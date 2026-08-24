@@ -1,7 +1,7 @@
 /* ليمك واصل — Service Worker */
-const CACHE='leemak-v10';
+const CACHE='leemak-v11';
 const SHELL=['./index.html','./manifest.json','./icon-192.png','./icon-512.png',
-  './img/081cb4e0.png','./img/25313d72.png','./img/5113ea67.png','./img/58b7d902.png','./img/792707e8.png','./img/99b1bf2d.png','./img/cf3f8b3b.png','./img/e333ce8a.png'];
+  './081cb4e0.png','./25313d72.png','./5113ea67.png','./58b7d902.png','./792707e8.png','./99b1bf2d.png','./cf3f8b3b.png','./e333ce8a.png'];
 
 self.addEventListener('install',e=>{
   e.waitUntil(caches.open(CACHE).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()));
