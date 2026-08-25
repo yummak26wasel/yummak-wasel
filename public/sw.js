@@ -1,5 +1,5 @@
 /* واصل ليمَك — Service Worker */
-const CACHE='leemak-v17';
+const CACHE='leemak-v18';
 const SHELL=['./index.html','./manifest.json','./icon-192.png','./icon-512.png',
   './081cb4e0.png','./25313d72.png','./5113ea67.png','./792707e8.png','./99b1bf2d.png','./cf3f8b3b.png','./e333ce8a.png'];
 

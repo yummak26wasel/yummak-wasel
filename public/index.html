@@ -2162,15 +2162,65 @@ function enter(){
 function logout(){ if(confirm('تريد تسجيل الخروج؟')){unsubscribeTopics();auth.signOut().then(()=>location.reload())} }
 
 /* ══════ LISTENERS ══════ */
-function listenShops(){
+/* ═══════════════════════════════════════════════════════
+   كاش المحلات — بدل ما نجيب كل المحلات من قاعدة البيانات
+   كل مرة يفتح الزبون التطبيق، نعرض النسخة المحفوظة بهاتفه
+   فوراً، وما نروح للسيرفر إلا إذا مضى عليها وقت.
+   النتيجة: التطبيق أسرع، والقراءات تنزل بشكل كبير.
+   ═══════════════════════════════════════════════════════ */
+const SHOPS_TTL = 10*60*1000;          /* الكاش يبقى طازج 10 دقائق */
+let shopsUnsub = null, shopsSyncedAt = 0;
+
+function applyShops(docs){
+  shops = docs;
+  renderShops();
+  if(curShop){ const f=shops.find(x=>x.id===curShop.id); if(f){ curShop=f; renderMenu() } }
+}
+
+async function listenShops(force){
   const sl=document.getElementById('shopList');
   if(sl && !sl.innerHTML.trim()) sl.innerHTML=skeleton(4);
-  db.collection('shops').where('approved','==',true).onSnapshot(s=>{
-    shops=s.docs.map(d=>({id:d.id,...d.data()})); renderShops();
-    if(curShop){const f=shops.find(x=>x.id===curShop.id); if(f){curShop=f;renderMenu()}}
-    conn(true);
-  },e=>{conn(false)});
+
+  try{ shopsSyncedAt = Number(localStorage.getItem('lw_shops_at')||0) }catch(e){}
+
+  let fresh=false;
+  if(!force){
+    /* نقرأ من الكاش المحلي — هاي ما تنحسب قراءة */
+    try{
+      const c = await db.collection('shops').where('approved','==',true).get({source:'cache'});
+      if(!c.empty){
+        applyShops(c.docs.map(d=>({id:d.id,...d.data()})));
+        conn(true);
+        fresh = (Date.now()-shopsSyncedAt) < SHOPS_TTL;
+      }
+    }catch(e){}
+  }
+  if(!fresh) attachShops();
 }
+
+function attachShops(){
+  if(shopsUnsub) return;
+  shopsUnsub = db.collection('shops').where('approved','==',true).onSnapshot(s=>{
+    applyShops(s.docs.map(d=>({id:d.id,...d.data()})));
+    shopsSyncedAt = Date.now();
+    try{ localStorage.setItem('lw_shops_at', String(shopsSyncedAt)) }catch(e){}
+    conn(true);
+  },e=>{ conn(false) });
+}
+
+function detachShops(){
+  if(shopsUnsub){ try{ shopsUnsub() }catch(e){} shopsUnsub=null }
+}
+
+/* لما التطبيق ينخفي، نوقف الاستماع — وما نرجّعه إلا إذا الكاش قدم */
+document.addEventListener('visibilitychange',()=>{
+  if(!me || me.role!=='customer') return;
+  if(document.hidden){ detachShops() }
+  else if(Date.now()-shopsSyncedAt > SHOPS_TTL){ attachShops() }
+});
+
+/* سحب للتحديث اليدوي */
+function refreshShops(){ detachShops(); attachShops(); toast('🔄 نحدّث المحلات...') }
 function listenCustomerOrders(){
   db.collection('orders').where('customerUid','==',uid).onSnapshot(s=>{
     const arr=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.createdAt-a.createdAt);
@@ -3690,8 +3740,9 @@ function atab(p,el){
   el.classList.add('on'); renderAdmin();
 }
 function listenAdmin(){
-  db.collection('orders').onSnapshot(s=>{
-    allOrders=s.docs.map(d=>({id:d.id,...d.data()})).sort((a,b)=>b.createdAt-a.createdAt); renderAdmin();
+  /* آخر 300 طلب بس — بدل ما نجيب كل الطلبات من أول التطبيق */
+  db.collection('orders').orderBy('createdAt','desc').limit(300).onSnapshot(s=>{
+    allOrders=s.docs.map(d=>({id:d.id,...d.data()})); renderAdmin();
   },e=>toast('خطأ بالطلبات: '+e.message));
   db.collection('users').onSnapshot(s=>{
     allUsers=s.docs.map(d=>({uid:d.id,...d.data()})); renderAdmin();
