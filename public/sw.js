@@ -1,6 +1,6 @@
-/* ليمك واصل — Service Worker */
-const CACHE='leemak-v12';
-const SHELL=['./index.html','./manifest.json','./icon-192.png','./icon-512.png',
+/* واصل ليمَك — Service Worker */
+const CACHE='leemak-v13';
+const SHELL=['./index.html','./manifest.json','./icon-192.png','./icon-512.png','./anah-bg.jpg',
   './081cb4e0.png','./25313d72.png','./5113ea67.png','./792707e8.png','./99b1bf2d.png','./cf3f8b3b.png','./e333ce8a.png'];
 
 /* ═══ إشعارات Firebase — تشتغل والهاتف مسكّر ═══ */
@@ -21,7 +21,7 @@ const messaging = firebase.messaging();
 messaging.onBackgroundMessage(payload=>{
   const d = payload.data || {};
   const n = payload.notification || {};
-  const title = n.title || d.title || 'ليمك واصل';
+  const title = n.title || d.title || 'واصل ليمَك';
   self.registration.showNotification(title,{
     body: n.body || d.body || '',
     icon: 'icon-192.png',
