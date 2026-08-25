@@ -832,106 +832,108 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .genopt.on i{border-color:#5917BC;border-width:6px}
 
 /* ═══════════════════════════════════════════════
-   واجهة الدخول الجديدة — عانة
+   واجهة الدخول — خلفية فاتحة بظلال معالم عانة
    ═══════════════════════════════════════════════ */
-#auth{padding:0;align-items:stretch;justify-content:flex-start;background:#2A0763}
-.authbg{position:absolute;inset:0 0 auto 0;height:62vh;min-height:330px;
-  background:url('anah-bg.jpg') center 28%/cover no-repeat;z-index:0}
-.authbg::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(180deg,rgba(42,7,99,.62) 0%,rgba(63,10,146,.55) 42%,rgba(63,10,146,.92) 100%)}
-.authhero{position:relative;z-index:2;text-align:center;padding:20px 20px 14px;flex-shrink:0}
-.authlogo{width:210px;max-width:62%;height:auto;display:block;margin:0 auto;
-  filter:drop-shadow(0 10px 22px rgba(0,0,0,.42))}
-.authcity{display:inline-flex;align-items:center;gap:5px;margin-top:2px;
-  color:#F6EEFF;font-size:12px;font-weight:700;background:rgba(0,0,0,.22);
-  padding:4px 12px;border-radius:20px;backdrop-filter:blur(3px)}
-.authcity svg{width:13px;height:13px;fill:#F97402}
-.authhi{font-family:'Cairo',sans-serif;color:#fff;font-size:27px;font-weight:800;
-  margin-top:14px;text-shadow:0 3px 14px rgba(0,0,0,.4)}
-.authsub{color:#E4D6FA;font-size:13px;font-weight:600;margin-top:5px}
+#auth{padding:0;align-items:stretch;justify-content:flex-start;
+  background:linear-gradient(180deg,#FAF8FE 0%,#F5F0FC 46%,#F1EBFA 100%)}
+.authsky{position:absolute;left:0;right:0;top:0;height:56vh;min-height:280px;
+  width:100%;z-index:0;pointer-events:none}
 
-.authcard{position:relative;z-index:2;background:#fff;border-radius:30px 30px 0 0;
-  padding:20px 18px 0;margin-top:auto;box-shadow:0 -12px 40px rgba(20,4,50,.3);
-  animation:cardUp .45s cubic-bezier(.22,1,.36,1)}
-@keyframes cardUp{from{transform:translateY(40px);opacity:.4}to{transform:none;opacity:1}}
+.authbar{position:relative;z-index:3;display:flex;align-items:center;
+  justify-content:space-between;padding:12px 14px 0}
+.apill{display:flex;align-items:center;gap:7px;background:#fff;border:1px solid #EFEAF8;
+  border-radius:22px;padding:8px 14px;font-family:inherit;font-size:13px;font-weight:800;
+  color:#3C3648;cursor:pointer;box-shadow:0 3px 12px rgba(63,10,146,.08)}
+.apill svg{width:16px;height:16px;fill:none;stroke:var(--g);stroke-width:1.7}
+.apill i{font-style:normal;font-size:11px;color:#9990AB;margin-inline-start:1px}
+.apin{width:42px;height:42px;border:0;border-radius:14px;background:#fff;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;box-shadow:0 3px 12px rgba(63,10,146,.1)}
+.apin svg{width:21px;height:21px;fill:var(--o)}
+
+.authhero{position:relative;z-index:2;text-align:center;padding:2px 20px 14px;flex-shrink:0}
+.authlogo{width:230px;max-width:68%;height:auto;display:block;margin:0 auto;
+  filter:drop-shadow(0 12px 26px rgba(63,10,146,.18))}
+.authhi{font-family:'Cairo',sans-serif;color:#2A0763;font-size:26px;font-weight:800;margin-top:12px}
+.authsub{color:#8B8797;font-size:13px;font-weight:600;margin-top:6px}
+
+.authcard{position:relative;z-index:2;flex:1;background:#fff;border-radius:30px 30px 0 0;
+  padding:18px 17px 0;margin-top:6px;display:flex;flex-direction:column;
+  box-shadow:0 -8px 34px rgba(63,10,146,.11);animation:cardUp .45s cubic-bezier(.22,1,.36,1)}
+@keyframes cardUp{from{transform:translateY(30px);opacity:.5}to{transform:none;opacity:1}}
 
 /* تبويبات الأدوار */
-.rtabs{display:flex;background:#F7F5FB;border:1px solid #EEEAF6;border-radius:16px;
-  padding:5px;gap:4px;margin-bottom:12px}
-.rtabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
-  padding:11px 2px 9px;border:0;background:transparent;border-radius:12px;position:relative;
-  font-family:inherit;font-size:13px;font-weight:800;color:#8B8797;cursor:pointer;transition:.18s}
-.rtabs button svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;
+.rtabs{display:flex;background:#FBFAFE;border:1px solid #F0ECF8;border-radius:18px;
+  padding:5px;gap:0;margin-bottom:16px}
+.rtabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
+  padding:13px 2px 12px;border:0;background:transparent;border-radius:14px;position:relative;
+  font-family:inherit;font-size:13.5px;font-weight:800;color:#8B8797;cursor:pointer;transition:.2s}
+.rtabs button + button::after{content:'';position:absolute;right:0;top:22%;bottom:22%;
+  width:1px;background:#EDE8F6}
+.rtabs button.on + button::after,.rtabs button.on::after{display:none}
+.rtabs button svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.9;
   stroke-linecap:round;stroke-linejoin:round}
-.rtabs button i{position:absolute;bottom:3px;left:50%;transform:translateX(-50%);
-  width:0;height:3px;border-radius:2px;background:#F97402;transition:width .22s}
-.rtabs button.on{background:var(--g);color:#fff;box-shadow:0 5px 14px rgba(63,10,146,.3)}
-.rtabs button.on i{width:26px}
+.rtabs button i{position:absolute;bottom:5px;left:50%;transform:translateX(-50%);
+  width:0;height:3.5px;border-radius:2px;background:#F97402;transition:width .24s}
+.rtabs button.on{background:var(--g);color:#fff;box-shadow:0 6px 16px rgba(63,10,146,.28)}
+.rtabs button.on i{width:34px}
 
-/* تبويب دخول / إنشاء حساب */
-#auth .seg{background:transparent;padding:0;gap:0;margin-bottom:14px;border-bottom:1.5px solid #EFECF6}
-#auth .seg button{border-radius:0;padding:9px 4px 10px;font-size:13.5px;position:relative;background:0}
-#auth .seg button.on{background:0;box-shadow:none;color:var(--g)}
-#auth .seg button.on::after{content:'';position:absolute;bottom:-1.5px;left:14%;right:14%;
-  height:2.5px;border-radius:2px;background:var(--o)}
-
-/* الحقول بأيقونات */
-.ifld{margin-bottom:12px}
-.ifld label{display:block;font-size:12.5px;font-weight:800;color:#5B5470;margin-bottom:6px}
-.ibox{display:flex;align-items:center;gap:9px;background:#FAF9FD;border:1.5px solid #E9E4F3;
-  border-radius:15px;padding:0 12px;transition:.18s}
-.ibox:focus-within{border-color:var(--g2);background:#fff;box-shadow:0 0 0 3.5px rgba(89,23,188,.09)}
-.ibox .ic{width:34px;height:34px;flex-shrink:0;border-radius:11px;background:#F1EBFC;
+/* الحقول */
+.ifld{margin-bottom:13px}
+.ifld label{display:block;font-size:13px;font-weight:800;color:#4A4356;margin-bottom:7px}
+.ibox{display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #EDE9F6;
+  border-radius:16px;padding:0 10px;transition:.18s}
+.ibox:focus-within{border-color:var(--g2);box-shadow:0 0 0 3.5px rgba(89,23,188,.1)}
+.ibox .ic{width:38px;height:38px;flex-shrink:0;border-radius:12px;background:#F2ECFD;
   display:flex;align-items:center;justify-content:center}
-.ibox .ic svg{width:17px;height:17px;fill:none;stroke:var(--g);stroke-width:1.9;
+.ibox .ic svg{width:18px;height:18px;fill:none;stroke:var(--g);stroke-width:1.9;
   stroke-linecap:round;stroke-linejoin:round}
-.ibox input{flex:1;min-width:0;border:0;background:0;padding:14px 0;font-size:15.5px;
-  font-weight:700;font-family:inherit;text-align:right;color:var(--txt)}
+.ibox input{flex:1;min-width:0;border:0;background:0;padding:15px 0;font-size:15.5px;
+  font-weight:700;font-family:inherit;text-align:center;color:var(--txt)}
 .ibox input:focus{outline:0}
 .ibox input::placeholder{color:#B7B1C6;font-weight:600}
-.ibox .eye{border:0;background:0;padding:6px;cursor:pointer;flex-shrink:0}
-.ibox .eye svg{width:21px;height:21px;fill:none;stroke:#9990AB;stroke-width:1.8;
+.ibox .eye{border:0;background:0;padding:7px;cursor:pointer;flex-shrink:0}
+.ibox .eye svg{width:22px;height:22px;fill:none;stroke:var(--g);stroke-width:1.8;
   stroke-linecap:round;stroke-linejoin:round}
-.ibox .eye.shown svg{stroke:var(--g)}
 .ibox .eye .e2{opacity:1;transition:.15s}
 .ibox .eye.shown .e2{opacity:0}
 
 /* تذكرني + نسيت كلمة المرور */
-.authrow{display:flex;align-items:center;justify-content:space-between;margin:2px 2px 4px}
-.rem{display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;font-weight:700;color:#5B5470}
+.authrow{display:flex;align-items:center;justify-content:space-between;margin:4px 2px 2px;
+  flex-direction:row-reverse}
+.rem{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13.5px;font-weight:700;color:#4A4356}
 .rem input{position:absolute;opacity:0;width:0;height:0}
-.rem i{width:19px;height:19px;border-radius:6px;border:2px solid #D6CFE6;background:#fff;
+.rem i{width:21px;height:21px;border-radius:7px;border:2px solid #D6CFE6;background:#fff;
   display:block;position:relative;transition:.16s}
 .rem input:checked + i{background:var(--g);border-color:var(--g)}
-.rem input:checked + i::after{content:'';position:absolute;top:2px;left:5.5px;width:4px;height:8.5px;
-  border:solid #fff;border-width:0 2.2px 2.2px 0;transform:rotate(45deg)}
+.rem input:checked + i::after{content:'';position:absolute;top:2.5px;left:6px;width:4px;height:9px;
+  border:solid #fff;border-width:0 2.4px 2.4px 0;transform:rotate(45deg)}
 .rem input:focus-visible + i{box-shadow:0 0 0 3px rgba(63,10,146,.2)}
-.forgot{font-size:12.5px;font-weight:800;color:var(--o2);cursor:pointer}
+.forgot{display:flex;align-items:center;gap:3px;font-size:13px;font-weight:800;
+  color:var(--o2);cursor:pointer}
+.forgot i{font-style:normal;font-size:15px}
 
-/* زر الدخول */
-.authbtn{display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px;
-  border-radius:16px;padding:15px;background:linear-gradient(100deg,var(--g),var(--g2));
-  box-shadow:0 8px 22px rgba(63,10,146,.32)}
-.authbtn .ar{font-style:normal;font-size:19px;line-height:1;transition:transform .18s}
-.authbtn:active .ar{transform:translateX(-5px)}
+.authbtn{display:flex;align-items:center;justify-content:center;gap:12px;margin-top:16px;
+  border-radius:17px;padding:16px;background:linear-gradient(100deg,var(--g),var(--g2));
+  box-shadow:0 10px 24px rgba(63,10,146,.3)}
+.authbtn .ar{font-style:normal;font-size:20px;line-height:1;transition:transform .18s}
+.authbtn:active .ar{transform:translateX(-6px)}
 
-.ordiv{display:flex;align-items:center;gap:12px;margin:16px 2px 12px;
-  color:#A79FBA;font-size:12px;font-weight:700}
-.ordiv::before,.ordiv::after{content:'';flex:1;height:1px;background:#EDEAF3}
+.ordiv{display:flex;align-items:center;gap:12px;margin:15px 2px 12px;
+  color:#A79FBA;font-size:12.5px;font-weight:700}
+.ordiv::before,.ordiv::after{content:'';flex:1;height:1px;background:#EFEBF7}
 
-.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
-  padding:13px;border:1.5px solid #E7E3F0;border-radius:15px;background:#fff;
-  font-family:inherit;font-size:14px;font-weight:700;color:#3C3648;cursor:pointer}
+.gbtn{width:100%;display:flex;align-items:center;justify-content:center;gap:11px;
+  padding:14px;border:1.5px solid #EDE9F6;border-radius:16px;background:#fff;
+  font-family:inherit;font-size:14.5px;font-weight:700;color:#3C3648;cursor:pointer}
 .gbtn:active{background:#FAF9FD}
-.gbtn svg{width:19px;height:19px}
+.gbtn svg{width:20px;height:20px}
 
-#auth .hint{margin:14px 0 0;font-size:12.5px;font-weight:600}
-#auth .hint b{color:var(--g);cursor:pointer}
-.authwave{display:block;width:calc(100% + 36px);margin:12px -18px 0;height:40px}
+#auth .hint{margin:16px 0 0;font-size:13px;font-weight:600;color:#8B8797}
+#auth .hint b{color:var(--g);cursor:pointer;font-weight:800}
+.authwave{display:block;width:calc(100% + 34px);margin:14px -17px 0;height:44px;margin-top:auto}
 
-/* حقول التسجيل داخل الكرت الجديد */
-#auth .fld input,#auth .fld select{border-radius:14px;border:1.5px solid #E9E4F3;background:#FAF9FD;padding:13px}
-#auth .fld label{color:#5B5470;font-size:12.5px}
+#auth .fld input,#auth .fld select{border-radius:15px;border:1.5px solid #EDE9F6;background:#fff;padding:14px}
+#auth .fld label{color:#4A4356;font-size:13px;font-weight:800}
 
 /* ═══════════════════════════════════════════════
    رسوم الخدمة · واجهة الدفع · اشترِيلي
@@ -996,6 +998,31 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .oitem.sep{border-top:1px dashed #E7E2F0;margin-top:7px;padding-top:9px}
 .oitem.tot{font-weight:800;color:var(--g)}
 .oitem.tot b{color:var(--g)}
+
+/* تنبيه الموقع الناقص */
+.loccard.need{background:linear-gradient(105deg,#B33F00 0%,#F97402 70%,#FF9330 100%);
+  box-shadow:0 8px 22px rgba(249,116,2,.32);animation:needPulse 2.2s ease-in-out infinite}
+@keyframes needPulse{0%,100%{box-shadow:0 8px 22px rgba(249,116,2,.32)}
+  50%{box-shadow:0 8px 30px rgba(249,116,2,.55)}}
+.loccard.need::after{background:rgba(255,255,255,.14)}
+.loccard.need .l1{color:#FFE6CE}
+.loccard.need .l1 i{background:#fff;box-shadow:0 0 0 3px rgba(255,255,255,.35)}
+.loccard.need .lcchg{background:#fff;color:#B33F00;box-shadow:0 4px 12px rgba(0,0,0,.18)}
+.locwarn{display:flex;align-items:center;gap:11px;background:#FFF4E9;border:1.5px solid #FFD9B0;
+  border-radius:18px;padding:12px 14px;margin:-6px 0 14px;cursor:pointer}
+.locwarn .lwic{font-size:20px;flex-shrink:0}
+.locwarn b{display:block;font-size:13.5px;font-weight:800;color:#B34E00}
+.locwarn p{font-size:11.5px;color:#8A6A4C;font-weight:600;line-height:1.65;margin-top:3px}
+.locwarn .lwgo{flex-shrink:0;background:var(--o);color:#fff;font-size:12px;font-weight:800;
+  padding:8px 12px;border-radius:11px}
+.big-btn.needloc{background:var(--o);box-shadow:0 8px 20px rgba(249,116,2,.34)}
+
+/* البانر — الخط أبيض داخل المربعات الملوّنة */
+.bigbanner h4,.bigbanner.b2 h4,.bigbanner.b3 h4{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.16)}
+.bigbanner h4 em{color:#fff;opacity:.94}
+.bigbanner p{color:rgba(255,255,255,.94);text-shadow:0 1px 5px rgba(0,0,0,.14)}
+.bigbanner .ul{background:#fff;opacity:.85}
+.bndots i.on{background:var(--o)}
 </style>
 </head>
 <body>
@@ -1022,12 +1049,60 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 
 <!-- ═══ AUTH ═══ -->
 <div class="screen" id="auth">
-  <div class="authbg"></div>
+  <svg class="authsky" viewBox="0 0 420 210" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <g fill="#3F0A92">
+        <g opacity=".05">
+          <ellipse cx="72" cy="34" rx="34" ry="11"/><ellipse cx="96" cy="30" rx="22" ry="9"/>
+          <ellipse cx="330" cy="52" rx="30" ry="10"/><ellipse cx="352" cy="47" rx="19" ry="8"/>
+        </g>
+        <g opacity=".22">
+          <path d="M300 26l2 2-2 2-2-2zM306 22l2 2-2 2-2-2zM294 20l2 2-2 2-2-2z"/>
+        </g>
+        <g opacity=".10">
+          <rect x="0" y="150" width="52" height="60"/><rect x="46" y="162" width="40" height="48"/>
+          <rect x="330" y="158" width="46" height="52"/><rect x="370" y="146" width="50" height="64"/>
+          <rect x="120" y="170" width="38" height="40"/><rect x="252" y="166" width="34" height="44"/>
+        </g>
+        <g opacity=".16">
+          <path d="M186 210V72c0-5 3-8 8-8h12c5 0 8 3 8 8v138z"/>
+          <path d="M188 92h32M188 112h32M188 134h32M188 158h32" stroke="#F5F1FC" stroke-width="2.4" fill="none"/>
+          <path d="M190 64c0-9 5-15 12-15s12 6 12 15z"/>
+          <circle cx="202" cy="46" r="7"/>
+          <path d="M56 210V116c0-4 2.5-6.5 6.5-6.5h9c4 0 6.5 2.5 6.5 6.5v94z"/>
+          <path d="M58 132h24M58 152h24M58 176h24" stroke="#F5F1FC" stroke-width="2" fill="none"/>
+          <path d="M59 109c0-7 4-12 9.5-12s9.5 5 9.5 12z"/>
+          <path d="M352 210v-78c0-4 2-6 5.5-6h7c3.5 0 5.5 2 5.5 6v78z"/>
+          <circle cx="361" cy="122" r="5"/>
+        </g>
+        <g opacity=".13">
+          <path d="M112 210V166" stroke="#3F0A92" stroke-width="4" fill="none"/>
+          <path d="M112 168c-14-10-26-8-32 2 12-4 22-2 30 4zM112 168c14-10 26-8 32 2-12-4-22-2-30 4zM112 164c-8-14-4-26 6-30-4 12-2 22 2 30zM112 164c8-12 20-14 28-8-12 0-22 4-26 12z"/>
+          <path d="M292 210V172" stroke="#3F0A92" stroke-width="3.4" fill="none"/>
+          <path d="M292 174c-12-9-22-7-27 2 10-3 19-2 25 3zM292 174c12-9 22-7 27 2-10-3-19-2-25 3zM292 170c-7-12-3-22 5-26-3 10-2 19 1 26z"/>
+          <path d="M242 210V178" stroke="#3F0A92" stroke-width="3" fill="none"/>
+          <path d="M242 180c-10-8-19-6-23 2 8-3 16-2 21 2zM242 180c10-8 19-6 23 2-8-3-16-2-21 2z"/>
+        </g>
+        <g opacity=".14">
+          <circle cx="26" cy="188" r="30" fill="none" stroke="#3F0A92" stroke-width="3"/>
+          <path d="M26 158v60M-4 188h60M5 167l42 42M47 167L5 209" stroke="#3F0A92" stroke-width="2" fill="none"/>
+          <rect x="14" y="186" width="24" height="24"/>
+        </g>
+      </g>
+    </svg>
+
+  <div class="authbar">
+    <button class="apill" onclick="toast('التطبيق بالعربية حالياً — لغات ثانية قريباً')">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 2.6 15 0 18M12 3c-2.6 2.6-2.6 15 0 18"/></svg>
+      العربية<i>⌄</i></button>
+    <button class="apin" onclick="toast('📍 مدينة عانة – الأنبار')" aria-label="الموقع">
+      <svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+    </button>
+  </div>
+
   <div class="authhero">
     <img class="authlogo" src="081cb4e0.png" alt="واصل ليمَك">
-    <div class="authcity"><svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>مدينة عانة – الأنبار</div>
     <h1 class="authhi">مرحباً بك!</h1>
-    <p class="authsub">سجّل دخولك لتطلب اللي تريده بسرعة وسهولة</p>
+    <p class="authsub">سجّل دخولك لتطلب ما تريد بسرعة وسهولة</p>
   </div>
 
   <div class="authcard">
@@ -1041,11 +1116,6 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
       <button onclick="setRole('driver',this)">
         <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17" r="3"/><circle cx="18.5" cy="17" r="3"/><path d="M8.5 17h7l-2.6-7H16"/><path d="M13 6h3l1.6 5"/></svg>
         <span>سائق</span><i></i></button>
-    </div>
-
-    <div class="seg" id="modeSeg">
-      <button class="on" onclick="setMode('login',this)">تسجيل دخول</button>
-      <button onclick="setMode('signup',this)">إنشاء حساب</button>
     </div>
 
     <div class="err" id="authErr"></div>
@@ -1096,8 +1166,8 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
       </div>
     </div>
     <div class="authrow">
+      <span class="forgot" onclick="forgotPass()">نسيت كلمة المرور؟<i>›</i></span>
       <label class="rem"><input type="checkbox" id="aRemember" checked><i></i><span>تذكرني</span></label>
-      <span class="forgot" onclick="forgotPass()">نسيت كلمة المرور؟ ›</span>
     </div>
 
     <button class="big-btn authbtn" id="authBtn" onclick="doAuth()">
@@ -1111,9 +1181,9 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 
     <div class="hint" id="authHint">ما عندك حساب؟ <b onclick="setMode('signup')">سجّل الآن</b> ›</div>
 
-    <svg class="authwave" viewBox="0 0 420 46" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0 26 Q70 4 150 20 T290 16 T420 26 L420 46 L0 46Z" fill="#F97402" opacity=".18"/>
-      <path d="M0 33 Q80 12 165 27 T300 24 T420 33 L420 46 L0 46Z" fill="#F97402"/>
+    <svg class="authwave" viewBox="0 0 420 58" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 30 Q118 0 238 20 T420 10 L420 58 L0 58Z" fill="#F97402"/>
+      <path d="M0 45 Q120 18 250 37 T420 28 L420 58 L0 58Z" fill="#3F0A92"/>
     </svg>
   </div>
 </div>
@@ -1151,6 +1221,12 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
           <div class="l2" id="homeAddr">عانة – الأنبار</div>
         </div>
         <div class="lcchg">تغيير<span>›</span></div>
+      </div>
+      <div class="locwarn" id="locWarn" style="display:none" onclick="openMap('delivery')">
+        <span class="lwic">📍</span>
+        <div><b>موقعك مو محدّد</b>
+          <p>ما تكدر تطلب قبل ما تحدد موقعك على الخريطة — حتى يوصلك السائق بدقة.</p></div>
+        <span class="lwgo">حدد ›</span>
       </div>
 
       <div class="search">
@@ -1768,7 +1844,12 @@ const PH    = v => { const c=phoneCore(v); return c ? '0'+c : '' };   /* للع�
 const EMAIL = p => '964'+phoneCore(p) + '@yummak-wasel.app';
 /* الحسابات القديمة انسجّلت بصيغ مختلفة — نجرّبهن كلهن عند الدخول */
 const EMAIL_ALTS = p => { const c=phoneCore(p);
-  return ['964'+c, '0'+c, c, '00964'+c].map(x=>x+'@yummak-wasel.app') };
+  const list=['964'+c, '0'+c, c].map(x=>x+'@yummak-wasel.app');
+  let saved=null; try{ saved=localStorage.getItem('lw_em_'+c) }catch(e){}
+  if(saved) return [saved, ...list.filter(x=>x!==saved)];
+  return list;
+};
+function saveEmailAlt(core,email){ try{ localStorage.setItem('lw_em_'+core,email) }catch(e){} }
 /* ═══════════════════════════════════════════════
    الإشعارات — تشتغل والهاتف مسكّر
    ═══════════════════════════════════════════════ */
@@ -1906,8 +1987,8 @@ function busy(b){
   if(b) __busyT=setTimeout(()=>{
     const L2=document.getElementById('load'); if(L2)L2.classList.remove('on');
     const B2=document.getElementById('authBtn'); if(B2)B2.disabled=false;
-    if(typeof toast==='function') toast('الاتصال بطيء — انتظر شوي أو جرّب مرة ثانية');
-  },45000);
+    if(typeof toast==='function') toast('الاتصال بطيء — جرّب مرة ثانية');
+  },75000);
 }
 function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(i))>>>0;return 'h'+h.toString(36)}
 
@@ -1954,8 +2035,24 @@ async function doAuth(){
           // حساب قديم ما اكتمل — نكمّله بدل ما نرفض
           cred=await auth.signInWithEmailAndPassword(email,pass);
           const ex=await db.collection('users').doc(cred.user.uid).get();
-          if(ex.exists){ signingUp=false; busy(false);
-            return showErr('هذا الرقم مسجّل مسبقاً — سجّل دخول') }
+          if(ex.exists){
+            /* الحساب مكتمل أصلاً وكلمة المرور صحيحة — ندخّله مباشرة */
+            const R2=ex.data().role||'';
+            if(R2!=='admin' && R2!==role){
+              signingUp=false; busy(false); await auth.signOut();
+              const r2={store:'متجر',driver:'سائق',customer:'عميل'}[R2]||'دور ثاني';
+              return showErr('هذا الرقم مسجّل كـ '+r2+' — بدّل التبويب وسجّل دخول');
+            }
+            uid=cred.user.uid; me={uid,...ex.data()};
+            try{ const c=await db.collection('settings').doc('app').get();
+              if(c.exists) SET={...SET,...c.data()} }catch(e){}
+            saveEmailAlt(core,email);
+            signingUp=false; busy(false);
+            document.getElementById('auth').classList.remove('on');
+            toast('عندك حساب — دخّلناك 👋');
+            enter();
+            return;
+          }
         }else{ signingUp=false; throw e }
       }
       const newUid=cred.user.uid;
@@ -1987,24 +2084,40 @@ async function doAuth(){
       return;
     }
 
-    let cred=null, lastErr=null;
-    for(const em of EMAIL_ALTS(core)){
-      try{ cred=await auth.signInWithEmailAndPassword(em,pass); break }
+    signingUp=true;                      /* نمسك الدخول بأيدنا بدل ما ننتظر إشارة فايربيس */
+    let cred=null, lastErr=null, usedEmail='';
+    const alts=EMAIL_ALTS(core);
+    for(let i=0;i<alts.length;i++){
+      if(i===1){ const T=document.getElementById('loadTxt'); if(T)T.textContent='نتأكد من صيغة رقمك...' }
+      try{ cred=await auth.signInWithEmailAndPassword(alts[i],pass); usedEmail=alts[i]; break }
       catch(err){
         lastErr=err;
-        if(err.code!=='auth/user-not-found' && err.code!=='auth/invalid-credential') throw err;
+        if(err.code!=='auth/user-not-found' && err.code!=='auth/invalid-credential'){ signingUp=false; throw err }
       }
     }
-    if(!cred) throw lastErr;
+    if(!cred){ signingUp=false; throw lastErr }
+    saveEmailAlt(core,usedEmail);
+
     const d=await db.collection('users').doc(cred.user.uid).get();
-    const R=d.exists?d.data().role:'';
-    // المؤسس يدخل من أي تبويب
-    if(d.exists && R!=='admin' && R!==role){
+    if(!d.exists){
+      signingUp=false; busy(false); await auth.signOut();
+      return showErr('حسابك ما اكتمل — اضغط «سجّل الآن» بنفس الرقم وكلمة المرور حتى يكمّل');
+    }
+    const R=d.data().role||'';
+    if(R!=='admin' && R!==role){
+      signingUp=false; busy(false); await auth.signOut();
       const r={store:'متجر',driver:'سائق',customer:'عميل'}[R]||'دور ثاني';
-      await auth.signOut(); busy(false);
       return showErr('هذا الرقم مسجّل كـ '+r+' — بدّل التبويب');
     }
+    uid=cred.user.uid; me={uid,...d.data()};
+    try{ const c=await db.collection('settings').doc('app').get();
+      if(c.exists) SET={...SET,...c.data()} }catch(e){}
+    signingUp=false; busy(false);
+    document.getElementById('auth').classList.remove('on');
+    enter();
+    return;
   }catch(e){
+    signingUp=false;
     busy(false);
     const m={
       'auth/email-already-in-use':'هذا الرقم مسجّل مسبقاً — سجّل دخول',
@@ -2189,7 +2302,9 @@ function bnScroll(){ bnDots(bnCur()); __bnHold=Date.now() }
 function bnGo(i){
   const w=document.getElementById('bnSlides'); if(!w)return;
   const sl=w.querySelectorAll('.bigbanner'); if(!sl[i])return;
-  sl[i].scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  /* حساب الفرق من المكان الحالي — يشتغل صح مع RTL بكل المتصفحات */
+  const wr=w.getBoundingClientRect(), tr=sl[i].getBoundingClientRect();
+  w.scrollBy({left:Math.round(tr.left-wr.left),behavior:'smooth'});
   bnDots(i);
 }
 function bnAuto(){
@@ -2201,7 +2316,7 @@ function bnAuto(){
     if(Date.now()-__bnHold<6000)return;
     const n=w.querySelectorAll('.bigbanner').length;
     bnGo((bnCur()+1)%n);
-  },4500);
+  },4000);
 }
 function renderCats(){
   const C=[
@@ -2226,9 +2341,27 @@ function pickCat(v){
   cat = (cat===v ? 'all' : v);
   renderCats(); renderShops();
 }
+function hasLoc(){ return !!(me && me.loc && me.loc.lat) }
 function renderHomeLoc(){
-  const a=document.getElementById('homeAddr');
-  if(a) a.textContent = (me&&me.addr) ? me.addr : 'اضغط لتحديد موقعك';
+  const a=document.getElementById('homeAddr'), card=document.querySelector('#p_home .loccard');
+  const ok=hasLoc();
+  if(a) a.textContent = ok ? (me.addr||'عانة – الأنبار') : 'ما حددت موقعك بعد';
+  if(card){
+    card.classList.toggle('need',!ok);
+    const l1=card.querySelector('.l1'), chg=card.querySelector('.lcchg');
+    if(l1) l1.innerHTML = ok ? '<i></i>توصيل إلى' : '<i></i>مطلوب — حدد موقعك';
+    if(chg) chg.innerHTML = ok ? 'تغيير<span>›</span>' : 'حدد الآن<span>›</span>';
+  }
+  const w=document.getElementById('locWarn');
+  if(w) w.style.display = ok ? 'none' : 'block';
+}
+/* بوابة وحدة: أي طلب لازم يمر منها */
+function requireLoc(){
+  if(hasLoc()) return true;
+  toast('📍 لازم تحدد موقعك على الخريطة حتى تكدر تطلب');
+  buzz([15,50,15]);
+  openMap('delivery');
+  return false;
 }
 /* ═══ وجبات مختلفة كل ما يفتح العميل التطبيق — ترتيب المحلات يبقى ثابت ═══ */
 const __feat={};
@@ -2308,6 +2441,7 @@ function renderMenu(){
 }
 function addCart(pid){
   if(!isOpenNow(curShop)) return toast('المحل مسكّر الآن — '+nextOpenTxt(curShop));
+  if(!requireLoc()) return;
   const p=(curShop.products||[]).find(x=>x.id===pid); if(!p)return;
   if(cart.length&&cart[0].shopId!==curShop.id){
     if(!confirm('سلتك بيها طلب من محل ثاني. تريد تفرغها؟'))return; cart=[];
@@ -2364,8 +2498,9 @@ function renderCart(){
       <div class="bl2"><span>أجرة التوصيل</span><b>${SET.deliveryFee.toLocaleString()} د.ع</b></div>
       <div class="bl2 tot"><span>المجموع الكلي</span><b>${(sub+svcFee(sub)+SET.deliveryFee).toLocaleString()} د.ع</b></div>
     </div>
-    ${(me.loc&&me.loc.lat)?'':'<div class="locset no" style="margin-top:12px">⚠️ ما حددت موقعك على الخريطة بعد — راح نطلبه منك بالخطوة الجاية</div>'}
-    <button class="big-btn stickybtn" onclick="goCheckout()">متابعة ←</button>`;
+    ${hasLoc()?'':'<div class="locset no" style="margin-top:12px">⚠️ <b>موقعك مو محدّد</b><br>ما تكدر تكمّل الطلب قبل ما تحدده على الخريطة.</div>'}
+    <button class="big-btn stickybtn ${hasLoc()?'':'needloc'}" onclick="${hasLoc()?'goCheckout()':"openMap('delivery')"}">
+      ${hasLoc()?'متابعة ←':'📍 حدد موقعك أول'}</button>`;
 }
 function clearCart(){
   if(!cart.length)return;
@@ -2378,6 +2513,7 @@ function backToShops(){
 
 /* ═══════ الطلب الخاص من السوق ═══════ */
 function openSpecialOrder(){
+  if(!requireLoc()) return;
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('p_special').classList.add('on');
   document.getElementById('sp_market').value='';
@@ -2486,6 +2622,7 @@ function openSpecialMap(id){
 /* ═══════ صفحة تفاصيل الطلب ═══════ */
 function goCheckout(){
   if(!cart.length)return;
+  if(!requireLoc()) return;
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('p_checkout').classList.add('on');
   renderCheckout();
@@ -3206,6 +3343,7 @@ async function openMap(mode){
   }catch(e){ toast('الخريطة ما تحمّلت — تأكد من الإنترنت'); if(ld)ld.classList.add('gone') }
 }
 function closeMap(){ document.getElementById('mapSheet').classList.remove('on') }
+function refreshLocUI(){ try{ renderHomeLoc(); renderCart() }catch(e){} }
 
 function updateZone(){
   if(!pMap)return;
@@ -3245,7 +3383,8 @@ async function confirmMap(){
     }else{
       me.loc=loc;                       // ينثبّت بالتطبيق فوراً
       closeMap();
-      renderCheckout(); renderAccount(); renderHomeLoc();
+      try{ renderCheckout() }catch(e){}
+      renderAccount(); renderHomeLoc(); renderCart();
       toast('✅ انثبّت موقعك — '+loc.zone);
       // نحاول نحفظه بالحساب، وإذا فشل الطلب يبقى يشتغل
       try{ await db.collection('users').doc(uid).update({loc}) }
