@@ -1023,6 +1023,104 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .bigbanner p{color:rgba(255,255,255,.94);text-shadow:0 1px 5px rgba(0,0,0,.14)}
 .bigbanner .ul{background:#fff;opacity:.85}
 .bndots i.on{background:var(--o)}
+
+/* ═══════════════════════════════════════════════
+   واجهة السائق — بطاقات «طلباتك اليوم»
+   ═══════════════════════════════════════════════ */
+.dhead{margin:2px 2px 13px}
+.dhead h3{font-family:'Cairo',sans-serif;font-size:19px;font-weight:800;color:var(--txt)}
+.dhead h3 span{font-size:17px}
+.dhead p{font-size:12.5px;color:var(--mut);font-weight:600;margin-top:4px}
+
+.dstats{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:16px}
+.dcard{background:#fff;border:1px solid #F0ECF8;border-radius:20px;padding:14px 13px;
+  display:flex;align-items:flex-start;gap:11px;box-shadow:0 3px 14px rgba(63,10,146,.055);
+  transition:.18s}
+.dcard:active{transform:scale(.985)}
+.dcard .dic{width:42px;height:42px;flex-shrink:0;border-radius:14px;
+  display:flex;align-items:center;justify-content:center}
+.dcard .dic svg{width:21px;height:21px;fill:none;stroke:#fff;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round}
+.dcard .dtx{flex:1;min-width:0}
+.dcard .dlbl{font-size:12px;font-weight:700;color:#8B8797;line-height:1.4}
+.dcard .dval{font-family:'Cairo',sans-serif;font-size:24px;font-weight:800;
+  margin-top:4px;line-height:1.15;white-space:nowrap}
+.dcard .dval small{font-size:13px;font-weight:700;opacity:.75}
+.dcard .dsub{font-size:10.5px;font-weight:700;color:#A79FBA;margin-top:5px;
+  display:flex;align-items:center;gap:2px}
+.dcard .dsub .feei{width:15px;height:15px;font-size:10px;line-height:15px;margin-inline-start:4px}
+
+.c-purple .dic{background:linear-gradient(135deg,#5917BC,#3F0A92)}
+.c-purple .dval{color:#3F0A92}
+.c-green  .dic{background:linear-gradient(135deg,#1FA463,#158049)}
+.c-green  .dval{color:#158049}
+.c-orange .dic{background:linear-gradient(135deg,#FF9330,#F97402)}
+.c-orange .dval{color:#D95F00}
+.c-blue   .dic{background:linear-gradient(135deg,#3C8CF0,#2563C9)}
+.c-blue   .dval{color:#2563C9}
+
+@media(max-width:340px){
+  .dstats{grid-template-columns:1fr}
+  .dcard .dval{font-size:22px}
+}
+
+#comSheet{position:fixed;inset:0;background:rgba(20,4,50,.55);z-index:9999;
+  display:none;align-items:flex-end;backdrop-filter:blur(2px)}
+#comSheet.on{display:flex;animation:svcFade .2s}
+
+/* ═══════════════════════════════════════════════
+   لوحة المؤسس — بطاقات وجداول
+   ═══════════════════════════════════════════════ */
+.astats{display:grid;grid-template-columns:1fr;gap:11px;margin-bottom:15px}
+@media(min-width:400px){.astats{grid-template-columns:1fr 1fr}}
+.acard{background:#fff;border:1px solid #F0ECF8;border-radius:20px;padding:14px 13px;
+  display:flex;align-items:center;gap:12px;box-shadow:0 3px 14px rgba(63,10,146,.055)}
+.acard .aic{width:44px;height:44px;flex-shrink:0;border-radius:15px;
+  display:flex;align-items:center;justify-content:center}
+.acard .aic svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:1.9;
+  stroke-linecap:round;stroke-linejoin:round}
+.acard .atx{flex:1;min-width:0}
+.acard .albl{font-size:12.5px;font-weight:700;color:#8B8797}
+.acard .aval{font-family:'Cairo',sans-serif;font-size:25px;font-weight:800;
+  margin-top:3px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.acard .asub{font-size:11px;font-weight:700;color:#A79FBA;margin-top:2px}
+.acard.c-purple .aic{background:linear-gradient(135deg,#5917BC,#3F0A92)}
+.acard.c-purple .aval{color:#3F0A92}
+.acard.c-green .aic{background:linear-gradient(135deg,#1FA463,#158049)}
+.acard.c-green .aval{color:#158049}
+.acard.c-orange .aic{background:linear-gradient(135deg,#FF9330,#F97402)}
+.acard.c-orange .aval{color:#D95F00}
+
+.atbl{padding:14px 13px 10px}
+.atHead{display:flex;align-items:center;gap:11px;margin-bottom:13px}
+.atHead .atIc{width:38px;height:38px;flex-shrink:0;border-radius:13px;
+  display:flex;align-items:center;justify-content:center}
+.atHead .atIc svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:2;
+  stroke-linecap:round;stroke-linejoin:round}
+.atHead .atIc.p{background:linear-gradient(135deg,#5917BC,#3F0A92)}
+.atHead .atIc.g{background:linear-gradient(135deg,#1FA463,#158049)}
+.atHead .atIc.o{background:linear-gradient(135deg,#FF9330,#F97402)}
+.atHead h3{font-family:'Cairo',sans-serif;font-size:16px;font-weight:800}
+.atHead p{font-size:11.5px;color:var(--mut);font-weight:600;margin-top:2px}
+
+.atRow{display:flex;align-items:center;gap:8px;padding:11px 10px;font-size:13.5px;
+  border-bottom:1px solid #F4F1FA}
+.atRow:last-child{border-bottom:0}
+.atRow .c1{width:22px;flex-shrink:0;color:#A79FBA;font-weight:800;font-size:12px}
+.atRow .c2{flex:1;min-width:0;font-weight:700;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.atRow .c3{flex-shrink:0;font-weight:800;color:var(--g)}
+.atRow.head{background:linear-gradient(100deg,#3F0A92,#5917BC);color:#fff;
+  border-radius:13px;border:0;margin-bottom:4px;padding:10px}
+.atRow.head .c1,.atRow.head .c2,.atRow.head .c3{color:#fff;font-size:12.5px;font-weight:800}
+#atSales ~ .atMore, .atbl .atRow.head.g{background:linear-gradient(100deg,#158049,#1FA463)}
+.atbl.g .atRow.head{background:linear-gradient(100deg,#158049,#1FA463)}
+.atbl.g .atRow .c3{color:#158049}
+.atbl.o .atRow.head{background:linear-gradient(100deg,#D95F00,#F97402)}
+.atbl.o .atRow .c3{color:#D95F00}
+.atMore{text-align:center;padding:4px 0 2px}
+.atMore button{border:0;background:0;color:var(--g);font-family:inherit;
+  font-size:12.5px;font-weight:800;cursor:pointer;padding:8px 12px}
 </style>
 </head>
 <body>
@@ -1152,7 +1250,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
         <input type="file" id="shPhoto" accept="image/*" style="display:none" onchange="pickShopPhoto(this,'shBox')">
         <div class="fld"><label>اسم المطعم / المتجر</label><input type="text" id="aStore" placeholder="مثال: مطعم الرافدين"></div>
         <div class="fld"><label>النوع</label><select id="aType">
-          <option value="restaurant">🍔 مطعم</option><option value="store">🏪 متجر / بقالة</option><option value="other">📦 خدمات أخرى</option></select></div>
+          <option value="restaurant">🍔 مطعم</option><option value="store">🏪 متجر / بقالة</option><option value="pharmacy">💊 صيدلية</option><option value="other">📦 خدمات أخرى</option></select></div>
       </div>
       <div id="fDriver" style="display:none">
         <div class="photobox" id="phBox" onclick="document.getElementById('aPhoto').click()">
@@ -1604,9 +1702,45 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   <div class="alertbar" id="dAlert" onclick="stopAlarm()">🛵 طلب جديد جاهز للتوصيل — اضغط للإيقاف</div>
   <div class="body">
     <div class="page on" id="d_avail">
-      <div class="driverHero">
-        <div class="dhTop"><div><div class="dhTitle">طلباتك اليوم 🛵</div><div class="dhSub">استلم الطلب، وصلّه، واحسب أرباحك بسهولة</div></div><div class="dhMoney"><span id="dHeroMoney">0</span> <small>د.ع</small></div></div>
-        <div class="driverQuick"><div class="dq"><b id="dHeroCount">0</b><span>توصيلات</span></div><div class="dq"><b>250</b><span>أجرة التطبيق</span></div><div class="dq"><b id="dHeroStatus">متاح</b><span>الحالة</span></div></div>
+      <div class="dhead">
+        <h3>طلباتك اليوم <span>🛵</span></h3>
+        <p>استلم الطلب، وصّله، واحسب أرباحك بسهولة</p>
+      </div>
+
+      <div class="dstats">
+        <div class="dcard c-purple">
+          <div class="dic"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></div>
+          <div class="dtx">
+            <div class="dlbl">عدد التوصيلات</div>
+            <div class="dval" id="dHeroCount">0</div>
+          </div>
+        </div>
+
+        <div class="dcard c-green">
+          <div class="dic"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.6"/><path d="M6 10v4M18 10v4"/></svg></div>
+          <div class="dtx">
+            <div class="dlbl">أرباح اليوم</div>
+            <div class="dval" id="dHeroMoney">0 <small>د.ع</small></div>
+          </div>
+        </div>
+
+        <div class="dcard c-orange">
+          <div class="dic"><svg viewBox="0 0 24 24"><path d="M19 5 5 19"/><circle cx="7.5" cy="7.5" r="2.6"/><circle cx="16.5" cy="16.5" r="2.6"/></svg></div>
+          <div class="dtx">
+            <div class="dlbl">عمولة التطبيق</div>
+            <div class="dval" id="dHeroCom">بدون</div>
+            <div class="dsub">ما نقتطع شي حالياً
+              <button type="button" class="feei" onclick="openCom(event)" aria-label="شرح العمولة">i</button></div>
+          </div>
+        </div>
+
+        <div class="dcard c-blue">
+          <div class="dic"><svg viewBox="0 0 24 24"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H18a2 2 0 0 1 2 2v1"/><path d="M3 7.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg></div>
+          <div class="dtx">
+            <div class="dlbl">المتاح حالياً</div>
+            <div class="dval" id="dHeroNet">0 <small>د.ع</small></div>
+          </div>
+        </div>
       </div>
       <div class="panel" style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px">
         <div><b style="font-size:14px">حالتي</b><div style="font-size:12px;color:var(--mut)" id="dutyTxt">متاح للطلبات</div></div>
@@ -1635,8 +1769,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
         <div class="set-row"><span>الاسم</span><span class="v" id="ds_name">—</span></div>
         <div class="set-row"><span>الهاتف</span><span class="v" id="ds_phone">—</span></div>
         <div class="set-row"><span>المركبة</span><span class="v" id="ds_veh">—</span></div>
-        <div class="set-row"><span>أجرة التوصيلة</span><span class="v" id="ds_fee">—</span></div>
-        <div class="set-row"><span>عمولة الإدارة</span><span class="v" id="ds_com">—</span></div></div>
+</div>
       <div class="panel"><h3 class="ttl">💰 حسابي مع الإدارة</h3>
         <div id="ds_debt"></div></div>
       <div class="panel"><h3 class="ttl">🍔 اطلب لنفسك</h3>
@@ -1669,8 +1802,36 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
     <button class="out" onclick="logout()">خروج</button></div>
   <div class="body">
     <div class="page on" id="a_over">
-      <div class="stats" id="aStats"></div>
-      <div class="panel"><h3 class="ttl">💰 العمولات المستحقة</h3><div id="aDebts"></div></div>
+      <div class="astats" id="aStats"></div>
+
+      <div class="panel atbl">
+        <div class="atHead">
+          <div class="atIc p"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+          <div><h3>طلبات اليوم</h3><p>عدد الطلبات لكل محل اليوم</p></div>
+        </div>
+        <div id="atOrders"></div>
+        <div class="atMore" id="atOrdersMore"></div>
+      </div>
+
+      <div class="panel atbl g">
+        <div class="atHead">
+          <div class="atIc g"><svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></div>
+          <div><h3>المبيعات الكلية</h3><p>إجمالي مبيعات كل محل</p></div>
+        </div>
+        <div id="atSales"></div>
+        <div class="atMore" id="atSalesMore"></div>
+      </div>
+
+      <div class="panel atbl o">
+        <div class="atHead">
+          <div class="atIc o"><svg viewBox="0 0 24 24"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 8 7 3h10l3 5"/><path d="M12 12v5"/></svg></div>
+          <div><h3>رسوم الخدمة المحصّلة</h3><p>مجموع رسوم الخدمة من طلبات كل محل</p></div>
+        </div>
+        <div id="atFees"></div>
+        <div class="atMore" id="atFeesMore"></div>
+      </div>
+
+      <div class="panel"><h3 class="ttl">💰 العمولات المستحقة على السواق</h3><div id="aDebts"></div></div>
       <div class="panel"><h3 class="ttl">🔔 آخر الطلبات</h3><div id="aRecent"></div></div>
     </div>
 
@@ -1756,6 +1917,22 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
     <button class="big-btn" onclick="closeSvc()">حسناً، فهمت</button>
   </div>
 </div>
+<div id="comSheet" onclick="if(event.target===this)closeCom()">
+  <div class="svcbox">
+    <svg class="svcwave" viewBox="0 0 420 16" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 9 Q105 0 210 7 T420 6 L420 16 L0 16Z" fill="#F97402"/></svg>
+    <div class="svchead">
+      <h4>عمولة التطبيق</h4>
+      <button class="x" onclick="closeCom()" aria-label="إغلاق">✕</button>
+    </div>
+    <div class="svcbody">
+      <p>حالياً <b>ماكو أي عمولة</b> على السواق — أجرة التوصيلة تبقى إلك كاملة.</p>
+      <p>ما ننقص ولا دينار من أرباحك.</p>
+      <p>إذا صارت أي تغييرات مستقبلاً، راح نعلمك قبلها بوقت كافي.</p>
+    </div>
+    <button class="big-btn" onclick="closeCom()">حسناً، فهمت</button>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <div class="load" id="load"><div class="spin"></div><div id="loadTxt">جاري التحميل...</div></div>
 
@@ -1779,11 +1956,13 @@ function svcRow(sub){
        + `<b>${svcFee(sub).toLocaleString()} د.ع</b></div>`;
 }
 function openSvc(e){ if(e)e.stopPropagation(); document.getElementById('svcSheet').classList.add('on') }
+function openCom(e){ if(e)e.stopPropagation(); document.getElementById('comSheet').classList.add('on') }
+function closeCom(){ document.getElementById('comSheet').classList.remove('on') }
 function closeSvc(){ document.getElementById('svcSheet').classList.remove('on') }
 const DAYMS=86400000;
 let fcm=null;
 let db=null,auth=null,uid=null,me=null,signingUp=false,cart=[],curShop=null,shops=[],myOrders=[],availOrders=[],cat='all',ordFil='new';
-let seenPending=new Set(),seenReady=new Set(),seenSpecial=new Set(),specialAvailOrders=[],mySpecialOrders=[],firstLoad=true,firstDLoad=true,myShopDoc=null;
+let seenPending=new Set(),seenReady=new Set(),seenSpecial=new Set(),specialAvailOrders=[],mySpecialOrders=[],allSpecial=[],firstLoad=true,firstDLoad=true,myShopDoc=null;
 
 function initFirebase(){
   if(String(firebaseConfig.apiKey).startsWith('PUT_')){
@@ -2965,10 +3144,6 @@ function renderStore(){
   if(!myShopDoc)return;
   const sh=myShopDoc,os=myOrders;
   document.getElementById('stName').textContent=sh.name;
-  const dEarnings=done.reduce((sum,o)=>sum+Math.max(0,Number(o.deliveryFee||SET.deliveryFee||1250)-250),0);
-  const hm=document.getElementById('dHeroMoney'); if(hm)hm.textContent=dEarnings.toLocaleString();
-  const heroCountEl=document.getElementById('dHeroCount'); if(heroCountEl)heroCountEl.textContent=done.length;
-  const hs=document.getElementById('dHeroStatus'); if(hs)hs.textContent=me.duty===false?'غير متاح':'متاح';
   const today=new Date().toLocaleDateString('ar-IQ');
   const tc=os.filter(o=>(o.date||'').includes(today)).length;
   const rev=os.filter(o=>o.status==='delivered').reduce((s,o)=>s+o.sub,0);
@@ -3107,8 +3282,6 @@ function renderDriverAccount(){
   ds_photo.innerHTML = me.photo
     ? `<img src="${me.photo}" style="width:92px;height:92px;object-fit:cover;border-radius:50%;border:3px solid var(--g2)">`
     : '';
-  ds_fee.textContent=SET.deliveryFee.toLocaleString()+' د.ع';
-  ds_com.textContent=SET.commissionPerOrder.toLocaleString()+' د.ع لكل توصيلة';
   const d=myDebt(), dl=me.oldestUnpaidAt?Math.ceil((me.oldestUnpaidAt+SET.graceDays*DAYMS-Date.now())/DAYMS):null;
   ds_debt.innerHTML = d.count
     ? `<div class="debt ${dl<=0?'late':''}">
@@ -3136,6 +3309,18 @@ function renderDriver(){
   }
   const mine=myOrders.filter(o=>o.status==='ontheway');
   const done=myOrders.filter(o=>o.status==='delivered');
+
+  /* ── بطاقات طلباتك اليوم ── */
+  const today0=new Date().toLocaleDateString('ar-IQ');
+  const doneToday=done.filter(o=>String(o.date||'').includes(today0));
+  /* أجرة التوصيلة كاملة للسائق — العمولة تنحسب كل 10 طلبات */
+  const earnToday=doneToday.reduce((sum,o)=>
+    sum + Number(o.deliveryFee||SET.deliveryFee||1250), 0);
+  /* بدون عمولة حالياً — ما ننقص شي من أرباح السائق */
+  const _c=document.getElementById('dHeroCount'); if(_c)_c.textContent=doneToday.length;
+  const _m=document.getElementById('dHeroMoney'); if(_m)_m.innerHTML=earnToday.toLocaleString()+' <small>د.ع</small>';
+  const _n=document.getElementById('dHeroNet');   if(_n)_n.innerHTML=earnToday.toLocaleString()+' <small>د.ع</small>';
+
   const ac=document.getElementById('availCnt');
   ac.style.display=availOrders.length?'flex':'none';ac.textContent=availOrders.length;
   const mc=document.getElementById('mineCnt');
@@ -3750,6 +3935,9 @@ function listenAdmin(){
   db.collection('shops').onSnapshot(s=>{
     allShops=s.docs.map(d=>({id:d.id,...d.data()})); renderAdmin();
   },e=>toast('خطأ بالمحلات: '+e.message));
+  db.collection('specialOrders').orderBy('createdAt','desc').limit(200).onSnapshot(s=>{
+    allSpecial=s.docs.map(d=>({id:d.id,...d.data()})); renderAdmin();
+  },e=>console.warn('special',e.message));
 }
 function driverDebt(duid){
   const un=allOrders.filter(o=>o.driverUid===duid&&o.status==='delivered'&&o.commissionPaid===false);
@@ -3759,6 +3947,78 @@ function daysLeft(u){
   if(!u.oldestUnpaidAt) return null;
   return Math.ceil((u.oldestUnpaidAt+SET.graceDays*DAYMS-Date.now())/DAYMS);
 }
+/* ═══════════════════════════════════════════════════════
+   جداول لوحة المؤسس — كل محل بسطر مستقل
+   تشمل المطاعم والمتاجر والصيدليات وطلبات «اشترِيلي»
+   ═══════════════════════════════════════════════════════ */
+let atShowAll={orders:false, sales:false, fees:false};
+
+function shopKind(name){
+  const sh=allShops.find(x=>x.name===name);
+  const t=sh?sh.type:'';
+  return t==='restaurant'?'🍔':t==='store'?'🏪':t==='pharmacy'?'💊':'📦';
+}
+
+function atRows(boxId, moreId, rows, fmt, key){
+  const box=document.getElementById(boxId), more=document.getElementById(moreId);
+  if(!box) return;
+  if(!rows.length){
+    box.innerHTML='<div class="empty" style="padding:20px"><div class="e">📋</div><p>ما بيه بيانات بعد</p></div>';
+    if(more) more.innerHTML='';
+    return;
+  }
+  const all=atShowAll[key], list=all?rows:rows.slice(0,5);
+  box.innerHTML=`<div class="atRow head"><span class="c1">#</span><span class="c2">اسم المحل</span><span class="c3">${fmt.head}</span></div>`
+    + list.map((r,i)=>`<div class="atRow">
+        <span class="c1">${i+1}</span>
+        <span class="c2">${r.icon} ${r.name}</span>
+        <span class="c3">${fmt.val(r.value)}</span>
+      </div>`).join('');
+  if(more) more.innerHTML = rows.length>5
+    ? `<button onclick="atShowAll.${key}=!atShowAll.${key};renderAdmin()">${all?'عرض أقل':'عرض الكل ('+rows.length+')'} ›</button>`
+    : '';
+}
+
+function renderAdminTables(tOrders, tSpecial, dlv){
+  /* ① طلبات اليوم لكل محل */
+  const cnt={};
+  tOrders.forEach(o=>{ const n=o.shopName||'—'; cnt[n]=(cnt[n]||0)+1 });
+  if(tSpecial.length) cnt['اشترِيلي — شراء من السوق']=tSpecial.length;
+  const rowsO=Object.keys(cnt).map(n=>({
+    name:n, value:cnt[n],
+    icon: n.startsWith('اشترِيلي')?'🛒':shopKind(n)
+  })).sort((a,b)=>b.value-a.value);
+  atRows('atOrders','atOrdersMore',rowsO,{head:'عدد الطلبات',val:v=>v+' طلب'},'orders');
+
+  /* ② المبيعات الكلية لكل محل */
+  const sal={};
+  dlv.forEach(o=>{ const n=o.shopName||'—'; sal[n]=(sal[n]||0)+Number(o.sub||0) });
+  const spDone=allSpecial.filter(o=>o.status==='delivered')
+    .reduce((s,o)=>s+Number(o.purchaseBudget||0),0);
+  if(spDone) sal['اشترِيلي — شراء من السوق']=spDone;
+  const rowsS=Object.keys(sal).map(n=>({
+    name:n, value:sal[n],
+    icon: n.startsWith('اشترِيلي')?'🛒':shopKind(n)
+  })).sort((a,b)=>b.value-a.value);
+  atRows('atSales','atSalesMore',rowsS,{head:'المبيعات (د.ع)',val:v=>v.toLocaleString()+' د.ع'},'sales');
+
+  /* ③ رسوم الخدمة المحصّلة من كل محل */
+  const fee={};
+  dlv.forEach(o=>{
+    const n=o.shopName||'—';
+    const f=Number(o.serviceFee!=null ? o.serviceFee : svcFee(o.sub||0));
+    if(f) fee[n]=(fee[n]||0)+f;
+  });
+  const spFee=allSpecial.filter(o=>o.status==='delivered')
+    .reduce((t,o)=>t+Number(o.serviceFee||0),0);
+  if(spFee) fee['اشترِيلي — شراء من السوق']=spFee;
+  const rowsF=Object.keys(fee).map(n=>({
+    name:n, value:fee[n],
+    icon: n.startsWith('اشترِيلي')?'🛒':shopKind(n)
+  })).sort((a,b)=>b.value-a.value);
+  atRows('atFees','atFeesMore',rowsF,{head:'رسوم الخدمة (د.ع)',val:v=>v.toLocaleString()+' د.ع'},'fees');
+}
+
 function renderAdmin(){
   const today=new Date().toLocaleDateString('ar-IQ');
   const tOrders=allOrders.filter(o=>(o.date||'').includes(today));
@@ -3766,10 +4026,35 @@ function renderAdmin(){
   const sales=dlv.reduce((s,o)=>s+(o.sub||0),0);
   const dueAll=allOrders.filter(o=>o.status==='delivered'&&o.commissionPaid===false)
                         .reduce((s,o)=>s+(o.commission||0),0);
+  const tSpecial=allSpecial.filter(o=>(o.date||'').includes(today));
+  const totalToday=tOrders.length+tSpecial.length;
+  /* رسوم الخدمة المحصّلة من كل الطلبات الموصّلة */
+  const totalFees = dlv.reduce((t,o)=>
+      t + Number(o.serviceFee!=null ? o.serviceFee : svcFee(o.sub||0)), 0)
+    + allSpecial.filter(o=>o.status==='delivered')
+        .reduce((t,o)=>t+Number(o.serviceFee||0),0);
+
   document.getElementById('aStats').innerHTML=`
-    <div class="stat"><div class="sl">طلبات اليوم</div><div class="sv">${tOrders.length}</div></div>
-    <div class="stat blue"><div class="sl">مبيعات كلية</div><div class="sv">${sales>=1000?Math.round(sales/1000)+'ألف':sales}</div></div>
-    <div class="stat orange"><div class="sl">عمولات مستحقة</div><div class="sv">${dueAll>=1000?Math.round(dueAll/1000)+'ألف':dueAll}</div></div>`;
+    <div class="acard c-purple">
+      <div class="aic"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div>
+      <div class="atx"><div class="albl">إجمالي الطلبات</div>
+        <div class="aval">${totalToday.toLocaleString()}</div>
+        <div class="asub">طلبات اليوم</div></div>
+    </div>
+    <div class="acard c-green">
+      <div class="aic"><svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></div>
+      <div class="atx"><div class="albl">إجمالي المبيعات</div>
+        <div class="aval">${sales.toLocaleString()}</div>
+        <div class="asub">د.ع</div></div>
+    </div>
+    <div class="acard c-orange">
+      <div class="aic"><svg viewBox="0 0 24 24"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 8 7 3h10l3 5"/><path d="M12 12v5"/></svg></div>
+      <div class="atx"><div class="albl">رسوم الخدمة</div>
+        <div class="aval">${totalFees.toLocaleString()}</div>
+        <div class="asub">د.ع محصّلة</div></div>
+    </div>`;
+
+  renderAdminTables(tOrders, tSpecial, dlv);
 
   // عمولات
   const drivers=allUsers.filter(u=>u.role==='driver');
