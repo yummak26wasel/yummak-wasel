@@ -9,7 +9,6 @@
 <title>لليمك واصل - توصيل عانة</title>
 
 <script>
-/* يخفي شاشة البداية بعد ثانيتين مهما صار — حماية من الاتصال البطيء */
 (function(){
   function go(){ var sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
   setTimeout(go,2000);
@@ -19,6 +18,7 @@
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 
 <script>
 /* ══════════════════════════════════════════════════
@@ -38,6 +38,9 @@ const firebaseConfig = {
    ٢) بوت تلگرام — هذا الي يخلي الإشعار يوصل
       حتى لو الهاتف مسكّر. شوف ملف TELEGRAM.md
    ══════════════════════════════════════════════════ */
+/* مفتاح الإشعارات — Firebase ← Cloud Messaging ← Web Push certificates */
+const VAPID_KEY = "BOWusCGI78_98pxGnAEYzTOSHL2NqMf0GlsGS-s1n3hum2EpTH4WnlgPh_mZIeaecZGk6JE7QozOrIDOURTOuzE";
+
 const TG = {
   token:        "PUT_BOT_TOKEN",   // من @BotFather
   driversChat:  "PUT_DRIVERS_CHAT" // آي دي گروب السواق (يبدأ بـ -100)
@@ -637,19 +640,6 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .bigbanner .bb-i img{width:100%;max-width:190px;height:auto;object-fit:contain;
   filter:drop-shadow(0 6px 12px rgba(0,0,0,.22))}
 
-.supcards{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:16px}
-.supcard{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:18px 12px 16px;
-  text-align:center;cursor:pointer;transition:.18s;box-shadow:0 3px 12px rgba(63,10,146,.05)}
-.supcard:active{transform:scale(.97)}
-.supcard.on{border-color:#5917BC;box-shadow:0 6px 18px rgba(63,10,146,.16)}
-.sc-ic{width:74px;height:74px;margin:0 auto 11px;border-radius:20px;
-  display:flex;align-items:center;justify-content:center;overflow:hidden}
-.sc-ic svg{width:100%;height:100%}
-.faq-ic{background:#F6F1FE;padding:7px}
-.call-ic{background:#F6DFD5}
-.sc-t{font-family:'Cairo',sans-serif;font-size:14.5px;font-weight:800;color:#3F0A92}
-.sc-s{font-size:11px;color:var(--mut);font-weight:600;margin-top:4px;line-height:1.5}
-
 .trust{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
 .trust .ti{border-radius:18px;padding:15px 8px 13px;text-align:center;
   box-shadow:0 3px 12px rgba(63,10,146,.06);transition:.2s}
@@ -691,60 +681,54 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   color:#8B8797;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
 .mpill.st2{color:#D98A00;background:#FFF6EC}
 .mpill.fee{color:#D95F00;background:#FFF2E6}
-.profhead2{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:16px;
-  display:flex;align-items:center;gap:14px;margin-bottom:16px;cursor:pointer;
-  box-shadow:0 3px 14px rgba(63,10,146,.06);transition:.18s}
-.profhead2:active{transform:scale(.985)}
-.ph-av{width:62px;height:62px;border-radius:50%;background:#F0EDF6;flex-shrink:0;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#B3ABC5}
-.ph-av img{width:100%;height:100%;object-fit:cover}
-.ph-t{flex:1;min-width:0}
-.ph-t .pn{font-family:'Cairo',sans-serif;font-size:17px;font-weight:800;margin-bottom:3px}
-.ph-link{font-size:13.5px;color:var(--g2);font-weight:700}
-.ph-a{color:#C9C4D4;font-size:23px}
+.rcard.off{opacity:.6}
+.offtag{position:absolute;top:10px;left:10px;background:#e74c3c;color:#fff;font-size:10px;
+  font-weight:800;padding:3px 9px;border-radius:20px}
+.hourpill{border-radius:10px;padding:4px 9px;font-size:11.5px;font-weight:700;display:inline-flex;gap:4px}
+.hourpill.op{background:#F2ECFD;color:#3F0A92}
+.hourpill.cl{background:#fdecea;color:#e74c3c}
 
-.uiform{padding-bottom:14px}
-.ui-photo{text-align:center;margin-bottom:20px}
-.ui-av{width:110px;height:110px;border-radius:50%;background:#F0EDF6;margin:0 auto 12px;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:800;color:#B3ABC5;
-  cursor:pointer;border:3px solid #fff;box-shadow:0 5px 18px rgba(63,10,146,.14)}
-.ui-av img{width:100%;height:100%;object-fit:cover}
-.ui-cam{background:#F2ECFD;color:var(--g);border:0;border-radius:26px;padding:9px 19px;
-  font-family:'Cairo',sans-serif;font-size:12.5px;font-weight:800;cursor:pointer}
-.genrow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
-.genopt{border:1.5px solid #ECE8F4;border-radius:13px;padding:13px;display:flex;align-items:center;
-  gap:10px;cursor:pointer;font-size:14.5px;font-weight:700;transition:.16s;background:#F7F6FA}
-.genopt i{width:20px;height:20px;border-radius:50%;border:2px solid #D6D0E2;flex-shrink:0;transition:.16s}
-.genopt.on{border-color:#5917BC;background:#fff}
-.genopt.on i{border-color:#5917BC;border-width:6px}
-.buycard{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:15px;
-  display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 3px 14px rgba(63,10,146,.06);transition:.18s}
-.buycard:active{transform:scale(.98)}
-.bc-ic{width:82px;height:82px;border-radius:16px;background:#F6F1FE;flex-shrink:0;padding:6px;
+.nav button{font-size:11px;font-weight:700;color:#1c1c1c;gap:5px}
+.nav svg{width:25px;height:25px;stroke:#1c1c1c;stroke-width:1.9;fill:none}
+.nav button.on{color:var(--g2)}
+.nav button.on svg{stroke:var(--g2);fill:var(--g2);stroke-width:1.4}
+.nav button.on .ni{background:none;padding:0}
+.supcards{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:16px}
+.supcard{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:18px 12px 16px;
+  text-align:center;cursor:pointer;transition:.18s;box-shadow:0 3px 12px rgba(63,10,146,.05)}
+.supcard:active{transform:scale(.97)}
+.supcard.on{border-color:#5917BC;box-shadow:0 6px 18px rgba(63,10,146,.16)}
+.sc-ic{width:74px;height:74px;margin:0 auto 11px;border-radius:20px;
+  display:flex;align-items:center;justify-content:center;overflow:hidden}
+.sc-ic svg{width:100%;height:100%}
+.faq-ic{background:#F6F1FE;padding:7px}
+.call-ic{background:#F6DFD5}
+.sc-t{font-family:'Cairo',sans-serif;font-size:14.5px;font-weight:800;color:#3F0A92}
+.sc-s{font-size:11px;color:var(--mut);font-weight:600;margin-top:4px;line-height:1.5}
+
+.rwrap{background:#fff;border:1px solid #EDEAF3;border-radius:18px;margin-bottom:12px;
+  box-shadow:0 2px 10px rgba(63,10,146,.05);overflow:hidden}
+.rwrap.off{opacity:.6}
+.rwrap .rcard{border:0;box-shadow:none;margin-bottom:0;background:transparent}
+.feat{display:flex;gap:9px;overflow-x:auto;padding:0 12px 12px;scrollbar-width:none;cursor:pointer}
+.feat::-webkit-scrollbar{display:none}
+.fitem{flex:0 0 92px}
+.fitem img,.fitem .fx{width:92px;height:70px;border-radius:12px;object-fit:cover;display:flex;
+  align-items:center;justify-content:center;font-size:26px;background:linear-gradient(140deg,#F5F2FC,#fff)}
+.fn{font-size:11px;font-weight:700;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fp{font-size:11px;font-weight:800;color:var(--o2);margin-top:2px}
+
+.emptyBig{text-align:center;padding:56px 22px}
+.ebCircle{width:150px;height:150px;border-radius:50%;background:#F3F2F6;margin:0 auto 30px;
   display:flex;align-items:center;justify-content:center}
-.bc-ic svg{width:100%;height:100%}
-.bc-t{flex:1;min-width:0}
-.bc-h{font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;color:#1c1c1c;margin-bottom:5px}
-.bc-s{font-size:12px;color:#8B8797;font-weight:600;line-height:1.65}
-.bc-a{color:#C9C4D4;font-size:23px;flex-shrink:0}
+.ebCircle svg{width:74px;height:74px}
+.emptyBig h3{font-family:'Cairo',sans-serif;font-size:25px;font-weight:800;color:#1c1c1c;margin-bottom:11px}
+.emptyBig p{font-size:14.5px;color:#9B95A8;font-weight:600;line-height:1.7;margin-bottom:26px}
+.ebBtn{background:var(--g);color:#fff;border:0;border-radius:32px;padding:15px 52px;
+  font-family:'Cairo',sans-serif;font-size:17px;font-weight:800;cursor:pointer;
+  box-shadow:0 6px 18px rgba(63,10,146,.28);transition:.18s}
+.ebBtn:active{transform:scale(.96)}
 
-.special-form{padding-bottom:14px}
-.sfbox{background:#fff;border:1px solid #EDEAF3;border-radius:16px;padding:14px;margin-bottom:12px;
-  box-shadow:0 2px 9px rgba(63,10,146,.04)}
-.sfbox label{display:block;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:800;
-  color:#3F0A92;margin-bottom:10px}
-.sfbox label span{color:var(--mut);font-weight:600;font-size:11.5px}
-.sfbox input,.sfbox textarea{width:100%;background:#F7F6FA;border:1.5px solid #ECE8F4;border-radius:12px;
-  padding:12px 13px;font-size:14px;font-family:inherit;text-align:right;color:#1c1c1c;
-  outline:none;transition:.16s;resize:vertical}
-.sfbox input:focus,.sfbox textarea:focus{border-color:#5917BC;background:#fff}
-.sfbox input::placeholder,.sfbox textarea::placeholder{color:#B3ABC5;font-size:13px}
-.sfbox textarea{min-height:104px;line-height:1.75}
-.sfaddr{font-weight:800;font-size:14.5px;color:#1c1c1c;background:#F7F6FA;border-radius:12px;padding:12px 13px}
-.special-help{font-size:11.5px;color:var(--mut);margin-top:8px;line-height:1.6;font-weight:600}
-.special-total{display:flex;justify-content:space-between;align-items:center;background:#FFF2E6;
-  border-radius:16px;padding:15px 17px;margin-bottom:14px;font-size:14px;font-weight:700;color:#8A4A00}
-.special-total b{font-family:'Cairo',sans-serif;font-size:18px;font-weight:800;color:#D95F00}
 .ordc{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:15px;margin-bottom:15px;
   box-shadow:0 3px 14px rgba(63,10,146,.06)}
 .ordtop{display:flex;align-items:center;gap:13px;cursor:pointer}
@@ -779,39 +763,62 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .reorder:not(.dis){background:var(--g);color:#fff;box-shadow:0 4px 13px rgba(63,10,146,.24)}
 .reorder:not(.dis):active{transform:scale(.97)}
 .reorder.dis{cursor:not-allowed}
-.emptyBig{text-align:center;padding:56px 22px}
-.ebCircle{width:150px;height:150px;border-radius:50%;background:#F3F2F6;margin:0 auto 30px;
-  display:flex;align-items:center;justify-content:center}
-.ebCircle svg{width:74px;height:74px}
-.emptyBig h3{font-family:'Cairo',sans-serif;font-size:25px;font-weight:800;color:#1c1c1c;margin-bottom:11px}
-.emptyBig p{font-size:14.5px;color:#9B95A8;font-weight:600;line-height:1.7;margin-bottom:26px}
-.ebBtn{background:var(--g);color:#fff;border:0;border-radius:32px;padding:15px 52px;
-  font-family:'Cairo',sans-serif;font-size:17px;font-weight:800;cursor:pointer;
-  box-shadow:0 6px 18px rgba(63,10,146,.28);transition:.18s}
-.ebBtn:active{transform:scale(.96)}
-.rwrap{background:#fff;border:1px solid #EDEAF3;border-radius:18px;margin-bottom:12px;
-  box-shadow:0 2px 10px rgba(63,10,146,.05);overflow:hidden}
-.rwrap.off{opacity:.6}
-.rwrap .rcard{border:0;box-shadow:none;margin-bottom:0;background:transparent}
-.feat{display:flex;gap:9px;overflow-x:auto;padding:0 12px 12px;scrollbar-width:none;cursor:pointer}
-.feat::-webkit-scrollbar{display:none}
-.fitem{flex:0 0 92px}
-.fitem img,.fitem .fx{width:92px;height:70px;border-radius:12px;object-fit:cover;display:flex;
-  align-items:center;justify-content:center;font-size:26px;background:linear-gradient(140deg,#F5F2FC,#fff)}
-.fn{font-size:11px;font-weight:700;margin-top:5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.fp{font-size:11px;font-weight:800;color:var(--o2);margin-top:2px}
-.rcard.off{opacity:.6}
-.offtag{position:absolute;top:10px;left:10px;background:#e74c3c;color:#fff;font-size:10px;
-  font-weight:800;padding:3px 9px;border-radius:20px}
-.hourpill{border-radius:10px;padding:4px 9px;font-size:11.5px;font-weight:700;display:inline-flex;gap:4px}
-.hourpill.op{background:#F2ECFD;color:#3F0A92}
-.hourpill.cl{background:#fdecea;color:#e74c3c}
 
-.nav button{font-size:11px;font-weight:700;color:#1c1c1c;gap:5px}
-.nav svg{width:25px;height:25px;stroke:#1c1c1c;stroke-width:1.9;fill:none}
-.nav button.on{color:var(--g2)}
-.nav button.on svg{stroke:var(--g2);fill:var(--g2);stroke-width:1.4}
-.nav button.on .ni{background:none;padding:0}
+.buycard{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:15px;
+  display:flex;align-items:center;gap:13px;cursor:pointer;box-shadow:0 3px 14px rgba(63,10,146,.06);transition:.18s}
+.buycard:active{transform:scale(.98)}
+.bc-ic{width:82px;height:82px;border-radius:16px;background:#F6F1FE;flex-shrink:0;padding:6px;
+  display:flex;align-items:center;justify-content:center}
+.bc-ic svg{width:100%;height:100%}
+.bc-t{flex:1;min-width:0}
+.bc-h{font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;color:#1c1c1c;margin-bottom:5px}
+.bc-s{font-size:12px;color:#8B8797;font-weight:600;line-height:1.65}
+.bc-a{color:#C9C4D4;font-size:23px;flex-shrink:0}
+
+.special-form{padding-bottom:14px}
+.sfbox{background:#fff;border:1px solid #EDEAF3;border-radius:16px;padding:14px;margin-bottom:12px;
+  box-shadow:0 2px 9px rgba(63,10,146,.04)}
+.sfbox label{display:block;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:800;
+  color:#3F0A92;margin-bottom:10px}
+.sfbox label span{color:var(--mut);font-weight:600;font-size:11.5px}
+.sfbox input,.sfbox textarea{width:100%;background:#F7F6FA;border:1.5px solid #ECE8F4;border-radius:12px;
+  padding:12px 13px;font-size:14px;font-family:inherit;text-align:right;color:#1c1c1c;
+  outline:none;transition:.16s;resize:vertical}
+.sfbox input:focus,.sfbox textarea:focus{border-color:#5917BC;background:#fff}
+.sfbox input::placeholder,.sfbox textarea::placeholder{color:#B3ABC5;font-size:13px}
+.sfbox textarea{min-height:104px;line-height:1.75}
+.sfaddr{font-weight:800;font-size:14.5px;color:#1c1c1c;background:#F7F6FA;border-radius:12px;padding:12px 13px}
+.special-help{font-size:11.5px;color:var(--mut);margin-top:8px;line-height:1.6;font-weight:600}
+.special-total{display:flex;justify-content:space-between;align-items:center;background:#FFF2E6;
+  border-radius:16px;padding:15px 17px;margin-bottom:14px;font-size:14px;font-weight:700;color:#8A4A00}
+.special-total b{font-family:'Cairo',sans-serif;font-size:18px;font-weight:800;color:#D95F00}
+
+.profhead2{background:#fff;border:1px solid #EDEAF3;border-radius:20px;padding:16px;
+  display:flex;align-items:center;gap:14px;margin-bottom:16px;cursor:pointer;
+  box-shadow:0 3px 14px rgba(63,10,146,.06);transition:.18s}
+.profhead2:active{transform:scale(.985)}
+.ph-av{width:62px;height:62px;border-radius:50%;background:#F0EDF6;flex-shrink:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:#B3ABC5}
+.ph-av img{width:100%;height:100%;object-fit:cover}
+.ph-t{flex:1;min-width:0}
+.ph-t .pn{font-family:'Cairo',sans-serif;font-size:17px;font-weight:800;margin-bottom:3px}
+.ph-link{font-size:13.5px;color:var(--g2);font-weight:700}
+.ph-a{color:#C9C4D4;font-size:23px}
+
+.uiform{padding-bottom:14px}
+.ui-photo{text-align:center;margin-bottom:20px}
+.ui-av{width:110px;height:110px;border-radius:50%;background:#F0EDF6;margin:0 auto 12px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:800;color:#B3ABC5;
+  cursor:pointer;border:3px solid #fff;box-shadow:0 5px 18px rgba(63,10,146,.14)}
+.ui-av img{width:100%;height:100%;object-fit:cover}
+.ui-cam{background:#F2ECFD;color:var(--g);border:0;border-radius:26px;padding:9px 19px;
+  font-family:'Cairo',sans-serif;font-size:12.5px;font-weight:800;cursor:pointer}
+.genrow{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.genopt{border:1.5px solid #ECE8F4;border-radius:13px;padding:13px;display:flex;align-items:center;
+  gap:10px;cursor:pointer;font-size:14.5px;font-weight:700;transition:.16s;background:#F7F6FA}
+.genopt i{width:20px;height:20px;border-radius:50%;border:2px solid #D6D0E2;flex-shrink:0;transition:.16s}
+.genopt.on{border-color:#5917BC;background:#fff}
+.genopt.on i{border-color:#5917BC;border-width:6px}
 </style>
 </head>
 <body>
@@ -961,15 +968,6 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
         <div class="bndots" id="bnDots"><i class="on"></i><i></i><i></i></div>
       </div>
 
-      <div class="trust">
-        <div class="ti t1"><div class="tic"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg></div>
-          <div class="tt">دفع آمن<br>وسهل</div></div>
-        <div class="ti t2"><div class="tic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="7"/><path d="M12 10v3l2 1.6"/><path d="M9 3h6"/></svg></div>
-          <div class="tt">توصيل سريع<br>وموثوق</div></div>
-        <div class="ti t3"><div class="tic"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h2.6v5H5.6A1.6 1.6 0 0 1 4 17.4z"/><path d="M20 14h-2.6v5h1A1.6 1.6 0 0 0 20 17.4z"/></svg></div>
-          <div class="tt">دعم العملاء<br>24/7</div></div>
-      </div>
-
       <div class="sechead" style="margin-top:6px"><h3 id="listTtl">🏪 كل المحلات</h3></div>
       <div id="shopList"></div>
     </div>
@@ -1020,13 +1018,11 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
             <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
               <rect x="30" y="20" width="22" height="17" rx="2" fill="#E8B77A"/>
               <path d="M30 26h22" stroke="#C99659" stroke-width="2.2"/>
-              <path d="M39 29l2-2 2 2" stroke="#C99659" stroke-width="1.8" fill="none" stroke-linecap="round"/>
               <rect x="26" y="35" width="24" height="18" rx="2" fill="#DFA967"/>
               <path d="M26 41h24" stroke="#C08B4B" stroke-width="2.2"/>
               <rect x="34" y="43" width="6" height="4" rx="1" fill="#C08B4B"/>
               <path d="M20 22a7 7 0 0 1 14 0v3H20z" fill="#3F0A92"/>
               <ellipse cx="27" cy="20" rx="8" ry="6" fill="#5917BC"/>
-              <path d="M27 14c-5 0-8 3-8 6h4c0-2 2-3 4-3z" fill="#3F0A92"/>
               <circle cx="26" cy="27" r="7" fill="#F3B183"/>
               <path d="M20 26a7 7 0 0 1 13 0v-2a7 7 0 0 0-13 0z" fill="#7A4A22"/>
               <path d="M18 40c0-6 4-9 9-9s9 3 9 9v14H18z" fill="#5917BC"/>
@@ -1048,11 +1044,11 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
         <div class="sfbox"><label>🏪 اسم السوبر ماركت</label>
           <input id="sp_market" placeholder="مثال: سوبر ماركت النور"></div>
         <div class="sfbox"><label>🛍️ شنو تريد تشتري؟</label>
-          <textarea id="sp_items" placeholder="حليب 2&#10;بيض كارتونة&#10;خبز 2&#10;بيبسي 1"></textarea></div>
+          <textarea id="sp_items" placeholder="حليب 2&#10;بيض كارتونة&#10;خبز 2"></textarea></div>
         <div class="sfbox"><label>💰 المبلغ التقريبي <span>(اختياري)</span></label>
           <input id="sp_budget" inputmode="numeric" placeholder="مثال: 25,000"></div>
         <div class="sfbox"><label>📝 ملاحظة للسائق <span>(اختياري)</span></label>
-          <textarea id="sp_note" style="min-height:70px" placeholder="مثال: إذا نوع معين غير موجود، اتصل بي قبل الشراء"></textarea></div>
+          <textarea id="sp_note" style="min-height:70px" placeholder="مثال: إذا نوع معين غير موجود، اتصل بي"></textarea></div>
         <div class="sfbox"><label>📍 عنوان التوصيل</label>
           <div id="sp_addr" class="sfaddr">—</div>
           <div class="special-help">لازم يكون موقعك محدد على الخريطة حتى يستلم السائق الطلب بدقة.</div></div>
@@ -1076,7 +1072,6 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
               <path d="M33 44 L52 30 L52 50 Z" fill="#EDEDED"/>
               <rect x="49" y="28" width="9" height="24" rx="4" fill="#4C6FE7"/>
               <rect x="55" y="30" width="6" height="20" rx="3" fill="#E8365D"/>
-              <rect x="44" y="47" width="7" height="13" rx="3.5" fill="#E8365D" transform="rotate(-18 47 53)"/>
             </svg>
           </div>
           <div class="sc-t">الأسئلة الشائعة</div>
@@ -1092,7 +1087,6 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
               <path d="M21 26a11 11 0 0 1 22 0v5" stroke="#2E3244" stroke-width="3.4" fill="none" stroke-linecap="round"/>
               <rect x="17" y="24" width="6" height="10" rx="3" fill="#2E3244"/>
               <rect x="41" y="24" width="6" height="10" rx="3" fill="#2E3244"/>
-              <path d="M38 33c2 2 2 4 0 5" stroke="#2E3244" stroke-width="2.4" fill="none" stroke-linecap="round"/>
               <path d="M30 40h5v9h-5z" fill="#E8544A"/>
               <rect x="22" y="45" width="20" height="13" rx="2" fill="#fff"/>
             </svg>
@@ -1150,6 +1144,11 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
           <div class="mi">📞</div><div class="mt">مركز المساعدة</div><div class="ma">‹</div></div>
       </div>
       <div id="supBox"></div>
+      <div class="mlist">
+        <div class="mrow" onclick="enablePush()">
+          <div class="mi">🔔</div><div class="mt">إشعارات الطلبات</div>
+          <div class="mv" id="cPermTxt">—</div><div class="ma">‹</div></div>
+      </div>
       <div class="mlist">
         <div class="mrow" style="cursor:default">
           <div class="mi">🌐</div><div class="mt">حالة الاتصال</div>
@@ -1246,7 +1245,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
       <div class="panel"><h3 class="ttl">🔔 تنبيه داخل التطبيق</h3>
         <div class="set-row"><span>صوت عند وصول طلب</span><div class="tg on" id="sndTg" onclick="this.classList.toggle('on')"></div></div>
         <div class="set-row"><span>إشعار المتصفح</span><span class="v" id="permTxt">—</span></div>
-        <div class="btns"><button class="btn gh" onclick="askPerm()">تفعيل</button>
+        <div class="btns"><button class="btn" onclick="enablePush()">🔔 تفعيل الإشعارات</button>
         <button class="btn gh" onclick="testAlarm()">🔊 جرّب الصوت</button></div></div>
     </div>
   </div>
@@ -1312,7 +1311,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
         <div class="tgnote">حتى توصلك الطلبات والهاتف مسكّر: انضم لگروب السواق بالتلگرام، وخلّي إشعارات الگروب مفعّلة.</div>
         <div class="set-row"><span>صوت داخل التطبيق</span><div class="tg on" id="dSndTg" onclick="this.classList.toggle('on')"></div></div>
         <div class="set-row"><span>إشعار المتصفح</span><span class="v" id="dPermTxt">—</span></div>
-        <div class="btns"><button class="btn gh" onclick="askPerm(true)">تفعيل</button>
+        <div class="btns"><button class="btn" onclick="enablePush()">🔔 تفعيل الإشعارات</button>
         <button class="btn gh" onclick="testAlarm()">🔊 جرّب الصوت</button></div></div>
     </div>
   </div>
@@ -1406,10 +1405,10 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 <script>
 let SET={deliveryFee:1250,commissionPerOrder:250,graceDays:5};
 const DAYMS=86400000;
+let fcm=null;
 let db=null,auth=null,uid=null,me=null,signingUp=false,cart=[],curShop=null,shops=[],myOrders=[],availOrders=[],cat='all',ordFil='new';
 let seenPending=new Set(),seenReady=new Set(),seenSpecial=new Set(),specialAvailOrders=[],mySpecialOrders=[],firstLoad=true,firstDLoad=true,myShopDoc=null;
 
-/* ينتظر تحميل Firebase — ما يوقف الصفحة إذا الاتصال بطيء */
 function initFirebase(){
   if(String(firebaseConfig.apiKey).startsWith('PUT_')){
     document.getElementById('setup').classList.add('on'); return;
@@ -1419,9 +1418,9 @@ function initFirebase(){
     firebase.initializeApp(firebaseConfig);
     db=firebase.firestore(); auth=firebase.auth();
     try{ db.enablePersistence({synchronizeTabs:true}).catch(()=>{}) }catch(e){}
+    try{ if(firebase.messaging&&firebase.messaging.isSupported&&firebase.messaging.isSupported()) fcm=firebase.messaging() }catch(e){}
     boot();
   }catch(e){
-    console.warn('firebase',e.message);
     const L=document.getElementById('load'); if(L)L.classList.remove('on');
     const A=document.getElementById('auth'); if(A)A.classList.add('on');
   }
@@ -1459,6 +1458,64 @@ function boot(){
   });
 }
 const EMAIL = p => p.replace(/[^0-9]/g,'') + '@yummak-wasel.app';
+/* ═══════════════════════════════════════════════
+   الإشعارات — تشتغل والهاتف مسكّر
+   ═══════════════════════════════════════════════ */
+let myFcmToken=null;
+async function initPush(silent){
+  if(!fcm||!uid) return false;
+  try{
+    if(!('Notification' in window)) return false;
+    let perm=Notification.permission;
+    if(perm==='default'&&!silent) perm=await Notification.requestPermission();
+    if(perm!=='granted') return false;
+    let reg=null;
+    if('serviceWorker' in navigator){
+      reg=await navigator.serviceWorker.getRegistration();
+      if(!reg) reg=await navigator.serviceWorker.register('sw.js');
+      await navigator.serviceWorker.ready;
+    }
+    const tok=await fcm.getToken({vapidKey:VAPID_KEY,serviceWorkerRegistration:reg});
+    if(!tok) return false;
+    myFcmToken=tok;
+    await db.collection('users').doc(uid).set({
+      fcmTokens:firebase.firestore.FieldValue.arrayUnion(tok),
+      fcmUpdatedAt:Date.now(), notifyRole:me.role, notifyShopId:me.shopId||''
+    },{merge:true});
+    fcm.onMessage(pl=>{
+      const t=(pl.notification&&pl.notification.title)||(pl.data&&pl.data.title)||'ليمك واصل';
+      const b=(pl.notification&&pl.notification.body)||(pl.data&&pl.data.body)||'';
+      toast('🔔 '+t); beep(); buzz([300,120,300]);
+      try{ if(reg) reg.showNotification(t,{body:b,icon:'icon-192.png',badge:'icon-192.png',
+        vibrate:[300,120,300],tag:'lw-'+Date.now(),dir:'rtl',lang:'ar'}) }catch(e){}
+    });
+    return true;
+  }catch(e){ console.warn('push',e.message); return false }
+}
+async function enablePush(){
+  const ok=await initPush(false);
+  toast(ok?'✅ انفعّلت الإشعارات — راح توصلك الطلبات':'❌ ما انفعّلت — فعّل الإذن من إعدادات المتصفح');
+  refreshPushUI();
+}
+function refreshPushUI(){
+  const st = !('Notification' in window) ? 'غير مدعوم'
+    : Notification.permission==='granted' ? (myFcmToken?'✅ مفعّلة':'⏳ تجهيز...')
+    : Notification.permission==='denied' ? '❌ مرفوضة' : 'اضغط تفعيل';
+  ['permTxt','dPermTxt','cPermTxt'].forEach(id=>{
+    const e=document.getElementById(id); if(e)e.textContent=st;
+  });
+}
+async function pushTo(targetUid,title,body,data){
+  if(!targetUid||!db) return;
+  try{ await db.collection('notifications').add({to:targetUid,title,body,
+    data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+}
+async function pushDrivers(title,body,data){
+  if(!db) return;
+  try{ await db.collection('notifications').add({toRole:'driver',title,body,
+    data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+}
+
 /* ══════ TELEGRAM ══════ */
 function tgReady(){ return TG.token && !String(TG.token).startsWith('PUT_') }
 async function tgSend(chat,text){
@@ -1497,39 +1554,13 @@ function setRole(r,el){
 }
 function showErr(t){const e=document.getElementById('authErr');e.textContent=t;e.classList.add('on')}
 function hideErr(){document.getElementById('authErr').classList.remove('on')}
-/* ══════ BANNER IMG (يُحمّل مرة وحدة) ══════ */
-const BN_IMG="58b7d902.png";
-document.addEventListener('DOMContentLoaded',()=>{
-  document.querySelectorAll('.bnimg').forEach(i=>i.src=BN_IMG);
-});
-/* ══════ BANNER SLIDER ══════ */
-let __bnT=null,__bnI=0;
-function bnScroll(){
-  const w=document.getElementById('bnSlides'); if(!w)return;
-  const i=Math.round(Math.abs(w.scrollLeft)/w.clientWidth);
-  __bnI=i;
-  document.querySelectorAll('#bnDots i').forEach((d,k)=>d.classList.toggle('on',k===i));
-}
-function bnStart(){
-  clearInterval(__bnT);
-  __bnT=setInterval(()=>{
-    const w=document.getElementById('bnSlides'); if(!w||!w.clientWidth)return;
-    const n=w.querySelectorAll('.bigbanner').length;
-    __bnI=(__bnI+1)%n;
-    const dir=(getComputedStyle(w).direction==='rtl')?-1:1;
-    w.scrollTo({left:dir*__bnI*w.clientWidth,behavior:'smooth'});
-  },4200);
-}
-
 let __busyT=null,__busyStep=null;
 function busy(b){
-  /* نص متغيّر يطمّن المستخدم بالاتصال البطيء */
   clearInterval(__busyStep);
   if(b){
     const T=document.getElementById('loadTxt');
     const msgs=['جاري التحميل...','نجهّز البيانات...','الاتصال بطيء شوي...','لحظات وننتهي...'];
-    let i=0;
-    if(T)T.textContent=msgs[0];
+    let i=0; if(T)T.textContent=msgs[0];
     __busyStep=setInterval(()=>{ i=(i+1)%msgs.length; if(T)T.textContent=msgs[i] },5000);
   }
   const L=document.getElementById('load'); if(L)L.classList.toggle('on',b);
@@ -1604,6 +1635,12 @@ async function doAuth(){
       }
 
       uid=newUid; me={uid,...data};
+      if(role!=='customer'){
+        try{ await db.collection('notifications').add({
+          toRole:'admin', title:(role==='store'?'🏪 متجر جديد':'🛵 سائق جديد'),
+          body:name+' — '+phone+' ينتظر موافقتك',
+          createdAt:Date.now(), sent:false }) }catch(e){}
+      }
       signingUp=false; busy(false);
       document.getElementById('auth').classList.remove('on');
       toast('✅ تم إنشاء الحساب');
@@ -1640,6 +1677,7 @@ function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
   document.getElementById('auth').classList.remove('on');
   subscribeTopics();
+  setTimeout(()=>{ initPush(true).then(refreshPushUI) },1500);
   if(me.role==='admin'){
     document.getElementById('aApp').classList.add('on');
     ad_name.textContent=me.name; ad_phone.textContent=me.phone;
@@ -1770,10 +1808,7 @@ function askPerm(drv){
     document.getElementById(drv?'dPermTxt':'permTxt').textContent=p==='granted'?'✅ مفعّلة':'❌ مرفوضة';
     if(p==='granted')toast('انفعّلت الإشعارات')});
 }
-function askPermSilent(drv){
-  const e=document.getElementById(drv?'dPermTxt':'permTxt'); if(!e)return;
-  e.textContent=('Notification' in window)?(Notification.permission==='granted'?'✅ مفعّلة':'اضغط للتفعيل'):'غير مدعوم';
-}
+function askPermSilent(drv){ refreshPushUI() }
 
 /* ══════ CUSTOMER ══════ */
 function tab(p,el){
@@ -1783,7 +1818,7 @@ function tab(p,el){
   document.querySelectorAll('#cNav button').forEach(b=>b.classList.remove('on'));
   if(el&&el.classList) el.classList.add('on');
   if(p==='cart')renderCart();
-  if(p==='more')renderAccount();
+  if(p==='more'){ renderAccount(); refreshPushUI() }
   if(p==='home'){ renderCats(); renderHomeLoc() }
   try{ document.querySelector('#cApp .body').scrollTop=0 }catch(e){}
 }
@@ -1809,7 +1844,7 @@ function renderCats(){
 function pickCat(v){
   if(v==='special'){ openSpecialOrder && openSpecialOrder(); return }
   cat = (cat===v ? 'all' : v);
-  renderCats(); renderShops(); bnStart();
+  renderCats(); renderShops();
 }
 function renderHomeLoc(){
   const a=document.getElementById('homeAddr');
@@ -1985,6 +2020,7 @@ async function submitSpecialOrder(){
   };
   try{
     await db.collection('specialOrders').add(o);
+    pushDrivers('🛒 طلب شراء جديد',market+' → '+me.addr,{type:'special'});
     toast('🛵 انرسل طلبك للسواق');
     document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
     document.getElementById('p_orders').classList.add('on');
@@ -2119,6 +2155,7 @@ async function checkout(){
     await db.collection('orders').add(o);
     const sh=shops.find(s=>s.id===o.shopId);
     if(sh&&sh.tgChat) tgSend(sh.tgChat,orderText(o,'🔔 <b>طلب جديد وصلك!</b>'));
+    pushTo(ownerUid,'🔔 طلب جديد',o.customer+' — '+o.total.toLocaleString()+' د.ع',{type:'order'});
     cart=[];orderNote='';renderCart();
     document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
     document.getElementById('p_orders').classList.add('on');
@@ -2221,7 +2258,6 @@ function renderAccount(){
   const sl=document.getElementById('s_loc');
   if(sl) sl.textContent = (me.loc&&me.loc.lat) ? ('✅ '+(me.loc.zone||'محدّد')) : '⚠️ غير محدّد';
 }
-/* ══════ USER INFO ══════ */
 let __uiPhoto=null,__uiGender=null;
 function openUserInfo(){
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
@@ -2397,6 +2433,14 @@ async function setStatus(id,st){
   stopAlarm();
   try{
     await db.collection('orders').doc(id).update({status:st});
+    const _o=myOrders.find(x=>x.id===id);
+    if(_o){
+      const M={accepted:['👨‍🍳 المحل قبل طلبك','طلبك قيد التحضير'],
+               rejected:['❌ اعتذر المحل','ما گدر يقبل طلبك حالياً'],
+               ready:['📦 طلبك جاهز','ننتظر مندوب يستلمه']}[st];
+      if(M) pushTo(_o.customerUid,M[0],M[1]+' — '+_o.shopName,{type:'status'});
+      if(st==='ready') pushDrivers('🛵 طلب جاهز للتوصيل',_o.shopName+' → '+_o.addr,{type:'ready'});
+    }
     if(st==='ready'){
       const o=myOrders.find(x=>x.id===id);
       const ok=await tgSend(TG.driversChat,orderText(o,'🛵 <b>طلب جاهز للتوصيل</b>\nأول مندوب يفتح التطبيق ياخذه'));
@@ -2564,6 +2608,8 @@ async function claim(id){
       t.update(ref,{driverUid:uid,driverPhone:me.phone,driverName:me.name,driverPhoto:me.photo||'',status:'ontheway',
         commission:SET.commissionPerOrder,commissionPaid:false,claimedAt:Date.now()});
     });
+    const _c=availOrders.find(x=>x.id===id);
+    if(_c) pushTo(_c.customerUid,'🛵 المندوب بالطريق',me.name+' استلم طلبك',{type:'ontheway'});
     toast('✅ الطلب صار إلك — روح استلمه من المحل');
     document.querySelectorAll('#dApp .page').forEach(x=>x.classList.remove('on'));
     document.getElementById('d_mine').classList.add('on');
@@ -2590,6 +2636,8 @@ async function specialDelivered(id){
 async function deliver(id){
   if(!confirm('تأكيد إنك وصّلت الطلب واستلمت المبلغ؟'))return;
   await db.collection('orders').doc(id).update({status:'delivered',deliveredAt:Date.now()});
+  const _d=myOrders.find(x=>x.id===id);
+  if(_d) pushTo(_d.customerUid,'✅ وصل طلبك','شكراً لاختيارك ليمك واصل 💜',{type:'delivered'});
   if(!me.oldestUnpaidAt){
     try{ await db.collection('users').doc(uid).update({oldestUnpaidAt:Date.now()}) }catch(e){}
   }
@@ -3211,7 +3259,6 @@ function unsubscribeTopics(){
 }
 
 function hideSplash(){ const sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
-/* يختفي أول ما تجهز الصفحة، وبأسوأ الأحوال بعد 4 ثواني */
 if(document.readyState==='complete') setTimeout(hideSplash,300);
 else window.addEventListener('load',()=>setTimeout(hideSplash,300));
 setTimeout(hideSplash,4000);
