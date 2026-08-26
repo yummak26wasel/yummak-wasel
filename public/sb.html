@@ -16,7 +16,6 @@
 })();
 </script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js"></script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script>
 
 <script>
@@ -1122,6 +1121,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   font-size:12.5px;font-weight:800;cursor:pointer;padding:8px 12px}
 </style>
 <script src="sb-layer.js"></script>
+<script src="auth-layer.js"></script>
 </head>
 <body>
 <div id="splash">
@@ -1961,7 +1961,7 @@ function closeCom(){ document.getElementById('comSheet').classList.remove('on') 
 function closeSvc(){ document.getElementById('svcSheet').classList.remove('on') }
 const DAYMS=86400000;
 let fcm=null;
-let __unused=null,auth=null,uid=null,me=null,signingUp=false,cart=[],curShop=null,shops=[],myOrders=[],availOrders=[],cat='all',ordFil='new';
+let __unused=null,uid=null,me=null,signingUp=false,cart=[],curShop=null,shops=[],myOrders=[],availOrders=[],cat='all',ordFil='new';
 let seenPending=new Set(),seenReady=new Set(),seenSpecial=new Set(),specialAvailOrders=[],mySpecialOrders=[],allSpecial=[],firstLoad=true,firstDLoad=true,myShopDoc=null;
 
 function initFirebase(){
@@ -1971,7 +1971,7 @@ function initFirebase(){
   if(typeof firebase==='undefined'){ setTimeout(initFirebase,250); return }
   try{
     firebase.initializeApp(firebaseConfig);
-    auth=firebase.auth();   /* db يجي من الطبقة */
+    /* auth و db يجون من الطبقات */
     /* الكاش المحلي — خاص بـ Firestore، ما نحتاجه */
     try{ if(firebase.messaging&&firebase.messaging.isSupported&&firebase.messaging.isSupported()) fcm=firebase.messaging() }catch(e){}
     boot();
