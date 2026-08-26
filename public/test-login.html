@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>واصل ليمّك — تسجيل الدخول</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:system-ui,'Segoe UI',Tahoma,sans-serif;
+  background:#0f1115;color:#fff;min-height:100vh;
+  display:flex;align-items:center;justify-content:center;padding:20px
+}
+.card{
+  width:100%;max-width:400px;background:#171a21;
+  border-radius:20px;padding:28px 22px;
+  box-shadow:0 10px 40px rgba(0,0,0,.4)
+}
+.logo{text-align:center;margin-bottom:24px}
+.logo h1{font-size:26px;color:#22c55e;margin-bottom:6px}
+.logo p{font-size:13px;color:#8b93a5}
+label{display:block;font-size:13px;color:#c3cad8;margin:14px 0 6px}
+input{
+  width:100%;padding:14px;border-radius:12px;border:1px solid #2a2f3a;
+  background:#0f1115;color:#fff;font-size:16px;font-family:inherit;
+  text-align:right;direction:rtl
+}
+input:focus{outline:none;border-color:#22c55e}
+button{
+  width:100%;padding:15px;margin-top:20px;border:none;border-radius:12px;
+  background:#22c55e;color:#06210f;font-size:16px;font-weight:700;
+  font-family:inherit;cursor:pointer
+}
+button:disabled{opacity:.5}
+button.ghost{background:transparent;color:#8b93a5;font-weight:400;font-size:14px;margin-top:12px}
+.msg{
+  margin-top:16px;padding:12px;border-radius:10px;
+  font-size:14px;text-align:center;display:none;line-height:1.6
+}
+.msg.err{display:block;background:#3b1418;color:#fca5a5}
+.msg.ok{display:block;background:#0d2f1a;color:#86efac}
+.msg.info{display:block;background:#152238;color:#93c5fd}
+.hide{display:none}
+.steps{display:flex;gap:6px;justify-content:center;margin-bottom:20px}
+.dot{width:8px;height:8px;border-radius:50%;background:#2a2f3a}
+.dot.on{background:#22c55e}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo">
+    <h1>واصل ليمّك</h1>
+    <p>تجربة تسجيل الدخول</p>
+  </div>
+
+  <div class="steps">
+    <div class="dot on" id="d1"></div>
+    <div class="dot" id="d2"></div>
+  </div>
+
+  <!-- الخطوة 1 -->
+  <div id="step1">
+    <label>رقم الهاتف</label>
+    <input id="phone" type="tel" placeholder="07XXXXXXXXX" inputmode="numeric">
+    <button id="btnSend" onclick="sendCode()">إرسال رمز التحقق</button>
+  </div>
+
+  <!-- الخطوة 2 -->
+  <div id="step2" class="hide">
+    <label>رمز التحقق</label>
+    <input id="code" type="tel" placeholder="0000" inputmode="numeric" maxlength="4">
+
+    <label>الاسم</label>
+    <input id="name" type="text" placeholder="اسمك الكامل">
+
+    <label>كلمة السر</label>
+    <input id="pass" type="password" placeholder="••••••••">
+
+    <button id="btnVerify" onclick="verifyCode()">تأكيد وإنشاء الحساب</button>
+    <button class="ghost" onclick="reset()">تغيير الرقم / إعادة المحاولة</button>
+  </div>
+
+  <div class="msg" id="msg"></div>
+</div>
+
+<script>
+// ═══ بدّل هذا بمفتاحك ═══
+const SUPABASE_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
+const SUPABASE_KEY = "ضع_المفتاح_هنا";
+// ════════════════════════
+
+const $ = id => document.getElementById(id);
+const msg = (t, k) => { $('msg').className = 'msg ' + k; $('msg').textContent = t; };
+
+async function call(fn, body) {
+  const r = await fetch(`${SUPABASE_URL}/functions/v1/${fn}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + SUPABASE_KEY,
+      'apikey': SUPABASE_KEY
+    },
+    body: JSON.stringify(body)
+  });
+  return r.json();
+}
+
+async function sendCode() {
+  const phone = $('phone').value.trim();
+  if (phone.length < 10) return msg('اكتب رقم هاتف صحيح', 'err');
+
+  $('btnSend').disabled = true;
+  msg('جاري الإرسال...', 'info');
+
+  try {
+    const res = await call('send-otp', { phone });
+    if (!res.ok) throw new Error(res.error);
+
+    $('step1').classList.add('hide');
+    $('step2').classList.remove('hide');
+    $('d2').classList.add('on');
+    msg('تم إرسال الرمز — راح يوصلك بالواتساب خلال دقائق', 'ok');
+  } catch (e) {
+    msg(e.message || 'صار خطأ، جرّب مرة ثانية', 'err');
+  }
+  $('btnSend').disabled = false;
+}
+
+async function verifyCode() {
+  const phone = $('phone').value.trim();
+  const code = $('code').value.trim();
+  const name = $('name').value.trim();
+  const password = $('pass').value;
+
+  if (code.length !== 4) return msg('الرمز لازم يكون 4 أرقام', 'err');
+  if (!name) return msg('اكتب اسمك', 'err');
+  if (password.length < 6) return msg('كلمة السر لازم 6 أحرف على الأقل', 'err');
+
+  $('btnVerify').disabled = true;
+  msg('جاري التحقق...', 'info');
+
+  try {
+    const res = await call('verify-otp', { phone, code, name, password });
+    if (!res.ok) throw new Error(res.error);
+
+    localStorage.setItem('wasel_user', JSON.stringify(res.profile));
+    msg('🎉 تم تسجيل الدخول!\nأهلاً ' + res.profile.name, 'ok');
+    $('step2').classList.add('hide');
+  } catch (e) {
+    msg(e.message || 'صار خطأ', 'err');
+  }
+  $('btnVerify').disabled = false;
+}
+
+function reset() {
+  $('step2').classList.add('hide');
+  $('step1').classList.remove('hide');
+  $('d2').classList.remove('on');
+  $('code').value = '';
+  msg('', '');
+  $('msg').style.display = 'none';
+}
+</script>
+
+</body>
+</html>
