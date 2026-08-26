@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>فحص طبقة الترجمة</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,Tahoma,sans-serif;background:#0f1115;color:#fff;padding:16px}
+.w{max-width:560px;margin:0 auto}
+h1{font-size:20px;color:#F97402;margin-bottom:4px}
+p.s{font-size:13px;color:#8b93a5;margin-bottom:18px}
+button{width:100%;padding:15px;border:none;border-radius:12px;background:#F97402;color:#fff;font-size:16px;font-weight:700;font-family:inherit;margin-bottom:16px}
+button:disabled{opacity:.45}
+.t{background:#171a21;border-radius:12px;padding:13px;margin-bottom:9px;font-size:14px;line-height:1.8}
+.t b{display:block;margin-bottom:4px}
+.t.ok{border-right:4px solid #22c55e}
+.t.no{border-right:4px solid #ef4444}
+.t.run{border-right:4px solid #3b82f6}
+.t span{font-size:12px;color:#8b93a5;display:block;word-break:break-all}
+.sum{margin-top:16px;padding:15px;border-radius:12px;text-align:center;font-size:15px;line-height:1.9;display:none}
+.sum.on{display:block}
+.sum.good{background:#0d2f1a;color:#86efac}
+.sum.bad{background:#3b1418;color:#fca5a5}
+</style>
+</head>
+<body>
+<div class="w">
+  <h1>فحص طبقة الترجمة</h1>
+  <p class="s">يجرّب كل عملية على بيانات تجريبية · ما يلمس شي حقيقي</p>
+  <button onclick="runAll()" id="b">ابدأ الفحص</button>
+  <div id="out"></div>
+  <div class="sum" id="sum"></div>
+</div>
+
+<script src="sb-layer.js"></script>
+<script>
+const $ = id => document.getElementById(id);
+let pass = 0, fail = 0;
+
+function card(name){
+  const d = document.createElement('div');
+  d.className = 't run';
+  d.innerHTML = '<b>⏳ ' + name + '</b>';
+  $('out').appendChild(d);
+  return d;
+}
+
+async function test(name, fn){
+  const d = card(name);
+  try{
+    const r = await fn();
+    d.className = 't ok';
+    d.innerHTML = '<b>✅ ' + name + '</b><span>' + (r || 'نجح') + '</span>';
+    pass++;
+  }catch(e){
+    d.className = 't no';
+    d.innerHTML = '<b>❌ ' + name + '</b><span>' + String(e.message).slice(0,200) + '</span>';
+    fail++;
+  }
+}
+
+async function runAll(){
+  $('b').disabled = true;
+  $('out').innerHTML = '';
+  $('sum').classList.remove('on');
+  pass = 0; fail = 0;
+
+  const testId = 'zz-test-' + Date.now();
+
+  // ① قراءة الإعدادات
+  await test('قراءة إعداد (settings.doc.get)', async () => {
+    const d = await db.collection('settings').doc('support_whatsapp').get();
+    if(!d.exists) throw new Error('ما لگى الإعداد');
+    return 'القيمة: ' + JSON.stringify(d.data()).slice(0,80);
+  });
+
+  // ② قراءة مجموعة
+  await test('قراءة المحلات (collection.get)', async () => {
+    const s = await db.collection('shops').get();
+    return 'عدد المحلات: ' + s.size;
+  });
+
+  // ③ where
+  await test('فلترة (where)', async () => {
+    const s = await db.collection('shops').where('approved','==',true).get();
+    return 'المعتمدة: ' + s.size;
+  });
+
+  // ④ orderBy + limit
+  await test('ترتيب وحد (orderBy + limit)', async () => {
+    const s = await db.collection('shops').orderBy('name').limit(1).get();
+    return s.size ? 'أول محل: ' + s.docs[0].data().name : 'فاضي';
+  });
+
+  // ⑤ ترجمة الأسماء
+  await test('ترجمة أسماء الحقول', async () => {
+    const s = await db.collection('shops').get();
+    if(!s.size) throw new Error('ما أكو محلات نفحص عليها');
+    const d = s.docs[0].data();
+    if(!('approved' in d)) throw new Error('حقل approved ما انترجم');
+    if(!('open' in d))     throw new Error('حقل open ما انترجم');
+    return 'approved و open انترجموا صح';
+  });
+
+  // ⑥ إضافة
+  await test('إضافة محل تجريبي (add)', async () => {
+    const r = await db.collection('shops').add({
+      name: testId, type: 'other', approved: false, open: false
+    });
+    if(!r.id) throw new Error('ما رجّع id');
+    window.__tid = r.id;
+    return 'انضاف — id: ' + r.id.slice(0,8) + '...';
+  });
+
+  // ⑦ تعديل
+  await test('تعديل (update)', async () => {
+    if(!window.__tid) throw new Error('ما أكو محل تجريبي');
+    await db.collection('shops').doc(window.__tid).update({ name: testId + '-معدّل' });
+    const d = await db.collection('shops').doc(window.__tid).get();
+    if(d.data().name !== testId + '-معدّل') throw new Error('التعديل ما انحفظ');
+    return 'الاسم صار: ' + d.data().name;
+  });
+
+  // ⑧ قراءة وثيقة
+  await test('قراءة وثيقة (doc.get)', async () => {
+    const d = await db.collection('shops').doc(window.__tid).get();
+    if(!d.exists) throw new Error('ما لگاها');
+    return 'النوع: ' + d.data().type;
+  });
+
+  // ⑨ حذف
+  await test('حذف المحل التجريبي', async () => {
+    await db.collection('shops').doc(window.__tid).delete();
+    const d = await db.collection('shops').doc(window.__tid).get();
+    if(d.exists) throw new Error('ما انحذف');
+    return 'انحذف — القاعدة رجعت نظيفة';
+  });
+
+  // النتيجة
+  const s = $('sum');
+  s.classList.add('on');
+  if(fail === 0){
+    s.className = 'sum on good';
+    s.innerHTML = '🎉 نجحت كل الفحوص (' + pass + '/' + pass + ')<br>طبقة الترجمة تشتغل صح';
+  }else{
+    s.className = 'sum on bad';
+    s.innerHTML = 'نجح ' + pass + ' · فشل ' + fail + '<br>شوف التفاصيل فوق';
+  }
+  $('b').disabled = false;
+}
+</script>
+</body>
+</html>
