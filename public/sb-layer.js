@@ -17,7 +17,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
-const SB_KEY = "ضع_المفتاح_هنا";
+const SB_KEY = "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq";
 
 /* ═══ التوكن — يُقرأ عند كل طلب، مو مرة وحدة ═══ */
 function _token(){
