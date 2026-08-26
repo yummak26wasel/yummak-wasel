@@ -17,7 +17,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
-const SB_KEY = "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq";
+const SB_KEY = "ضع_المفتاح_هنا";
 
 const _H = {
   'apikey': SB_KEY,
@@ -83,7 +83,7 @@ async function _req(path, opt = {}){
 }
 
 /* ── وثيقة واحدة ── */
-function _doc(coll, id){
+let _doc = function(coll, id){
   const tbl = _TBL[coll] || coll;
   const key = (coll === 'settings') ? 'key' : 'id';
 
@@ -204,4 +204,28 @@ const db = {
       }
     };
   }
+};
+
+/* ═══ إضافة عنصر لمصفوفة (بديل Firestore arrayUnion) ═══ */
+function __arrayUnion(...items){
+  return { __op: 'append', items };
+}
+
+/* نغلّف update و set عشان يفهمون __arrayUnion */
+const _rawDoc = _doc;
+_doc = function(coll, id){
+  const d = _rawDoc(coll, id);
+  const wrap = fn => async (data, opt) => {
+    const ops = {};
+    for(const k in data){
+      if(data[k] && data[k].__op === 'append'){ ops[k] = data[k].items; delete data[k] }
+    }
+    if(Object.keys(ops).length){
+      const cur = await d.get();
+      const old = cur.exists ? cur.data() : {};
+      for(const k in ops) data[k] = (old[k] || []).concat(ops[k]);
+    }
+    return fn(data, opt);
+  };
+  return { ...d, update: wrap(d.update), set: wrap(d.set) };
 };
