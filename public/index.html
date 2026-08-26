@@ -1964,6 +1964,40 @@ let fcm=null;
 let db=null,auth=null,uid=null,me=null,signingUp=false,cart=[],curShop=null,shops=[],myOrders=[],availOrders=[],cat='all',ordFil='new';
 let seenPending=new Set(),seenReady=new Set(),seenSpecial=new Set(),specialAvailOrders=[],mySpecialOrders=[],allSpecial=[],firstLoad=true,firstDLoad=true,myShopDoc=null;
 
+
+/* ══════════════════════════════════════════════════
+   رفع الصور إلى Supabase Storage
+   الصورة تنرفع للمخزن، وقاعدة البيانات تحفظ الرابط بس
+   ══════════════════════════════════════════════════ */
+const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
+const SB_KEY = "ضع_المفتاح_هنا";
+
+/* يحوّل الصورة base64 إلى رابط — وإذا فشل يرجّع الأصل حتى ما ينكسر شي */
+async function toUrl(data, folder){
+  try{
+    if(!data) return '';
+    if(!String(data).startsWith('data:')) return data;   // رابط أصلاً
+    if(String(SB_KEY).startsWith('ضع_')) return data;    // المفتاح ما انحط بعد
+
+    const blob = await (await fetch(data)).blob();
+    const name = folder + '/' + Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.jpg';
+
+    const r = await fetch(SB_URL + '/storage/v1/object/images/' + name, {
+      method: 'POST',
+      headers: {
+        'Authorization': 'Bearer ' + SB_KEY,
+        'apikey': SB_KEY,
+        'Content-Type': 'image/jpeg',
+        'x-upsert': 'true'
+      },
+      body: blob
+    });
+
+    if(!r.ok) return data;                               // فشل الرفع ← نخزن مثل قبل
+    return SB_URL + '/storage/v1/object/public/images/' + name;
+  }catch(e){ return data }
+}
+
 function initFirebase(){
   if(String(firebaseConfig.apiKey).startsWith('PUT_')){
     document.getElementById('setup').classList.add('on'); return;
@@ -2787,7 +2821,7 @@ async function submitSpecialOrder(){
     type:'market_purchase',
     customerUid:uid,customer:me.name,phone:me.phone,
     marketName:market,itemsText:items,note:note.slice(0,500),
-    itemDesc:desc.slice(0,300),itemPhoto:specialPhoto||'',
+    itemDesc:desc.slice(0,300),itemPhoto:(await toUrl(specialPhoto,'special'))||'',
     purchaseBudget:budget,addr:me.addr,loc:me.loc,
     deliveryFee:fee,serviceFee:svc,commission:SET.commissionPerOrder||250,
     driverEarning:Math.max(0,fee-(SET.commissionPerOrder||250)),
@@ -3099,7 +3133,7 @@ async function saveUserInfo(){
   const nm=document.getElementById('ui_name').value.trim();
   if(!nm) return toast('اكتب اسمك');
   const up={name:nm};
-  if(__uiPhoto!==undefined) up.photo=__uiPhoto||'';
+  if(__uiPhoto!==undefined) up.photo=(await toUrl(__uiPhoto,'users'))||'';
   if(__uiGender) up.gender=__uiGender;
   try{
     await db.collection('users').doc(uid).update(up);
@@ -3246,7 +3280,8 @@ async function addProduct(){
   const n=pn.value.trim(),p=parseInt(pp.value),d=pd.value.trim();
   if(!n)return toast('اكتب اسم المنتج');
   if(!p||p<=0)return toast('اكتب سعر صحيح');
-  const ps=(myShopDoc.products||[]).concat([{id:Date.now(),name:n,price:p,desc:d,img:prodPhoto||''}]);
+  const __pu=await toUrl(prodPhoto,'products');
+  const ps=(myShopDoc.products||[]).concat([{id:Date.now(),name:n,price:p,desc:d,img:__pu||''}]);
   try{await db.collection('shops').doc(me.shopId).update({products:ps});
     pn.value='';pp.value='';pd.value='';resetProdBox();toast('✅ انضاف المنتج')}catch(e){toast('خطأ: '+e.message)}
 }
@@ -3760,7 +3795,7 @@ function pickShopPhoto(inp,boxId){
 }
 async function saveShopImg(){
   if(!shopPhoto) return toast('اختر صورة أول');
-  try{ await db.collection('shops').doc(me.shopId).update({img:shopPhoto}); toast('✅ انحفظت صورة المحل') }
+  try{ const u=await toUrl(shopPhoto,'shops'); await db.collection('shops').doc(me.shopId).update({img:u}); toast('✅ انحفظت صورة المحل') }
   catch(e){ toast('خطأ: '+e.message) }
 }
 
