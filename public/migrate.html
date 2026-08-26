@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نقل الصور — واصل ليمّك</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{font-family:system-ui,Tahoma,sans-serif;background:#0f1115;color:#fff;padding:16px;min-height:100vh}
+.card{max-width:520px;margin:0 auto;background:#171a21;border-radius:18px;padding:22px 18px}
+h1{font-size:22px;color:#F97402;margin-bottom:4px}
+.sub{font-size:13px;color:#8b93a5;margin-bottom:20px}
+label{display:block;font-size:13px;color:#c3cad8;margin:12px 0 6px}
+input{width:100%;padding:13px;border-radius:11px;border:1px solid #2a2f3a;background:#0f1115;color:#fff;font-size:16px;font-family:inherit;text-align:right}
+input:focus{outline:none;border-color:#F97402}
+button{width:100%;padding:15px;margin-top:18px;border:none;border-radius:11px;background:#F97402;color:#fff;font-size:16px;font-weight:700;font-family:inherit}
+button:disabled{opacity:.45}
+button.g{background:#3F0A92}
+.log{margin-top:18px;background:#0b0d11;border-radius:11px;padding:12px;max-height:320px;overflow-y:auto;font-size:13px;line-height:1.9;display:none}
+.log.on{display:block}
+.log div{border-bottom:1px solid #1c2028;padding:3px 0}
+.ok{color:#86efac}.err{color:#fca5a5}.inf{color:#93c5fd}.warn{color:#fbbf24}
+.bar{height:7px;background:#2a2f3a;border-radius:4px;margin-top:14px;overflow:hidden;display:none}
+.bar.on{display:block}
+.bar i{display:block;height:100%;background:#F97402;width:0;transition:width .3s}
+.done{margin-top:16px;padding:14px;background:#0d2f1a;border-radius:11px;color:#86efac;font-size:14px;text-align:center;display:none;line-height:1.8}
+.done.on{display:block}
+.note{margin-top:16px;font-size:12px;color:#8b93a5;line-height:1.9;background:#0b0d11;padding:12px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="card">
+  <h1>نقل الصور القديمة</h1>
+  <div class="sub">من قاعدة البيانات → مخزن الصور</div>
+
+  <div id="form">
+    <label>رقم المؤسس</label>
+    <input id="ph" type="tel" value="07724201077" inputmode="numeric">
+
+    <label>كلمة السر</label>
+    <input id="pw" type="password" placeholder="••••••••">
+
+    <button onclick="run()" id="btn">ابدأ النقل</button>
+
+    <div class="note">
+      • ينقل صور المحلات والمنتجات فقط<br>
+      • ما يلمس الأسعار ولا الطلبات ولا الحسابات<br>
+      • آمن: إذا فشلت صورة، يتخطاها ويكمّل<br>
+      • تكدر تشغّله أكثر من مرة — يتخطى المنقول
+    </div>
+  </div>
+
+  <div class="bar" id="bar"><i id="fill"></i></div>
+  <div class="log" id="log"></div>
+  <div class="done" id="done"></div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey:            "AIzaSyAhEpQQ42PYTeqjtGGyomPFfqZSJLU6Su4",
+  authDomain:        "yummak-wasel.firebaseapp.com",
+  projectId:         "yummak-wasel",
+  storageBucket:     "yummak-wasel.firebasestorage.app",
+  messagingSenderId: "778244622694",
+  appId:             "1:778244622694:web:5b75284290bfcd854560a7"
+};
+
+// ═══ بدّل هذا بمفتاحك ═══
+const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
+const SB_KEY = "ضع_المفتاح_هنا";
+// ════════════════════════
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore(), auth = firebase.auth();
+
+const $ = id => document.getElementById(id);
+function log(t, k){
+  $('log').classList.add('on');
+  const d = document.createElement('div');
+  d.className = k || 'inf';
+  d.textContent = t;
+  $('log').appendChild(d);
+  $('log').scrollTop = $('log').scrollHeight;
+}
+
+function phoneCore(v){
+  let p = String(v).replace(/\D/g,'');
+  if(p.startsWith('00964')) p = p.slice(5);
+  if(p.startsWith('964'))   p = p.slice(3);
+  if(p.startsWith('0'))     p = p.slice(1);
+  return p;
+}
+
+async function upload(data, folder){
+  const blob = await (await fetch(data)).blob();
+  const name = folder + '/' + Date.now() + '_' + Math.random().toString(36).slice(2,8) + '.jpg';
+  const r = await fetch(SB_URL + '/storage/v1/object/images/' + name, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Bearer ' + SB_KEY,
+      'apikey': SB_KEY,
+      'Content-Type': 'image/jpeg',
+      'x-upsert': 'true'
+    },
+    body: blob
+  });
+  if(!r.ok) throw new Error('فشل الرفع ' + r.status);
+  return SB_URL + '/storage/v1/object/public/images/' + name;
+}
+
+async function run(){
+  if(String(SB_KEY).startsWith('ضع_')) return alert('لازم تحط مفتاح Supabase أول');
+
+  const phone = phoneCore($('ph').value);
+  const pass  = $('pw').value;
+  if(!phone || !pass) return alert('اكتب الرقم وكلمة السر');
+
+  $('btn').disabled = true;
+  $('form').style.display = 'none';
+  $('bar').classList.add('on');
+
+  try{
+    // ── الدخول ──
+    log('جاري الدخول...', 'inf');
+    let ok = false;
+    for(const em of [phone+'@wasel.app', '0'+phone+'@wasel.app', phone+'@leemak.app']){
+      try{ await auth.signInWithEmailAndPassword(em, pass); ok = true; break }catch(e){}
+    }
+    if(!ok) throw new Error('الرقم أو كلمة السر غلط');
+
+    const u = await db.collection('users').doc(auth.currentUser.uid).get();
+    if(!u.exists || u.data().role !== 'admin') throw new Error('هذا مو حساب المؤسس');
+    log('✅ دخلت كمؤسس', 'ok');
+
+    // ── المحلات ──
+    const snap = await db.collection('shops').get();
+    log('عدد المحلات: ' + snap.size, 'inf');
+
+    let shopDone = 0, prodDone = 0, skipped = 0, failed = 0, i = 0;
+
+    for(const doc of snap.docs){
+      i++;
+      $('fill').style.width = Math.round(i/snap.size*100) + '%';
+
+      const d = doc.data();
+      const upd = {};
+      let changed = false;
+
+      // صورة المحل
+      if(d.img && String(d.img).startsWith('data:')){
+        try{
+          upd.img = await upload(d.img, 'shops');
+          shopDone++; changed = true;
+        }catch(e){ failed++; log('✗ صورة محل ' + (d.name||'') + ': ' + e.message, 'err') }
+      } else if(d.img){ skipped++ }
+
+      // صور المنتجات
+      if(Array.isArray(d.products) && d.products.length){
+        const ps = [];
+        let any = false;
+        for(const p of d.products){
+          if(p.img && String(p.img).startsWith('data:')){
+            try{
+              ps.push({...p, img: await upload(p.img, 'products')});
+              prodDone++; any = true; continue;
+            }catch(e){ failed++ }
+          } else if(p.img){ skipped++ }
+          ps.push(p);
+        }
+        if(any){ upd.products = ps; changed = true }
+      }
+
+      if(changed){
+        await db.collection('shops').doc(doc.id).update(upd);
+        log('✅ ' + (d.name || doc.id), 'ok');
+      } else {
+        log('— ' + (d.name || doc.id) + ' (ما بيه صور قديمة)', 'inf');
+      }
+    }
+
+    $('fill').style.width = '100%';
+    $('done').classList.add('on');
+    $('done').innerHTML =
+      '🎉 خلص النقل<br><br>' +
+      'صور محلات: ' + shopDone + '<br>' +
+      'صور منتجات: ' + prodDone + '<br>' +
+      (skipped ? 'منقولة سابقاً: ' + skipped + '<br>' : '') +
+      (failed  ? '<span style="color:#fca5a5">فشلت: ' + failed + ' — شغّل الأداة مرة ثانية</span>' : '');
+
+    log('انتهى.', 'ok');
+    try{ await auth.signOut() }catch(e){}
+
+  }catch(e){
+    log('✗ ' + e.message, 'err');
+    $('form').style.display = 'block';
+    $('btn').disabled = false;
+  }
+}
+</script>
+
+</body>
+</html>
