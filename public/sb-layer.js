@@ -17,7 +17,7 @@
    ═══════════════════════════════════════════════════════════ */
 
 const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
-const SB_KEY = "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq";
+const SB_KEY = "ضع_المفتاح_هنا";
 
 const _H = {
   'apikey': SB_KEY,
@@ -118,6 +118,22 @@ let _doc = function(coll, id){
 
     async delete(){
       await _req(`${tbl}?${key}=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+    },
+
+    /* الاستماع لوثيقة واحدة — بتحديث دوري */
+    onSnapshot(cb, err){
+      let dead = false, last = '';
+      const tick = async () => {
+        if(dead) return;
+        try{
+          const snap = await _doc(coll, id).get();
+          const sig = JSON.stringify(snap.data() || null);
+          if(sig !== last){ last = sig; cb(snap) }
+        }catch(e){ if(err) err(e) }
+        if(!dead) setTimeout(tick, 3000);
+      };
+      tick();
+      return () => { dead = true };
     }
   };
 }
@@ -172,7 +188,7 @@ function _query(coll, filters = [], order = null, lim = null){
           const sig = JSON.stringify(snap.docs.map(d => d.data()));
           if(sig !== last){ last = sig; cb(snap) }
         }catch(e){ if(err) err(e) }
-        if(!dead) setTimeout(tick, 12000);
+        if(!dead) setTimeout(tick, 3000);
       };
       tick();
       return () => { dead = true };
