@@ -1,13 +1,26 @@
 /* ═══════════════════════════════════════════════════
-   طبقة الدخول — Firebase Auth ⇄ Supabase
-   واصل ليمَك · v2
-
-   يستخدم SB_URL و SB_KEY و _req من sb-layer.js
+   طبقة الدخول — Supabase Auth حقيقي
+   واصل ليمَك · v3
+   يعتمد على SB_URL و SB_KEY من sb-layer.js
    ═══════════════════════════════════════════════════ */
 
 const _SESS = 'wasel_session';
+let _sb = null;
 
-/* توحيد الرقم — يقبل أي صيغة ويرجّع 964XXXXXXXXX */
+async function _client(){
+  if(_sb) return _sb;
+  if(!window.supabase){
+    await new Promise((ok, no) => {
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+      s.onload = ok; s.onerror = no;
+      document.head.appendChild(s);
+    });
+  }
+  _sb = window.supabase.createClient(SB_URL, SB_KEY);
+  return _sb;
+}
+
 function _norm(v){
   let p = String(v || '').replace(/\D/g, '');
   if(p.startsWith('00964')) p = p.slice(5);
@@ -16,15 +29,8 @@ function _norm(v){
   return '964' + p;
 }
 
-/* الرقم من الإيميل أو من رقم مباشر */
-function _phoneOf(v){
-  return _norm(String(v).split('@')[0]);
-}
-
-async function _hash(pass, phone){
-  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(pass + phone));
-  return Array.from(new Uint8Array(b)).map(x => x.toString(16).padStart(2,'0')).join('');
-}
+function _phoneOf(v){ return _norm(String(v).split('@')[0]) }
+function _mail(phone){ return phone + '@wasel.app' }
 
 function _save(u){ try{ localStorage.setItem(_SESS, JSON.stringify(u)) }catch(e){} }
 function _load(){ try{ return JSON.parse(localStorage.getItem(_SESS)) }catch(e){ return null } }
@@ -32,28 +38,6 @@ function _clear(){ try{ localStorage.removeItem(_SESS) }catch(e){} }
 
 const _watchers = [];
 function _notify(u){ _watchers.forEach(f => { try{ f(u) }catch(e){} }) }
-
-/* يدوّر الحساب بكل الصيغ الممكنة — فما يضيع حساب أبداً */
-async function _find(phone){
-  const core = phone.slice(3);                       // بلا 964
-  const forms = [phone, '0' + core, core, '+' + phone, '00' + phone];
-  for(const f of forms){
-    const rows = await _req(`profiles?select=*&phone=eq.${encodeURIComponent(f)}`);
-    if(rows && rows[0]){
-      /* لقيناه بصيغة قديمة ← نوحّدها عشان ما تتكرر المشكلة */
-      if(rows[0].phone !== phone){
-        try{
-          await _req(`profiles?id=eq.${encodeURIComponent(rows[0].id)}`, {
-            method: 'PATCH', body: JSON.stringify({ phone })
-          });
-          rows[0].phone = phone;
-        }catch(e){}
-      }
-      return rows[0];
-    }
-  }
-  return null;
-}
 
 const auth = {
 
@@ -69,55 +53,54 @@ const auth = {
   },
 
   async signInWithEmailAndPassword(email, pass){
+    const sb = await _client();
     const phone = _phoneOf(email);
-    const p = await _find(phone);
 
-    if(!p) throw Object.assign(new Error('الرقم غير مسجّل'), { code: 'auth/user-not-found' });
+    const { data, error } = await sb.auth.signInWithPassword({
+      email: _mail(phone), password: pass
+    });
 
-    /* نجرّب التجزئة بكل الصيغ — للحسابات القديمة */
-    const core = phone.slice(3);
-    let ok = false;
-    for(const f of [phone, '0' + core, core]){
-      if(p.password_hash === await _hash(pass, f)){ ok = true; break }
+    if(error){
+      const m = String(error.message || '');
+      if(m.includes('Invalid login'))
+        throw Object.assign(new Error('الرقم أو كلمة السر غلط'), { code: 'auth/wrong-password' });
+      throw Object.assign(new Error(m), { code: 'auth/error' });
     }
 
-    if(!ok) throw Object.assign(new Error('كلمة السر غلط'), { code: 'auth/wrong-password' });
-
-    /* نوحّد التجزئة على الصيغة الرسمية */
-    const std = await _hash(pass, phone);
-    if(p.password_hash !== std){
-      try{
-        await _req(`profiles?id=eq.${encodeURIComponent(p.id)}`, {
-          method: 'PATCH', body: JSON.stringify({ password_hash: std })
-        });
-      }catch(e){}
-    }
-
-    const u = { uid: p.id, email };
+    const u = { uid: data.user.id, email: _mail(phone), token: data.session.access_token };
     _save(u); _notify(u);
     return { user: u };
   },
 
   async createUserWithEmailAndPassword(email, pass){
+    const sb = await _client();
     const phone = _phoneOf(email);
 
-    if(await _find(phone))
-      throw Object.assign(new Error('الرقم مسجّل مسبقاً'), { code: 'auth/email-already-in-use' });
-
-    const uid = 'u_' + Date.now().toString(36) + Math.random().toString(36).slice(2,10);
-    const h = await _hash(pass, phone);
-
-    await _req('profiles', {
-      method: 'POST',
-      body: JSON.stringify({ id: uid, phone, password_hash: h, role: 'customer', is_verified: false })
+    const { data, error } = await sb.auth.signUp({
+      email: _mail(phone), password: pass
     });
 
-    const u = { uid, email };
+    if(error){
+      const m = String(error.message || '');
+      if(m.includes('already'))
+        throw Object.assign(new Error('الرقم مسجّل مسبقاً'), { code: 'auth/email-already-in-use' });
+      throw Object.assign(new Error(m), { code: 'auth/error' });
+    }
+
+    const u = {
+      uid: data.user.id,
+      email: _mail(phone),
+      token: data.session ? data.session.access_token : null
+    };
     _save(u); _notify(u);
     return { user: u };
   },
 
-  async signOut(){ _clear(); _notify(null) },
+  async signOut(){
+    const sb = await _client();
+    try{ await sb.auth.signOut() }catch(e){}
+    _clear(); _notify(null);
+  },
 
   async sendPasswordResetEmail(){
     throw new Error('استخدم «نسيت كلمة المرور» — يوصلك رمز بالواتساب');
