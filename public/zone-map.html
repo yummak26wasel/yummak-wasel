@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>نطاق التوصيل — واصل ليمَك</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:system-ui,Tahoma,sans-serif}
+body{background:#f5f4f8}
+#map{position:fixed;inset:0;top:112px}
+.bar{position:fixed;top:0;left:0;right:0;height:112px;background:#3F0A92;color:#fff;
+  padding:12px 14px;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.2)}
+.bar h3{font-size:16px;font-weight:800;margin-bottom:8px}
+.bar .btns{display:flex;gap:7px;flex-wrap:wrap}
+.bar button{background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);
+  color:#fff;border-radius:10px;padding:8px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+.bar button.on{background:#F97402;border-color:#F97402}
+.legend{position:fixed;bottom:12px;right:12px;background:#fff;border-radius:12px;
+  padding:10px 12px;font-size:12px;font-weight:700;z-index:1000;box-shadow:0 2px 10px rgba(0,0,0,.2);line-height:1.9}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;
+  vertical-align:-2px;margin-left:6px}
+</style>
+</head>
+<body>
+<div class="bar">
+  <h3>نطاق التوصيل المجاني — عانة</h3>
+  <div class="btns">
+    <button id="bSat" class="on" onclick="setLayer('sat')">قمر صناعي</button>
+    <button id="bMap" onclick="setLayer('map')">خريطة</button>
+    <button onclick="fit()">توسيط</button>
+  </div>
+</div>
+<div id="map"></div>
+<div class="legend">
+  <div><i style="background:#1D9E75"></i> داخل النطاق — ١٢٥٠ د.ع</div>
+  <div><i style="background:#F97402"></i> نقاط الحدود (١٩)</div>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+const PTS=[
+[34.3678241,41.9671200],[34.3649016,41.9683149],[34.3625408,41.9691343],
+[34.3582193,41.9728240],[34.3570621,41.9800013],[34.3584313,41.9862036],
+[34.3615505,41.9929433],[34.3629006,41.9973361],[34.3666764,41.9982531],
+[34.3693276,41.9972445],[34.3730769,41.9917480],[34.3776065,41.9882065],
+[34.3814926,41.9836528],[34.3789140,41.9777516],[34.3781594,41.9763367],
+[34.3766781,41.9755183],[34.3749376,41.9733400],[34.3727714,41.9712415],
+[34.3707459,41.9676531]];
+
+const map=L.map('map',{zoomControl:true}).setView([34.3691,41.9808],14);
+
+const sat=L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
+  {maxZoom:19,attribution:'Esri'});
+const street=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+  {maxZoom:19,attribution:'© OpenStreetMap'});
+sat.addTo(map);
+
+const poly=L.polygon(PTS,{color:'#0F6E56',weight:3,fillColor:'#1D9E75',fillOpacity:.25}).addTo(map);
+PTS.forEach((p,i)=>{
+  L.circleMarker(p,{radius:6,color:'#fff',weight:2,fillColor:'#F97402',fillOpacity:1})
+   .addTo(map).bindTooltip(String(i+1),{permanent:false});
+});
+
+function setLayer(k){
+  if(k==='sat'){ map.removeLayer(street); sat.addTo(map);
+    bSat.classList.add('on'); bMap.classList.remove('on') }
+  else { map.removeLayer(sat); street.addTo(map);
+    bMap.classList.add('on'); bSat.classList.remove('on') }
+}
+function fit(){ map.fitBounds(poly.getBounds(),{padding:[24,24]}) }
+setTimeout(fit,400);
+</script>
+</body>
+</html>
