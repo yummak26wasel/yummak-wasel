@@ -1,0 +1,8 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.leemak.app",
+    "sha256_cert_fingerprints": ["34:2F:A2:6F:68:78:5A:26:DD:F0:AF:C2:CC:12:EB:BC:CD:75:8B:B2:BC:7B:A8:B5:62:DF:3C:C8:5F:57:9E:75"]
+  }
+}]
