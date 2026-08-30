@@ -13,7 +13,7 @@ const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage(function (payload) {
   const d = payload.data || {};
-  const title = d.title || 'واصل ليمَك';
+  const title = d.title || '\u0648\u0627\u0635\u0644 \u0644\u064A\u0645\u064E\u0643';
   const options = {
     body: d.body || '',
     icon: d.icon || undefined,
