@@ -12,19 +12,19 @@
   "theme_color": "#3F0A92",
   "icons": [
     {
-      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/icon-192-2.png",
+      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/app-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/icon-512-2.png",
+      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/app-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/icon-maskable-512.png",
+      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/app-icon-maskable-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
