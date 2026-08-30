@@ -12,13 +12,13 @@
   "theme_color": "#3F0A92",
   "icons": [
     {
-      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/app-icon-192.png",
+      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/splash-192-t.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/app-icon-512.png",
+      "src": "https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/splash-512-t.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
