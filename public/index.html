@@ -3627,15 +3627,30 @@ function refreshPushUI(){
     const e=document.getElementById(id); if(e)e.textContent=st;
   });
 }
+function __clean(t){ return String(t||'').replace(/<[^>]*>/g,' ').replace(/\s+/g,' ').trim() }
+async function __sendPush(target,title,body,data){
+  try{
+    const jwt=(window.__waselToken&&window.__waselToken())||'';
+    if(!jwt) return;
+    await fetch(OTP_WORKER+'/push',{method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+jwt},
+      body:JSON.stringify(Object.assign({
+        title:__clean(title)||'واصل ليمَك',
+        body:__clean(body),
+        url:'/', tag:(data&&data.type)||'lw'
+      },target))});
+  }catch(e){ console.warn('push send:',e.message) }
+}
 async function pushTo(targetUid,title,body,data){
-  if(!targetUid||!db) return;
-  try{ await db.collection('notifications').add({to:targetUid,title,body,
+  if(!targetUid) return;
+  try{ if(db) await db.collection('notifications').add({to:targetUid,title,body,
     data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+  __sendPush({user_id:targetUid},title,body,data);
 }
 async function pushDrivers(title,body,data){
-  if(!db) return;
-  try{ await db.collection('notifications').add({toRole:'driver',title,body,
+  try{ if(db) await db.collection('notifications').add({toRole:'driver',title,body,
     data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+  __sendPush({role:'driver'},title,body,data);
 }
 
 /* ══════ TELEGRAM ══════ */
@@ -4160,7 +4175,17 @@ function conn(ok){const e=document.getElementById('s_conn'); if(e)e.innerHTML=ok
 
 /* ══════ ALARM ══════ */
 let actx=null,alarmTimer=null;
+const ALERT_SND='https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/alert.mp3';
+let __au=null;
 function beep(){
+  try{
+    if(!__au){ __au=new Audio(ALERT_SND); __au.preload='auto'; __au.volume=1 }
+    __au.currentTime=0;
+    const p=__au.play();
+    if(p&&p.catch) p.catch(()=>__beepFallback());
+  }catch(e){ __beepFallback() }
+}
+function __beepFallback(){
   try{
     actx=actx||new (window.AudioContext||window.webkitAudioContext)();
     if(actx.state==='suspended') actx.resume();
@@ -4178,7 +4203,7 @@ function alarm(who,o){
   bar.classList.add('on');
   if(snd&&snd.classList.contains('on')){
     let n=0;clearInterval(alarmTimer);
-    alarmTimer=setInterval(()=>{beep();if(++n>=8)clearInterval(alarmTimer)},700);
+    alarmTimer=setInterval(()=>{beep();if(++n>=4)clearInterval(alarmTimer)},3200);
   }
   if(navigator.vibrate)navigator.vibrate([300,120,300,120,300]);
   if('Notification' in window&&Notification.permission==='granted'){
@@ -4187,9 +4212,10 @@ function alarm(who,o){
   }
 }
 function stopAlarm(){clearInterval(alarmTimer);
+  try{ if(__au){ __au.pause(); __au.currentTime=0 } }catch(e){}
   document.getElementById('alertBar').classList.remove('on');
   document.getElementById('dAlert').classList.remove('on')}
-function testAlarm(){beep();setTimeout(beep,600);if(navigator.vibrate)navigator.vibrate(300);toast('إذا ما سمعت، ارفع صوت الهاتف')}
+function testAlarm(){beep();if(navigator.vibrate)navigator.vibrate([300,120,300]);toast('إذا ما سمعت، ارفع صوت الهاتف')}
 function askPerm(drv){
   if(!('Notification' in window))return toast('المتصفح ما يدعم الإشعارات');
   Notification.requestPermission().then(p=>{
@@ -6752,5 +6778,32 @@ async function initPush(silent){
   }catch(e){ console.warn('push:',e.message); return false }
 }
 </script>
+
+<style>
+/* ═══ إصلاح شريط تتبّع الطلب ═══ */
+.track{display:flex;justify-content:space-between;align-items:flex-start;
+  gap:2px;position:relative;margin:16px 0 6px;padding:0 2px;background:transparent}
+.track::before{content:"";position:absolute;top:12px;right:10%;left:10%;
+  height:2px;background:#E8E2F2;z-index:0}
+.track .stp{flex:1 1 0;min-width:0;display:flex;flex-direction:column;
+  align-items:center;text-align:center;gap:5px;margin:0;position:relative;z-index:1}
+.track .stp::before,.track .stp::after{display:none!important}
+.track .stp .n{width:25px;height:25px;border-radius:50%;background:#D9DEDB;
+  color:#fff;display:flex;align-items:center;justify-content:center;
+  font-weight:800;font-size:12px;flex-shrink:0}
+.track .stp.done .n{background:#3F0A92}
+.track .stp .n .wic{width:14px;height:14px}
+.track .stp .t{width:100%;min-width:0}
+.track .stp .t h5{font-size:9.5px;line-height:1.3;font-weight:700;
+  color:#B9AECB;margin:0;overflow-wrap:break-word}
+.track .stp.done .t h5{color:#3F0A92}
+.track .stp .t p{font-size:8.5px;color:#C4BBD2;margin:2px 0 0}
+.track .stp.done .t p{color:#7C5FB0}
+@media(max-width:360px){
+  .track .stp .t h5{font-size:8.5px}
+  .track .stp .n{width:22px;height:22px;font-size:11px}
+  .track::before{top:10px}
+}
+</style>
 </body>
 </html>
