@@ -2780,35 +2780,35 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .dic .wic,.ni .wic{width:100%;height:100%}
 
 /* ══ لوحة السائق — بطاقة الحالة ══ */
-.dvduty{position:relative;overflow:hidden;background:linear-gradient(135deg,#F2FBF5,#E6F7EC);
-  border-radius:22px;padding:16px;margin-bottom:12px;box-shadow:0 3px 14px rgba(22,32,92,.07)}
+.dvduty{display:flex;align-items:stretch;gap:10px;background:linear-gradient(135deg,#F2FBF5,#E6F7EC);
+  border-radius:22px;padding:15px;margin-bottom:12px;box-shadow:0 3px 14px rgba(22,32,92,.07)}
 .dvduty.off{background:linear-gradient(135deg,#FFF7F0,#FDEDE1)}
-.dvd-art{position:absolute;left:-6px;bottom:-8px;width:132px;pointer-events:none;opacity:.97}
-.dvd-pin{position:absolute;left:74px;top:16px;width:46px;pointer-events:none}
-.dvduty.off .dvd-art,.dvduty.off .dvd-pin{filter:grayscale(.55);opacity:.5}
-.dvd-in{position:relative;z-index:2;padding-right:0;padding-left:118px}
-.dvd-t{display:flex;align-items:flex-start;gap:11px}
-.dvd-tx{flex:1;text-align:right}
-.dvd-tx b{display:flex;align-items:center;justify-content:flex-start;flex-direction:row-reverse;
-  gap:8px;font-size:15px;font-weight:900;color:#14532D}
+.dvd-art{position:relative;width:96px;flex:none;align-self:flex-end}
+.dvd-art img.bk{width:96px;display:block}
+.dvd-art img.pn{position:absolute;top:-6px;left:52px;width:36px}
+.dvduty.off .dvd-art{filter:grayscale(.6);opacity:.55}
+.dvd-in{flex:1;min-width:0}
+.dvd-t{display:flex;align-items:flex-start;gap:10px}
+.dvd-tx{flex:1;min-width:0;text-align:right}
+.dvd-tx b{display:flex;align-items:center;flex-direction:row-reverse;justify-content:flex-start;
+  gap:7px;font-size:14px;font-weight:900;color:#14532D;line-height:1.4}
 .dvduty.off .dvd-tx b{color:#9A3412}
-.dvd-tx b i{width:9px;height:9px;border-radius:50%;background:#16A34A;flex:none}
+.dvd-tx b i{width:8px;height:8px;border-radius:50%;background:#16A34A;flex:none}
 .dvduty.off .dvd-tx b i{background:#EA580C}
-.dvd-tx>span{display:block;font-size:11.5px;font-weight:600;color:#4B7A5C;margin-top:5px;line-height:1.6}
+.dvd-tx>span{display:block;font-size:11px;font-weight:600;color:#4B7A5C;margin-top:5px;line-height:1.65}
 .dvduty.off .dvd-tx>span{color:#9C6B45}
-.dvd-sw{width:56px;height:31px;border-radius:20px;background:#16A34A;position:relative;
-  border:0;flex:none;cursor:pointer;transition:.2s;box-shadow:0 2px 7px rgba(22,163,74,.32)}
+.dvd-sw{width:52px;height:29px;border-radius:20px;background:#16A34A;position:relative;
+  border:0;flex:none;cursor:pointer;transition:.2s;box-shadow:0 2px 7px rgba(22,163,74,.3)}
 .dvduty.off .dvd-sw{background:#CBD2DE;box-shadow:none}
-.dvd-sw::after{content:"";position:absolute;top:3px;left:3px;width:25px;height:25px;
+.dvd-sw::after{content:"";position:absolute;top:3px;left:3px;width:23px;height:23px;
   border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 4px rgba(0,0,0,.22)}
-.dvduty.off .dvd-sw::after{left:28px}
+.dvduty.off .dvd-sw::after{left:26px}
 .dvd-note{display:flex;align-items:center;flex-direction:row-reverse;justify-content:flex-end;
-  gap:9px;margin-top:13px;background:rgba(255,255,255,.82);border-radius:14px;
-  padding:11px 13px;font-size:12px;font-weight:700;color:#14532D}
+  gap:8px;margin-top:12px;background:rgba(255,255,255,.85);border-radius:13px;
+  padding:10px 12px;font-size:11.5px;font-weight:700;color:#14532D;line-height:1.5}
 .dvduty.off .dvd-note{color:#9C6B45}
-.dvd-note .wic{width:18px;height:18px;flex:none;color:#16A34A}
+.dvd-note .wic{width:17px;height:17px;flex:none;color:#16A34A}
 .dvduty.off .dvd-note .wic{color:#EA580C}
-
 .dvstats{display:grid;grid-template-columns:1fr 1fr 1fr;background:#fff;border-radius:22px;
   padding:16px 6px 18px;margin-bottom:14px;box-shadow:0 3px 14px rgba(22,32,92,.07)}
 .dvst{text-align:center;position:relative}
@@ -9056,8 +9056,10 @@ function paintDutyCard(doneTodayCount){
 
   if(box) box.innerHTML=`
     <div class="dvduty ${on?'':'off'}" id="dutyCard">
-      <img class="dvd-art" src="drv-bike.png" alt="">
-      <img class="dvd-pin" src="drv-pin.png" alt="">
+      <div class="dvd-art">
+        <img class="pn" src="drv-pin.png" alt="" onerror="this.style.display='none'">
+        <img class="bk" src="drv-bike.png" alt="" onerror="this.parentNode.style.display='none'">
+      </div>
       <div class="dvd-in">
         <div class="dvd-t">
           <button class="dvd-sw" onclick="toggleDuty()" aria-label="تبديل الحالة"></button>
