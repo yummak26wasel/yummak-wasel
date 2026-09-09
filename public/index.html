@@ -8959,6 +8959,13 @@ function _renderDriverBody(){
   }
   const mine=myOrders.filter(o=>['assigned','ontheway','arrived'].includes(o.status));
   const done=myOrders.filter(o=>o.status==='delivered');
+  const _lf = myLedger.filter(x=>x.kind==='delivery_fee');
+  const _fee = o=>Number(o.deliveryFee||SET.deliveryFee||1250);
+  /* إذا جدول الحركات فاضي، نحسب من الطلبات المكتملة */
+  const useLedger = _lf.length>0;
+  const earned = useLedger
+      ? _lf.reduce((a,x)=>a+Number(x.amount||0),0)
+      : done.reduce((a,o)=>a+_fee(o),0);
 
   /* ── بطاقات طلباتك اليوم ── */
   const d0=new Date(); d0.setHours(0,0,0,0); const dayStart=d0.getTime();
@@ -9321,13 +9328,6 @@ function _renderDriverBody(){
   const inP = done.filter(o=>inPeriod(_orderTs(o)));
   const perName = periodDays===1?'اليوم':('آخر '+periodDays+' يوم');
 
-  const _lf = myLedger.filter(x=>x.kind==='delivery_fee');
-  const _fee = o=>Number(o.deliveryFee||SET.deliveryFee||1250);
-  /* إذا جدول الحركات فاضي، نحسب من الطلبات المكتملة */
-  const useLedger = _lf.length>0;
-  const earned = useLedger
-      ? _lf.reduce((a,x)=>a+Number(x.amount||0),0)
-      : done.reduce((a,o)=>a+_fee(o),0);
   const earnedP = useLedger
       ? _lf.filter(x=>inPeriod(x.created_at)).reduce((a,x)=>a+Number(x.amount||0),0)
       : inP.reduce((a,o)=>a+_fee(o),0);
