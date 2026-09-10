@@ -1223,6 +1223,29 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   padding:14px;font-size:14.5px;font-weight:800;font-family:inherit;cursor:pointer;
   box-shadow:0 5px 15px rgba(63,10,146,.22);margin-bottom:14px}
 .stf-add:active{transform:scale(.985)}
+/* ═══ التصنيفات ═══ */
+.cat-row{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid #EFECF7;
+  border-radius:16px;padding:12px 14px;margin-bottom:10px;box-shadow:0 2px 8px rgba(22,32,92,.04)}
+.cat-row.hid{opacity:.6}
+.cat-row.drag{opacity:.75;box-shadow:0 8px 20px rgba(63,10,146,.18);border-color:#C9B8F0}
+.cat-nm{flex:1;min-width:0;text-align:right}
+.cat-nm b{display:block;font-size:15px;font-weight:800;color:var(--txt);line-height:1.5}
+.cat-nm b em{font-style:normal;font-size:11px;font-weight:700;color:#C62828}
+.cat-nm span{display:block;font-size:12px;font-weight:700;color:#3F0A92;margin-top:2px}
+.cat-ic{width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+  border:0;flex:none;cursor:pointer;background:transparent;padding:0}
+.cat-ic .wic{width:19px;height:19px;stroke-width:1.9}
+.cat-ic.ed{background:#F2ECFD;color:#3F0A92}
+.cat-ic.rm{color:#DC2626}
+.cat-ic.dg{color:#B9AECB;touch-action:none;user-select:none;-webkit-user-select:none}
+.cat-add{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+  background:#3F0A92;color:#fff;border:0;border-radius:16px;padding:15px;
+  font-size:15px;font-weight:800;cursor:pointer;margin-top:4px;
+  box-shadow:0 4px 14px rgba(63,10,146,.25)}
+.cat-add:active{transform:scale(.985)}
+.cat-add .wic{width:19px;height:19px;stroke-width:2.6}
+.cat-note2{text-align:center;font-size:12px;font-weight:700;color:var(--mut);margin-top:14px;line-height:1.7}
+
 .stf-add svg{width:19px;height:19px;stroke-width:2.6}
 .stf-c{background:#fff;border:1px solid #EFEAF7;border-radius:17px;padding:13px;margin-bottom:11px}
 .stf-r{display:flex;align-items:center;gap:11px}
@@ -2032,9 +2055,12 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .pcway .wic{width:26px;height:26px;color:var(--nv);margin-bottom:6px}
 .pcway b{display:block;font-size:12.5px;font-weight:900;color:var(--nv)}
 .pcway span{display:block;font-size:10px;color:#8A90A8;font-weight:600;margin-top:2px}
-.pcway .rd{position:absolute;top:9px;left:9px;width:17px;height:17px;border-radius:50%;
-  border:2px solid #D8D3E8;background:#fff}
-.pcway.on .rd{border-color:var(--pr);background:var(--pr);box-shadow:inset 0 0 0 3px #fff}
+.pcway .rd{position:absolute;top:9px;left:9px;width:21px;height:21px;border-radius:50%;
+  border:2px solid #D8D3E8;background:#fff;transition:.15s}
+.pcway.on{box-shadow:0 0 0 2px rgba(63,10,146,.18)}
+.pcway.on .rd{border-color:#3F0A92;background:#3F0A92}
+.pcway.on .rd::after{content:"";position:absolute;top:4px;left:5.5px;width:6px;height:10px;
+  border:solid #fff;border-width:0 2.4px 2.4px 0;transform:rotate(45deg)}
 .pcbank{background:#F7F6FB;border-radius:15px;padding:13px;margin-top:11px}
 .pcbrow{display:flex;align-items:center;gap:9px;padding:8px 0}
 .pcbrow span{flex:none;width:74px;font-size:11.5px;font-weight:700;color:#8A90A8}
@@ -5855,48 +5881,97 @@ function renderCatsPage(){
 
   const noCat=((myShopDoc&&myShopDoc.products)||[]).filter(p=>!String(p.cat||'').trim()).length;
 
-  let html='<button class="stf-add" onclick="catAdd()">'
-    +'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>'
-    +' إضافة تصنيف جديد</button>';
-
   if(!myCats.length){
-    box.innerHTML = html + '<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>';
+    box.innerHTML='<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>'
+      +'<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>';
     return;
   }
 
-  html += myCats.map((c,i)=>{
+  let html='<div id="catRows">'+myCats.map(c=>{
     const q=JSON.stringify(c.id).replace(/"/g,'&quot;');
-    const off = c.visible===false;
+    const off=c.visible===false;
     return `
-    <div class="stf-c" style="${off?'opacity:.55':''}">
-      <div class="stf-r">
-        <div class="stf-av"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px;height:20px"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg></div>
-        <div class="stf-i">
-          <b>${esc(c.name)}${off?' <span style="font-size:11px;color:#C62828">(مخفي)</span>':''}</b>
-          <span>${_catCnt[c.id]||0} منتج</span>
-        </div>
-        <button class="stf-menu" onclick="catMove(${q},-1)" title="فوق" ${i===0?'disabled style="opacity:.3"':''}>
-          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
-        </button>
-        <button class="stf-menu" onclick="catMove(${q},1)" title="تحت" ${i===myCats.length-1?'disabled style="opacity:.3"':''}>
-          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
-        </button>
-        <button class="stf-menu" onclick="catToggle(${q})" title="${off?'إظهار':'إخفاء'}">
-          ${off
-            ? '<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/><path d="M4 4l16 16"/></svg>'
-            : '<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/></svg>'}
-        </button>
-        <button class="stf-menu" onclick="catRename(${q})" title="تعديل">
-          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg>
-        </button>
-        <button class="stf-menu" onclick="catRemove(${q})" title="حذف" style="color:#C62828">
-          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>
-        </button>
+    <div class="cat-row${off?' hid':''}" data-cid="${esc(c.id)}">
+      <div class="cat-nm">
+        <b>${esc(c.name)}${off?' <em>مخفي</em>':''}</b>
+        <span>${_catCnt[c.id]||0} منتج</span>
       </div>
-    </div>`}).join('');
+      <button class="cat-ic ed" onclick="catRename(${q})" aria-label="تعديل">
+        <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg>
+      </button>
+      <button class="cat-ic rm" onclick="catRemove(${q})" aria-label="حذف">
+        <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>
+      </button>
+      <span class="cat-ic dg" aria-label="اسحب للترتيب">
+        <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16M4 12h16M4 16h16"/></svg>
+      </span>
+    </div>`}).join('')+'</div>';
 
-  if(noCat) html += `<div class="stf-empty" style="padding:16px">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
-  box.innerHTML = html;
+  html += '<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>';
+
+  if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
+
+  box.innerHTML=html;
+  catBindDrag();
+}
+
+/* ═══ سحب وإفلات لترتيب التصنيفات ═══ */
+let _dragRow=null;
+function catBindDrag(){
+  const wrap=document.getElementById('catRows'); if(!wrap) return;
+  wrap.querySelectorAll('.cat-ic.dg').forEach(h=>{
+    h.addEventListener('touchstart', catDragStart, {passive:false});
+    h.addEventListener('mousedown', catDragStart);
+  });
+}
+function _pt(e){
+  if(e.touches && e.touches[0]) return {x:e.touches[0].clientX, y:e.touches[0].clientY};
+  return {x:e.clientX, y:e.clientY};
+}
+function catDragStart(e){
+  e.preventDefault();
+  _dragRow=e.currentTarget.closest('.cat-row');
+  if(!_dragRow) return;
+  _dragRow.classList.add('drag');
+  document.addEventListener('touchmove', catDragMove, {passive:false});
+  document.addEventListener('mousemove', catDragMove);
+  document.addEventListener('touchend', catDragEnd);
+  document.addEventListener('mouseup', catDragEnd);
+}
+function catDragMove(e){
+  if(!_dragRow) return;
+  e.preventDefault();
+  const p=_pt(e);
+  const el=document.elementFromPoint(p.x,p.y);
+  const over=el && el.closest ? el.closest('.cat-row') : null;
+  if(!over || over===_dragRow) return;
+  const wrap=document.getElementById('catRows'); if(!wrap) return;
+  const rows=[...wrap.children];
+  if(rows.indexOf(over) < rows.indexOf(_dragRow)) wrap.insertBefore(_dragRow, over);
+  else wrap.insertBefore(_dragRow, over.nextSibling);
+}
+async function catDragEnd(){
+  document.removeEventListener('touchmove', catDragMove);
+  document.removeEventListener('mousemove', catDragMove);
+  document.removeEventListener('touchend', catDragEnd);
+  document.removeEventListener('mouseup', catDragEnd);
+  if(!_dragRow) return;
+  _dragRow.classList.remove('drag');
+  _dragRow=null;
+  const wrap=document.getElementById('catRows'); if(!wrap) return;
+  const ids=[...wrap.children].map(r=>r.getAttribute('data-cid'));
+  const same = ids.every((id,i)=> myCats[i] && myCats[i].id===id);
+  if(same) return;
+  try{
+    for(let i=0;i<ids.length;i++){
+      const c=myCats.find(x=>x.id===ids[i]);
+      if(c && c.sort!==i+1) await sbPatch('shop_categories?id=eq.'+ids[i], {sort:i+1});
+    }
+    await loadShopCats();
+  }catch(e){
+    toast('ما گدرنا نحفظ الترتيب: '+String(e.message||e).slice(0,60));
+    await loadShopCats();
+  }
 }
 
 /* يزامن حقل cat داخل منتجات المحل حتى واجهة الزبون تبقى شغالة */
@@ -10523,10 +10598,10 @@ let _pcMethod='cash', _pcBank=null;
 
 async function loadBankInfo(){
   try{
-    const r=await sbGet('settings?select=value&key=eq.bank&limit=1');
-    const v=(r&&r[0]&&r[0].value)||null;
+    const r=await sbGet('settings?select=bank&key=eq.app&limit=1');
+    const v=(r&&r[0]&&r[0].bank)||null;
     _pcBank = (typeof v==='string') ? JSON.parse(v) : v;
-  }catch(e){ _pcBank=null }
+  }catch(e){ _pcBank=null; console.warn('bank', e) }
 }
 
 function pcPick(m){
