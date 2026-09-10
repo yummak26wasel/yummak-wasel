@@ -2011,6 +2011,52 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .invnote{display:flex;gap:9px;background:var(--nvl);border-radius:14px;padding:12px;font-size:11.5px;
   font-weight:700;color:#4C5578;line-height:1.7;margin:12px 0}
 .invnote .wic{width:16px;height:16px;color:var(--nv);flex:none;margin-top:2px}
+.pcsec{background:#fff;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 2px 12px rgba(22,32,92,.07)}
+.pcsec>h5{font-size:15px;font-weight:900;color:var(--nv);margin:0 0 2px}
+.pcsec>p.sub{font-size:11.5px;color:#8A90A8;margin:0 0 13px;font-weight:600}
+.pcsec .req{color:#E23A3A}
+.pchero{display:flex;align-items:center;gap:12px;background:#F5F3FC;border-radius:16px;padding:14px}
+.pchero .ic{width:46px;height:46px;border-radius:14px;background:#EAE4FB;color:var(--pr);
+  display:flex;align-items:center;justify-content:center;flex:none}
+.pchero .ic .wic{width:22px;height:22px}
+.pchero .amt{flex:1}
+.pchero .amt span{display:block;font-size:11.5px;font-weight:700;color:#8A90A8}
+.pchero .amt b{display:block;font-size:24px;font-weight:900;color:var(--nv);line-height:1.25}
+.pchero .cur{text-align:center;font-size:11.5px;font-weight:700;color:#8A90A8}
+.pchero .cur b{display:block;font-size:14px;font-weight:900;color:var(--nv);margin-top:3px}
+.pcways{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.pcway{position:relative;border:1.6px solid #E7E4F1;border-radius:16px;padding:13px 8px 11px;
+  text-align:center;cursor:pointer;background:#fff;transition:.15s}
+.pcway.on{border-color:var(--pr);background:#F7F4FE}
+.pcway.off{opacity:.5;pointer-events:none;background:#FAFAFC}
+.pcway .wic{width:26px;height:26px;color:var(--nv);margin-bottom:6px}
+.pcway b{display:block;font-size:12.5px;font-weight:900;color:var(--nv)}
+.pcway span{display:block;font-size:10px;color:#8A90A8;font-weight:600;margin-top:2px}
+.pcway .rd{position:absolute;top:9px;left:9px;width:17px;height:17px;border-radius:50%;
+  border:2px solid #D8D3E8;background:#fff}
+.pcway.on .rd{border-color:var(--pr);background:var(--pr);box-shadow:inset 0 0 0 3px #fff}
+.pcbank{background:#F7F6FB;border-radius:15px;padding:13px;margin-top:11px}
+.pcbrow{display:flex;align-items:center;gap:9px;padding:8px 0}
+.pcbrow span{flex:none;width:74px;font-size:11.5px;font-weight:700;color:#8A90A8}
+.pcbrow b{flex:1;font-size:13.5px;font-weight:900;color:var(--nv);text-align:left;direction:ltr;
+  letter-spacing:.4px;word-break:break-all}
+.pccopy{width:100%;margin-top:9px;border:0;border-radius:12px;background:#EFEAFC;color:var(--pr);
+  font-family:inherit;font-size:13px;font-weight:900;padding:11px;display:flex;
+  align-items:center;justify-content:center;gap:7px;cursor:pointer}
+.pccopy .wic{width:16px;height:16px}
+.pcgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pcf label{display:block;font-size:12px;font-weight:800;color:var(--nv);margin:0 0 6px}
+.pcf input{width:100%;border:1.6px solid #E7E4F1;border-radius:13px;padding:12px;
+  font-family:inherit;font-size:13.5px;font-weight:700;color:var(--nv);background:#fff}
+.pcsend{width:100%;border:0;border-radius:16px;padding:15px;font-family:inherit;font-size:15px;
+  font-weight:900;color:#fff;background:linear-gradient(135deg,#5B21B6,#3F0A92);
+  display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;
+  box-shadow:0 6px 18px rgba(63,10,146,.28)}
+.pcsend .wic{width:18px;height:18px}
+.pcwa{width:100%;margin-top:9px;border:0;border-radius:16px;padding:14px;font-family:inherit;
+  font-size:14px;font-weight:900;color:#fff;background:#25D366;display:flex;
+  align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.pcwa .wic{width:17px;height:17px}
 .sfbox2{background:#fff;border-radius:20px;padding:16px;margin-bottom:12px;box-shadow:0 2px 12px rgba(22,32,92,.07)}
 .sfbox2 h5{font-size:15px;font-weight:900;color:var(--nv);margin:0 0 13px}
 .sfbox2 label{display:block;font-size:12px;font-weight:800;color:#6B738F;margin-bottom:6px}
@@ -2780,12 +2826,17 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .dic .wic,.ni .wic{width:100%;height:100%}
 
 /* ══ لوحة السائق — بطاقة الحالة ══ */
-.dvduty{display:flex;align-items:stretch;gap:10px;background:linear-gradient(135deg,#F2FBF5,#E6F7EC);
-  border-radius:22px;padding:15px;margin-bottom:12px;box-shadow:0 3px 14px rgba(22,32,92,.07)}
+.dvduty{display:flex;align-items:stretch;gap:6px;background:linear-gradient(135deg,#F2FBF5,#E6F7EC);
+  border-radius:22px;padding:15px;margin-bottom:12px;box-shadow:0 3px 14px rgba(22,32,92,.07);
+  overflow:hidden;position:relative}
 .dvduty.off{background:linear-gradient(135deg,#FFF7F0,#FDEDE1)}
-.dvd-art{position:relative;width:96px;flex:none;align-self:flex-end}
-.dvd-art img.bk{width:96px;display:block}
-.dvd-art img.pn{position:absolute;top:-6px;left:52px;width:36px}
+.dvd-art{position:relative;width:118px;flex:none;align-self:flex-end;
+  margin-inline-start:-12px;margin-bottom:-15px;pointer-events:none}
+.dvd-art::before{content:"";position:absolute;inset:auto -14px -10px -14px;height:78%;
+  background:radial-gradient(ellipse at 50% 78%,rgba(255,255,255,.85),rgba(255,255,255,0) 70%);
+  border-radius:50%}
+.dvd-art img.bk{width:118px;display:block;position:relative}
+.dvd-art img.pn{position:absolute;top:-4px;left:64px;width:42px}
 .dvduty.off .dvd-art{filter:grayscale(.6);opacity:.55}
 .dvd-in{flex:1;min-width:0}
 .dvd-t{display:flex;align-items:flex-start;gap:10px}
@@ -4889,10 +4940,10 @@ body,.screen{background:#fff;color:var(--txt)}
         واصل ليمَك — من يمهم ليمك <svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 20.5S3.5 15 3.5 9.4A4.4 4.4 0 0 1 12 7.3a4.4 4.4 0 0 1 8.5 2.1c0 5.6-8.5 11.1-8.5 11.1z"/></svg></div> </div> </div> <div class="nav" id="cNav"> <button class="on" onclick="tab('home',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1V9.5"/></svg></span>الرئيسية</button> <button onclick="tab('cart',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg></span>السلة<span class="b" id="cartCnt">0</span></button> <button onclick="tab('orders',this)"><span class="ni"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>طلباتي</button> <button onclick="tab('sup',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h2.6v5H5.6A1.6 1.6 0 0 1 4 17.4z"/><path d="M20 14h-2.6v5h1A1.6 1.6 0 0 0 20 17.4z"/></svg></span>الدعم</button> <button onclick="tab('more',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>حسابي</button> </div>
 </div> <!-- ═══ STORE ═══ -->
 <div class="screen" id="sApp"> <div class="top"><div class="l"><span class="logoc"><img class="mini" src="792707e8.png" alt=""></span><div><h2 id="stName">متجري</h2><p>لوحة تحكم المتجر</p></div></div> <button class="out" onclick="logout()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>خروج</button></div> <div class="alertbar" id="alertBar" onclick="stopAlarm()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> عندك طلب جديد — اضغط للإيقاف</div> <div class="body"> <div class="page on" id="q_dash">
-      <div id="stComm"></div>
-      <div id="stCash"></div>
       <div id="stCallDrv"></div>
       <div id="stSummary"></div>
+      <div id="stComm"></div>
+      <div id="stCash"></div>
       <div id="stFinance"></div>
       <div class="sechd"><h3>أداء المطعم</h3>
         <div class="perbar sm">
@@ -4913,7 +4964,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <span class="stf-cnt" id="catCount">0</span>
       </div>
       <div class="stf-note" style="margin-bottom:14px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> التصنيفات تتكوّن من أقسام منتجاتك — عدّل الاسم هنا وينتغيّر بكل المنتجات</div>
-      <div id="catList"></div>
+      <div id="catsBox"></div>
     </div> <div class="page" id="q_staff">
       <div class="stf-hd">
         <div>
@@ -5511,16 +5562,13 @@ async function loadShopStaff(){
   const sid = me.shopId || (me.staff && me.staff.shop_id);
   if(!sid) return;
   try{
-    const rows = await sbGet('shop_staff?select=*&shop_id=eq.'+sid+'&order=created_at.desc');
-    const ids = (rows||[]).map(r=>r.profile_id).filter(Boolean);
-    let profs = [];
-    if(ids.length){
-      profs = await sbGet('profiles?select=id,name,phone,photo_url&id=in.('+ids.join(',')+')');
-    }
-    shopStaff = (rows||[]).map(r=>{
-      const p = (profs||[]).find(x=>x.id===r.profile_id) || {};
-      return {...r, name:p.name||'موظف', phone:p.phone||'', photo:p.photo_url||''};
-    });
+    const rows = await rpc('shop_staff_list',{p_shop:sid});
+    shopStaff = (rows||[]).map(r=>({
+      ...r,
+      name : r.name || 'موظف',
+      phone: r.phone || '',
+      photo: r.photo_url || ''
+    }));
   }catch(e){ shopStaff=[]; console.warn('staff',e.message) }
   renderShopStaff();
 }
@@ -5767,6 +5815,9 @@ async function stfDelete(){
 /* ═══════════════════════════════════════════════
    التصنيفات — أقسام المتجر
    ═══════════════════════════════════════════════ */
+let myCats=[], _catCnt={};
+
+/* توافق مع الكود القديم — يجيب أسماء الأقسام من المنتجات */
 function shopCatList(){
   const ps=(myShopDoc&&myShopDoc.products)||[];
   const m={};
@@ -5778,58 +5829,157 @@ function shopCatList(){
   return Object.keys(m).map(c=>({name:c, count:m[c]}));
 }
 
+async function loadShopCats(){
+  if(!me||!me.shopId){ myCats=[]; _catCnt={}; renderCatsPage(); return }
+  try{
+    myCats = await sbGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+me.shopId+'&order=sort.asc');
+  }catch(e){
+    myCats=[];
+    toast('ما گدرنا نجيب التصنيفات: '+String(e.message||e).slice(0,70));
+  }
+  _catCnt={};
+  if(myCats.length){
+    try{
+      const ids=myCats.map(c=>c.id).join(',');
+      const rows=await sbGet('product_categories?select=category_id&category_id=in.('+ids+')');
+      rows.forEach(r=>{ _catCnt[r.category_id]=(_catCnt[r.category_id]||0)+1 });
+    }catch(e){ }
+  }
+  renderCatsPage();
+}
+
 function renderCatsPage(){
-  const box=document.getElementById('catList'); if(!box) return;
-  const list=shopCatList();
+  const box=document.getElementById('catsBox')||document.getElementById('catList'); if(!box) return;
   const cnt=document.getElementById('catCount');
-  if(cnt) cnt.textContent=list.length;
+  if(cnt) cnt.textContent=myCats.length;
 
   const noCat=((myShopDoc&&myShopDoc.products)||[]).filter(p=>!String(p.cat||'').trim()).length;
 
-  if(!list.length){
-    box.innerHTML='<div class="stf-empty">ماكو تصنيفات بعد<br>أضف قسم للمنتج من تبويب «قائمتي»</div>';
+  let html='<button class="stf-add" onclick="catAdd()">'
+    +'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg>'
+    +' إضافة تصنيف جديد</button>';
+
+  if(!myCats.length){
+    box.innerHTML = html + '<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>';
     return;
   }
 
-  box.innerHTML = list.map(c=>`
-    <div class="stf-c">
+  html += myCats.map((c,i)=>{
+    const q=JSON.stringify(c.id).replace(/"/g,'&quot;');
+    const off = c.visible===false;
+    return `
+    <div class="stf-c" style="${off?'opacity:.55':''}">
       <div class="stf-r">
         <div class="stf-av"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px;height:20px"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg></div>
         <div class="stf-i">
-          <b>${esc(c.name)}</b>
-          <span>${c.count} منتج</span>
+          <b>${esc(c.name)}${off?' <span style="font-size:11px;color:#C62828">(مخفي)</span>':''}</b>
+          <span>${_catCnt[c.id]||0} منتج</span>
         </div>
-        <button class="stf-menu" onclick="catRename(${JSON.stringify(c.name).replace(/"/g,'&quot;')})" title="تعديل">
+        <button class="stf-menu" onclick="catMove(${q},-1)" title="فوق" ${i===0?'disabled style="opacity:.3"':''}>
+          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+        </button>
+        <button class="stf-menu" onclick="catMove(${q},1)" title="تحت" ${i===myCats.length-1?'disabled style="opacity:.3"':''}>
+          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M12 5v14M6 13l6 6 6-6"/></svg>
+        </button>
+        <button class="stf-menu" onclick="catToggle(${q})" title="${off?'إظهار':'إخفاء'}">
+          ${off
+            ? '<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/><path d="M4 4l16 16"/></svg>'
+            : '<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M3 12s3.5-6 9-6 9 6 9 6-3.5 6-9 6-9-6-9-6z"/><circle cx="12" cy="12" r="2.6"/></svg>'}
+        </button>
+        <button class="stf-menu" onclick="catRename(${q})" title="تعديل">
           <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg>
         </button>
-        <button class="stf-menu" onclick="catRemove(${JSON.stringify(c.name).replace(/"/g,'&quot;')})" title="حذف" style="color:#C62828">
+        <button class="stf-menu" onclick="catRemove(${q})" title="حذف" style="color:#C62828">
           <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;height:18px"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>
         </button>
       </div>
-    </div>`).join('')
-    + (noCat?`<div class="stf-empty" style="padding:16px">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`:'');
+    </div>`}).join('');
+
+  if(noCat) html += `<div class="stf-empty" style="padding:16px">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
+  box.innerHTML = html;
 }
 
-async function catRename(oldName){
-  const nv=prompt('اسم التصنيف الجديد:', oldName);
+/* يزامن حقل cat داخل منتجات المحل حتى واجهة الزبون تبقى شغالة */
+async function catSyncProducts(oldName, newName){
+  const ps=(myShopDoc&&myShopDoc.products)||[];
+  let ch=false;
+  const np=ps.map(p=>{
+    if(String(p.cat||'').trim()===oldName){ ch=true; return Object.assign({},p,{cat:newName}) }
+    return p;
+  });
+  if(!ch) return true;
+  try{
+    await sbPatch('shops?id=eq.'+me.shopId, {products:np});
+    myShopDoc.products=np;
+    return true;
+  }catch(e){
+    toast('التصنيف انتغيّر بس المنتجات ما انزامنت: '+String(e.message||e).slice(0,60));
+    return false;
+  }
+}
+
+async function catAdd(){
+  const nv=prompt('اسم التصنيف الجديد:');
   if(nv===null) return;
   const n=String(nv).trim();
   if(!n){ toast('اكتب اسم'); return }
-  if(n===oldName) return;
+  if(myCats.some(c=>c.name===n)){ toast('التصنيف موجود'); return }
+  const mx=myCats.reduce((a,c)=>Math.max(a, c.sort||0), 0);
   try{
-    await rpc('shop_cat_rename',{p_shop:me.shopId, p_old:oldName, p_new:n});
-    toast('انتغيّر اسم التصنيف');
-  }catch(e){ toast('ما گدرنا نحفظ') }
+    await sbPost('shop_categories',{shop_id:me.shopId, name:n, sort:mx+1, visible:true});
+    toast('انضاف التصنيف');
+    await loadShopCats();
+  }catch(e){ toast('ما گدرنا نضيف: '+String(e.message||e).slice(0,70)) }
 }
 
-async function catRemove(name){
-  const c=shopCatList().find(x=>x.name===name);
-  const num=c?c.count:0;
-  if(!confirm('تشيل تصنيف «'+name+'»؟\n'+num+' منتج راح يصيرون بلا قسم — المنتجات ما تنحذف.')) return;
+async function catRename(id){
+  const c=myCats.find(x=>x.id===id); if(!c) return;
+  const nv=prompt('اسم التصنيف الجديد:', c.name);
+  if(nv===null) return;
+  const n=String(nv).trim();
+  if(!n){ toast('اكتب اسم'); return }
+  if(n===c.name) return;
+  if(myCats.some(x=>x.name===n)){ toast('الاسم مستخدم بتصنيف ثاني'); return }
   try{
-    await rpc('shop_cat_rename',{p_shop:me.shopId, p_old:name, p_new:''});
-    toast('انشال التصنيف');
-  }catch(e){ toast('ما گدرنا نحفظ') }
+    await sbPatch('shop_categories?id=eq.'+id, {name:n});
+  }catch(e){ toast('ما گدرنا نحفظ: '+String(e.message||e).slice(0,70)); return }
+  await catSyncProducts(c.name, n);
+  toast('انتغيّر اسم التصنيف');
+  await loadShopCats();
+}
+
+async function catToggle(id){
+  const c=myCats.find(x=>x.id===id); if(!c) return;
+  const nv = !(c.visible!==false);
+  try{
+    await sbPatch('shop_categories?id=eq.'+id, {visible:nv});
+    toast(nv?'التصنيف ظاهر':'التصنيف مخفي');
+    await loadShopCats();
+  }catch(e){ toast('ما گدرنا نحفظ: '+String(e.message||e).slice(0,70)) }
+}
+
+async function catMove(id, dir){
+  const i=myCats.findIndex(x=>x.id===id);
+  const j=i+dir;
+  if(i<0 || j<0 || j>=myCats.length) return;
+  const a=myCats[i], b=myCats[j];
+  try{
+    await sbPatch('shop_categories?id=eq.'+a.id, {sort:(b.sort||0)});
+    await sbPatch('shop_categories?id=eq.'+b.id, {sort:(a.sort||0)});
+    await loadShopCats();
+  }catch(e){ toast('ما گدرنا نرتّب: '+String(e.message||e).slice(0,70)) }
+}
+
+async function catRemove(id){
+  const c=myCats.find(x=>x.id===id); if(!c) return;
+  const num=_catCnt[c.id]||0;
+  if(!confirm('تشيل تصنيف «'+c.name+'»؟\n'+num+' منتج راح يصيرون بلا قسم — المنتجات ما تنحذف.')) return;
+  try{
+    await sbDel('shop_categories?id=eq.'+id);
+  }catch(e){ toast('ما گدرنا نحذف: '+String(e.message||e).slice(0,70)); return }
+  await catSyncProducts(c.name, '');
+  toast('انشال التصنيف');
+  await loadShopCats();
 }
 
 /* ═══════════════════════════════════════════════
@@ -6710,6 +6860,7 @@ function listenStoreOrders(){
     if(!firstLoad){ pend.forEach(o=>{ if(!seenPending.has(o.id)){seenPending.add(o.id);alarm('store',o)} }) }
     else{ pend.forEach(o=>seenPending.add(o.id)); firstLoad=false }
     renderStore();
+    try{ loadMyComm() }catch(e){}
   },e=>{ toast('ما گدرنا نقرا الطلبات:'+e.message) });
 }
 let driverRenderPending=false;
@@ -8304,7 +8455,7 @@ function sup(t,el){
 
 /* ══════ STORE ══════ */
 function loadMyShop(){
-  db.collection('shops').doc(me.shopId).onSnapshot(d=>{myShopDoc={...d.data(), id:d.id};renderStore();try{loadMyComm()}catch(e){ __silent(e,'loadMyComm') }try{renderCatsPage()}catch(e){ __silent(e,'renderCatsPage') }});
+  db.collection('shops').doc(me.shopId).onSnapshot(d=>{myShopDoc={...d.data(), id:d.id};renderStore();try{loadMyComm()}catch(e){ __silent(e,'loadMyComm') }try{loadShopCats()}catch(e){ __silent(e,'loadShopCats') }});
 }
 function stab(p,el){
   if(p==='orders' && me && me.staff && me.staff.can_orders!==true) return toast('ما عندك صلاحية إدارة الطلبات');
@@ -8313,7 +8464,7 @@ function stab(p,el){
   document.getElementById('q_'+p).classList.add('on');
   document.querySelectorAll('#sNav button').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderStore();
   if(p==='staff'){ try{ loadShopStaff() }catch(e){} }
-  if(p==='cats'){ try{ renderCatsPage() }catch(e){ __silent(e,'renderCatsPage') } }
+  if(p==='cats'){ try{ loadShopCats() }catch(e){ __silent(e,'loadShopCats') } }
 }
 let __clockTimer=null;
 function startShopClock(){
@@ -10368,33 +10519,111 @@ function renderMyComm(){
     </div>`;
 }
 
-function openPayCom(){
+let _pcMethod='cash', _pcBank=null;
+
+async function loadBankInfo(){
+  try{
+    const r=await sbGet('settings?select=value&key=eq.bank&limit=1');
+    const v=(r&&r[0]&&r[0].value)||null;
+    _pcBank = (typeof v==='string') ? JSON.parse(v) : v;
+  }catch(e){ _pcBank=null }
+}
+
+function pcPick(m){
+  _pcMethod=m;
+  document.querySelectorAll('.pcway').forEach(w=>w.classList.toggle('on', w.dataset.m===m));
+  const b=document.getElementById('pcBankSec');
+  if(b) b.style.display = (m==='bank') ? 'block' : 'none';
+}
+
+function pcCopy(){
+  const t=(_pcBank&&_pcBank.acc)||'';
+  if(!t) return toast('ماكو رقم محفوظ');
+  try{ navigator.clipboard.writeText(t); toast('انتنسخ الرقم') }
+  catch(e){
+    const i=document.createElement('input');
+    i.value=t; document.body.appendChild(i); i.select();
+    try{ document.execCommand('copy'); toast('انتنسخ الرقم') }catch(_){ toast('ما گدرنا ننسخ') }
+    i.remove();
+  }
+}
+
+async function openPayCom(){
+  if(myInv && myInv.status==='pending')
+    return toast('عندك طلب سداد قيد المراجعة — انتظر تأكيد الإدارة');
+  if(myInv && myInv.status==='paid')
+    return toast('عمولة هذا الشهر مسدّدة');
+
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('q_paycom').classList.add('on');
   const box=document.getElementById('payComBox');
+  box.innerHTML='<div class="stf-empty">…</div>';
+  await loadBankInfo();
+  _pcMethod='cash';
+
+  const bk=_pcBank||{};
+  const wic=(p)=>`<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor">${p}</svg>`;
+
   box.innerHTML=`
-    <div class="invbox">
-      <h5>عمولة ${_pAr(new Date())}</h5>
-      <div class="invr"><div class="ri"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/></svg></div><span>إجمالي المبيعات</span><b>${myComm.sales.toLocaleString()} د.ع</b></div>
-      <div class="invr"><div class="ri"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 19 19 5"/><circle cx="7.5" cy="7.5" r="2.5"/><circle cx="16.5" cy="16.5" r="2.5"/></svg></div><span>نسبة العمولة</span><b>5.5%</b></div>
-      <div class="invr"><div class="ri"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="6.5" rx="7.5" ry="3"/><path d="M4.5 6.5v11c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-11"/></svg></div><span>قيمة العمولة المستحقة</span><b>${myComm.amount.toLocaleString()} د.ع</b></div>
-      <div class="invr"><div class="ri"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 9.6h17"/></svg></div><span>تاريخ الاستحقاق</span><b>${_dueDate(new Date()).toLocaleDateString('ar-IQ')}</b></div>
+    <div class="pcsec">
+      <h5>تسجيل سداد العمولة</h5>
+      <p class="sub">يرجى إدخال تفاصيل السداد بدقة</p>
+      <div class="pchero">
+        <div class="ic">${wic('<ellipse cx="12" cy="6.5" rx="7.5" ry="3"/><path d="M4.5 6.5v11c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-11"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/>')}</div>
+        <div class="amt"><span>المبلغ المدفوع <i class="req">*</i></span><b>${myComm.amount.toLocaleString()}</b></div>
+        <div class="cur">العملة<b>د.ع</b></div>
+      </div>
     </div>
 
-    <div class="sfbox2">
-      <h5>معلومات السداد</h5>
-      <label>المبلغ المدفوع <i>*</i></label>
-      <input id="pc_amt" type="number" value="${myComm.amount}">
-      <label>طريقة الدفع <i>*</i></label>
-      <select id="pc_method"><option value="cash">نقدي</option><option value="bank">تحويل بنكي</option></select>
-      <label>تاريخ السداد <i>*</i></label>
-      <input id="pc_date" type="date" value="${new Date().toISOString().slice(0,10)}">
-      <label>ملاحظات (اختياري)</label>
-      <input id="pc_note" placeholder="أضف أي ملاحظات…">
-      <button class="act" onclick="sendPayCom()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/></svg> إرسال طلب السداد</button>
+    <div class="pcsec">
+      <h5>طريقة الدفع <i class="req">*</i></h5>
+      <p class="sub">اختر طريقة الدفع المستخدمة</p>
+      <div class="pcways">
+        <div class="pcway on" data-m="cash" onclick="pcPick('cash')">
+          <span class="rd"></span>
+          ${wic('<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/>')}
+          <b>نقدي</b><span>دفع مباشر</span>
+        </div>
+        <div class="pcway" data-m="bank" onclick="pcPick('bank')">
+          <span class="rd"></span>
+          ${wic('<path d="M3.5 9.5 12 4l8.5 5.5"/><path d="M5.5 9.5v8M18.5 9.5v8M9.5 9.5v8M14.5 9.5v8"/><path d="M3.5 20.5h17"/>')}
+          <b>تحويل بنكي</b><span>من حساب إلى حساب</span>
+        </div>
+        <div class="pcway off" data-m="wallet">
+          <span class="rd"></span>
+          ${wic('<rect x="3" y="6" width="18" height="13" rx="2.4"/><path d="M3 10h18"/><circle cx="17" cy="14.5" r="1.3"/>')}
+          <b>محفظة</b><span>غير متوفر حالياً</span>
+        </div>
+      </div>
+
+      <div id="pcBankSec" style="display:none">
+        <div class="pcbank">
+          <div class="pcbrow"><span>الجهة</span><b>${esc(bk.bank||'—')}</b></div>
+          <div class="pcbrow"><span>رقم الحساب</span><b>${esc(bk.acc||'—')}</b></div>
+          <div class="pcbrow"><span>اسم الحساب</span><b>${esc(bk.name||'—')}</b></div>
+          ${bk.branch?`<div class="pcbrow"><span>الفرع</span><b>${esc(bk.branch)}</b></div>`:''}
+          <button class="pccopy" onclick="pcCopy()">${wic('<rect x="8.5" y="8.5" width="12" height="12" rx="2.2"/><path d="M15.5 5.5h-9a2 2 0 0 0-2 2v9"/>')} نسخ رقم الحساب</button>
+        </div>
+      </div>
     </div>
 
-    <div class="invnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/></svg>
+    <div class="pcsec">
+      <h5>تفاصيل السداد</h5>
+      <p class="sub">تاريخ التحويل وأي ملاحظة تحب تضيفها</p>
+      <div class="pcgrid">
+        <div class="pcf"><label>تاريخ السداد <i class="req">*</i></label>
+          <input id="pc_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
+        <div class="pcf"><label>المبلغ المدفوع <i class="req">*</i></label>
+          <input id="pc_amt" type="number" value="${myComm.amount}"></div>
+      </div>
+      <div class="pcf" style="margin-top:10px"><label>ملاحظات (اختياري)</label>
+        <input id="pc_note" placeholder="أضف أي ملاحظات…"></div>
+    </div>
+
+    <button class="pcsend" onclick="sendPayCom()">${wic('<path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/>')} إرسال طلب السداد</button>
+    <a class="pcwa" href="https://wa.me/${WA_NUM}" target="_blank" rel="noopener">${wic('<path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/>')} دز وصل التحويل بالواتساب</a>
+
+    <div class="invnote" style="margin-top:11px">${wic('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/>')}
       يوصل إشعار للإدارة بمبلغ السداد لمراجعته وتأكيده، ويوصلك إشعار بعد التأكيد.</div>`;
 }
 
@@ -10404,14 +10633,14 @@ async function sendPayCom(){
   const per=_pKey(new Date());
   const row={
     shop_id: me.shopId, period: per, status:'pending', amount_paid: amt,
-    method:(document.getElementById('pc_method')||{}).value||'cash',
+    method:_pcMethod||'cash',
     paid_date:(document.getElementById('pc_date')||{}).value||null,
     note:((document.getElementById('pc_note')||{}).value||'').trim()||null,
     reported_at:new Date().toISOString()
   };
   try{
-    if(myInv) await sbPatch('shop_invoices?id=eq.'+myInv.id, row);
-    else      await sbPost('shop_invoices', row);
+    if(myInv) return toast('عندك طلب سداد قيد المراجعة');
+    await sbPost('shop_invoices', row);
     toast('انرسل — الإدارة راح تراجعه');
     await loadMyComm();
     stab('main', document.querySelectorAll('#sNav button')[0]);
