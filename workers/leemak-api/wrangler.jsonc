@@ -1,0 +1,19 @@
+{
+  // leemak-api — حذف الحساب + إشعارات التطبيق الأصلي عبر Expo.
+  // منفصل عن leemak-otp عمداً: ذاك الـWorker ما عنده نسخة بـgit.
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "leemak-api",
+  "main": "src/index.js",
+  "compatibility_date": "2026-09-01",
+  "vars": {
+    "SUPABASE_URL": "https://obvxqyfmcmldruauhsgw.supabase.co",
+    // مفتاح عام — نفس الموجود بـ sb-layer.js. يُستعمل فقط للتحقق من توكن المستخدم.
+    "SUPABASE_PUBLISHABLE_KEY": "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq",
+    "ALLOWED_ORIGIN": "https://leemak-app.dhifvmy.workers.dev"
+  },
+  // SUPABASE_SERVICE_ROLE_KEY سرّي — يُضبط بـ:  npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY
+  "kv_namespaces": [
+    { "binding": "PUSH", "id": "84e62138385c4ab78fd59e8c0bd82951" }
+  ],
+  "observability": { "enabled": true }
+}
