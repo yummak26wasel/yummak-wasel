@@ -133,6 +133,30 @@ DEMO_LINE = """    if(r.status===403&&j.error==='demo_account'){ toast('هذا �
 once("error==='demo_account'", "demo-account message",
      lambda t: t.replace(ADMIN_LINE, ADMIN_LINE + DEMO_LINE, 1))
 
+# الطلب الملغي (status = 'cancelled'): خريطة LBL ما فيها المفتاح، فبطاقة
+# الطلب عند الزبون تكتب "undefined" مرتين وتعرض موعد وصول وتتبّع لطلب ملغي.
+def add_cancelled_label(t):
+    m = re.search(r"rejected:'(<svg.*?</svg>) رفضه المحل'\}", t, re.S)
+    if not m: sys.exit("LBL map changed — update store-patch.py")
+    return t[:m.start()] + f"rejected:'{m.group(1)} رفضه المحل',cancelled:'{m.group(1)} ملغي'}}" + t[m.end():]
+once("رفضه المحل',cancelled:", "LBL: cancelled label", add_cancelled_label)
+
+CARD_DONE = re.compile(r"const done=\(o\.status==='delivered'\|\|o\.status==='rejected'\);(\s*const _r=shopRating\(sh\))")
+def card_done(t):
+    m = CARD_DONE.search(t)
+    if not m: sys.exit("order card done-check changed — update store-patch.py")
+    return t[:m.start()] + "const done=(o.status==='delivered'||o.status==='rejected'||o.status==='cancelled');" + m.group(1) + t[m.end():]
+# ما نستعمل once() هنا: نفس النص موجود بـ DONE العامة، فالعلامة لازم تكون السطر نفسه
+CARD_DONE_NEW = re.compile(r"const done=\(o\.status==='delivered'\|\|o\.status==='rejected'\|\|o\.status==='cancelled'\);\s*const _r=shopRating\(sh\)")
+if CARD_DONE_NEW.search(s):
+    log.append("  skip   order card: cancelled counts as done (already applied)")
+else:
+    s = card_done(s); log.append("  apply  order card: cancelled counts as done")
+
+once(".st-rejected,.st-cancelled{", "cancelled status styling",
+     lambda t: t.replace("\n.st-rejected{", "\n.st-rejected,.st-cancelled{")
+                .replace("\n.ordstat.st-rejected{", "\n.ordstat.st-rejected,.ordstat.st-cancelled{"))
+
 # ─── ٣ · أزرار الحذف بالواجهة ───────────────────────────────────────
 TRASH = ('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor">'
          '<path d="M4 7h16M9.5 7V4.5h5V7M6.5 7l1 13h9l1-13M10 11v5M14 11v5"/></svg>')
