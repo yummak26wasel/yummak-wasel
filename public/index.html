@@ -7216,6 +7216,7 @@ async function askDeleteAccount(){
     const r=await fetch(API_WORKER+'/delete-account',{method:'POST',headers:{'Authorization':'Bearer '+jwt}});
     const j=await r.json().catch(()=>({}));
     if(r.status===403&&j.error==='admin_account'){ toast('حساب الإدارة ما ينحذف من التطبيق'); return }
+    if(r.status===403&&j.error==='demo_account'){ toast('هذا حساب تجريبي مخصص لمراجعة المتجر، ومحمي من الحذف. حسابات المستخدمين العادية تنحذف فوراً.'); return }
     if(!r.ok||!j.ok) throw new Error(j.error||('HTTP '+r.status));
     toast('انحذف حسابك');
     try{ localStorage.clear() }catch(e){}

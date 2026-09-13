@@ -143,6 +143,15 @@ async function deleteAccount(req, env) {
 
   const phone = (profile && profile.phone) || String(user.email || '').split('@')[0];
 
+  /* حسابات مراجعة المتجر محمية — نفسها تُستعمل بكل مراجعة. الأرقام
+     بـ secret اسمه DEMO_PHONES (مفصولة بفواصل) حتى ما تنكشف بالريبو.
+     نرفض بوضوح بدل ما نتظاهر بالحذف: المراجع إذا حذف ورجع سجّل دخول
+     ولكى الحساب شغّال، يعتبر الحذف معطّل. */
+  const demo = String(env.DEMO_PHONES || '').split(',').map(x => x.trim()).filter(Boolean);
+  if (demo.includes(phone) || demo.includes(String(user.email || '').split('@')[0])) {
+    return json({ error: 'demo_account' }, 403);
+  }
+
   /* ١ · رموز الإشعارات */
   await dropTokens(env, uid);
   await sb(`push_tokens?user_id=eq.${uid}`, { method: 'DELETE' });

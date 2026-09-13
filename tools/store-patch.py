@@ -99,6 +99,7 @@ async function askDeleteAccount(){
     const r=await fetch(API_WORKER+'/delete-account',{method:'POST',headers:{'Authorization':'Bearer '+jwt}});
     const j=await r.json().catch(()=>({}));
     if(r.status===403&&j.error==='admin_account'){ toast('حساب الإدارة ما ينحذف من التطبيق'); return }
+    if(r.status===403&&j.error==='demo_account'){ toast('هذا حساب تجريبي مخصص لمراجعة المتجر، ومحمي من الحذف. حسابات المستخدمين العادية تنحذف فوراً.'); return }
     if(!r.ok||!j.ok) throw new Error(j.error||('HTTP '+r.status));
     toast('انحذف حسابك');
     try{ localStorage.clear() }catch(e){}
@@ -123,6 +124,14 @@ OLD_LOGOUT = "function logout(){ if(confirm('تريد تسجيل الخروج؟'
 NEW_LOGOUT = "function logout(){ if(confirm('تريد تسجيل الخروج؟')){unsubscribeTopics();__dropNativePush().then(()=>auth.signOut()).then(()=>location.reload())} }"
 once("async function askDeleteAccount()", "askDeleteAccount + logout unregister",
      lambda t: t.replace(OLD_LOGOUT, NEW_LOGOUT + "\n" + FN, 1) if OLD_LOGOUT in t else sys.exit("logout() changed — update store-patch.py"))
+
+# حسابات المراجعة المحمية — للملفات اللي فيها askDeleteAccount بدون هذا السطر
+ADMIN_LINE = """    if(r.status===403&&j.error==='admin_account'){ toast('حساب الإدارة ما ينحذف من التطبيق'); return }
+"""
+DEMO_LINE = """    if(r.status===403&&j.error==='demo_account'){ toast('هذا حساب تجريبي مخصص لمراجعة المتجر، ومحمي من الحذف. حسابات المستخدمين العادية تنحذف فوراً.'); return }
+"""
+once("error==='demo_account'", "demo-account message",
+     lambda t: t.replace(ADMIN_LINE, ADMIN_LINE + DEMO_LINE, 1))
 
 # ─── ٣ · أزرار الحذف بالواجهة ───────────────────────────────────────
 TRASH = ('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor">'
