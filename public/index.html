@@ -47,11 +47,11 @@ const VAPID_KEY = "BOWusCGI78_98pxGnAEYzTOSHL2NqMf0GlsGS-s1n3hum2EpTH4WnlgPh_mZI
 --o:#F97402;--o2:#D95F00;--o3:#FFF2E6;
 --osh:rgba(249,116,2,.30);
 /* ── دلالات ── */
---ok:var(--ok);--ok2:var(--ok2);--ok3:var(--ok3);--oksh:rgba(22,163,74,.26);
---no:var(--no);--no2:#DC2626;--no3:#FDECEC;--nosh:rgba(239,68,68,.24);
+--ok:#16A34A;--ok2:#15803D;--ok3:#E4F7EA;--oksh:rgba(22,163,74,.26);
+--no:#EF4444;--no2:#DC2626;--no3:#FDECEC;--nosh:rgba(239,68,68,.24);
 --gy:#F1EEF7;--gy2:#77708A;   /* رمادي — إجراءات ثانوية */
 /* ── أساسيات ── */
---bl:#2563C9;--bg:var(--bg);--txt:#1B1533;--mut:#8B8797;--bd:#E9E4F3;--dg:var(--no);
+--bl:#2563C9;--bg:#F7F5FC;--txt:#1B1533;--mut:#8B8797;--bd:#E9E4F3;--dg:#EF4444;
 --pr:#5B2BC9}
 body{background:var(--bg);color:var(--txt)}
 .screen{display:none;position:fixed;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;flex-direction:column;background:var(--bg);z-index:50}
@@ -8180,10 +8180,10 @@ function renderTrack(){
   <div class="trk-ill">${done&&!gone?BOXI:PAN}</div>
   ${!done?`<div class="trk-eta"><span>سيصلك الطلب في</span><b>${etaRange(o)}</b></div>`:''}
   <div class="trk-steps">
-    <div class="nd${on(3)}">${TRK_ICONS[3]}</div><div class="ln${on(3)}"></div>
-    <div class="nd${on(2)}">${TRK_ICONS[2]}</div><div class="ln${on(2)}"></div>
-    <div class="nd${on(1)}">${TRK_ICONS[1]}</div><div class="ln${on(1)}"></div>
-    <div class="nd${gone?'':' on'}">${TRK_ICONS[0]}</div>
+    <div class="nd${gone?'':' on'}">${TRK_ICONS[0]}</div><div class="ln${on(1)}"></div>
+    <div class="nd${on(1)}">${TRK_ICONS[1]}</div><div class="ln${on(2)}"></div>
+    <div class="nd${on(2)}">${TRK_ICONS[2]}</div><div class="ln${on(3)}"></div>
+    <div class="nd${on(3)}">${TRK_ICONS[3]}</div>
   </div>
   <div class="trk-msg${gone?' no':''}">${TRK_MSG[o.status]||'—'}</div>
   ${o.driverName?`<div class="trk-drv">
@@ -8287,10 +8287,10 @@ const TRKI=[
         </div>
       </div>
       <div class="trk-steps sm">
-        <div class="nd${on(3)}">${TRK_ICONS[3]}</div><div class="ln${on(3)}"></div>
-        <div class="nd${on(2)}">${TRK_ICONS[2]}</div><div class="ln${on(2)}"></div>
-        <div class="nd${on(1)}">${TRK_ICONS[1]}</div><div class="ln${on(1)}"></div>
-        <div class="nd${gn?'':' on'}">${TRK_ICONS[0]}</div>
+        <div class="nd${gn?'':' on'}">${TRK_ICONS[0]}</div><div class="ln${on(1)}"></div>
+        <div class="nd${on(1)}">${TRK_ICONS[1]}</div><div class="ln${on(2)}"></div>
+        <div class="nd${on(2)}">${TRK_ICONS[2]}</div><div class="ln${on(3)}"></div>
+        <div class="nd${on(3)}">${TRK_ICONS[3]}</div>
       </div></div>`;
   }).join('');
 
