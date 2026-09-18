@@ -5190,7 +5190,7 @@ async function stfFind(){
         const r=await rpc('find_user_by_phone',{p_phone:v});
         u=Array.isArray(r)?r[0]:r;
         if(u&&u.id) break; else u=null;
-      }catch(e){}
+      }catch(e){ __silent(e,'findUserByPhone') }
     }
     if(!u){   /* احتياط: القراءة المباشرة إذا الدالة ما اشتغلت */
       try{
@@ -6073,10 +6073,12 @@ async function _trkPush(loc){
   if(!orders.length && !special.length) return;
   const body={lat:loc.lat, lng:loc.lng, at:Date.now()};
   for(const o of orders){
-    try{ await db.collection('orders').doc(o.id).update({driver_loc:body}) }catch(e){}
+    try{ await db.collection('orders').doc(o.id).update({driver_loc:body}) }
+      catch(e){}  /* صامت بقصد: يتكرر كل ثانية، والفشل ما يضر */
   }
   for(const o of special){
-    try{ await db.collection('specialOrders').doc(o.id).update({driverLoc:body}) }catch(e){}
+    try{ await db.collection('specialOrders').doc(o.id).update({driverLoc:body}) }
+      catch(e){}  /* صامت بقصد: يتكرر كل ثانية، والفشل ما يضر */
   }
 }
 
@@ -6148,7 +6150,7 @@ async function initPush(silent){
       const b=(pl.notification&&pl.notification.body)||(pl.data&&pl.data.body)||'';
       toast(''+t); beep(); buzz([300,120,300]);
       try{ if(reg) reg.showNotification(t,{body:b,icon:'icon-192.png',badge:'icon-192.png',
-        vibrate:[300,120,300],tag:'lw-'+Date.now(),dir:'rtl',lang:'ar'}) }catch(e){}
+        vibrate:[300,120,300],tag:'lw-'+Date.now(),dir:'rtl',lang:'ar'}) }catch(e){ __silent(e,'pushMeta') }
     });
     return true;
   }catch(e){ console.warn('push',e.message); return false }
@@ -6207,7 +6209,7 @@ async function pmoSend(){
   if(btn){ btn.classList.add('dis'); btn.textContent='جاري الإرسال…' }
   try{
     try{ await db.collection('notifications').add({toRole:pmoRole,title:t,body:b,
-      data:{type:'promo'},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+      data:{type:'promo'},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){ __silent(e,'notifyInsert') }
     await __sendPush({role:pmoRole}, t, b, {type:'promo'});
     const c=document.getElementById('pmoCnt');
     if(c) c.textContent='انرسل لـ'+who+' — '+new Date().toLocaleTimeString('ar-IQ');
@@ -6284,12 +6286,12 @@ async function __sendPush(target,title,body,data){
 async function pushTo(targetUid,title,body,data){
   if(!targetUid) return;
   try{ if(db) await db.collection('notifications').add({to:targetUid,title,body,
-    data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+    data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){ __silent(e,'notifyInsert') }
   __sendPush({user_id:targetUid},title,body,data);
 }
 async function pushDrivers(title,body,data){
   try{ if(db) await db.collection('notifications').add({toRole:'driver',title,body,
-    data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){}
+    data:data||{},createdAt:Date.now(),sent:false,from:uid||''}) }catch(e){ __silent(e,'notifyInsert') }
   __sendPush({role:'driver'},title,body,data);
 }
 
@@ -6529,7 +6531,7 @@ async function doAuth(){
         try{ await db.collection('notifications').add({
           toRole:'admin', title:(role==='store'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg> متجر جديد':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> سائق جديد'),
           body:name+' — '+phone+' ينتظر موافقتك',
-          createdAt:Date.now(), sent:false }) }catch(e){}
+          createdAt:Date.now(), sent:false }) }catch(e){ __silent(e,'notifyInsert') }
       }
       signingUp=false; busy(false);
       document.getElementById('auth').classList.remove('on');
@@ -6742,7 +6744,7 @@ async function openRateDriver(o){
       const r=await rpc('driver_brief',{p_id:o.driverUid});
       const d=Array.isArray(r)?r[0]:r;
       if(d){ nm=nm||d.name||''; ph=ph||d.photo_url||'' }
-    }catch(e){}
+    }catch(e){ __silent(e,'driverBrief') }
     if(!nm||!ph){
       try{
         const d=await db.collection('users').doc(o.driverUid).get();
@@ -6817,7 +6819,7 @@ async function submitRate(){
         const dd=dv.exists?dv.data():{};
         await db.collection('users').doc(o.driverUid).update({
           rSum:(Number(dd.rSum)||0)+rateStars, rCnt:(Number(dd.rCnt)||0)+1 });
-      }catch(e){}
+      }catch(e){ __silent(e,'rateDriver'); toast('انحفظ تقييمك بالطلب، بس ما انضاف لمعدّل المندوب') }
       return done('شكراً على تقييمك');
     }
 
@@ -6831,7 +6833,7 @@ async function submitRate(){
       await db.collection('shops').doc(o.shopId).update({
         rSum:(Number(sh.rSum)||0)+rateStars,
         rCnt:(Number(sh.rCnt)||0)+1 });
-    }catch(e){}
+    }catch(e){ __silent(e,'rateShop'); toast('انحفظ تقييمك بالطلب، بس ما انضاف لمعدّل المحل') }
 
     if(o.driverUid && !o.drvRated){
       btn.disabled=false; btn.textContent='إرسال التقييم';
@@ -6885,7 +6887,8 @@ function scheduleDriverRender(){
 }
 function listenDriver(){
   // نستمع فقط للطلبات الجاهزة بدل تحميل ready + ontheway لكل السواق.
-  db.collection('orders').where('status','==','ready').onSnapshot(s=>{
+  /* نقرا من orders_available — عرض بلا بيانات الزبون (حماية خصوصية) */
+  db.collection('orders_available').onSnapshot(s=>{
     const all=s.docs.map(d=>({...d.data(), id:d.id}));
     const STALE=12*3600*1000; const nowT=Date.now();
     const fresh=o=>{ const t=Number(o.createdAt||0); return !t || (nowT-t)<STALE };
@@ -7363,11 +7366,11 @@ function renderShops(){
     const ps=pickFeatured(s);
     const feat=ps.length?`<div class="feat">${ps.map(pp=>`
       <div class="fitem">${pp.img?`<img src="${pp.img}">`:`<div class="fx">${s.type==='restaurant'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>'}</div>`}
-        <div class="fn">${pp.name}</div> <div class="fp">${Number(pp.price||0).toLocaleString()}</div> </div>`).join('')}</div>`:'';
+        <div class="fn">${esc(pp.name)}</div> <div class="fp">${Number(pp.price||0).toLocaleString()}</div> </div>`).join('')}</div>`:'';
     return `<div class="rwrap ${op?'':'off'}"> <div class="rcard" onclick="openShop('${s.id}')">
         ${op?'':'<span class="offtag">مسكّر الآن</span>'}
         ${s.img?`<img class="logo" src="${s.img}">`:`<div class="logo">${ic}</div>`}
-        <div class="ri"> <div class="rn">${s.name}</div> <div class="rmeta"> <span class="mpill st2">${ratingTxt(s)}</span> <span class="mpill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> ${t} د</span> <span class="mpill fee">${fareNow().toLocaleString()} د.ع</span> </div> <div class="rmeta" style="margin-top:6px"> <span class="hourpill ${op?'op':'cl'}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg> ${op?('مفتوح'+(H.close?' لين '+(typeof fmt12==='function'?fmt12(H.close):H.close):'')):(typeof nextOpenTxt==='function'?nextOpenTxt(s):'مسكّر')}</span> </div> </div> </div>
+        <div class="ri"> <div class="rn">${esc(s.name)}</div> <div class="rmeta"> <span class="mpill st2">${ratingTxt(s)}</span> <span class="mpill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> ${t} د</span> <span class="mpill fee">${fareNow().toLocaleString()} د.ع</span> </div> <div class="rmeta" style="margin-top:6px"> <span class="hourpill ${op?'op':'cl'}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg> ${op?('مفتوح'+(H.close?' لين '+(typeof fmt12==='function'?fmt12(H.close):H.close):'')):(typeof nextOpenTxt==='function'?nextOpenTxt(s):'مسكّر')}</span> </div> </div> </div>
       ${feat?`<div onclick="openShop('${s.id}')">${feat}</div>`:''}
     </div>`}).join('');
 }
@@ -7422,7 +7425,7 @@ function openShop(id){
       <div class="spidt">
         <div class="splogo">${curShop.img?`<img src="${curShop.img}" alt="">`:FALLBACK}</div>
         <div class="spnm">
-          <h2>${curShop.name}</h2>
+          <h2>${esc(curShop.name)}</h2>
           <span class="sptype">${({restaurant:'مطعم',store:'سوبر ماركت',cosmetics:'كوزمتك',sweet:'حلويات'})[curShop.type]||'متجر'}</span>
         </div>
         <span class="spstate ${open?'op':'cl'}">${open?'مفتوح الآن':'مسكّر'}</span>
@@ -7641,7 +7644,7 @@ function renderCart(){
   }
   const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
   box.innerHTML=`
-    <div class="pgtop"> <h2>سلة التسوق</h2> <button onclick="clearCart()" title="تفريغ السلة"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M6.5 7 7.4 20a1.4 1.4 0 0 0 1.4 1.3h6.4A1.4 1.4 0 0 0 16.6 20L17.5 7"/></svg></button> </div> <div class="panel" style="padding:11px 14px;margin-bottom:12px;display:flex;align-items:center;gap:9px"> <span style="font-size:17px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></span><b style="font-size:14.5px">${cart[0].shopName}</b> </div>
+    <div class="pgtop"> <h2>سلة التسوق</h2> <button onclick="clearCart()" title="تفريغ السلة"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M6.5 7 7.4 20a1.4 1.4 0 0 0 1.4 1.3h6.4A1.4 1.4 0 0 0 16.6 20L17.5 7"/></svg></button> </div> <div class="panel" style="padding:11px 14px;margin-bottom:12px;display:flex;align-items:center;gap:9px"> <span style="font-size:17px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></span><b style="font-size:14.5px">${esc(cart[0].shopName)}</b> </div>
     ${cart.map((c,i)=>`<div class="citem">
       ${c.img?`<img class="pimg" src="${c.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
       <div class="ci"> <div class="cn">${esc(c.name)}</div>
@@ -7971,7 +7974,7 @@ function openReview(){
   box.innerHTML=`
     <div class="rv-shop">
       <div class="rv-logo">${sh.img?`<img src="${sh.img}" alt="">`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/></svg>'}</div>
-      <div class="rv-nm"><b>${sh.name||cart[0].shopName}</b><span>${sh.type==='restaurant'?'مطاعم':'متاجر'}</span></div>
+      <div class="rv-nm"><b>${esc(sh.name||cart[0].shopName)}</b><span>${sh.type==='restaurant'?'مطاعم':'متاجر'}</span></div>
     </div>
     <div class="rv-card" onclick="openMap('delivery')">
       <div class="rv-ic p"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div>
@@ -8077,7 +8080,7 @@ async function submitOrder(){
 const OCCLS=s=>({pending:'oc-red',accepted:'oc-amber',ready:'oc-amber',assigned:'oc-green',arrived:'oc-green',ontheway:'oc-green',purchased:'oc-green',delivered:'oc-gray',rejected:'oc-gray'}[s]||'oc-gray');
 const LBL={pending:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg> بانتظار المحل',accepted:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="10.5" cy="11.5" r="6"/><circle cx="10.5" cy="11.5" r="2.4"/><path d="M16.5 11.5H21"/></svg> قيد التحضير',ready:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg> جاهز — ننتظر مندوب',
   assigned:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> استلمه المندوب',arrived:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> المندوب وصل',ontheway:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> المندوب بالطريق',delivered:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> تم التوصيل',rejected:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg> رفضه المحل'};
-const IDX={pending:-1,accepted:0,ready:1,assigned:2,ontheway:2,arrived:2,delivered:3};
+const IDX={pending:0,accepted:1,ready:1,assigned:2,ontheway:2,arrived:2,delivered:3};
 /* ═══════════ شاشة متابعة الطلب ═══════════ */
 let trkId=null, trkOpen=false;
 
@@ -8095,7 +8098,8 @@ const TRK_MSG={
   ontheway:'المندوب استلم طلبك وطالع إلك',
   arrived:'المندوب وصل عندك — استلم طلبك',
   delivered:'تم تسليم الطلب — عافية',
-  rejected:'الطلب ملغي'
+  rejected:'الطلب ملغي',
+  cancelled:'الطلب ملغي'
 };
 function trkCode(o){
   const d=new Date(Number(o.createdAt)||Date.now());
@@ -8150,7 +8154,7 @@ function renderTrack(){
   const o=(myOrders||[]).find(x=>x.id===trkId);
   if(!o){ box.innerHTML='<div class="empty"><p>ما لكينا الطلب</p></div>'; return }
   const sh=(shops||[]).find(x=>x.id===o.shopId)||{};
-  const idx=IDX[o.status]; const gone=(o.status==='rejected');
+  const idx=IDX[o.status]; const gone=(o.status==='rejected'||o.status==='cancelled');
   const done=(o.status==='delivered'||gone);
   const on=i=>(!gone&&idx>=i)?' on':'';
   /* المرحلة الجاية — تنبض والخط اللي قبلها يومض */
@@ -8277,7 +8281,7 @@ const TRKI=[
   const _act=list.filter(o=>!DONE(o)), _past=list.filter(DONE);
   const miniHTML=_act.map(o=>{
     const sh=(shops||[]).find(x=>x.id===o.shopId)||{};
-    const i2=IDX[o.status]; const gn=(o.status==='rejected');
+    const i2=IDX[o.status]; const gn=(o.status==='rejected'||o.status==='cancelled');
     const on=i=>(!gn&&i2>=i)?' on':'';
     const nx=i=>(!gn&&i2<3&&i2===i-1)?' nx':'';
     return `<div class="mini" onclick="openTrack('${o.id}')">
@@ -8336,7 +8340,7 @@ const TRKI=[
       </div> <div class="ordsep"></div> <div class="ordpills"> <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg> ${dt[0]||'—'}</span>
         ${dt[1]?`<span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg> ${dt[1].trim()}</span>`:''}
         <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr||'—')}</span> </div> <div class="ordbill" onclick="this.nextElementSibling.classList.toggle('on')"> <span>الفاتورة</span> <b>${o.total.toLocaleString()} د.ع <i>›</i></b> </div> <div class="orditems">
-        ${(o.items||[]).map(i=>`<div class="oitem"><span>${i.name} × ${i.qty}</span><b>${(i.price*i.qty).toLocaleString()}</b></div>`).join('')}
+        ${(o.items||[]).map(i=>`<div class="oitem"><span>${esc(i.name)} × ${i.qty}</span><b>${(i.price*i.qty).toLocaleString()}</b></div>`).join('')}
         <div class="oitem sep"><span>سعر المنتجات</span><b>${Number(o.sub||0).toLocaleString()}</b></div>
         ${o.serviceFee?`<div class="oitem"><span>رسوم الخدمة</span><b>${Number(o.serviceFee).toLocaleString()}</b></div>`:''}
         <div class="oitem"><span>أجرة التوصيل</span><b>${Number(o.deliveryFee||SET.deliveryFee).toLocaleString()}</b></div> <div class="oitem tot"><span>المجموع الكلي</span><b>${Number(o.total||0).toLocaleString()} د.ع</b></div> </div> <div class="ordstat st-${o.status}">${LBL[o.status]}</div>
@@ -8726,7 +8730,8 @@ async function delAddr(id){
 /* نطبّق العنوان على الحساب حتى يشتغل الطلب مثل ما هو */
 async function applyAddr(a){
   me.loc = a.loc; me.addr = addrText(a) || a.label || '';
-  try{ await db.collection('users').doc(uid).update({addr:me.addr, loc:me.loc}) }catch(e){}
+  try{ await db.collection('users').doc(uid).update({addr:me.addr, loc:me.loc}) }
+  catch(e){ __silent(e,'saveAddr'); toast('ما انحفظ العنوان — '+String(e.message||e)) }
   try{ renderAccount(); renderCart() }catch(e){}
 }
 
@@ -8817,7 +8822,7 @@ function renderStore(){
     cashBox.innerHTML = rows.length ? rows.map(([k,d])=>`
       <div class="cashcard">
         <div class="cc-h">استلام المبلغ من السائق</div>
-        <div class="cc-sub">بعد استلام المبلغ من ${d.name||'السائق'}، اضغط على تم الاستلام</div>
+        <div class="cc-sub">بعد استلام المبلغ من ${esc(d.name||'السائق')}، اضغط على تم الاستلام</div>
         ${d.sent?'<div class="cc-flag">المندوب يقول إنه سلّم المبلغ — أكّد إذا استلمت</div>':''}
         <div class="cc-box">
           <div class="cc-half">
@@ -9156,8 +9161,8 @@ function ordCard(o){
           <div><span>المبلغ الكلي</span><b>${Number(o.total||0).toLocaleString()} د.ع</b></div>
         </div>
         <div class="stordc-acts">
-          ${o.phone?`<a class="ost-b msg" href="tel:${o.phone}" onclick="event.stopPropagation()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg> اتصال</a>
-          <a class="ost-b msg" href="https://wa.me/${wa}" target="_blank" onclick="event.stopPropagation()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20.5 5.4 16.5a8.2 8.2 0 1 1 3.1 3.1z"/><path d="M8.9 9.5c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8.1-4-9.6-7.6h1.6l1 2z"/></svg> مراسلة</a>`:''}
+          ${o.phone?`<a class="ost-b msg" href="tel:${o.phone}" onclick="event.stopPropagation()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg><span>اتصال</span></a>
+          <a class="ost-b msg" href="https://wa.me/${wa}" target="_blank" onclick="event.stopPropagation()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20.5 5.4 16.5a8.2 8.2 0 1 1 3.1 3.1z"/><path d="M8.9 9.5c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8.1-4-9.6-7.6h1.6l1 2z"/></svg><span>مراسلة</span></a>`:''}
           ${act}
         </div>
       </div>
@@ -9270,7 +9275,7 @@ function ocard(o,act){
   return `<div class="oc ${OCCLS(o.status)}"> <div class="oh"><span class="oid">#${(o.order_no||String(o.createdAt).slice(-4))}</span><span class="st st-${o.status}">${LBL[o.status]}</span></div> <div class="ccard"> <div class="cav">${(o.customer||'؟').charAt(0)}</div> <div class="cinf"><div class="clbl">رقم الزبون</div> <div class="cnm">${esc(o.customer)}</div> <div class="cph">${o.phone}</div></div> <a class="callb" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a> </div> <div class="od"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr)}</div>
     ${o.loc&&o.loc.lat?`<a class="navbtn g" style="display:inline-flex;margin:6px 0" onclick="openViewMap(${JSON.stringify(o.loc).replace(/"/g,'&quot;')},'موقع الزبون',${JSON.stringify(o.addr||'').replace(/"/g,'&quot;')});return false" href="#"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> موقع الزبون على الخريطة</a>`:''}
     ${o.note?`<div class="od" style="color:var(--o2);font-weight:700"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M14.5 6.5l3 3"/></svg> ${esc(o.note)}</div>`:''}
-    ${o.items.map(i=>`<div class="itemline">• ${i.name} × ${i.qty} — ${(i.price*i.qty).toLocaleString()} د.ع</div>`).join('')}
+    ${o.items.map(i=>`<div class="itemline">• ${esc(i.name)} × ${i.qty} — ${(i.price*i.qty).toLocaleString()} د.ع</div>`).join('')}
     ${o.driverName?`<div class="drvcard">
       ${o.driverPhoto?`<img class="avat sm" src="${o.driverPhoto}">`:'<div class="avat sm" style="display:flex;align-items:center;justify-content:center;background:#fff"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></div>'}
       <div class="di"><b>${esc(o.driverName)}</b><span>${o.driverPhone||'—'}</span></div></div>`:''}
@@ -9525,7 +9530,7 @@ async function _wtSave(acc, start){
   try{
     await db.collection('users').doc(uid).update(
       {work_day:me.work_day, work_acc:acc, work_start:start});
-  }catch(e){}
+  }catch(e){ __silent(e,'workTime') }
 }
 
 /* يشغّل العدّاد إذا مو شغّال */
@@ -9905,7 +9910,7 @@ function _renderDriverBody(){
       ${o.shopPhone?`<a class="callb" href="tel:${o.shopPhone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
     </div> <div class="ccard"> <div class="cav">${(o.customer||'؟').charAt(0)}</div> <div class="cinf"><div class="clbl">وصّل إلى الزبون</div> <div class="cnm">${esc(o.customer)}</div> <div class="cph">${o.phone}</div></div> <a class="callb" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a> </div> <div class="soinfo dcinfo">
       <div class="sorow2"><span class="sol">العنوان</span><b class="sov">${esc(o.addr||'—')}</b><i class="soic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg></i></div>
-      <div class="sorow2"><span class="sol">الطلبات</span><b class="sov">${o.items.map(i=>`${i.name} × ${i.qty}`).join('<br>')}</b><i class="soic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg></i></div>
+      <div class="sorow2"><span class="sol">الطلبات</span><b class="sov">${o.items.map(i=>`${esc(i.name)} × ${i.qty}`).join('<br>')}</b><i class="soic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg></i></div>
       <div class="sorow2"><span class="sol">تحصّل من الزبون</span><b class="sov money">${o.total.toLocaleString()} د.ع</b><i class="soic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></i></div>
     </div> <div class="dcBtns">
       ${o.shopLoc&&o.shopLoc.lat?`<a class="navg" target="_blank" href="${navUrl(o.shopLoc)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg> الملاحة للمحل</a>`:'<span class="navg"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg> موقع المحل غير محدد</span>'}
@@ -9956,7 +9961,7 @@ function _renderDriverBody(){
               </div>
               <div class="spx-row">
                 <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg>
-                <div><b>${o.custName||o.customerName||'زبون'}</b><span>اسم الزبون</span></div>
+                <div><b>${esc(o.custName||o.customerName||'زبون')}</b><span>اسم الزبون</span></div>
               </div>
               <div class="spx-row">
                 <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg>
@@ -10017,7 +10022,7 @@ function _renderDriverBody(){
    دورة الطلب عند السائق
    المنطق كله بالقاعدة — الواجهة تنادي بس
    ═══════════════════════════════════════════════════ */
-async function rpc(fn, args){
+async function rpc(fn, args, _retried){
   const r = await fetch(SB_URL+'/rest/v1/rpc/'+fn, {
     method:'POST',
     headers:{
@@ -10029,6 +10034,11 @@ async function rpc(fn, args){
   });
   const t = await r.text();
   if(!r.ok){
+    if(!_retried && /JWT expired|PGRST301/.test(t) &&
+       typeof window.__waselRefresh==='function'){
+      const fresh = await window.__waselRefresh();
+      if(fresh) return rpc(fn, args, true);
+    }
     let m=t;
     try{ m=JSON.parse(t).message||t }catch(e){}
     throw new Error(m);
@@ -10746,7 +10756,7 @@ function listenMyTicket(){
 }
 function chatBox(boxId,msgs,sendFn){
   const el=document.getElementById(boxId); if(!el)return;
-  const list=(msgs||[]).map(m=>`<div class="msg ${m.from==='user'?'me':''}"> <div class="bub">${m.text.replace(/</g,'&lt;')}<span class="tm">${m.at?new Date(m.at).toLocaleString('ar-IQ'):''}</span></div></div>`).join('')
+  const list=(msgs||[]).map(m=>`<div class="msg ${m.from==='user'?'me':''}"> <div class="bub">${esc(m.text)}<span class="tm">${m.at?new Date(m.at).toLocaleString('ar-IQ'):''}</span></div></div>`).join('')
     || '<div class="empty" style="padding:26px"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg></div><p>اكتب رسالتك وراح ترد عليك الإدارة</p></div>';
   el.innerHTML=`<div class="chat"><div class="msgs" id="${boxId}_m">${list}</div> <div class="cin"><input id="${boxId}_i" placeholder="اكتب رسالتك للإدارة..."
       onkeydown="if(event.key==='Enter')${sendFn}('${boxId}')"> <button onclick="${sendFn}('${boxId}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></svg></button></div></div>`;
@@ -10785,19 +10795,19 @@ function renderTickets(){
   const b=document.getElementById('supCnt'); if(b){b.style.display=n?'flex':'none';b.textContent=n}
   const el=document.getElementById('tktList'); if(!el)return;
   if(openTkt){
-    el.innerHTML=`<button class="back" onclick="openTkt=null;renderTickets()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg> رجوع للرسائل</button> <div class="panel" style="padding:11px 13px;margin-bottom:10px"> <b>${openTkt.role==='driver'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'} ${openTkt.name}</b> <div class="sm" style="font-size:12px;color:var(--mut)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg> <a href="tel:${openTkt.phone}" style="color:var(--g);font-weight:800">${openTkt.phone}</a></div> </div>`;
+    el.innerHTML=`<button class="back" onclick="openTkt=null;renderTickets()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg> رجوع للرسائل</button> <div class="panel" style="padding:11px 13px;margin-bottom:10px"> <b>${openTkt.role==='driver'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'} ${esc(openTkt.name)}</b> <div class="sm" style="font-size:12px;color:var(--mut)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg> <a href="tel:${esc(openTkt.phone)}" style="color:var(--g);font-weight:800">${esc(openTkt.phone)}</a></div> </div>`;
     chatBox('tktChat', (openTkt.messages||[]).map(m=>({...m,from:m.from==='admin'?'user':'them'})), 'adminReply');
     return;
   }
   document.getElementById('tktChat').innerHTML='';
   el.innerHTML = allTickets.length ? allTickets.map(t=>{
     const last=(t.messages||[]).slice(-1)[0];
-    return `<div class="tkt ${t.newForAdmin?'new':''}" onclick="openTicket('${t.id}')"> <div class="th"><span class="nm">${t.role==='driver'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'} ${t.name} ${t.newForAdmin?'<span class="pill no">جديد</span>':''}</span> <span style="font-size:11px;color:var(--mut)">${t.lastAt?new Date(t.lastAt).toLocaleDateString('ar-IQ'):''}</span></div> <div class="pv">${last?last.text:''}</div></div>`}).join('')
+    return `<div class="tkt ${t.newForAdmin?'new':''}" onclick="openTicket('${t.id}')"> <div class="th"><span class="nm">${t.role==='driver'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'} ${esc(t.name)} ${t.newForAdmin?'<span class="pill no">جديد</span>':''}</span> <span style="font-size:11px;color:var(--mut)">${t.lastAt?new Date(t.lastAt).toLocaleDateString('ar-IQ'):''}</span></div> <div class="pv">${last?esc(last.text):''}</div></div>`}).join('')
     : '<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg></div><p>ما وصلت رسائل</p></div>';
 }
 async function openTicket(id){
   openTkt=allTickets.find(t=>t.id===id); renderTickets();
-  try{ await db.collection('tickets').doc(id).update({newForAdmin:false}) }catch(e){}
+  try{ await db.collection('tickets').doc(id).update({newForAdmin:false}) }catch(e){ __silent(e,'tktSeen') }
 }
 async function adminReply(boxId){
   const i=document.getElementById(boxId+'_i'); if(!i||!i.value.trim()||!openTkt)return;
@@ -10859,7 +10869,7 @@ async function loadMyComm(){
     const r=await rpc('shop_commission',{p_shop:me.shopId, p_period:per});
     const d=Array.isArray(r)?r[0]:r;
     myComm={sales:Number((d&&d.sales)||0), amount:Number((d&&d.amount)||0)};
-  }catch(e){}
+  }catch(e){ __silent(e,'shopCommission') }
   try{
     const iv=await sbGet('shop_invoices?select=*&shop_id=eq.'+me.shopId+'&period=eq.'+per);
     myInv=(iv||[])[0]||null;
@@ -10889,8 +10899,9 @@ let _pcMethod='cash', _pcBank=null;
 
 async function loadBankInfo(){
   try{
-    const r=await sbGet('settings?select=bank&key=eq.app&limit=1');
-    const v=(r&&r[0]&&r[0].bank)||null;
+    /* app_bank — جدول مقيّد: الأدمن وأصحاب المحلات وموظفيهم فقط */
+    const r=await sbGet('app_bank?select=data&id=eq.1&limit=1');
+    const v=(r&&r[0]&&r[0].data)||null;
     _pcBank = (typeof v==='string') ? JSON.parse(v) : v;
   }catch(e){ _pcBank=null; console.warn('bank', e) }
 }
@@ -11035,7 +11046,7 @@ async function loadInv(){
       const d=Array.isArray(r)?r[0]:r;
       invRows.push({shop:sh, sales:Number((d&&d.sales)||0),
                     amount:Number((d&&d.amount)||0), inv:invStatus[sh.id]||null});
-    }catch(e){}
+    }catch(e){ __silent(e,'shopCommission') }
   }
   renderInv();
 }
@@ -11226,15 +11237,29 @@ function openSetlSheet(id){
   document.getElementById('setlSheet').classList.add('on');
 }
 function closeSetlSheet(){ document.getElementById('setlSheet').classList.remove('on'); _ssId=null }
+
+/* ═══ تعليم طلبات التسديد كمستلَمة — ترجّع اللي فشل بدل ما تبلعه ═══ */
+async function markOrdersPaid(ids){
+  const bad=[];
+  for(const oid of (ids||[])){
+    try{
+      await db.collection('orders').doc(oid).update({shopCashPaid:true, shopCashAt:Date.now()});
+    }catch(e){ bad.push({id:oid, why:String(e.message||e)}) }
+  }
+  if(bad.length){
+    console.warn('markOrdersPaid failed', bad);
+    toast('تنبيه: '+bad.length+' طلب ما انعلّم مستلَم — '+bad[0].why);
+  }
+  return bad;
+}
+
 async function doSetlOk(){
   const id=_ssId; if(!id) return;
   const x=(allSetls||[]).find(y=>y.id===id); if(!x) return;
   try{
     await sbPatch('settlements?id=eq.'+id,
       {status:'confirmed', confirmed_at:new Date().toISOString(), confirmed_by:uid});
-    for(const oid of (x.order_ids||[])){
-      try{ await db.collection('orders').doc(oid).update({shopCashPaid:true, shopCashAt:Date.now()}) }catch(e){}
-    }
+    await markOrdersPaid(x.order_ids);
     if(x.driver_id) pushTo(x.driver_id,'الإدارة أكّدت تسديدك',
       'انحسم مبلغ '+Number(x.amount||0).toLocaleString()+' د.ع',{type:'cash_ok'});
     allSetls=allSetls.filter(y=>y.id!==id);
@@ -11444,9 +11469,7 @@ async function adminSetl(id){
   try{
     await sbPatch('settlements?id=eq.'+id,
       {status:'confirmed', confirmed_at:new Date().toISOString(), confirmed_by:uid});
-    for(const oid of (x.order_ids||[])){
-      try{ await db.collection('orders').doc(oid).update({shopCashPaid:true, shopCashAt:Date.now()}) }catch(e){}
-    }
+    await markOrdersPaid(x.order_ids);
     if(x.driver_id) pushTo(x.driver_id,'الإدارة أكّدت تسديدك',
       'انحسم مبلغ '+Number(x.amount||0).toLocaleString()+' د.ع',{type:'cash_ok'});
     toast('انحسمت');
@@ -12162,7 +12185,7 @@ function renderAdmin(){
           ${u.blocked?'<span class="pill no">موقوف</span>':u.approved?'<span class="pill ok">فعّال</span>':'<span class="pill wait">بالانتظار</span>'}</div> <div class="sm"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg> <a href="tel:${u.phone}" style="color:var(--g);font-weight:800">${u.phone}</a></div>
         ${pFil==='driver'?`<div class="sm"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> ${allOrders.filter(o=>o.driverUid===u.uid&&o.status==='delivered').length} توصيلة منجزة</div>
           ${d.count?`<div class="debt ${dl<=0?'late':''}">مستحق: <b>${d.amount.toLocaleString()} د.ع</b> · ${dl<=0?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M7 12h10"/></svg> متأخر':'باقي '+dl+' يوم'}</div>`:''}`
-        :`<div class="sm"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${u.addr||'—'} · ${allOrders.filter(o=>o.customerUid===u.uid).length} طلب</div>`}
+        :`<div class="sm"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(u.addr||'—')} · ${allOrders.filter(o=>o.customerUid===u.uid).length} طلب</div>`}
         <div class="btns">
           ${!u.approved?`<button class="btn" onclick="okUser('${u.uid}',true)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> اعتماد</button>`:''}
           ${d&&d.count?`<button class="btn o" onclick="settle('${u.uid}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a2 2 0 0 1 2 2v1"/><path d="M3 8.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg> استلمت العمولة</button>`:''}
@@ -12247,7 +12270,10 @@ async function drvSentCash(shopName){
         order_ids: pend.map(o=>o.id),
         status: 'pending'
       });
-    }catch(e){}
+    }catch(e){
+      console.warn('settlements insert', e);
+      toast('تنبيه: ما انتسجّل بسجل التسديدات — '+String(e.message||e));
+    }
     const ownr=pend[0].shopOwnerUid;
     if(ownr) pushTo(ownr,'المندوب سلّم المبلغ',
       (me.name||'المندوب')+' يقول إنه سلّم '+amt.toLocaleString()+' د.ع — أكّد الاستلام',{type:'cash'});
@@ -12269,13 +12295,17 @@ async function shopTakeCash(key){
       await db.collection('orders').doc(o.id).update({shopCashPaid:true, shopCashAt:Date.now()});
     }
     /* ختم سجل التسديدات */
+    const drv = pend[0].driverUid;
     try{
-      const drv = pend[0].driverUid;
       await sbPatch('settlements?driver_id=eq.'+drv+'&shop_id=eq.'+me.shopId+'&status=eq.pending',
         {status:'confirmed', confirmed_at:new Date().toISOString(), confirmed_by:uid});
-      if(drv) pushTo(drv,'المحل أكّد الاستلام',
-        (myShopDoc&&myShopDoc.name||'المحل')+' أكّد استلام '+amt.toLocaleString()+' د.ع',{type:'cash_ok'});
-    }catch(e){}
+    }catch(e){
+      console.warn('settlements confirm', e);
+      toast('تنبيه: ما انختم سجل التسديدات — '+String(e.message||e));
+    }
+    /* إشعار السائق يُدزّ مهما صار بالسجل */
+    if(drv) pushTo(drv,'المحل أكّد الاستلام',
+      (myShopDoc&&myShopDoc.name||'المحل')+' أكّد استلام '+amt.toLocaleString()+' د.ع',{type:'cash_ok'});
     toast('انتسجّل الاستلام');
     renderStore();
   }catch(e){ toast(errMsg(e)) }
@@ -12411,7 +12441,7 @@ async function loadMyFees(){
     const r=await rpc('driver_balance',{p_driver:uid});
     (r||[]).forEach(x=>{ myFees[x.fee_type]={
       due:Number(x.due||0), paid:Number(x.paid||0), rem:Number(x.remaining||0) } });
-  }catch(e){}
+  }catch(e){ __silent(e,'driverBalance') }
   try{ myPays = await sbGet('driver_payments?select=*&driver_id=eq.'+uid+'&order=created_at.desc') || [] }
   catch(e){ myPays=[] }
   renderMyFees();
@@ -12602,7 +12632,7 @@ async function savePushToken(tok){
     const r=await fetch(SB_URL+'/rest/v1/push_tokens?on_conflict=token',
       {method:'POST',headers:hd,body:JSON.stringify(body)});
     if(r.ok) return true;
-  }catch(e){}
+  }catch(e){ __silent(e,'pushTokenSave') }
   try{
     const ex=await sbGet('push_tokens?select=id&token=eq.'+encodeURIComponent(tok)+'&limit=1');
     if(ex&&ex.length) await sbSend('push_tokens?id=eq.'+ex[0].id,'PATCH',body);
@@ -12631,7 +12661,7 @@ async function initPush(silent){
 
     try{ await db.collection('users').doc(uid).set({
       fcmUpdatedAt:Date.now(), notifyRole:me.role, notifyShopId:me.shopId||''
-    },{merge:true}) }catch(e){}
+    },{merge:true}) }catch(e){ __silent(e,'pushMeta') }
 
     if(!__fcmMsgBound){
       __fcmMsgBound=true;
@@ -13404,6 +13434,22 @@ async function initPush(silent){
 .ost-b.go{background:linear-gradient(135deg,#FF8F1F,var(--o));color:#fff;
   box-shadow:0 4px 12px var(--osh)}
 .ost-b.dis{background:var(--g3);color:#A79CBE;pointer-events:none;box-shadow:none}
+
+
+/* ── ترتيب أسفل الكارت: المبلغ فوق، الإجراء بعرض كامل ── */
+.stordc-f{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.stordc-f .stordc-money{flex:1 1 100%;padding-bottom:10px;
+  border-bottom:1px solid var(--g3);margin-bottom:2px}
+.stordc-acts{display:flex;gap:8px;flex:1 1 100%;min-width:0}
+.ost-b{flex:1;min-width:0;border:0;border-radius:14px;padding:13px 10px;
+  font-family:inherit;font-size:13.5px;font-weight:800;display:flex;align-items:center;
+  justify-content:center;gap:6px;white-space:nowrap;text-decoration:none;overflow:hidden}
+/* الاتصال والمراسلة: أيقونة فقط، عرض ثابت */
+.ost-b.msg{flex:0 0 48px;padding:13px 0;gap:0;background:#fff;
+  border:1.6px solid var(--g);color:var(--g)}
+.ost-b.msg span{display:none}
+.ost-b.msg .wic{width:19px;height:19px}
+.ost-b.go,.ost-b.dis{flex:1 1 auto}
 
 </style>
 <script>
