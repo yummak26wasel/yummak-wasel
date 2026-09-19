@@ -6141,10 +6141,10 @@ async function initPush(silent){
     const tok=await fcm.getToken({vapidKey:VAPID_KEY,serviceWorkerRegistration:reg});
     if(!tok) return false;
     myFcmToken=tok;
-    await db.collection('users').doc(uid).set({
+    await db.collection('users').doc(uid).update({
       fcmTokens:__arrayUnion(tok),
       fcmUpdatedAt:Date.now(), notifyRole:me.role, notifyShopId:me.shopId||''
-    },{merge:true});
+    });
     fcm.onMessage(pl=>{
       const t=(pl.notification&&pl.notification.title)||(pl.data&&pl.data.title)||'واصل ليمَك';
       const b=(pl.notification&&pl.notification.body)||(pl.data&&pl.data.body)||'';
@@ -12659,9 +12659,9 @@ async function initPush(silent){
     myFcmToken=tok;
     await savePushToken(tok);
 
-    try{ await db.collection('users').doc(uid).set({
+    try{ await db.collection('users').doc(uid).update({
       fcmUpdatedAt:Date.now(), notifyRole:me.role, notifyShopId:me.shopId||''
-    },{merge:true}) }catch(e){ __silent(e,'pushMeta') }
+    }) }catch(e){ __silent(e,'pushMeta') }
 
     if(!__fcmMsgBound){
       __fcmMsgBound=true;
