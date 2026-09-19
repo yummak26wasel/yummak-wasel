@@ -6286,17 +6286,13 @@ async function __sendPush(target,title,body,data){
 async function pushTo(targetUid,title,body,data){
   if(!targetUid||!uid) return;
   try{
-    const tok=(typeof window!=='undefined'&&window.__waselToken)?window.__waselToken():null;
-    if(db&&tok) await db.collection('notifications').add({to:targetUid,title,body,
-      data:data||{},createdAt:Date.now(),sent:false,from:uid});
+    await rpc('notify_insert',{p_to:targetUid,p_to_role:null,p_title:title,p_body:body,p_data:data||{}});
   }catch(e){ __silent(e,'notifyInsert') }
   __sendPush({user_id:targetUid},title,body,data);
 }
 async function pushDrivers(title,body,data){
   try{
-    const tok=(typeof window!=='undefined'&&window.__waselToken)?window.__waselToken():null;
-    if(db&&uid&&tok) await db.collection('notifications').add({toRole:'driver',title,body,
-      data:data||{},createdAt:Date.now(),sent:false,from:uid});
+    await rpc('notify_insert',{p_to:null,p_to_role:'driver',p_title:title,p_body:body,p_data:data||{}});
   }catch(e){ __silent(e,'notifyInsert') }
   __sendPush({role:'driver'},title,body,data);
 }
