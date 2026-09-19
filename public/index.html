@@ -4975,7 +4975,9 @@ function boot(){
   busy(true);
   auth.onAuthStateChanged(async u=>{
     if(signingUp) return;                 // التسجيل يكمّل بنفسه
-    if(!u){ uid=null; me=null; busy(false); document.getElementById('auth').classList.add('on'); return }
+    if(!u){ uid=null; me=null; busy(false); document.getElementById('auth').classList.add('on');
+      if(_staffPollTimer){ clearInterval(_staffPollTimer); _staffPollTimer=null }
+      return }
     uid=u.uid;
     try{
       const d=await db.collection('users').doc(uid).get();
@@ -4998,6 +5000,7 @@ function boot(){
       }
       document.getElementById('auth').classList.remove('on');
       try{ await loadStaff() }catch(e){ console.warn('staff',e.message) }
+      startStaffPoll();
       busy(false); enter();
     }catch(e){ busy(false); document.getElementById('auth').classList.add('on'); showErr('خطأ: '+e.message) }
   });
@@ -5007,6 +5010,7 @@ function boot(){
    للوحة المتجر إذا صاحب المحل ضافه
    ═══════════════════════════════════════════════ */
 let staffShopDoc=null;
+let _staffPollTimer=null;
 
 async function loadStaff(){
   me.staff=null;
@@ -5017,8 +5021,29 @@ async function loadStaff(){
       me.staff=rows[0];
       const sh=await sbGet('shops?select=id,name,type&id=eq.'+rows[0].shop_id+'&limit=1');
       if(sh && sh.length) staffShopDoc=sh[0];
+    } else {
+      staffShopDoc=null;
     }
   }catch(e){ console.warn('staff',e.message) }
+}
+
+/* صلاحيات الموظف تتغيّر أحياناً وهو داخل بالتطبيق (صاحب المحل
+   يعدّلها بينما الموظف شغّال) — نحدّثها بالخلفية كل شوي بدل
+   ما تنقرا مرة وحدة بس عند الدخول، حتى ما تحتاج تسجّل خروج
+   ودخول عشان تشتغل الصلاحية الجديدة. */
+function startStaffPoll(){
+  if(_staffPollTimer) clearInterval(_staffPollTimer);
+  _staffPollTimer=setInterval(async ()=>{
+    if(!me || me.role!=='customer') return;
+    try{
+      await loadStaff();
+      try{ renderStaffCard() }catch(e){}
+      try{
+        const sApp=document.getElementById('sApp');
+        if(sApp && sApp.classList.contains('on')) renderStore();
+      }catch(e){}
+    }catch(e){}
+  }, 20000);
 }
 
 /* البطاقة اللي تظهر بصفحة حسابي */
@@ -7545,6 +7570,7 @@ function prodPH(){
    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>';
 }
 function prodCtl(p){
+  if(p.avail===false) return `<span class="ost-b dis">غير متوفر</span>`;
   const c=cart.find(x=>x.pid===p.id&&x.shopId===curShop.id);
   return c
     ? `<div class="qty"><button onclick="qty(${p.id},-1)">−</button><span>${c.qty}</span><button onclick="qty(${p.id},1)">+</button></div>`
@@ -7582,7 +7608,7 @@ function renderMenu(){
   const ps = _secProducts(all);
   if(!ps.length){ box.innerHTML=EMPTY('ما بيه منتجات بهذا القسم'); renderSpBar(); return }
   box.innerHTML=ps.map(p=>`
-    <div class="prod">
+    <div class="prod"${p.avail===false?' style="opacity:.55"':''}>
       <div class="pimgw">
         ${p.img?`<img class="pimg" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
         ${p.isNew?'<span class="pnew">جديد</span>':''}
@@ -7615,6 +7641,7 @@ function addCart(pid){
   if(!isOpenNow(curShop)) return toast('المحل مسكّر الآن —'+nextOpenTxt(curShop));
   if(!requireLoc()) return;
   const p=(curShop.products||[]).find(x=>x.id===pid); if(!p)return;
+  if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
   if(cart.length&&cart[0].shopId!==curShop.id){
     return askConfirm(
       'سلتك بيها طلب من <b>'+esc(cart[0].shopName||'محل ثاني')+'</b>.<br>'
@@ -9003,12 +9030,20 @@ function renderStore(){
   if(_odId && document.getElementById('q_orddet').classList.contains('on')) renderOrdDet();
 
   const ps=sh.products||[];
-  document.getElementById('stMenu').innerHTML=ps.length?ps.map(p=>`<div class="prod">${p.img?`<img class="pimg" src="${p.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
-    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${p.price.toLocaleString()} د.ع</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;gap:6px"> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
+  document.getElementById('stMenu').innerHTML=ps.length?ps.map(p=>`<div class="prod"${p.avail===false?' style="opacity:.6"':''}>${p.img?`<img class="pimg" src="${p.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
+    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${p.price.toLocaleString()} د.ع</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?'متوفر — اضغط لإيقافه':'غير متوفر — اضغط لتفعيله'}"></div> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
     :'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>ضيف أول منتج</p></div>';
   paintShopType();
   const dl=document.getElementById('catOpts');
-  if(dl)dl.innerHTML=[...new Set((sh.products||[]).map(x=>x.cat).filter(Boolean))].map(c=>`<option value="${c}">`).join('');
+  if(dl){
+    const fromCats=(typeof myCats!=='undefined' && Array.isArray(myCats))?myCats.map(c=>c.name):[];
+    const fromProds=(sh.products||[]).map(x=>x.cat);
+    dl.innerHTML=[...new Set([...fromCats, ...fromProds].filter(Boolean))].map(c=>`<option value="${c}">`).join('');
+    /* لو قائمة التصنيفات لسه ما انحمّلت هذي الجلسة، نجيبها بالخلفية
+       حتى المرة الجاية يطلع بالسهم كل الأصناف الحقيقية مو بس
+       يلي انكتبت بالمنتجات */
+    if(!fromCats.length && typeof loadShopCats==='function') loadShopCats().catch(()=>{});
+  }
   if(!document.getElementById('optsBox').dataset.init){document.getElementById('optsBox').dataset.init='1';renderOpts()}
   ss_name.textContent=sh.name;
   ss_type.textContent=({restaurant:'مطعم',store:'سوبر ماركت',cosmetics:'كوزمتك',sweet:'حلويات'})[sh.type]||'متجر';
@@ -9132,7 +9167,7 @@ function ordCard(o){
   const act = o.status==='pending'
       ? `<button class="ost-b go" onclick="event.stopPropagation();odtQuick('${o.id}','accepted')">${_CHK} قبول الطلب</button>`
     : o.status==='accepted'
-      ? `<button class="ost-b go" onclick="event.stopPropagation();odtQuick('${o.id}','ready')">${_CHK} تجهيز الطلب</button>`
+      ? `<button class="ost-b go" onclick="event.stopPropagation();odtQuick('${o.id}','ready')">${_CHK} جاهز — نادِ مندوب</button>`
     : o.status==='delivered'
       ? `<span class="ost-b dis">${_CHK} تم التسليم</span>`
       : '';
@@ -9305,6 +9340,7 @@ async function setStatus(id,st){
   }catch(e){ toast('ما انحدّثت: '+String(e.message||e)); return false }
 }
 let editingProdId=null;
+let editingProdAvail=true;
 
 /* ── الإضافات الاختيارية ── */
 let optRows=[];
@@ -9433,10 +9469,23 @@ async function addProduct(){
   const opts=collectOpts();
   const item={
     id: editingProdId!==null ? editingProdId : Date.now(),
-    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts
+    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, avail:editingProdAvail
   };
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
+    /* لو القسم يلي كتبه صاحب المحل جديد (مو موجود بقائمة التصنيفات
+       أصلاً)، نسجّله هناك تلقائياً حتى يظهر فوراً بتبويبات الزبون
+       وبصفحة "التصنيفات" — بلا ما يحتاج يضيفه مرتين. */
+    if(ct){
+      try{
+        if(!Array.isArray(myCats) || !myCats.length) await loadShopCats();
+        if(!myCats.some(c=>c.name===ct)){
+          const mx=myCats.reduce((a,c)=>Math.max(a, c.sort||0), 0);
+          await sbPost('shop_categories',{shop_id:me.shopId, name:ct, sort:mx+1, visible:true});
+          await loadShopCats();
+        }
+      }catch(e){ console.warn('catAutoAdd',e.message) }
+    }
     const wasEdit=editingProdId!==null;
     cancelEditProduct();
     toast(wasEdit?'انحفظ التعديل':'انضاف المنتج');
@@ -9446,6 +9495,7 @@ function editProduct(id){
   const p=(myShopDoc.products||[]).find(x=>x.id===id);
   if(!p)return toast('ما لكيت المنتج');
   editingProdId=id;
+  editingProdAvail=(p.avail!==false);
   pn.value=p.name||'';pp.value=p.price||'';pd.value=p.desc||'';
   const pcEl=document.getElementById('pc'); if(pcEl)pcEl.value=p.cat||'';
   prodPhoto=p.img||null;
@@ -9465,6 +9515,7 @@ function editProduct(id){
 }
 function cancelEditProduct(){
   editingProdId=null;
+  editingProdAvail=true;
   pn.value='';pp.value='';pd.value='';
   const pcEl2=document.getElementById('pc'); if(pcEl2)pcEl2.value='';
   optRows=[]; renderOpts();
@@ -9480,6 +9531,14 @@ async function delProduct(id){
     await rpc('shop_product_delete',{p_shop:me.shopId, p_id:String(id)});
     toast('انحذف المنتج');
   }catch(e){ toast('ما گدرنا نحذف') }
+}
+async function toggleProdAvail(id){
+  const p=(myShopDoc && myShopDoc.products||[]).find(x=>x.id===id);
+  if(!p) return;
+  const item={...p, avail: !(p.avail!==false)};
+  try{
+    await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
+  }catch(e){ toast('ما گدرنا نغيّر الحالة:'+e.message) }
 }
 async function toggleOpen(){
   const v=!myShopDoc.open; await db.collection('shops').doc(me.shopId).update({open:v});
@@ -9511,7 +9570,7 @@ function renderDriverAccount(){
        ${d.claimed
          ? '<div class="md-note wait">بلّغت الإدارة — بانتظار تأكيد الاستلام</div>'
          : `<button class="md-btn" onclick="drvSentCom()">سلّمت العمولة للإدارة</button>`}
-       <div class="tgnote" style="margin-top:9px">لازم تسدّد خلال ${grace} أيام. أول ما تأكّد الإدارة الاستلام يصفّر الحساب.</div>`
+       <div class="tgnote" style="margin-top:9px">لازم تسدّد خلال ${grace} أيام. أول ما تأكّد الإدارة الاستلام يصفّر الحساب.<br>هذا الجزء المستعجل من حسابك — التفاصيل الكاملة بصفحة «السجل».</div>`
     : '<div class="mydebt zero"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg><b>حسابك نظيف</b><span>ما عليك أي مستحقات</span></div>';
   const _dtg=document.getElementById('dutyTg'); if(_dtg) _dtg.classList.toggle('on',me.duty!==false);
   const _dtx=document.getElementById('dutyTxt'); if(_dtx) _dtx.textContent=me.duty!==false?'متاح للطلبات':'غير متاح الآن';
@@ -9659,23 +9718,29 @@ function _renderDriverBody(){
   const owedMap = {};
   owedList.forEach(o=>{
     const isSp = !!o.marketName;
-    const k = isSp ? (o.marketName+' (سوق)') : (o.shopName||'محل غير معروف');
-    if(!owedMap[k]) owedMap[k]={amt:0,n:0,shopId:(isSp?null:o.shopId),ids:[]};
+    const nm = isSp ? (o.marketName+' (سوق)') : (o.shopName||'محل غير معروف');
+    /* نفصل المُسلّم عن غير المُسلّم — قبل كان طلب واحد مُسلّم
+       يأشّر كل طلبات نفس المحل كأنها مُسلّمة */
+    const st = !!o.driverCashSent;
+    const k  = nm+'\u0000'+(st?'1':'0');
+    if(!owedMap[k]) owedMap[k]={nm, amt:0,n:0,shopId:(isSp?null:o.shopId),ids:[],sent:st};
     owedMap[k].ids.push(o.id);
     owedMap[k].amt += Number(isSp ? (o.purchaseBudget||0) : (o.sub||0));
     owedMap[k].n++;
-    if(o.driverCashSent) owedMap[k].sent=true;
   });
-  const owedRows = Object.keys(owedMap).map(k=>({name:k,...owedMap[k]}))
+  const owedRows = Object.keys(owedMap).map(k=>({...owedMap[k], name:owedMap[k].nm}))
                     .sort((a,b)=>b.amt-a.amt);
   const cashHand = owedRows.reduce((a,r)=>a+r.amt,0);
   /* عمولة التطبيق وأجور السائق من نفس الطلبات */
-  const comHand = owedList.reduce((a,o)=>
-      a+Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||o.purchaseBudget||0)),0);
+  const _svcOf = o => Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||o.purchaseBudget||0));
+  const comHand = owedList.reduce((a,o)=>a+_svcOf(o),0);
+  const comDueList  = owedList.filter(o=>!o.comSent);
+  const comSentList = owedList.filter(o=>o.comSent);
+  const comDue  = comDueList.reduce((a,o)=>a+_svcOf(o),0);
+  const comPaid = comSentList.reduce((a,o)=>a+_svcOf(o),0);
   const feeHand = owedList.reduce((a,o)=>
       a+Number(o.deliveryFee||SET.deliveryFee||1250),0);
   const collectAll = cashHand + comHand + feeHand;
-  const comSent = owedList.some(o=>o.comSent);
   const comToday = myLedger.filter(x=>x.kind==='commission'
       && (Date.now()-Date.parse(x.created_at))<86400000)
       .reduce((a,x)=>a+Number(x.amount||0),0);
@@ -9685,11 +9750,12 @@ function _renderDriverBody(){
   const accRate  = allMine.length ? Math.round((done.length/allMine.length)*100) : 100;
 
   /* ═══ لوحة الحساب المبسّطة ═══ */
+  /* ملاحظة: رسوم خدمة التطبيق ما تنحط هنا — إلها بطاقة لحالها
+     («رسوم خدمة التطبيق») تجيب رقمها من القاعدة مباشرة، وحطّها
+     بمكانين كان يخلي نفس المبلغ يبين مرتين وبزرّين مختلفين.
+     هذي القائمة صارت حصراً لفلوس المحلات. */
   const rowsPay = owedRows.map(r=>({key:r.name, nm:r.name, amt:r.amt, n:r.n,
                                     shopId:r.shopId, ids:r.ids, sent:r.sent, kind:'shop'}));
-  if(comHand>0) rowsPay.push({key:'__com', nm:'عمولة التطبيق', amt:comHand,
-                              n:owedList.length, ids:owedList.map(o=>o.id),
-                              sent:comSent, kind:'com'});
   const stillDue = rowsPay.filter(r=>!r.sent).reduce((a,r)=>a+r.amt,0);
   rowsPay.sort((a,b)=>(a.sent?1:0)-(b.sent?1:0));   /* اللي باقي عليه فوگ */
 
@@ -9708,9 +9774,9 @@ function _renderDriverBody(){
 
   if(hero) hero.innerHTML=`
     <div class="setl">
-      <div class="setl-k">عليك تسديد</div>
+      <div class="setl-k">عليك تسديد للمحلات</div>
       <div class="setl-v">${stillDue.toLocaleString()}<small> د.ع</small></div>
-      <div class="setl-sub">إجمالي المبلغ المطلوب تسديده</div>
+      <div class="setl-sub">فلوس البضاعة اللي تخص المحلات · رسوم التطبيق بالأسفل</div>
       <div class="setl-row">
         <div class="setl-c">
           <div class="l"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> توصيلة اليوم</div>
@@ -9790,11 +9856,11 @@ function _renderDriverBody(){
   const due=document.getElementById('dDue');
   if(due){
     const unpaid=owedRows.filter(r=>!r.sent);
-    const unpaidAmt=unpaid.reduce((a,r)=>a+r.amt,0)+(comSent?0:comHand);
+    const unpaidAmt=unpaid.reduce((a,r)=>a+r.amt,0);
     due.innerHTML = unpaidAmt>0 ? `
       <button class="duebar" onclick="dtab('hist',document.querySelectorAll('#dNav button')[2])">
         <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3.6 2.8 19.4h18.4z"/><path d="M12 9.5v4.2M12 16.6v.1"/></svg>
-        <span>عليك تسديد <b>${unpaidAmt.toLocaleString()} د.ع</b></span>
+        <span>عليك تسديد للمحلات <b>${unpaidAmt.toLocaleString()} د.ع</b></span>
         <i>التفاصيل ›</i>
       </button>` : '';
   }
@@ -9929,7 +9995,7 @@ function _renderDriverBody(){
       : o.status==='ontheway'
       ? `<button class="stepbtn" onclick="arrived('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> وصلت لعند الزبون</button>`
       : `<button class="stepbtn done" onclick="deliver('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> تم إكمال الطلب</button>`}
-    ${o.status!=='assigned'?`<button class="stepbtn" style="background:#FF7A00" onclick="openTrip('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> شاشة الرحلة</button>`:''}
+    ${`<button class="stepbtn" style="background:#FF7A00" onclick="openTrip('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> شاشة الرحلة</button>`}
     </div>`).join('')
     :'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 12.5 12 6l9 6.5V19a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 19z"/><path d="M3 12.5h5l1.6 2.6h4.8l1.6-2.6h5"/></svg></div><p>ما عندك توصيلة شغالة</p></div>';
 
@@ -10063,6 +10129,12 @@ async function claim(id){
     if(c) pushTo(c.customerUid,'المندوب بالطريق', me.name+' استلم طلبك',{type:'assigned'});
     toast('الطلب صار إلك — روح استلمه من المحل');
     dtab('mine', document.querySelectorAll('#dNav button')[1]);
+    /* نفتحله شاشة الرحلة على طول — بس ننتظر لين الطلب يوصل
+       لقائمة «طلباتي» (تجي من القاعدة) قبل ما نفتحها */
+    for(let i=0;i<20;i++){
+      if((myOrders||[]).some(x=>x.id===id)){ openTrip(id); break }
+      await new Promise(r=>setTimeout(r,300));
+    }
   }catch(e){ toast(e.message) }
 }
 
@@ -12246,8 +12318,8 @@ async function drvSentCash(shopName){
   const isSp = shopName.endsWith(' (سوق)');
   const base = isSp ? shopName.replace(/ \(سوق\)$/,'') : shopName;
   const pend = isSp
-    ? (mySpecialOrders||[]).filter(o=>o.status==='delivered' && !o.shopCashPaid && o.marketName===base)
-    : myOrders.filter(o=>o.status==='delivered' && !o.shopCashPaid
+    ? (mySpecialOrders||[]).filter(o=>o.status==='delivered' && !o.shopCashPaid && !o.driverCashSent && o.marketName===base)
+    : myOrders.filter(o=>o.status==='delivered' && !o.shopCashPaid && !o.driverCashSent
               && (o.shopName||'محل غير معروف')===shopName);
   if(!pend.length) return toast('ما بيه مبلغ مستحق لهذا المحل');
   const amt=pend.reduce((a,o)=>a+Number(o.sub||o.purchaseBudget||0),0);
@@ -12293,11 +12365,13 @@ async function shopTakeCash(key){
     {title:'تأكيد الاستلام', ok:'إي استلمت'});
   if(!yes) return;
   try{
-    for(const o of pend){
-      await db.collection('orders').doc(o.id).update({shopCashPaid:true, shopCashAt:Date.now()});
-    }
-    /* ختم سجل التسديدات */
     const drv = pend[0].driverUid;
+    if(!drv) throw new Error('ما لكينا معرّف المندوب');
+    /* التأشير يصير داخل القاعدة (دالة محمية) — أعمدة الفلوس
+       مقفولة على التعديل المباشر، والدالة تتحقق إنك صاحب المحل */
+    await rpc('shop_confirm_cash',{p_driver:drv});
+    pend.forEach(o=>{ o.shopCashPaid=true; o.shopCashAt=Date.now() });
+    /* ختم سجل التسديدات */
     try{
       await sbPatch('settlements?driver_id=eq.'+drv+'&shop_id=eq.'+me.shopId+'&status=eq.pending',
         {status:'confirmed', confirmed_at:new Date().toISOString(), confirmed_by:uid});
