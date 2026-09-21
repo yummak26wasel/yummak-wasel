@@ -341,12 +341,6 @@ body{background:#F6F5FA}
 .hscroll .sc-btn{font-size:11px;padding:8px 10px}
 .hscroll .sc-hours{font-size:10px;padding:5px 8px}
 .hscroll .sc-cats,.hscroll .sc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.promo2{display:flex;gap:10px;margin-bottom:16px}
-.promo2-c{flex:1;border-radius:16px;padding:14px;color:#fff}
-.promo2-c b{display:block;font-size:13px;font-weight:800;margin-bottom:4px}
-.promo2-c span{display:block;font-size:10.5px;opacity:.9}
-.promo2-c.p1{background:linear-gradient(135deg,var(--g),#3F0A92)}
-.promo2-c.p2{background:linear-gradient(135deg,var(--o),#D95F00)}
 .sc-name{font-weight:800;font-size:15.5px;margin-bottom:3px}
 .sc-cats{font-size:12px;color:var(--mut);margin-bottom:9px}
 .sc-row{display:flex;gap:8px;margin-bottom:7px;flex-wrap:wrap}
@@ -1010,11 +1004,12 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   border-radius:16px;padding:15px 17px;margin-bottom:14px;font-size:14px;font-weight:700;color:#8A4A00}
 .special-total b{font-family:'Cairo',sans-serif;font-size:18px;font-weight:800;color:#D95F00}
 
-.profhead2{background:linear-gradient(135deg,var(--g3) 0%,#fff 55%,var(--g3) 100%);
+.profhead2{position:relative;overflow:hidden;background:#fff;
   border:1px solid #EDEAF3;border-radius:20px;padding:22px 16px 18px;
   display:flex;flex-direction:column;align-items:center;gap:10px;margin-bottom:16px;
   box-shadow:0 3px 14px rgba(91,43,201,.06)}
-.ph-top{display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;width:100%}
+.ph-deco{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none}
+.ph-top{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;width:100%}
 .ph-top:active{transform:scale(.985)}
 .ph-av{width:64px;height:64px;border-radius:50%;background:#fff;flex-shrink:0;overflow:hidden;
   display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:800;color:var(--g);
@@ -1022,7 +1017,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .ph-av img{width:100%;height:100%;object-fit:cover}
 .profhead2 .pn{font-family:'Cairo',sans-serif;font-size:17px;font-weight:800;text-align:center}
 .ph-link{font-size:13px;color:var(--mut);font-weight:600;text-align:center}
-.ph-edit{margin-top:4px;background:#fff;border:1.4px solid var(--g);color:var(--g);
+.ph-edit{position:relative;z-index:1;margin-top:4px;background:#fff;border:1.4px solid var(--g);color:var(--g);
   font-family:inherit;font-weight:800;font-size:12.5px;border-radius:20px;padding:8px 18px;
   display:flex;align-items:center;gap:6px}
 .ph-edit .wic{width:14px;height:14px}
@@ -4329,13 +4324,15 @@ body,.screen{background:#fff;color:var(--txt)}
 .dm-sec,.off-sec{margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .dm-t h3{font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;margin:0}
 .dm-t p{font-size:11.5px;color:var(--mut);margin:3px 0 0}
-.dm-wrap{overflow-x:auto;overflow-y:hidden;margin-bottom:8px;scrollbar-width:none;
-  -webkit-overflow-scrolling:touch}
+.dm-wrap{overflow-x:auto;overflow-y:hidden;margin-bottom:10px;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
 .dm-wrap::-webkit-scrollbar{display:none}
-.dm-track{display:flex;gap:11px;width:max-content}
-.dm-card{flex:0 0 124px;width:124px;background:#fff;border-radius:16px;overflow:hidden;
-  border:1px solid var(--bd);padding-bottom:9px;box-shadow:0 2px 8px rgba(31,15,64,.05)}
-.dm-img{width:124px;height:96px;background:var(--g3)}
+.dm-track{display:flex;gap:10px;width:max-content}
+.dm-card{flex:0 0 calc((100vw - 52px)/3.15);width:calc((100vw - 52px)/3.15);max-width:150px;
+  scroll-snap-align:start;background:#fff;border-radius:16px;overflow:hidden;
+  border:1px solid var(--bd);padding-bottom:9px;box-shadow:0 2px 8px rgba(31,15,64,.05);
+  display:flex;flex-direction:column}
+.dm-img{width:100%;aspect-ratio:124/96;background:var(--g3)}
 .dm-img img{width:100%;height:100%;object-fit:cover;display:block}
 .dm-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--g)}
 .dm-ph svg{width:26px;height:26px}
@@ -4345,37 +4342,36 @@ body,.screen{background:#fff;color:var(--txt)}
 .dm-logo{flex:0 0 16px;width:16px;height:16px;border-radius:50%;overflow:hidden;background:var(--g3);
   display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;color:var(--g)}
 .dm-logo img{width:100%;height:100%;object-fit:cover}
-.dm-shop{font-size:10.5px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.dm-price{font-size:12.5px;font-weight:800;color:var(--o2);margin:0 8px}
+.dm-shop{font-size:10.5px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.dm-price{font-size:12.5px;font-weight:800;color:var(--o2);margin:auto 8px 0;padding-top:2px}
 .dm-dots{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
 .dm-dots i{width:7px;height:7px;border-radius:50%;background:#DCD6E8;transition:.25s;display:block}
 .dm-dots i.on{width:20px;border-radius:20px;background:var(--o)}
 
 /* ══════════════════════════════════════════════════════════
-   🏷️ خصومات — كاروسيل بطاقات صغيرة (عروض/كوبونات حقيقية)
+   🏷️ خصومات — بطاقات أفقية بعرض الشاشة الكامل (Carousel)
    ══════════════════════════════════════════════════════════ */
-.off-wrap{overflow-x:auto;overflow-y:hidden;margin-bottom:18px;scrollbar-width:none;
-  -webkit-overflow-scrolling:touch}
+.off-wrap{overflow-x:auto;overflow-y:hidden;margin:0 -16px 18px;padding:0 16px;
+  scrollbar-width:none;-webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
 .off-wrap::-webkit-scrollbar{display:none}
-.off-track{display:flex;gap:11px;width:max-content}
-.off-card{flex:0 0 128px;width:128px;background:#fff;border-radius:16px;overflow:hidden;
-  border:1px solid var(--bd);padding-bottom:9px;box-shadow:0 2px 8px rgba(31,15,64,.05)}
-.off-img{position:relative;width:128px;height:80px;background:var(--g3)}
+.off-track{display:flex;gap:12px;width:max-content}
+.off-card{flex:0 0 calc(100vw - 64px);max-width:460px;scroll-snap-align:start;
+  display:flex;align-items:stretch;background:#fff;border-radius:18px;overflow:hidden;
+  border:1px solid var(--bd);box-shadow:0 3px 12px rgba(31,15,64,.07)}
+.off-tx{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:center;
+  gap:6px;padding:16px 14px}
+.off-img{position:relative;flex:0 0 34%;width:34%;background:var(--g3)}
 .off-img img{width:100%;height:100%;object-fit:cover;display:block}
 .off-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--g)}
-.off-ph svg{width:24px;height:24px}
-.off-badge{position:absolute;top:6px;right:6px;background:var(--o);color:#fff;font-weight:800;
-  font-size:13px;line-height:1;border-radius:9px;padding:5px 6px;display:flex;align-items:baseline;gap:1px;
+.off-ph svg{width:28px;height:28px}
+.off-badge{align-self:flex-start;background:var(--o);color:#fff;font-weight:800;
+  font-size:15px;line-height:1;border-radius:9px;padding:6px 9px;display:flex;align-items:baseline;gap:2px;
   box-shadow:0 2px 6px rgba(217,95,0,.35)}
-.off-badge small{font-size:9px;font-weight:700}
-.off-name{font-size:12px;font-weight:800;margin:8px 8px 3px;line-height:1.25;overflow:hidden;
+.off-badge small{font-size:10px;font-weight:700}
+.off-name{font-size:14.5px;font-weight:800;line-height:1.3;overflow:hidden;
+  text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.off-shop{font-size:12px;color:var(--mut);font-weight:600;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
-.off-shop{font-size:10.5px;color:var(--mut);margin:0 8px;overflow:hidden;
-  text-overflow:ellipsis;white-space:nowrap}
-.off-empty{flex:1;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:8px;padding:26px 12px;color:var(--mut);background:#fff;border:1px dashed var(--bd);border-radius:16px}
-.off-empty svg{width:26px;height:26px;color:var(--g)}
-.off-empty p{font-size:12.5px;font-weight:700;margin:0}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
 <script src="sb-layer.js"></script>
@@ -4552,7 +4548,7 @@ body,.screen{background:#fff;color:var(--txt)}
   </div>
   <button class="rv-ok" id="rev_btn" onclick="confirmReview()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> كلشي تمام</button>
 </div> <div class="page" id="p_track"> <div class="pgtop"><h2>متابعة الطلب</h2><button onclick="closeTrack()">›</button></div> <div id="trackBox"></div> </div> <div class="page" id="p_orders"><div class="ord-loc" id="ordLoc"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg><span id="ordLocTxt">—</span></div><div class="otabs" id="ordTabs"></div><div id="ordersBox"></div></div> <div class="page" id="p_sup"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h2.6v5H5.6A1.6 1.6 0 0 1 4 17.4z"/><path d="M20 14h-2.6v5h1A1.6 1.6 0 0 0 20 17.4z"/></svg> الدعم والمساعدة</h3> <div class="supcards"> <div class="supcard" onclick="sup('faq',this)"> <div class="sc-ic faq-ic"> <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <ellipse cx="22" cy="17" rx="15" ry="11" fill="#C77DFF"/> <path d="M14 25 L12 33 L21 27 Z" fill="#C77DFF"/> <circle cx="16" cy="17" r="2.4" fill="#fff"/><circle cx="22" cy="17" r="2.4" fill="#fff"/><circle cx="28" cy="17" r="2.4" fill="#fff"/> <ellipse cx="17" cy="38" rx="12" ry="9" fill="#F9A03F"/> <path d="M11 45 L9 52 L17 46 Z" fill="#F9A03F"/> <circle cx="12" cy="38" r="2" fill="#fff"/><circle cx="17" cy="38" r="2" fill="#fff"/><circle cx="22" cy="38" r="2" fill="#fff"/> <path d="M33 44 L52 30 L52 50 Z" fill="#EDEDED"/> <rect x="49" y="28" width="9" height="24" rx="4" fill="#4C6FE7"/> <rect x="55" y="30" width="6" height="20" rx="3" fill="#E8365D"/> </svg> </div> <div class="sc-t">الأسئلة الشائعة</div> <div class="sc-s">جواب لأكثر الأسئلة</div> </div> <div class="supcard" onclick="sup('call',this)"> <div class="sc-ic call-ic"> <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"> <rect x="4" y="4" width="56" height="56" rx="12" fill="#F6DFD5"/> <path d="M20 52c0-8 5.5-13 12-13s12 5 12 13z" fill="#2E3244"/> <circle cx="32" cy="27" r="9" fill="#F5A96A"/> <path d="M23 25a9 9 0 0 1 18 0v-2a9 9 0 0 0-18 0z" fill="#4A3428"/> <path d="M21 26a11 11 0 0 1 22 0v5" stroke="#2E3244" stroke-width="3.4" fill="none" stroke-linecap="round"/> <rect x="17" y="24" width="6" height="10" rx="3" fill="#2E3244"/> <rect x="41" y="24" width="6" height="10" rx="3" fill="#2E3244"/> <path d="M30 40h5v9h-5z" fill="#E8544A"/> <rect x="22" y="45" width="20" height="13" rx="2" fill="#fff"/> </svg> </div> <div class="sc-t">خدمة العملاء</div> <div class="sc-s">تواصل ويانا بالواتساب</div> </div> </div> <div id="supBox2"></div> </div> <div class="page" id="p_uinfo"> <div class="pgtop"><h2>معلومات المستخدم</h2><button onclick="closeUserInfo()">›</button></div> <div class="uiform"> <div class="ui-photo"> <div class="ui-av" id="ui_av" onclick="document.getElementById('ui_file').click()">؟</div> <input type="file" id="ui_file" accept="image/*" style="display:none" onchange="uiPickPhoto(this)"> <button class="ui-cam" onclick="document.getElementById('ui_file').click()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg> تغيير الصورة</button> </div> <div class="sfbox"><label>الاسم</label> <input id="ui_name" placeholder="اكتب اسمك"></div> <div class="sfbox"><label>رقم الهاتف</label> <div class="sfaddr" id="ui_phone" style="direction:ltr;text-align:left">—</div> <div class="special-help">الرقم مربوط بحسابك وما ينعدّل.</div></div> <div class="sfbox"><label>الجنس</label> <div class="genrow"> <div class="genopt" id="g_male" onclick="uiSetGender('male')"><i></i><span>ذكر</span></div> <div class="genopt" id="g_female" onclick="uiSetGender('female')"><i></i><span>أنثى</span></div> </div></div> <button class="big-btn stickybtn" onclick="saveUserInfo()">حفظ البيانات</button> </div> </div> <div class="page" id="p_addrs"> <div class="pgtop"><h2>عناويني</h2><button onclick="closeAddrs()">›</button></div> <div id="addrList"></div> <button class="big-btn" onclick="openAddrForm()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة عنوان جديد</button> </div> <div class="page" id="p_addrform"> <div class="pgtop"><h2 id="afTtl">عنوان جديد</h2><button onclick="openAddrs()">›</button></div> <div class="uiform"> <div class="sfbox"><label>اسم العنوان</label> <div class="lblrow" id="afLabels"></div> <input id="af_label" placeholder="مثال: البيت"></div> <div class="sfbox"><label>الموقع على الخريطة — إجباري</label> <div id="af_locstate"></div> <div class="mapbox" id="af_map" onclick="openMap('delivery')" style="margin-bottom:10px"><div class="pinc"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div></div> <button class="big-btn" onclick="openMap('delivery')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> حدد الموقع</button></div> <div class="sfbox"><label>اسم المنطقة / الحي</label><input id="af_building" placeholder="مثال: حي الضباط"></div> <div class="sfbox"><label>أقرب نقطة دالة</label><input id="af_floor" placeholder="مثال: مقابل جامع النور"></div> <div class="sfbox"><label>ملاحظة للمندوب (اختياري)</label><input id="af_note" placeholder="مثال: الباب الأزرق — دگ الجرس"></div> <button class="big-btn stickybtn" onclick="saveAddr()">حفظ العنوان</button> </div> </div> <div class="page" id="p_disc"> <div class="dsc-hd"><div class="dsc-t"><h2>الخصومات</h2><p>🎁 استخدم كوبونك ووفّر أكثر</p></div><div class="dsc-ill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12.6 2.6 21 11l-9.4 9.4L3 12V4.5a1.9 1.9 0 0 1 1.9-1.9z"/><circle cx="8" cy="8" r="1.6"/><path d="M10 15l5-5"/><circle cx="10.5" cy="10.5" r="1"/><circle cx="14.5" cy="14.5" r="1"/></svg></div></div> <div class="dsc-tabs" id="dscTabs"></div> <div id="dscList"></div> </div> <div class="page" id="p_more"> <button class="acc-gear" onclick="document.getElementById('accSettings').scrollIntoView({behavior:'smooth'})" aria-label="الإعدادات"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.9 2.9l-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1.1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1a2 2 0 1 1-2.9-2.9l.1-.1a1.7 1.7 0 0 0 .3-1.9 1.7 1.7 0 0 0-1.6-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9l-.1-.1a2 2 0 1 1 2.9-2.9l.1.1a1.7 1.7 0 0 0 1.9.3H9a1.7 1.7 0 0 0 1-1.6V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1a2 2 0 1 1 2.9 2.9l-.1.1a1.7 1.7 0 0 0-.3 1.9V9a1.7 1.7 0 0 0 1.6 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.6 1z"/></svg></button>
-        <div class="profhead2"> <div class="ph-top" onclick="openUserInfo()"> <div class="ph-av" id="s_av">؟</div> <div class="pn" id="s_name">—</div> <div class="ph-link">إظهار معلومات المستخدم</div> </div> <button class="ph-edit" onclick="openUserInfo()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15.2 4.8 19 8.6 8.4 19.2 4 20l.8-4.4z"/></svg> تعديل الحساب</button> </div> <div id="staffCard" style="display:none"></div> <div class="seclbl2">الحساب والعناوين</div>
+        <div class="profhead2"> <svg class="ph-deco" viewBox="0 0 400 210" preserveAspectRatio="none" aria-hidden="true"><path d="M0 0h150C70 15 25 65 0 130z" fill="#C9B7EE" opacity=".55"/><path d="M0 0h95C40 10 12 42 0 78z" fill="#8B5FE0" opacity=".45"/><path d="M0 90 12 130 0 150z" fill="#F97402" opacity=".55"/><path d="M400 0H255c85 12 128 60 145 118V0z" fill="#D8C9F5" opacity=".55"/><path d="M400 0H320c55 8 85 35 95 66V0z" fill="#8B5FE0" opacity=".3"/><path d="M400 145 375 175 400 210z" fill="#F97402" opacity=".4"/></svg> <div class="ph-top" onclick="openUserInfo()"> <div class="ph-av" id="s_av">؟</div> <div class="pn" id="s_name">—</div> <div class="ph-link">إظهار معلومات المستخدم</div> </div> <button class="ph-edit" onclick="openUserInfo()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15.2 4.8 19 8.6 8.4 19.2 4 20l.8-4.4z"/></svg> تعديل الحساب</button> </div> <div id="staffCard" style="display:none"></div> <div class="seclbl2">الحساب والعناوين</div>
         <div class="mlist">
           <div class="mrow" onclick="editAddr()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div><div class="mt">عنوان التوصيل<span class="msub" id="s_addr">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" onclick="openMap('delivery')"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg></div><div class="mt">موقعي على الخريطة<span class="msub" id="s_loc">—</span></div><div class="ma">‹</div></div>
@@ -7705,7 +7701,7 @@ function renderDailyMeals(){
   dmBindOnce();
   requestAnimationFrame(()=>{
     const first=track.querySelector('.dm-card');
-    const cw=first?first.getBoundingClientRect().width+11:129;
+    const cw=first?first.getBoundingClientRect().width+10:120;
     __dmPerPage=Math.max(1,Math.round(wrap.clientWidth/cw));
     const pages=Math.max(1,Math.ceil(set.length/__dmPerPage));
     if(dots) dots.innerHTML=Array.from({length:pages}).map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('');
@@ -7739,11 +7735,6 @@ function renderShops(){
       ${rest.length?`
       <div class="ymk-sec"><h3>مطاعم قريبة منك</h3><span class="ymk-all" onclick="pickCat('restaurant')">عرض الكل ›</span></div>
       <div class="shc-list">${rest.map(shopCardHTML).join('')}</div>`:''}
-
-      <div class="promo2">
-        <div class="promo2-c p1"><b>توصيل مجاني</b><span>للطلبات فوق 20,000 د.ع</span></div>
-        <div class="promo2-c p2"><b>عروض خاصة</b><span>خصومات حصرية يومياً</span></div>
-      </div>
 
       ${store.length?`
       <div class="ymk-sec"><h3>متاجر قريبة منك</h3><span class="ymk-all" onclick="pickCat('store')">عرض الكل ›</span></div>
@@ -8677,7 +8668,10 @@ const TRKI=[
     const i2=IDX[o.status]; const gn=(o.status==='rejected'||o.status==='cancelled');
     const on=i=>(!gn&&i2>=i)?' on':'';
     const nx=i=>(!gn&&i2<3&&i2===i-1)?' nx':'';
+    const stLabel = gn ? 'ملغي' : (i2<0?'الطلب قيد الموافقة':steps[i2]);
+    const stIcon = gn ? '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg>' : TRK_ICONS[Math.max(i2,0)];
     return `<div class="mini" onclick="openTrack('${o.id}')">
+      <span class="mstat ${gn?'no':'go'}">${stIcon} ${stLabel}</span>
       <div class="mtop">
         <div class="mlg">${sh.img?`<img src="${sh.img}" alt="" onerror="this.style.display='none'">`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'}</div>
         <div class="mtx">
@@ -8970,9 +8964,12 @@ function offCardHTML(o){
   const img = shImg ? `<img src="${shImg}" alt="">`
     : `<div class="off-ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></div>`;
   return `<div class="off-card" onclick="openDisc()">
-    <div class="off-img">${img}<span class="off-badge">${v.n}<small>${v.s}</small></span></div>
-    <div class="off-name">${esc(o.title||'عرض')}</div>
-    <div class="off-shop">${sh?esc(sh.name):'كل المطاعم'}</div>
+    <div class="off-tx">
+      <span class="off-badge">${v.n}<small>${v.s}</small></span>
+      <div class="off-name">${esc(o.title||'عرض')}</div>
+      <div class="off-shop">${sh?esc(sh.name):'كل المطاعم'}</div>
+    </div>
+    <div class="off-img">${img}</div>
   </div>`;
 }
 function renderHomeOffers(){
@@ -8980,13 +8977,12 @@ function renderHomeOffers(){
   if(!track||!wrap||!sec) return;
   const now=Date.now();
   const list=(myOffers||[]).filter(o=>offValidNow(o,now)).slice(0,10);
-  const sub=sec.querySelector('.dm-t p');
   if(!list.length){
-    if(sub) sub.textContent='ماكو عروض حالياً';
-    track.innerHTML=`<div class="off-empty"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg><p>ماكو عروض حالياً</p></div>`;
+    sec.style.display='none'; wrap.style.display='none';
+    track.innerHTML='';
     return;
   }
-  if(sub) sub.textContent='عروض وكوبونات نشطة الآن';
+  sec.style.display=''; wrap.style.display='';
   track.innerHTML=list.map(offCardHTML).join('');
 }
 
@@ -13435,6 +13431,11 @@ async function initPush(silent){
 .mini{background:#fff;border:1.5px solid var(--bd);border-radius:17px;
   padding:14px;margin-bottom:18px;cursor:pointer;box-shadow:0 2px 10px rgba(31,15,64,.05)}
 .mini:active{transform:scale(.99)}
+.mstat{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:800;
+  border-radius:20px;padding:6px 12px;margin-bottom:12px}
+.mstat svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.8}
+.mstat.go{background:var(--o3);color:var(--o2)}
+.mstat.no{background:var(--no3);color:var(--no2)}
 .mini .mtop{display:flex;align-items:center;gap:11px;margin-bottom:12px}
 .mini .mlg{width:72px;height:72px;border-radius:14px;flex:none;overflow:hidden;
   background:var(--g3);display:flex;align-items:center;justify-content:center;color:var(--g)}
