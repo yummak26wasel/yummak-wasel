@@ -1,4 +1,4 @@
-const CACHE = 'leemak-v44';
+const CACHE = 'leemak-v48';
 const ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
