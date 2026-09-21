@@ -188,6 +188,7 @@ h3.ttl{font-size:15px;font-weight:800;margin:4px 0 12px}
 .alertbar{background:var(--o);color:#fff;padding:10px 14px;font-size:13px;font-weight:800;text-align:center;cursor:pointer;display:none}
 .alertbar.on{display:block}
 .toast{position:fixed;bottom:104px;right:50%;transform:translateX(50%);background:#222;color:#fff;padding:11px 20px;border-radius:24px;font-size:13.5px;font-weight:700;z-index:999;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;max-width:90%}
+#auth.on ~ .toast{bottom:26px}
 .toast.on{opacity:1;bottom:112px}
 .load{position:fixed;inset:0;background:rgba(255,255,255,.94);display:none;flex-direction:column;
   align-items:center;justify-content:center;z-index:9000;font-weight:800;color:var(--g);gap:16px;font-size:14px}
@@ -4279,6 +4280,66 @@ body,.screen{background:#fff;color:var(--txt)}
   display:none;align-items:flex-end;backdrop-filter:blur(2px)}
 #rsSheet.on{display:flex;animation:svcFade .2s}
 #rsSheet input:focus{border-color:var(--g2)}
+#addrAskSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
+  align-items:center;justify-content:center;padding:22px;box-sizing:border-box}
+#addrAskSheet.on{display:flex;animation:svcFade .2s}
+.addrAskBox{position:relative;background:#fff;border-radius:28px;padding:32px 22px 22px;
+  width:100%;max-width:380px;max-height:92vh;overflow:auto;box-sizing:border-box;
+  box-shadow:0 20px 55px rgba(20,12,40,.32);text-align:center}
+.addrAskX{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;
+  border:0;background:#F4F1FA;color:var(--g);font-size:15px;cursor:pointer;line-height:1}
+.addrAskIcWrap{width:78px;height:78px;border-radius:50%;background:var(--g3);margin:0 auto 16px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center}
+.addrAskIc{color:var(--g)}
+.addrAskIc svg{width:34px;height:34px}
+.addrAskIcWrap i{display:block;width:26px;height:4px;border-radius:4px;background:var(--o);margin-top:6px}
+.addrAskBox h4{font-family:'Cairo',sans-serif;font-size:22px;font-weight:800;color:#1B1533;margin-bottom:6px}
+.addrAskBox #addrAskSub{font-size:13.5px;color:var(--mut);font-weight:600;margin-bottom:20px}
+.addrAskField{position:relative;margin-bottom:12px}
+.addrAskField input{width:100%;padding:15px 44px 15px 15px;border:1.5px solid #EDE9F6;border-radius:16px;
+  font-size:14.5px;font-weight:700;font-family:'Cairo',sans-serif;outline:none;text-align:right;
+  background:#FAF9FD;box-sizing:border-box}
+.addrAskField input:focus{border-color:var(--g2)}
+.addrAskField svg{position:absolute;top:50%;right:15px;transform:translateY(-50%);
+  width:18px;height:18px;color:var(--g);pointer-events:none}
+.addrAskLoc{width:100%;display:flex;align-items:center;gap:10px;background:var(--g3);border:0;
+  border-radius:16px;padding:12px 14px;margin-bottom:16px;cursor:pointer;text-align:right;font-family:inherit}
+.addrAskLoc .ic{flex:none;width:34px;height:34px;border-radius:50%;background:#fff;color:var(--g);
+  display:flex;align-items:center;justify-content:center}
+.addrAskLoc .ic .wic{width:18px;height:18px}
+.addrAskLoc .tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.addrAskLoc .tx b{font-size:13.5px;font-weight:800;color:var(--g)}
+.addrAskLoc .tx span{font-size:11px;color:var(--g2);opacity:.8;font-weight:600}
+.addrAskLoc .chev{flex:none;color:var(--g);font-size:20px;font-weight:700}
+.addrAskBts{display:flex;gap:10px;margin-bottom:16px}
+.addrAskNo{flex:1;background:#fff;border:1.6px solid var(--g);color:var(--g);border-radius:16px;
+  padding:14px;font-family:'Cairo',sans-serif;font-size:14.5px;font-weight:800;cursor:pointer}
+.addrAskYes{flex:1;background:var(--g);border:0;color:#fff;border-radius:16px;
+  padding:14px;font-family:'Cairo',sans-serif;font-size:14.5px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 8px 20px rgba(91,43,201,.28)}
+.addrAskYes:active,.addrAskNo:active{transform:scale(.97)}
+.addrAskLock{font-size:11px;color:var(--mut);font-weight:600;display:flex;align-items:center;
+  justify-content:center;gap:5px}
+.addrAskLock .wic{width:13px;height:13px}
+#logoutSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
+  align-items:center;justify-content:center;padding:22px;box-sizing:border-box}
+#logoutSheet.on{display:flex;animation:svcFade .2s}
+.loBox{position:relative;background:#fff;border-radius:28px;padding:30px 22px 22px;
+  width:100%;max-width:380px;box-sizing:border-box;box-shadow:0 20px 55px rgba(20,12,40,.32);text-align:center}
+.loX{position:absolute;top:14px;left:14px;width:34px;height:34px;border-radius:50%;
+  border:0;background:#F4F1FA;color:var(--g);font-size:15px;cursor:pointer;line-height:1}
+.loArt{width:190px;height:auto;margin:0 auto 14px;display:block}
+.loBox h4{font-family:'Cairo',sans-serif;font-size:24px;font-weight:800;color:var(--g);margin-bottom:8px}
+.loBox p{font-size:14.5px;color:#3D2E63;font-weight:700;margin-bottom:22px}
+.loBts{display:flex;gap:10px}
+.loNo{flex:1;background:#fff;border:1.6px solid var(--g);color:var(--g);border-radius:16px;
+  padding:14px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer}
+.loYes{flex:1;background:var(--g);border:0;color:#fff;border-radius:16px;
+  padding:14px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:800;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  box-shadow:0 8px 20px rgba(91,43,201,.28)}
+.loNo:active,.loYes:active{transform:scale(.97)}
 #rsSheet .err{background:#fdecea;color:#c0392b;padding:9px 12px;border-radius:11px;
   font-size:13px;font-weight:700;display:none;text-align:center}
 #rsSheet .err.on{display:block}
@@ -4981,6 +5042,63 @@ body,.screen{background:#fff;color:var(--txt)}
         font-size:15px;font-weight:700;font-family:'Cairo',sans-serif;outline:none;text-align:right">
       <div id="rsErrB" class="err" style="margin-top:10px"></div>
       <button class="big-btn g" id="rsBtn" onclick="rsConfirm()">حفظ كلمة المرور</button>
+    </div>
+  </div>
+</div>
+<div id="addrAskSheet" onclick="if(event.target===this)addrAskCancel()">
+  <div class="addrAskBox">
+    <button class="addrAskX" onclick="addrAskCancel()" aria-label="إغلاق">✕</button>
+    <div class="addrAskIcWrap"><div class="addrAskIc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div><i></i></div>
+    <h4 id="addrAskTtl">أدخل عنوانك</h4>
+    <p id="addrAskSub">حتى نوصلك طلبك بأسرع وقت</p>
+    <div class="addrAskField">
+      <input id="addrAskInput" placeholder="">
+      <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg>
+    </div>
+    <button class="addrAskLoc" id="addrAskLocBt" onclick="addrAskUseGPS()">
+      <span class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="2.6"/><path d="M12 3v2.3M12 18.7V21M21 12h-2.3M5.3 12H3"/><circle cx="12" cy="12" r="7.5"/></svg></span>
+      <span class="tx"><b>استخدام موقعي الحالي</b><span>تحديد الموقع تلقائياً</span></span>
+      <span class="chev">‹</span>
+    </button>
+    <div class="addrAskBts">
+      <button class="addrAskNo" onclick="addrAskCancel()">إلغاء</button>
+      <button class="addrAskYes" onclick="addrAskConfirm()">تأكيد العنوان <span>→</span></button>
+    </div>
+    <div class="addrAskLock"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="10.5" width="14" height="9" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg> معلوماتك آمنة ولن يتم مشاركتها</div>
+  </div>
+</div>
+<div id="logoutSheet" onclick="if(event.target===this)closeLogout()">
+  <div class="loBox">
+    <button class="loX" onclick="closeLogout()" aria-label="إغلاق">✕</button>
+    <svg class="loArt" viewBox="0 0 200 170" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="150" rx="55" ry="9" fill="#EFEAF9"/>
+      <circle cx="100" cy="95" r="62" fill="#F4EFFB"/>
+      <path d="M55 145 42 128l7-10 13 12z" fill="#F97402" opacity=".85"/>
+      <g stroke="#F97402" stroke-width="4" stroke-linecap="round">
+        <path d="M150 88l13-9M154 100l15-2M150 111l12 7"/>
+      </g>
+      <path d="M64 78h72l-6 84a8 8 0 0 1-8 7H78a8 8 0 0 1-8-7z" fill="#fff" stroke="#3D2E63" stroke-width="3.2"/>
+      <path d="M62 78 74 60h52l12 18z" fill="#fff" stroke="#3D2E63" stroke-width="3.2"/>
+      <rect x="99" y="34" width="24" height="30" rx="4" fill="#5B2BC9"/>
+      <path d="M111 34v-9" stroke="#5B2BC9" stroke-width="4" stroke-linecap="round"/>
+      <path d="M78 60c2-16 40-16 42 0z" fill="#F9A93A"/>
+      <ellipse cx="99" cy="60" rx="21" ry="5" fill="#7A4A1E"/>
+      <path d="M45 92c-10 3-16 12-13 22" stroke="#3D2E63" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <path d="M141 88c11 1 19 9 18 20" stroke="#3D2E63" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+      <circle cx="82" cy="98" r="3.6" fill="#1B1533"/>
+      <circle cx="112" cy="98" r="3.6" fill="#1B1533"/>
+      <path d="M87 108q10 8 20 0" stroke="#1B1533" stroke-width="3.4" fill="none" stroke-linecap="round"/>
+      <circle cx="76" cy="106" r="5" fill="#FFC2C2" opacity=".8"/>
+      <circle cx="120" cy="106" r="5" fill="#FFC2C2" opacity=".8"/>
+      <path d="M96 128h10M98 144h6" stroke="#5B2BC9" stroke-width="3" stroke-linecap="round"/>
+      <path d="M30 70a12 12 0 0 1 12-12h4l4-8 4 8h2a12 12 0 0 1 4 23l-3 7-6-7a12 12 0 0 1-21-11z" fill="#fff" stroke="#3D2E63" stroke-width="2.6"/>
+      <path d="M42 62c1.5-2 5-2 6.5 0" stroke="#F97402" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+    </svg>
+    <h4>وين رايح؟ <span>😄</span></h4>
+    <p>تره تجوع بدوننا! <span>❤️</span></p>
+    <div class="loBts">
+      <button class="loNo" onclick="closeLogout()">لا، أبقى 😋</button>
+      <button class="loYes" onclick="confirmLogout()">تسجيل الخروج <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg></button>
     </div>
   </div>
 </div>
@@ -6605,6 +6723,44 @@ function rsErr(t){
   });
 }
 function rsClose(){document.getElementById('rsSheet').classList.remove('on')}
+
+/* ═════ نافذة إدخال العنوان الأنيقة داخل التطبيق — بديل prompt() الأصلي ═════ */
+let __addrAskResolve=null;
+function askText(title,placeholder){
+  return new Promise(resolve=>{
+    __addrAskResolve=resolve;
+    const i=document.getElementById('addrAskInput');
+    if(i){ i.value=''; i.placeholder=placeholder||'مثال: قرب سوق الخضرة'; }
+    const sh=document.getElementById('addrAskSheet'); if(sh) sh.classList.add('on');
+    setTimeout(()=>{ if(i) i.focus() },150);
+  });
+}
+function addrAskConfirm(){
+  const i=document.getElementById('addrAskInput');
+  const v=i?i.value.trim():'';
+  const sh=document.getElementById('addrAskSheet'); if(sh) sh.classList.remove('on');
+  if(__addrAskResolve){ __addrAskResolve(v||null); __addrAskResolve=null }
+}
+function addrAskCancel(){
+  const sh=document.getElementById('addrAskSheet'); if(sh) sh.classList.remove('on');
+  if(__addrAskResolve){ __addrAskResolve(null); __addrAskResolve=null }
+}
+function addrAskUseGPS(){
+  const bt=document.getElementById('addrAskLocBt'), i=document.getElementById('addrAskInput');
+  if(!navigator.geolocation){ toast('جهازك ما يدعم تحديد الموقع'); return }
+  if(bt) bt.querySelector('.tx b').textContent='… جاري تحديد موقعك';
+  navigator.geolocation.getCurrentPosition(
+    ()=>{ if(i) i.value='موقعي الحالي'; if(bt) bt.querySelector('.tx b').textContent='استخدام موقعي الحالي'; if(i) i.focus(); },
+    ()=>{ if(bt) bt.querySelector('.tx b').textContent='تعذّر تحديد الموقع'; toast('لازم تفعّل صلاحية الموقع بالمتصفح'); },
+    {timeout:8000}
+  );
+}
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'){
+    const sh=document.getElementById('addrAskSheet');
+    if(sh && sh.classList.contains('on') && document.activeElement && document.activeElement.id==='addrAskInput') addrAskConfirm();
+  }
+});
 function rsPaint(){
   document.getElementById('rsS1').style.display = rsStep===1?'block':'none';
   document.getElementById('rsS2').style.display = rsStep===2?'block':'none';
@@ -6739,7 +6895,15 @@ async function doAuth(){
       }catch(e){
         if(e.code==='auth/email-already-in-use'){
           // حساب قديم ما اكتمل — نكمّله بدل ما نرفض
-          cred=await auth.signInWithEmailAndPassword(email,pass);
+          try{
+            cred=await auth.signInWithEmailAndPassword(email,pass);
+          }catch(e2){
+            signingUp=false; busy(false);
+            if(e2.code==='auth/invalid-credential'||e2.code==='auth/wrong-password'){
+              return showErr('هذا الرقم مسجّل من قبل — وكلمة المرور اللي كتبتها ما تطابق كلمة المرور الأصلية. سجّل دخول بدل إنشاء حساب، أو اضغط «نسيت كلمة المرور؟»');
+            }
+            throw e2;
+          }
           const ex=await db.collection('users').doc(cred.user.uid).get();
           if(ex.exists){
             /* الحساب مكتمل أصلاً وكلمة المرور صحيحة — ندخّله مباشرة */
@@ -6873,7 +7037,10 @@ function enter(){
     try{ startDriverTracking() }catch(e){}
   }
 }
-function logout(){ if(confirm('تريد تسجيل الخروج؟')){unsubscribeTopics();auth.signOut().then(()=>location.reload())} }
+function logout(){ openLogout() }
+function openLogout(){ const sh=document.getElementById('logoutSheet'); if(sh) sh.classList.add('on') }
+function closeLogout(){ const sh=document.getElementById('logoutSheet'); if(sh) sh.classList.remove('on') }
+function confirmLogout(){ closeLogout(); unsubscribeTopics(); auth.signOut().then(()=>location.reload()) }
 
 /* ══════ LISTENERS ══════ */
 /* ═══════════════════════════════════════════════════════
@@ -7612,7 +7779,7 @@ function shopCardHTML(s){
     const freeDelivery = !!(s.freeDelivery||s.free_delivery);
     return `<div class="shc-card ${op?'':'off'}">
       <div class="shc-img" onclick="openShop('${s.id}')">
-        ${s.cover_url?`<img src="${s.cover_url}" alt="">`:(s.img?`<img src="${s.img}" alt="">`:`<div class="shc-ph">${ic}</div>`)}
+        ${s.img?`<img src="${s.img}" alt="">`:(s.cover_url?`<img src="${s.cover_url}" alt="">`:`<div class="shc-ph">${ic}</div>`)}
       </div>
       <div class="shc-info" onclick="openShop('${s.id}')">
         <div class="shc-name">${esc(s.name)}</div>
@@ -7686,6 +7853,16 @@ function dmUpdateDots(){
   document.querySelectorAll('#dmDots i').forEach((d,k)=>d.classList.toggle('on',k===page));
 }
 
+let __dmDir=null;
+function dmDetectDir(wrap){
+  const orig=wrap.scrollLeft;
+  wrap.scrollLeft=5;
+  if(Math.abs(wrap.scrollLeft)>0.5){ const d=wrap.scrollLeft>0?1:-1; wrap.scrollLeft=orig; return d }
+  wrap.scrollLeft=-5;
+  if(Math.abs(wrap.scrollLeft)>0.5){ const d=wrap.scrollLeft>0?1:-1; wrap.scrollLeft=orig; return d }
+  wrap.scrollLeft=orig;
+  return null; /* ما نعرف الاتجاه بعد (يمكن المحتوى أصلاً أقصر من الشاشة) */
+}
 function dmAutoScrollTick(now){
   const wrap=document.getElementById('dmWrap');
   if(!wrap){ __dmRAF=requestAnimationFrame(dmAutoScrollTick); return }
@@ -7694,10 +7871,13 @@ function dmAutoScrollTick(now){
   if(!__dmPaused){
     const max=wrap.scrollWidth-wrap.clientWidth;
     if(max>2){
-      const speed=0.028; /* حركة هادئة وناعمة */
-      let sl=wrap.scrollLeft-dt*speed;   /* يمين ← يسار بالمتصفحات الحديثة (RTL) */
-      if(sl<=-max) sl=0;
-      wrap.scrollLeft=sl;
+      if(__dmDir===null) __dmDir=dmDetectDir(wrap);
+      if(__dmDir){
+        const speed=0.028; /* حركة هادئة وناعمة */
+        let sl=wrap.scrollLeft + __dmDir*dt*speed;
+        if(Math.abs(sl)>=max) sl=0;
+        wrap.scrollLeft=sl;
+      }
     }
   }
   __dmRAF=requestAnimationFrame(dmAutoScrollTick);
@@ -8435,7 +8615,7 @@ async function submitOrder(){
     return toast('المحل سكّر —'+nextOpenTxt(shNow));
   }
   if(!me.addr||!me.addr.trim()){
-    const v=prompt('اكتب عنوانك داخل عانة حتى يوصلك الطلب:');
+    const v=await askText('اكتب عنوانك داخل عانة حتى يوصلك الطلب:','مثال: قرب سوق الخضرة');
     if(!v||!v.trim()) return toast('لازم عنوان حتى نوصّلك');
     me.addr=v.trim();
     try{ await db.collection('users').doc(uid).update({addr:me.addr}) }
@@ -8970,7 +9150,7 @@ function offValidNow(o,now){
 function offCardHTML(o){
   const v=_offVal(o);
   const sh = o.shop_id ? shops.find(x=>x.id===o.shop_id) : null;
-  const shImg = sh ? (sh.cover_url||sh.img) : null;
+  const shImg = sh ? (sh.img||sh.cover_url) : null;
   const img = shImg ? `<img src="${shImg}" alt="">`
     : `<div class="off-ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></div>`;
   return `<div class="off-card" onclick="openDisc()">
