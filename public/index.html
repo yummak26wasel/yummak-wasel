@@ -950,6 +950,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   border-radius:13px;padding:12px 14px;font-size:13.5px;font-weight:700;color:#6E6780;cursor:pointer;flex:1}
 .ordbill b{color:#1c1c1c;font-size:14.5px;display:flex;align-items:center;gap:6px}
 .ordbill b i{font-style:normal;color:#B3ABC5;font-size:17px}
+.ordbill span{display:flex;align-items:center;gap:5px}
 .ordfoot{display:flex;gap:10px;align-items:stretch;margin:10px 0}
 .reorderbtn{flex:0 0 auto;display:flex;align-items:center;gap:6px;background:#fff;color:var(--g);
   border:1.5px solid var(--g);border-radius:13px;padding:0 14px;font-family:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
@@ -4319,34 +4320,44 @@ body,.screen{background:#fff;color:var(--txt)}
   width:100%;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 
 /* ══════════════════════════════════════════════════════════
-   🔥 وجبات اليوم — كاروسيل أفقي
+   🔥 وجبات اليوم — Container مستقل + كاروسيل أفقي (حسب المرجع)
    ══════════════════════════════════════════════════════════ */
-.dm-sec,.off-sec{margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
-.dm-t h3{font-family:'Cairo',sans-serif;font-size:16px;font-weight:800;margin:0}
+.dm-box{width:100%;padding:16px;border-radius:24px;overflow:hidden;
+  background:var(--bg);margin-bottom:24px;box-sizing:border-box}
+.dm-sec{min-height:48px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.off-sec{margin-bottom:10px;display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.dm-t h3{font-family:'Cairo',sans-serif;font-size:24px;font-weight:800;margin:0}
 .dm-t p{font-size:11.5px;color:var(--mut);margin:3px 0 0}
-.dm-wrap{overflow-x:auto;overflow-y:hidden;margin-bottom:10px;scrollbar-width:none;
-  -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+.dm-viewall{font-size:17px;font-weight:700;background:var(--o3);color:var(--o2);
+  padding:10px 16px;border-radius:20px;white-space:nowrap;flex:none}
+.dm-wrap{width:100%;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;
+  -webkit-overflow-scrolling:touch;scroll-snap-type:x mandatory}
 .dm-wrap::-webkit-scrollbar{display:none}
-.dm-track{display:flex;gap:10px;width:max-content}
-.dm-card{flex:0 0 calc((100vw - 52px)/3.15);width:calc((100vw - 52px)/3.15);max-width:150px;
-  scroll-snap-align:start;background:#fff;border-radius:16px;overflow:hidden;
-  border:1px solid var(--bd);padding-bottom:9px;box-shadow:0 2px 8px rgba(31,15,64,.05);
-  display:flex;flex-direction:column}
-.dm-img{width:100%;aspect-ratio:124/96;background:var(--g3)}
+.dm-track{display:flex;gap:11px;width:max-content}
+.dm-card{flex:0 0 calc((100vw - 86px)/3);width:calc((100vw - 86px)/3);max-width:160px;
+  scroll-snap-align:start;background:#fff;border-radius:18px;overflow:hidden;
+  box-shadow:0 2px 8px rgba(31,15,64,.06);display:flex;flex-direction:column}
+.dm-img{position:relative;width:100%;aspect-ratio:1/0.85;background:var(--g3);flex:none}
 .dm-img img{width:100%;height:100%;object-fit:cover;display:block}
 .dm-ph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--g)}
 .dm-ph svg{width:26px;height:26px}
-.dm-name{font-size:12px;font-weight:800;margin:8px 8px 5px;line-height:1.25;overflow:hidden;
+.dm-heart{position:absolute;top:10px;left:10px;width:38px;height:38px;border-radius:50%;
+  background:#fff;border:0;padding:0;display:flex;align-items:center;justify-content:center;
+  color:var(--mut);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.dm-heart svg{width:18px;height:18px}
+.dm-heart.on{color:#E8365D}
+.dm-heart.on svg{fill:currentColor}
+.dm-name{font-size:16.5px;font-weight:800;margin:9px 9px 3px;line-height:1.25;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
-.dm-shopr{display:flex;align-items:center;gap:5px;margin:0 8px 5px;overflow:hidden}
-.dm-logo{flex:0 0 16px;width:16px;height:16px;border-radius:50%;overflow:hidden;background:var(--g3);
-  display:flex;align-items:center;justify-content:center;font-size:8.5px;font-weight:800;color:var(--g)}
-.dm-logo img{width:100%;height:100%;object-fit:cover}
-.dm-shop{font-size:10.5px;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
-.dm-price{font-size:12.5px;font-weight:800;color:var(--o2);margin:auto 8px 0;padding-top:2px}
-.dm-dots{display:flex;gap:6px;justify-content:center;margin-bottom:16px}
-.dm-dots i{width:7px;height:7px;border-radius:50%;background:#DCD6E8;transition:.25s;display:block}
-.dm-dots i.on{width:20px;border-radius:20px;background:var(--o)}
+.dm-shop{font-size:13px;color:var(--mut);font-weight:600;margin:0 9px 8px;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.dm-meta{display:flex;align-items:center;justify-content:space-between;gap:6px;margin:auto 9px 10px}
+.dm-rate{display:flex;align-items:center;gap:3px;font-size:13.5px;font-weight:700;color:var(--txt);flex:none}
+.dm-rate .wic{width:14px;height:14px;color:var(--o);flex:none}
+.dm-price{font-size:17px;font-weight:800;color:var(--o2);white-space:nowrap}
+.dm-dots{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.dm-dots i{width:8px;height:8px;border-radius:999px;background:var(--g3);transition:.25s;display:block}
+.dm-dots i.on{width:22px;height:8px;border-radius:999px;background:var(--o)}
 
 /* ══════════════════════════════════════════════════════════
    🏷️ خصومات — بطاقات أفقية بعرض الشاشة الكامل (Carousel)
@@ -4498,14 +4509,16 @@ body,.screen{background:#fff;color:var(--txt)}
 
 <div class="catrow" id="catCards"></div>
 
-<div class="dm-sec">
-  <div class="dm-t"><h3>🔥 وجبات اليوم</h3><p>تشكيلة متنوعة من أفضل المطاعم</p></div>
-  <span class="ymk-all" onclick="renderDailyMeals()">عرض الكل ›</span>
+<div class="dm-box">
+  <div class="dm-sec">
+    <span class="dm-viewall" onclick="renderDailyMeals()">عرض الكل ‹</span>
+    <div class="dm-t"><h3>وجبات اليوم 🔥</h3></div>
+  </div>
+  <div class="dm-wrap" id="dmWrap">
+    <div class="dm-track" id="dmTrack"></div>
+  </div>
+  <div class="dm-dots" id="dmDots"></div>
 </div>
-<div class="dm-wrap" id="dmWrap">
-  <div class="dm-track" id="dmTrack"></div>
-</div>
-<div class="dm-dots" id="dmDots"></div>
 
 <div class="off-sec" id="offSec">
   <div class="dm-t"><h3>🏷️ خصومات</h3><p>عروض وكوبونات نشطة الآن</p></div>
@@ -7634,12 +7647,12 @@ function dmCardHTML(item){
   const p=item.product||{}, s=item.shop;
   const img = p.img ? `<img src="${p.img}" alt="">`
     : `<div class="dm-ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>`;
-  const logo = s.img ? `<img src="${s.img}" alt="">` : `<span>${esc((s.name||'؟').trim().charAt(0))}</span>`;
+  const r=shopRating(s);
   return `<div class="dm-card" onclick="openShop('${s.id}')">
-    <div class="dm-img">${img}</div>
+    <div class="dm-img">${img}<button class="dm-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button></div>
     <div class="dm-name">${esc(p.name||'')}</div>
-    <div class="dm-shopr"><span class="dm-logo">${logo}</span><span class="dm-shop">${esc(s.name)}</span></div>
-    <div class="dm-price">${Number(p.price||0).toLocaleString()} د.ع</div>
+    <div class="dm-shop">${esc(s.name)}</div>
+    <div class="dm-meta"><span class="dm-rate"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${r?r.avg.toFixed(1):'جديد'}</span><span class="dm-price">${Number(p.price||0).toLocaleString()} د.ع</span></div>
   </div>`;
 }
 
@@ -7690,18 +7703,18 @@ function dmAutoScrollTick(now){
 }
 
 function renderDailyMeals(){
-  const sec=document.querySelector('.dm-sec'), wrap=document.getElementById('dmWrap'),
+  const box=document.querySelector('.dm-box'), wrap=document.getElementById('dmWrap'),
         track=document.getElementById('dmTrack'), dots=document.getElementById('dmDots');
-  if(!track||!wrap||!sec) return;
+  if(!track||!wrap||!box) return;
   const set=pickDailyMealsSet();
-  if(!set.length){ sec.style.display='none'; wrap.style.display='none'; if(dots)dots.style.display='none'; return }
-  sec.style.display=''; wrap.style.display=''; if(dots)dots.style.display='';
+  if(!set.length){ box.style.display='none'; return }
+  box.style.display='';
   track.innerHTML=set.map(dmCardHTML).join('');
   wrap.scrollLeft=0;
   dmBindOnce();
   requestAnimationFrame(()=>{
     const first=track.querySelector('.dm-card');
-    const cw=first?first.getBoundingClientRect().width+10:120;
+    const cw=first?first.getBoundingClientRect().width+11:130;
     __dmPerPage=Math.max(1,Math.round(wrap.clientWidth/cw));
     const pages=Math.max(1,Math.ceil(set.length/__dmPerPage));
     if(dots) dots.innerHTML=Array.from({length:pages}).map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('');
@@ -8712,25 +8725,10 @@ const TRKI=[
           ${shopOpen?'':'<span class="shuttag">المطعم<br>مغلق</span>'}
         </div>
         <div class="ordname">${esc(o.shopName)}<span>${esc(o.addr||'—')}</span></div>
-        <div class="ordmetr">
-          <div class="omt star">
-            <b>${o.rating?Number(o.rating).toFixed(1):'—'}</b>
-            <svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg>
-            <span>التقييم</span>
-          </div>
-          <div class="omt bag">
-            <b>${cnt}</b>
-            <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>
-            <span>منتجات</span>
-          </div>
-        </div>
       </div> <div class="ordsep"></div> <div class="ordpills"> <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg> ${dt[0]||'—'}</span>
         ${dt[1]?`<span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg> ${dt[1].trim()}</span>`:''}
         <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr||'—')}</span> </div>
-      <div class="ordfoot">
-        ${done?`<button class="reorderbtn" onclick="event.stopPropagation();reorder('${o.id}')">اطلب مجدداً <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>`:`<button class="trackbtn" onclick="event.stopPropagation();openTrack('${o.id}')">تتبّع الطلب</button>`}
-        <div class="ordbill" onclick="this.nextElementSibling.classList.toggle('on')"> <span>تفاصيل الدفع</span> <b>${o.total.toLocaleString()} د.ع <i>›</i></b> </div>
-      </div>
+      <div class="ordbill" onclick="this.nextElementSibling.classList.toggle('on')"> <b>${o.total.toLocaleString()} د.ع <i>›</i></b> <span>الفاتورة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span> </div>
       <div class="orditems">
         ${(o.items||[]).map(i=>`<div class="oitem"><span>${esc(i.name)} × ${i.qty}</span><b>${(i.price*i.qty).toLocaleString()}</b></div>`).join('')}
         <div class="oitem sep"><span>سعر المنتجات</span><b>${Number(o.sub||0).toLocaleString()}</b></div>
@@ -8752,7 +8750,10 @@ const TRKI=[
       </div>
       <div class="trk-now">${idx<0?'الطلب قيد الموافقة':steps[idx]}</div>
       ${(o.driverUid && o.loc && o.loc.lat && o.status!=='delivered')?`<button class="trkmap" onclick="openTrackMap('${o.id}',false)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> تتبّع المندوب على الخريطة</button>`:''}`:''}
-      <div class="ordfoot"> <button class="reorder ${(done&&shopOpen)?'':'dis'}" ${(done&&shopOpen)?`onclick="reorder('${o.id}')"`:'disabled'}><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg> اعادة الطلب</button> </div> </div>`}).join('');
+      <div class="ordfoot">
+        <span class="ordstars"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${o.rating?Number(o.rating).toFixed(1):'—'}</span>
+        <button class="reorder ${(done&&shopOpen)?'':'dis'}" ${(done&&shopOpen)?`onclick="reorder('${o.id}')"`:'disabled'}><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg> اعادة الطلب</button>
+      </div> </div>`}).join('');
   const _pastHTML=box.innerHTML;
   box.innerHTML =
     (miniHTML?`<div class="osec">الطلبات الحالية</div>`+miniHTML:'') + spActive +
