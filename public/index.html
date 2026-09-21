@@ -336,7 +336,11 @@ body{background:#F6F5FA}
 .sc-body{padding:14px 14px 6px;cursor:pointer}
 .hscroll{display:flex;gap:12px;overflow-x:auto;padding-bottom:6px;margin-bottom:16px;scrollbar-width:none}
 .hscroll::-webkit-scrollbar{display:none}
-.hscroll .scard{flex:0 0 200px;margin-bottom:0}
+.hscroll .scard{flex:0 0 200px;width:200px;max-width:200px;margin-bottom:0;overflow:hidden}
+.hscroll .sc-foot{flex-wrap:wrap;gap:6px}
+.hscroll .sc-btn{font-size:11px;padding:8px 10px}
+.hscroll .sc-hours{font-size:10px;padding:5px 8px}
+.hscroll .sc-cats,.hscroll .sc-name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .promo2{display:flex;gap:10px;margin-bottom:16px}
 .promo2-c{flex:1;border-radius:16px;padding:14px;color:#fff}
 .promo2-c b{display:block;font-size:13px;font-weight:800;margin-bottom:4px}
@@ -956,12 +960,14 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .reorderbtn{flex:0 0 auto;display:flex;align-items:center;gap:6px;background:#fff;color:var(--g);
   border:1.5px solid var(--g);border-radius:13px;padding:0 14px;font-family:inherit;font-size:12.5px;font-weight:800;cursor:pointer}
 .reorderbtn svg{width:16px;height:16px;border:1.5px solid var(--g);border-radius:50%;padding:2px}
+.trackbtn{flex:1;background:var(--g);color:#fff;border:none;border-radius:13px;text-align:center;
+  padding:0 14px;font-family:inherit;font-size:13px;font-weight:800;cursor:pointer}
 .orditems{display:none;padding:11px 5px 3px}
 .orditems.on{display:block}
 .oitem{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;color:#5E5670;font-weight:600}
 .ordstat{margin-top:11px;text-align:center;font-size:12.5px;font-weight:800;padding:9px;border-radius:12px;
   background:var(--g3);color:var(--g)}
-.ordstat.st-delivered{background:#E8F7EE;color:#1B7A43}
+.ordstat.st-delivered,.ordstat.st-accepted,.ordstat.st-ready,.ordstat.st-assigned,.ordstat.st-arrived,.ordstat.st-ontheway{background:#E8F7EE;color:#1B7A43}
 .ordstat.st-rejected{background:#fdecea;color:#C0392B}
 .ordfoot{display:flex;align-items:center;gap:11px;margin-top:13px}
 .ordstars{border:2px solid var(--g2);border-radius:32px;padding:9px 15px;font-size:13px;font-weight:800;
@@ -1972,11 +1978,13 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .ask-ok{background:var(--g);color:#fff}
 .ask-ok.danger{background:var(--o)}
 
-.otabs{display:flex;gap:9px;margin:10px 0 14px}
-.otab{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:26px;
-  padding:13px 10px;font-family:inherit;font-size:14.5px;font-weight:900;background:#F4F1FA;color:#5B5470}
-.otab img{width:26px;height:26px;object-fit:contain}
-.otab.on{background:var(--o);color:#fff;box-shadow:0 4px 14px rgba(255,122,0,.32)}
+.otabs{display:flex;gap:9px;margin:10px 0 14px;overflow-x:auto;scrollbar-width:none}
+.otabs::-webkit-scrollbar{display:none}
+.otab{flex:0 0 auto;display:flex;align-items:center;justify-content:center;gap:6px;
+  border:1.5px solid #E7E3EF;border-radius:22px;padding:9px 18px;font-family:inherit;
+  font-size:13px;font-weight:800;background:#fff;color:var(--txt)}
+.otab img{width:18px;height:18px;object-fit:contain}
+.otab.on{background:#1B1533;border-color:#1B1533;color:#fff}
 
 /* ══ محفظة السائق ══ */
 .wal{background:#fff;border-radius:24px;padding:20px 18px;margin-bottom:12px;box-shadow:0 3px 16px rgba(91,43,201,.08)}
@@ -3371,10 +3379,10 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   color:var(--g);margin-bottom:11px}
 .mnyb.b .mh{color:#1D4ED8}
 .mi{width:30px;height:30px;border-radius:9px;display:flex;align-items:center;
-  justify-content:center;flex-shrink:0}
-.mi.p{background:var(--g3);color:var(--g)}
-.mi.b{background:#DBEAFE;color:#1D4ED8}
-.mi .wic{width:16px;height:16px}
+  justify-content:center;flex-shrink:0;background:transparent!important}
+.mi.p{color:var(--g)}
+.mi.b{color:var(--g)}
+.mi .wic{width:19px;height:19px}
 .mrow{display:flex;gap:8px}
 .mrow>div{flex:1}
 .mk{font-size:10.5px;color:var(--mut);margin-bottom:3px}
@@ -8395,7 +8403,7 @@ function renderOrders(){ try{ _renderOrders(); if(trkOpen) renderTrack() }catch(
   const b=document.getElementById('ordersBox');
   if(b&&!b.innerHTML) b.innerHTML='<div class="empty"><p>ما گدرنا نعرض الطلبات</p></div>';
 } }
-let ordKind='rest';   /* rest = مطاعم · store = متاجر وكوزمتك */
+let ordKind='all';   /* all · rest = مطاعم · store = متاجر وكوزمتك */
 function setOrdKind(k){ ordKind=k; renderOrders() }
 
 function _renderOrders(){
@@ -8410,11 +8418,12 @@ function _renderOrders(){
       return sh ? sh.type==='restaurant' : true;
     };
     if(tb) tb.innerHTML=`
+      <button class="otab${ordKind==='all'?' on':''}" onclick="setOrdKind('all')">الكل</button>
       <button class="otab${ordKind==='rest'?' on':''}" onclick="setOrdKind('rest')">
         <img src="cat-food-1.png" alt=""> مطاعم</button>
       <button class="otab${ordKind==='store'?' on':''}" onclick="setOrdKind('store')">
         <img src="cat-store-1.png" alt=""> متاجر</button>`;
-    list = list.filter(o=> ordKind==='rest' ? _isRest(o) : !_isRest(o));
+    if(ordKind!=='all') list = list.filter(o=> ordKind==='rest' ? _isRest(o) : !_isRest(o));
   }
   /* النشط أول، والمكتمل/الملغي آخر شي */
   const DONE=o=>(o.status==='delivered'||o.status==='rejected'||o.status==='cancelled');
@@ -8498,7 +8507,7 @@ const TRKI=[
         ${dt[1]?`<span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg> ${dt[1].trim()}</span>`:''}
         <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr||'—')}</span> </div>
       <div class="ordfoot">
-        ${done?`<button class="reorderbtn" onclick="event.stopPropagation();reorder('${o.id}')">اطلب مجدداً <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>`:'<span></span>'}
+        ${done?`<button class="reorderbtn" onclick="event.stopPropagation();reorder('${o.id}')">اطلب مجدداً <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></button>`:`<button class="trackbtn" onclick="event.stopPropagation();openTrack('${o.id}')">تتبّع الطلب</button>`}
         <div class="ordbill" onclick="this.nextElementSibling.classList.toggle('on')"> <span>تفاصيل الدفع</span> <b>${o.total.toLocaleString()} د.ع <i>›</i></b> </div>
       </div>
       <div class="orditems">
