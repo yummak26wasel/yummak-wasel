@@ -6672,6 +6672,7 @@ function startDriverTracking(){
     navigator.geolocation.getCurrentPosition(p=>{
       const loc={lat:p.coords.latitude, lng:p.coords.longitude};
       if(_trkPrev && _dist(_trkPrev,loc)<TRK_MIN_MOVE) return;   /* ما تحرك */
+      if(_trkPrev) _addKmToday(_dist(_trkPrev,loc));              /* نجمّع مسافة اليوم من نفس القراءة */
       _trkPrev=loc;
       _trkPush(loc);
     },()=>{}, {enableHighAccuracy:true, maximumAge:8000, timeout:9000});
@@ -7479,11 +7480,16 @@ async function submitRate(){
 }
 setInterval(()=>{ try{ checkRatePrompt() }catch(e){} }, 45000);
 
+let _custOrdSig=null;
 function listenCustomerOrders(){
   db.collection('orders').where('customerUid','==',uid).where('createdAt','>=',sinceMs(DAYS_USER)).orderBy('createdAt','desc').limit(300).onSnapshot(s=>{
     const arr=s.docs.map(d=>({...d.data(), id:d.id})).sort((a,b)=>b.createdAt-a.createdAt);
     if(me.role==='customer') myOrders=arr; else cOrders=arr;
-    renderOrders(); conn(true); try{refreshTrackMap()}catch(e){}
+    /* ما نعيد بناء القائمة كاملة إلا إذا تغيّر شي يبان فعلاً بيها —
+       تحديث موقع السائق (كل 10 ثواني وقت التوصيل) وحده ما يستاهل إعادة رسم كل الطلبات */
+    const sig = arr.map(o=>o.id+':'+o.status+':'+(o.shopCashPaid?1:0)+':'+(o.rated?1:0)+':'+(o.drvRated?1:0)).join('|');
+    if(sig!==_custOrdSig){ _custOrdSig=sig; renderOrders() }
+    conn(true); try{refreshTrackMap()}catch(e){}
     /* ما ننادي التقييم عند الدخول — الفاصل الدوري يتكفّل بيها */
   },e=>conn(false));
   db.collection('specialOrders').where('customerUid','==',uid).where('createdAt','>=',sinceMs(DAYS_USER)).orderBy('createdAt','desc').limit(300).onSnapshot(s=>{
@@ -10589,9 +10595,8 @@ function startDriverClock(){
   };
   tick(); __dclockTimer=setInterval(tick,1000*20);
 }
-/* ═══ مسافة اليوم — تتبع GPS حقيقي وأنت بوضع "متاح" (Haversine)، تخزين محلي بالجهاز ═══
-   ملاحظة: هذا تخزين على جهاز السائق نفسه (localStorage) — ما يحتاج تعديل Supabase.
-   يعني إذا السائق غيّر جهاز أو مسح بيانات المتصفح، يبدأ العداد من صفر. */
+/* ═══ مسافة اليوم — نعتمد على نظام تتبع الموقع الموجود أصلاً أثناء التوصيل الفعلي
+   (startDriverTracking) بدل ما نفتح GPS ثاني منفصل — تخزين محلي بالجهاز (localStorage) ═══ */
 const _KM_KEY='wl_km_today_v1';
 function _todayStr(){ const d=new Date(); return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate() }
 function _loadKmToday(){
@@ -10604,44 +10609,18 @@ function _loadKmToday(){
 function _saveKmToday(km){
   try{ localStorage.setItem(_KM_KEY, JSON.stringify({date:_todayStr(), km})) }catch(e){}
 }
-function _kmDistance(lat1,lon1,lat2,lon2){
-  const R=6371, toRad=x=>x*Math.PI/180;
-  const dLat=toRad(lat2-lat1), dLon=toRad(lon2-lon1);
-  const a=Math.sin(dLat/2)**2 + Math.cos(toRad(lat1))*Math.cos(toRad(lat2))*Math.sin(dLon/2)**2;
-  return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));
-}
-let _kmWatchId=null, _kmLastPos=null;
-function startKmTracking(){
-  if(_kmWatchId!=null) return; /* شغّال أصلاً */
-  if(!navigator.geolocation) return;
-  _kmLastPos=null;
-  _kmWatchId=navigator.geolocation.watchPosition(pos=>{
-    const {latitude:lat, longitude:lon, accuracy}=pos.coords;
-    if(accuracy && accuracy>60) return; /* دقة ضعيفة — نتجاهلها حتى ما تخرب الحساب */
-    if(_kmLastPos){
-      const d=_kmDistance(_kmLastPos.lat,_kmLastPos.lon,lat,lon);
-      /* نتجاهل قفزات GPS غير منطقية (أكثر من 2 كم بقفزة وحدة) */
-      if(d>0.01 && d<2){
-        const total=_loadKmToday()+d;
-        _saveKmToday(total);
-        const el=document.getElementById('dKmToday');
-        if(el) el.textContent=total.toFixed(1);
-      }
-    }
-    _kmLastPos={lat,lon};
-  }, ()=>{ /* المستخدم رفض إذن الموقع — نسكت، الإحصائية تضل — */ },
-  {enableHighAccuracy:true, maximumAge:5000, timeout:15000});
-}
-function stopKmTracking(){
-  if(_kmWatchId!=null && navigator.geolocation){ navigator.geolocation.clearWatch(_kmWatchId) }
-  _kmWatchId=null; _kmLastPos=null;
+function _addKmToday(meters){
+  if(!(meters>0) || meters>3000) return; /* نتجاهل قفزات GPS غير منطقية */
+  const total=_loadKmToday()+(meters/1000);
+  _saveKmToday(total);
+  const el=document.getElementById('dKmToday');
+  if(el) el.textContent=total.toFixed(1);
 }
 /* ═══ كارت الحالة + إحصائيات السائق ═══ */
 function paintDutyCard(doneTodayCount, earnToday){
   const box=document.getElementById('dutyBox');
   const on = (me.duty!==false) && me.approved;
   if(on && !_wtState().start) _wtStart();
-  if(on) startKmTracking(); else stopKmTracking();
   const wic=p=>`<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">${p}</svg>`;
 
   if(box) box.innerHTML=`
