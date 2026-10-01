@@ -11637,16 +11637,16 @@ function loadLeaflet(){
   return leafletPromise;
 }
 function tiles(){
-  /* خريطة فاتحة وهادية (رمادي/أبيض + نهر أزرق) تنسجم مع ألوان التطبيق؛ إذا فشلت نرجع لخريطة OSM العادية */
-  const CARTO='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
-  const OSM='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  const t=L.tileLayer(CARTO,{maxZoom:19,minZoom:11,subdomains:'abcd',detectRetina:true,
-    attribution:'© OpenStreetMap © CARTO'});
-  let fb=false, w=false;
-  t.on('tileerror',()=>{
-    if(!fb){ fb=true; t.options.detectRetina=false; t.options.subdomains='abc'; t.setUrl(OSM); return }
-    if(!w){ w=true; toast('صور الخريطة ما نزلت — تأكد من الإنترنت') }
-  });
+  /* خريطة OSM المجانية (بدون مفتاح) بس بلون أهدأ حتى ينسجم مع ألوان التطبيق */
+  if(!document.getElementById('wl-tile-css')){
+    const st=document.createElement('style'); st.id='wl-tile-css';
+    st.textContent='.wl-tile{filter:saturate(.4) contrast(.94) brightness(1.07)}';
+    document.head.appendChild(st);
+  }
+  const t=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {maxZoom:19,minZoom:11,attribution:'© OpenStreetMap',className:'wl-tile'});
+  let w=false;
+  t.on('tileerror',()=>{ if(!w){ w=true; toast('صور الخريطة ما نزلت — تأكد من الإنترنت') } });
   return t;
 }
 
