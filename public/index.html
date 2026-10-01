@@ -4971,7 +4971,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="dutyBox"></div>
       <div id="dvStats"></div>
       <div id="availMapBox" style="display:none;margin:0 0 14px;position:relative">
-        <div id="availMap" style="height:clamp(320px,52vh,520px);border-radius:24px;overflow:hidden;border:1px solid #E7E1F5;box-shadow:0 6px 20px rgba(91,43,201,.12)"></div>
+        <div id="availMap" style="height:clamp(320px,52vh,520px);border-radius:24px;overflow:hidden;border:2px solid #fff;box-shadow:0 8px 24px rgba(91,43,201,.18)"></div>
         <div id="amChip" style="position:absolute;top:12px;left:12px;z-index:1000;background:#fff;border-radius:16px;padding:8px 12px;box-shadow:0 3px 12px rgba(0,0,0,.14);display:flex;align-items:center;gap:7px;font-weight:800;font-size:13px;color:#5B2BC9"></div>
         <button onclick="amRecenter()" style="position:absolute;bottom:12px;right:12px;z-index:1000;background:#fff;border:0;border-radius:18px;padding:9px 14px;box-shadow:0 3px 12px rgba(0,0,0,.14);display:flex;align-items:center;gap:7px;font:800 13px inherit;font-family:inherit;color:#5B2BC9"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3"/></svg> إعادة التمركز</button>
       </div>
@@ -10690,16 +10690,17 @@ async function renderAvailMap(gate){
   const pts=(availOrders||[]).filter(o=>!_amSkip.has(o.id)&&o.shopLoc&&o.shopLoc.lat&&o.shopLoc.lng);
   if(gate || me.duty===false){ box.style.display='none'; const _n0=document.getElementById('nearestOrder'); if(_n0) _n0.style.cssText=''; return }
   box.style.display='block';
-  const _nb=document.getElementById('nearestOrder'); if(_nb){ _nb.style.cssText='position:relative;z-index:1100;margin-top:-34px' }
+  const _nb=document.getElementById('nearestOrder'); if(_nb){ _nb.style.cssText=_nb.innerHTML.trim()?'position:relative;z-index:1100;margin-top:-34px':'' }
   const chip=document.getElementById('amChip');
   if(chip) chip.innerHTML='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>'+(((availOrders||[]).filter(o=>!_amSkip.has(o.id)).length)||'ماكو')+' طلبات جديدة';
   try{ await loadLeaflet() }catch(e){ box.style.display='none'; toast('ما اشتغلت الخريطة: '+String(e&&e.message||e).slice(0,80)); return }
   const el=document.getElementById('availMap'); if(!el||!window.L) return;
+  el.style.height = pts.length ? 'clamp(300px,44vh,460px)' : '230px';
   if(_amMap && _amMap.getContainer()!==el){ try{_amMap.remove()}catch(e){} _amMap=null; _amLayer=null }
   if(!_amMap){
     _amMap=L.map(el,{zoomControl:false,attributionControl:false,dragging:!L.Browser.mobile,
       touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,tap:false})
-      .setView(pts.length?[pts[0].shopLoc.lat,pts[0].shopLoc.lng]:(_amMe?[_amMe.lat,_amMe.lng]:[34.3854,41.9838]),pts.length?14:15);
+      .setView(pts.length?[pts[0].shopLoc.lat,pts[0].shopLoc.lng]:(_amMe?[_amMe.lat,_amMe.lng]:[34.3854,41.9838]),pts.length?14:(_amMe?15:13));
     tiles().addTo(_amMap);
     _amLayer=L.layerGroup().addTo(_amMap);
     el.style.setProperty('touch-action','pan-y','important');
@@ -10729,7 +10730,7 @@ async function renderAvailMap(gate){
     navigator.geolocation.getCurrentPosition(p=>{
       _amMe={lat:p.coords.latitude,lng:p.coords.longitude};
       try{ renderDriver() }catch(e){}
-    },()=>{},{enableHighAccuracy:false,maximumAge:60000,timeout:8000});
+    },()=>{ if(!window.__amGpsWarned){ window.__amGpsWarned=true; toast('شغّل الموقع (GPS) للتطبيق حتى يبين موقعك بالخريطة') } },{enableHighAccuracy:false,maximumAge:60000,timeout:8000});
   }
 }
 
@@ -11636,10 +11637,16 @@ function loadLeaflet(){
   return leafletPromise;
 }
 function tiles(){
-  const t=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {maxZoom:19,minZoom:11,attribution:'© OpenStreetMap'});
-  let w=false;
-  t.on('tileerror',()=>{ if(!w){ w=true; toast('صور الخريطة ما نزلت — تأكد من الإنترنت') } });
+  /* خريطة فاتحة وهادية (رمادي/أبيض + نهر أزرق) تنسجم مع ألوان التطبيق؛ إذا فشلت نرجع لخريطة OSM العادية */
+  const CARTO='https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png';
+  const OSM='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  const t=L.tileLayer(CARTO,{maxZoom:19,minZoom:11,subdomains:'abcd',detectRetina:true,
+    attribution:'© OpenStreetMap © CARTO'});
+  let fb=false, w=false;
+  t.on('tileerror',()=>{
+    if(!fb){ fb=true; t.options.detectRetina=false; t.options.subdomains='abc'; t.setUrl(OSM); return }
+    if(!w){ w=true; toast('صور الخريطة ما نزلت — تأكد من الإنترنت') }
+  });
   return t;
 }
 
@@ -13863,36 +13870,20 @@ document.addEventListener('click',()=>{ if(actx&&actx.state==='suspended')actx.r
 let __fcmMsgBound=false;
 
 async function savePushToken(tok){
-  const body={
-    user_id: uid,
-    token: tok,
-    role: (me&&me.role)||'customer',
-    shop_id: (me&&me.shopId)||null,
-    platform: (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)?'android':'web',
-    updated_at: new Date().toISOString()
-  };
-  const hd={
-    'apikey': SB_KEY,
-    'Authorization':'Bearer '+((window.__waselToken&&window.__waselToken())||SB_KEY),
-    'Content-Type':'application/json',
-    'Prefer':'resolution=merge-duplicates,return=minimal'
-  };
-  let lastErr='';
+  /* RPC محمية: تنقل الرمز للحساب الحالي حتى لو كان مسجّل لحساب ثاني على نفس الجهاز */
   try{
-    const r=await fetch(SB_URL+'/rest/v1/push_tokens?on_conflict=token',
-      {method:'POST',headers:hd,body:JSON.stringify(body)});
-    if(r.ok) return true;
-    try{ lastErr=(await r.text()).slice(0,200) }catch(e2){ lastErr='HTTP '+r.status }
-  }catch(e){ lastErr=String(e.message||e).slice(0,200); __silent(e,'pushTokenSave') }
-  try{
-    const ex=await sbGet('push_tokens?select=id&token=eq.'+encodeURIComponent(tok)+'&limit=1');
-    if(ex&&ex.length) await sbSend('push_tokens?id=eq.'+ex[0].id,'PATCH',body);
-    else await sbSend('push_tokens','POST',body);
+    await rpc('save_push_token',{
+      p_token: tok,
+      p_role: (me&&me.role)||'customer',
+      p_shop_id: (me&&me.shopId)||'',
+      p_platform: (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)?'android':'web'
+    });
     return true;
   }catch(e){
-    lastErr=String(e.message||e).slice(0,200);
-    console.warn('savePushToken:',lastErr);
-    toast('ما انحفظ رمز الإشعار: '+lastErr);
+    const m=String(e.message||e).slice(0,200);
+    console.warn('savePushToken:',m);
+    __silent(e,'pushTokenSave');
+    toast('ما انحفظ رمز الإشعار: '+m);
     return false;
   }
 }
