@@ -10688,18 +10688,18 @@ function amRecenter(){
 async function renderAvailMap(gate){
   const box=document.getElementById('availMapBox'); if(!box) return;
   const pts=(availOrders||[]).filter(o=>!_amSkip.has(o.id)&&o.shopLoc&&o.shopLoc.lat&&o.shopLoc.lng);
-  if(gate || me.duty===false || !pts.length){ box.style.display='none'; const _n0=document.getElementById('nearestOrder'); if(_n0) _n0.style.cssText=''; return }
+  if(gate || me.duty===false){ box.style.display='none'; const _n0=document.getElementById('nearestOrder'); if(_n0) _n0.style.cssText=''; return }
   box.style.display='block';
   const _nb=document.getElementById('nearestOrder'); if(_nb){ _nb.style.cssText='position:relative;z-index:1100;margin-top:-34px' }
   const chip=document.getElementById('amChip');
-  if(chip) chip.innerHTML='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>'+(availOrders||[]).filter(o=>!_amSkip.has(o.id)).length+' طلبات جديدة';
+  if(chip) chip.innerHTML='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>'+(((availOrders||[]).filter(o=>!_amSkip.has(o.id)).length)||'ماكو')+' طلبات جديدة';
   try{ await loadLeaflet() }catch(e){ box.style.display='none'; toast('ما اشتغلت الخريطة: '+String(e&&e.message||e).slice(0,80)); return }
   const el=document.getElementById('availMap'); if(!el||!window.L) return;
   if(_amMap && _amMap.getContainer()!==el){ try{_amMap.remove()}catch(e){} _amMap=null; _amLayer=null }
   if(!_amMap){
     _amMap=L.map(el,{zoomControl:false,attributionControl:false,dragging:!L.Browser.mobile,
       touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,tap:false})
-      .setView([pts[0].shopLoc.lat,pts[0].shopLoc.lng],14);
+      .setView(pts.length?[pts[0].shopLoc.lat,pts[0].shopLoc.lng]:(_amMe?[_amMe.lat,_amMe.lng]:[34.3854,41.9838]),pts.length?14:15);
     tiles().addTo(_amMap);
     _amLayer=L.layerGroup().addTo(_amMap);
     el.style.setProperty('touch-action','pan-y','important');
