@@ -659,22 +659,28 @@ h3.ttl{font-size:16px;margin:2px 0 14px}
 .mshead{padding:14px 16px;border-bottom:1px solid #EDEAF3;display:flex;justify-content:space-between;align-items:center}
 .mshead h4{font-size:16px;font-weight:800;color:var(--g)}
 .mshead .x{background:var(--bg);border:0;width:34px;height:34px;border-radius:50%;font-size:16px;cursor:pointer;font-weight:800}
-.mapwrap{position:relative;width:100%;height:52vh;min-height:280px;background:#E9E5F0}
+.mapwrap{position:relative;width:100%;height:56vh;min-height:330px;background:#E9E5F0}
 #pickMap{width:100%;height:100%;touch-action:none;-ms-touch-action:none;cursor:grab}
 #pickMap:active{cursor:grabbing}
-.leaflet-container{touch-action:none!important;background:#E9E5F0}
-.leaflet-control-zoom a{width:34px!important;height:34px!important;line-height:34px!important;font-size:20px!important}
+.leaflet-container{touch-action:none!important;background:#E9E5F0;font-family:'Cairo',system-ui,sans-serif}
+.leaflet-control-zoom{border:0!important;box-shadow:0 4px 14px rgba(31,15,64,.16)!important;border-radius:14px!important;overflow:hidden}
+.leaflet-control-zoom a{width:38px!important;height:38px!important;line-height:38px!important;font-size:21px!important;color:#5B2BC9!important;background:#fff!important;border:0!important}
+.leaflet-control-attribution{font-size:9px!important;background:rgba(255,255,255,.82)!important;border-radius:8px 0 0 0!important;padding:2px 5px!important}
 .msheet{will-change:auto}
-.maploading{position:absolute;inset:0;z-index:700;background:#EDEAF3;display:flex;
+.maploading{position:absolute;inset:0;z-index:700;background:#F5F2FA;display:flex;
   align-items:center;justify-content:center;font-weight:800;color:var(--g);font-size:13px;gap:8px}
 .maploading.gone{display:none}
 .ctrpin{position:absolute;top:50%;left:50%;transform:translate(-50%,-100%);z-index:600;
-  pointer-events:none;font-size:40px;filter:drop-shadow(0 5px 6px rgba(0,0,0,.35));
+  pointer-events:none;width:54px;height:68px;display:flex;align-items:center;justify-content:center;
+  color:#5B2BC9;filter:drop-shadow(0 5px 7px rgba(20,8,45,.30));
   animation:pinB .5s cubic-bezier(.3,1.4,.5,1)}
+.ctrpin svg{width:48px;height:48px;stroke:#fff;stroke-width:1.35;fill:#5B2BC9}
+.ctrpin::after{content:'';position:absolute;bottom:3px;left:50%;width:12px;height:5px;transform:translateX(-50%);background:rgba(30,12,60,.22);border-radius:50%;filter:blur(2px)}
 @keyframes pinB{from{transform:translate(-50%,-165%)}to{transform:translate(-50%,-100%)}}
-.gpsbtn{position:absolute;bottom:14px;left:14px;z-index:600;background:#fff;border:0;
-  width:46px;height:46px;border-radius:50%;font-size:20px;cursor:pointer;
-  box-shadow:0 4px 14px rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center}
+.gpsbtn{position:absolute;bottom:16px;left:14px;z-index:600;background:#fff;border:1px solid #E8E2F2;
+  width:48px;height:48px;border-radius:15px;font-size:20px;cursor:pointer;color:#5B2BC9;
+  box-shadow:0 5px 16px rgba(31,15,64,.18);display:flex;align-items:center;justify-content:center}
+.gpsbtn:active{transform:scale(.93)}
 .gpsbtn:active{transform:scale(.93)}
 .zonetag{position:absolute;top:12px;right:12px;z-index:600;background:rgba(255,255,255,.95);
   padding:6px 13px;border-radius:20px;font-size:12px;font-weight:800;color:var(--g);
@@ -5135,7 +5141,7 @@ body,.screen{background:#fff;color:var(--txt)}
     <div class="mstip" id="vmAddr"></div>
     <button class="big-btn" id="vmNav" style="background:#5B2BC9;color:#fff"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 2.5 2 10.2l7.6 2.9 2.9 7.6z"/><path d="M21.5 2.5 9.6 13.1"/></svg> افتح الملاحة بخرائط جوجل</button>
   </div>
-</div> </div> <div id="tripSheet"><div class="tp-map-wrap"><div id="tripMap"></div><button class="tp-x" onclick="closeTrip()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="tp-eta" id="tripEta">… يحسب المسار</div></div><div class="tp-card" id="tripCard"></div></div> <div id="mapSheet"> <div class="msheet"> <div class="mshead"><h4 id="mapTitle"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> حدد الموقع</h4> <button class="x" onclick="closeMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div> <div class="mapwrap"> <div id="pickMap"></div> <div class="maploading" id="mapLoad"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> … جاري تحميل الخريطة</div> <div class="ctrpin"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg></div> <div class="zonetag" id="zoneTag">داخل عانة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div> <button class="gpsbtn" onclick="gpsLocate()" title="موقعي الحالي"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></button> </div> <div class="msfoot"> <div class="mstip" id="mapTip">حرّك الخريطة لين يصير الدبوس <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> فوق المكان بالضبط، بعدين اضغط تثبيت.</div> <button class="big-btn" onclick="confirmMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> ثبّت هذا الموقع</button> <div class="coordline" id="coordLine"></div> </div> </div>
+</div> </div> <div id="tripSheet"><div class="tp-map-wrap"><div id="tripMap"></div><button class="tp-x" onclick="closeTrip()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="tp-eta" id="tripEta">… يحسب المسار</div></div><div class="tp-card" id="tripCard"></div></div> <div id="mapSheet"> <div class="msheet"> <div class="mshead"><h4 id="mapTitle"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> حدد الموقع</h4> <button class="x" onclick="closeMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div> <div class="mapwrap"> <div id="pickMap"></div> <div class="maploading" id="mapLoad"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> … جاري تحميل الخريطة</div> <div class="ctrpin"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 43S38 30.6 38 19A14 14 0 1 0 10 19c0 11.6 14 24 14 24Z" fill="#5B2BC9" stroke="white" stroke-width="2"/><circle cx="24" cy="19" r="5.2" fill="white"/><circle cx="24" cy="19" r="2.7" fill="#F97402"/></svg></div> <div class="zonetag" id="zoneTag">داخل عانة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div> <button class="gpsbtn" onclick="gpsLocate()" title="موقعي الحالي"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></button> </div> <div class="msfoot"> <div class="mstip" id="mapTip">حرّك الخريطة لين يصير الدبوس <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> فوق المكان بالضبط، بعدين اضغط تثبيت.</div> <button class="big-btn" onclick="confirmMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> ثبّت هذا الموقع</button> <div class="coordline" id="coordLine"></div> </div> </div>
 </div>
 <div id="cdSheet" onclick="if(event.target===this)closeCallDrv()"> <div class="cdbox"> <div class="cdhead"> <h4>استدعاء سائق</h4> <button class="x" onclick="closeCallDrv()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button> </div> <div class="cdnote">السائق يجي لمحلك، ياخذ الطلب، ويوصله لزبونك.</div> <div class="fld"><label>اسم الزبون</label><input id="cdName" placeholder="مثال: أحمد"></div> <div class="fld"><label>رقم هاتف الزبون</label><input id="cdPhone" inputmode="numeric" placeholder="07XXXXXXXXX" style="direction:ltr;text-align:left"></div> <div class="fld"><label>عنوان الزبون</label><input id="cdAddr" placeholder="مثال: حي الضباط — قرب الجامع"></div> <div class="fld"><label>مبلغ البضاعة (د.ع)</label><input id="cdAmount" inputmode="numeric" placeholder="0"><div class="fldhelp">المبلغ الي يستلمه السائق من الزبون ويرجعه لك.</div></div> <div class="fld"><label>ملاحظة للسائق <span style="color:var(--mut);font-weight:600">(اختياري)</span></label><input id="cdNote" placeholder="مثال: كيس كبير — انتبه"></div> <button class="big-btn" id="cdBtn" onclick="sendCallDrv()">إرسال للسواق</button> <button class="big-btn ghost" onclick="closeCallDrv()">إلغاء</button> </div></div>
 <div id="svcSheet" onclick="if(event.target===this)closeSvc()"> <div class="svcbox"> <svg class="svcwave" viewBox="0 0 420 16" preserveAspectRatio="none" aria-hidden="true"> <path d="M0 9 Q105 0 210 7 T420 6 L420 16 L0 16Z" fill="#F97402"/></svg> <div class="svchead"> <h4>ما هي رسوم الخدمة؟</h4> <button class="x" onclick="closeSvc()" aria-label="إغلاق"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button> </div> <div class="svcbody"> <p>قد تُضاف رسوم خدمة بسيطة إلى طلبك، وتُحدد قيمتها حسب إجمالي قيمة مشترياتك.</p> <p>تبدأ رسوم الخدمة من 250 د.ع وتصل إلى 1,000 د.ع كحد أقصى.</p> <p>تساعدنا هذه الرسوم على تطوير خدماتنا وتقديم تجربة توصيل أسرع وأسهل لك.</p> </div> <button class="big-btn" onclick="closeSvc()">حسناً، فهمت</button> </div>
@@ -11663,14 +11669,14 @@ function loadLeaflet(){
   return leafletPromise;
 }
 function tiles(){
-  /* خريطة OSM المجانية (بدون مفتاح) بس بلون أهدأ حتى ينسجم مع ألوان التطبيق */
+  /* خريطة OSM — ستايل هادئ يناسب هوية واصل ليمك، بدون API key */
   if(!document.getElementById('wl-tile-css')){
     const st=document.createElement('style'); st.id='wl-tile-css';
-    st.textContent='.wl-tile{filter:saturate(.4) contrast(.94) brightness(1.07)}';
+    st.textContent='.wl-tile{filter:saturate(.48) contrast(.96) brightness(1.06) hue-rotate(2deg)}';
     document.head.appendChild(st);
   }
   const t=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    {maxZoom:19,minZoom:11,attribution:'© OpenStreetMap',className:'wl-tile'});
+    {maxZoom:19,minZoom:11,attribution:'© OpenStreetMap contributors',className:'wl-tile',updateWhenIdle:true,keepBuffer:2});
   let w=false;
   t.on('tileerror',()=>{ if(!w){ w=true; toast('صور الخريطة ما نزلت — تأكد من الإنترنت') } });
   return t;
@@ -11712,7 +11718,20 @@ async function openMap(mode, autoGps){
         tiles().addTo(pMap);
         L.circle(GEO.anah,{radius:1460,color:'#5917BC',weight:1.5,fillOpacity:.05,interactive:false}).addTo(pMap);
         L.circle(GEO.rayhana,{radius:2000,color:'#F97402',weight:1.5,fillOpacity:.05,interactive:false}).addTo(pMap);
-        pMap.on('move',updateZone);
+        pMap.on('move',()=>{
+          updateZone();
+          const pin=document.querySelector('.ctrpin');
+          if(pin) pin.style.transform='translate(-50%,-100%) scale(1)';
+        });
+        pMap.on('movestart',()=>{
+          const pin=document.querySelector('.ctrpin');
+          if(pin) pin.style.transform='translate(-50%,-100%) scale(.94)';
+        });
+        pMap.on('moveend',()=>{
+          const pin=document.querySelector('.ctrpin');
+          if(pin) pin.style.transform='translate(-50%,-100%) scale(1)';
+          updateZone();
+        });
         pMap.on('load',()=>pMap.invalidateSize());
       }
       pMap.setView(start,z,{animate:false});
