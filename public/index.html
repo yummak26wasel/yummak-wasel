@@ -11005,8 +11005,8 @@ function _renderDriverBody(){
     av.innerHTML='<div class="empty"><div class="e"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#B9AECB" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 13h8"/></svg></div><p><b>أنت غير متاح حالياً</b><br>شغّل حالة متاح لاستقبال الطلبات.</p></div>';
   }else if(!availOrders.length){
     av.innerHTML = specialAvailOrders.length ? '' : `
-      <div class="empty"><div class="e"><svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#B9AECB" stroke-width="1.6" stroke-linecap="round"><path d="M4 8.5 12 5l8 3.5v7L12 19l-8-3.5z"/><path d="M4 8.5 12 12l8-3.5M12 12v7"/></svg></div>
-        <p><b>لا توجد طلبات حالياً</b><br>عندما تتوفر طلبات جديدة في منطقتك سيتم عرضها هنا مباشرة.</p></div>
+      <div class="empty avail-empty"><div class="e"><svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#FF9A22" stroke-width="1.6" stroke-linecap="round"><path d="M4 8.5 12 5l8 3.5v7L12 19l-8-3.5z"/><path d="M4 8.5 12 12l8-3.5M12 12v7"/></svg></div>
+        <p><b>ماكو طلبات قريبة حالياً</b><br>سنبلغك عند توفر طلبات جديدة بمنطقتك.</p></div>
       <div class="dvtip"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9.3 18h5.4"/><path d="M10 21h4"/><path d="M12 3a5.6 5.6 0 0 1 3.4 10.1c-.6.5-.9 1.1-.9 1.9h-5c0-.8-.3-1.4-.9-1.9A5.6 5.6 0 0 1 12 3z"/></svg>
         تأكد من أن المفتاح في وضع متاح لاستقبال الطلبات.</div>`;
   }else{
@@ -14753,6 +14753,221 @@ async function initPush(silent){
 .ost-b.msg .wic{width:19px;height:19px}
 .ost-b.go,.ost-b.dis{flex:1 1 auto}
 
+
+/* ═══════════════════════════════════════════════════════════════
+   واصل ليمَك — تنسيق واجهة السائق / الخريطة — النسخة المحسّنة
+   هدفها: مسافات أهدأ، بطاقات أوضح، خريطة طبيعية، وتسلسل بصري أنظف.
+   لا تغيّر أي منطق أو بيانات.
+═══════════════════════════════════════════════════════════════ */
+#dApp{background:#F7F5FC!important}
+#dApp .top{
+  background:rgba(255,255,255,.98)!important;
+  padding:12px 16px!important;
+  min-height:68px!important;
+  border-bottom:1px solid #ECE7F4!important;
+  box-shadow:0 3px 16px rgba(45,28,83,.08)!important;
+  backdrop-filter:blur(12px);
+}
+#dApp .top h2{font-size:18px!important;font-weight:900!important;color:#4A1FA8!important;line-height:1.25!important}
+#dApp .top p{font-size:11px!important;color:#7E7890!important;margin-top:2px!important}
+#dApp .top .mini{width:36px!important;height:36px!important;object-fit:contain!important}
+#dApp .top .l{gap:9px!important}
+#dApp .out{
+  border:1px solid #E8E1F2!important;background:#fff!important;color:#C2410C!important;
+  border-radius:14px!important;padding:9px 14px!important;font-weight:900!important;
+  box-shadow:0 2px 8px rgba(30,20,60,.05)!important;
+}
+#dApp .body{
+  background:#F7F5FC!important;
+  padding:14px 14px 118px!important;
+}
+#dApp .body>.page.on{max-width:680px;margin:0 auto!important}
+
+/* بطاقات الحالة */
+#dApp .dvduty{
+  border-radius:22px!important;padding:15px 15px 13px!important;margin-bottom:11px!important;
+  box-shadow:0 5px 18px rgba(47,28,91,.07)!important;
+  border:1px solid rgba(255,255,255,.9)!important;
+}
+#dApp .dvhead{gap:9px!important;margin-bottom:11px!important}
+#dApp .dvclock,#dApp .dvduty2{border-radius:18px!important;padding:11px 12px!important}
+#dApp .dvstats{
+  border-radius:22px!important;padding:13px 5px 15px!important;margin-bottom:13px!important;
+  box-shadow:0 5px 18px rgba(47,28,91,.065)!important;border:1px solid #F0EBF7!important;
+}
+#dApp .dvst b{font-size:17px!important;color:#21183C!important}
+#dApp .dvst span{font-size:10.5px!important;color:#898398!important}
+#dApp .dvst .i{width:38px!important;height:38px!important;margin-bottom:7px!important}
+
+/* الخريطة */
+#dApp #availMapBox{
+  margin:0 0 15px!important;
+  border-radius:26px!important;
+  overflow:hidden!important;
+  background:#fff!important;
+  box-shadow:0 9px 28px rgba(55,31,105,.13)!important;
+}
+#dApp #availMap{
+  height:clamp(300px,47vh,480px)!important;
+  border:2px solid #fff!important;
+  border-radius:26px!important;
+  box-shadow:none!important;
+  background:#E9E5D9!important;
+  overflow:hidden!important;
+}
+#dApp #availMap .leaflet-container{background:#E9E5D9!important}
+#dApp #amChip{
+  top:12px!important;left:12px!important;
+  border-radius:16px!important;padding:9px 12px!important;
+  box-shadow:0 5px 16px rgba(35,20,65,.16)!important;
+  color:#4A1FA8!important;background:rgba(255,255,255,.97)!important;
+  border:1px solid #EEE8F7!important;font-size:12px!important;
+}
+#dApp #amClose{
+  width:44px!important;height:44px!important;border-radius:50%!important;
+  box-shadow:0 5px 16px rgba(20,12,40,.18)!important;
+}
+#dApp #availMapBox>button[onclick="amRecenter()"]{
+  bottom:12px!important;right:12px!important;
+  min-height:44px!important;padding:10px 14px!important;
+  border:1px solid #EEE8F7!important;border-radius:16px!important;
+  box-shadow:0 5px 16px rgba(35,20,65,.15)!important;
+  color:#4A1FA8!important;font-size:12px!important;
+}
+#dApp #availMap .leaflet-control-zoom{
+  margin:12px!important;border:0!important;box-shadow:0 5px 16px rgba(35,20,65,.15)!important;
+}
+#dApp #availMap .leaflet-control-zoom a{
+  width:38px!important;height:38px!important;line-height:38px!important;
+  border:0!important;color:#4A1FA8!important;background:#fff!important;font-size:20px!important;
+}
+#dApp #availMap .leaflet-control-zoom a:first-child{border-radius:13px 13px 0 0!important}
+#dApp #availMap .leaflet-control-zoom a:last-child{border-radius:0 0 13px 13px!important}
+
+/* الطلبات المتاحة */
+#dApp .dvsec{
+  margin:3px 2px 11px!important;gap:10px!important;align-items:center!important;
+}
+#dApp .dvsec h3{
+  color:#21183C!important;font-size:17px!important;font-weight:900!important;
+  padding-bottom:7px!important;border-bottom:3px solid #5B2BC9!important;
+}
+#dApp .dvsec h3 small{display:block;font-size:10.5px!important;color:#8B8797!important;font-weight:700!important;margin-top:3px!important}
+#dApp .dvcount{
+  order:2!important;min-width:34px!important;height:34px!important;padding:0 9px!important;
+  display:flex!important;align-items:center!important;justify-content:center!important;
+  border-radius:13px!important;background:#F0EAFB!important;color:#5B2BC9!important;font-weight:900!important;
+}
+#dApp .dvref{border-radius:15px!important;background:#fff!important;border:1px solid #E9E2F2!important;
+  padding:9px 13px!important;box-shadow:0 2px 8px rgba(35,20,65,.04)!important}
+#dApp .newbar{
+  border:1px solid #E4D9F7!important;background:linear-gradient(135deg,#F7F2FF,#F0E9FC)!important;
+  border-radius:18px!important;padding:12px!important;margin:0 0 12px!important;
+  box-shadow:0 4px 14px rgba(91,43,201,.07)!important;
+}
+#dApp .newbar .ic{width:42px!important;height:42px!important;border-radius:13px!important}
+#dApp .newbar .tx b{font-size:13px!important}
+#dApp .newbar .tx span{font-size:10.5px!important}
+
+/* عناوين الأقسام */
+#dApp .sechd{margin:17px 2px 10px!important;min-height:30px!important}
+#dApp .sechd h3{font-size:16px!important;font-weight:900!important;color:#21183C!important}
+#dApp .sechd .lnk{font-size:11px!important;color:#5B2BC9!important;background:#F0EAFB!important;border-radius:12px!important;padding:7px 10px!important}
+#dApp .pgrid{gap:9px!important;margin-bottom:13px!important}
+#dApp .pcell{
+  border:1px solid #EEEAF5!important;border-radius:17px!important;padding:13px 7px!important;
+  box-shadow:0 3px 12px rgba(40,25,75,.04)!important;
+}
+#dApp .pcell .v{font-size:17px!important;color:#21183C!important}
+#dApp .pcell .k{font-size:10.5px!important;color:#898398!important}
+
+/* أدوات سريعة */
+#dApp .qgrid.two{gap:10px!important;margin-top:0!important}
+#dApp .qgrid.two .qbtn{min-height:76px!important;border:1px solid #E9E3F2!important;border-radius:18px!important;
+  box-shadow:0 3px 12px rgba(40,25,75,.04)!important;background:#fff!important}
+
+/* الشريط السفلي */
+#dNav{
+  background:rgba(255,255,255,.98)!important;
+  border-top:1px solid #E8E2F0!important;
+  box-shadow:0 -6px 20px rgba(45,28,83,.07)!important;
+  padding-top:5px!important;
+  backdrop-filter:blur(12px);
+}
+#dNav button{color:#8B8797!important;font-size:10.5px!important;font-weight:700!important}
+#dNav button.on{color:#5B2BC9!important;font-weight:900!important}
+#dNav .ni{width:24px!important;height:24px!important;margin-bottom:3px!important}
+#dNav button.on .ni{filter:drop-shadow(0 3px 5px rgba(91,43,201,.22))}
+
+/* استجابة الشاشات الصغيرة */
+@media(max-width:380px){
+  #dApp .body{padding-inline:11px!important}
+  #dApp .dvclock,#dApp .dvduty2{padding-inline:9px!important}
+  #dApp .dvsec h3{font-size:16px!important}
+  #dApp #availMap{height:clamp(290px,45vh,440px)!important}
+}
+
+
+/* FINAL DRIVER UI OVERRIDE — Wasil Leemak */
+#dApp{background:#F8F6FC!important}
+#dApp .top{
+  background:linear-gradient(135deg,#5B2BC9 0%,#4A1FA8 58%,#3F0A92 100%)!important;
+  color:#fff!important;border:0!important;box-shadow:0 5px 18px rgba(63,10,146,.22)!important;
+  min-height:78px!important;padding:12px 16px!important;position:relative;
+}
+#dApp .top .l{gap:10px!important}
+#dApp .top .mini{width:46px!important;height:46px!important;border-radius:50%!important;
+  background:#fff!important;padding:5px!important;box-shadow:0 3px 10px rgba(0,0,0,.12)!important}
+#dApp .top h2{color:#fff!important;font-size:19px!important;font-weight:900!important}
+#dApp .top p{color:rgba(255,255,255,.82)!important;font-size:11px!important}
+#dApp .out{background:rgba(255,255,255,.14)!important;color:#fff!important;
+  border:1px solid rgba(255,255,255,.32)!important;border-radius:22px!important;
+  padding:9px 16px!important;box-shadow:none!important}
+#dApp .body{padding:0 12px 112px!important;background:#F8F6FC!important}
+#dApp .body>.page.on{max-width:700px!important;margin:0 auto!important;display:flex!important;flex-direction:column!important}
+#dApp #dDue{order:0}
+#dApp #availMapBox{order:1!important;margin:0 -12px 0!important;border-radius:0 0 26px 26px!important;
+  box-shadow:0 10px 24px rgba(63,10,146,.12)!important}
+#dApp #availMap{height:clamp(330px,46vh,500px)!important;border:0!important;border-radius:0 0 26px 26px!important;box-shadow:none!important}
+#dApp #dutyBox{order:2!important;margin-top:-18px!important;position:relative;z-index:20;padding:0 4px!important}
+#dApp #dvStats{order:3!important;padding:0 4px!important}
+#dApp #nearestOrder{order:4!important}
+#dApp #dNew{order:5!important}
+#dApp .dvsec{order:6!important;margin:12px 4px 10px!important;padding:9px 10px!important;
+  border-radius:17px!important;background:linear-gradient(135deg,#5B2BC9 0%,#4A1FA8 58%,#3F0A92 100%)!important;
+  box-shadow:0 7px 18px rgba(91,43,201,.22)!important;gap:9px!important}
+#dApp .dvsec h3{order:1!important;flex:1!important;color:#fff!important;border:0!important;padding:0!important;
+  font-size:16px!important;line-height:1.35!important}
+#dApp .dvsec h3 small{color:rgba(255,255,255,.72)!important;font-size:10px!important}
+#dApp .dvcount{order:2!important;background:#FF941E!important;color:#fff!important;
+  min-width:36px!important;height:36px!important;border-radius:12px!important;box-shadow:0 3px 10px rgba(249,116,2,.3)!important}
+#dApp .dvref{order:3!important;background:#FF941E!important;color:#fff!important;border:0!important;
+  border-radius:13px!important;padding:8px 11px!important;box-shadow:0 4px 10px rgba(249,116,2,.25)!important}
+#dApp .dvref .wic{color:#fff!important}
+#dApp #specialAvailList,#dApp #availList{order:7!important}
+#dApp #dPerf{order:8!important}
+#dApp .sechd{order:9!important}
+#dApp .qgrid.two{order:10!important}
+#dApp .avail-empty{margin:0 4px 12px!important;padding:20px 14px!important;border-radius:20px!important;
+  background:linear-gradient(145deg,#24104F 0%,#35116F 55%,#4A1FA8 100%)!important;
+  border:1px solid rgba(255,255,255,.08)!important;color:#fff!important;
+  box-shadow:0 9px 22px rgba(63,10,146,.2)!important;position:relative;overflow:hidden}
+#dApp .avail-empty:before{content:'';position:absolute;width:120px;height:120px;border-radius:50%;
+  background:rgba(255,148,30,.10);top:-55px;left:-35px}
+#dApp .avail-empty .e{margin-bottom:8px!important;position:relative}
+#dApp .avail-empty p{color:rgba(255,255,255,.72)!important;font-size:12px!important;position:relative;margin:0!important}
+#dApp .avail-empty p b{display:block;color:#fff!important;font-size:16px!important;margin-bottom:5px}
+#dApp .dvtip{margin:0 4px 14px!important;border-radius:15px!important;background:#FFF4E8!important;
+  border:1px solid #FFD8AE!important;color:#8A4A00!important;padding:10px 12px!important;font-size:11px!important}
+#dApp .dvtip .wic{color:#F97402!important}
+#dApp .avc{border-radius:20px!important}
+#dApp .sechd h3{font-size:16px!important}
+#dNav{z-index:60!important}
+@media(max-width:380px){
+  #dApp #availMap{height:clamp(310px,45vh,450px)!important}
+  #dApp .dvsec h3{font-size:15px!important}
+  #dApp .dvref{padding-inline:9px!important}
+}
 </style>
 <script>
 
