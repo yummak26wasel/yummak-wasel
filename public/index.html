@@ -4979,6 +4979,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="availMapBox" style="display:none;margin:0 0 14px;position:relative">
         <div id="availMap" style="height:clamp(320px,52vh,520px);border-radius:24px;overflow:hidden;border:2px solid #fff;box-shadow:0 8px 24px rgba(91,43,201,.18)"></div>
         <button id="amClose" onclick="amCollapse()" style="display:none;position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);right:12px;z-index:1001;width:44px;height:44px;border:0;border-radius:50%;background:#fff;box-shadow:0 3px 12px rgba(0,0,0,.2);color:#5B2BC9;font-size:22px;font-weight:800;line-height:1">✕</button>
+        <div id="amZoom"><button type="button" onclick="try{_amMap.zoomIn()}catch(e){}" aria-label="+">+</button><button type="button" onclick="try{_amMap.zoomOut()}catch(e){}" aria-label="-">&minus;</button><button type="button" onclick="amRecenter()" aria-label="loc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3"/></svg></button></div>
         <div id="amChip" style="position:absolute;top:12px;left:12px;z-index:1000;background:#fff;border-radius:16px;padding:8px 12px;box-shadow:0 3px 12px rgba(0,0,0,.14);display:flex;align-items:center;gap:7px;font-weight:800;font-size:13px;color:#5B2BC9"></div>
         <button onclick="amRecenter()" style="position:absolute;bottom:12px;right:12px;z-index:1000;background:#fff;border:0;border-radius:18px;padding:9px 14px;box-shadow:0 3px 12px rgba(0,0,0,.14);display:flex;align-items:center;gap:7px;font:800 13px inherit;font-family:inherit;color:#5B2BC9"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.5v3.3M12 18.2v3.3M2.5 12h3.3M18.2 12h3.3"/></svg> إعادة التمركز</button>
       </div>
@@ -10512,7 +10513,7 @@ async function toggleOpen(){
 function dtab(p,el){
   document.querySelectorAll('#dApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('d_'+p).classList.add('on');
-  document.querySelectorAll('#dNav button').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderDriver();
+  document.querySelectorAll('#dNav button').forEach(b=>b.classList.remove('on'));el.classList.add('on');renderDriver(); _amSyncMode();
 }
 function setHistTab(t, el){
   document.querySelectorAll('.htTab').forEach(x=>x.classList.remove('on'));
@@ -10679,11 +10680,12 @@ const SHOP_TYPE_AR={restaurant:'مطعم', store:'متجر', cafe:'كافيه', 
 /* ═══ خريطة الطلبات المتاحة — مواقع المحلات (اسم + مسافة) + موقع المندوب + اختيار الطلب ═══ */
 let _amMap=null, _amLayer=null, _amMe=null, _amMeAt=0, _amFitKey='', _amSel=null, _amPts=[];
 const _amSkip=new Set();
+const _AM_ME_ICON=()=>L.divIcon({className:'',iconSize:[76,76],iconAnchor:[38,38],html:'<div style="width:76px;height:76px;border-radius:50%;background:rgba(124,58,237,.22);display:flex;align-items:center;justify-content:center"><div style="width:24px;height:24px;border-radius:50%;background:#5B21B6;border:4px solid #fff;box-shadow:0 2px 8px rgba(63,10,146,.45)"></div></div>'});
 let _amFull=false;
 function _amH(){ return (availOrders||[]).some(o=>!_amSkip.has(o.id)&&o.shopLoc&&o.shopLoc.lat) ? 'clamp(300px,44vh,460px)' : '230px' }
 function amExpand(){
   const b=document.getElementById('availMapBox'), el=document.getElementById('availMap'); if(!b||!el||!_amMap) return;
-  _amFull=true;
+  _amFull=true; b.classList.add('am-full');
   b.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;z-index:9500;margin:0;background:#fff;display:block';
   el.style.height='100%'; el.style.borderRadius='0'; el.style.border='0'; el.style.boxShadow='none';
   el.style.setProperty('touch-action','none','important');
@@ -10694,13 +10696,13 @@ function amExpand(){
 }
 function amCollapse(){
   const b=document.getElementById('availMapBox'), el=document.getElementById('availMap'); if(!b||!el) return;
-  _amFull=false;
+  _amFull=false; b.classList.remove('am-full');
   b.style.cssText='display:block;margin:0 0 14px;position:relative';
   el.style.height=_amH(); el.style.borderRadius='24px'; el.style.border='2px solid #fff'; el.style.boxShadow='0 8px 24px rgba(91,43,201,.18)';
   el.style.setProperty('touch-action','pan-y','important');
   const c=document.getElementById('amClose'); if(c) c.style.display='none';
   const ch=document.getElementById('amChip'); if(ch) ch.style.top='12px';
-  try{ if(L.Browser.mobile){ _amMap.dragging.disable(); _amMap.touchZoom.disable(); _amMap.doubleClickZoom.disable() } }catch(e){}
+  
   setTimeout(()=>{ try{ _amMap.invalidateSize() }catch(e){} },120);
 }
 function _amDistM(o){ return (_amMe&&o.shopLoc&&o.shopLoc.lat) ? _dist(_amMe,o.shopLoc) : null }
@@ -10710,17 +10712,27 @@ function _amPick(){
   const s=l.find(o=>o.id===_amSel); if(s) return s;
   return l.slice().sort((a,b)=>(_amDistM(a)??1e12)-(_amDistM(b)??1e12))[0];
 }
+function _amSyncMode(){
+  try{
+    const a=document.getElementById('dApp'), b=document.getElementById('availMapBox'), pg=document.getElementById('d_avail');
+    if(!a) return;
+    const on=!!(b && b.style.display!=='none' && pg && pg.classList.contains('on'));
+    const was=a.classList.contains('mapmode');
+    a.classList.toggle('mapmode',on);
+    if(on!==was && _amMap) setTimeout(()=>{ try{ _amMap.invalidateSize() }catch(e){} },150);
+  }catch(e){}
+}
 function amSelect(id){ _amSel=id; renderDriver() }
 function amReject(id){ _amSkip.add(id); if(_amSel===id) _amSel=null; renderDriver() }
 function amRecenter(){
   if(!_amMap||!_amPts.length) return;
-  try{ _amPts.length>1 ? _amMap.fitBounds(L.latLngBounds(_amPts),{padding:[40,40],maxZoom:16}) : _amMap.setView(_amPts[0],15) }catch(e){}
+  try{ _amPts.length>1 ? _amMap.fitBounds(L.latLngBounds(_amPts),{padding:[40,40],maxZoom:16}) : _amMap.setView(_amPts[0],16) }catch(e){}
 }
 async function renderAvailMap(gate){
   const box=document.getElementById('availMapBox'); if(!box) return;
   const pts=(availOrders||[]).filter(o=>!_amSkip.has(o.id)&&o.shopLoc&&o.shopLoc.lat&&o.shopLoc.lng);
-  if(gate || me.duty===false){ if(_amFull) amCollapse(); box.style.display='none'; const _n0=document.getElementById('nearestOrder'); if(_n0) _n0.style.cssText=''; return }
-  box.style.display='block';
+  if(gate || me.duty===false){ if(_amFull) amCollapse(); box.style.display='none'; const _n0=document.getElementById('nearestOrder'); if(_n0) _n0.style.cssText=''; _amSyncMode(); return }
+  box.style.display='block'; _amSyncMode();
   const _nb=document.getElementById('nearestOrder'); if(_nb){ _nb.style.cssText=_nb.innerHTML.trim()?'position:relative;z-index:1100;margin-top:-34px':'' }
   const chip=document.getElementById('amChip');
   if(chip) chip.innerHTML='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;height:18px"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15z"/><path d="M10 20.5a2 2 0 0 0 4 0"/></svg>'+(((availOrders||[]).filter(o=>!_amSkip.has(o.id)).length)||'ماكو')+' طلبات جديدة';
@@ -10729,13 +10741,13 @@ async function renderAvailMap(gate){
   if(!_amFull) el.style.height = pts.length ? 'clamp(300px,44vh,460px)' : '230px';
   if(_amMap && _amMap.getContainer()!==el){ try{_amMap.remove()}catch(e){} _amMap=null; _amLayer=null }
   if(!_amMap){
-    _amMap=L.map(el,{zoomControl:false,attributionControl:false,dragging:!L.Browser.mobile,
-      touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,tap:false})
-      .setView(pts.length?[pts[0].shopLoc.lat,pts[0].shopLoc.lng]:(_amMe?[_amMe.lat,_amMe.lng]:[34.3699,41.9860]),pts.length?14:(_amMe?15:14));
+    _amMap=L.map(el,{zoomControl:false,attributionControl:false,dragging:true,
+      touchZoom:true,scrollWheelZoom:false,doubleClickZoom:false,tap:false})
+      .setView(pts.length?[pts[0].shopLoc.lat,pts[0].shopLoc.lng]:(_amMe?[_amMe.lat,_amMe.lng]:[34.3699,41.9860]),pts.length?15:(_amMe?16:15));
     tiles().addTo(_amMap);
     _amLayer=L.layerGroup().addTo(_amMap);
-    el.style.setProperty('touch-action','pan-y','important');
-    _amMap.on('click',()=>{ if(!_amFull) amExpand() });
+    el.style.setProperty('touch-action','none','important');
+    
   }
   _amLayer.clearLayers();
   const sel=_amPick(); const ll=[];
@@ -10751,7 +10763,7 @@ async function renderAvailMap(gate){
         +'<b style="font-size:12px;color:#1c1830">'+esc(o.shopName||'—')+'</b>'+(d?'<div style="font-size:11px;color:#6b6685">'+d+'</div>':'')+'</div></div>'});
     L.marker(p,{icon:ic}).addTo(_amLayer).on('click',()=>amSelect(o.id));
   });
-  if(_amMe){ ll.push([_amMe.lat,_amMe.lng]); L.marker([_amMe.lat,_amMe.lng],{icon:_DRV_ICON(),interactive:false}).addTo(_amLayer) }
+  if(_amMe){ ll.push([_amMe.lat,_amMe.lng]); L.marker([_amMe.lat,_amMe.lng],{icon:_AM_ME_ICON(),interactive:false}).addTo(_amLayer) }
   _amPts=ll;
   const key=ll.map(p=>p.join(',')).join('|');
   if(key!==_amFitKey){ _amFitKey=key; amRecenter() }
@@ -11005,8 +11017,8 @@ function _renderDriverBody(){
     av.innerHTML='<div class="empty"><div class="e"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#B9AECB" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 13h8"/></svg></div><p><b>أنت غير متاح حالياً</b><br>شغّل حالة متاح لاستقبال الطلبات.</p></div>';
   }else if(!availOrders.length){
     av.innerHTML = specialAvailOrders.length ? '' : `
-      <div class="empty avail-empty"><div class="e"><svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#FF9A22" stroke-width="1.6" stroke-linecap="round"><path d="M4 8.5 12 5l8 3.5v7L12 19l-8-3.5z"/><path d="M4 8.5 12 12l8-3.5M12 12v7"/></svg></div>
-        <p><b>ماكو طلبات قريبة حالياً</b><br>سنبلغك عند توفر طلبات جديدة بمنطقتك.</p></div>
+      <div class="empty avail-empty"><div class="e"><svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round"><path d="M4 8.5 12 5l8 3.5v7L12 19l-8-3.5z"/><path d="M4 8.5 12 12l8-3.5M12 12v7"/></svg></div>
+        <p><b>لا توجد طلبات حالياً</b><br>عندما تتوفر طلبات جديدة في منطقتك سيتم عرضها هنا مباشرة.</p></div>
       <div class="dvtip"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9.3 18h5.4"/><path d="M10 21h4"/><path d="M12 3a5.6 5.6 0 0 1 3.4 10.1c-.6.5-.9 1.1-.9 1.9h-5c0-.8-.3-1.4-.9-1.9A5.6 5.6 0 0 1 12 3z"/></svg>
         تأكد من أن المفتاح في وضع متاح لاستقبال الطلبات.</div>`;
   }else{
@@ -11672,7 +11684,7 @@ function tiles(){
   /* خريطة OSM — ستايل هادئ يناسب هوية واصل ليمك، بدون API key */
   if(!document.getElementById('wl-tile-css')){
     const st=document.createElement('style'); st.id='wl-tile-css';
-    st.textContent='.wl-tile{filter:saturate(.48) contrast(.96) brightness(1.06) hue-rotate(2deg)}';
+    st.textContent='.wl-tile{filter:saturate(1.18) contrast(1.04)}';
     document.head.appendChild(st);
   }
   const t=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -14968,6 +14980,44 @@ async function initPush(silent){
   #dApp .dvsec h3{font-size:15px!important}
   #dApp .dvref{padding-inline:9px!important}
 }
+
+/* ═══ شاشة السائق — خريطة بالأعلى + لوحة سفلية (مطابقة التصميم المعتمد) ═══ */
+#amZoom{display:none}
+#dApp.mapmode #availMapBox:not(.am-full){position:fixed!important;top:0!important;left:0!important;right:0!important;
+  height:52vh!important;margin:0!important;border-radius:0!important;box-shadow:none!important;background:#E9E5D9!important;z-index:1!important;overflow:hidden!important}
+#dApp.mapmode #availMapBox:not(.am-full) #availMap{height:100%!important;border:0!important;border-radius:0!important;box-shadow:none!important}
+#dApp.mapmode #availMapBox:not(.am-full) #amChip{top:calc(env(safe-area-inset-top,0px) + 14px)!important;left:14px!important;border-radius:999px!important;
+  border:1.5px solid #5B2BC9!important;background:#fff!important;padding:10px 16px!important;font-size:14px!important}
+#dApp.mapmode #availMapBox:not(.am-full) #amZoom{display:flex;flex-direction:column;position:absolute;top:calc(env(safe-area-inset-top,0px) + 14px);right:14px;z-index:1000;
+  background:#fff;border-radius:18px;box-shadow:0 4px 16px rgba(35,20,65,.18);overflow:hidden}
+#amZoom button{width:46px;height:46px;border:0;background:#fff;color:#5B2BC9;font:800 24px/1 inherit;font-family:inherit;display:flex;align-items:center;justify-content:center;cursor:pointer}
+#amZoom button+button{border-top:1px solid #EEE8F7}
+#dApp.mapmode #availMapBox:not(.am-full)>button[onclick="amRecenter()"]{bottom:52px!important;right:14px!important;z-index:1000;border-radius:999px!important;padding:11px 18px!important}
+/* الرأس يصير أول اللوحة السفلية */
+#dApp.mapmode>.top{position:relative!important;top:auto!important;margin-top:calc(52vh - 30px)!important;z-index:5!important;border-radius:30px 30px 0 0!important;
+  background:#fff!important;color:#4A1FA8!important;min-height:0!important;padding:26px 18px 10px!important;border:0!important;box-shadow:0 -10px 28px rgba(63,10,146,.14)!important;backdrop-filter:none!important}
+#dApp.mapmode>.top:before{content:'';position:absolute;top:9px;left:50%;transform:translateX(-50%);width:44px;height:5px;border-radius:9px;background:#CFC9DA}
+#dApp.mapmode>.top h2{color:#4A1FA8!important}
+#dApp.mapmode>.top p{color:#7E7890!important}
+#dApp.mapmode>.top .mini{background:#fff!important;box-shadow:0 2px 10px rgba(63,10,146,.14)!important;border:1px solid #EEE8F7!important}
+#dApp.mapmode>.top .out{background:#fff!important;border:1px solid #E8E1F2!important;color:#E53935!important}
+#dApp.mapmode>.alertbar{position:relative;z-index:6}
+#dApp.mapmode>.body{position:relative!important;z-index:5!important;background:#fff!important;padding-top:6px!important;min-height:calc(52vh)!important}
+#dApp.mapmode #dutyBox{margin-top:0!important;padding:0 4px!important}
+#dApp.mapmode .dvtip{display:none!important}
+/* مفتاح متاح/غير متاح */
+#dApp .dvduty2 .dvdot{display:none!important}
+#dApp .dvduty2{display:flex!important;align-items:center!important;gap:10px!important}
+#dApp .dvduty2:after{content:'';flex:0 0 52px;width:52px;height:30px;border-radius:999px;order:3;background-color:#16A34A;
+  background-image:radial-gradient(circle at calc(100% - 16px) 50%,#fff 12px,transparent 13px);box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+#dApp .dvduty2.off:after{background-color:#CFC8DD;background-image:radial-gradient(circle at 16px 50%,#fff 12px,transparent 13px)}
+/* حالة «لا توجد طلبات» — بطاقة بنفسجية فاتحة */
+#dApp .avail-empty{background:#F3EEFF!important;border:1px solid #E7DEFA!important;box-shadow:none!important;color:#21183C!important;text-align:center}
+#dApp .avail-empty:before{display:none!important}
+#dApp .avail-empty p{color:#6B6685!important}
+#dApp .avail-empty p b{color:#21183C!important}
+/* الشريط السفلي — الفعّال بكبسولة */
+#dNav button.on{background:#EFE8FF!important;border-radius:20px!important;margin:4px 5px!important;padding-top:7px!important}
 </style>
 <script>
 
