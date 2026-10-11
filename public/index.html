@@ -11688,7 +11688,7 @@ function tiles(){
     document.head.appendChild(st);
   }
   const geoapifyKey='c25d40a0075047db8b75e529a79177ae';
-  const tileUrl='https://maps.geoapify.com/v1/tile/osm-carto/{z}/{x}/{y}.png?apiKey='+encodeURIComponent(geoapifyKey);
+  const tileUrl='https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?apiKey='+encodeURIComponent(geoapifyKey);
   const t=L.tileLayer(tileUrl,
     {maxZoom:20,minZoom:11,attribution:'© OpenStreetMap contributors | © Geoapify',className:'wl-tile',updateWhenIdle:true,keepBuffer:2});
   let w=false;
