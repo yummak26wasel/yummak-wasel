@@ -8881,7 +8881,11 @@ async function submitOrder(){
     serviceFee:svcFee(sub),deliveryFee:fareNow(),total:sub+svcFee(sub)+fareNow(),
     status:'pending',createdAt:Date.now(),date:new Date().toLocaleString('ar-IQ')};
   try{
-    await db.collection('orders').add(o);
+    const _ref=await db.collection('orders').add(o);
+    /* نضيف الطلب لقائمة الزبون فوراً بدون ما ننتظر وصول المستمع (onSnapshot) */
+    try{
+      if(_ref&&_ref.id&&!(myOrders||[]).some(x=>x.id===_ref.id)) myOrders=[{...o,id:_ref.id},...(myOrders||[])];
+    }catch(e){}
     const sh=shops.find(s=>s.id===o.shopId);
     pushTo(ownerUid,'طلب جديد',o.customer+'—'+o.total.toLocaleString()+'د.ع',{type:'order'});
     cart=[];orderNote='';orderCode='';renderCart();
@@ -8889,6 +8893,8 @@ async function submitOrder(){
     document.getElementById('p_orders').classList.add('on');
     document.querySelectorAll('#cNav button').forEach(b=>b.classList.remove('on'));
     document.querySelectorAll('#cNav button')[2].classList.add('on');
+    _custOrdSig=null; ordKind='all'; try{ renderOrders() }catch(e){}
+    setTimeout(()=>{ try{ renderOrders() }catch(e){} },700);
     buzz([20,60,20,60,30]); toast('انرسل طلبك للمحل');
     setTimeout(npAsk, 900);
   }catch(e){toast(errMsg(e)); __revBusy=false;
@@ -11681,18 +11687,16 @@ function loadLeaflet(){
   return leafletPromise;
 }
 function tiles(){
-  /* Geoapify Map Tiles — استبدال مصدر صور الخريطة فقط */
+  /* خريطة OSM — ستايل هادئ يناسب هوية واصل ليمك، بدون API key */
   if(!document.getElementById('wl-tile-css')){
     const st=document.createElement('style'); st.id='wl-tile-css';
-    st.textContent='.wl-tile{filter:saturate(1.08) contrast(1.02)}';
+    st.textContent='.wl-tile{filter:saturate(1.18) contrast(1.04)}';
     document.head.appendChild(st);
   }
-  const geoapifyKey='c25d40a0075047db8b75e529a79177ae';
-  const tileUrl='https://maps.geoapify.com/v1/tile/carto/{z}/{x}/{y}.png?apiKey='+encodeURIComponent(geoapifyKey);
-  const t=L.tileLayer(tileUrl,
-    {maxZoom:20,minZoom:11,attribution:'© OpenStreetMap contributors | © Geoapify',className:'wl-tile',updateWhenIdle:true,keepBuffer:2});
+  const t=L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+    {maxZoom:19,minZoom:11,attribution:'© OpenStreetMap contributors',className:'wl-tile',updateWhenIdle:true,keepBuffer:2});
   let w=false;
-  t.on('tileerror',()=>{ if(!w){ w=true; toast('خريطة Geoapify ما نزلت — تحقق من تفعيل Map Tiles ومفتاح API والإنترنت') } });
+  t.on('tileerror',()=>{ if(!w){ w=true; toast('صور الخريطة ما نزلت — تأكد من الإنترنت') } });
   return t;
 }
 
@@ -13747,14 +13751,17 @@ let tt;
 
 /* ══════════ رسوم السائق — جهة السائق ══════════ */
 let myFees={app_service:{due:0,paid:0,rem:0}, driver_fee:{due:0,paid:0,rem:0}}, myPays=[];
+let myFeesState='loading', myFeesErr='';
 
 async function loadMyFees(){
   if(!uid) return;
   try{
     const r=await rpc('driver_balance',{p_driver:uid});
+    myFees={app_service:{due:0,paid:0,rem:0}, driver_fee:{due:0,paid:0,rem:0}};
     (r||[]).forEach(x=>{ myFees[x.fee_type]={
       due:Number(x.due||0), paid:Number(x.paid||0), rem:Number(x.remaining||0) } });
-  }catch(e){ __silent(e,'driverBalance') }
+    myFeesState='ok'; myFeesErr='';
+  }catch(e){ myFeesState='err'; myFeesErr=String((e&&e.message)||e).slice(0,160); __silent(e,'driverBalance') }
   try{ myPays = await sbGet('driver_payments?select=*&driver_id=eq.'+uid+'&order=created_at.desc') || [] }
   catch(e){ myPays=[] }
   renderMyFees();
@@ -13762,6 +13769,12 @@ async function loadMyFees(){
 
 function renderMyFees(){
   const box=document.getElementById('drvFees'); if(!box) return;
+  if(myFeesState!=='ok'){
+    box.innerHTML = myFeesState==='loading'
+      ? '<div class="feec" style="grid-column:1/-1;text-align:center;padding:18px;color:#6B7280;font-weight:800">جاري جلب حسابك…</div>'
+      : '<div class="feec" style="grid-column:1/-1;text-align:center;padding:16px;color:#B91C1C;font-weight:800">تعذّر جلب حسابك<br><small style="font-weight:600;direction:ltr;display:block;margin-top:6px">'+String(myFeesErr).replace(/</g,'&lt;')+'</small><button class="sl-bt" style="margin-top:10px" onclick="loadMyFees()">إعادة المحاولة</button></div>';
+    return;
+  }
   const cell=(k,cls,ic,ttl)=>{
     const x=myFees[k]||{due:0,paid:0,rem:0};
     const wait=(myPays||[]).some(p=>p.fee_type===k && p.status==='pending');
@@ -15075,6 +15088,10 @@ async function initPush(silent){
 /* منع تداخل بطاقة الحالة مع نهاية الخريطة */
 #dApp.mapmode #dutyBox{margin-top:0!important;position:relative!important;z-index:8!important}
 #dApp.mapmode #dvStats{position:relative!important;z-index:7!important}
+/* إصلاح التداخل: الخريطة تنزل تحت اللوحة (كانت تطلع فوق الهيدر وتبين من ورا البطاقات) */
+#dApp.mapmode{isolation:isolate}
+#dApp.mapmode>.body{z-index:auto!important}
+#dApp.mapmode #availMapBox:not(.am-full){z-index:-1!important}
 
 /* الشريط السفلي — الفعّال بكبسولة */
 #dNav button.on{background:#EFE8FF!important;border-radius:20px!important;margin:4px 5px!important;padding-top:7px!important}
