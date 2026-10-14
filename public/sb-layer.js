@@ -105,15 +105,19 @@ if(typeof document !== 'undefined'){
 const _wake = new Set();
 
 /* ═══ التوكن — يُقرأ عند كل طلب ═══ */
+let _badTok = null;   /* توكن منتهي ما نقدر نجدده — نتجاهله لين يتبدل بتوكن جديد */
 function _token(){
+  let t = null;
   if(typeof window !== 'undefined' && typeof window.__waselToken === 'function'){
-    const t = window.__waselToken();
-    if(t) return t;
+    t = window.__waselToken() || null;
   }
-  try{
-    const s = JSON.parse(localStorage.getItem('wasel_session'));
-    return (s && s.token) || null;
-  }catch(e){ return null }
+  if(!t){
+    try{
+      const s = JSON.parse(localStorage.getItem('wasel_session'));
+      t = (s && s.token) || null;
+    }catch(e){ t = null }
+  }
+  return (t && t === _badTok) ? null : t;
 }
 
 function _hdr(extra){
@@ -218,10 +222,13 @@ async function _req(path, opt = {}, _retried){
   if(!r) throw _lastErr || new Error('ماكو اتصال');
   if(!r.ok){
     const bodyTxt = await r.text();
-    if(!_retried && /JWT expired|PGRST301|row-level security/.test(bodyTxt) &&
+    if(!_retried && /JWT expired|PGRST30[0-9]|row-level security/.test(bodyTxt) &&
        typeof window !== 'undefined' && typeof window.__waselRefresh === 'function'){
+      const _old = _token();
       const fresh = await window.__waselRefresh();
       if(fresh) return _req(path, opt, true);
+      /* التجديد فشل والتوكن منتهي فعلاً: نتجاهله ونعيد المحاولة بالمفتاح العام (شاشة الدخول تشتغل) */
+      if(_old && /JWT expired|PGRST30[0-9]/.test(bodyTxt)){ _badTok = _old; return _req(path, opt, true) }
     }
     throw new Error(bodyTxt);
   }
