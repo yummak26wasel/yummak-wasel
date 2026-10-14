@@ -3,7 +3,10 @@
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
 const VER = 'leemak-v59';
+const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
+const IMG_MAX = 200;
 const SHELL = ['/sb-layer.js', '/auth-layer.js', '/manifest.json', '/792707e8.png'];
+const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
 const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|project-osrm\.org|fcm\.googleapis)/;
 const IMG = /\.(png|jpe?g|webp|gif|svg|ico|woff2?)$/i;
@@ -32,7 +35,7 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(ks => Promise.all(ks.filter(k => k !== VER).map(k => caches.delete(k))))
+    caches.keys().then(ks => Promise.all(ks.filter(k => k !== VER && k !== IMGC).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -98,6 +101,25 @@ async function img(e, req){
   }catch(err){ return Response.error() }
 }
 
+/* صور Supabase (أسماء ملفاتها فيها وقت الرفع فما تتغير): الكاش أول، وإذا ما موجودة تنزل وتنحفظ.
+   نطلبها بـCORS حتى ما تكون opaque (opaque تاكل مساحة كبيرة من الكاش) */
+async function sbimg(req){
+  const c = await caches.open(IMGC);
+  const cached = await c.match(req.url);
+  if(cached) return cached;
+  let r = null;
+  try{ r = await fetch(req.url, { mode: 'cors', credentials: 'omit' }) }catch(e){ r = null }
+  if(r && r.ok){
+    try{
+      await c.put(req.url, r.clone());
+      const ks = await c.keys();
+      if(ks.length > IMG_MAX) await Promise.all(ks.slice(0, ks.length - IMG_MAX).map(k => c.delete(k)));
+    }catch(e){}
+    return r;
+  }
+  try{ return await fetch(req) }catch(e){ return Response.error() }   /* CORS فشل أو النت طايح: نجرّب الطلب العادي */
+}
+
 /* مكتبات CDN (Leaflet وغيرها): الكاش أول */
 async function cdn(req){
   const c = await caches.open(VER);
@@ -112,6 +134,7 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   if(req.method !== 'GET') return;
   const url = new URL(req.url);
+  if(req.destination === 'image' && SBIMG.test(url.href)){ e.respondWith(sbimg(req)); return }
   if(API.test(url.href) && !CDN.test(url.href)) return;          /* بيانات حيّة — بدون كاش */
   if(CDN.test(url.href)){ e.respondWith(cdn(req)); return }
   if(url.origin !== location.origin) return;
