@@ -427,7 +427,7 @@ body{background:#F6F5FA}
 
 #sNav{position:fixed;left:12px;right:12px;bottom:0;display:flex;gap:4px;background:#fff;
   border:0;border-radius:26px;padding:7px;box-shadow:0 4px 20px rgba(91,43,201,.13);
-  margin-bottom:calc(10px + env(safe-area-inset-bottom))}
+  margin-bottom:calc(8px + max(0px, calc(env(safe-area-inset-bottom) - 38px)))}
 #sNav button{border-radius:20px;padding:9px 0 8px;transition:.18s}
 #sNav button.on{background:var(--g);color:#fff}
 #sNav button.on svg{stroke:#fff}
@@ -2152,6 +2152,9 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .cyk .kx.paid b{color:var(--ok)} .cyk .kx.rem b{color:#DC2626}
 .cyk .kz{margin-top:10px;display:flex;align-items:center;justify-content:center;gap:8px;border-radius:14px;padding:12px;font-weight:900;font-size:15px;background:#DCFCE7;color:var(--ok2)}
 .cyk .kz .wic{width:20px;height:20px}
+.cyb .cyr{display:flex;gap:6px;margin-top:8px}
+.cyb .cyp{flex:1;text-align:center;border:2px solid #E0D4F7;background:#fff;color:#8A7BB5;border-radius:11px;padding:7px 2px;font-size:12px;font-weight:900}
+.cyb .cyp.on{background:var(--g);border-color:var(--g);color:#fff}
 .cycopt{flex:1;border:2px solid #E7DCFA;background:#fff;color:#4A1FA8;border-radius:14px;padding:12px 6px;font-family:inherit;font-size:13px;font-weight:900;cursor:pointer}
 .cycopt.on{background:var(--g);border-color:var(--g);color:#fff}
 .dtot{display:flex;align-items:center;gap:12px;background:#FEF1F1;border-radius:16px;padding:15px;margin-bottom:12px}
@@ -4766,7 +4769,7 @@ body,.screen{background:#fff;color:var(--txt)}
       </div> </div> <div class="authrow"> <span class="forgot" onclick="forgotPass()">نسيت كلمة المرور؟<i>›</i></span> <label class="rem"><input type="checkbox" id="aRemember" checked><i></i><span>تذكرني</span></label> </div> <button class="big-btn authbtn" id="authBtn" onclick="doAuth()"> <span id="authBtnTxt">دخول</span><i class="ar"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></button> <div class="ordiv"><span>أو</span></div> <button class="gbtn" onclick="toast('تسجيل Google — قريباً إن شاء الله')"> <svg viewBox="0 0 48 48"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.7-.4-3.9H24v7.1h12c-.2 1.8-1.5 4.6-4.4 6.4l6.7 5.2C42.2 35.1 45 30 45 24z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.4c-1.8 1.3-4.3 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.2 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.4c-.5-1.4-.7-2.9-.7-4.4s.3-3 .7-4.4l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 9.9l7.1-5.5z"/><path fill="#EA4335" d="M24 10.2c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4 29.9 2 24 2 15.4 2 8 6.8 4.4 14.1l7.1 5.5C13.3 14.2 18.2 10.2 24 10.2z"/></svg>
       تسجيل الدخول بواسطة Google</button> <div class="hint" id="authHint">ما عندك حساب؟ <b onclick="setMode('signup')">سجّل الآن</b> ›</div> <svg class="authwave" viewBox="0 0 420 58" preserveAspectRatio="none" aria-hidden="true"> <path d="M0 30 Q118 0 238 20 T420 10 L420 58 L0 58Z" fill="#F97402"/> <path d="M0 45 Q120 18 250 37 T420 28 L420 58 L0 58Z" fill="#5B2BC9"/> </svg> </div>
 </div> <!-- ═══ CUSTOMER ═══ -->
-<div class="screen" id="cApp"> <div class="hdr"> <div class="side"> <button class="iconbtn" onclick="tab('orders',document.querySelectorAll('#cNav button')[2])"> <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 14 18 8z"/> <path d="M10.3 20a2 2 0 0 0 3.4 0"/></svg> <span class="dot" id="notifDot" style="display:none">0</span> </button> </div> <div class="brandc"> <img src="792707e8.png" alt=""> <div class="btxt"> <div class="b1">واصل <span>ليمَك</span></div> <div class="b2">— من يمهم ليمك —</div> </div> </div> <div class="side"> <button class="iconbtn" onclick="tab('more',document.querySelectorAll('#cNav button')[4])"> <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg> </button> </div> </div> <button class="out" id="backPanel" style="display:none;position:absolute;top:70px;right:14px;z-index:70;color:#5B2BC9" onclick="closeShopping()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> لوحتي</button> <div class="body"> <div class="page on" id="p_home">
+<div class="screen" id="cApp"> <div class="hdr"> <div class="side"> <button class="iconbtn" onclick="tab('orders',document.querySelectorAll('#cNav button')[2])"> <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 14 18 8z"/> <path d="M10.3 20a2 2 0 0 0 3.4 0"/></svg> <span class="dot" id="notifDot" style="display:none">0</span> </button> </div> <div class="brandc"> <img src="792707e8.png" alt=""> <div class="btxt"> <div class="b1">واصل <span>ليمَك</span></div> <div class="b2">— من يمهم ليمك —</div> </div> </div> <div class="side"> <button class="iconbtn" onclick="tab('more',document.querySelectorAll('#cNav button')[4])"> <svg viewBox="0 0 24 24"><path d="M4 7h16M4 12h16M4 17h16"/></svg> </button> </div> </div> <button class="out" id="backPanel" style="display:none;position:relative;margin:10px 14px 0;z-index:70;background:#F3EEFF;border:0;border-radius:22px;padding:9px 16px;color:#5B2BC9;font-family:inherit;font-size:13px;font-weight:900;cursor:pointer" onclick="closeShopping()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> لوحتي</button> <div class="body"> <div class="page on" id="p_home">
 
 <div class="hcard" onclick="openMap('delivery',true)">
   <div class="hc-t">
@@ -4872,7 +4875,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <div style="text-align:center;padding:8px 0 4px;color:#B3ABC5;font-size:11.5px;font-weight:600">
         واصل ليمَك — من يمهم ليمك <svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 20.5S3.5 15 3.5 9.4A4.4 4.4 0 0 1 12 7.3a4.4 4.4 0 0 1 8.5 2.1c0 5.6-8.5 11.1-8.5 11.1z"/></svg></div> </div> </div> <div class="nav" id="cNav"> <button class="on" onclick="tab('home',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1V9.5"/></svg></span>الرئيسية</button> <button onclick="tab('cart',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg></span>السلة<span class="b" id="cartCnt">0</span></button> <button onclick="tab('orders',this)"><span class="ni"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>طلباتي</button> <button onclick="tab('disc',this)"><span class="ni"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></span>الخصومات</button> <button onclick="tab('more',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>حسابي</button> </div>
 </div> <!-- ═══ STORE ═══ -->
-<div class="screen" id="sApp"> <div class="top"><div class="l"><span class="logoc"><img class="mini" src="792707e8.png" alt=""></span><div><h2 id="stName">متجري</h2><p>لوحة تحكم المتجر</p></div></div> <button class="out" onclick="logout()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>خروج</button></div> <div class="alertbar" id="alertBar" onclick="stopAlarm()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> عندك طلب جديد — اضغط للإيقاف</div> <div class="body"> <div class="page on" id="q_dash">
+<div class="screen" id="sApp"> <div class="top"><div class="l"><span class="logoc"><img class="mini" id="stAv" src="792707e8.png" alt=""></span><div><h2 id="stName">متجري</h2><p>لوحة تحكم المتجر</p></div></div> <button class="out" onclick="logout()"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>خروج</button></div> <div class="alertbar" id="alertBar" onclick="stopAlarm()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> عندك طلب جديد — اضغط للإيقاف</div> <div class="body"> <div class="page on" id="q_dash">
       <span id="newCnt" style="display:none"></span>
       <div id="stCallDrv"></div>
       <div id="stSummary"></div>
@@ -4887,10 +4890,11 @@ body,.screen{background:#fff;color:var(--txt)}
       <div class="statwrap" style="display:none"><div class="stats" id="stStats"></div></div> <div id="stRecent" style="display:none"></div>
       </div> <div class="page" id="q_finance">
       <div class="fhd"><div><h2>المالية</h2><p>مراجعة مبيعاتك وعمولة التطبيق</p></div>
-        <span class="fmonth"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>هذا الشهر</span></div>
+        <span class="fmonth"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span id="finPerLbl">آخر 30 يوم</span></span></div>
+      <div class="perbar" id="finPer" style="margin:0 0 14px"></div>
       <div id="stFinance"></div>
       <div id="stCash"></div>
-      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('main',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
+      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
       <div class="stf-hd">
         <div>
           <h3>التصنيفات</h3>
@@ -9702,8 +9706,20 @@ function startShopClock(){
 }
 function renderStore(){
   if(!myShopDoc)return;
+  if(!window.__stPerInit){ window.__stPerInit=true; periodDays=30 }   /* المالية تبدأ بآخر 30 يوم مو اليوم */
   const sh=myShopDoc,os=myOrders;
   document.getElementById('stName').textContent=sh.name;
+  try{ /* صورة المتجر بالهيدر، وإذا ما موجودة أو انكسر رابطها نرجع لشعار التطبيق */
+    const _av=document.getElementById('stAv');
+    if(_av){
+      const _src=sh.img||sh.photo||'';
+      if(_src && _av.dataset.src!==_src){
+        _av.dataset.src=_src; _av.classList.add('ph');
+        _av.onerror=()=>{ _av.onerror=null; _av.classList.remove('ph'); _av.src='792707e8.png' };
+        _av.src=_src;
+      }else if(!_src && _av.dataset.src){ _av.dataset.src=''; _av.classList.remove('ph'); _av.src='792707e8.png' }
+    }
+  }catch(e){}
   const today=new Date().toLocaleDateString('ar-IQ');
   const tc=os.filter(o=>(o.date||'').includes(today)).length;
   const rev=os.filter(o=>o.status==='delivered').reduce((s,o)=>s+o.sub,0);
@@ -9759,6 +9775,11 @@ function renderStore(){
 
   const sm=document.getElementById('stSummary');
   const __noRep = !!(me.staff && !me.staff.can_reports);   /* موظف بلا صلاحية تقارير */
+  /* ملخص الرئيسية = هذا الشهر (من يوم 1 بتوقيت الجهاز) ويتصفّر مع بداية كل شهر */
+  const _mS=new Date(); _mS.setDate(1); _mS.setHours(0,0,0,0); const _mT=_mS.getTime();
+  const _monO   = os.filter(o=>_anyTs(o.createdAt)>=_mT);
+  const _monDone= os.filter(o=>o.status==='delivered' && _anyTs(o.deliveredAt||o.createdAt)>=_mT);
+  const _monName= new Date().toLocaleDateString('ar-IQ',{month:'long'});
   if(sm) sm.innerHTML=`
     <div class="stsum">
       <div class="dt"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
@@ -9771,16 +9792,16 @@ function renderStore(){
       <div class="g3"${__noRep?' style="grid-template-columns:1fr 1fr"':''}>
         <div class="g3c">
           <span class="g3i pu"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span>
-          <div class="k">إجمالي الطلبات</div><div class="v pu">${allO}</div><div class="s">طلب</div>
+          <div class="k">طلبات ${_monName}</div><div class="v pu">${_monO.length}</div><div class="s">طلب</div>
         </div>
         <div class="g3c">
           <span class="g3i gr"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg></span>
-          <div class="k">الطلبات المكتملة</div><div class="v gr">${doneAll.length}</div><div class="s">طلب</div>
+          <div class="k">المكتملة</div><div class="v gr">${_monDone.length}</div><div class="s">طلب</div>
         </div>
         ${__noRep?'':`<div class="g3c">
           <span class="g3i tl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></span>
-          <div class="k">إجمالي المبيعات</div>
-          <div class="v tl">${doneAll.reduce((a,o)=>a+Number(o.sub||0),0).toLocaleString()}<small> د.ع</small></div>
+          <div class="k">مبيعات ${_monName}</div>
+          <div class="v tl">${_monDone.reduce((a,o)=>a+Number(o.sub||0),0).toLocaleString()}<small> د.ع</small></div>
           <div class="s">بعد الخصومات</div>
         </div>`}
       </div>
@@ -9855,112 +9876,77 @@ function renderStore(){
 
   /* ═══════ الملخص المالي ═══════ */
   const perName = periodDays===1?'اليوم':('آخر '+periodDays+' يوم');
-  const doneP = os.filter(o=>o.status==='delivered' && inPeriod(o.deliveredAt||o.createdAt));
+  const _mEnd = window.stMonth ? new Date(new Date(window.stMonth).getFullYear(), new Date(window.stMonth).getMonth()+1, 1).getTime() : 0;
+  const doneP = os.filter(o=>{ if(o.status!=='delivered') return false; const _t=window.stMonth?(o.createdAt||o.deliveredAt):(o.deliveredAt||o.createdAt);
+    if(window.stMonth){ const t=_anyTs(_t); return t>=window.stMonth && t<_mEnd }
+    return inPeriod(_t) });
 
+  const rejP = os.filter(o=>{ if(o.status!=='rejected') return false; const _t=o.createdAt||o.deliveredAt;
+    if(window.stMonth){ const t=_anyTs(_t); return t>=window.stMonth && t<_mEnd }
+    return inPeriod(_t) });
   const gross = doneP.reduce((a,o)=>a+Number(o.sub||0),0);              /* قيمة الطعام */
   const svc   = doneP.reduce((a,o)=>a+Number(o.serviceFee||0),0);        /* رسوم للتطبيق */
   const dlv   = doneP.reduce((a,o)=>a+Number(o.deliveryFee||0),0);       /* للسائق */
-  const disc  = doneP.reduce((a,o)=>a+Number(o.discountShop||0),0);      /* خصم يتحمله المحل */
-  const discApp = doneP.reduce((a,o)=>a+Number(o.discountApp||0),0);     /* خصم يتحمله التطبيق */
+  const disc  = doneP.reduce((a,o)=>a+dscShop(o),0);      /* خصم يتحمله المحل */
+  const discApp = doneP.reduce((a,o)=>a+dscApp(o),0);     /* خصم يتحمله التطبيق */
   const discAll = disc + discApp;
 
-  const comOn  = SET.shopCommissionEnabled===true || SET.shopCommissionEnabled==='1';
-  const comVal = Number(SET.shopCommissionPct||0);
-  const comKind= SET.shopCommissionKind||'percent';
-  const comSet = (comOn && comVal>0) ? comVal : null;
-  const shopCom = comSet==null ? 0
-    : (comKind==='fixed' ? comVal*doneP.length : Math.round(gross*comVal/100));
-  const comTxt = comSet==null ? 'مجاني'
-    : shopCom.toLocaleString()+'<small> د.ع</small>';
-  const comSub = comSet==null ? 'فترة تجريبية — ما ننقص شي'
-    : (comKind==='fixed' ? comVal.toLocaleString()+' د.ع لكل طلب' : comVal+'% من المبيعات');
+  /* نفس حساب الإدارة (دالة shop_commission): 5.5% من المبيعات المكتملة */
+  const comVal = 5.5, comKind='percent', comSet = comVal;
+  const shopCom = Math.round(gross*0.055);
+  const comSub = '5.5% من المبيعات';
   const net = gross - shopCom - disc;
 
+  try{
+    const _pl=document.getElementById('finPerLbl'); if(_pl) _pl.textContent = window.stMonth ? new Date(window.stMonth).toLocaleDateString('ar-IQ',{month:'long',year:'numeric'}) : (periodDays===1?'اليوم':('آخر '+periodDays+(periodDays===7?' أيام':' يوم')));
+    const _pb=document.getElementById('finPer');
+    if(_pb){
+      _pb.innerHTML=[[1,'اليوم'],[7,'7 أيام'],[30,'30 يوم']].map(([d,l])=>`<button class="perchip${(!window.stMonth&&periodDays===d)?' on':''}" onclick="stPickMonth(0);setPeriod(${d},this)">${l}</button>`).join('');
+      /* الأشهر: الحالي + السابقة (آخر 12 شهر) */
+      let _mb=document.getElementById('finMon');
+      if(!_mb){ _mb=document.createElement('div'); _mb.id='finMon'; _mb.className='perbar'; _mb.style.cssText='margin:-6px 0 14px;overflow-x:auto;flex-wrap:nowrap;gap:6px'; _pb.insertAdjacentElement('afterend',_mb) }
+      const _n=new Date(); let _h='';
+      for(let i=0;i<12;i++){ const d=new Date(_n.getFullYear(),_n.getMonth()-i,1), t=d.getTime();
+        _h+=`<button class="perchip${window.stMonth===t?' on':''}" style="flex:0 0 auto;white-space:nowrap" onclick="stPickMonth(${t})">${d.toLocaleDateString('ar-IQ',{month:'long'})}${d.getFullYear()!==_n.getFullYear()?' '+d.getFullYear():''}</button>` }
+      _mb.innerHTML=_h;
+    }
+  }catch(e){}
   const fin=document.getElementById('stFinance');
   if(fin && __noRep){ fin.innerHTML=''; }
   else if(fin){
-    /* ═══ مبيعات آخر 7 أيام (لكل يوم حقيقي من الطلبات المسلَّمة) ═══ */
-    const WD=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
-    const doneDeliv=os.filter(o=>o.status==='delivered');
-    const dayMs=86400000, nowD=new Date(); nowD.setHours(0,0,0,0);
-    const days=[]; for(let i=6;i>=0;i--) days.push(new Date(nowD.getTime()-i*dayMs));
-    const chartVals=days.map(d=>{
-      const lo=d.getTime(), hi=lo+dayMs;
-      return doneDeliv.reduce((a,o)=>{ const t=_anyTs(o.deliveredAt||o.createdAt); return (t>=lo&&t<hi)?a+Number(o.sub||0):a }, 0);
-    });
-    const chartMax=Math.max(...chartVals,1);
-    const sales7  = chartVals.reduce((a,v)=>a+v,0);
-    const salesToday = chartVals[6]||0;
-    const sales30 = doneDeliv.reduce((a,o)=>{ const t=_anyTs(o.deliveredAt||o.createdAt); return (nowD.getTime()+dayMs-t<=30*dayMs)?a+Number(o.sub||0):a },0);
-    const avgDaily = Math.round(sales30/30);
-
+    const _st=(myInv&&myInv.status)||'due';
+    const _stTxt=_st==='paid'?'مسدد ✓':(_st==='pending'?'قيد المراجعة':'مستحق');
+    const _stCls=_st==='paid'?'ok':(_st==='pending'?'pend':'due');
+    const _n=n=>Number(n||0).toLocaleString();
     fin.innerHTML=`
-    <div class="fkpi">
-      <div class="fkc"><span class="fki pu"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></span>
-        <div class="v pu">${gross.toLocaleString()}</div><div class="k">إجمالي المبيعات · د.ع</div></div>
-      <div class="fkc"><span class="fki pu2"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><path d="M9 8a3 3 0 0 0 6 0"/></svg></span>
-        <div class="v pu">${doneP.length}</div><div class="k">عدد الطلبات</div></div>
-      <div class="fkc"><span class="fki rd"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></span>
-        <div class="v rd">${discAll.toLocaleString()}</div><div class="k">إجمالي الخصومات · د.ع</div></div>
-      <div class="fkc"><span class="fki or"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 5 5 19M7.5 8.5a2 2 0 1 0 0-.1M16.5 15.5a2 2 0 1 0 0-.1"/></svg></span>
-        <div class="v or">${shopCom.toLocaleString()}</div><div class="k">عمولة التطبيق · د.ع</div></div>
+    <div class="fsec"><i class="pu"></i><h3>المبيعات</h3></div>
+    <div class="fst">
+      <div class="fst-r"><div><b>مبيعاتك</b><small>قيمة الأكل والمنتجات</small></div><span class="pl">${_n(gross)} <small style="display:inline">د.ع</small></span></div>
+      <div class="fst-r"><div><b>عدد الطلبات المكتملة</b></div><span class="pl">${doneP.length}</span></div>
+      <div class="fst-r"><div><b>عدد الطلبات المرفوضة</b><small>ما تنحسب بالمبيعات</small></div><span class="mn">${rejP.length}</span></div>
     </div>
 
-    <div class="sechd"><h3>المبيعات</h3></div>
-    <div class="fchartcard">
-      <div class="fchart-hd"><span>المبيعات آخر ${perName}</span>
-        <span class="fci"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></span></div>
-      <div class="perbar sm"><button class="perchip${periodDays===30?' on':''}" onclick="setPeriod(30,this)">30 يوم</button>
-        <button class="perchip${periodDays===7?' on':''}" onclick="setPeriod(7,this)">7 أيام</button>
-        <button class="perchip${periodDays===1?' on':''}" onclick="setPeriod(1,this)">اليوم</button></div>
-      <div class="fbars">
-        ${chartVals.map((v,i)=>`<div class="fbar-col"><span class="fbar-v">${v>=1000?Math.round(v/1000)+'K':v}</span>
-          <div class="fbar-track"><div class="fbar-fill${i===6?' now':''}" style="height:${Math.max(6,Math.round(v/chartMax*100))}%"></div></div>
-          <span class="fbar-l">${WD[days[i].getDay()]}</span></div>`).join('')}
-      </div>
-    </div>
-    <div class="fstat4">
-      <div class="fsc"><span class="fsi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
-        <div class="k">مبيعات 30 يوم</div><div class="v">${sales30.toLocaleString()}<small> د.ع</small></div></div>
-      <div class="fsc"><span class="fsi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
-        <div class="k">مبيعات 7 أيام</div><div class="v">${sales7.toLocaleString()}<small> د.ع</small></div></div>
-      <div class="fsc"><span class="fsi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></span>
-        <div class="k">مبيعات اليوم</div><div class="v">${salesToday.toLocaleString()}<small> د.ع</small></div></div>
-      <div class="fsc"><span class="fsi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m3 17 5-5 4 4 8-9"/></svg></span>
-        <div class="k">المتوسط اليومي</div><div class="v">${avgDaily.toLocaleString()}<small> د.ع</small></div></div>
+    <div class="fsec"><i class="rd"></i><h3>الخصومات</h3></div>
+    <div class="fst">
+      <div class="fst-r"><div><b>خصومات المتجر</b><small>تتحملها انت وتنقص من مبيعاتك</small></div><span class="mn">− ${_n(disc)}</span></div>
+      <div class="fst-r"><div><b>خصومات التطبيق</b><small>يتحملها التطبيق، ما تنقص منك</small></div><span class="gr">${_n(discApp)}</span></div>
+      <div class="fst-r"><div><b>إجمالي الخصومات</b><small>للمعلومة بس</small></div><span class="pl">${_n(discAll)}</span></div>
     </div>
 
-    <div class="sechd"><h3>تفاصيل الخصومات</h3><span class="fci"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></span></div>
-    <div class="fdisc">
-      <div class="fdc"><span class="fdi pu"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/></svg></span>
-        <div class="k">خصومات التطبيق</div><div class="p">${gross?((discApp/gross)*100).toFixed(1):'0.0'}%</div><div class="v">${discApp.toLocaleString()}<small> د.ع</small></div></div>
-      <div class="fdc"><span class="fdi or"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></span>
-        <div class="k">خصومات المتجر</div><div class="p">${gross?((disc/gross)*100).toFixed(1):'0.0'}%</div><div class="v">${disc.toLocaleString()}<small> د.ع</small></div></div>
-      <div class="fdc"><span class="fdi rd"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v6l4 2"/></svg></span>
-        <div class="k">إجمالي الخصومات</div><div class="p">${gross?((discAll/gross)*100).toFixed(1):'0.0'}%</div><div class="v rd">${discAll.toLocaleString()}<small> د.ع</small></div></div>
+    <div class="fsec"><i class="or"></i><h3>العمولة</h3></div>
+    <div class="fst">
+      <div class="fst-r"><div><b>عمولة التطبيق</b><small>${comSub}</small></div><span class="mn">− ${_n(shopCom)}</span></div>
+      <div class="fst-r"><div><b>حالة سداد عمولة الشهر</b><small>المبلغ المطلوب: ${_n(myComm.amount)} د.ع</small></div><span class="paytag ${_stCls}">${_stTxt}</span></div>
     </div>
 
-    <div class="sechd"><h3>تفاصيل العمولة</h3><span class="fci or"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 5 5 19M7.5 8.5a2 2 0 1 0 0-.1M16.5 15.5a2 2 0 1 0 0-.1"/></svg></span></div>
-    <div class="fcomm">
-      <div class="fcc"><div class="k">حالة السداد</div>
-        <div class="v"><span class="paytag ${(myInv&&myInv.status==='paid')?'ok':((myInv&&myInv.status==='pending')?'pend':'due')}">
-          ${(myInv&&myInv.status==='paid')?'مسدد ✓':((myInv&&myInv.status==='pending')?'قيد المراجعة':'مستحق')}</span></div></div>
-      <div class="fcc"><div class="k">إجمالي العمولة لهذا الشهر</div><div class="v">${myComm.amount.toLocaleString()}<small> د.ع</small></div></div>
-      <div class="fcc"><div class="k">نسبة العمولة</div><div class="v or">${comSet==null?'—':comVal+(comKind==='fixed'?' د.ع/طلب':'%')}</div></div>
-    </div>
+    <div class="fsec"><i class="gn"></i><h3>الصافي</h3></div>
+    <div class="fst-tot"><b>الصافي لك</b><span>${_n(net)}<small> د.ع</small></span></div>
+    <div class="fst-eq">المبيعات − خصومات المتجر − العمولة</div>
 
-    <div class="sechd"><h3>آخر العمليات المالية</h3><span class="seclink" onclick="stab('orders',null)">عرض الكل ‹</span></div>
-    <div class="ftx">
-      ${doneAll.slice(0,6).map(o=>`
-      <div class="ftxr">
-        <span class="ftxi up"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 19V5M5 12l7-7 7 7"/></svg></span>
-        <div class="ftxt"><b>طلب #${o.order_no||String(o.createdAt||'').slice(-4)}</b><span>مبيعات · ${(o.date||'')}</span></div>
-        <div class="ftxv">${Number(o.sub||0).toLocaleString()}<small> د.ع</small></div>
-      </div>`).join('') || '<div class="empty" style="padding:26px 10px"><p>لا توجد عمليات بعد</p></div>'}
-    </div>
-    <div class="finote">
-      <span class="fi">i</span>
-      أجرة التوصيل (${dlv.toLocaleString()} د.ع) ورسوم الخدمة يدفعها الزبون ومو من حسابك.
+    <div class="fsec"><i class="gy"></i><h3>يدفعه الزبون</h3></div>
+    <div class="fst">
+      <div class="fst-r"><div><b>أجرة التوصيل</b><small>للسائق مباشرة، مو من حسابك</small></div><span class="pl">${_n(dlv)} <small style="display:inline">د.ع</small></span></div>
+      <div class="fst-r"><div><b>رسوم الخدمة</b><small>للتطبيق، مو من حسابك</small></div><span class="pl">${_n(svc)} <small style="display:inline">د.ع</small></span></div>
     </div>`;
   }
   const rec=os.slice(0,3);
@@ -10566,11 +10552,36 @@ function setHistTab(t, el){
   const map={earn:'htEarn', shop:'htShop', app:'htApp'};
   const p=document.getElementById(map[t]); if(p) p.classList.add('on');
 }
+/* السائق يبدّل صورته — نفس طريقة رفع صورة الزبون (نفس الجدول والعمود) */
+let _drvPhBusy=false;
+async function drvPickPhoto(inp){
+  const f=inp.files&&inp.files[0]; if(!f||_drvPhBusy) return;
+  _drvPhBusy=true;
+  const b=document.getElementById('dPhBtn'); const old=b?b.innerHTML:'';
+  if(b) b.textContent='… جاري الرفع';
+  try{
+    const url=await uploadImage(f,'avatars',{size:400,square:true,quality:0.82});
+    await db.collection('users').doc(uid).update({photo:url});
+    me={...me,photo:url};
+    try{ renderDriverAccount() }catch(e){}
+    try{ renderDrvHead() }catch(e){}
+    toast('انتغيرت صورتك');
+  }catch(e){
+    if(b) b.innerHTML=old;
+    toast('ما انغيرت الصورة: '+errMsg(e));
+  }
+  inp.value=''; _drvPhBusy=false;
+}
 function renderDriverAccount(){
   ds_name.textContent=me.name;ds_phone.textContent=me.phone;ds_veh.textContent=me.vehicle||'—';
-  ds_photo.innerHTML = me.photo
-    ? `<img src="${me.photo}" style="width:92px;height:92px;object-fit:cover;border-radius:50%;border:3px solid var(--g2)">`
-    : '';
+  const _dph = me.photo || me.photo_url || '';
+  ds_photo.innerHTML =
+    (_dph
+      ? `<img src="${esc(_dph)}" style="width:92px;height:92px;object-fit:cover;border-radius:50%;border:3px solid var(--g2)">`
+      : `<div style="width:92px;height:92px;border-radius:50%;margin:0 auto;border:3px solid var(--g2);background:var(--g3);color:var(--g);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:900">${esc((me.name||'؟').trim().charAt(0))}</div>`)
+    + `<div style="margin-top:10px"><label id="dPhBtn" class="sl-bt" style="display:inline-flex;align-items:center;gap:7px;cursor:pointer;padding:10px 18px;font-size:13px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:18px;height:18px"><path d="M4 8.5A2 2 0 0 1 6 6.5h1.6l1.3-2h6.2l1.3 2H18a2 2 0 0 1 2 2V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><circle cx="12" cy="12.6" r="3.3"/></svg>تغيير الصورة</label>`
+    + `<input type="file" accept="image/*" style="display:none" onchange="drvPickPhoto(this)" id="dPhIn"></div>`;
+  try{ const _l=document.getElementById('dPhBtn'); if(_l) _l.setAttribute('for','dPhIn') }catch(e){}
   const d=myDebt();
   const grace=Number(SET.graceDays||7);
   const dl=me.oldestUnpaidAt?Math.ceil((me.oldestUnpaidAt+grace*DAYMS-Date.now())/DAYMS):grace;
@@ -10696,9 +10707,7 @@ function paintDutyCard(doneTodayCount, earnToday){
   const sb=document.getElementById('dvStats');
   if(!sb) return;
   sb.innerHTML=`
-    <div class="dvstats dvstats3">
-      <div class="dvst"><div class="i p">${wic('<circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="6" r="2.2"/><path d="M8.2 18H15a3.5 3.5 0 0 0 0-7H9a3.5 3.5 0 0 1 0-7h6.8"/>')}</div>
-        <b id="dKmToday">${_loadKmToday().toFixed(1)}</b><span>المسافة اليوم (كم)</span></div>
+    <div class="dvstats">
       <div class="dvst"><div class="i o">${wic('<path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/>')}</div>
         <b>${doneTodayCount}</b><span>عدد الطلبات</span></div>
       <div class="dvst"><div class="i g">${wic('<ellipse cx="12" cy="6.5" rx="7.5" ry="2.8"/><path d="M4.5 6.5v5c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-5"/><path d="M4.5 11.5v5c0 1.6 3.4 2.8 7.5 2.8s7.5-1.2 7.5-2.8v-5"/>')}</div>
@@ -10782,6 +10791,8 @@ function _amSyncMode(){
     const on=!!(b && b.style.display!=='none' && pg && pg.classList.contains('on'));
     const was=a.classList.contains('mapmode');
     a.classList.toggle('mapmode',on);
+    /* تبدّل الوضع (خريطة ↔ بدون خريطة) يغيّر طول الصفحة؛ نرجّع التمرير للأعلى حتى ما يطلع المحتوى تحت الهيدر */
+    if(on!==was){ try{ a.scrollTop=0; const _bd=a.querySelector('.body'); if(_bd) _bd.scrollTop=0 }catch(e){} }
     if(on!==was && _amMap) setTimeout(()=>{ try{ _amMap.invalidateSize() }catch(e){} },150);
   }catch(e){}
 }
@@ -11651,12 +11662,14 @@ async function loadWallet(){
 
 /* ═══ فلتر الفترة — اليوم · أسبوع · 15 · 30 ═══ */
 let periodDays = 1;
+function stPickMonth(t){ window.stMonth=t||null; if(t){ try{ renderStore() }catch(e){ __silent(e,'renderStore') } } }
 function setPeriod(d, el){
   periodDays = d;
   document.querySelectorAll('.perchip').forEach(x=>x.classList.remove('on'));
   if(el) el.classList.add('on');
   try{ renderDriver() }catch(e){ __silent(e,'renderDriver') }
   try{ renderShop() }catch(e){}
+  try{ if(me && me.role==='store') renderStore() }catch(e){ __silent(e,'renderStore') }
 }
 function inPeriod(ts){
   if(!ts) return false;
@@ -11906,8 +11919,25 @@ async function confirmMap(){
 /* ── معاينة صغيرة ── */
 function preview(elId,loc,key){
   const el=document.getElementById(elId); if(!el||!loc||!loc.lat)return;
-  el.innerHTML='<div class="prevmap" style="display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;color:var(--g);background:linear-gradient(135deg,#eef7f1,#f7faf8);border:1px solid var(--bd);border-radius:12px;min-height:72px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> '+(loc.zone||'موقع التوصيل')+' <span style="font-size:11px;color:var(--mut)">اضغط لفتح الخريطة</span></div>';
-  el.onclick=()=>{ try{ window.open(pinUrl(loc),'_blank') }catch(e){} };
+  const ph='<div class="prevmap" style="display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;color:var(--g);background:linear-gradient(135deg,#eef7f1,#f7faf8);border:1px solid var(--bd);border-radius:12px;min-height:72px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> '+(loc.zone||'موقع التوصيل')+' <span style="font-size:11px;color:var(--mut)">اضغط لفتح الخريطة</span></div>';
+  el.innerHTML=ph;
+  /* الضغط يفتح الخريطة داخل التطبيق (مو قوقل) */
+  el.onclick=()=>{ try{ openViewMap(loc, loc.zone||'الموقع', '') }catch(e){} };
+  /* خريطة مصغّرة حقيقية بدل المربع الفاضي (إذا ماكو نت يبقى المربع) */
+  (async()=>{
+    try{
+      await loadLeaflet();
+      if(!document.body.contains(el)) return;
+      el.innerHTML='<div class="pvmini" style="width:100%;height:100%;min-height:150px;border-radius:12px;pointer-events:none"></div>';
+      const box=el.firstChild;
+      if(el.__pvMap){ try{ el.__pvMap.remove() }catch(e){} el.__pvMap=null }
+      const m=L.map(box,{zoomControl:false,attributionControl:false,dragging:false,touchZoom:false,doubleClickZoom:false,scrollWheelZoom:false,boxZoom:false,keyboard:false,tap:false}).setView([loc.lat,loc.lng],16);
+      tiles().addTo(m);
+      L.marker([loc.lat,loc.lng]).addTo(m);
+      el.__pvMap=m;
+      setTimeout(()=>{ try{ m.invalidateSize() }catch(e){} },250);
+    }catch(e){ try{ el.innerHTML=ph }catch(_){} }
+  })();
 }
 
 function navUrl(loc){ return 'https://www.google.com/maps/dir/?api=1&destination='+loc.lat+','+loc.lng }
@@ -12236,7 +12266,7 @@ async function loadMyComm(){
   if(!me||!me.shopId) return;
   const per=_pKey(new Date());
   try{
-    const r=await rpc('shop_commission',{p_shop:me.shopId, p_period:per});
+    const r=await rpc('shop_commission',{p_shop:me.shopId, p_period:_pMon(new Date())});
     const d=Array.isArray(r)?r[0]:r;
     myComm={sales:Number((d&&d.sales)||0), amount:Number((d&&d.amount)||0)};
   }catch(e){ __silent(e,'shopCommission') }
@@ -12368,7 +12398,6 @@ async function openPayCom(){
     </div>
 
     <button class="pcsend" onclick="sendPayCom()">${wic('<path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/>')} إرسال طلب السداد</button>
-    <a class="pcwa" href="https://wa.me/${WA_NUM}" target="_blank" rel="noopener">${wic('<path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/>')} دز وصل التحويل بالواتساب</a>
 
     <div class="invnote" style="margin-top:11px">${wic('<circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/>')}
       يوصل إشعار للإدارة بمبلغ السداد لمراجعته وتأكيده، ويوصلك إشعار بعد التأكيد.</div>`;
@@ -12390,7 +12419,7 @@ async function sendPayCom(){
     await sbPost('shop_invoices', row);
     toast('انرسل — الإدارة راح تراجعه');
     try{ await loadMyComm() }catch(e2){ console.warn('loadMyComm', e2) }
-    stab('main', document.querySelectorAll('#sNav button')[0]);
+    stab('dash', document.querySelectorAll('#sNav button')[0]);
   }catch(e){
     console.error('sendPayCom', e);
     toast('فشل الإرسال: '+String(e.message||e).slice(0,140));
@@ -12400,6 +12429,8 @@ async function sendPayCom(){
 /* ══════════ فواتير المطاعم ══════════ */
 let invMonth=new Date(), invRows=[], invFil='all', _invShop=null, invStatus={};
 const _pKey = d => new Date(d.getFullYear(), d.getMonth(), 1).toISOString().slice(0,10);
+/* تاريخ أول الشهر بالتوقيت المحلي — لدالة shop_commission (حتى ما تقرا الشهر السابق) */
+const _pMon = d => d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-01';
 const _pAr  = d => d.toLocaleDateString('ar-IQ',{month:'long',year:'numeric'});
 const _dueDate = d => new Date(d.getFullYear(), d.getMonth()+1, 0);
 
@@ -12412,7 +12443,7 @@ async function loadInv(){
   invRows=[];
   for(const sh of (allShops||[])){
     try{
-      const r=await rpc('shop_commission',{p_shop:sh.id, p_period:per});
+      const r=await rpc('shop_commission',{p_shop:sh.id, p_period:_pMon(invMonth)});
       const d=Array.isArray(r)?r[0]:r;
       invRows.push({shop:sh, sales:Number((d&&d.sales)||0),
                     amount:Number((d&&d.amount)||0), inv:invStatus[sh.id]||null});
@@ -12518,7 +12549,19 @@ function renderInvOne(){
       ${iv.method?row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/></svg>','طريقة الدفع', iv.method==='cash'?'نقدي':'تحويل بنكي'):''}
       <div class="invnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/></svg>
         تُحتسب العمولة على إجمالي المبيعات المكتملة خلال الشهر، بلا أجور التوصيل.</div>
-    </div>`;
+    </div>
+    ${(()=>{
+      /* الخصومات لهذا المحل بهذا الشهر — نفس حساب صفحة المالية عند المتجر */
+      const a=rpAgg(rpRows(invMonth.getFullYear()+'-'+String(invMonth.getMonth()+1).padStart(2,'0'), _invShop));
+      return `<div class="invbox">
+        <h5>الخصومات (نفس أرقام المتجر)</h5>
+        <div class="invr"><span>عدد الطلبات المكتملة</span><b>${a.n.toLocaleString()}</b></div>
+        <div class="invr"><span>عدد الطلبات المرفوضة</span><b>${(()=>{const y=invMonth.getFullYear(),m=invMonth.getMonth(),f=new Date(y,m,1).getTime(),t=new Date(y,m+1,1).getTime();return allOrders.filter(o=>o.status==='rejected'&&o.shop_id===_invShop&&(x=>x>=f&&x<t)(Date.parse(o.created_at||o.createdAt||0))).length})()}</b></div>
+        <div class="invr"><span>خصومات يتحملها المتجر</span><b>${a.dShop.toLocaleString()} د.ع</b></div>
+        <div class="invr"><span>خصومات يتحملها التطبيق</span><b>${a.dApp.toLocaleString()} د.ع</b></div>
+        <div class="invr"><span>إجمالي الخصومات</span><b>${a.disc.toLocaleString()} د.ع</b></div>
+      </div>`;
+    })()}`;
 }
 
 async function invMarkPaid(){
@@ -12981,6 +13024,9 @@ function openReports(){
 }
 
 function rpNum(v){ return Number(v)||0 }
+/* مصدر واحد لقراءة الخصومات — يستخدمه المتجر والإدارة حتى تتطابق الأرقام */
+function dscShop(o){ return rpNum(o&&o.discountShop)||rpNum(o&&o.discount_shop) }   /* خصم يتحمله المحل */
+function dscApp(o){ return rpNum(o&&o.discountApp)||rpNum(o&&o.discount_platform) } /* خصم يتحمله التطبيق */
 function rpFmt(n){ return Math.round(rpNum(n)).toLocaleString('en-US') }
 
 function rpRows(month, shopId){
@@ -12990,7 +13036,7 @@ function rpRows(month, shopId){
   return allOrders.filter(o=>{
     if(o.status!=='delivered') return false;
     if(shopId && o.shop_id!==shopId) return false;
-    const t=Date.parse(o.deliveredAt||o.created_at||o.createdAt||0);
+    const t=Date.parse(o.created_at||o.createdAt||o.deliveredAt||0);
     return t>=from && t<to;
   });
 }
@@ -12998,8 +13044,8 @@ function rpRows(month, shopId){
 function rpAgg(list){
   const a={n:0,sales:0,fee:0,disc:0,dShop:0,dApp:0,dlv:0,net:0};
   list.forEach(o=>{
-    const shopDisc=rpNum(o.discountShop)||rpNum(o.discount_shop);
-    const appDisc =rpNum(o.discountApp) ||rpNum(o.discount_platform);
+    const shopDisc=dscShop(o);
+    const appDisc =dscApp(o);
     a.n++;
     a.sales+=rpNum(o.items_total);
     a.fee  +=rpNum(o.service_fee);
@@ -13933,7 +13979,9 @@ function renderMyFees(){
   if(_pq && _pq.s && _pq.e){
     const rng = (_pq.s===_pq.e) ? ('اليوم · '+_dt(_pq.s)) : ('من '+_dt(_pq.s)+' إلى '+_dt(_pq.e));
     _banner='<div class="cyb"><div class="ci"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg></div>'
-      +'<div class="ct"><b>دورة التسديد: '+_cn+'</b><span>'+rng+'</span></div></div>';
+      +'<div class="ct"><b>دورة التسديد</b><div class="cyr">'
+      +[[1,'يوم'],[15,'15 يوم'],[30,'30 يوم']].map(([n,l])=>'<div class="cyp'+(myCyc===n?' on':'')+'">'+l+'</div>').join('')
+      +'</div><span style="margin-top:8px">'+rng+'</span></div></div>';
   }
   box.innerHTML = _banner +
     cell('app_service','app','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="2.4"/><path d="M8.5 8h7M8.5 12h7M8.5 16h4"/></svg>','رسوم خدمة التطبيق','مخصومة من أجور التوصيل')
@@ -15261,6 +15309,68 @@ async function initPush(silent){
 #dApp.mapmode>.top .mini{width:42px!important;height:42px!important}
 #dApp.mapmode>.top h2{font-size:17px!important}
 #dApp.mapmode #availMapBox:not(.am-full){height:48vh!important}
+
+/* ═══ شعار هيدر المتجر: كلاس .mini القديم (بطاقات) كان يضيف حشوة وحدود فيضغط الصورة لنقطة ═══ */
+#sApp .top .logoc{overflow:hidden!important}
+#sApp .top .logoc img.mini{padding:0!important;margin:0!important;border:0!important;box-shadow:none!important;
+  background:transparent!important;border-radius:0!important;width:34px!important;height:34px!important;object-fit:contain!important}
+#sApp .top .logoc img.mini.ph{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:50%!important}
+#sApp .top .logoc::after{z-index:3}
+
+/* ═══ شريط المتجر السفلي: يغطي الفراغ تحته وعلى جوانبه حتى ما يبين المحتوى من تحت الكبسولة ═══ */
+
+/* ملاحظة مالية المتجر: توضيح من يدفع شنو */
+.fnote2{background:#fff;border:1px solid #ECE6F7;border-radius:18px;padding:14px;margin:14px 0 4px;box-shadow:0 2px 12px rgba(91,43,201,.05)}
+.fnote2 h4{margin:0 0 10px;font-size:13px;font-weight:800;color:var(--txt);display:flex;align-items:center;gap:7px}
+.fnote2 h4 i{width:19px;height:19px;border-radius:50%;background:var(--g);color:#fff;font-size:11px;font-style:normal;display:flex;align-items:center;justify-content:center}
+.fnote2 .nr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px dashed #E7E2F2}
+.fnote2 .nr:first-of-type{border-top:0}
+.fnote2 .nr b{font-size:12.5px;font-weight:700;color:var(--txt)}
+.fnote2 .nr small{display:block;font-size:11px;font-weight:500;color:var(--mut);margin-top:2px}
+.fnote2 .nr span{font-size:13px;font-weight:800;color:var(--g);white-space:nowrap}
+.fnote2 .nr span.z{color:#16A34A}
+.fnote2 .nf{margin-top:8px;background:#F4F0FC;border-radius:12px;padding:9px 11px;font-size:11.5px;font-weight:600;color:#5B4A86;line-height:1.7}
+#sNav{isolation:isolate}
+#sNav::before{content:'';position:fixed;left:0;right:0;bottom:0;z-index:-1;pointer-events:none;
+  height:calc(88px + max(0px, calc(env(safe-area-inset-bottom) - 38px)));
+  background:linear-gradient(to top,var(--bg,#fff) 0%,var(--bg,#fff) 70%,transparent 100%)}
+/* آخر المحتوى ينتهي فوق شريط التنقل بمسافة محترمة (ارتفاع الكبسولة + هامش + منطقة أمان الجهاز) */
+#sApp .body{padding-bottom:calc(125px + max(0px, calc(env(safe-area-inset-bottom) - 38px)))!important}
+#sApp{scroll-padding-bottom:125px}
+
+/* ═══ زخرفة هيدر السائق بالصفحات الداخلية (نفس زخرفة المتجر + حلقة برتقالية مثل الرئيسية) ═══ */
+#dApp:not(.mapmode)>.top{overflow:hidden!important}
+#dApp:not(.mapmode)>.top:before{content:''!important;position:absolute!important;inset:0!important;z-index:0!important;pointer-events:none!important;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 100' preserveAspectRatio='none'%3E%3Cpath d='M0 0 C110 55 170 -8 250 50 C315 96 360 38 400 66 L400 0 Z' fill='%23FFFFFF' fill-opacity='.07'/%3E%3Cpath d='M40 100 C120 40 160 95 230 48 C290 8 345 60 400 22' fill='none' stroke='%23F97402' stroke-width='2.2' stroke-opacity='.55'/%3E%3C/svg%3E");
+  background-size:100% 100%;background-repeat:no-repeat}
+#dApp:not(.mapmode)>.top:after{content:''!important;position:absolute!important;left:-20px!important;bottom:-34px!important;
+  width:150px!important;height:80px!important;border-radius:50%!important;pointer-events:none!important;z-index:0!important;
+  border:2px solid rgba(249,116,2,.32)!important;
+  box-shadow:0 0 0 12px rgba(255,255,255,.035),0 0 0 24px rgba(249,116,2,.055)!important}
+#dApp:not(.mapmode)>.top>.l,#dApp:not(.mapmode)>.top>.out{position:relative!important;z-index:2!important}
+
+/* ═══ كشف الحساب المبسّط للمتجر ═══ */
+.fst{background:#fff;border:1px solid #ECE6F7;border-radius:18px;padding:6px 14px 12px;margin:0 0 12px;box-shadow:0 2px 12px rgba(91,43,201,.05)}
+.fst-hd{display:flex;align-items:center;justify-content:space-between;padding:10px 0 6px}
+.fst-hd b{font-size:15px;font-weight:800;color:var(--txt)}
+.fst-hd span{font-size:11.5px;font-weight:700;color:var(--mut)}
+.fst-r{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px dashed #E7E2F2}
+.fst-r b{font-size:13px;font-weight:700;color:var(--txt)}
+.fst-r small{display:block;font-size:11px;font-weight:500;color:var(--mut);margin-top:2px}
+.fst-r span{font-size:14px;font-weight:800;white-space:nowrap}
+.fst-r .pl{color:var(--txt)}.fst-r .mn{color:#DC2626}.fst-r .gr{color:#16A34A}
+.fst-tot{display:flex;align-items:center;justify-content:space-between;margin-top:6px;padding:13px 14px;border-radius:14px;background:linear-gradient(135deg,#5B2BC9,#7A4BE0);color:#fff}
+.fst-tot b{font-size:14px;font-weight:800}
+.fst-tot span{font-size:19px;font-weight:900}
+.fst-tot small{font-size:11px;font-weight:700;opacity:.85}
+.fst2{padding-top:0;padding-bottom:4px}.fst2 .fst-r:first-child{border-top:0}
+
+.fsec{display:flex;align-items:center;gap:8px;margin:18px 2px 8px}
+.fsec h3{margin:0;font-size:15px;font-weight:800;color:var(--txt)}
+.fsec i{width:6px;height:18px;border-radius:4px;background:var(--g)}
+.fsec i.rd{background:#DC2626}.fsec i.or{background:var(--o,#F97402)}.fsec i.gn{background:#16A34A}.fsec i.gy{background:#9A93AD}
+.fst-eq{text-align:center;font-size:11.5px;font-weight:600;color:var(--mut);margin:7px 0 2px}
+.fst .fst-r:first-child{border-top:0}
 </style>
 <script>
 
