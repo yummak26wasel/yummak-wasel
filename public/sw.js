@@ -2,10 +2,11 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v59';
+const VER = 'leemak-v60';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 200;
-const SHELL = ['/sb-layer.js', '/auth-layer.js', '/manifest.json', '/792707e8.png'];
+const PRE_IMG = ['/081cb4e0.png', '/792707e8.png'];   /* الشعار — ينحفظ بالكاش الدائم */
+const SHELL = ['/sb-layer.js', '/auth-layer.js', '/manifest.json'];
 const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
 const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|project-osrm\.org|fcm\.googleapis)/;
@@ -23,14 +24,33 @@ async function clean(r){
 
 const _checked = new Map();   /* آخر فحص تحديث لكل صورة (بالذاكرة) */
 
+/* ينقل أي صور محفوظة بالكاشات القديمة للكاش الدائم (حتى ما تختفي الصور لما يتحدّث التطبيق) */
+async function migrateImages(){
+  try{
+    const ic = await caches.open(IMGC);
+    for(const k of await caches.keys()){
+      if(k === IMGC || k.indexOf('leemak-v') !== 0) continue;
+      const oc = await caches.open(k);
+      for(const rq of await oc.keys()){
+        if(IMG.test(new URL(rq.url).pathname) && !(await ic.match(rq.url))){
+          const rs = await oc.match(rq); if(rs && rs.ok) await ic.put(rq.url, rs);
+        }
+      }
+    }
+  }catch(err){}
+}
+
 self.addEventListener('install', e => {
   self.skipWaiting();
-  e.waitUntil(caches.open(VER).then(c => Promise.all([
+  e.waitUntil(migrateImages().then(() => Promise.all([
+    caches.open(IMGC).then(ic => Promise.all(PRE_IMG.map(u =>
+      ic.match(u).then(h => h || fetch(u, { cache: 'reload' }).then(r => { if (r.ok) return ic.put(u, r) }))).map(p => p.catch(() => {})))),
+    caches.open(VER).then(c => Promise.all([
     fetch('/', { cache: 'reload' }).then(clean).then(r => { if (r && r.ok) return c.put('/index.html', r) }).catch(() => {}),
     ...SHELL.map(u =>
       fetch(u, { cache: 'reload' }).then(clean).then(r => { if (r && r.ok) return c.put(u, r) }).catch(() => {})
     )
-  ])));
+  ]))])));
 });
 
 self.addEventListener('activate', e => {
@@ -84,7 +104,7 @@ async function swr(e, req){
 
 /* صور وخطوط: الكاش أول، وتحديث بالخلفية كل 6 ساعات كحد أقصى */
 async function img(e, req){
-  const c = await caches.open(VER);
+  const c = await caches.open(IMGC);
   const cached = await c.match(req);
   if(cached){
     const last = _checked.get(req.url) || 0;
