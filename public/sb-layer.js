@@ -12,6 +12,22 @@ const SB_KEY = "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq";
    ═══════════════════════════════ */
 let _rt = null;                 /* عميل supabase */
 let _rtOk = false;              /* هل الاتصال الحي شغّال؟ */
+const _rtTblOk = {};            /* حالة الاتصال الحي لكل جدول لحاله */
+let _rtTok = null;              /* آخر توكن انعطى لقناة Realtime */
+const _tblWake = new Map();     /* جدول → دوال إعادة التحميل (لتحديث فوري بعد كتابتنا) */
+function _tblAdd(tbl, fn){ if(!_tblWake.has(tbl)) _tblWake.set(tbl, new Set()); _tblWake.get(tbl).add(fn) }
+function _tblDel(tbl, fn){ const s=_tblWake.get(tbl); if(s) s.delete(fn) }
+function _kick(tbl){
+  const run = t => { const s=_tblWake.get(t); if(s) s.forEach(f=>{ try{ f() }catch(e){} }) };
+  run(tbl);
+  if(tbl === 'orders') run('orders_available');
+}
+/* القناة الحية تحتاج توكن المستخدم، وإلا RLS ما يخلّي تتوصلها تغييرات الطلبات */
+function _rtAuth(){
+  if(!_rt) return;
+  const t = _token();
+  if(t && t !== _rtTok){ _rtTok = t; try{ _rt.realtime.setAuth(t) }catch(e){} }
+}
 const _rtSubs = new Map();      /* جدول → مجموعة دوال إعادة التحميل */
 
 function _rtInit(){
@@ -21,6 +37,8 @@ function _rtInit(){
       auth:{ persistSession:false, autoRefreshToken:false },
       realtime:{ params:{ eventsPerSecond: 5 } }
     });
+    _rtAuth();
+    setInterval(_rtAuth, 45000);
   }catch(e){ _rt=null }
 }
 
@@ -29,6 +47,7 @@ function _rtWatch(tbl, fn){
   _rtInit();
   if(!_rt) return null;
 
+  _rtAuth();
   if(!_rtSubs.has(tbl)){
     const set = new Set();
     _rtSubs.set(tbl, set);
@@ -37,7 +56,10 @@ function _rtWatch(tbl, fn){
         .on('postgres_changes', {event:'*', schema:'public', table:tbl}, ()=>{
           set.forEach(f=>{ try{ f() }catch(e){} });
         })
-        .subscribe(st=>{ if(st==='SUBSCRIBED') _rtOk=true; });
+        .subscribe(st=>{
+          if(st==='SUBSCRIBED'){ _rtOk=true; _rtTblOk[tbl]=true }
+          else if(st==='CHANNEL_ERROR' || st==='TIMED_OUT' || st==='CLOSED'){ _rtTblOk[tbl]=false }
+        });
     }catch(e){ _rtSubs.delete(tbl); return null }
   }
   const set=_rtSubs.get(tbl);
@@ -65,7 +87,10 @@ const _POLL = {
 const _RT_TABLES = ['orders','orders_available','special_orders','shops','notifications'];
 function _every(tbl){
   /* الجداول اللي عليها Realtime — استطلاع بطيء كشبكة أمان بس */
-  if(_rtOk && _RT_TABLES.indexOf(tbl) > -1) return 30000;
+  if(_rtTblOk[tbl] && _RT_TABLES.indexOf(tbl) > -1){
+    /* الطلبات حرجة: حتى لو الاتصال الحي شغّال نبقي شبكة أمان كل 10 ثواني (مو 30) */
+    return (tbl==='orders' || tbl==='orders_available' || tbl==='special_orders') ? 10000 : 30000;
+  }
   return _POLL[tbl] || _POLL._default;
 }
 
@@ -173,7 +198,24 @@ function _in(coll, row){
 async function _req(path, opt = {}, _retried){
   const o = { ...opt };
   const extra = o.headers; delete o.headers;
-  const r = await fetch(SB_URL + '/rest/v1/' + path, { ...o, headers: _hdr(extra) });
+  /* مهلة + إعادة محاولة للقراءة فقط (الإنترنت الضعيف). الكتابة: مهلة أطول بدون إعادة تلقائية */
+  const _isGet = !o.method || String(o.method).toUpperCase()==='GET';
+  const _tries = _isGet ? 2 : 1, _tmo = _isGet ? 20000 : 45000;
+  let r, _lastErr;
+  for(let _i=0; _i<_tries; _i++){
+    const _ac = new AbortController(); const _t = setTimeout(()=>_ac.abort(), _tmo);
+    try{
+      r = await fetch(SB_URL + '/rest/v1/' + path, { ...o, headers: _hdr(extra), signal: _ac.signal });
+      clearTimeout(_t);
+      if(r.status >= 500 && _i < _tries-1){ r = null; await new Promise(z=>setTimeout(z, 1200)); continue }
+      break;
+    }catch(e){
+      clearTimeout(_t); r = null;
+      _lastErr = (e && e.name==='AbortError') ? new Error('الاتصال ضعيف — انتهت المهلة') : e;
+      if(_i < _tries-1) await new Promise(z=>setTimeout(z, 1200));
+    }
+  }
+  if(!r) throw _lastErr || new Error('ماكو اتصال');
   if(!r.ok){
     const bodyTxt = await r.text();
     if(!_retried && /JWT expired|PGRST301|row-level security/.test(bodyTxt) &&
@@ -184,7 +226,15 @@ async function _req(path, opt = {}, _retried){
     throw new Error(bodyTxt);
   }
   const t = await r.text();
-  return t ? JSON.parse(t) : null;
+  const res = t ? JSON.parse(t) : null;
+  try{
+    const m = String(opt.method || 'GET').toUpperCase();
+    if(m !== 'GET' && m !== 'HEAD'){
+      const tb = String(path).split('?')[0];
+      if(tb.indexOf('rpc/') !== 0) setTimeout(()=>_kick(tb), 120);
+    }
+  }catch(e){}
+  return res;
 }
 
 /* ── وثيقة واحدة ── */
@@ -243,11 +293,11 @@ let _doc = function(coll, id){
         if(!dead) timer = setTimeout(tick, gap());
       };
       const wake = () => { if(!dead){ clearTimeout(timer); tick() } };
-      _wake.add(wake);
+      _wake.add(wake); _tblAdd(tbl, wake);
       const unRt = _rtWatch(tbl, wake);      /* تحديث فوري من القاعدة */
       tick();
       return () => {
-        dead = true; clearTimeout(timer); _wake.delete(wake);
+        dead = true; clearTimeout(timer); _wake.delete(wake); _tblDel(tbl, wake);
         if(unRt) unRt();
       };
     }
@@ -315,11 +365,11 @@ function _query(coll, filters = [], order = null, lim = null){
         if(!dead) timer = setTimeout(tick, gap());
       };
       const wake = () => { if(!dead){ clearTimeout(timer); tick() } };
-      _wake.add(wake);
+      _wake.add(wake); _tblAdd(tbl, wake);
       const unRt = _rtWatch(tbl, wake);      /* تحديث فوري من القاعدة */
       tick();
       return () => {
-        dead = true; clearTimeout(timer); _wake.delete(wake);
+        dead = true; clearTimeout(timer); _wake.delete(wake); _tblDel(tbl, wake);
         if(unRt) unRt();
       };
     }
