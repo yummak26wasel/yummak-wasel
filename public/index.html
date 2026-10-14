@@ -5533,7 +5533,19 @@ function initFirebase(){
 }
 if(document.readyState!=='loading') initFirebase();
 else document.addEventListener('DOMContentLoaded',initFirebase);
-if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('/sw.js').catch(()=>{});
+  /* الـSW يبلّغ لما ينزل إصدار جديد — شريط صغير، والمستخدم يقرر متى يحدّث (ما نقطع طلب شغّال) */
+  navigator.serviceWorker.addEventListener('message',function(ev){
+    if(!(ev.data&&ev.data.type==='leemak-update')) return;
+    if(document.getElementById('updBar')) return;
+    var b=document.createElement('button'); b.id='updBar';
+    b.textContent='فيه تحديث جديد — اضغط للتحديث';
+    b.style.cssText='position:fixed;top:calc(env(safe-area-inset-top,0px) + 8px);left:50%;transform:translateX(-50%);z-index:100000;background:#3F0A92;color:#fff;border:0;border-radius:999px;padding:10px 20px;font:700 13px inherit;font-family:inherit;box-shadow:0 6px 20px rgba(0,0,0,.25)';
+    b.onclick=function(){ location.reload() };
+    document.body.appendChild(b);
+  });
+}
 
 function boot(){
   busy(true);
@@ -10943,15 +10955,20 @@ function _renderDriverBody(){
     <div id="setlOrders" class="sl-orders"></div>`:''}`;
 
   /* ── بطاقة "أرباحي" (مجموع الأجور + إحصائيات اليوم) ── */
+  /* الكارت الكبير يتبع أزرار الفترة (اليوم / 7 / 15 / 30) — اليوم = من بداية اليوم، والباقي أيام تقويمية */
+  const _pStart = dayStart - (periodDays-1)*86400000;
+  const _pDone  = doneAll.filter(o=>_ts(o)>=_pStart);
+  const _pEarn  = _pDone.reduce((sum,o)=>sum + Number(o.deliveryFee||SET.deliveryFee||1250), 0);
+  const _pName  = periodDays===1 ? 'أجورك اليوم' : ('أجورك — آخر '+periodDays+(periodDays===7?' أيام':' يوم'));
   const earnCard=document.getElementById('dEarnCard');
   if(earnCard) earnCard.innerHTML=`
     <div class="wal">
       <div class="wal-hd">
         <div class="wal-ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3.5 8.5A2.5 2.5 0 0 1 6 6h12a2.5 2.5 0 0 1 2.5 2.5v8A2.5 2.5 0 0 1 18 19H6a2.5 2.5 0 0 1-2.5-2.5z"/><path d="M16.5 12.5h2.8"/></svg></div>
-        <b>مجموع أجورك</b>
+        <b>${_pName}</b>
       </div>
-      <div class="wal-v">${earned.toLocaleString()}<small> د.ع</small></div>
-      <div class="wal-s">من كل توصيلاتك المكتملة</div>
+      <div class="wal-v">${_pEarn.toLocaleString()}<small> د.ع</small></div>
+      <div class="wal-s">${_pDone.length} توصيلة مكتملة</div>
     </div>
 
     <div class="wal-grid">
@@ -10999,7 +11016,7 @@ function _renderDriverBody(){
     pf.innerHTML=`
     <div class="pgrid three">
       <div class="pcell"><div class="i g"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg></div>
-        <div class="v">${done.length}</div><div class="k">مكتملة</div></div>
+        <div class="v">${doneToday.length}</div><div class="k">مكتملة اليوم</div></div>
       <div class="pcell"><div class="i o"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg></div>
         <div class="v">${active}</div><div class="k">قيد التوصيل</div></div>
       <div class="pcell"><div class="i g"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg></div>
@@ -11249,8 +11266,28 @@ function _renderDriverBody(){
    دورة الطلب عند السائق
    المنطق كله بالقاعدة — الواجهة تنادي بس
    ═══════════════════════════════════════════════════ */
+/* ═══ طلبات الشبكة بمهلة (وإعادة محاولة للقراءة فقط) — للإنترنت الضعيف ═══
+   القراءة: مهلة 20 ثانية + إعادة محاولة. الكتابة والمال: مهلة 45 ثانية بدون إعادة تلقائية (حتى ما تتكرر عملية) */
+async function _fx(url, opt, o){
+  o=o||{}; const tmo=o.timeout||20000, retries=o.retries||0; let last;
+  for(let i=0;i<=retries;i++){
+    const ac=new AbortController(); const t=setTimeout(()=>ac.abort(),tmo);
+    try{
+      const r=await fetch(url,Object.assign({},opt,{signal:ac.signal}));
+      clearTimeout(t);
+      if(r.status>=500 && i<retries){ last=new Error('HTTP '+r.status); await new Promise(z=>setTimeout(z,1200*(i+1))); continue }
+      return r;
+    }catch(e){
+      clearTimeout(t);
+      last=(e&&e.name==='AbortError') ? new Error('الاتصال ضعيف — انتهت المهلة، حاول مرة ثانية')
+         : (e instanceof TypeError ? new Error('ماكو اتصال أو الإنترنت ضعيف جداً') : e);
+      if(i<retries) await new Promise(z=>setTimeout(z,1200*(i+1)));
+    }
+  }
+  throw last;
+}
 async function rpc(fn, args, _retried){
-  const r = await fetch(SB_URL+'/rest/v1/rpc/'+fn, {
+  const r = await _fx(SB_URL+'/rest/v1/rpc/'+fn, {
     method:'POST',
     headers:{
       'apikey': SB_KEY,
@@ -11258,7 +11295,7 @@ async function rpc(fn, args, _retried){
       'Content-Type':'application/json'
     },
     body: JSON.stringify(args||{})
-  });
+  }, {timeout:45000});
   const t = await r.text();
   if(!r.ok){
     if(!_retried && /JWT expired|PGRST301/.test(t) &&
@@ -11543,10 +11580,10 @@ async function tripAct(k){
 
 /* ═══ قراءة مباشرة من الجداول ═══ */
 async function sbGet(path){
-  const r=await fetch(SB_URL+'/rest/v1/'+path,{headers:{
+  const r=await _fx(SB_URL+'/rest/v1/'+path,{headers:{
     'apikey':SB_KEY,
     'Authorization':'Bearer '+((window.__waselToken&&window.__waselToken())||SB_KEY)
-  }});
+  }},{timeout:20000,retries:1});
   if(!r.ok) throw new Error(await r.text());
   return r.json();
 }
@@ -11558,8 +11595,8 @@ async function _sbSend(path, method, body, prefer){
     'Authorization':'Bearer '+((window.__waselToken&&window.__waselToken())||SB_KEY),
     'Content-Type':'application/json'};
   if(prefer) h['Prefer']=prefer;
-  const r=await fetch(SB_URL+'/rest/v1/'+path,
-    {method, headers:h, body: body?JSON.stringify(body):undefined});
+  const r=await _fx(SB_URL+'/rest/v1/'+path,
+    {method, headers:h, body: body?JSON.stringify(body):undefined},{timeout:45000});
   if(!r.ok) throw new Error(await r.text());
   const t=await r.text();
   return t?JSON.parse(t):null;
