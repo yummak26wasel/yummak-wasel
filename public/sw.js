@@ -2,8 +2,8 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v69';
-const SHELL = ['/', '/index.html', '/sb-layer.js', '/auth-layer.js', '/manifest.json', '/792707e8.png'];
+const VER = 'leemak-v58';
+const SHELL = ['/sb-layer.js', '/auth-layer.js', '/manifest.json', '/792707e8.png'];
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
 const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|project-osrm\.org|fcm\.googleapis)/;
 const IMG = /\.(png|jpe?g|webp|gif|svg|ico|woff2?)$/i;
@@ -12,13 +12,22 @@ const OFFLINE_HTML = '<!doctype html><html lang="ar" dir="rtl"><meta charset="ut
   '<h2 style="color:#3F0A92;margin:0 0 8px">الإنترنت ضعيف</h2><p style="color:#777;margin:0 0 20px">ما كدرنا نفتح التطبيق أول مرة. تأكد من الاتصال وحاول مرة ثانية.</p>' +
   '<button onclick="location.reload()" style="background:#3F0A92;color:#fff;border:0;border-radius:16px;padding:14px 34px;font-size:17px;font-weight:700">إعادة المحاولة</button></body></html>';
 
+/* Cloudflare يحوّل /index.html إلى / — الرد المحوّل ممنوع نرجعه لصفحة التنقل (يطلع ERR_FAILED)، فنعيد بناءه نظيف */
+async function clean(r){
+  if(!r || !r.redirected) return r;
+  return new Response(await r.blob(), { status: r.status, statusText: r.statusText, headers: r.headers });
+}
+
 const _checked = new Map();   /* آخر فحص تحديث لكل صورة (بالذاكرة) */
 
 self.addEventListener('install', e => {
   self.skipWaiting();
-  e.waitUntil(caches.open(VER).then(c => Promise.all(SHELL.map(u =>
-    fetch(u, { cache: 'reload' }).then(r => { if (r.ok) return c.put(u, r) }).catch(() => {})
-  ))));
+  e.waitUntil(caches.open(VER).then(c => Promise.all([
+    fetch('/', { cache: 'reload' }).then(clean).then(r => { if (r && r.ok) return c.put('/index.html', r) }).catch(() => {}),
+    ...SHELL.map(u =>
+      fetch(u, { cache: 'reload' }).then(clean).then(r => { if (r && r.ok) return c.put(u, r) }).catch(() => {})
+    )
+  ])));
 });
 
 self.addEventListener('activate', e => {
@@ -50,10 +59,10 @@ function timeout(ms){ return new Promise(r => setTimeout(() => r(null), ms)) }
 async function shell(e){
   const c = await caches.open(VER);
   const cached = await c.match('/index.html');
-  const net = fetch('/index.html', { cache: 'no-cache' })
+  const net = fetch('/', { cache: 'no-cache' }).then(clean)
     .then(async r => { if(r.ok) await store(c, '/index.html', r, true); return r })
     .catch(() => null);
-  if(cached){ e.waitUntil(net); return cached }
+  if(cached){ e.waitUntil(net); return await clean(cached) }
   const r = await Promise.race([net, timeout(12000)]);
   return (r && r.ok) ? r : new Response(OFFLINE_HTML, { headers: { 'Content-Type': 'text/html; charset=utf-8' } });
 }
@@ -62,10 +71,10 @@ async function shell(e){
 async function swr(e, req){
   const c = await caches.open(VER);
   const cached = await c.match(req);
-  const net = fetch(req, { cache: 'no-cache' })
+  const net = fetch(req, { cache: 'no-cache' }).then(clean)
     .then(async r => { if(r.ok) await store(c, req, r, false); return r })
     .catch(() => null);
-  if(cached){ e.waitUntil(net); return cached }
+  if(cached){ e.waitUntil(net); return await clean(cached) }
   const r = await Promise.race([net, timeout(15000)]);
   return r || Response.error();
 }
