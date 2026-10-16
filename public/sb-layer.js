@@ -94,6 +94,23 @@ function _every(tbl){
   return _POLL[tbl] || _POLL._default;
 }
 
+
+/* ═══ حماية القاعدة من الضغط ═══
+   1) إذا القاعدة ما ترد: كل موبايل يبطّئ أسئلته (3ث ← 6 ← 12 ← 20 ثانية كحد أقصى) بدل ما يضربها كل 3 ثواني
+   2) فرق عشوائي صغير بالتوقيت حتى ما تسأل كل الموبايلات بنفس اللحظة
+   3) التحديث الفوري: إذا جت تغييرات ورا بعض نجمعها بسؤال واحد بدل سؤال لكل تغيير */
+function _gapFor(tbl, fails){
+  let g = _every(tbl);
+  if(fails > 0) g = Math.min(20000, g * Math.pow(2, Math.min(fails, 3)));
+  return Math.round(g * (0.85 + Math.random() * 0.3));
+}
+function _wakeFn(isDead, getT, setT, tick){
+  let pend = null;
+  return () => {
+    if(isDead() || pend) return;
+    pend = setTimeout(() => { pend = null; if(isDead()) return; clearTimeout(getT()); tick() }, 250 + Math.floor(Math.random() * 500));
+  };
+}
 /* ═══ إيقاف الاستطلاع لمن التطبيق بالخلفية ═══ */
 let _hidden = false;
 if(typeof document !== 'undefined'){
@@ -287,19 +304,22 @@ let _doc = function(coll, id){
     },
 
     onSnapshot(cb, err){
-      let dead = false, last = '', timer = null;
-      const gap = () => _every(tbl);
+      let dead = false, last = '', timer = null, fails = 0, busy = false;
+      const gap = () => _gapFor(tbl, fails);
       const tick = async () => {
-        if(dead) return;
+        if(dead || busy) return;
         if(_hidden){ timer = setTimeout(tick, gap()); return }   /* بالخلفية — ما نسأل */
+        busy = true;
         try{
           const snap = await _doc(coll, id).get();
+          fails = 0;
           const sig = JSON.stringify(snap.data() || null);
           if(sig !== last){ last = sig; cb(snap) }
-        }catch(e){ if(err) err(e) }
-        if(!dead) timer = setTimeout(tick, gap());
+        }catch(e){ fails++; if(err) err(e) }
+        busy = false;
+        if(!dead){ clearTimeout(timer); timer = setTimeout(tick, gap()) }
       };
-      const wake = () => { if(!dead){ clearTimeout(timer); tick() } };
+      const wake = _wakeFn(() => dead, () => timer, t => { timer = t }, tick);
       _wake.add(wake); _tblAdd(tbl, wake);
       const unRt = _rtWatch(tbl, wake);      /* تحديث فوري من القاعدة */
       tick();
@@ -359,19 +379,22 @@ function _query(coll, filters = [], order = null, lim = null){
     },
 
     onSnapshot(cb, err){
-      let dead = false, last = '', timer = null;
-      const gap = () => _every(tbl);
+      let dead = false, last = '', timer = null, fails = 0, busy = false;
+      const gap = () => _gapFor(tbl, fails);
       const tick = async () => {
-        if(dead) return;
+        if(dead || busy) return;
         if(_hidden){ timer = setTimeout(tick, gap()); return }   /* بالخلفية — ما نسأل */
+        busy = true;
         try{
           const snap = await api.get();
+          fails = 0;
           const sig = JSON.stringify(snap.docs.map(d => d.data()));
           if(sig !== last){ last = sig; cb(snap) }
-        }catch(e){ if(err) err(e) }
-        if(!dead) timer = setTimeout(tick, gap());
+        }catch(e){ fails++; if(err) err(e) }
+        busy = false;
+        if(!dead){ clearTimeout(timer); timer = setTimeout(tick, gap()) }
       };
-      const wake = () => { if(!dead){ clearTimeout(timer); tick() } };
+      const wake = _wakeFn(() => dead, () => timer, t => { timer = t }, tick);
       _wake.add(wake); _tblAdd(tbl, wake);
       const unRt = _rtWatch(tbl, wake);      /* تحديث فوري من القاعدة */
       tick();
