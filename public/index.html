@@ -5081,6 +5081,7 @@ body,.screen{background:#fff;color:var(--txt)}
 </div> <div class="panel" style="display:none"><!-- قديم: التسديد صار من «تسديد التطبيق» --><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a2 2 0 0 1 2 2v1"/><path d="M3 8.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg> حسابي مع الإدارة</h3> <div id="ds_debt"></div></div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 15.5h16M4.5 12h15"/><path d="M3.5 15.5c0 2 1.6 3.5 3.5 3.5h10c1.9 0 3.5-1.5 3.5-3.5"/><path d="M3.5 12C3.5 8.4 7.3 5.5 12 5.5s8.5 2.9 8.5 6.5"/></svg> اطلب لنفسك</h3> <div class="tgnote">تگدر تطلب أكل بنفس حسابك — ما تحتاج حساب ثاني.</div> <button class="big-btn" onclick="openShopping()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg> افتح المحلات واطلب</button> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg> مراسلة الإدارة</h3> <div id="myChatD"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> الإشعارات</h3> <div class="tgnote">فعّل الإشعارات حتى توصلك الطلبات الجديدة والهاتف مسكّر.</div> <div class="set-row"><span>صوت داخل التطبيق</span><div class="tg on" id="dSndTg" onclick="this.classList.toggle('on')"></div></div> <div class="set-row"><span>إشعار المتصفح</span><span class="v" id="dPermTxt">—</span></div> <div class="btns"><button class="btn" onclick="enablePush()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> تفعيل الإشعارات</button> <button class="btn gh" onclick="testAlarm()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.6a3.4 3.4 0 0 1 0 4.8M18 7a7 7 0 0 1 0 10"/></svg> جرّب الصوت</button></div></div> <div class="panel"><h3 class="ttl" style="color:#DC2626"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7M6 7l1 12.5A2 2 0 0 0 9 21.5h6a2 2 0 0 0 2-2L18 7"/></svg> حذف الحساب</h3> <div class="tgnote">حذف الحساب يوقفه نهائياً — ما تگدر تدخل بيه بعدها. بياناتك وطلباتك السابقة تضل محفوظة.</div> <button class="big-btn" style="background:#DC2626" onclick="delMyAccount()">حذف الحساب</button> </div> <div class="panel" style="margin-bottom:24px"><button class="big-btn" style="background:#DC2626" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button></div> </div> </div> <div class="nav" id="dNav"> <button class="on" onclick="dtab('avail',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>متاحة<span class="b" id="availCnt">0</span></button> <button onclick="dtab('mine',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M8.5 17.5h7l-3-8h-2"/><path d="M15.5 9.5h3l1 4"/></svg></span>طلباتي<span class="b" id="mineCnt">0</span></button> <button onclick="dtab('hist',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>السجل</button> <button onclick="dtab('set',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>حسابي</button> </div>
 </div> <!-- ═══ ADMIN ═══ -->
 <div class="screen" id="aApp"> <div class="top"><div class="l"><img class="mini" src="792707e8.png" alt=""><div> <h2>لوحة المؤسس</h2><p>واصل ليمَك — عانة</p></div></div> <button class="out" onclick="logout()">خروج</button></div> <div class="body"> <div class="page on" id="a_over">
+ <div id="aHome"></div>
  <div id="aHead"></div>
  <div class="astats" id="aStats"></div>
  <div class="sechd"><h3>عمولات التطبيق</h3></div>
@@ -5112,7 +5113,7 @@ body,.screen{background:#fff;color:var(--txt)}
  <div class="sechd"><h3>إجراءات سريعة</h3></div>
  <div id="aQuick"></div>
  <div class="sechd"><h3>نظرة عامة</h3></div>
- <div id="aOver"></div> <div class="panel atbl"> <div class="atHead"> <div class="atIc p"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div> <div><h3>طلبات اليوم</h3><p>عدد الطلبات لكل محل اليوم</p></div> </div> <div id="atOrders"></div> <div class="atMore" id="atOrdersMore"></div> </div> <div class="panel atbl g"> <div class="atHead"> <div class="atIc g"><svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></div> <div><h3>المبيعات الكلية</h3><p>إجمالي مبيعات كل محل</p></div> </div> <div id="atSales"></div> <div class="atMore" id="atSalesMore"></div> </div> <div class="panel atbl o"> <div class="atHead"> <div class="atIc o"><svg viewBox="0 0 24 24"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 8 7 3h10l3 5"/><path d="M12 12v5"/></svg></div> <div><h3>رسوم الخدمة المحصّلة</h3><p>مجموع رسوم الخدمة من طلبات كل محل</p></div> </div> <div id="atFees"></div> <div class="atMore" id="atFeesMore"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a2 2 0 0 1 2 2v1"/><path d="M3 8.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg> العمولات المستحقة على السواق</h3><div id="aDebts"></div></div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> آخر الطلبات</h3><div id="aRecent"></div></div> </div> <div class="page" id="a_join"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg> طلبات انضمام تنتظر موافقتك</h3> <div id="aPending"></div> </div> <div class="page" id="a_inv"> <div class="pgtop"><h2>فواتير المطاعم</h2><button onclick="atabBack()">›</button></div> <p class="pgsub">إدارة عمولات المطاعم وتحصيلها</p> <div id="invMonth"></div> <div class="chips" id="invChips"></div> <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="invSearch" placeholder="البحث باسم المطعم…" oninput="renderInv()"></div> <div id="invList"></div> </div> <div class="page" id="a_invone"> <div class="pgtop"><h2>تفاصيل الفاتورة</h2><button onclick="openInv()">›</button></div> <div id="invOne"></div> </div> <div class="page" id="a_dracc"> <div class="pgtop"><h2>حسابات السائقين</h2><button onclick="atabBack()">›</button></div> <p class="pgsub">متابعة مستحقات السائقين للتطبيق</p> <div id="draTop"></div> <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="draSearch" placeholder="البحث باسم السائق أو رقم الهاتف…" oninput="renderDrAcc()"></div> <div class="chips" id="draChips"></div> <div id="draList"></div> </div> <div class="page" id="a_drone"> <div class="pgtop"><h2>تفاصيل حساب السائق</h2><button onclick="openDrAcc()">›</button></div> <div id="drOne"></div> </div> <div class="page" id="a_people"> <div class="chips" id="pFilter"></div> <div id="aPeople"></div> </div> <div class="page" id="a_orders"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> كل الطلبات</h3> <div id="aOrders"></div> </div> <div class="page" id="a_sup"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg> رسائل المحلات والسواق</h3> <div id="tktList"></div> <div id="tktChat"></div> </div> <div class="page" id="a_offers">
+ <div id="aOver"></div> <div class="panel atbl"> <div class="atHead"> <div class="atIc p"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div> <div><h3>طلبات اليوم</h3><p>عدد الطلبات لكل محل اليوم</p></div> </div> <div id="atOrders"></div> <div class="atMore" id="atOrdersMore"></div> </div> <div class="panel atbl g"> <div class="atHead"> <div class="atIc g"><svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></div> <div><h3>المبيعات الكلية</h3><p>إجمالي مبيعات كل محل</p></div> </div> <div id="atSales"></div> <div class="atMore" id="atSalesMore"></div> </div> <div class="panel atbl o"> <div class="atHead"> <div class="atIc o"><svg viewBox="0 0 24 24"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 8 7 3h10l3 5"/><path d="M12 12v5"/></svg></div> <div><h3>رسوم الخدمة المحصّلة</h3><p>مجموع رسوم الخدمة من طلبات كل محل</p></div> </div> <div id="atFees"></div> <div class="atMore" id="atFeesMore"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a2 2 0 0 1 2 2v1"/><path d="M3 8.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg> العمولات المستحقة على السواق</h3><div id="aDebts"></div></div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> آخر الطلبات</h3><div id="aRecent"></div></div> </div> <div class="page" id="a_join"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg> طلبات انضمام تنتظر موافقتك</h3> <div id="aPending"></div> </div> <div class="page" id="a_inv"> <div class="pgtop"><h2>فواتير المطاعم</h2><button onclick="atabBack()">›</button></div> <p class="pgsub">إدارة عمولات المطاعم وتحصيلها</p> <div id="invMonth"></div> <div class="chips" id="invChips"></div> <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="invSearch" placeholder="البحث باسم المطعم…" oninput="renderInv()"></div> <div id="invList"></div> </div> <div class="page" id="a_invone"> <div class="pgtop"><h2>تفاصيل الفاتورة</h2><button onclick="openInv()">›</button></div> <div id="invOne"></div> </div> <div class="page" id="a_fin"> <div class="fin-hd"><h2>المالية</h2><p>كل فلس يدخل أو يطلع، ووين وصل</p><div class="fin-tabs" id="finTabs"></div></div> <div id="finBody"></div> <div id="finMove"></div> </div> <div class="page" id="a_dracc"> <div class="pgtop"><h2>حسابات السائقين</h2><button onclick="atabBack()">›</button></div> <p class="pgsub">متابعة مستحقات السائقين للتطبيق</p> <div id="draTop"></div> <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="draSearch" placeholder="البحث باسم السائق أو رقم الهاتف…" oninput="renderDrAcc()"></div> <div class="chips" id="draChips"></div> <div id="draList"></div> </div> <div class="page" id="a_drone"> <div class="pgtop"><h2>تفاصيل حساب السائق</h2><button onclick="openDrAcc()">›</button></div> <div id="drOne"></div> </div> <div class="page" id="a_people"> <div class="chips" id="pFilter"></div> <div id="aPeople"></div> </div> <div class="page" id="a_orders"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> كل الطلبات</h3> <div id="aOrders"></div> </div> <div class="page" id="a_sup"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg> رسائل المحلات والسواق</h3> <div id="tktList"></div> <div id="tktChat"></div> </div> <div class="page" id="a_offers">
       <div class="sechd"><h3>العروض والخصومات</h3>
         <button class="addbtn" onclick="newOffer()">+ عرض جديد</button></div>
       <div id="offList"></div>
@@ -5175,14 +5176,14 @@ body,.screen{background:#fff;color:var(--txt)}
 
   <button class="wl-btn o block" id="pmoSend" onclick="pmoSend()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M21.5 2.5 2 10.2l7.6 2.9 2.9 7.6z"/><path d="M21.5 2.5 9.6 13.1"/></svg> إرسال الإشعار</button>
   <div class="pmo-cnt" id="pmoCnt"></div>
-</div> <div class="page" id="a_cfg"> <button class="wl-btn g block" style="margin-bottom:14px" onclick="atab('promo',null)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> إرسال إشعار ترويجي</button> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.4 5.4l1.9 1.9M16.7 16.7l1.9 1.9M18.6 5.4l-1.9 1.9M7.3 16.7l-1.9 1.9"/></svg> إعدادات التطبيق</h3> <div class="fld"><label>أجرة التوصيل للطلبات العادية (د.ع)</label><input type="number" id="cfgFee" inputmode="numeric"></div> <div class="fld"><label>أجرة طلبات «اشترِيلي» (د.ع)</label><input type="number" id="cfgSpecial" inputmode="numeric"> <div class="fldhelp">تظهر تلقائياً للزبون بصفحة اشترِيلي.</div></div> <div class="cfgsec">عمولة السائق</div>
+</div> <div class="page" id="a_cfg"> <button class="wl-btn block" style="margin-bottom:10px;background:#22113F" onclick="openOffers()">🏷️ العروض والخصومات</button> <button class="wl-btn block" style="margin-bottom:10px;background:#fff;color:#22113F;border:1px solid #E3E0EC" onclick="openSetLog()">🕘 سجل تعديلات الإعدادات</button> <div id="setLog"></div> <button class="wl-btn g block" style="margin-bottom:14px" onclick="atab('promo',null)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> إرسال إشعار ترويجي</button> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3.2"/><path d="M12 2.6v2.6M12 18.8v2.6M2.6 12h2.6M18.8 12h2.6M5.4 5.4l1.9 1.9M16.7 16.7l1.9 1.9M18.6 5.4l-1.9 1.9M7.3 16.7l-1.9 1.9"/></svg> إعدادات التطبيق</h3> <div class="fld"><label>أجرة التوصيل للطلبات العادية (د.ع)</label><input type="number" id="cfgFee" inputmode="numeric"></div> <div class="fld"><label>أجرة طلبات «اشترِيلي» (د.ع)</label><input type="number" id="cfgSpecial" inputmode="numeric"> <div class="fldhelp">تظهر تلقائياً للزبون بصفحة اشترِيلي.</div></div> <div class="cfgsec">عمولة السائق</div>
  <div class="fld"><label>مفعّلة؟</label><select id="cfgDrvOn"><option value="0">لا — مجاني حالياً</option><option value="1">نعم</option></select></div>
  <div class="fld"><label>النوع</label><select id="cfgDrvKind"><option value="fixed">مبلغ ثابت (د.ع)</option><option value="percent">نسبة من التوصيل (%)</option></select></div>
  <div class="fld"><label>القيمة</label><input type="number" id="cfgCom" inputmode="numeric"></div>
  <div class="cfgsec">عمولة المطعم</div>
  <div class="fld"><label>مفعّلة؟</label><select id="cfgShopOn"><option value="0">لا — غير محددة</option><option value="1">نعم</option></select></div>
  <div class="fld"><label>النوع</label><select id="cfgShopKind"><option value="percent">نسبة من المبيعات (%)</option><option value="fixed">مبلغ ثابت (د.ع)</option></select></div>
- <div class="fld"><label>القيمة</label><input type="number" id="cfgShopVal" inputmode="decimal" step="0.1" min="0" max="50"></div> <div class="fld"><label>مهلة تسديد العمولة (أيام)</label><input type="number" id="cfgDays" inputmode="numeric"></div> <button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button> <div class="tgnote" style="margin-top:12px">إذا السائق ما سدّد خلال المهلة، حسابه يتوقف تلقائياً عن أخذ الطلبات لين تسوّي تسوية.</div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg> دورة تسديد السائقين</h3> <div class="tgnote" style="margin-bottom:10px">كل شكد السائق يسدّد رسوم التطبيق ورسوم السائق. تظهر تلقائياً بحسابات كل السائقين.</div> <div id="cycOpts" style="display:flex;gap:8px"></div> <div class="tgnote" id="cycNote" style="margin-top:10px"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 18h16M4 18 3 7l5 4 4-6 4 6 5-4-1 11z"/></svg> حسابي</h3> <div class="set-row"><span>الاسم</span><span class="v" id="ad_name">—</span></div> <div class="set-row"><span>الهاتف</span><span class="v" id="ad_phone">—</span></div> <div class="set-row"><span>الصلاحية</span><span class="v">مؤسس — صلاحية كاملة</span></div> </div> </div> </div> <div class="nav" id="aNav"> <button class="on" onclick="atab('over',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>عام</button> <button onclick="atab('join',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>انضمام<span class="b" id="joinCnt">0</span></button> <button onclick="atab('people',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>المشتركين</button> <button onclick="atab('orders',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>الطلبات</button> <button onclick="atab('sup',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-11.6 7.1L3 20.5l1.9-6.3A8 8 0 1 1 21 11.5z"/></svg></span>الدعم<span class="b" id="supCnt">0</span></button> <button onclick="openOffers()"><span class="ni"><svg viewBox="0 0 24 24"><path d="M11.5 3H20a1 1 0 0 1 1 1v8.5L11.6 22 2 12.4z"/><circle cx="16.6" cy="7.4" r="1.4"/></svg></span>العروض</button> <button onclick="atab('cfg',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span>إعدادات</button> </div>
+ <div class="fld"><label>القيمة</label><input type="number" id="cfgShopVal" inputmode="decimal" step="0.1" min="0" max="50"></div> <div class="fld"><label>مهلة تسديد العمولة (أيام)</label><input type="number" id="cfgDays" inputmode="numeric"></div> <button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button> <div class="tgnote" style="margin-top:12px">إذا السائق ما سدّد خلال المهلة، حسابه يتوقف تلقائياً عن أخذ الطلبات لين تسوّي تسوية.</div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="3"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg> دورة تسديد السائقين</h3> <div class="tgnote" style="margin-bottom:10px">كل شكد السائق يسدّد رسوم التطبيق ورسوم السائق. تظهر تلقائياً بحسابات كل السائقين.</div> <div id="cycOpts" style="display:flex;gap:8px"></div> <div class="tgnote" id="cycNote" style="margin-top:10px"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 18h16M4 18 3 7l5 4 4-6 4 6 5-4-1 11z"/></svg> حسابي</h3> <div class="set-row"><span>الاسم</span><span class="v" id="ad_name">—</span></div> <div class="set-row"><span>الهاتف</span><span class="v" id="ad_phone">—</span></div> <div class="set-row"><span>الصلاحية</span><span class="v">مؤسس — صلاحية كاملة</span></div> </div> </div> </div> <div class="nav" id="aNav"> <button class="on" onclick="atab('over',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>عام</button> <button onclick="atab('join',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>انضمام<span class="b" id="joinCnt">0</span></button> <button onclick="atab('people',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>المشتركين</button> <button onclick="atab('orders',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>الطلبات</button> <button onclick="atab('sup',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-11.6 7.1L3 20.5l1.9-6.3A8 8 0 1 1 21 11.5z"/></svg></span>الدعم<span class="b" id="supCnt">0</span></button> <button onclick="openFin(null,this)"><span class="ni"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle class="in" cx="12" cy="12" r="2.6"/><path class="in" d="M6 9.5v5M18 9.5v5"/></svg></span>المالية<span class="b" id="finCnt" style="display:none">0</span></button> <button onclick="atab('cfg',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span>إعدادات</button> </div>
 </div> <div id="viewMapSheet" onclick="if(event.target===this)closeViewMap()"> <div class="msheet">
   <div class="mshead">
     <h4 id="vmTitle"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> موقع الزبون</h4>
@@ -5259,7 +5260,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <button class="big-btn" style="background:#5B2BC9;color:#fff;margin-top:16px" onclick="stfBack()">حسناً</button>
     </div>
   </div>
-</div> </div> <div id="setlSheet"><div class="ssheet"><div class="ss-grip"></div><div style="display:flex"><button class="ss-x" onclick="closeSetlSheet()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="ss-ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 7v6M12 16.5v.1"/><circle cx="12" cy="12" r="9"/></svg></div><h4>تأكيد التسديدة</h4><p class="sp">هل أنت متأكد من تسديد هذه التسديدة وتأكيدها؟<br>راح ينحفظ التأكيد باسمك كإدارة، وتنعلّم الطلبات كمسدَّدة، ويوصل إشعار للمندوب.</p><div class="ss-tab" id="ssTab"></div><div class="ss-bts"><button class="ss-no" onclick="closeSetlSheet()">إلغاء</button><button class="ss-ok" onclick="doSetlOk()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg> تأكيد التسديدة</button></div></div></div> <div id="walSheet"><div class="wsheet"><div class="ws-top"><b>سجل المحفظة</b><button onclick="closeWalLog()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="ws-chips" id="wsChips"></div><div id="wsList"></div></div></div> <div id="askSheet"><div class="askbox"><div class="ask-ic" id="askIc"></div><b id="askTtl">تنبيه</b><p id="askMsg"></p><div class="ask-bts"><button class="ask-no" onclick="askClose(false)">إلغاء</button><button class="ask-ok" id="askOkBt" onclick="askClose(true)">حسناً</button></div></div></div> <div id="rateSheet" onclick="if(event.target===this)closeRate()"> <div class="ratebox"> <div class="ratehead"> <div class="rlogo" id="rateLogo"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></div> <h4 id="rateShop">المحل</h4> <p id="rateTtl">شلون كانت تجربتك؟ تقييمك يساعد غيرك</p> <button class="x" onclick="closeRate()" aria-label="إغلاق"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button> </div> <div class="stars" id="rateStars"></div> <div class="ratelbl" id="rateLbl">اضغط على النجوم</div> <textarea id="rateNote" placeholder="اكتب ملاحظتك (اختياري)"></textarea> <button class="big-btn o" id="rateBtn" onclick="submitRate()">إرسال التقييم</button> <button class="big-btn" style="background:#EFECF7;color:#5B5470;margin-top:8px" onclick="closeRate()">لاحقاً</button> </div>
+</div> </div> <div id="setlSheet"><div class="ssheet"><div class="ss-grip"></div><div style="display:flex"><button class="ss-x" onclick="closeSetlSheet()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="ss-ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 7v6M12 16.5v.1"/><circle cx="12" cy="12" r="9"/></svg></div><h4>تأكيد التسديدة</h4><p class="sp">هل أنت متأكد من تسديد هذه التسديدة وتأكيدها؟<br>راح ينحفظ التأكيد باسمك كإدارة، وتنعلّم الطلبات كمسدَّدة، ويوصل إشعار للمندوب.</p><div class="ss-tab" id="ssTab"></div><div class="ss-bts"><button class="ss-no" onclick="closeSetlSheet()">إلغاء</button><button class="ss-ok" onclick="doSetlOk()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg> تأكيد التسديدة</button></div></div></div> <div id="walSheet"><div class="wsheet"><div class="ws-top"><b>سجل المحفظة</b><button onclick="closeWalLog()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div><div class="ws-chips" id="wsChips"></div><div id="wsList"></div></div></div> <div id="askSheet"><div class="askbox"><div class="ask-ic" id="askIc"></div><b id="askTtl">تنبيه</b><p id="askMsg"></p><div class="ask-bts"><button class="ask-no" onclick="askClose(false)">إلغاء</button><button class="ask-ok" id="askOkBt" onclick="askClose(true)">حسناً</button></div></div></div> <div id="rateSheet" onclick="if(event.target===this)closeRate()"> <div class="ratebox"> <div class="ratehead"> <div class="rlogo" id="rateLogo"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></div> <h4 id="rateShop">المحل</h4> <p id="rateTtl">شلون كانت تجربتك؟ تقييمك يساعد غيرك</p> <button class="x" onclick="closeRate()" aria-label="إغلاق"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button> </div> <div class="rs-step" id="rateStep"></div> <div class="rs-emo" id="rateEmo">⭐</div> <div class="stars" id="rateStars"></div> <div class="ratelbl" id="rateLbl">اضغط على النجوم</div> <div class="rs-tags" id="rateTags"></div> <button type="button" class="rs-addn" id="rateAddN" onclick="this.style.display='none';const n=document.getElementById('rateNote');n.style.display='block';n.focus()">＋ أضف تعليق</button> <textarea id="rateNote" placeholder="اكتب ملاحظتك (اختياري)" style="display:none"></textarea> <button class="big-btn o" id="rateBtn" onclick="submitRate()">إرسال التقييم</button> <button class="rs-later" onclick="closeRate()">لاحقاً</button> </div>
 </div>
 <div id="otpSheet" onclick="if(event.target===this)otpClose()">
   <div class="svcbox">
@@ -7166,7 +7167,7 @@ function showSoon(){
     v.innerHTML=`<div class="sn-in">
       <img src="792707e8.png" alt="" onerror="this.style.display='none'">
       <div class="sn-rk">🚀</div>
-      <h2>التطبيق سينطلق قريباً</h2>
+      <h2>واصل ليمَك سيصل قريباً إليك</h2>
       <p>نجهّز «واصل ليمَك» حتى يوصلك أحسن خدمة توصيل بعانة.<br>ترقّبونا — الإطلاق قريب جداً!</p>
       <button onclick="document.getElementById('soonView').classList.remove('on')">رجوع</button>
     </div>`;
@@ -7471,21 +7472,23 @@ function checkRatePrompt(){
   if(o2) openRateDriver(o2);
 }
 function openRate(o,step){
-  rateOrder=o; rateStars=0; rateStep=step||'shop';
+  rateOrder=o; rateStars=0; rateStep=step||'shop'; rateTags=[];
   if(rateStep==='driver'){ return openRateDriver(o) }
   const sh=shops.find(x=>x.id===o.shopId)||{};
   const _t=document.getElementById('rateTtl');
-  if(_t) _t.textContent='شلون كانت تجربتك؟ تقييمك يساعد غيرك';
-  document.getElementById('rateNote').placeholder='اكتب ملاحظتك (اختياري)';
+  if(_t) _t.textContent='طلب #'+(o.order_no||String(o.createdAt||'').slice(-4))+(o.total?(' · '+Number(o.total).toLocaleString()+' د.ع'):'');
+  document.getElementById('rateShop').dataset.q='شلون كان طلبك من';
+  document.getElementById('rateNote').placeholder='تريد تضيف شي؟ (اختياري)';
   document.getElementById('rateShop').textContent=sh.name||o.shopName||'المحل';
   document.getElementById('rateLogo').innerHTML=sh.img?`<img src="${sh.img}">`:(sh.type==='restaurant'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 15.5h16M4.5 12h15"/><path d="M3.5 15.5c0 2 1.6 3.5 3.5 3.5h10c1.9 0 3.5-1.5 3.5-3.5"/><path d="M3.5 12C3.5 8.4 7.3 5.5 12 5.5s8.5 2.9 8.5 6.5"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>');
   document.getElementById('rateNote').value='';
+  try{ document.getElementById('rateNote').style.display='none'; document.getElementById('rateAddN').style.display='' }catch(e){}
   paintStars();
   document.getElementById('rateSheet').classList.add('on');
   buzz&&buzz([10,40,10]);
 }
 async function openRateDriver(o){
-  rateOrder=o; rateStars=0; rateStep='driver';
+  rateOrder=o; rateStars=0; rateStep='driver'; rateTags=[];
   let nm=o.driverName||o.driver_name||'', ph=o.driverPhoto||'';
   if((!nm||!ph) && o.driverUid){
     /* دالة القاعدة — القراءة المباشرة من profiles تحجبها الـRLS */
@@ -7501,23 +7504,47 @@ async function openRateDriver(o){
       }catch(e){}
     }
   }
-  document.getElementById('rateShop').textContent=nm||'المندوب';
+  document.getElementById('rateShop').textContent=nm||'السائق';
   document.getElementById('rateLogo').innerHTML=ph
     ? `<img src="${ph}">`
     : '<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg>';
-  const t=document.getElementById('rateTtl'); if(t) t.textContent='شلون كان المندوب؟ تقييمك يساعد غيرك';
+  const t=document.getElementById('rateTtl'); if(t) t.textContent='سائقك بطلب #'+(o.order_no||String(o.createdAt||'').slice(-4));
+  document.getElementById('rateShop').dataset.q='شلون كان التوصيل ويه';
   document.getElementById('rateNote').value='';
-  document.getElementById('rateNote').placeholder='شلون كان المندوب؟ (اختياري)';
+  document.getElementById('rateNote').placeholder='تريد تضيف شي؟ (اختياري)';
   paintStars();
   document.getElementById('rateSheet').classList.add('on');
   buzz&&buzz([10,40,10]);
 }
+const R_EMO=['⭐','😞','😕','🙂','😀','🤩'];
+const R_TXT=['اضغط على نجمة','سيئة','مو زينة','مقبولة','زينة','ممتازة'];
+const R_TAGS={
+  shop:{good:['طعم ممتاز','تغليف مرتب','كمية زينة','سعر مناسب','حار وطازج'],bad:['الطعم مو زين','بارد','ناقص شي','تغليف سيء','غالي']},
+  driver:{good:['سريع','محترم','حافظ على الطلب','وصل بالوقت','تعامل راقي'],bad:['تأخّر','ما اتصل','الطلب تخربط','تعامل سيء','ضيّع العنوان']}
+};
+let rateTags=[];
 function paintStars(){
   document.getElementById('rateStars').innerHTML=[1,2,3,4,5].map(i=>
-    `<button class="${i<=rateStars?'on':''}" onclick="setStars(${i})"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg></button>`).join('');
-  document.getElementById('rateLbl').innerHTML=rateStars?RLBL[rateStars]:'اضغط على النجوم';
+    `<button class="${i<=rateStars?'on':''}" onclick="setStars(${i})" aria-label="${i}"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg></button>`).join('');
+  document.getElementById('rateLbl').textContent=R_TXT[rateStars]||R_TXT[0];
+  const em=document.getElementById('rateEmo'); if(em){ em.textContent=R_EMO[rateStars]||'⭐'; em.classList.remove('pop'); void em.offsetWidth; if(rateStars) em.classList.add('pop') }
+  const stp=document.getElementById('rateStep');
+  if(stp){ const two=!!(rateOrder&&rateOrder.driverUid); stp.innerHTML=two?`<i class="on"></i><i class="${rateStep==='driver'?'on':''}"></i>`:'' }
+  { const b0=document.getElementById('rateBtn'); if(b0) b0.classList.toggle('dis',!rateStars) }
+  const tg=document.getElementById('rateTags');
+  if(tg){
+    if(!rateStars){ tg.innerHTML=''; return }
+    const set=(R_TAGS[rateStep==='driver'?'driver':'shop']||R_TAGS.shop)[rateStars>=4?'good':'bad'];
+    tg.innerHTML=`<div class="h">${rateStars>=4?'شنو أكثر شي عجبك؟':'شنو اللي ما عجبك؟'}</div>`+set.map(t=>`<button type="button" class="${rateTags.includes(t)?'on':''}" onclick="rateTag(this)">${t}</button>`).join('');
+  }
+  const b=document.getElementById('rateBtn'); if(b) b.classList.toggle('dis',!rateStars);
 }
-function setStars(i){ rateStars=i; paintStars(); buzz&&buzz([8]) }
+function rateTag(el){
+  const t=el.textContent; const i=rateTags.indexOf(t);
+  if(i>=0) rateTags.splice(i,1); else rateTags.push(t);
+  el.classList.toggle('on'); buzz&&buzz([6]);
+}
+function setStars(i){ if((rateStars>=4)!==(i>=4)) rateTags=[]; rateStars=i; paintStars(); buzz&&buzz([8]) }
 const RSKIP='lw_rateskip';
 function rSkipLoad(){
   try{
@@ -7543,7 +7570,8 @@ function closeRate(){
 async function submitRate(){
   if(!rateStars)return toast('اختر عدد النجوم أول');
   if(!rateOrder)return;
-  const o=rateOrder, note=(document.getElementById('rateNote').value||'').trim();
+  const o=rateOrder, _nt=(document.getElementById('rateNote').value||'').trim();
+  const note=[rateTags.join('، '),_nt].filter(Boolean).join(' — ').slice(0,500);
   const btn=document.getElementById('rateBtn');
   btn.disabled=true; btn.textContent='جاري الإرسال...';
 
@@ -9016,27 +9044,36 @@ function spDrvOpen(id){
       <div><b>${esc(o.marketName||'السوق')}</b><span>اشتريلي · ${_spAgo(o)}</span></div>
       <button class="spds-x" onclick="spDrvClose()">×</button>
     </div>
-    <div class="spds-earn"><span>أرباحك</span><b>${earn.toLocaleString()} د.ع</b>${bd?`<em>المبلغ التقريبي للمشتريات ${bd.toLocaleString()} د.ع</em>`:''}</div>
+    ${bd?`<div class="spds-bd">💵 المبلغ التقريبي للمشتريات: <b>${bd.toLocaleString()} د.ع</b></div>`:''}
     <div class="spds-sec">القائمة <em>${its.length} مواد</em></div>
-    <div class="spds-list">${its.map((x,k)=>`<div><i>${k+1}</i><span>${esc(x)}</span></div>`).join('')||'<div><span>—</span></div>'}</div>
+    <div class="spds-list2">${its.map(x=>`<div><i></i><span>${esc(x)}</span></div>`).join('')||'<div><span>—</span></div>'}</div>
     ${(o.itemDesc||o.note)?`<div class="spds-note">${o.itemDesc?'<b>وصف:</b> '+esc(o.itemDesc)+'<br>':''}${o.note?'<b>ملاحظة:</b> '+esc(o.note):''}</div>`:''}
     ${ph.length?`<div class="spds-ph">${ph.map(u=>`<img src="${u}" onclick="viewPhoto('${u}')" alt="">`).join('')}</div>`:''}
     <div class="spds-to">
-      <div><b>التوصيل إلى</b><span>${esc(o.addr||'—')}</span></div>
+      <div><b>الزبون</b><span>${esc(o.addr||'—')}</span></div>
       <button onclick="openSpecialMap('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg></button>
     </div>
-    <div class="spds-acts">
-      <button class="no" onclick="spDrvDecline('${o.id}')">رفض</button>
+    <div class="spds-acts2">
+      <div class="er"><span>أجرتك</span><b>${earn.toLocaleString()} د.ع</b></div>
       <button class="ok" onclick="spDrvAccept('${o.id}',this)">✓ موافق — استلم الطلب</button>
     </div>
+    <button class="spds-no" onclick="spDrvDecline('${o.id}')">رفض الطلب</button>
   </div>`;
   requestAnimationFrame(()=>sh.classList.add('on'));
 }
 function spDrvClose(){ const sh=document.getElementById('spDrvSheet'); if(sh) sh.classList.remove('on') }
 async function spDrvAccept(id,btn){
   if(btn){ btn.disabled=true; btn.textContent='... جاري الاستلام' }
-  await takeSpecialOrder(id);
+  const src=(specialAvailOrders||[]).find(x=>x.id===id);
+  const ok=await takeSpecialOrder(id);
   spDrvClose();
+  if(ok && src){
+    /* ننقله لطلباتي محلياً ونفتح شاشة الرحلة فوراً — مثل طلبات المطاعم */
+    if(!(mySpecialOrders||[]).some(x=>x.id===id)) mySpecialOrders=[{...src,status:'assigned',driverUid:uid},...(mySpecialOrders||[])];
+    specialAvailOrders=(specialAvailOrders||[]).filter(x=>x.id!==id);
+    try{ renderDriver() }catch(e){}
+    setTimeout(()=>openSpTrip(id),150);
+  }
 }
 function spDrvDecline(id){
   spDeclAdd(id); spDrvClose(); toast('انشال الطلب من قائمتك');
@@ -9048,6 +9085,9 @@ function spDrvDecline(id){
 function spChkGet(id){ try{ return JSON.parse(localStorage.getItem('lw_spchk_'+id)||'{}')||{} }catch(e){ return {} } }
 function spChk(id,k,el){
   const c=spChkGet(id); c[k]=!c[k]; try{ localStorage.setItem('lw_spchk_'+id,JSON.stringify(c)) }catch(e){}
+  /* الزبون يشوف شنو لكه السائق ✓ */
+  try{ const f=Object.keys(c).filter(x=>c[x]).map(Number).sort((a,b)=>a-b);
+    clearTimeout(window['_spF'+id]); window['_spF'+id]=setTimeout(()=>{ db.collection('specialOrders').doc(id).update({foundItems:f}).catch(()=>{}) },600) }catch(e){}
   el.classList.toggle('got',!!c[k]);
   const card=el.closest('.spx2'); if(!card) return;
   const all=card.querySelectorAll('.spx2-list .row:not(.miss) .it').length, got=card.querySelectorAll('.spx2-list .row:not(.miss) .it.got').length;
@@ -9095,7 +9135,8 @@ async function takeSpecialOrder(id){
     await rpc('claim_special',{p_order:id});
     try{ const o=(specialAvailOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق استلم طلبك',((me&&me.name)||'السائق')+' استلم طلبك وراح يشتريه',{type:'assigned'}) }catch(e){}
     toast('استلمت طلب الشراء');
-  }catch(e){toast(e.message||'ما گدرنا نستلم الطلب')}
+    return true;
+  }catch(e){toast(e.message||'ما گدرنا نستلم الطلب'); return false}
 }
 function viewPhoto(src){
   let v=document.getElementById('photoView');
@@ -9756,6 +9797,20 @@ function spStepsHTML(o,small){
   if(small) return `<div class="trk-steps sm">${SP_STEPS.map((t,i)=>`${i?`<div class="ln${on(i)}${lx(i)}"></div>`:''}<div class="trk-col"><div class="nd${on(i)}${nx(i)}">${SP_ICONS[i]}</div><span>${t}</span></div>`).join('')}</div>`;
   return `<div class="trk-steps">${SP_STEPS.map((t,i)=>`${i?`<div class="ln${on(i)}${lx(i)}"></div>`:''}<div class="nd${on(i)}${nx(i)}">${SP_ICONS[i]}</div>`).join('')}</div>`;
 }
+/* على كارت الزبون: شنو لكه السائق وشنو ما لكه — بدون ما يفتح الطلب */
+function spFoundHTML(o){
+  if(!['assigned','purchased','arrived'].includes(o.status)) return '';
+  const its=spItems(o); if(!its.length) return '';
+  const mis=Array.isArray(o.missingItems)?o.missingItems.map(Number):[];
+  const fnd=Array.isArray(o.foundItems)?o.foundItems.map(Number):[];
+  const all=o.status!=='assigned';
+  const st=k=> mis.includes(k)?'no':((all||fnd.includes(k))?'ok':'');
+  const nOk=its.filter((x,k)=>st(k)==='ok').length, nNo=mis.length;
+  return `<div class="spf">
+    <div class="spf-h"><b>🛒 ${all?'اشترى أغراضك':'السائق يتسوّق'}</b><span>لكه ${nOk} من ${its.length}${nNo?` · ${nNo} ما متوفر`:''}</span></div>
+    <div class="spf-c">${its.map((x,k)=>{const c=st(k);return `<span class="${c}">${c==='ok'?'✓ ':(c==='no'?'✕ ':'')}${esc(x)}</span>`}).join('')}</div>
+  </div>`;
+}
 function spMiniHTML(o){
   const i2=SP_IDX[o.status]!=null?SP_IDX[o.status]:-1;
   const items=spItems(o);
@@ -9770,6 +9825,7 @@ function spMiniHTML(o){
       </div>
     </div>
     ${spStepsHTML(o,true)}
+    ${spFoundHTML(o)}
     ${i2<0?`<button type="button" class="mk-cancel sp-mc" onclick="event.stopPropagation();spCancel('${o.id}',this)">إلغاء الطلب</button>`:''}
   </div>`;
 }
@@ -9779,6 +9835,7 @@ function renderSpTrack(box,id){
   const gn=(o.status==='cancelled'||o.status==='rejected'), done=(o.status==='delivered'||gn);
   const i2=SP_IDX[o.status]!=null?SP_IDX[o.status]:-1;
   const items=spItems(o), mis=Array.isArray(o.missingItems)?o.missingItems.map(Number):[];
+  const fnd=Array.isArray(o.foundItems)?o.foundItems.map(Number):[];
   const dlv=Number(o.deliveryFee||0), svc=Number(o.serviceFee||0), bd=Number(o.purchaseBudget||0);
   const photos=(Array.isArray(o.itemPhotos)&&o.itemPhotos.length?o.itemPhotos:(o.itemPhoto?[o.itemPhoto]:[])).filter(Boolean);
   const BAG=`<svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg"><g class="sp-bag">
@@ -9812,7 +9869,8 @@ function renderSpTrack(box,id){
   </div>
   <div class="sp-sec"><span>🛒</span> الأغراض المطلوبة (${items.length})</div>
   <div class="sp-list">
-    ${items.map((x,k)=>`<div class="sp-li${mis.includes(k)?' miss':''}"><i>${mis.includes(k)?'✕':(k+1)}</i><span>${esc(x)}</span>${mis.includes(k)?'<em>ما متوفر</em>':''}</div>`).join('')||'<div class="sp-li"><span>—</span></div>'}
+    ${items.map((x,k)=>{ const ms=mis.includes(k), ok=!ms&&(fnd.includes(k)||['purchased','arrived','delivered'].includes(o.status));
+      return `<div class="sp-li${ms?' miss':''}${ok?' ok':''}"><i>${ms?'✕':(ok?'✓':(k+1))}</i><span>${esc(x)}</span>${ms?'<em>ما متوفر</em>':(ok?'<em class="g">لكاها</em>':'')}</div>` }).join('')||'<div class="sp-li"><span>—</span></div>'}
     ${photos.length?`<div class="sp-ph">${photos.map(u=>`<img src="${u}" alt="" onclick="window.open('${u}','_blank')">`).join('')}</div>`:''}
     ${o.itemDesc?`<div class="sp-nt"><b>وصف:</b> ${esc(o.itemDesc)}</div>`:''}
     ${o.note?`<div class="sp-nt"><b>ملاحظة:</b> ${esc(o.note)}</div>`:''}
@@ -10499,9 +10557,9 @@ function renderStore(){
   const fin=document.getElementById('stFinance');
   if(fin && __noRep){ fin.innerHTML=''; }
   else if(fin){
-    const _st=(myInv&&myInv.status)||'due';
-    const _stTxt=_st==='paid'?'مسدد ✓':(_st==='pending'?'قيد المراجعة':'مستحق');
-    const _stCls=_st==='paid'?'ok':(_st==='pending'?'pend':'due');
+    const _ic=invCalc(myComm.amount, myInv), _st=_ic.s;
+    const _stTxt=_st==='paid'?'مسدد ✓':(_st==='pend'?'قيد المراجعة':(_st==='part'?'باقي '+_ic.rem.toLocaleString():'مستحق'));
+    const _stCls=_st==='paid'?'ok':((_st==='pend'||_st==='part')?'pend':'due');
     const _n=n=>Number(n||0).toLocaleString();
     fin.innerHTML=`
     <div class="fsec"><i class="pu"></i><h3>المبيعات</h3></div>
@@ -11845,6 +11903,8 @@ function _renderDriverBody(){
             ${o.phone?`<a class="b wa" href="https://wa.me/${wa}" target="_blank"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3.5 20.5 5 16.6a8 8 0 1 1 3 3z"/><path d="M8.8 9.4c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8-3.9-9.5-7.5h1.6l.9 2z"/></svg></a><a class="b ph" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
           </div>
           <div class="spx2-ft"><div class="earn"><span>أجرتك</span><b>${earn.toLocaleString()} د.ع</b></div>${next}</div>
+          <div class="tp-spst sm">${['قبلت الطلب','اشتريت الأغراض','وصلت للزبون','سلّمت الطلب'].map((t,i)=>{const n=!bought?1:(!arrivedSp?2:3);return `<span class="${i<n?'on':''}${i===n?' nx':''}">${i<n?'✓ ':''}${t}</span>`}).join('')}</div>
+          <button class="spx-trip" onclick="openSpTrip('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> شاشة الرحلة والخريطة</button>
         </div>`;
       }).join('');
   }
@@ -12026,10 +12086,13 @@ function toggleSetlOrders(){
 /* ═══════ شاشة رحلة التوصيل ═══════ */
 let _tpS=null,_tpMap=null,_tpD=null,_tpC=null,_tpLine=null,_tpTimer=null,_tpId=null,_tpEtaAt=0,_tpFrom='me';
 
-const _tpOrder = () => (myOrders||[]).find(x=>x.id===_tpId);
+let _tpSp=false;   /* شاشة الرحلة لطلب اشتريلي */
+const _tpOrder = () => (_tpSp ? (mySpecialOrders||[]) : (myOrders||[])).find(x=>x.id===_tpId);
 
-async function openTrip(id){
-  const o=(myOrders||[]).find(x=>x.id===id);
+function openSpTrip(id){ return openTrip(id,true) }
+async function openTrip(id,sp){
+  _tpSp=!!sp;
+  const o=(_tpSp?(mySpecialOrders||[]):(myOrders||[])).find(x=>x.id===id);
   if(!o) return toast('ما لكينا الطلب');
   _tpId=id; _tpEtaAt=0;
   document.getElementById('tripSheet').classList.add('on');
@@ -12056,7 +12119,8 @@ function closeTrip(){
   document.getElementById('tripSheet').classList.remove('on');
   if(_tpTimer){ clearInterval(_tpTimer); _tpTimer=null }
   if(_tpMap){ try{_tpMap.remove()}catch(e){} _tpMap=null;_tpD=null;_tpC=null;_tpLine=null }
-  _tpId=null;
+  _tpId=null; _tpSp=false;
+  try{ document.getElementById('tripSheet').classList.remove('spshop') }catch(e){}
 }
 
 function _tpTick(){
@@ -12132,7 +12196,8 @@ async function _tpRoute(from,to,via){
 function _tripPaint(){
   const card=document.getElementById('tripCard'); if(!card) return;
   const o=_tpOrder();
-  if(!o || o.status==='delivered'){ closeTrip(); return }
+  if(!o || o.status==='delivered' || o.status==='cancelled'){ closeTrip(); return }
+  if(_tpSp) return _spTripPaint(card,o);
 
   const btn = o.status==='assigned'
     ? `<button class="tp-go" onclick="tripAct('go')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg> استلمت من المحل وانطلقت</button>`
@@ -12180,9 +12245,70 @@ function _tripPaint(){
     ${btn}`;
 }
 
+/* شاشة الرحلة — اشتريلي: وضعين
+   1) يتسوّق (assigned): قائمة كبيرة بالتأشير بدون خريطة
+   2) بالطريق (purchased/arrived): الخريطة تكبر وتحت كارت صغير */
+function spPhotosHTML(o){
+  const ph=((Array.isArray(o.itemPhotos)&&o.itemPhotos.length)?o.itemPhotos:(o.itemPhoto?[o.itemPhoto]:[])).filter(Boolean);
+  return ph.length?`<div class="sps-ph"><div class="h">📷 صور من الزبون</div><div>${ph.map(u=>`<img src="${u}" onclick="viewPhoto('${u}')" alt="">`).join('')}</div></div>`:'';
+}
+function _spTripPaint(card,o){
+  const st=o.status, shop=(st==='assigned');
+  const sh=document.getElementById('tripSheet'); if(sh) sh.classList.toggle('spshop',shop);
+  const its=spItems(o), chk=spChkGet(o.id), mis=Array.isArray(o.missingItems)?o.missingItems.map(Number):[];
+  const svc=Number(o.serviceFee||0), dlv=Number(o.deliveryFee||0), bd=Number(o.purchaseBudget||0);
+  const cn=esc(o.custName||o.customerName||o.customer||'الزبون');
+  const n= st==='assigned'?1:(st==='purchased'?2:3);
+  const STP=['قبلت','يتسوّق','بالطريق','سلّمت'];
+  const steps=`<div class="sps-st">${STP.map((t,i)=>`<span class="${i<n?'on':''}${i===n?' nx':''}">${i<n?'✓ ':''}${t}</span>`).join('')}</div>`;
+  const call=o.phone?`<a class="tp-call" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:'';
+  if(shop){
+    const done=its.filter((x,k)=>chk[k]||mis.includes(k)).length;
+    const got=its.filter((x,k)=>chk[k]&&!mis.includes(k)).length;
+    const pct=its.length?Math.round(done/its.length*100):0;
+    card.innerHTML=`<div class="sps-hd">
+        <div class="r"><div><b>🛒 ${esc(o.marketName||'السوق')}</b><small>اشتريلي · ${cn}</small></div>
+          <button class="sps-x" onclick="closeTrip()">×</button></div>
+        ${steps}
+      </div>
+      <div class="sps-ring" style="--p:${pct}%"><div><b>${got}/${its.length}</b><span>لكيت</span></div></div>
+      <div class="sps-hint">اضغط على المادة إذا لكيتها · ✕ إذا ما متوفرة</div>
+      ${(o.itemDesc||o.note)?`<div class="sps-note"><div class="h">📝 ملاحظات الزبون</div>${o.itemDesc?'<p>'+esc(o.itemDesc)+'</p>':''}${o.note?'<p>'+esc(o.note)+'</p>':''}</div>`:''}
+      ${spPhotosHTML(o)}
+      ${bd?`<div class="sps-bd">💵 المبلغ التقريبي: <b>${bd.toLocaleString()} د.ع</b></div>`:''}
+      <div class="sps-list">${its.map((x,k)=>{const ms=mis.includes(k), ok=!ms&&chk[k];
+        return `<div class="sps-it${ok?' ok':''}${ms?' no':''}">
+          <button type="button" class="m" ${ms?'disabled':''} onclick="spChk('${o.id}',${k},this);setTimeout(_tripPaint,30)"><i>${ok?'✓':(ms?'✕':'')}</i><span>${esc(x)}</span>${ok?'<em>لكيتها</em>':(ms?'<em>ما متوفر</em>':'')}</button>
+          <button type="button" class="x2${ms?' on':''}" onclick="spMiss('${o.id}',${k},this).then(()=>setTimeout(_tripPaint,30))">${ms?'↺':'✕'}</button>
+        </div>`}).join('')}</div>
+      <div class="sps-cu"><div class="av">${cn.charAt(0)}</div><div class="t"><b>${cn}</b><small>${esc(o.addr||'—')}</small></div>${call}</div>
+      <button class="sps-go" onclick="tripAct('sp_bought')">✓ خلصت التسوّق — ابدأ التوصيل</button>`;
+    return;
+  }
+  const btn = st==='purchased'
+    ? `<button class="tp-go" onclick="tripAct('sp_arr')">📍 وصلت لعند الزبون</button>`
+    : `<button class="tp-go done" onclick="tripAct('sp_done')">✓ سلّمت الطلب</button>`;
+  card.innerHTML=`<div class="tp-grip"></div>
+    ${steps}
+    <div class="tp-row">
+      <div class="tp-ic">${cn.charAt(0)}</div>
+      <div class="tp-tx"><div class="tp-lbl">وصّل إلى</div><div class="tp-val">${cn}</div><div class="tp-lbl">${esc(o.addr||'—')}</div></div>
+      ${call}
+    </div>
+    <div class="tp-row">
+      <div class="tp-ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></div>
+      <div class="tp-tx"><div class="tp-lbl">تستلم من الزبون</div><div class="tp-val money">${(dlv+svc).toLocaleString()} د.ع + فاتورة السوق</div></div>
+      <div class="tp-tx" style="text-align:left;flex:none"><div class="tp-lbl">أجرتك</div><div class="tp-val" style="color:var(--ok)">${spEarn(o).toLocaleString()} د.ع</div></div>
+    </div>
+    <div class="tp-nav">${o.loc&&o.loc.lat?`<a target="_blank" href="${navUrl(o.loc)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/></svg> ملاحة للزبون</a>`:''}</div>
+    ${btn}`;
+}
 async function tripAct(k){
   const id=_tpId; if(!id) return;
   const o=_tpOrder();
+  if(k==='sp_bought'){ await specialPurchased(id); if(o) o.status='purchased'; _tpEtaAt=0; _tripPaint(); setTimeout(()=>{ try{_tpMap&&_tpMap.invalidateSize()}catch(e){} try{_tpTick()}catch(e){} },300); return }
+  if(k==='sp_arr'){ await specialArrived(id); if(o) o.status='arrived'; _tripPaint(); return }
+  if(k==='sp_done'){ await specialDelivered(id); if(o) o.status='delivered'; closeTrip(); try{renderDriver()}catch(e){} return }
   if(k==='go'){
     await goOnTheWay(id);
     if(o) o.status='ontheway';
@@ -12836,6 +12962,19 @@ let allOrders=[],allUsers=[],allShops=[],pFil='driver';
 
 /* ══════════ عمولة المطعم — جهة المحل ══════════ */
 let myComm={sales:0,amount:0}, myInv=null;
+/* حالة عمولة شهر: شكد انسدّ وشكد باقي — الفواتير القديمة المأشّرة مسدد تبقى مسدّدة كاملة */
+function invCalc(amount, inv){
+  amount=Number(amount||0);
+  const st=(inv&&inv.status)||'due';
+  const paid = inv && inv.paid_total!=null ? Number(inv.paid_total) : (st==='paid' ? amount : 0);
+  const rem = Math.max(0, amount-paid);
+  let s;
+  if(st==='pending') s='pend';
+  else if(rem<=0 && (paid>0 || st==='paid')) s='paid';
+  else if(paid>0) s='part';
+  else s='due';
+  return {paid, rem, s, amount};
+}
 
 async function loadMyComm(){
   if(!me||!me.shopId) return;
@@ -12854,17 +12993,18 @@ async function loadMyComm(){
 
 function renderMyComm(){
   const box=document.getElementById('stComm'); if(!box) return;
-  const st=(myInv&&myInv.status)||'due';
+  const ic=invCalc(myComm.amount, myInv), st=ic.s;
   const dd=_dueDate(new Date()).toLocaleDateString('ar-IQ');
-  const tag = st==='paid'?['مسدد','paid']:(st==='pending'?['قيد المراجعة','pend']:['مستحق','due']);
+  const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
   box.innerHTML=`
     <div class="invhero">
       <div class="hd"><span>عمولة هذا الشهر</span><span class="ist ${tag[1]}" style="position:static">${tag[0]}</span></div>
       <div class="v ${st==='paid'?'g':''}">${myComm.amount.toLocaleString()}<small> د.ع</small></div>
       <div class="rg">مبيعات ${myComm.sales.toLocaleString()} د.ع · ${myComm.rate!=null?Number(myComm.rate):shopPct()}% · تستحق ${dd}</div>
-      ${st==='due'
+      ${ic.paid>0&&st!=='paid'?`<div class="rg" style="margin-top:4px;font-weight:800">سدّدت ${ic.paid.toLocaleString()} · باقي عليك ${ic.rem.toLocaleString()} د.ع</div>`:''}
+      ${(st==='due'||st==='part')
         ? `<button class="act" onclick="openPayCom()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/></svg> إبلاغ عن السداد</button>`
-        : (st==='pending'
+        : (st==='pend'
            ? '<button class="act off" disabled>بانتظار تأكيد الإدارة</button>'
            : '<button class="act off" disabled>انسددت وانتأكدت</button>')}
     </div>`;
@@ -12903,7 +13043,8 @@ function pcCopy(){
 async function openPayCom(){
   if(myInv && myInv.status==='pending')
     return toast('عندك طلب سداد قيد المراجعة — انتظر تأكيد الإدارة');
-  if(myInv && myInv.status==='paid')
+  const _ic=invCalc(myComm.amount, myInv);
+  if(_ic.s==='paid' || _ic.rem<=0)
     return toast('عمولة هذا الشهر مسدّدة');
 
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
@@ -12922,7 +13063,7 @@ async function openPayCom(){
       <p class="sub">يرجى إدخال تفاصيل السداد بدقة</p>
       <div class="pchero">
         <div class="ic">${wic('<ellipse cx="12" cy="6.5" rx="7.5" ry="3"/><path d="M4.5 6.5v11c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-11"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/>')}</div>
-        <div class="amt"><span>المبلغ المدفوع <i class="req">*</i></span><b>${myComm.amount.toLocaleString()}</b></div>
+        <div class="amt"><span>${_ic.paid>0?'الباقي عليك':'المبلغ المستحق'} <i class="req">*</i></span><b>${_ic.rem.toLocaleString()}</b></div>
         <div class="cur">العملة<b>د.ع</b></div>
       </div>
     </div>
@@ -12966,7 +13107,7 @@ async function openPayCom(){
         <div class="pcf"><label>تاريخ السداد <i class="req">*</i></label>
           <input id="pc_date" type="date" value="${new Date().toISOString().slice(0,10)}"></div>
         <div class="pcf"><label>المبلغ المدفوع <i class="req">*</i></label>
-          <input id="pc_amt" type="number" value="${myComm.amount}"></div>
+          <input id="pc_amt" type="number" inputmode="numeric" step="1" value="${_ic.rem}"></div>
       </div>
       <div class="pcf" style="margin-top:10px"><label>ملاحظات (اختياري)</label>
         <input id="pc_note" placeholder="أضف أي ملاحظات…"></div>
@@ -12981,6 +13122,7 @@ async function openPayCom(){
 async function sendPayCom(){
   const amt=Number((document.getElementById('pc_amt')||{}).value||0);
   if(amt<=0) return toast('اكتب المبلغ المدفوع');
+  if(amt!==Math.round(amt)) return toast('اكتب رقم صحيح بدون كسور');
   const per=_pKey(new Date());
   const row={
     shop_id: me.shopId, period: per, status:'pending', amount_paid: amt,
@@ -12990,8 +13132,9 @@ async function sendPayCom(){
     reported_at:new Date().toISOString()
   };
   try{
-    if(myInv) return toast('عندك طلب سداد قيد المراجعة');
-    await sbPost('shop_invoices', row);
+    if(myInv && myInv.status==='pending') return toast('عندك طلب سداد قيد المراجعة');
+    await rpc('shop_report_payment',{p_shop:me.shopId, p_period:per, p_amount:amt, p_method:row.method,
+                                     p_date:row.paid_date, p_note:row.note||''});
     toast('انرسل — الإدارة راح تراجعه');
     try{ await loadMyComm() }catch(e2){ console.warn('loadMyComm', e2) }
     stab('dash', document.querySelectorAll('#sNav button')[0]);
@@ -13035,9 +13178,10 @@ function openInv(){
 function invNav(n){ invMonth=new Date(invMonth.getFullYear(), invMonth.getMonth()+n, 1); loadInv() }
 
 const _invSt = r => {
-  const st=(r.inv&&r.inv.status)||'due';
-  if(st==='paid')    return ['مسدد','paid','g'];
-  if(st==='pending') return ['قيد المراجعة','pend','o'];
+  const c=invCalc(r.amount, r.inv);
+  if(c.s==='paid') return ['مسدد','paid','g'];
+  if(c.s==='pend') return ['قيد المراجعة','pend','o'];
+  if(c.s==='part') return ['باقي '+c.rem.toLocaleString(),'due','r'];
   return ['مستحق','due','r'];
 };
 
@@ -13075,6 +13219,7 @@ function renderInv(){
         <div class="ii"><b>${esc(r.shop.name||'محل')}</b>
           <p>مبيعات الشهر <u>${r.sales.toLocaleString()}</u> د.ع</p>
           <p>العمولة (${r.rate!=null?Number(r.rate):shopPct()}%) <u>${r.amount.toLocaleString()}</u> د.ع</p>
+          ${(c=>c.paid>0&&c.s!=='paid'?`<p>انسدّ <u>${c.paid.toLocaleString()}</u> · باقي <u style="color:#C2362B">${c.rem.toLocaleString()}</u> د.ع</p>`:'')(invCalc(r.amount,r.inv))}
         </div>
       </div>
       <div class="due-dt ${col}">${cls==='paid'?('تاريخ السداد '+(r.inv&&r.inv.paid_date?new Date(r.inv.paid_date).toLocaleDateString('ar-IQ'):'—')):(cls==='pend'?'أبلغ المطعم عن السداد':('يستحق في '+dd))}</div>
@@ -13120,7 +13265,9 @@ function renderInvOne(){
       ${row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><ellipse cx="12" cy="6.5" rx="7.5" ry="3"/><path d="M4.5 6.5v11c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3v-11"/><path d="M4.5 12c0 1.7 3.4 3 7.5 3s7.5-1.3 7.5-3"/></svg>','قيمة العمولة', r.amount.toLocaleString()+' د.ع')}
       ${row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5l3 2"/></svg>','حالة السداد', lbl)}
       ${row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 9.6h17M8.5 3.5V6M15.5 3.5V6"/></svg>','تاريخ الاستحقاق', dd)}
-      ${iv.amount_paid?row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>','المبلغ المدفوع', Number(iv.amount_paid).toLocaleString()+' د.ع'):''}
+      ${(c=>c.paid>0?row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg>','انسدّ لحد هسه', c.paid.toLocaleString()+' د.ع')
+         +(c.rem>0?row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7v6M12 16v.1"/></svg>','الباقي', '<span style="color:#C2362B">'+c.rem.toLocaleString()+' د.ع</span>'):''):'')(invCalc(r.amount,iv))}
+      ${iv.status==='pending'&&iv.amount_paid?row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/></svg>','المطعم يكول دفع', Number(iv.amount_paid).toLocaleString()+' د.ع'):''}
       ${iv.method?row('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9.5 12 4l9 5.5"/><path d="M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 21h18"/></svg>','طريقة الدفع', iv.method==='cash'?'نقدي':'تحويل بنكي'):''}
       <div class="invnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8v.1"/></svg>
         تُحتسب العمولة على إجمالي المبيعات المكتملة خلال الشهر، بلا أجور التوصيل.</div>
@@ -13141,22 +13288,35 @@ function renderInvOne(){
 
 async function invMarkPaid(){
   const r=invRows.find(x=>x.shop.id===_invShop); if(!r) return;
+  const c=invCalc(r.amount, r.inv);
+  window._impAmt=c.rem;
   const yes=await askConfirm(
-    'تسجيل تحصيل <b>'+r.amount.toLocaleString()+' د.ع</b> من <b>'+esc(r.shop.name)+'</b> عن '+_pAr(invMonth)+'؟',
+    'كم استلمت من <b>'+esc(r.shop.name)+'</b> عن '+_pAr(invMonth)+'؟'
+    +'<div style="margin:10px 0 4px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ '+c.paid.toLocaleString():'')+' · <b>الباقي '+c.rem.toLocaleString()+'</b></div>'
+    +'<input type="number" inputmode="numeric" step="1" value="'+c.rem+'" oninput="window._impAmt=this.value" style="width:100%;padding:11px;border:1px solid #ddd;border-radius:12px;font:inherit;font-size:16px;text-align:center">',
     {title:'تسجيل التحصيل', ok:'إي حصّلتها', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>'});
   if(!yes) return;
-  await _invSave({status:'paid', amount_paid:r.amount, method:'cash',
+  const amt=Number(window._impAmt||0);
+  if(!(amt>0) || amt!==Math.round(amt)) return toast('اكتب مبلغ صحيح بدون كسور');
+  const tot=c.paid+amt, left=Math.max(0,r.amount-tot);
+  if(left>0) toast('انحفظ — باقي عليه '+left.toLocaleString()+' د.ع');
+  await _invSave({status:left>0?'partial':'paid', paid_total:tot, amount_paid:amt, method:'cash',
                   paid_date:new Date().toISOString().slice(0,10),
                   confirmed_at:new Date().toISOString(), confirmed_by:uid});
 }
 async function invConfirm(){
   const r=invRows.find(x=>x.shop.id===_invShop); if(!r) return;
   const iv=r.inv||{};
+  const c=invCalc(r.amount, iv), got=Number(iv.amount_paid||0), tot=c.paid+got, left=Math.max(0,r.amount-tot);
   const yes=await askConfirm(
-    '<b>'+esc(r.shop.name)+'</b> أبلغ إنه سدّد <b>'+Number(iv.amount_paid||r.amount).toLocaleString()+' د.ع</b>.<br>تأكيد الاستلام؟',
+    '<b>'+esc(r.shop.name)+'</b> أبلغ إنه سدّد <b>'+got.toLocaleString()+' د.ع</b>'
+    +'<div style="margin-top:8px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ قبل '+c.paid.toLocaleString():'')+'</div>'
+    +(left>0?'<div style="margin-top:6px;color:#C2362B;font-weight:800">⚠️ المبلغ ناقص — راح يبقى عليه '+left.toLocaleString()+' د.ع والشهر ما يتسكّر</div>'
+            :'<div style="margin-top:6px;color:#0E8A5F;font-weight:800">✓ العمولة تنسدّ كاملة</div>')
+    +'<br>تأكيد الاستلام؟',
     {title:'مراجعة السداد', ok:'إي استلمت', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>'});
   if(!yes) return;
-  await _invSave({status:'paid', confirmed_at:new Date().toISOString(), confirmed_by:uid});
+  await _invSave({status:left>0?'partial':'paid', paid_total:tot, confirmed_at:new Date().toISOString(), confirmed_by:uid});
 }
 async function _invSave(patch){
   const per=_pKey(invMonth);
@@ -13280,6 +13440,7 @@ function openDrAcc(){
   renderDrAcc(); loadDrAcc();
 }
 function atabBack(){
+  if(window._finFrom){ return openFin('acc') }
   document.querySelectorAll('#aApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('a_over').classList.add('on');
 }
@@ -13467,6 +13628,7 @@ async function adminSetl(id){
 }
 
 function atab(p,el){
+  if(p!=='fin') window._finFrom=false;
   document.querySelectorAll('#aApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('a_'+p).classList.add('on');
   document.querySelectorAll('#aNav button').forEach(b=>b.classList.remove('on'));
@@ -14098,7 +14260,357 @@ async function sbSend(path, method, body){
 }
 
 
+
+/* ═══════════ الرئيسية الجديدة — دفتر الحسابات ═══════════
+   الأرقام كلها من دالة السيرفر admin_finance_summary (تقرا بس)،
+   وهي تستخدم نفس طرق حساب السائق والمطعم — ما يتغيّر أي حساب */
+let ahPer='day', ahData=null, ahErr='', ahAt=0, ahBusy=false;
+setInterval(()=>{ try{ const pg=document.getElementById('a_over'); if(pg&&pg.classList.contains('on')&&me&&me.role==='admin') renderAdminHome() }catch(e){} },60000);
+function _ahRange(){
+  const n=new Date(), f=new Date(n);
+  if(ahPer==='day'){ f.setHours(0,0,0,0) }
+  else if(ahPer==='week'){ f.setDate(f.getDate()-6); f.setHours(0,0,0,0) }
+  else if(ahPer==='month'){ f.setDate(1); f.setHours(0,0,0,0) }
+  else { f.setMonth(0,1); f.setHours(0,0,0,0) }
+  const t=new Date(n.getTime()+86400000);
+  return [f.toISOString(), t.toISOString()];
+}
+async function ahLoad(force){
+  if(ahBusy) return; if(!force && ahData && Date.now()-ahAt<60000) return;
+  ahBusy=true;
+  try{ const [a,b]=_ahRange(); ahData=await rpc('admin_finance_summary',{p_from:a,p_to:b}); ahErr=''; ahAt=Date.now() }
+  catch(e){ ahErr=errMsg(e); }
+  ahBusy=false; renderAdminHome();
+}
+function ahSetPer(p){ ahPer=p; ahData=null; renderAdminHome(); ahLoad(true) }
+
+/* ═══ طلبات معلّقة: المطعم ما قبل خلال 10 دقايق، أو جاهز وما استلمه سائق ═══ */
+function stuckOrders(){
+  const now=Date.now(), M=60000, out=[]; let old=0;
+  const ts=o=>Number(o.createdAt||0)||Date.parse(o.created_at||0)||0;
+  (allOrders||[]).forEach(o=>{
+    const age=now-ts(o); if(!ts(o)) return;
+    let why='';
+    if(o.status==='pending' && age>10*M) why='المطعم ما قبل الطلب';
+    else if(o.status==='ready' && !o.driverUid && age>15*M) why='جاهز وما استلمه سائق';
+    else if(o.status==='accepted' && age>45*M) why='صارله وقت يتحضّر';
+    if(!why) return;
+    if(age>24*60*M){ old++; return }
+    out.push({no:'#'+(o.order_no||String(o.createdAt).slice(-4)), name:o.shopName||'—', why, min:Math.round(age/M)});
+  });
+  (allSpecial||[]).forEach(o=>{
+    const age=now-ts(o); if(!ts(o)) return;
+    if(o.status==='ready' && age>10*M){ if(age>24*60*M){ old++; return } out.push({no:'اشتريلي', name:o.marketName||'السوق', why:'ما استلمه سائق', min:Math.round(age/M)}) }
+  });
+  return {list:out.sort((a,b)=>b.min-a.min), old};
+}
+const _n = v => Math.round(Number(v||0)).toLocaleString('en-US');
+function renderAdminHome(){
+  const el=document.getElementById('aHome'), pg=document.getElementById('a_over'); if(!el||!pg) return;
+  if(ahErr && !ahData){
+    pg.classList.remove('v2');
+    el.innerHTML=`<div class="ah-warn">لوحة الفلوس الجديدة تحتاج ملف <b>admin_summary.sql</b> يتشغّل بـ Supabase. لحد ما يتشغّل، تبقى الصفحة القديمة.<small>${esc(ahErr).slice(0,140)}</small></div>`;
+    return;
+  }
+  pg.classList.add('v2');
+  const d=ahData||{}, ld=!ahData;
+  const PER={day:'اليوم',week:'آخر 7 أيام',month:'هذا الشهر',year:'هذي السنة'};
+  const net=Number(d.svc||0)+Number(d.shop_com||0)+Number(d.drv_com||0);
+  const inn=Number(d.drivers_owe||0)+Number(d.shops_owe||0), out=Math.max(0,Number(d.disc_owe||0))+Math.max(0,Number(d.comp_owe||0));
+  const h=new Date().getHours();
+  const v=x=>ld?'…':_n(x);
+  const pend=(allSetls||[]).length;
+  el.innerHTML=`
+  <div class="ah-top">
+    <div class="ah-who"><div><b>${h<12?'صباح الخير':'مساء الخير'} ${esc(String((me&&me.name)||'').split(' ')[0])}</b><span>${new Date().toLocaleDateString('ar-IQ',{weekday:'long',day:'numeric',month:'long'})}</span></div></div>
+    <div class="ah-per">${Object.keys(PER).map(k=>`<button class="${ahPer===k?'on':''}" onclick="ahSetPer('${k}')">${k==='day'?'اليوم':k==='week'?'الأسبوع':k==='month'?'الشهر':'السنة'}</button>`).join('')}</div>
+    <div class="ah-net"><small>صافي ربح التطبيق ${PER[ahPer]}</small><b>${v(net)}<i>د.ع</i></b>
+      <p>رسوم الخدمة ${v(d.svc)} · عمولة المطاعم ${v(d.shop_com)} · عمولة السواق ${v(d.drv_com)}</p></div>
+  </div>
+  <div class="ah-bal">
+    <div class="h"><b>الحسابات المفتوحة</b><span>لحد هسه</span></div>
+    <div class="bar"><i style="flex:${Math.max(inn,1)};background:#0E8A5F"></i><i style="flex:${Math.max(out,ld?1:0.0001)};background:#C2362B"></i></div>
+    <div class="leg"><div class="in"><span>يدخل للتطبيق</span><b>${v(inn)}</b></div><div class="out"><span>يطلع من التطبيق</span><b>${v(out)}</b></div></div>
+    <button class="ln" onclick="window._finFrom=true;openDrAcc()"><i style="background:#E3F4EC">🛵</i><div class="t"><b>عند السواق</b><small>رسوم وعمولات ما مسدّدة</small></div><em class="g">${v(d.drivers_owe)}</em><s>‹</s></button>
+    <button class="ln" onclick="window._finFrom=true;openInv()"><i style="background:#E7E9FB">🍽️</i><div class="t"><b>عند المطاعم</b><small>عمولة الأشهر اللي ما تسدّدت</small></div><em class="g">${v(d.shops_owe)}</em><s>‹</s></button>
+    <button class="ln" onclick="openFin('acc');setTimeout(()=>{openDiscOwed();const x=document.getElementById('aDiscOwed');x&&x.scrollIntoView({behavior:'smooth'})},250)"><i style="background:#FBE9E7">🎟️</i><div class="t"><b>تعويض المطاعم</b><small>خصومات على حساب التطبيق</small></div><em class="r">${v(Math.max(0,d.disc_owe||0))}</em><s>‹</s></button>
+    <button class="ln" onclick="openFin('acc');setTimeout(()=>{openCompOwed();const x=document.getElementById('aCompOwed');x&&x.scrollIntoView({behavior:'smooth'})},250)"><i style="background:#FFF1E2">🚚</i><div class="t"><b>تعويض السواق</b><small>كوبونات توصيل مجاني</small></div><em class="r">${v(Math.max(0,d.comp_owe||0))}</em><s>‹</s></button>
+  </div>
+  ${(()=>{ const st=stuckOrders(); if(!st.list.length&&!st.old) return '';
+    return `<div class="ah-stuck"><div class="h">🚨 طلبات تحتاج تدخّلك <em>${st.list.length}</em></div>
+      ${st.list.slice(0,5).map(x=>`<button class="sl" onclick="atab('orders',document.querySelectorAll('#aNav button')[3])"><b>${esc(x.no)} · ${esc(x.name)}</b><small>${x.why}</small><em>${x.min<60?x.min+' د':Math.floor(x.min/60)+' س'}</em></button>`).join('')}
+      ${st.old?`<div class="old">+ ${st.old} طلب قديم معلّق من أكثر من يوم (غالباً تجربة) — راجعهم بصفحة الطلبات</div>`:''}</div>` })()}
+  ${(allSetls||[]).length?`<button class="ah-pend" onclick="openFin('acc')">⏳ ${(allSetls||[]).length} تسديد ينتظر حسمك — اضغط هنا</button>`:''}
+  <div class="ah-kp">
+    <div><b>${v(d.orders)}</b><span>طلب</span><em>${ld?'':_n(d.orders_done)+' تم'}</em></div>
+    <div><b>${v(d.special)}</b><span>اشتريلي</span><em>${ld?'':_n(d.special_done)+' تم'}</em></div>
+    <div><b>${v(d.customers)}</b><span>زبون</span><em>${ld||!Number(d.new_users)?'':'+'+_n(d.new_users)+' جديد'}</em></div>
+    <div><b>${ld?'…':_n(d.drivers_on)+'/'+_n(d.drivers)}</b><span>سائق متاح</span><em>${ld?'':_n(d.shops_open)+'/'+_n(d.shops)+' محل'}</em></div>
+  </div>
+  </div>`;
+}
+
+/* ═══════════════ المالية ═══════════════
+   تقرا بس من: admin_finance_summary و admin_receipts و admin_late
+   والأزرار اللي تحسم أو تسدّد هي نفسها القديمة (حسابات السائقين، فواتير المطاعم، التعويضات) */
+let finTab='acc', finMonth=new Date(), finRecs=null, finRecErr='', finRecFil='all', finLate=null, finDay=null;
+const FIN_K={drv:['رسوم سائق','in'],shop:['عمولة مطعم','in'],disc:['تعويض خصومات','out'],comp:['تعويض توصيل','out'],setl:['سائق سلّم مطعم','mid']};
+function openFin(tab,el){
+  window._finFrom=true;
+  if(tab) finTab=tab;
+  document.querySelectorAll('#aApp .page').forEach(x=>x.classList.remove('on'));
+  document.getElementById('a_fin').classList.add('on');
+  document.querySelectorAll('#aNav button').forEach(b=>b.classList.remove('on'));
+  const nb=[...document.querySelectorAll('#aNav button')].find(b=>/المالية/.test(b.textContent)); if(nb) nb.classList.add('on');
+  /* ننقل قوائم التعويضات والتسديدات المعلّقة لهنا (نفس العناصر ونفس الأزرار) */
+  const mv=document.getElementById('finMove');
+  ['aSetls','aDiscOwed','aCompOwed'].forEach(id=>{ const x=document.getElementById(id); if(x&&mv&&x.parentNode!==mv) mv.appendChild(x) });
+  try{ document.querySelector('#a_fin').scrollIntoView() }catch(e){}
+  renderFin(); finLoad();
+}
+async function finLoad(){
+  try{ ahLoad() }catch(e){}
+  try{ loadAllSetls() }catch(e){}
+  if(finTab==='acc' && !finLate){ try{ finLate=await rpc('admin_late',{})||[] }catch(e){ finLate=[] } renderFin(); finAutoRemind() }
+  if(finTab==='rec'){ await finLoadRecs() }
+  if(finTab==='day'){ await finLoadDay() }
+  finBadge();
+}
+function finBadge(){
+  const b=document.getElementById('finCnt'); if(!b) return;
+  const n=(finLate||[]).filter(x=>x.kind!=='driver_soon').length+(allSetls||[]).length;
+  b.style.display=n?'flex':'none'; b.textContent=n;
+}
+function finSetTab(t){ finTab=t; renderFin(); finLoad() }
+function _mRange(d){ const f=new Date(d.getFullYear(),d.getMonth(),1), t=new Date(d.getFullYear(),d.getMonth()+1,1); return [f,t] }
+async function finLoadRecs(){
+  const [f,t]=_mRange(finMonth); finRecs=null; renderFin();
+  try{ finRecs=(await rpc('admin_receipts',{p_from:f.toISOString(),p_to:t.toISOString()})||[]).map(finNorm).filter(Boolean); finRecErr='' }
+  catch(e){ finRecs=[]; finRecErr=errMsg(e) }
+  renderFin();
+}
+function finMonthNav(n){
+  const x=new Date(finMonth.getFullYear(),finMonth.getMonth()+n,1), min=new Date(); min.setMonth(min.getMonth()-12); min.setDate(1);
+  if(x>new Date()||x<new Date(min.getFullYear(),min.getMonth(),1)) return toast('الوصولات محفوظة لآخر 12 شهر');
+  finMonth=x; finLoadRecs();
+}
+/* وصل موحّد من أي جدول */
+function finNorm(row){
+  const r=row.r||{}, k=row.kind, st=String(r.status||'').toLowerCase();
+  if(k==='shop' && !(st==='paid'||st==='pending'||st==='partial')) return null;           /* فاتورة ما تسدّدت = مو وصل */
+  const amt=Number(r.amount!=null?r.amount:(r.total!=null?r.total:(r.commission!=null?r.commission:0)))||0;
+  const ok = ['confirmed','paid','done','ok','partial'].includes(st) || (!st && (k==='disc'||k==='comp'));
+  const [title,dir]=FIN_K[k]||['تسديد','in'];
+  let sub='';
+  if(k==='drv') sub = r.fee_type==='driver_fee'?'عمولة السائق':'رسوم خدمة التطبيق';
+  if(k==='shop') sub = 'عمولة شهر '+(r.period?new Date(new Date(r.period).getTime()+86400000*2).toLocaleDateString('ar-IQ',{month:'long',year:'numeric'}):'')+(st==='partial'?' · جزء (باقي عليه)':'');
+  if(k==='setl') sub = (r.drv_name||'سائق')+' ← '+(r.shop_name||'مطعم')+(r.orders_count?(' · '+r.orders_count+' طلب'):'');
+  if(k==='disc') sub = 'التطبيق دفع للمطعم';
+  if(k==='comp') sub = 'التطبيق دفع للسائق';
+  const who = k==='setl' ? (r.drv_name||'سائق') : (r.who_name || (k==='shop'||k==='disc'?'مطعم':'سائق'));
+  const id=String(r.id||'');
+  return {k, id, no:'WL-'+({drv:'D',shop:'S',disc:'C',comp:'F',setl:'T'}[k]||'X')+id.replace(/-/g,'').slice(0,6).toUpperCase(),
+    at:new Date(row.at), amt, ok, title, sub, who, dir,
+    phone:(k==='shop'||k==='disc')?(((allShops||[]).find(x=>x.id===r.shop_id)||{}).phone||''):(((allUsers||[]).find(x=>x.id===(r.driver_id||r.party_id))||{}).phone||''),
+    raw:r};
+}
+async function finLoadDay(){
+  finDay=null; renderFin();
+  const f=new Date(); f.setHours(0,0,0,0); const t=new Date(f.getTime()+86400000);
+  try{
+    const [sm,rc]=await Promise.all([rpc('admin_finance_summary',{p_from:f.toISOString(),p_to:t.toISOString()}), rpc('admin_receipts',{p_from:f.toISOString(),p_to:t.toISOString()})]);
+    finDay={sm:sm||{}, recs:(rc||[]).map(finNorm).filter(Boolean), at:new Date()};
+  }catch(e){ finDay={err:errMsg(e)} }
+  renderFin();
+}
+
+/* ═══ تذكير بالتسديد ═══
+   تلقائي مرة وحدة باليوم (لما تفتح المالية): المتأخرين + السواق اللي دورتهم تخلص باچر */
+function _remTarget(x){
+  if(x.kind==='shop'){ const sh=(allShops||[]).find(y=>y.id===x.id); return sh&&(sh.ownerUid||sh.owner_id) }
+  return x.id;
+}
+function _remMsg(x){
+  const a=_n(x.amount)+' د.ع';
+  if(x.kind==='driver_soon') return ['تذكير بالتسديد','دورتك تخلص باچر — عليك '+a+' للتطبيق. سدّدها حتى يبقى حسابك شغّال'];
+  if(x.kind==='driver') return ['تأخرت بالتسديد','عليك '+a+' للتطبيق ومتأخر '+Math.max(1,Number(x.days||0))+' يوم. سدّد حتى ما يتوقف حسابك'];
+  return ['عمولة التطبيق متأخرة','عليك '+a+' عمولة ومتأخرة '+Math.max(1,Number(x.days||0))+' يوم. سدّدها من صفحة المالية بحسابك'];
+}
+async function finRemind(list,silent){
+  let n=0;
+  for(const x of list){ const t=_remTarget(x); if(!t) continue; const [a,b]=_remMsg(x);
+    try{ await pushTo(t,a,b,{type:'pay_remind'}); n++ }catch(e){} }
+  if(!silent) toast(n?('انرسل تذكير لـ '+n):'ما گدرنا نرسل التذكير');
+  return n;
+}
+function finAutoRemind(){
+  const key='lw_remind_'+new Date().toISOString().slice(0,10);
+  try{ if(localStorage.getItem(key)) return }catch(e){}
+  const list=(finLate||[]).filter(x=>Number(x.amount)>0); if(!list.length) return;
+  try{ localStorage.setItem(key,'1') }catch(e){}
+  finRemind(list,true).then(n=>{ if(n) toast('🔔 انرسل تذكير تلقائي لـ '+n) });
+}
+const _fd = d => d.toLocaleDateString('ar-IQ',{day:'numeric',month:'short'});
+function renderFin(){
+  const tb=document.getElementById('finTabs'), bd=document.getElementById('finBody'), mv=document.getElementById('finMove'); if(!bd) return;
+  tb.innerHTML=[['acc','الحسابات'],['rec','الوصولات'],['day','تقرير اليوم']].map(([k,l])=>`<button class="${finTab===k?'on':''}" onclick="finSetTab('${k}')">${l}</button>`).join('');
+  if(mv) mv.style.display = finTab==='acc'?'':'none';
+  if(finTab==='acc') return finRenderAcc(bd);
+  if(finTab==='rec') return finRenderRec(bd);
+  return finRenderDay(bd);
+}
+function finRenderAcc(bd){
+  const d=ahData||{}, ld=!ahData, v=x=>ld?'…':_n(x);
+  const late=(finLate||[]).filter(x=>x.kind!=='driver_soon'), soon=(finLate||[]).filter(x=>x.kind==='driver_soon');
+  bd.innerHTML=`
+  ${ahErr&&!ahData?`<div class="ah-warn">شغّل <b>admin_summary.sql</b> و <b>finance_v2.sql</b> حتى تطلع الأرقام.</div>`:''}
+  ${late.length?`<div class="fin-late"><div class="h">⚠️ متأخرين عن التسديد <em>${late.length}</em></div>
+    ${late.map((x,i)=>`<div class="fl"><i onclick="${x.kind==='driver'?`window._finFrom=true;openDrOne('${x.id}')`:`window._finFrom=true;openInv()`}">${x.kind==='driver'?'🛵':'🍽️'}</i><div class="t" onclick="${x.kind==='driver'?`window._finFrom=true;openDrOne('${x.id}')`:`window._finFrom=true;openInv()`}"><b>${esc(x.name||'—')}</b><small>${x.kind==='driver'?'سائق':'مطعم'} · متأخر ${Math.max(1,Number(x.days||0))} يوم</small></div><em>${_n(x.amount)}</em><button class="bell" onclick="finRemind([finLate.filter(y=>y.kind!=='driver_soon')[${i}]])" aria-label="تذكير">🔔</button></div>`).join('')}
+    <button class="remall" onclick="finRemind(finLate.filter(y=>y.kind!=='driver_soon'))">🔔 ذكّر الكل</button></div>`:''}
+  ${soon.length?`<div class="fin-soon"><div class="h">⏰ دورتهم تخلص باچر <em>${soon.length}</em><button onclick="finRemind(finLate.filter(y=>y.kind==='driver_soon'))">🔔 ذكّرهم</button></div>
+    ${soon.map(x=>`<div class="fl"><i>🛵</i><div class="t"><b>${esc(x.name||'—')}</b><small>سائق · عليه رسوم</small></div><em class="a">${_n(x.amount)}</em></div>`).join('')}</div>`:''}
+  <div class="fin-auto">🔔 التذكير يوصلهم تلقائياً مرة باليوم لما تفتح المالية</div>
+  <div class="fin-grp"><div class="h">التطبيق يطلب</div>
+    <button class="fl" onclick="openDrAcc()"><i style="background:#E3F4EC">🛵</i><div class="t"><b>رسوم السواق</b><small>رسوم الخدمة وعمولة السائق، ويّه اشتريلي</small></div><em class="g">${v(d.drivers_owe)}</em><s>‹</s></button>
+    <button class="fl" onclick="openInv()"><i style="background:#E7E9FB">🍽️</i><div class="t"><b>عمولة المطاعم</b><small>${shopPct()}% كل شهر</small></div><em class="g">${v(d.shops_owe)}</em><s>‹</s></button>
+  </div>
+  <div class="fin-grp"><div class="h">التطبيق يدفع</div>
+    <button class="fl" onclick="openDiscOwed()"><i style="background:#FBE9E7">🎟️</i><div class="t"><b>تعويض خصومات المطاعم</b><small>اضغط حتى تشوف كل مطعم وتسدّد</small></div><em class="r">${v(Math.max(0,d.disc_owe||0))}</em><s>‹</s></button>
+    <button class="fl" onclick="openCompOwed()"><i style="background:#FFF1E2">🚚</i><div class="t"><b>تعويض توصيل السواق</b><small>كوبونات التوصيل المجاني</small></div><em class="r">${v(Math.max(0,d.comp_owe||0))}</em><s>‹</s></button>
+  </div>
+  <div class="fin-grp"><div class="h">بين السائق والمطعم</div>
+    <div class="fl"><i style="background:#F1EEF6">🤝</i><div class="t"><b>فلوس الطلبات للمطاعم</b><small>${(allSetls||[]).length?'تسديدات تنتظر حسم — تحت':'ماكو تسديدات معلّقة'}</small></div><em class="a">${(allSetls||[]).length}</em></div>
+  </div>
+  <div class="fin-note">كل رقم هنا ينحسب بنفس دالة حساب السائق والمطعم، فيطابق اللي يشوفوه بحساباتهم. وكل تسديد ينحفظ وصل بتبويب «الوصولات».</div>`;
+}
+function finRenderRec(bd){
+  const mAr=finMonth.toLocaleDateString('ar-IQ',{month:'long',year:'numeric'});
+  const all=finRecs||[];
+  const list=all.filter(x=>finRecFil==='all'||(finRecFil==='drv'&&(x.k==='drv'||x.k==='comp'))||(finRecFil==='shop'&&(x.k==='shop'||x.k==='disc'||x.k==='setl'))||(finRecFil==='comp'&&(x.k==='disc'||x.k==='comp')));
+  const inn=all.filter(x=>x.dir==='in'&&x.ok).reduce((a,x)=>a+x.amt,0), out=all.filter(x=>x.dir==='out'&&x.ok).reduce((a,x)=>a+x.amt,0);
+  bd.innerHTML=`
+  <div class="fin-mth"><button onclick="finMonthNav(1)">›</button><b>${mAr}</b><button onclick="finMonthNav(-1)">‹</button></div>
+  <div class="fin-sum"><div><span>وصولات</span><b>${finRecs?all.length:'…'}</b></div><div><span>استلم التطبيق</span><b class="g">${_n(inn)}</b></div><div><span>دفع التطبيق</span><b class="r">${_n(out)}</b></div></div>
+  <div class="fin-exp"><button onclick="finPrintMonth()">🖨️ PDF الشهر كامل</button><button onclick="finCsv()">⬇ Excel للمحاسبة</button></div>
+  <div class="fin-chips">${[['all','الكل'],['drv','سواق'],['shop','مطاعم'],['comp','تعويضات']].map(([k,l])=>`<button class="${finRecFil===k?'on':''}" onclick="finRecFil='${k}';renderFin()">${l}</button>`).join('')}</div>
+  ${finRecErr?`<div class="ah-warn">شغّل <b>finance_v2.sql</b> حتى تطلع الوصولات.<small>${esc(finRecErr).slice(0,120)}</small></div>`:''}
+  <div class="fin-list">${!finRecs?'<div class="fin-empty">جاري التحميل…</div>':(list.length?list.map((x,i)=>`
+    <button class="stub" onclick="finOpenRec(${all.indexOf(x)})">
+      <div class="d"><b>${x.at.getDate()}</b><span>${x.at.toLocaleDateString('ar-IQ',{month:'short'})}</span></div>
+      <div class="m"><b>${esc(x.who)}</b><small>${x.title} · ${esc(x.sub)}</small></div>
+      <div class="v"><b class="${x.dir==='out'?'r':''}">${x.dir==='out'?'−':''}${_n(x.amt)}</b><span class="fstp ${x.ok?'ok':'wt'}">${x.ok?'مختوم':'ينتظر'}</span></div>
+    </button>`).join(''):'<div class="fin-empty">ماكو وصولات بهالشهر</div>')}</div>`;
+}
+function finRecHTML(x){
+  const r=x.raw||{};
+  return `<div class="rcp">
+    <div class="ph"><div class="b">واصل ليمَك<small>عانة، الأنبار</small></div><div class="n">وصل رقم<b>${x.no}</b>${x.at.toLocaleDateString('ar-IQ')}، ${x.at.toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'})}</div></div>
+    <div class="kv">
+      <div><span>النوع</span>${x.title} — ${esc(x.sub)}</div>
+      <div><span>${x.dir==='out'?'المستلم':'الدافع'}</span>${esc(x.who)}${x.phone?(' · '+esc(x.phone)):''}</div>
+      <div><span>${x.dir==='out'?'الدافع':'المستلم'}</span>${x.k==='setl'?esc(r.shop_name||'المطعم'):'إدارة واصل ليمَك'}</div>
+      ${r.orders_count?`<div><span>عدد الطلبات</span>${Number(r.orders_count)}</div>`:''}
+      <div><span>الحالة</span>${x.ok?'مسدّد ومؤكَّد':'بانتظار التأكيد'}</div>
+    </div>
+    <div class="tot"><span>المبلغ</span><b>${_n(x.amt)} د.ع</b></div>
+    <div class="stamp ${x.ok?'':'w'}">${x.ok?'مسدّد ✓':'ينتظر'}</div>
+    <div class="sig"><div>دفع<b>${x.ok?'✓ ':''}${esc(x.dir==='out'?'الإدارة':x.who)}</b></div><div>استلم وأكّد<b>${x.ok?'✓ ':''}${esc(x.dir==='out'?x.who:(x.k==='setl'?(r.shop_name||'المطعم'):'الإدارة'))}</b></div></div>
+  </div>`;
+}
+function finOpenRec(i){
+  const x=(finRecs||[])[i]; if(!x) return;
+  let sh=document.getElementById('finSheet');
+  if(!sh){ sh=document.createElement('div'); sh.id='finSheet'; sh.className='spds'; sh.addEventListener('click',e=>{ if(e.target===sh) sh.classList.remove('on') }); document.body.appendChild(sh) }
+  window._finCur=x;
+  sh.innerHTML=`<div class="spds-in fin-rs"><div class="spds-grab"></div>${finRecHTML(x)}
+    <div class="fin-ra"><button onclick="finPrint([window._finCur],'وصل '+window._finCur.no)">🖨️ PDF أو طباعة</button><button class="wa" onclick="finWa(window._finCur)">واتساب</button></div>
+    <button class="rs-later" onclick="document.getElementById('finSheet').classList.remove('on')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+function finWa(x){
+  const t=`وصل واصل ليمَك ${x.no}\n${x.title} — ${x.sub}\n${x.dir==='out'?'المستلم':'الدافع'}: ${x.who}\nالمبلغ: ${_n(x.amt)} د.ع\nالتاريخ: ${x.at.toLocaleDateString('ar-IQ')}\nالحالة: ${x.ok?'مسدّد ومؤكَّد ✓':'بانتظار التأكيد'}`;
+  const ph=String(x.phone||'').replace(/\D/g,'').replace(/^0/,'964');
+  window.open('https://wa.me/'+(ph||'')+'?text='+encodeURIComponent(t),'_blank');
+}
+/* طباعة / حفظ PDF — ورقة نظيفة بدون باقي التطبيق */
+function finPrint(list,title,extra){
+  let pa=document.getElementById('printArea'); if(!pa){ pa=document.createElement('div'); pa.id='printArea'; document.body.appendChild(pa) }
+  pa.innerHTML=(extra||'')+list.map(finRecHTML).join('<div class="pbrk"></div>');
+  const old=document.title; document.title=title||'واصل ليمَك';
+  document.body.classList.add('printing');
+  setTimeout(()=>{ try{ window.print() }catch(e){} setTimeout(()=>{ document.body.classList.remove('printing'); document.title=old },800) },100);
+}
+function finPrintMonth(){
+  const all=(finRecs||[]); if(!all.length) return toast('ماكو وصولات بهالشهر');
+  const mAr=finMonth.toLocaleDateString('ar-IQ',{month:'long',year:'numeric'});
+  const inn=all.filter(x=>x.dir==='in'&&x.ok).reduce((a,x)=>a+x.amt,0), out=all.filter(x=>x.dir==='out'&&x.ok).reduce((a,x)=>a+x.amt,0);
+  const head=`<div class="rcp"><div class="ph"><div class="b">واصل ليمَك<small>كشف وصولات ${mAr}</small></div><div class="n">عدد الوصولات<b>${all.length}</b></div></div>
+    <table class="ptab"><tr><th>الوصل</th><th>التاريخ</th><th>النوع</th><th>الاسم</th><th>المبلغ</th><th>الحالة</th></tr>
+    ${all.map(x=>`<tr><td>${x.no}</td><td>${x.at.toLocaleDateString('ar-IQ')}</td><td>${x.title}</td><td>${esc(x.who)}</td><td>${x.dir==='out'?'−':''}${_n(x.amt)}</td><td>${x.ok?'مؤكّد':'ينتظر'}</td></tr>`).join('')}</table>
+    <div class="tot"><span>استلم التطبيق</span><b>${_n(inn)} د.ع</b></div><div class="tot"><span>دفع التطبيق</span><b>${_n(out)} د.ع</b></div></div><div class="pbrk"></div>`;
+  finPrint(all,'وصولات '+mAr,head);
+}
+function finCsv(){
+  const all=(finRecs||[]); if(!all.length) return toast('ماكو وصولات بهالشهر');
+  const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
+  const rows=[['رقم الوصل','التاريخ','الوقت','النوع','التفاصيل','الاسم','الهاتف','المبلغ','الاتجاه','الحالة']].concat(all.map(x=>[x.no,x.at.toLocaleDateString('en-GB'),x.at.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),x.title,x.sub,x.who,x.phone,x.amt,x.dir==='out'?'دفع التطبيق':(x.dir==='in'?'استلم التطبيق':'بين سائق ومطعم'),x.ok?'مؤكد':'ينتظر']));
+  const csv='﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n');
+  const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+  a.download='wasel-receipts-'+finMonth.getFullYear()+'-'+String(finMonth.getMonth()+1).padStart(2,'0')+'.csv';
+  document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove() },1500);
+  toast('انحفظ ملف Excel');
+}
+function finDayHTML(){
+  const d=finDay.sm||{}, recs=finDay.recs||[];
+  const net=Number(d.svc||0)+Number(d.shop_com||0)+Number(d.drv_com||0);
+  const inn=recs.filter(x=>x.dir==='in'&&x.ok).reduce((a,x)=>a+x.amt,0), out=recs.filter(x=>x.dir==='out'&&x.ok).reduce((a,x)=>a+x.amt,0);
+  return `<div class="rcp">
+    <div class="ph"><div class="b">واصل ليمَك<small>تقرير آخر اليوم</small></div><div class="n">التاريخ<b>${new Date().toLocaleDateString('ar-IQ')}</b>${finDay.at.toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'})}</div></div>
+    <div class="kv">
+      <div><span>الطلبات</span>${_n(d.orders)} (تم ${_n(d.orders_done)}، ملغي ${_n(d.orders_cancel)})</div>
+      <div><span>اشتريلي</span>${_n(d.special)} (تم ${_n(d.special_done)})</div>
+      <div><span>مبيعات المطاعم</span>${_n(d.sales)} د.ع</div>
+      <div><span>رسوم الخدمة</span>${_n(d.svc)} د.ع</div>
+      <div><span>عمولة المطاعم</span>${_n(d.shop_com)} د.ع</div>
+      <div><span>عمولة السواق</span>${_n(d.drv_com)} د.ع</div>
+    </div>
+    <div class="tot"><span>ربح التطبيق اليوم</span><b>${_n(net)} د.ع</b></div>
+    <div class="kv">
+      <div><span>استلمت اليوم (وصولات)</span>${_n(inn)} د.ع</div>
+      <div><span>دفعت اليوم (وصولات)</span>${_n(out)} د.ع</div>
+      <div><span>باقي عند السواق</span>${_n(d.drivers_owe)} د.ع</div>
+      <div><span>باقي عند المطاعم</span>${_n(d.shops_owe)} د.ع</div>
+      <div><span>باقي تعويضات علينا</span>${_n(Math.max(0,d.disc_owe||0)+Math.max(0,d.comp_owe||0))} د.ع</div>
+    </div>
+  </div>`;
+}
+function finRenderDay(bd){
+  if(!finDay){ bd.innerHTML='<div class="fin-empty">جاري التحميل…</div>'; return }
+  if(finDay.err){ bd.innerHTML=`<div class="ah-warn">شغّل <b>admin_summary.sql</b> و <b>finance_v2.sql</b>.<small>${esc(finDay.err).slice(0,120)}</small></div>`; return }
+  bd.innerHTML=`<div class="fin-paper">${finDayHTML()}</div>
+    <div class="fin-exp"><button onclick="finPrint([], 'تقرير '+new Date().toLocaleDateString('ar-IQ'), finDayHTML())">🖨️ PDF أو طباعة</button><button onclick="finLoadDay()">↻ تحديث</button></div>`;
+}
+
+/* ═══ سجل تعديلات الإعدادات ═══ */
+const SETLBL={deliveryFee:'أجرة التوصيل',specialFee:'أجرة اشتريلي',commissionPerOrder:'عمولة السائق',commissionEnabled:'تفعيل عمولة السائق',
+  shopCommissionPct:'نسبة عمولة المطاعم',shopCommissionEnabled:'تفعيل عمولة المطاعم',graceDays:'مهلة التسديد (أيام)',base_fare:'أجرة داخل الدائرة',
+  step_m:'مسافة كل خطوة (متر)',step_fare:'زيادة كل خطوة',max_fare:'أعلى أجرة',cycle_days:'دورة تسديد السواق',polygon:'حدود الدائرة',etaMin:'وقت التوصيل (دقيقة)'};
+let _setLogOpen=false;
+async function openSetLog(){
+  const box=document.getElementById('setLog'); if(!box) return;
+  if(_setLogOpen){ _setLogOpen=false; box.innerHTML=''; return }
+  _setLogOpen=true; box.innerHTML='<div class="slog"><div class="fin-empty">جاري التحميل…</div></div>';
+  let rows=[];
+  try{ rows=await rpc('admin_settings_log',{p_limit:100})||[] }
+  catch(e){ box.innerHTML=`<div class="ah-warn">شغّل <b>audit_log.sql</b> حتى يشتغل السجل.<small>${esc(errMsg(e)).slice(0,120)}</small></div>`; return }
+  const fv=v=>{ if(v==null) return '—'; if(typeof v==='boolean') return v?'مفعّل':'معطّل'; if(typeof v==='object') return 'تغيّرت'; const n=Number(v); return isNaN(n)?String(v):n.toLocaleString('en-US') };
+  box.innerHTML=`<div class="slog">${rows.length?rows.map(r=>{ const ch=r.changes||{};
+    return `<div class="si"><div class="hd"><b>${esc(r.by_name||'النظام')}</b><span>${new Date(r.at).toLocaleString('ar-IQ',{day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'})}</span></div>
+      ${Object.keys(ch).map(k=>`<div class="ln"><span>${SETLBL[k]||k}</span><s>${esc(fv(ch[k].old))}</s><i>←</i><b>${esc(fv(ch[k].new))}</b></div>`).join('')}</div>` }).join('')
+    :'<div class="fin-empty">ماكو تعديلات مسجّلة بعد. أي تعديل من هسه وطالع راح ينحفظ هنا.</div>'}</div>`;
+}
 function renderAdmin(){
+  try{ renderAdminHome(); ahLoad() }catch(e){ __silent(e,'adminHome') }
   const today=new Date().toLocaleDateString('ar-IQ');
   const tOrders=allOrders.filter(o=>(o.date||'').includes(today));
   const dlv=allOrders.filter(o=>o.status==='delivered');
@@ -17999,12 +18511,12 @@ html[data-theme=dark] #cApp .sp-mslot{background:#2a2540;border-color:#3a3456}
 html[data-theme=dark] #cApp .sp-mtx{color:#C6A9F5}
 
 /* v141 السائق: كارت اشتريلي صغير + تفاصيل */
-#dApp .avc.spc{border-top:0!important;cursor:pointer;background:linear-gradient(158deg,#FFA040 0%,#F97402 55%,#E35D00 100%);box-shadow:0 10px 26px rgba(249,116,2,.28)}
-#dApp .avc.spc.fresh{box-shadow:0 0 0 3px rgba(255,160,64,.35),0 10px 26px rgba(249,116,2,.28)}
+#dApp .avc.spc{border-top:0!important;cursor:pointer;background:linear-gradient(158deg,#7E9A3A 0%,#5F7A26 52%,#46601A 100%);box-shadow:0 10px 26px rgba(70,96,26,.28)}
+#dApp .avc.spc.fresh{box-shadow:0 0 0 3px rgba(160,190,90,.5),0 10px 26px rgba(70,96,26,.28)}
 #dApp .avc.spc .av-thumb.sp{background:#fff;display:flex;align-items:center;justify-content:center}
 #dApp .avc.spc .av-thumb.sp img{width:80%;height:80%;object-fit:contain}
 #dApp .spc-tag,#dApp .spc-new{font-style:normal;font-size:11px;font-weight:800;border-radius:8px;padding:1px 8px}
-#dApp .spc-tag{color:#fff;background:rgba(255,255,255,.22)}
+#dApp .spc-tag{color:#fff;background:#FF8F1F}
 #dApp .spc-new{color:#15803D;background:#fff}
 #dApp .spc-prev{position:relative;z-index:1;font-size:13px;font-weight:700;color:rgba(255,255,255,.92);margin:8px 2px 0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #dApp .spc-hint{position:relative;z-index:1;text-align:center;font-size:12.5px;font-weight:800;color:#fff;margin-top:11px;background:rgba(255,255,255,.16);border-radius:14px;padding:9px}
@@ -18066,6 +18578,321 @@ html[data-theme=dark] .spds-acts .no{background:transparent;border-color:#6b2a2e
 #soonView p{font-size:15px;line-height:1.9;font-weight:600;color:rgba(255,255,255,.88);margin:0 0 22px}
 #soonView button{border:0;border-radius:16px;padding:13px 34px;background:#FF8F1F;color:#fff;font:inherit;font-size:15px;font-weight:800;box-shadow:0 8px 20px rgba(249,116,2,.35)}
 @keyframes snUp{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* v146 ورقة اشتريلي للسائق بنفس اللون الزيتوني */
+.spds-hd{background:linear-gradient(158deg,#7E9A3A,#5F7A26 55%,#46601A);margin:0 -16px;padding:14px 16px;color:#fff}
+.spds-hd b{color:#fff}
+.spds-hd span{color:rgba(255,255,255,.8)!important}
+.spds-hd img{background:#fff!important}
+.spds-x{background:rgba(255,255,255,.2)!important;color:#fff!important}
+.spds-grab{margin-bottom:8px}
+.spds-in{padding-top:8px}
+.spds-list i{background:#EEF3E2!important;color:#4E6B1A!important}
+.spds-acts .ok{background:linear-gradient(135deg,#6E8C2E,#4E6B1A)!important}
+html[data-theme=dark] .spds-list i{background:#2c3a17!important;color:#b6d27a!important}
+
+/* v147 ورقة اشتريلي بنفس ترتيب صفحة الطلب عند السائق */
+.spds-bd{margin:12px 0 4px;font-size:13.5px;font-weight:700;color:#4b5563;background:#F6F3FB;border-radius:14px;padding:10px 12px}
+.spds-bd b{color:#15803D}
+.spds-sec{margin-top:12px!important}
+.spds-list2{display:flex;flex-direction:column;gap:9px}
+.spds-list2 div{display:flex;align-items:center;gap:12px;background:#F6F3FB;border-radius:16px;padding:14px 16px;font-size:16px;font-weight:800}
+.spds-list2 i{width:9px;height:9px;border-radius:50%;background:#F97402;flex:none}
+.spds-to{background:transparent!important;border-top:1px solid #EEE9F6;border-radius:0!important;padding:14px 2px 4px!important;margin-top:14px!important}
+.spds-to b{font-size:17px!important}
+.spds-to button{width:52px!important;height:52px!important;border-radius:50%!important}
+.spds-acts2{display:flex;align-items:center;gap:12px;margin-top:12px}
+.spds-acts2 .er{display:flex;flex-direction:column;flex:none}
+.spds-acts2 .er span{font-size:13px;color:#7a7391;font-weight:700}
+.spds-acts2 .er b{font-size:21px;font-weight:900;color:#5B2BC9}
+.spds-acts2 .ok{flex:1;height:54px;border:0;border-radius:18px;font:inherit;font-weight:800;font-size:15.5px;color:#fff;background:linear-gradient(135deg,#6E8C2E,#4E6B1A)}
+.spds-acts2 .ok:disabled{opacity:.6}
+.spds-no{display:block;width:100%;margin-top:10px;background:none;border:0;color:#B42318;font:inherit;font-weight:800;font-size:14px;padding:8px}
+html[data-theme=dark] .spds-bd,html[data-theme=dark] .spds-list2 div{background:#2a2540;color:#eee}
+html[data-theme=dark] .spds-to{border-color:#3a3456}
+html[data-theme=dark] .spds-acts2 .er b{color:#C6A9F5}
+html[data-theme=dark] .spds-no{color:#ff9a95}
+
+#cApp .sp-li.ok i{background:#DCFCE7;color:#15803D}
+#cApp .sp-li em.g{color:#15803D;background:#DCFCE7}
+html[data-theme=dark] #cApp .sp-li.ok i,html[data-theme=dark] #cApp .sp-li em.g{background:#14361f;color:#6ee79a}
+
+#cApp .spf{margin-top:12px;background:#F7F5FC;border-radius:16px;padding:10px 12px}
+#cApp .spf-h{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+#cApp .spf-h b{font-size:13.5px;font-weight:800}
+#cApp .spf-h span{font-size:12px;font-weight:800;color:#15803D}
+#cApp .spf-c{display:flex;flex-wrap:wrap;gap:6px}
+#cApp .spf-c span{font-size:12.5px;font-weight:700;padding:4px 10px;border-radius:12px;background:#fff;border:1px solid #E7E2F1;color:#6b6480}
+#cApp .spf-c span.ok{background:#DCFCE7;border-color:#BBF7D0;color:#15803D}
+#cApp .spf-c span.no{background:#FDECEC;border-color:#F9C9C9;color:#B42318;text-decoration:line-through}
+html[data-theme=dark] #cApp .spf{background:#2a2540}
+html[data-theme=dark] #cApp .spf-c span{background:#221d33;border-color:#3a3456;color:#bdb6d0}
+html[data-theme=dark] #cApp .spf-c span.ok{background:#14361f;border-color:#1f4d2c;color:#6ee79a}
+html[data-theme=dark] #cApp .spf-c span.no{background:#4a1f26;border-color:#6b2a2e;color:#ff8a8e}
+html[data-theme=dark] #cApp .spf-h span{color:#6ee79a}
+
+/* v150 شاشة الرحلة لاشتريلي */
+.tp-spst{display:flex;gap:5px;flex-wrap:nowrap;margin:4px 0 10px}
+.tp-spst span{flex:1;text-align:center;white-space:nowrap;font-size:11px;font-weight:800;padding:7px 3px;border-radius:11px;background:#F3EFFA;color:#8a83a0}
+.tp-spst span.on{background:#E8F7EE;color:#15803D}
+.tp-spst span.nx{background:#EDE5FB;color:#5B2BC9;box-shadow:0 0 0 2px #C6A9F5 inset}
+.tp-spst.sm{margin:12px 0 0}
+.tp-spl{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.tp-spl button{font:inherit;font-size:13px;font-weight:800;padding:6px 11px;border-radius:12px;border:1px solid #E7E2F1;background:#fff;color:#4b4560}
+.tp-spl button.ok{background:#DCFCE7;border-color:#BBF7D0;color:#15803D}
+.tp-spl button.no{background:#FDECEC;border-color:#F9C9C9;color:#B42318;text-decoration:line-through}
+.spx-trip{width:100%;margin-top:10px;height:48px;border:0;border-radius:15px;background:#FF7A00;color:#fff;font:inherit;font-weight:800;font-size:14.5px;display:flex;align-items:center;justify-content:center;gap:8px}
+.spx-trip .wic{width:19px;height:19px}
+html[data-theme=dark] .tp-spst span{background:#2a2540;color:#8f88a8}
+html[data-theme=dark] .tp-spst span.on{background:#14361f;color:#6ee79a}
+html[data-theme=dark] .tp-spst span.nx{background:#3a2f63;color:#C6A9F5}
+html[data-theme=dark] .tp-spl button{background:#221d33;border-color:#3a3456;color:#ddd}
+html[data-theme=dark] .tp-spl button.ok{background:#14361f;border-color:#1f4d2c;color:#6ee79a}
+html[data-theme=dark] .tp-spl button.no{background:#4a1f26;border-color:#6b2a2e;color:#ff8a8e}
+
+/* v151 اشتريلي: وضع التسوّق بدون خريطة */
+#tripSheet.spshop .tp-map-wrap{display:none}
+#tripSheet.spshop .tp-card{max-height:none;flex:1;border-radius:0;padding:0 0 18px;background:#F6F3FB}
+.sps-hd{background:linear-gradient(158deg,#7E9A3A,#5F7A26 55%,#46601A);color:#fff;padding:16px 16px 72px;border-radius:0 0 28px 28px}
+.sps-hd .r{display:flex;justify-content:space-between;align-items:center}
+.sps-hd b{font-size:18px;font-weight:900}.sps-hd small{display:block;opacity:.85;font-size:12.5px;font-weight:700;margin-top:2px}
+.sps-x{width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.2);color:#fff;font-size:24px}
+.sps-st,.tp-card .sps-st{display:flex;gap:5px;margin-top:14px}
+.sps-st span{flex:1;text-align:center;font-size:11.5px;font-weight:800;padding:7px 2px;border-radius:11px;background:rgba(255,255,255,.16);color:#fff;white-space:nowrap}
+.sps-st span.on{background:#fff;color:#4E6B1A}
+.sps-st span.nx{background:#fff;color:#4E6B1A;box-shadow:0 0 0 2px #C9E08F inset}
+.tp-card>.sps-st{margin:2px 0 8px}
+.tp-card>.sps-st span{background:#F3EFFA;color:#8a83a0}
+.tp-card>.sps-st span.on{background:#E8F7EE;color:#15803D}
+.tp-card>.sps-st span.nx{background:#EDE5FB;color:#5B2BC9;box-shadow:0 0 0 2px #C6A9F5 inset}
+.sps-ring{margin:-58px auto 0;width:140px;height:140px;border-radius:50%;background:conic-gradient(#16A34A 0 var(--p),#E7E2F1 var(--p) 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(70,96,26,.25);transition:background .3s}
+.sps-ring div{width:110px;height:110px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.sps-ring b{font-size:32px;font-weight:900;color:#15803D;direction:ltr}.sps-ring span{font-size:12px;color:#7a7391;font-weight:800}
+.sps-hint{text-align:center;font-size:12.5px;color:#7a7391;font-weight:700;margin:10px 16px 6px}
+.sps-bd{margin:6px 14px;font-size:13px;font-weight:700;color:#4b5563;background:#fff;border-radius:14px;padding:9px 12px;text-align:center}
+.sps-bd b{color:#15803D}
+.sps-list{padding:6px 14px;display:flex;flex-direction:column;gap:9px}
+.sps-it{display:flex;gap:8px}
+.sps-it .m{flex:1;display:flex;align-items:center;gap:12px;background:#fff;border:1.5px solid #EEE9F6;border-radius:18px;padding:14px 14px;font:inherit;font-size:16px;font-weight:800;color:#1d1730;text-align:right}
+.sps-it .m i{width:28px;height:28px;border-radius:50%;border:2px solid #D9D2E9;flex:none;font-style:normal;display:flex;align-items:center;justify-content:center;font-size:15px}
+.sps-it .m span{flex:1}
+.sps-it .m em{font-style:normal;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:9px}
+.sps-it .x2{width:54px;flex:none;border-radius:18px;border:1.5px solid #F3D3D1;background:#fff;color:#E5484D;font-size:18px;font-weight:900}
+.sps-it.ok .m{background:#F0FDF4;border-color:#BBF7D0;color:#15803D}
+.sps-it.ok .m i{background:#16A34A;border-color:#16A34A;color:#fff}
+.sps-it.ok .m em{background:#DCFCE7;color:#15803D}
+.sps-it.no .m{background:#FEF2F2;border-color:#F9C9C9;color:#B42318}
+.sps-it.no .m span{text-decoration:line-through}
+.sps-it.no .m i{background:#E5484D;border-color:#E5484D;color:#fff}
+.sps-it.no .m em{background:#FDECEC;color:#B42318}
+.sps-it.no .x2{background:#FDECEC;color:#B42318}
+.sps-note{margin:10px 14px 0;font-size:13px;font-weight:600;color:#4b5563;background:#fff;border-radius:14px;padding:10px 12px}
+.sps-cu{margin:12px 14px 0;display:flex;align-items:center;gap:12px;background:#fff;border-radius:18px;padding:12px}
+.sps-cu .av{width:44px;height:44px;border-radius:50%;background:#EDE5FB;color:#5B2BC9;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:17px;flex:none}
+.sps-cu .t{flex:1;min-width:0}.sps-cu b{font-size:15px}.sps-cu small{display:block;color:#7a7391;font-size:12.5px;font-weight:700}
+.sps-go{display:block;width:calc(100% - 28px);margin:14px 14px 0;height:56px;border:0;border-radius:18px;background:linear-gradient(135deg,#6E8C2E,#4E6B1A);color:#fff;font:inherit;font-weight:900;font-size:16px}
+html[data-theme=dark] #tripSheet.spshop .tp-card{background:#1b1729}
+html[data-theme=dark] .sps-ring div,html[data-theme=dark] .sps-bd,html[data-theme=dark] .sps-note,html[data-theme=dark] .sps-cu,html[data-theme=dark] .sps-it .m,html[data-theme=dark] .sps-it .x2{background:#252038;color:#eee;border-color:#3a3456}
+html[data-theme=dark] .sps-it.ok .m{background:#14361f;border-color:#1f4d2c;color:#6ee79a}
+html[data-theme=dark] .sps-it.no .m{background:#3a1a20;border-color:#6b2a2e;color:#ff8a8e}
+html[data-theme=dark] .tp-card>.sps-st span{background:#2a2540;color:#8f88a8}
+html[data-theme=dark] .tp-card>.sps-st span.on{background:#14361f;color:#6ee79a}
+html[data-theme=dark] .tp-card>.sps-st span.nx{background:#3a2f63;color:#C6A9F5}
+
+.sps-note{margin:10px 14px 4px!important;background:#FFF8E6!important;border:1.5px solid #FCD97A;border-radius:16px!important;padding:11px 14px!important}
+.sps-note .h{font-size:13px;font-weight:900;color:#92400E;margin-bottom:4px}
+.sps-note p{font-size:15px;font-weight:800;color:#1d1730;line-height:1.7;margin:2px 0}
+.sps-ph{margin:6px 14px}
+.sps-ph .h{font-size:12.5px;font-weight:800;color:#7a7391;margin-bottom:6px}
+.sps-ph div{display:flex;gap:8px;flex-wrap:wrap}
+.sps-ph img{width:72px;height:72px;border-radius:14px;object-fit:cover;border:1px solid #EEE9F6}
+html[data-theme=dark] .sps-note{background:#3a2f12!important;border-color:#7a5a12}
+html[data-theme=dark] .sps-note .h{color:#fcd97a}
+html[data-theme=dark] .sps-note p{color:#f3eee0}
+
+/* v153 وجبات اليوم: نفس حجم الكارت حتى لو وجبة وحدة أو ثنتين */
+#cApp #p_home .dm-track[data-few]{width:max-content!important}
+#cApp #p_home .dm-track[data-few] .dm-card{flex:0 0 158px!important;width:158px!important;display:flex!important;flex-direction:column;align-items:stretch!important}
+#cApp #p_home .dm-track[data-few] .dm-img{width:100%!important;height:104px!important}
+#cApp #p_home .dm-track[data-few] .dm-card>.dm-name{margin:10px 0 0!important}
+#cApp #p_home .dm-track[data-few] .dm-card>.dm-meta{margin:10px 0 0!important}
+
+/* v154 صورة وجبات اليوم كاملة بدون قص */
+#cApp #p_home .dm-img{height:130px!important}
+#cApp #p_home .dm-img>img{object-fit:contain!important;width:100%!important;height:100%!important;position:relative}
+#cApp #p_home .dm-img:not(.bf){background:var(--v-tint)}
+
+/* v157 شاشة التقييم — نمط عالمي */
+#rateSheet .ratebox{padding:12px 22px calc(20px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;position:relative}
+.rs-step{display:flex;gap:6px;justify-content:center;margin:0 auto 16px;width:120px;direction:rtl}
+.rs-step:empty{display:block;height:4px;width:44px;background:#E2DDEC;border-radius:4px}
+.rs-step i{flex:1;height:4px;border-radius:4px;background:#E7E2F1}
+.rs-step i.on{background:#5B2BC9}
+#rateSheet .ratebox>.rs-step{order:-1}
+#rateSheet .ratebox{display:flex;flex-direction:column}
+#rateSheet .ratehead{order:0;display:flex;flex-direction:column;align-items:center;text-align:center;margin:0 0 6px;padding:0;border:0}
+#rateSheet .ratehead .rlogo{width:88px;height:88px;border-radius:50%;margin:4px 0 14px;background:#F4F1FA;color:#5B2BC9;border:0;box-shadow:0 10px 26px rgba(31,15,64,.14)}
+#rateSheet .ratehead .rlogo .wic{width:38px;height:38px}
+#rateSheet .ratehead h4{font-size:20px;font-weight:900;color:#1d1730;margin:0;line-height:1.5}
+#rateSheet .ratehead h4::before{content:attr(data-q) ' ';font-weight:700;color:#1d1730}
+#rateSheet .ratehead h4::after{content:'؟'}
+#rateSheet .ratehead p{font-size:13px;font-weight:600;color:#8a83a0;margin:4px 0 0}
+#rateSheet .ratehead .x{position:absolute;top:14px;left:16px;width:auto;height:auto;background:none;color:#8a83a0;border-radius:0;padding:4px}
+#rateSheet .ratehead .x .wic{width:22px;height:22px}
+.rs-emo{display:none}
+#rateSheet .stars{order:1;gap:12px;margin:16px 0 4px}
+#rateSheet .stars button{width:46px;height:46px;border-radius:0;background:none;color:#E1DCEA;transition:transform .18s cubic-bezier(.3,1.6,.5,1)}
+#rateSheet .stars button .wic{width:42px;height:42px}
+#rateSheet .stars button.on{background:none;color:#FFB400;transform:scale(1.06)}
+#rateSheet .stars button:active{transform:scale(.88)}
+#rateSheet .ratelbl{order:2;font-size:14px;font-weight:700;color:#6b6480;margin:2px 0 16px;min-height:20px}
+.rs-tags{order:3;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin-bottom:10px}
+.rs-tags:empty{display:none}
+.rs-tags .h{width:100%;text-align:center;font-size:15px;font-weight:800;color:#1d1730;margin-bottom:4px}
+.rs-tags button{font:inherit;font-size:13.5px;font-weight:700;padding:9px 15px;border-radius:999px;border:1px solid #E4DFEE;background:#fff;color:#3d3752;transition:.15s}
+.rs-tags button.on{background:#1d1730;border-color:#1d1730;color:#fff}
+.rs-addn{order:4;align-self:center;background:none;border:0;font:inherit;font-size:14px;font-weight:800;color:#5B2BC9;padding:8px 12px;margin-bottom:6px}
+#rateSheet textarea{order:4;width:100%;margin:0 0 12px;min-height:70px;border-radius:14px}
+#rateSheet #rateBtn{order:5;width:100%;margin:4px 0 0;border-radius:14px;height:54px;background:#5B2BC9;box-shadow:none;font-size:16px}
+#rateSheet #rateBtn.dis{background:#E7E2F1!important;color:#a49cb6!important}
+.rs-later{order:6;display:block;margin:10px auto 0;background:none;border:0;font:inherit;font-size:14px;font-weight:700;color:#8a83a0;padding:6px 16px}
+html[data-theme=dark] .rs-step i{background:#3a3456}
+html[data-theme=dark] .rs-step i.on{background:#9b7bf0}
+html[data-theme=dark] #rateSheet .ratehead .rlogo{background:#2b2447;color:#C6A9F5}
+html[data-theme=dark] #rateSheet .ratehead h4,html[data-theme=dark] #rateSheet .ratehead h4::before,html[data-theme=dark] .rs-tags .h{color:#f1eef8}
+html[data-theme=dark] #rateSheet .stars button{color:#3d3656}
+html[data-theme=dark] #rateSheet .stars button.on{color:#FFB400}
+html[data-theme=dark] .rs-tags button{background:transparent;border-color:#3a3456;color:#ddd}
+html[data-theme=dark] .rs-tags button.on{background:#f1eef8;border-color:#f1eef8;color:#1d1730}
+html[data-theme=dark] .rs-addn{color:#C6A9F5}
+html[data-theme=dark] #rateSheet #rateBtn{background:#7B4AE2}
+html[data-theme=dark] #rateSheet #rateBtn.dis{background:#2b2447!important;color:#6b6480!important}
+
+/* v158 الرئيسية الجديدة للمؤسس */
+#a_over.v2>*:not(#aHome):not(#aSetls):not(#aDiscOwed):not(#aCompOwed){display:none!important}
+#a_over.v2{padding-top:0}
+.ah-warn{margin:10px 0 14px;background:#FFF7E6;border:1px solid #F5D08A;border-radius:14px;padding:12px 14px;font-size:13px;font-weight:700;color:#7A4A00;line-height:1.8}
+.ah-warn small{display:block;font-size:11px;color:#9a7a4a;font-weight:600;direction:ltr;text-align:right}
+.ah-top{background:#22113F;color:#fff;margin:0 -16px;padding:18px 18px 90px;border-radius:0 0 26px 26px}
+.ah-who b{display:block;font-size:15px;font-weight:800}.ah-who span{font-size:12px;color:#B9AEDB;font-weight:600}
+.ah-per{display:flex;gap:4px;margin-top:14px;background:rgba(255,255,255,.08);border-radius:12px;padding:3px;width:max-content}
+.ah-per button{border:0;background:none;font:inherit;font-size:12.5px;font-weight:700;padding:6px 13px;border-radius:9px;color:#CFC6EA}
+.ah-per button.on{background:#fff;color:#22113F}
+.ah-net{margin-top:14px}.ah-net small{font-size:12.5px;color:#B9AEDB;font-weight:600}
+.ah-net b{display:block;font-size:38px;font-weight:900;line-height:1.2;letter-spacing:-.5px}.ah-net b i{font-style:normal;font-size:15px;color:#B9AEDB;margin-inline-start:6px;font-weight:700}
+.ah-net p{font-size:12px;color:#CFC6EA;margin-top:2px;font-weight:600}
+.ah-bal{margin:-68px 0 0;background:#fff;border-radius:22px;padding:14px 14px 4px;position:relative;box-shadow:0 18px 40px -18px rgba(34,17,63,.45)}
+.ah-bal .h{display:flex;justify-content:space-between;align-items:baseline}.ah-bal .h b{font-size:14.5px;font-weight:800}.ah-bal .h span{font-size:12px;color:#77708C;font-weight:600}
+.ah-bal .bar{display:flex;gap:3px;height:12px;border-radius:8px;overflow:hidden;margin:10px 0}
+.ah-bal .leg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
+.ah-bal .leg div{border-radius:13px;padding:9px 12px}.ah-bal .leg span{display:block;font-size:11.5px;font-weight:700}.ah-bal .leg b{font-size:19px;font-weight:900}
+.ah-bal .leg .in{background:#E3F4EC;color:#0E8A5F}.ah-bal .leg .out{background:#FBE9E7;color:#C2362B}
+.ah-bal .ln{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;font:inherit;text-align:right;padding:11px 0;border-top:1px solid #F0EEF5;color:inherit}
+.ah-bal .ln i{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-style:normal;font-size:16px;flex:none}
+.ah-bal .ln .t{flex:1}.ah-bal .ln b{display:block;font-size:13.5px;font-weight:800}.ah-bal .ln small{font-size:11.5px;color:#77708C;font-weight:600}
+.ah-bal .ln em{font-style:normal;font-weight:900;font-size:14.5px}.ah-bal .ln em.g{color:#0E8A5F}.ah-bal .ln em.r{color:#C2362B}
+.ah-bal .ln s{text-decoration:none;color:#C4BED3;font-size:16px}
+.ah-kp{display:grid;grid-template-columns:repeat(4,1fr);margin:12px 0;background:#fff;border:1px solid #E3E0EC;border-radius:18px}
+.ah-kp div{padding:11px 4px;text-align:center;border-inline-start:1px solid #F0EEF5}.ah-kp div:first-child{border:0}
+.ah-kp b{display:block;font-size:18px;font-weight:900}.ah-kp span{font-size:10.5px;color:#77708C;font-weight:700}
+.ah-kp em{display:block;font-style:normal;font-size:10px;font-weight:800;color:#0E8A5F;min-height:14px}
+.ah-quick{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 4px}
+.ah-quick button{border:1px solid #E3E0EC;background:#fff;border-radius:14px;padding:12px 4px;font:inherit;font-size:12.5px;font-weight:800;color:#22113F}
+.ah-quick i{display:block;font-style:normal;font-size:20px;margin-bottom:4px}
+html[data-theme=dark] .ah-top{background:#140a28}
+html[data-theme=dark] .ah-bal,html[data-theme=dark] .ah-kp,html[data-theme=dark] .ah-quick button{background:#221d33;border-color:#3a3456;color:#eee}
+html[data-theme=dark] .ah-bal .ln{border-color:#2e2845}
+html[data-theme=dark] .ah-bal .leg .in{background:#14361f;color:#6ee79a}
+html[data-theme=dark] .ah-bal .leg .out{background:#4a1f26;color:#ff8a8e}
+html[data-theme=dark] .ah-bal .ln em.g{color:#6ee79a}html[data-theme=dark] .ah-bal .ln em.r{color:#ff8a8e}
+html[data-theme=dark] .ah-kp div{border-color:#2e2845}
+
+/* v160 المالية */
+.fin-hd{background:#22113F;color:#fff;margin:0 -16px 12px;padding:16px 18px;border-radius:0 0 22px 22px}
+.fin-hd h2{font-size:21px;font-weight:900;color:#fff}.fin-hd p{font-size:12.5px;color:#B9AEDB;font-weight:600}
+.fin-tabs{display:flex;gap:4px;margin-top:12px;background:rgba(255,255,255,.08);border-radius:12px;padding:3px}
+.fin-tabs button{flex:1;border:0;background:none;font:inherit;font-size:13px;font-weight:700;padding:7px 0;border-radius:9px;color:#CFC6EA}
+.fin-tabs button.on{background:#fff;color:#22113F}
+.fin-grp,.fin-late{background:#fff;border:1px solid #E3E0EC;border-radius:18px;overflow:hidden;margin-bottom:10px}
+.fin-grp .h,.fin-late .h{padding:10px 14px 4px;font-size:12.5px;font-weight:800;color:#77708C}
+.fin-late{border-color:#F3CFC9;background:#FFF8F7}.fin-late .h{color:#C2362B;display:flex;justify-content:space-between}
+.fin-late .h em{font-style:normal;background:#C2362B;color:#fff;border-radius:8px;padding:0 8px}
+.fl{display:flex;align-items:center;gap:11px;width:100%;border:0;background:none;font:inherit;text-align:right;padding:11px 14px;border-top:1px solid #F0EEF5;color:inherit}
+.fl i{width:36px;height:36px;border-radius:11px;display:grid;place-items:center;font-style:normal;font-size:16px;flex:none;background:#F4F1FA}
+.fl .t{flex:1;min-width:0}.fl b{display:block;font-size:13.5px;font-weight:800}.fl small{font-size:11.5px;color:#77708C;font-weight:600}
+.fl em{font-style:normal;font-weight:900;font-size:14.5px;color:#C2362B}.fl em.g{color:#0E8A5F}.fl em.r{color:#C2362B}.fl em.a{color:#C26A0A}
+.fl s{text-decoration:none;color:#C4BED3;font-size:16px}
+.fin-note{font-size:12px;font-weight:700;color:#5d5674;background:#fff;border:1px solid #E3E0EC;border-radius:14px;padding:10px 12px;line-height:1.8;margin-bottom:12px}
+#finMove>div{margin-bottom:10px}
+.fin-mth{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1px solid #E3E0EC;border-radius:14px;padding:6px;margin-bottom:10px}
+.fin-mth b{font-size:14.5px;font-weight:900}.fin-mth button{width:34px;height:34px;border:0;border-radius:10px;background:#F4F1FA;font-size:18px;color:#22113F}
+.fin-sum{display:grid;grid-template-columns:repeat(3,1fr);background:#fff;border:1px solid #E3E0EC;border-radius:16px;margin-bottom:10px}
+.fin-sum div{text-align:center;padding:10px 0;border-inline-start:1px solid #F0EEF5}.fin-sum div:first-child{border:0}
+.fin-sum span{display:block;font-size:11px;color:#77708C;font-weight:700}.fin-sum b{font-size:17px;font-weight:900}.fin-sum b.g{color:#0E8A5F}.fin-sum b.r{color:#C2362B}
+.fin-exp{display:flex;gap:8px;margin-bottom:10px}.fin-exp button{flex:1;border:1px solid #E3E0EC;background:#fff;border-radius:12px;padding:11px 0;font:inherit;font-weight:800;font-size:13px;color:#22113F}
+.fin-exp button:first-child{background:#5B2BC9;border-color:#5B2BC9;color:#fff}
+.fin-chips{display:flex;gap:6px;margin-bottom:10px;overflow-x:auto}.fin-chips button{border:1px solid #E3E0EC;background:#fff;border-radius:10px;padding:7px 13px;font:inherit;font-size:12.5px;font-weight:700;white-space:nowrap}
+.fin-chips button.on{background:#22113F;color:#fff;border-color:#22113F}
+.fin-list .stub{display:flex;width:100%;border:1px solid #E3E0EC;background:#fff;border-radius:14px;margin-bottom:8px;font:inherit;text-align:right;padding:0;position:relative;color:inherit}
+.fin-list .stub .d{width:58px;border-inline-end:1.5px dashed #E3E0EC;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 0;color:#77708C;flex:none}
+.fin-list .stub .d b{font-size:17px;color:#22113F;font-weight:900;line-height:1}.fin-list .stub .d span{font-size:10.5px;font-weight:700}
+.fin-list .stub .m{flex:1;padding:10px 12px;min-width:0}.fin-list .stub .m b{display:block;font-size:13.5px;font-weight:800}.fin-list .stub .m small{font-size:11.5px;color:#77708C;font-weight:600}
+.fin-list .stub .v{padding:10px 12px;text-align:left;flex:none}.fin-list .stub .v b{display:block;font-size:15px;font-weight:900}.fin-list .stub .v b.r{color:#C2362B}
+.fstp{display:inline-block;margin-top:3px;font-size:10.5px;font-weight:900;padding:0 7px;border:1.5px solid;border-radius:6px;transform:rotate(-4deg)}
+.fstp.ok{color:#0E8A5F;border-color:#0E8A5F}.fstp.wt{color:#C26A0A;border-color:#C26A0A}
+.fin-empty{text-align:center;color:#77708C;font-weight:700;padding:24px 0}
+.rcp{background:#fff;padding:18px 16px;position:relative;color:#22113F;font-family:inherit}
+.rcp .ph{display:flex;justify-content:space-between;align-items:flex-start;border-bottom:1.5px dashed #E3E0EC;padding-bottom:10px}
+.rcp .ph .b{font-size:18px;font-weight:900;color:#5B2BC9;line-height:1.2}.rcp .ph .b small{display:block;font-size:11px;color:#77708C;font-weight:600}
+.rcp .ph .n{text-align:left;font-size:11px;color:#77708C;font-weight:700}.rcp .ph .n b{display:block;font-size:15px;color:#22113F;direction:ltr}
+.rcp .kv{padding-top:8px}.rcp .kv div{display:flex;justify-content:space-between;gap:10px;font-size:13px;padding:5px 0;font-weight:700;border-bottom:1px dotted #EEEAF3}
+.rcp .kv span{color:#77708C;font-weight:600;flex:none}
+.rcp .tot{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px}.rcp .tot span{font-weight:800}.rcp .tot b{font-size:22px;font-weight:900}
+.rcp .stamp{position:absolute;left:50%;margin-left:-40px;bottom:20px;color:#0E8A5F;border:2.5px solid #0E8A5F;border-radius:10px;padding:3px 10px;font-weight:900;font-size:13px;transform:rotate(-9deg);opacity:.85}
+.rcp .stamp.w{color:#C26A0A;border-color:#C26A0A}
+.rcp .sig{display:flex;justify-content:space-between;margin-top:14px;font-size:11px;color:#77708C;font-weight:700}.rcp .sig b{display:block;color:#22113F;font-size:12.5px}
+.rcp .ptab{width:100%;border-collapse:collapse;margin-top:10px;font-size:11.5px}.rcp .ptab th,.rcp .ptab td{border-bottom:1px solid #EEEAF3;padding:5px 3px;text-align:right}.rcp .ptab th{color:#77708C}
+.fin-paper{border:1px solid #E3E0EC;border-radius:6px;overflow:hidden;margin-bottom:12px;box-shadow:0 12px 30px -18px rgba(34,17,63,.4)}
+.fin-rs .rcp{border:1px solid #EEEAF3;border-radius:6px}
+.fin-ra{display:flex;gap:8px;margin-top:12px}.fin-ra button{flex:1;border:0;border-radius:13px;padding:12px 0;font:inherit;font-weight:800;font-size:13.5px;background:#5B2BC9;color:#fff}.fin-ra .wa{background:#1FAF55}
+.ah-pend{display:block;width:100%;margin:12px 0 0;border:1px solid #F5D08A;background:#FFF7E6;color:#7A4A00;border-radius:14px;padding:11px;font:inherit;font-weight:800;font-size:13px}
+#printArea{display:none}
+@media print{
+  body.printing>*:not(#printArea){display:none!important}
+  body.printing #printArea{display:block!important}
+  body.printing{background:#fff!important}
+  #printArea .pbrk{page-break-after:always}
+  #printArea .rcp{max-width:560px;margin:0 auto}
+}
+html[data-theme=dark] .fin-grp,html[data-theme=dark] .fin-note,html[data-theme=dark] .fin-mth,html[data-theme=dark] .fin-sum,html[data-theme=dark] .fin-exp button,html[data-theme=dark] .fin-chips button,html[data-theme=dark] .fin-list .stub{background:#221d33;border-color:#3a3456;color:#eee}
+html[data-theme=dark] .fl{border-color:#2e2845}html[data-theme=dark] .fin-mth button{background:#2e2747;color:#eee}
+html[data-theme=dark] .fin-list .stub .d b{color:#eee}
+html[data-theme=dark] .fin-late{background:#3a1a20;border-color:#6b2a2e}
+
+/* v161 تذكير + طلبات معلّقة + سجل الإعدادات */
+.fin-late .fl .bell{border:0;background:#fff;border:1px solid #F3CFC9;border-radius:10px;width:36px;height:34px;font-size:15px;flex:none}
+.fin-late .remall{display:block;width:calc(100% - 28px);margin:4px 14px 12px;border:0;background:#C2362B;color:#fff;border-radius:12px;padding:10px;font:inherit;font-weight:800;font-size:13px}
+.fin-soon{background:#FFF8EC;border:1px solid #F5D08A;border-radius:18px;overflow:hidden;margin-bottom:10px}
+.fin-soon .h{display:flex;align-items:center;gap:8px;padding:10px 14px 4px;font-size:12.5px;font-weight:800;color:#8a5a00}
+.fin-soon .h em{font-style:normal;background:#C26A0A;color:#fff;border-radius:8px;padding:0 8px}
+.fin-soon .h button{margin-inline-start:auto;border:0;background:#C26A0A;color:#fff;border-radius:10px;padding:5px 10px;font:inherit;font-weight:800;font-size:12px}
+.fin-auto{font-size:11.5px;font-weight:700;color:#77708C;text-align:center;margin:-2px 0 10px}
+.ah-stuck{margin:12px 0 0;background:#FFF5F4;border:1px solid #F3CFC9;border-radius:18px;overflow:hidden}
+.ah-stuck .h{display:flex;justify-content:space-between;padding:10px 14px 4px;font-size:13px;font-weight:900;color:#C2362B}
+.ah-stuck .h em{font-style:normal;background:#C2362B;color:#fff;border-radius:8px;padding:0 8px;font-size:12px}
+.ah-stuck .sl{display:grid;grid-template-columns:1fr auto;width:100%;border:0;border-top:1px solid #F7DCD8;background:none;font:inherit;text-align:right;padding:9px 14px;color:inherit}
+.ah-stuck .sl b{font-size:13px;font-weight:800}.ah-stuck .sl small{grid-column:1;font-size:11.5px;color:#9a3a30;font-weight:700}
+.ah-stuck .sl em{grid-row:1/3;grid-column:2;align-self:center;font-style:normal;font-weight:900;color:#C2362B;font-size:13px}
+.ah-stuck .old{font-size:11.5px;font-weight:700;color:#77708C;padding:8px 14px 10px;border-top:1px solid #F7DCD8}
+.slog{background:#fff;border:1px solid #E3E0EC;border-radius:16px;margin-bottom:12px;overflow:hidden}
+.slog .si{padding:10px 14px;border-top:1px solid #F0EEF5}.slog .si:first-child{border:0}
+.slog .hd{display:flex;justify-content:space-between;font-size:12.5px}.slog .hd b{font-weight:800}.slog .hd span{color:#77708C;font-weight:600}
+.slog .ln{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;margin-top:4px}
+.slog .ln span{flex:1;color:#4b4560}.slog .ln s{color:#C2362B}.slog .ln i{font-style:normal;color:#a49cb6}.slog .ln b{color:#0E8A5F}
+html[data-theme=dark] .ah-stuck,html[data-theme=dark] .fin-soon{background:#3a1a20;border-color:#6b2a2e}
+html[data-theme=dark] .slog{background:#221d33;border-color:#3a3456;color:#eee}
+html[data-theme=dark] .slog .ln span{color:#cfc9de}
+.nav button.on svg .in{stroke:#fff;fill:none}
 </style>
 <script>
 /* ══ الوضع الليلي: تلقائي / نهاري / ليلي ══ */
