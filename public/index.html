@@ -5596,18 +5596,23 @@ function initFirebase(){
   if(String(firebaseConfig.apiKey).startsWith('PUT_')){
     document.getElementById('setup').classList.add('on'); return;
   }
-  if(typeof firebase==='undefined'){ setTimeout(initFirebase,250); return }
-  try{
-    firebase.initializeApp(firebaseConfig);
-    /* auth و db يجون من الطبقات */
-    /* الكاش المحلي — خاص بـ Firestore، ما نحتاجه */
-    try{ if(firebase.messaging&&firebase.messaging.isSupported&&firebase.messaging.isSupported()) fcm=firebase.messaging() }catch(e){}
-    boot();
-  }catch(e){
-    const L=document.getElementById('load'); if(L)L.classList.remove('on');
-    const A=document.getElementById('auth'); if(A)A.classList.add('on');
-    try{ window.__splGo&&window.__splGo() }catch(e){}
+  /* الدخول والبيانات من Supabase (الطبقات) — ما ننتظر مكتبة Firebase حتى يفتح التطبيق.
+     Firebase بس للإشعارات، تتحمّل بالخلفية ومن تجهز نفعّلها */
+  if(!window.__booted){
+    window.__booted=1;
+    try{ boot() }catch(e){
+      const L=document.getElementById('load'); if(L)L.classList.remove('on');
+      const A=document.getElementById('auth'); if(A)A.classList.add('on');
+      try{ window.__splGo&&window.__splGo() }catch(_){}
+    }
   }
+  if(typeof firebase==='undefined'){ setTimeout(initFirebase,400); return }
+  try{
+    if(!firebase.apps||!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    try{ if(firebase.messaging&&firebase.messaging.isSupported&&firebase.messaging.isSupported()) fcm=firebase.messaging() }catch(e){}
+    /* إذا المستخدم دخل قبل ما تجهز Firebase — نفعّل الإشعارات هسه */
+    if(fcm && uid){ try{ initPush(true).then(refreshPushUI) }catch(e){} }
+  }catch(e){}
 }
 if(document.readyState!=='loading') initFirebase();
 else document.addEventListener('DOMContentLoaded',initFirebase);
