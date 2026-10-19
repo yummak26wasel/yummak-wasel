@@ -15150,7 +15150,7 @@ function renderAdmin(){
 
 /* ═══ v181 انضمام + المشتركين بستايل جديد + حذف آمن ═══ */
 let pQ='';
-const _live = x => !x.deleted_at;
+const _notDeleted = x => !x.deleted_at;
 function _jd(x){ const t=_anyTs(x.created_at)||_anyTs(x.createdAt); return t||0 }
 function _jdTxt(x,pre){ const t=_jd(x); if(!t) return ''; const d=Math.floor((Date.now()-t)/86400000);
   return (pre||'انضم')+' '+new Date(t).toLocaleDateString('ar-IQ',{day:'numeric',month:'long',year:'numeric'})+(d<=0?' · اليوم':d===1?' · أمس':d<31?' · قبل '+d+' يوم':'') }
@@ -15158,7 +15158,7 @@ const _byNew=(a,b)=>_jd(b)-_jd(a);
 function _av(img,txt){ return img?`<img class="pav" src="${img}" alt="">`:`<div class="pav">${esc(String(txt||'؟').charAt(0))}</div>` }
 function renderJoin2(){
   const box=document.getElementById('aPending'); if(!box) return;
-  const ps=(allShops||[]).filter(x=>_live(x)&&x.approved!==true), pd=(allUsers||[]).filter(u=>_live(u)&&u.role==='driver'&&u.approved!==true);
+  const ps=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true), pd=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true);
   const jb=document.getElementById('joinCnt'); if(jb){ const n=ps.length+pd.length; jb.style.display=n?'flex':'none'; jb.textContent=n }
   const card=(o)=>`<div class="jc">
       <div class="jc-h">${_av(o.img,o.name)}<div class="t"><b>${esc(o.name||'—')}</b><span>${o.sub}</span></div><em class="pill ${o.tag[1]}">${o.tag[0]}</em></div>
@@ -15183,7 +15183,7 @@ function renderJoin2(){
 }
 function renderPeople2(fromQ){
   const box=document.getElementById('aPeople'); if(!box) return;
-  const drv=(allUsers||[]).filter(u=>_live(u)&&u.role==='driver'), shp=(allShops||[]).filter(_live), cus=(allUsers||[]).filter(u=>_live(u)&&u.role==='customer');
+  const drv=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'), shp=(allShops||[]).filter(_notDeleted), cus=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='customer');
   const T=[['driver','السواق',drv.length],['store','المحلات',shp.length],['customer','الزبائن',cus.length]];
   const pf=document.getElementById('pFilter');
   if(pf && !fromQ) pf.innerHTML=`<div class="seg">${T.map(([v,l,n])=>`<button class="${pFil===v?'on':''}" onclick="pFil='${v}';renderAdmin()">${l}<i>${n}</i></button>`).join('')}</div>
@@ -19832,7 +19832,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v215', t0=Date.now();
+  var VER='v216', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
