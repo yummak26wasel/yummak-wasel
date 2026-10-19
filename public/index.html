@@ -5631,9 +5631,11 @@ if('serviceWorker' in navigator){
 }
 
 function boot(){
+  window.__step='auth';
   busy(true);
   auth.onAuthStateChanged(async u=>{
     if(signingUp) return;                 // التسجيل يكمّل بنفسه
+    window.__step=u?'user':'login';
     if(!u){ uid=null; me=null; busy(false); document.getElementById('auth').classList.add('on');
       if(_staffPollTimer){ clearInterval(_staffPollTimer); _staffPollTimer=null }
       return }
@@ -5646,6 +5648,7 @@ function boot(){
       me={uid,...d.data()};
       if(!betaOk(me.phone, me.role)){ me=null; uid=null; await auth.signOut(); busy(false);
         document.getElementById('auth').classList.add('on'); showSoon(); return }
+      window.__step='settings';
       /* الإعدادات وبيانات الموظف سوا بنفس الوقت (بدل وحدة ورا الثانية) — أسرع بالنت الضعيف */
       try{ const [c]=await Promise.all([
           db.collection('settings').doc('app').get().catch(()=>null),
@@ -5665,7 +5668,9 @@ function boot(){
       }
       document.getElementById('auth').classList.remove('on');
       startStaffPoll();
+      window.__step='enter';
       busy(false); enter();
+      window.__step='ready';
     }catch(e){ busy(false); document.getElementById('auth').classList.add('on'); showErr('خطأ: '+e.message) }
   });
 }
@@ -19814,5 +19819,27 @@ window.__silent = function(e, where){
     </button>
   </div>
 </div>
+<script>
+/* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
+   وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
+(function(){
+  var VER='v212', t0=Date.now();
+  function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
+  function tick(){
+    try{
+      var L=document.getElementById('load'); if(!L) return;
+      var dbg=document.getElementById('loadDbg');
+      if(!dbg){ dbg=document.createElement('div'); dbg.id='loadDbg'; dbg.style.cssText='position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:0;right:0;text-align:center;font-size:11px;font-weight:600;opacity:.55;color:#fff;z-index:2;direction:ltr'; L.appendChild(dbg) }
+      dbg.textContent=VER+' · '+(window.__step||'start')+' · '+Math.round((Date.now()-t0)/1000)+'s';
+      var sp=document.getElementById('splash');
+      if(sp && !sp.classList.contains('gone')) return;
+      var scr=[].some.call(document.querySelectorAll('.screen.on'),vis);
+      if(scr){ if(window.__wdOn){ window.__wdOn=0; L.classList.remove('on') } return }   /* التطبيق ظهر — نشيل اللي حطّيناه */
+      if(!L.classList.contains('on')){ window.__wdOn=1; L.classList.add('on') }
+    }catch(e){}
+  }
+  setInterval(function(){ if(Date.now()-t0<60000) tick() },500);
+})();
+</script>
 </body>
 </html>
