@@ -5677,6 +5677,7 @@ function boot(){
       }
       document.getElementById('auth').classList.remove('on');
       startStaffPoll();
+      try{ staffWatch() }catch(e){}
       window.__step='enter';
       busy(false); enter();
       window.__step='ready';
@@ -5715,6 +5716,7 @@ function startStaffPoll(){
     if(!me || me.role!=='customer') return;
     try{
       await loadStaff();
+      try{ staffWatch() }catch(e){}
       try{ renderStaffCard() }catch(e){}
       try{
         const sApp=document.getElementById('sApp');
@@ -7933,7 +7935,7 @@ function nofRender(){
     <div class="nof-card">
       <div class="nc-h">
         <div class="av"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3v7a2 2 0 0 0 2 2v9M11 3v7a2 2 0 0 1-2 2M9 3v6"/><path d="M17 21V3c-2 0-3.5 2.5-3.5 6s1.5 4 3.5 4"/></svg></div>
-        <div class="nm"><b>${esc(o.customer||'زبون')}</b><span>${esc(o.shopName||'مطعم')}</span></div>
+        <div class="nm"><b>${esc(o.customer||'زبون')}${(o.first_order||o.firstOrder)?' <em class="nof-new">زبون جديد</em>':''}</b><span>${esc(o.shopName||'مطعم')}</span></div>
         <div class="chip"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg> المنتجات${its.length?' ('+its.length+')':''}</div>
       </div>
       <div class="nc-its">${shown.map(i=>`<div class="it">
@@ -7957,8 +7959,43 @@ function nofRender(){
   </div>`;
   el.classList.add('on');
 }
+
+/* ═══ الموظف وهو بحساب الزبون: يرن ويطلع «طلب جديد!» إذا وصل طلب لمحله ═══ */
+let _stfWatchUn=null, _stfWatchShop=null, _stfFirst=true;
+function staffWatch(){
+  const sid = me && me.staff && me.staff.shop_id;
+  if(!sid){ if(_stfWatchUn){ try{_stfWatchUn()}catch(e){} _stfWatchUn=null; _stfWatchShop=null } return }
+  if(_stfWatchUn && _stfWatchShop===sid) return;
+  if(_stfWatchUn){ try{_stfWatchUn()}catch(e){} }
+  _stfWatchShop=sid; _stfFirst=true;
+  try{
+    _stfWatchUn = db.collection('orders').where('shopId','==',sid).where('status','==','pending')
+      .orderBy('createdAt','desc').limit(30).onSnapshot(s=>{
+        const sApp=document.getElementById('sApp'); const inStore=sApp&&sApp.classList.contains('on');
+        const pend=s.docs.map(d=>({...d.data(), id:d.id}));
+        if(_stfFirst){
+          _stfFirst=false;
+          /* طلبات معلّقة من قبل ما يفتح — نطلّعها هم (إذا عمرها أقل من ساعة) */
+          pend.forEach(o=>{ if(!seenPending.has(o.id)){ seenPending.add(o.id);
+            if(!inStore && Date.now()-Number(o.createdAt||0) < 3600000) alarm('store',o) } });
+          return;
+        }
+        pend.forEach(o=>{ if(!seenPending.has(o.id)){ seenPending.add(o.id); if(!inStore) alarm('store',o) } });
+        try{ if(!inStore && nofQ.length){ const n0=nofQ.length; nofQ=nofQ.filter(q=>pend.some(p=>p.id===q.id)); if(nofQ.length!==n0) nofRender() } }catch(e){}
+      },()=>{});
+  }catch(e){ _stfWatchUn=null }
+}
+/* إذا الموظف ضغط قبول/رفض وهو بحساب الزبون — نحوّله للوحة المحل أول */
+async function _nofEnsureStore(id){
+  const sApp=document.getElementById('sApp');
+  if(me && me.staff && !(sApp&&sApp.classList.contains('on'))){
+    try{ enterStaff() }catch(e){}
+    for(let i=0;i<25 && !(myOrders||[]).some(x=>x.id===id);i++) await new Promise(r=>setTimeout(r,200));
+  }
+}
 async function nofAct(a){
   const o=nofQ[0]; if(!o) return;
+  await _nofEnsureStore(o.id);
   if(a==='view'){ nofSkip.add(o.id); nofQ.shift(); nofRender(); stopAlarm(); try{ openOrdDet(o.id) }catch(e){} return }
   const ok=await setStatus(o.id,a);
   if(ok){ nofQ.shift(); nofRender(); if(nofQ.length) storeRing() }
@@ -9665,6 +9702,8 @@ async function submitOrder(){
     }catch(e){}
     const sh=shops.find(s=>s.id===o.shopId);
     pushTo(ownerUid,'🔔 طلب جديد',o.customer+' — '+o.total.toLocaleString()+' د.ع',{type:'new_order', order_id:(_ref&&_ref.id)||'', shop_id:o.shopId||'', total:String(o.total||0), customer:String(o.customer||'')});
+    /* وموظفين المحل هم — حتى لو تطبيقهم مسكّر */
+    try{ if(o.shopId && _ref && _ref.id) __sendPush({shop_staff:o.shopId},'🔔 طلب جديد',o.customer+' — '+o.total.toLocaleString()+' د.ع',{type:'new_order', order_id:_ref.id, shop_id:o.shopId, total:String(o.total||0), customer:String(o.customer||'')}) }catch(e){}
     cart=[];orderNote='';orderCode='';_pv={key:'',res:null};renderCart();
     document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
     document.getElementById('p_orders').classList.add('on');
@@ -10667,6 +10706,7 @@ function renderStore(){
       </div>`).join('') : '';
   }
 
+  try{ loadCashLog() }catch(e){}
   const sm=document.getElementById('stSummary');
   const __noRep = !!(me.staff && !me.staff.can_reports);   /* موظف بلا صلاحية تقارير */
   /* ملخص الرئيسية = هذا الشهر (من يوم 1 بتوقيت الجهاز) ويتصفّر مع بداية كل شهر */
@@ -15352,9 +15392,35 @@ async function drvSentCash(shopId, shopName){
     const ownr=pend[0].shopOwnerUid;
     if(ownr) pushTo(ownr,'المندوب سلّم المبلغ',
       (me.name||'المندوب')+' يقول إنه سلّم '+amt.toLocaleString()+' د.ع — أكّد الاستلام',{type:'cash'});
+    /* وموظفين المحل هم */
+    try{ if(!isSp && pend[0].shopId) __sendPush({shop_staff:pend[0].shopId},'المندوب سلّم المبلغ',(me.name||'المندوب')+' يقول إنه سلّم '+amt.toLocaleString()+' د.ع — أكّد الاستلام',{type:'cash'}) }catch(e){}
     toast('انبلّغ المحل — انتظر تأكيده');
     renderDriver();
   }catch(e){ toast(errMsg(e)) }
+}
+
+/* ═══ سجل المبالغ المستلمة — صاحب المحل يشوف منو استلم (هو لو موظف) ═══ */
+let _cashLogAt=0;
+async function loadCashLog(force){
+  const box0=document.getElementById('stCash'); if(!box0) return;
+  if(me && me.staff) return;                         /* السجل لصاحب المحل بس */
+  const sid=me && me.shopId; if(!sid) return;
+  if(!force && Date.now()-_cashLogAt<60000) return;
+  _cashLogAt=Date.now();
+  let box=document.getElementById('stCashLog');
+  if(!box){ box=document.createElement('div'); box.id='stCashLog'; box0.parentNode.insertBefore(box, box0.nextSibling) }
+  let rows=[];
+  try{ rows = await sbGet('settlements?select=*&shop_id=eq.'+sid+'&status=eq.confirmed&order=confirmed_at.desc&limit=8') || [] }catch(e){ rows=[] }
+  if(!rows.length){ box.innerHTML=''; return }
+  try{ if(!shopStaff.length) await loadShopStaff() }catch(e){}
+  const stName=id=>{ if(!id) return '—'; if(id===uid) return 'انت'; const s=(shopStaff||[]).find(x=>x.profile_id===id||x.id===id||x.uid===id); return s?('الموظف '+s.name):'موظف' };
+  const drvName=id=>{ const o=(myOrders||[]).find(x=>x.driverUid===id); return (o&&o.driverName)||'المندوب' };
+  const fmt=t=>{ try{ const d=new Date(t); return d.toLocaleDateString('ar-IQ',{day:'numeric',month:'short'})+' · '+d.toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit'}) }catch(e){ return '' } };
+  box.innerHTML='<div class="cashlog"><div class="cl-h">آخر المبالغ المستلمة من المندوبين</div>'+rows.map(r=>`
+    <div class="cl-r">
+      <div class="cl-t"><b>${Number(r.amount||0).toLocaleString()} د.ع</b><span>من ${esc(drvName(r.driver_id))} · ${r.orders_count||0} طلب</span></div>
+      <div class="cl-w"><em class="${r.confirmed_by===uid?'me':'st'}">استلمه: ${esc(stName(r.confirmed_by))}</em><span>${fmt(r.confirmed_at)}</span></div>
+    </div>`).join('')+'</div>';
 }
 async function shopTakeCash(key){
   const pend=myOrders.filter(o=>o.status==='delivered' && !o.shopCashPaid && (o.driverUid===key||o.driverName===key));
@@ -15383,6 +15449,13 @@ async function shopTakeCash(key){
     /* إشعار السائق يُدزّ مهما صار بالسجل */
     if(drv) pushTo(drv,'المحل أكّد الاستلام',
       (myShopDoc&&myShopDoc.name||'المحل')+' أكّد استلام '+amt.toLocaleString()+' د.ع',{type:'cash_ok'});
+    /* الموظف استلم — نبلّغ صاحب المحل منو استلم وشكد ومن ياهو مندوب */
+    try{
+      const own = me.staff && myShopDoc && (myShopDoc.ownerUid||myShopDoc.owner_id);
+      if(own && own!==uid) pushTo(own,'💵 موظفك استلم مبلغ',
+        (me.name||'الموظف')+' استلم '+amt.toLocaleString()+' د.ع من المندوب '+(pend[0].driverName||''),{type:'staff_cash'});
+    }catch(e){}
+    _cashLogAt=0; try{ loadCashLog(true) }catch(e){}
     toast('انتسجّل الاستلام');
     renderStore();
   }catch(e){ toast(errMsg(e)) }
@@ -19748,6 +19821,21 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 .catc.soon{position:relative}
 .catc.soon img{opacity:.55;filter:grayscale(.35)}
 .catc .cat-soon{position:absolute;top:4px;left:50%;transform:translateX(-50%);z-index:2;background:#F97402;color:#fff;font-style:normal;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(249,116,2,.35)}
+
+/* v223 علامة زبون جديد */
+.nof-new{display:inline-block;vertical-align:middle;margin-inline-start:6px;background:#FFF1E6;color:#C2410C;border:1px solid #FDBA74;font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
+
+/* v224 سجل المبالغ المستلمة */
+.cashlog{background:#fff;border:1px solid #EEE9F7;border-radius:18px;padding:12px 14px;margin:12px 0}
+.cashlog .cl-h{font-weight:900;font-size:14px;color:#3F0A92;margin-bottom:6px}
+.cashlog .cl-r{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #F3F0F8}
+.cashlog .cl-r:first-of-type{border-top:0}
+.cashlog .cl-t b{display:block;font-size:15px;font-weight:900;color:#12A85C}
+.cashlog .cl-t span,.cashlog .cl-w span{font-size:11.5px;color:#8a849c;font-weight:700}
+.cashlog .cl-w{text-align:left;display:flex;flex-direction:column;align-items:flex-end;gap:3px}
+.cashlog .cl-w em{font-style:normal;font-size:11.5px;font-weight:800;padding:2px 9px;border-radius:999px}
+.cashlog .cl-w em.me{background:#EEF6FF;color:#1D4ED8}
+.cashlog .cl-w em.st{background:#FFF1E6;color:#C2410C}
 </style>
 <script>
 /* ══ الوضع الليلي: تلقائي / نهاري / ليلي ══ */
@@ -19847,7 +19935,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v219', t0=Date.now();
+  var VER='v224', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
