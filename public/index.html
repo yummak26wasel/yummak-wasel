@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#5B2BC9">
 <script>window.__errs=[];window.addEventListener("error",function(e){try{var t=e.target,m;if(e.message){m=String(e.message).slice(0,70)+(e.filename?"@"+String(e.filename).split("/").pop().slice(0,24)+":"+e.lineno:"")}else if(t&&t.tagName==="SCRIPT"){m="✗ "+String(t.src).split("/").pop().slice(0,30)}if(m)window.__errs.push(m)}catch(_){}},true);</script>
-<script>try{var __p=localStorage.getItem("lw_theme")||"auto";if(__p==="dark"||(__p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+<script>document.documentElement.setAttribute("data-theme","light")/* الوضع الليلي متوقف مؤقتاً */</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="واصل ليمَك">
 <title>واصل ليمَك — توصيل عانة</title>
@@ -8005,7 +8005,7 @@ function tab(p,el){
   if(p==='disc'){ try{ renderDisc(); loadOffersC() }catch(e){} }
   if(p==='more'){ renderAccount(); refreshPushUI() }
   if(p==='home'){ renderCats(); renderHomeLoc() }
-  try{ document.querySelector('#cApp .body').scrollTop=0 }catch(e){}
+  try{ scrollTopAll() }catch(e){}
 }
 function goHome(){try{clearInterval(__revTimer)}catch(e){}
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));document.getElementById('p_home').classList.add('on')}
@@ -8114,13 +8114,13 @@ function renderCats(){
     ['all',        'cat-more-1.png',  'الكل'],
     ['restaurant', 'cat-food-1.png','مطاعم'],
     ['sweet',      'cat-sweet-1.png', 'حلويات'],
-    ['store',      'cat-store-1.png', 'متاجر'],
     ['special',    'cat-buy-1.png', 'اشتريلي'],
+    ['store',      'cat-store-1.png', 'متاجر'],
     ['cosmetics',  'cat-cosm.png',  'كوزمتك']
   ];
   const el=document.getElementById('catCards'); if(!el)return;
   el.innerHTML=C.map(([v,img,l])=>
-    `<div class="catc ${cat===v?'on':''}" onclick="pickCat('${v}')">
+    `<div class="catc ${cat===v?'on':''}${CAT_SOON.includes(v)?' soon':''}" onclick="pickCat('${v}')">${CAT_SOON.includes(v)?'<em class="cat-soon">قريباً</em>':''}
        <img src="${img}" alt="" onerror="this.onerror=null;this.src=this.src.replace('.png','-1.png')"><span>${l}</span></div>`).join('');
   const t=document.getElementById('listTtl');
   if(t) t.textContent={all:'كل المحلات',restaurant:'المطاعم',store:'المتاجر',
@@ -8337,8 +8337,10 @@ function wcGo(v){
   try{ if(v&&v!=='all') pickCat(v); }catch(e){}
   try{ buzz(14) }catch(e){}
 }
+const CAT_SOON=['store','cosmetics'];   /* أقسام بعدها ما اشتغلت — تطلع «قريباً» */
 function pickCat(v){
   if(v==='special'){ openSpecialOrder && openSpecialOrder(); return }
+  if(CAT_SOON.includes(v)){ toast((v==='store'?'المتاجر':'الكوزمتك')+' — قريباً إن شاء الله'); try{ buzz(12) }catch(e){} return }
   cat = (cat===v ? 'all' : v);
   renderCats(); renderShops();
 }
@@ -8624,6 +8626,12 @@ function etaTxt(){
   const t=Number((SET&&SET.etaMin)||25);
   return t+'–'+(t+15)+' دقيقة';
 }
+/* يرجّع الصفحة لفوك — التمرير صار على الصفحة كلها (مو .body) فلازم نصفّر الاثنين */
+function scrollTopAll(){
+  const go=()=>{ try{ window.scrollTo(0,0); const se=document.scrollingElement||document.documentElement; if(se) se.scrollTop=0; document.body.scrollTop=0;
+    document.querySelectorAll('.screen.on, .screen.on>.body, .page.on').forEach(x=>{ x.scrollTop=0 }) }catch(e){} };
+  go(); requestAnimationFrame(go); setTimeout(go,60); setTimeout(go,250);
+}
 function openShop(id){
   curShop=shops.find(s=>s.id===id); if(!curShop)return;
   pushRecent(curShop.id);
@@ -8684,7 +8692,7 @@ function openShop(id){
   _shopCats=[]; _shopLinks={}; _shopTop=[];
   renderMenu();
   try{ loadShopPublicCats() }catch(e){ console.warn('shopCats', e) }
-  const sc=document.querySelector('#cApp .body'); if(sc) sc.scrollTop=0;
+  scrollTopAll();
 }
 
 /* ٣ — العروض */
@@ -9588,7 +9596,7 @@ function openReview(){
     </div>`;
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('p_review').classList.add('on');
-  try{ document.querySelector('#cApp .body').scrollTop=0 }catch(e){}
+  try{ scrollTopAll() }catch(e){}
   __revLeft=10; __revBusy=false; paintRev();
   clearInterval(__revTimer);
   __revTimer=setInterval(()=>{
@@ -9710,7 +9718,7 @@ function openTrack(id){
   trkId=id; trkOpen=true;
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('p_track'); if(pg)pg.classList.add('on');
-  try{ document.querySelector('#cApp .body').scrollTop=0 }catch(e){}
+  try{ scrollTopAll() }catch(e){}
   renderTrack();
 }
 function closeTrack(){
@@ -19735,11 +19743,17 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 .load .spin,html[data-theme=dark] .load .spin{width:62px!important;height:62px!important;border:5px solid rgba(190,160,255,.45)!important;
   border-top-color:#F97402!important;border-right-color:#F97402!important;filter:drop-shadow(0 0 8px rgba(249,116,2,.55))}
 #loadTxt{color:#fff!important;font-size:18px;font-weight:800;letter-spacing:.2px}
+
+/* v218 أقسام «قريباً» */
+.catc.soon{position:relative}
+.catc.soon img{opacity:.55;filter:grayscale(.35)}
+.catc .cat-soon{position:absolute;top:4px;left:50%;transform:translateX(-50%);z-index:2;background:#F97402;color:#fff;font-style:normal;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 6px rgba(249,116,2,.35)}
 </style>
 <script>
 /* ══ الوضع الليلي: تلقائي / نهاري / ليلي ══ */
 var THEME_KEY='lw_theme';
-function themePref(){try{return localStorage.getItem(THEME_KEY)||'auto'}catch(e){return 'auto'}}
+var DARK_SOON=true;   /* الوضع الليلي متوقف مؤقتاً — بس النهاري متوفر */
+function themePref(){if(DARK_SOON)return 'light';try{return localStorage.getItem(THEME_KEY)||'auto'}catch(e){return 'auto'}}
 function themeIsDark(){var p=themePref();if(p==='dark')return true;if(p==='light')return false;return !!(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)}
 function applyTheme(){
   var staff=['sApp','dApp','aApp'].some(function(id){var e=document.getElementById(id);return e&&e.classList.contains('on')});
@@ -19748,8 +19762,9 @@ function applyTheme(){
   var m=document.querySelector('meta[name=theme-color]');if(m)m.setAttribute('content',dark?'#1B0B52':'#5B2BC9');
   var cur=themePref();document.querySelectorAll('#thmSeg button').forEach(function(b){b.classList.toggle('on',b.getAttribute('data-t')===cur)});
 }
-function toggleTheme(){setTheme(themeIsDark()?'light':'dark')}
-function setTheme(v){try{localStorage.setItem(THEME_KEY,v)}catch(e){}applyTheme()}
+function darkSoonMsg(){try{toast('الوضع الليلي قريباً — هسه بس الوضع النهاري متوفر')}catch(e){}}
+function toggleTheme(){if(DARK_SOON){darkSoonMsg();return}setTheme(themeIsDark()?'light':'dark')}
+function setTheme(v){if(DARK_SOON){if(v!=='light')darkSoonMsg();applyTheme();return}try{localStorage.setItem(THEME_KEY,v)}catch(e){}applyTheme()}
 (function(){
   try{var mq=matchMedia('(prefers-color-scheme: dark)');(mq.addEventListener?mq.addEventListener('change',applyTheme):mq.addListener(applyTheme))}catch(e){}
   function hook(){['sApp','dApp','aApp'].forEach(function(id){var e=document.getElementById(id);if(e)new MutationObserver(applyTheme).observe(e,{attributes:true,attributeFilter:['class']})});applyTheme()}
@@ -19832,7 +19847,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v216', t0=Date.now();
+  var VER='v219', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
