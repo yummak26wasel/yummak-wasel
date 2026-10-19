@@ -31,10 +31,11 @@
 </style>
  <script>
 (function(){
-  /* شاشة البداية تبقى 3 ثواني بالضبط */
+  /* شاشة البداية تبقى ثانيتين أقل شي */
   window.__splT0=Date.now();
-  function go(){ var w=3000-(Date.now()-window.__splT0); if(w>0) return setTimeout(go,w); var sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
-  setTimeout(go,3000);
+  function go(){ var w=2000-(Date.now()-window.__splT0); if(w>0) return setTimeout(go,w); var sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
+  window.__splGo=go;
+  setTimeout(go,20000);   /* احتياط فقط — الإخفاء الطبيعي لما التطبيق يجهز (busy(false)) */
 })();
 </script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -5605,6 +5606,7 @@ function initFirebase(){
   }catch(e){
     const L=document.getElementById('load'); if(L)L.classList.remove('on');
     const A=document.getElementById('auth'); if(A)A.classList.add('on');
+    try{ window.__splGo&&window.__splGo() }catch(e){}
   }
 }
 if(document.readyState!=='loading') initFirebase();
@@ -7168,6 +7170,7 @@ function busy(b){
     __busyStep=setInterval(()=>{ i=(i+1)%msgs.length; if(T)T.textContent=msgs[i] },5000);
   }
   const L=document.getElementById('load'); if(L)L.classList.toggle('on',b);
+  if(!b){ try{ window.__splGo&&window.__splGo() }catch(e){} }   /* شاشة البداية تبقى لحد ما التطبيق يجهز (ثانيتين أقل شي) */
   const B=document.getElementById('authBtn'); if(B)B.disabled=b;
   clearTimeout(__busyT);
   if(b) __busyT=setTimeout(()=>{
@@ -15462,10 +15465,8 @@ function unsubscribeTopics(){
   localStorage.removeItem('w_topics');
 }
 
-function hideSplash(){ const w=3000-(Date.now()-(window.__splT0||0)); if(w>0) return setTimeout(hideSplash,w); const sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
-if(document.readyState==='complete') setTimeout(hideSplash,300);
-else window.addEventListener('load',()=>setTimeout(hideSplash,300));
-setTimeout(hideSplash,15000); /* شبكة بطيئة: لا تختفي شاشة التحميل قبل ما التطبيق فعلاً يخلص */
+function hideSplash(){ const w=2000-(Date.now()-(window.__splT0||0)); if(w>0) return setTimeout(hideSplash,w); const sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
+setTimeout(hideSplash,20000); /* احتياط: نت كلش ضعيف */ /* شبكة بطيئة: لا تختفي شاشة التحميل قبل ما التطبيق فعلاً يخلص */
 /* ═════════ اللمس والاهتزاز ═════════ */
 function buzz(ms){ try{ if(navigator.vibrate) navigator.vibrate(ms||12) }catch(e){} }
 document.addEventListener('pointerdown',e=>{
