@@ -6,6 +6,7 @@
 <link rel="apple-touch-icon" href="https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/icon-192-2.png">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
 <meta name="theme-color" content="#5B2BC9">
+<script>window.__errs=[];window.addEventListener("error",function(e){try{var t=e.target,m;if(e.message){m=String(e.message).slice(0,70)+(e.filename?"@"+String(e.filename).split("/").pop().slice(0,24)+":"+e.lineno:"")}else if(t&&t.tagName==="SCRIPT"){m="✗ "+String(t.src).split("/").pop().slice(0,30)}if(m)window.__errs.push(m)}catch(_){}},true);</script>
 <script>try{var __p=localStorage.getItem("lw_theme")||"auto";if(__p==="dark"||(__p==="auto"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches))document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="واصل ليمَك">
@@ -19831,14 +19832,19 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v214', t0=Date.now();
+  var VER='v215', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
       var L=document.getElementById('load'); if(!L) return;
       var dbg=document.getElementById('loadDbg');
       if(!dbg){ dbg=document.createElement('div'); dbg.id='loadDbg'; dbg.style.cssText='position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 14px);left:0;right:0;text-align:center;font-size:11px;font-weight:600;opacity:.55;color:#fff;z-index:2;direction:ltr'; L.appendChild(dbg) }
-      dbg.textContent=VER+' · '+(window.__step||'start')+' · '+Math.round((Date.now()-t0)/1000)+'s';
+      var info=VER+' · '+(window.__step||'start')+' · '+Math.round((Date.now()-t0)/1000)+'s';
+      if(window.__step!=='ready'){
+        info+=' · f:'+(typeof initFirebase)[0]+' a:'+(typeof auth)[0]+' s:'+(typeof supabase)[0];
+        if(window.__errs&&window.__errs.length) info+='\n'+window.__errs.slice(0,3).join('\n');
+      }
+      dbg.textContent=info; dbg.style.whiteSpace='pre-wrap'; dbg.style.padding='0 12px';
       var sp=document.getElementById('splash');
       if(sp && !sp.classList.contains('gone')) return;
       var scr=[].some.call(document.querySelectorAll('.screen.on'),vis);
