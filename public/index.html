@@ -38,8 +38,15 @@
   setTimeout(go,1400);   /* أقصى شي 3 ثواني — بعدها تطلع شاشة جاري التحميل إذا بعده ما جهز */
 })();
 </script>
-<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
-<script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js"></script> <script>
+<script>
+/* مكتبة Firebase (للإشعارات بس) تتحمّل بالخلفية — ما توقّف فتح التطبيق إذا النت بطيء */
+(function(){
+  function add(src,cb){ var s=document.createElement('script'); s.src=src; s.async=true; if(cb) s.onload=cb; document.head.appendChild(s) }
+  add('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js',function(){
+    add('https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js');
+  });
+})();
+</script> <script>
 /* ══════════════════════════════════════════════════
    ١) مفاتيح Firebase — من Project settings <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Web app
    ══════════════════════════════════════════════════ */
@@ -5609,6 +5616,7 @@ function initFirebase(){
   if(typeof firebase==='undefined'){ setTimeout(initFirebase,400); return }
   try{
     if(!firebase.apps||!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+    if(!firebase.messaging){ setTimeout(initFirebase,400); return }
     try{ if(firebase.messaging&&firebase.messaging.isSupported&&firebase.messaging.isSupported()) fcm=firebase.messaging() }catch(e){}
     /* إذا المستخدم دخل قبل ما تجهز Firebase — نفعّل الإشعارات هسه */
     if(fcm && uid){ try{ initPush(true).then(refreshPushUI) }catch(e){} }
@@ -19823,7 +19831,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v212', t0=Date.now();
+  var VER='v213', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
