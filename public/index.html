@@ -33,9 +33,9 @@
 (function(){
   /* شاشة البداية تبقى ثانيتين أقل شي */
   window.__splT0=Date.now();
-  function go(){ var w=2000-(Date.now()-window.__splT0); if(w>0) return setTimeout(go,w); var sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
+  function go(){ var w=1400-(Date.now()-window.__splT0); if(w>0) return setTimeout(go,w); var sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
   window.__splGo=go;
-  setTimeout(go,20000);   /* احتياط فقط — الإخفاء الطبيعي لما التطبيق يجهز (busy(false)) */
+  setTimeout(go,1400);   /* أقصى شي 3 ثواني — بعدها تطلع شاشة جاري التحميل إذا بعده ما جهز */
 })();
 </script>
 <script defer src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
@@ -55,7 +55,7 @@ const firebaseConfig = {
 
 /* مفتاح الإشعارات — Firebase <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Cloud Messaging <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> Web Push certificates */
 const VAPID_KEY = "BOWusCGI78_98pxGnAEYzTOSHL2NqMf0GlsGS-s1n3hum2EpTH4WnlgPh_mZIeaecZGk6JE7QozOrIDOURTOuzE";
-</script> <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+</script> <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'"><noscript><link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet"></noscript>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;font-family:system-ui,-apple-system,'Noto Sans Arabic',Tahoma,Arial,sans-serif}
 :root{
@@ -5641,8 +5641,12 @@ function boot(){
       me={uid,...d.data()};
       if(!betaOk(me.phone, me.role)){ me=null; uid=null; await auth.signOut(); busy(false);
         document.getElementById('auth').classList.add('on'); showSoon(); return }
-      try{ const c=await db.collection('settings').doc('app').get();
-        if(c.exists) SET={...SET,...c.data()} }catch(e){}
+      /* الإعدادات وبيانات الموظف سوا بنفس الوقت (بدل وحدة ورا الثانية) — أسرع بالنت الضعيف */
+      try{ const [c]=await Promise.all([
+          db.collection('settings').doc('app').get().catch(()=>null),
+          loadStaff().catch(e=>console.warn('staff',e&&e.message))
+        ]);
+        if(c && c.exists) SET={...SET,...c.data()} }catch(e){}
       try{ loadBanners() }catch(e){}
       try{ if(me && me.role==='customer') setTimeout(wcShow,700) }catch(e){}
       // ترقيع الحسابات القديمة الناقصة حقول — عبر دالة محمية (الأعمدة مقفولة على التعديل المباشر)
@@ -5655,7 +5659,6 @@ function boot(){
         catch(e){ console.warn('fix',e.message) }
       }
       document.getElementById('auth').classList.remove('on');
-      try{ await loadStaff() }catch(e){ console.warn('staff',e.message) }
       startStaffPoll();
       busy(false); enter();
     }catch(e){ busy(false); document.getElementById('auth').classList.add('on'); showErr('خطأ: '+e.message) }
@@ -15465,8 +15468,8 @@ function unsubscribeTopics(){
   localStorage.removeItem('w_topics');
 }
 
-function hideSplash(){ const w=2000-(Date.now()-(window.__splT0||0)); if(w>0) return setTimeout(hideSplash,w); const sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
-setTimeout(hideSplash,20000); /* احتياط: نت كلش ضعيف */ /* شبكة بطيئة: لا تختفي شاشة التحميل قبل ما التطبيق فعلاً يخلص */
+function hideSplash(){ const w=1400-(Date.now()-(window.__splT0||0)); if(w>0) return setTimeout(hideSplash,w); const sp=document.getElementById('splash'); if(sp)sp.classList.add('gone') }
+setTimeout(hideSplash,1400); /* شبكة بطيئة: لا تختفي شاشة التحميل قبل ما التطبيق فعلاً يخلص */
 /* ═════════ اللمس والاهتزاز ═════════ */
 function buzz(ms){ try{ if(navigator.vibrate) navigator.vibrate(ms||12) }catch(e){} }
 document.addEventListener('pointerdown',e=>{
@@ -19698,6 +19701,21 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 .dof-earn b{color:#12A85C;font-size:28px;font-weight:900}
 .dof-earn small{font-size:17px}
 .dof-skip{width:100%;margin-top:12px;height:54px;border-radius:18px;border:1.5px solid rgba(255,80,110,.6);background:rgba(255,255,255,.03);color:#FF5C7A;font:inherit;font-size:18px;font-weight:900;display:flex;align-items:center;justify-content:center;gap:40px}
+
+/* v207 شاشة «جاري التحميل» — حسب التصميم المعتمد */
+.load,html[data-theme=dark] .load{overflow:hidden;color:#fff!important;
+  background:radial-gradient(90% 55% at 100% 0%,#7A22F0 0%,rgba(122,34,240,0) 70%),linear-gradient(180deg,#2B0A86 0%,#1F0666 45%,#250879 75%,#2E0B8C 100%)!important}
+.load::before,.load::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.load::before{width:125vw;height:125vw;max-width:700px;max-height:700px;top:-82vw;left:-62vw;
+  background:radial-gradient(circle at 75% 85%,#6C24E8 0%,#4A12C0 45%,#3510A0 75%);
+  box-shadow:5px 6px 0 -2px rgba(255,150,60,.75),10px 14px 36px 0 rgba(249,116,2,.45),46px 54px 0 -40px rgba(160,110,255,.0),0 0 0 1px rgba(170,120,255,.25)}
+.load::after{width:135vw;height:135vw;max-width:760px;max-height:760px;bottom:-88vw;right:-58vw;
+  background:radial-gradient(circle at 30% 20%,#7C2CF2 0%,#4E14C4 40%,#2E0B90 75%);
+  box-shadow:-5px -6px 0 -2px rgba(255,150,60,.8),-12px -16px 44px 0 rgba(249,116,2,.5),0 0 0 1px rgba(170,120,255,.25)}
+.load>*{position:relative;z-index:1}
+.load .spin,html[data-theme=dark] .load .spin{width:62px!important;height:62px!important;border:5px solid rgba(190,160,255,.45)!important;
+  border-top-color:#F97402!important;border-right-color:#F97402!important;filter:drop-shadow(0 0 8px rgba(249,116,2,.55))}
+#loadTxt{color:#fff!important;font-size:18px;font-weight:800;letter-spacing:.2px}
 </style>
 <script>
 /* ══ الوضع الليلي: تلقائي / نهاري / ليلي ══ */

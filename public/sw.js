@@ -2,9 +2,11 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v205';
+const VER = 'leemak-v210';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 200;
+const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
+const FONT = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\//;
 const PRE_IMG = ['/081cb4e0.png', '/792707e8.png'];   /* الشعار — ينحفظ بالكاش الدائم */
 const SHELL = ['/sb-layer.js', '/auth-layer.js', '/manifest.json'];
 const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
@@ -55,7 +57,7 @@ self.addEventListener('install', e => {
 
 self.addEventListener('activate', e => {
   e.waitUntil(
-    caches.keys().then(ks => Promise.all(ks.filter(k => k !== VER && k !== IMGC).map(k => caches.delete(k))))
+    caches.keys().then(ks => Promise.all(ks.filter(k => k !== VER && k !== IMGC && k !== LIBC).map(k => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
@@ -142,7 +144,7 @@ async function sbimg(req){
 
 /* مكتبات CDN (Leaflet وغيرها): الكاش أول */
 async function cdn(req){
-  const c = await caches.open(VER);
+  const c = await caches.open(LIBC);
   const cached = await c.match(req);
   if(cached) return cached;
   const r = await fetch(req);
@@ -155,6 +157,7 @@ self.addEventListener('fetch', e => {
   if(req.method !== 'GET') return;
   const url = new URL(req.url);
   if(req.destination === 'image' && SBIMG.test(url.href)){ e.respondWith(sbimg(req)); return }
+  if(FONT.test(url.href)){ e.respondWith(cdn(req).catch(() => fetch(req))); return }   /* الخطوط: من الكاش الدائم */
   if(API.test(url.href) && !CDN.test(url.href)) return;          /* بيانات حيّة — بدون كاش */
   if(CDN.test(url.href)){ e.respondWith(cdn(req)); return }
   if(url.origin !== location.origin) return;
