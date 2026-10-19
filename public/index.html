@@ -19831,7 +19831,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v213', t0=Date.now();
+  var VER='v214', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
@@ -19847,6 +19847,9 @@ window.__silent = function(e, where){
     }catch(e){}
   }
   setInterval(function(){ if(Date.now()-t0<60000) tick() },500);
+  /* الصفحة كلها انقرت هنا — نبدي التطبيق مباشرة بدون ما ننتظر أي ملف خارجي */
+  try{ if(!window.__booted && typeof initFirebase==='function') initFirebase() }catch(e){ window.__step='err:'+(e&&e.message||e) }
+  window.addEventListener('error',function(ev){ try{ if(window.__step!=='ready') window.__step='err:'+String(ev.message||'').slice(0,40) }catch(_){} });
 })();
 </script>
 </body>
