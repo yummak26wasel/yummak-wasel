@@ -18,6 +18,61 @@
 #splash .sdot span{width:9px;height:9px;border-radius:50%;background:#fff;opacity:.35;animation:bl 1.1s infinite}
 #splash .sdot span:nth-child(2){animation-delay:.18s}#splash .sdot span:nth-child(3){animation-delay:.36s}
 @keyframes bl{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
+
+/* v229 الأحجام */
+.szopt{font-size:11px;font-weight:600;color:#8B84A0;margin-inline-start:4px}
+.szr .szidx{min-width:44px;font-size:10.5px;font-weight:800;color:#6A2FD0;text-align:center}
+.szctl{position:relative;display:inline-flex}
+.szcnt{position:absolute;top:-6px;inset-inline-start:-6px;min-width:19px;height:19px;padding:0 5px;border-radius:10px;background:#F97402;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 2px #fff}
+.szsh{position:fixed;inset:0;z-index:9500;background:rgba(20,10,40,.5);display:flex;align-items:flex-end;justify-content:center;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+.szsh.on{opacity:1;visibility:visible}
+.szcard{width:100%;max-width:520px;max-height:92vh;overflow:auto;background:#fff;border-radius:26px 26px 0 0;padding:10px 18px 0;transform:translateY(40px);transition:transform .28s cubic-bezier(.2,.8,.2,1)}
+.szsh.on .szcard{transform:none}
+.szgrab{width:40px;height:5px;border-radius:3px;background:#DAD6E3;margin:0 auto 14px}
+.szhd{display:flex;align-items:flex-start;gap:14px;padding-bottom:16px;border-bottom:1px solid #EFECF5}
+.szhimg{width:76px;height:76px;border-radius:14px;overflow:hidden;flex-shrink:0;background:#F4F1FA;display:flex;align-items:center;justify-content:center}
+.szhimg img{width:100%;height:100%;object-fit:cover}.szhimg .px svg{width:34px;height:34px;color:#B9B0CF}
+.szht{flex:1;min-width:0}.szht b{display:block;font-size:22px;font-weight:900;color:#140d24;line-height:1.3}
+.szht p{margin:4px 0 0;font-size:13.5px;color:#6E6783;line-height:1.6}
+.szx{width:38px;height:38px;border-radius:50%;border:0;background:#F1EEF6;color:#2A2140;font-size:22px;line-height:1;flex-shrink:0}
+.szsec{padding:16px 0 10px}.szst{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:900;color:#140d24}
+.szsi{width:24px;height:24px;color:#6A2FD0;display:inline-flex}.szsi svg{width:24px;height:24px}
+.szsec p{margin:4px 0 0;font-size:12.5px;color:#7A7390}
+.szlist{display:flex;flex-direction:column;gap:10px;padding-bottom:14px}
+.szrow{display:flex;align-items:center;gap:10px;padding:10px 16px;border:1.5px solid #ECE8F2;border-radius:18px;cursor:pointer;min-height:76px;transition:border-color .15s,background .15s}
+.szrow.on{border-color:#7B3FE4;background:#F7F2FF}
+.szml{width:52px;font-size:12px;color:#6E6783;font-weight:600;text-align:right;flex-shrink:0}
+.szim{width:74px;height:62px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.szim img{max-width:100%;max-height:100%;object-fit:contain;transform:scale(var(--s));border-radius:10px}.szim .px svg{width:30px;height:30px;color:#C2BAD6}
+.szinfo{flex:1;display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.szn{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:800;color:#140d24}
+.sztg{font-style:normal;min-width:26px;height:24px;padding:0 6px;border-radius:7px;font-size:12.5px;font-weight:800;display:inline-flex;align-items:center;justify-content:center}
+.sztg.t0{background:#FFE3DC;color:#E8541E}.sztg.t1{background:#FFEFD6;color:#C76A00}.sztg.t2{background:#FFF1D1;color:#9A6A00}.sztg.t3{background:#EDE6FB;color:#6A2FD0}
+.szinfo b{font-size:19px;font-weight:900;color:#140d24;direction:rtl}
+.szrow.on .szinfo b{color:#5B1FC8}
+.szrd{width:24px;height:24px;border-radius:50%;border:2px solid #C9C3D6;flex-shrink:0;position:relative;background:#fff}
+.szrow.on .szrd{border-color:#5B1FC8}
+.szrow.on .szrd::after{content:"";position:absolute;inset:4px;border-radius:50%;background:#5B1FC8}
+.szbar{position:sticky;bottom:0;display:flex;align-items:center;gap:12px;padding:14px 0 max(16px,env(safe-area-inset-bottom));background:#fff;border-top:1px solid #F1EEF6;margin:0 -18px;padding-inline:18px}
+.szqty{display:flex;align-items:center;gap:8px;flex-shrink:0;background:#F4F1FA;border-radius:30px;padding:6px}
+.szqty button{width:38px;height:38px;border-radius:50%;border:1.5px solid #DCD6E8;background:#fff;color:#2A2140;font-size:20px;line-height:1}
+.szqty button.pl{background:#5B1FC8;border-color:#5B1FC8;color:#fff}
+.szqty span{min-width:16px;text-align:center;font-weight:800;font-size:17px;color:#140d24}
+.szadd{flex:1;min-width:0;display:flex;align-items:center;justify-content:space-between;gap:8px;border:0;border-radius:18px;padding:16px 16px;background:linear-gradient(135deg,#FF7A00,#FF9533);color:#fff;font-weight:800;font-size:16px;box-shadow:0 8px 18px rgba(255,122,0,.28)}
+.szadd i{width:1px;height:26px;background:rgba(255,255,255,.45)}
+.szadd b{font-size:17px;font-weight:900;white-space:nowrap}
+.szadd span{white-space:nowrap;font-size:15.5px}
+.szd{max-width:80px}
+.szr{gap:6px!important}
+.optrow.szr .optn{background:#fff;border:1.5px solid #E6E1F0;border-radius:12px;padding:10px 10px;min-width:0;font-weight:700}
+.optrow.szr .optn:focus{border-color:#7B3FE4;outline:0}
+.optrow.szr .optn:not(.szd){flex:1.2}
+.optrow.szr .szd{flex:1;max-width:none}
+.optrow.szr .optpw{flex:1.3;min-width:0}
+.szr .szidx{min-width:0;width:38px;font-size:10px}
+.szhead{display:flex;gap:6px;padding:0 12px 6px;font-size:11px;font-weight:800;color:#8B84A0}
+.szhead .h0{width:38px}.szhead .h1{flex:1.2}.szhead .h2{flex:1}.szhead .h3{flex:1.3}.szhead .h4{width:44px}
+.optshead .psub{font-size:12px}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -4934,7 +4989,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="stFinance"></div>
       <div id="stDiscOwed"></div>
       <div id="stCash"></div>
-      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
+      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="optshead"><div><h4 class="opt-t">الأحجام <small class="szopt">اختياري</small></h4><p class="psub">مثل: وسط · كبير — الزبون يختار وحد بس، والسعر حسب الحجم</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
       <div class="stf-hd">
         <div>
           <h3>التصنيفات</h3>
@@ -4999,6 +5054,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <input id="pfPrice" type="number" inputmode="numeric" class="cf-inp" placeholder="أدخل السعر">
         <span>د.ع</span>
       </div>
+      <div class="optshead"><div><h4 class="opt-t">الأحجام <small class="szopt">اختياري</small></h4><p class="psub">مثل: وسط · كبير — الزبون يختار وحد بس، والسعر حسب الحجم</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div>
       <label class="cf-lab" style="margin-top:16px">الوصف</label>
       <textarea id="pfDesc" class="cf-inp pf-ta" rows="3" placeholder="اكتب وصف عن المنتج…"></textarea>
       <label class="cf-lab" style="margin-top:16px">صورة المنتج</label>
@@ -6359,6 +6415,7 @@ function prodFormOpen(pid){
   const ds=document.getElementById('pfDesc'); if(ds) ds.value = p ? (p.desc||'') : '';
   _pfImg = p ? (p.img||'') : '';
   prodFormPaintImg();
+  szRows = p && Array.isArray(p.sizes) ? p.sizes.map(z=>({n:z.n,p:z.p,d:z.d||''})) : []; szPaint();
 
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_prodform');
@@ -6404,7 +6461,8 @@ async function prodFormSave(){
   const pr=document.getElementById('pfPrice');
   const ds=document.getElementById('pfDesc');
   const n=String((nm&&nm.value)||'').trim();
-  const price=parseInt((pr&&pr.value)||0);
+  const _sz=szCollect(); if(_sz.err) return toast(_sz.err);
+  const price=_sz.sizes.length ? _sz.sizes[0].p : parseInt((pr&&pr.value)||0);
   if(!n){ toast('اكتب اسم المنتج'); if(nm) nm.focus(); return }
   if(!price || price<=0){ toast('اكتب سعر صحيح'); if(pr) pr.focus(); return }
 
@@ -6414,8 +6472,10 @@ async function prodFormSave(){
     id, name:n, price, desc:String((ds&&ds.value)||'').trim(),
     cat: old && String(old.cat||'').trim() ? old.cat : _pfCat.name,
     img: _pfImg||'',
-    opts: (old && Array.isArray(old.opts)) ? old.opts : []
+    opts: (old && Array.isArray(old.opts)) ? old.opts : [],
+    sizes: _sz.sizes
   };
+  if(old && old.avail===false) item.avail=false;
 
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
@@ -8501,7 +8561,7 @@ function dmCardHTML(item){
     <div class="dm-img${p.img?' bf':''}"${p.img?` style="--bg:url('${p.img}')"`:''}>${img}<span class="dm-rate"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${r?r.avg.toFixed(1):'جديد'}</span><button class="dm-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button></div>
     <div class="dm-name">${esc(p.name||'')}</div>
     <div class="dm-shop">${esc(s.name)}</div>
-    <div class="dm-meta"><span class="dm-price">${Number(p.price||0).toLocaleString()} <small>د.ع</small></span><button class="dm-add" onclick="event.stopPropagation();quickAdd('${s.id}','${p.id}')" aria-label="أضف للسلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
+    <div class="dm-meta"><span class="dm-price">${pPriceTxt(p)} <small>د.ع</small></span><button class="dm-add" onclick="event.stopPropagation();quickAdd('${s.id}','${p.id}')" aria-label="أضف للسلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
   </div>`;
 }
 /* إضافة سريعة للسلة من بطاقة الوجبة — إذا الوجبة بيها إضافات نفتح المحل */
@@ -8509,6 +8569,7 @@ function quickAdd(sid,pid){
   const sh=shops.find(x=>String(x.id)===String(sid)); if(!sh) return;
   const pr=(sh.products||[]).find(x=>String(x.id)===String(pid)); if(!pr) return;
   if(pr.opts&&pr.opts.length){ openShop(sh.id); return toast('اختار الإضافات اللي تريدها') }
+  if(pSizes(pr).length){ curShop=sh; return addCart(pr.id) }
   curShop=sh; addCart(pr.id);
 }
 /* شاهدتها مؤخراً */
@@ -8831,6 +8892,10 @@ function prodPH(){
 }
 function prodCtl(p){
   if(p.avail===false) return `<span class="ost-b dis">غير متوفر</span>`;
+  if(pSizes(p).length){
+    const n=cart.filter(x=>x.pid===p.id&&x.shopId===curShop.id).reduce((a,x)=>a+x.qty,0);
+    return `<div class="szctl"><button class="addb" onclick="addCart(${p.id})" aria-label="اختار الحجم">+</button>${n?`<span class="szcnt">${n}</span>`:''}</div>`;
+  }
   const c=cart.find(x=>x.pid===p.id&&x.shopId===curShop.id);
   return c
     ? `<div class="qty"><button onclick="qty(${p.id},-1)">−</button><span>${c.qty}</span><button onclick="qty(${p.id},1)">+</button></div>`
@@ -8855,7 +8920,7 @@ function renderTopSellers(){
           <div class="spcimg">${p.img?`<img src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
             <div class="spcadd">${prodCtl(p)}</div></div>
           <div class="spcnm">${esc(p.name)}</div>
-          <div class="spcpr">${p.price.toLocaleString()} د.ع</div>
+          <div class="spcpr">${pPriceTxt(p)} د.ع</div>
         </div>`).join('')}</div>
     </div>`;
 }
@@ -8877,7 +8942,7 @@ function renderMenu(){
       <div class="pi">
         <h4>${esc(p.name)}</h4>
         ${p.desc?`<p>${esc(p.desc)}</p>`:''}
-        <div class="pr">${p.price.toLocaleString()} د.ع</div>
+        <div class="pr">${pPriceTxt(p)} د.ع</div>
       </div>
     </div>`).join('');
   renderSpBar();
@@ -8897,28 +8962,82 @@ function renderSpBar(){
       <span class="spb-p">${t.toLocaleString()} د.ع</span>
     </button>`;
 }
-function addCart(pid){
+/* ═══ الأحجام: الزبون يختار وحد بس (وسط · كبير) — السعر من القاعدة (fix_order) ═══ */
+function pSizes(p){ return (p&&Array.isArray(p.sizes)?p.sizes:[]).filter(z=>z&&String(z.n||'').trim()&&Number(z.p)>0) }
+function pPriceTxt(p){
+  const z=pSizes(p);
+  if(z.length>1){ const lo=Math.min(...z.map(x=>Number(x.p))); return 'من '+lo.toLocaleString() }
+  if(z.length===1) return Number(z[0].p).toLocaleString();
+  return Number(p.price||0).toLocaleString();
+}
+let _szP=null,_szSel=0,_szQ=1;
+const SZ_TAG={'صغير':'S','وسط':'M','متوسط':'M','كبير':'L','عائلي':'XL','جامبو':'XL','سنكل':'S','دبل':'L'};
+function szTag(n,i,len){ const t=SZ_TAG[String(n).trim()]; if(t) return t; return (len===2?['M','L']:['S','M','L','XL','XXL','3XL'])[i]||String(i+1) }
+function openSizeSheet(p){ _szP=p; _szSel=0; _szQ=1; szSheetPaint() }
+function szSheetPaint(){
+  let el=document.getElementById('szSheet');
+  if(!el){
+    el=document.createElement('div'); el.id='szSheet'; el.className='szsh';
+    el.addEventListener('click',e=>{ if(e.target===el) szClose() });
+    document.body.appendChild(el);
+  }
+  const z=pSizes(_szP); if(!z.length) return szClose();
+  if(_szSel>=z.length) _szSel=0;
+  const p=_szP, img=p.img?`<img src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`;
+  const cup='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.5 13a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M4 7h16M8 7l1-3h6l1 3"/><path d="M9.5 12h5"/></svg>';
+  el.innerHTML=`<div class="szcard">
+    <div class="szgrab"></div>
+    <div class="szhd">
+      <div class="szhimg">${img}</div>
+      <div class="szht"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}</div>
+      <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
+    </div>
+    <div class="szsec"><div class="szst"><span class="szsi">${cup}</span>اختر الحجم</div><p>يمكنك اختيار حجم واحد فقط، والسعر يختلف حسب الحجم.</p></div>
+    <div class="szlist">${z.map((x,i)=>`<div class="szrow${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()">
+      <span class="szml">${esc(x.d||'')}</span>
+      <span class="szim" style="--s:${(0.72+0.28*(z.length>1?i/(z.length-1):1)).toFixed(2)}">${img}</span>
+      <span class="szinfo"><span class="szn"><i class="sztg t${Math.min(i,3)}">${szTag(x.n,i,z.length)}</i>${esc(x.n)}</span><b>${Number(x.p).toLocaleString()} د.ع</b></span>
+      <span class="szrd"></span>
+    </div>`).join('')}</div>
+    <div class="szbar">
+      <div class="szqty"><button class="pl" onclick="szQty(1)" aria-label="زيادة">+</button><span>${_szQ}</span><button onclick="szQty(-1)" aria-label="نقصان">−</button></div>
+      <button class="szadd" onclick="szConfirm()"><span>أضف إلى السلة</span><i></i><b>${(Number(z[_szSel].p)*_szQ).toLocaleString()} د.ع</b></button>
+    </div>
+  </div>`;
+  el.classList.add('on');
+}
+function szQty(d){ _szQ=Math.max(1,Math.min(20,_szQ+d)); szSheetPaint() }
+function szClose(){ const el=document.getElementById('szSheet'); if(el) el.classList.remove('on') }
+function szConfirm(){
+  const z=pSizes(_szP)[_szSel]; if(!z) return szClose();
+  const pid=_szP.id, q=_szQ; szClose(); addCart(pid,z.n,q);
+}
+function addCart(pid,szName,addQ){
   if(!isOpenNow(curShop)) return toast('المحل مسكّر الآن —'+nextOpenTxt(curShop));
   if(!requireLoc()) return;
   const p=(curShop.products||[]).find(x=>x.id===pid); if(!p)return;
   if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
+  const _zs=pSizes(p); let sz=null;
+  if(_zs.length){ sz=(szName!=null)?_zs.find(x=>x.n===szName):null; if(!sz) return openSizeSheet(p) }
   if(cart.length&&cart[0].shopId!==curShop.id){
     return askConfirm(
       'سلتك بيها طلب من <b>'+esc(cart[0].shopName||'محل ثاني')+'</b>.<br>'
       +'إذا تكمّل، السلة الحالية تنمسح وتبدي سلة جديدة من <b>'+esc(curShop.name)+'</b>.',
       {title:'محل مختلف', ok:'امسح وكمّل', danger:true,
         icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'}
-    ).then(yes=>{ if(yes){ cart=[]; addCart(pid) } });
+    ).then(yes=>{ if(yes){ cart=[]; addCart(pid,szName,addQ) } });
   }
-  const _ex=cart.find(c=>c.pid===p.id && c.shopId===curShop.id);
-  if(_ex) _ex.qty+=1;
-  else cart.push({pid:p.id,name:p.name,price:p.price,qty:1,img:p.img||'',desc:p.desc||'',shopId:curShop.id,shopName:curShop.name});
+  const _sk=sz?sz.n:'';
+  const _ex=cart.find(c=>c.pid===p.id && c.shopId===curShop.id && (c.size||'')===_sk);
+  const _aq=Math.max(1,parseInt(addQ)||1);
+  if(_ex) _ex.qty+=_aq;
+  else cart.push(Object.assign({pid:p.id,name:sz?(p.name+' ('+sz.n+')'):p.name,price:sz?Number(sz.p):p.price,qty:_aq,img:p.img||'',desc:p.desc||'',shopId:curShop.id,shopName:curShop.name}, sz?{size:sz.n}:{}));
   renderMenu();renderCart();renderSpBar();buzz([10,40,16]); toast('انضاف للسلة');
 }
 /* نفس المنتج يصير سطر واحد بالسلة والعدد يزيد */
 function mergeCart(){
   const m=[];
-  cart.forEach(c=>{ const x=m.find(y=>y.pid===c.pid && y.shopId===c.shopId); if(x) x.qty+=Number(c.qty||0); else m.push({...c}) });
+  cart.forEach(c=>{ const x=m.find(y=>y.pid===c.pid && y.shopId===c.shopId && (y.size||'')===(c.size||'')); if(x) x.qty+=Number(c.qty||0); else m.push({...c}) });
   if(m.length!==cart.length) cart=m;
 }
 function qty(pid,d){const i=cart.findIndex(c=>c.pid===pid);if(i<0)return;
@@ -9702,7 +9821,7 @@ async function submitOrder(){
   }
   const o={shopId:cart[0].shopId,shopName:cart[0].shopName,shopOwnerUid:ownerUid,
     customerUid:uid,customer:me.name,phone:me.phone,addr:me.addr,loc:me.loc||null,driverUid:'',
-    shopLoc:window.__shopLoc||null,shopPhone:window.__shopPhone||'',note:(orderNote||'').slice(0,300), offer_code:(promoNow()&&!promoNow().auto)?(orderCode||'').trim().toUpperCase():null,items:cart.map(c=>({pid:c.pid,name:c.name,price:c.price,qty:c.qty,img:c.img||''})),sub,
+    shopLoc:window.__shopLoc||null,shopPhone:window.__shopPhone||'',note:(orderNote||'').slice(0,300), offer_code:(promoNow()&&!promoNow().auto)?(orderCode||'').trim().toUpperCase():null,items:cart.map(c=>Object.assign({pid:c.pid,name:c.name,price:c.price,qty:c.qty,img:c.img||''}, c.size?{size:c.size}:{})),sub,
     serviceFee:svcFee(sub),deliveryFee:billCalc(sub).dlvPay,discount:billCalc(sub).disc,total:billCalc(sub).tot,
     status:'pending',createdAt:Date.now(),date:new Date().toLocaleString('ar-IQ')};
   try{
@@ -10065,9 +10184,13 @@ function reorder(oid){
   const avail=sh.products||[];
   const items=[]; let missing=0;
   (o.items||[]).forEach(i=>{
-    const p=avail.find(x=>x.id===i.pid || x.name===i.name);
-    if(p) items.push({pid:p.id,shopId:sh.id,name:p.name,price:p.price,qty:i.qty});
-    else missing++;
+    const p=avail.find(x=>String(x.id)===String(i.pid) || x.name===i.name);
+    if(!p){ missing++; return }
+    const zs=pSizes(p);
+    if(zs.length){
+      const z=zs.find(x=>x.n===i.size); if(!z){ missing++; return }
+      items.push({pid:p.id,shopId:sh.id,name:p.name+' ('+z.n+')',price:Number(z.p),qty:i.qty,size:z.n});
+    } else items.push({pid:p.id,shopId:sh.id,name:p.name,price:p.price,qty:i.qty});
   });
   if(!items.length) return toast('منتجات هذا الطلب ما عادت متوفرة');
   cart=items; mergeCart(); curShop=sh; renderCart();
@@ -10932,7 +11055,7 @@ function renderStore(){
 
   const ps=sh.products||[];
   document.getElementById('stMenu').innerHTML=ps.length?ps.map(p=>`<div class="prod"${p.avail===false?' style="opacity:.6"':''}>${p.img?`<img class="pimg" src="${p.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
-    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${p.price.toLocaleString()} د.ع</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?'متوفر — اضغط لإيقافه':'غير متوفر — اضغط لتفعيله'}"></div> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
+    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${p.price.toLocaleString()} د.ع</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${pSizes(p).length?`<div class="optcnt">${pSizes(p).map(z=>esc(z.n)).join(' · ')}</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?'متوفر — اضغط لإيقافه':'غير متوفر — اضغط لتفعيله'}"></div> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
     :'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>ضيف أول منتج</p></div>';
   paintShopType();
   const dl=document.getElementById('catOpts');
@@ -11253,6 +11376,38 @@ let editingProdAvail=true;
 
 /* ── الإضافات الاختيارية ── */
 let optRows=[];
+/* ── الأحجام (اختيار وحد إجباري) ── */
+let szRows=[];
+function szPaint(){
+  const html=szRows.length?'<div class="szhead"><span class="h0"></span><span class="h1">اسم الحجم</span><span class="h2">الكمية (اختياري)</span><span class="h3">السعر</span><span class="h4"></span></div>'+szRows.map((z,i)=>`<div class="optrow szr"> <span class="szidx">${i===0?'الأساسي':''}</span> <input class="optn" type="text" value="${esc(z.n||'')}" placeholder="${i===0?'مثال: وسط':'مثال: كبير'}" oninput="szRows[${i}].n=this.value"> <input class="optn szd" type="text" value="${esc(z.d||'')}" placeholder="250 مل" maxlength="14" oninput="szRows[${i}].d=this.value"> <div class="optpw"><input class="optp" type="number" inputmode="numeric" value="${z.p||''}" placeholder="السعر" oninput="szRows[${i}].p=this.value"><span class="unit">د.ع</span></div> <button class="optdel" onclick="szDelRow(${i})" aria-label="حذف"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M6.5 7 7.4 20a1.4 1.4 0 0 0 1.4 1.3h6.4A1.4 1.4 0 0 0 16.6 20L17.5 7"/></svg></button></div>`).join('')
+    +'<div class="optnote">أول حجم هو اللي يطلع افتراضي. لمن تضيف أحجام، السعر الأساسي ياخذ سعر أول حجم.</div>'
+    :'';
+  document.querySelectorAll('.szbox').forEach(b=>b.innerHTML=html);
+}
+function szAddRow(){
+  if(szRows.length>=6) return toast('أقصى شي 6 أحجام');
+  if(!szRows.length){
+    /* أول مرة: نعبّي سطرين، الأول بسعر المنتج الحالي */
+    const pf=document.getElementById('pfPrice'), po=document.getElementById('pp');
+    const cur=parseInt((pf&&pf.offsetParent&&pf.value)||(po&&po.offsetParent&&po.value)||0)||'';
+    szRows=[{n:'',p:cur},{n:'',p:''}];
+  } else szRows.push({n:'',p:''});
+  szPaint();
+}
+function szDelRow(i){ szRows.splice(i,1); szPaint() }
+function szCollect(){
+  const out=[], seen={};
+  for(const z of szRows){
+    const n=String(z.n||'').trim().slice(0,30), pr=parseInt(z.p)||0, dd=String(z.d||'').trim().slice(0,14);
+    if(!n && !pr) continue;
+    if(!n) return {err:'اكتب اسم كل حجم'};
+    if(pr<=0) return {err:'اكتب سعر الحجم «'+n+'»'};
+    if(seen[n]) return {err:'الحجم «'+n+'» مكرر'};
+    seen[n]=1; out.push(dd?{n,p:pr,d:dd}:{n,p:pr});
+  }
+  if(out.length===1) return {err:'لازم حجمين على الأقل — أو احذف الأحجام'};
+  return {sizes:out};
+}
 function renderOpts(){
   const b=document.getElementById('optsBox'); if(!b)return;
   b.innerHTML=optRows.length?optRows.map((o,i)=>`<div class="optrow"> <button class="optimg ${o.img?'has':''}" onclick="pickOptImg(${i})" title="صورة الخيار">${o.img?`<img src="${o.img}"><span class="rmx" onclick="delOptImg(${i},event)">×</span>`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg>'}</button> <input class="optn" type="text" value="${(o.n||'').replace(/"/g,'&quot;')}" placeholder="اسم الإضافة" oninput="optRows[${i}].n=this.value"> <div class="optpw"><input class="optp" type="number" inputmode="numeric" value="${o.p||''}" placeholder="0" oninput="optRows[${i}].p=this.value"><span class="unit">د.ع</span></div> <button class="optdel" onclick="delOptRow(${i})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M6.5 7 7.4 20a1.4 1.4 0 0 0 1.4 1.3h6.4A1.4 1.4 0 0 0 16.6 20L17.5 7"/></svg></button></div>`).join('')
@@ -11394,13 +11549,14 @@ async function sendCallDrv(){
 }
 
 async function addProduct(){
-  const n=pn.value.trim(),p=parseInt(pp.value),d=pd.value.trim(),ct=(document.getElementById('pc').value||'').trim();
+  const _sz=szCollect(); if(_sz.err) return toast(_sz.err);
+  const n=pn.value.trim(),p=_sz.sizes.length?_sz.sizes[0].p:parseInt(pp.value),d=pd.value.trim(),ct=(document.getElementById('pc').value||'').trim();
   if(!n)return toast('اكتب اسم المنتج');
   if(!p||p<=0)return toast('اكتب سعر صحيح');
   const opts=collectOpts();
   const item={
     id: editingProdId!==null ? editingProdId : Date.now(),
-    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, avail:editingProdAvail
+    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, avail:editingProdAvail
   };
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
@@ -11450,6 +11606,7 @@ function editProduct(id){
       b.innerHTML='<div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div><div class="tx">صورة المنتج (اختيارية)</div><div class="sub">اضغط لإضافة صورة</div>'}
   }
   optRows=(p.opts||[]).map(o=>({n:o.n,p:o.p,img:o.img||''})); renderOpts();
+  szRows=(Array.isArray(p.sizes)?p.sizes:[]).map(z=>({n:z.n,p:z.p,d:z.d||''})); szPaint();
   const t=document.getElementById('prodPanelTtl'); if(t)t.textContent='تعديل المنتج';
   const su=document.getElementById('prodPanelSub'); if(su)su.textContent='عدّل بيانات المنتج واحفظ التغييرات';
   const ab=document.getElementById('addProdBtn'); if(ab)ab.textContent='حفظ التعديل';
@@ -11462,6 +11619,7 @@ function cancelEditProduct(){
   pn.value='';pp.value='';pd.value='';
   const pcEl2=document.getElementById('pc'); if(pcEl2)pcEl2.value='';
   optRows=[]; renderOpts();
+  szRows=[]; szPaint();
   resetProdBox();
   const t=document.getElementById('prodPanelTtl'); if(t)t.textContent='إضافة منتج جديد';
   const su=document.getElementById('prodPanelSub'); if(su)su.textContent='أضف منتجاتك بسهولة واجذب المزيد من العملاء';
@@ -19836,7 +19994,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 /* v223 علامة زبون جديد */
 .nof-new{display:inline-block;vertical-align:middle;margin-inline-start:6px;background:#FFF1E6;color:#C2410C;border:1px solid #FDBA74;font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
 
-/* v226 سجل المبالغ المستلمة */
+/* v229 سجل المبالغ المستلمة */
 .cashlog{background:#fff;border:1px solid #EEE9F7;border-radius:18px;padding:12px 14px;margin:12px 0}
 .cashlog .cl-h{font-weight:900;font-size:14px;color:#3F0A92;margin-bottom:6px}
 .cashlog .cl-r{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #F3F0F8}
@@ -19946,7 +20104,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v226', t0=Date.now();
+  var VER='v229', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
