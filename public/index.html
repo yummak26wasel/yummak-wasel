@@ -19,7 +19,7 @@
 #splash .sdot span:nth-child(2){animation-delay:.18s}#splash .sdot span:nth-child(3){animation-delay:.36s}
 @keyframes bl{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
 
-/* v229 الأحجام */
+/* v237 الأحجام */
 .szopt{font-size:11px;font-weight:600;color:#8B84A0;margin-inline-start:4px}
 .szr .szidx{min-width:44px;font-size:10.5px;font-weight:800;color:#6A2FD0;text-align:center}
 .szctl{position:relative;display:inline-flex}
@@ -63,6 +63,20 @@
 .szadd b{font-size:17px;font-weight:900;white-space:nowrap}
 .szadd span{white-space:nowrap;font-size:15.5px}
 .szd{max-width:80px}
+#p_shop .prod{cursor:pointer}
+.szbig{margin:0 -18px 14px;height:220px;overflow:hidden;background:#F4F1FA}.szbig img{width:100%;height:100%;object-fit:cover;display:block}
+.oplist{display:flex;flex-direction:column;gap:8px;padding-bottom:14px}
+.oprow{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid #ECE8F2;border-radius:16px;cursor:pointer}
+.oprow.on{border-color:#7B3FE4;background:#F7F2FF}
+.opimg{width:40px;height:40px;border-radius:10px;object-fit:cover;flex-shrink:0}
+.opn{flex:1;font-weight:800;color:#140d24;font-size:15px}
+.opp{font-weight:800;color:#6E6783;font-size:14px;white-space:nowrap}
+.oprow.on .opp{color:#5B1FC8}
+.opck{width:22px;height:22px;border-radius:7px;border:2px solid #C9C3D6;flex-shrink:0;position:relative;background:#fff}
+.oprow.on .opck{background:#5B1FC8;border-color:#5B1FC8}
+.oprow.on .opck::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.szone{display:flex;align-items:center;justify-content:space-between;padding:16px 4px 14px;font-weight:800;color:#6E6783}
+.szone b{font-size:20px;font-weight:900;color:#5B1FC8}
 .szr{gap:6px!important}
 .optrow.szr .optn{background:#fff;border:1.5px solid #E6E1F0;border-radius:12px;padding:10px 10px;min-width:0;font-weight:700}
 .optrow.szr .optn:focus{border-color:#7B3FE4;outline:0}
@@ -73,6 +87,43 @@
 .szhead{display:flex;gap:6px;padding:0 12px 6px;font-size:11px;font-weight:800;color:#8B84A0}
 .szhead .h0{width:38px}.szhead .h1{flex:1.2}.szhead .h2{flex:1}.szhead .h3{flex:1.3}.szhead .h4{width:44px}
 .optshead .psub{font-size:12px}
+
+/* sheet-simple نافذة المنتج — بسيطة مثل بلي */
+.szcard{position:relative;padding-top:0!important}
+.szcard>.szx{position:absolute;top:12px;left:12px;z-index:3;background:rgba(255,255,255,.92);box-shadow:0 2px 8px rgba(0,0,0,.12)}
+.szbig{margin:0 -18px 0!important;height:250px!important;border-radius:26px 26px 0 0}
+.szinfo2{padding:16px 0 14px;border-bottom:1px solid #EFECF5}
+.szinfo2 b{display:block;font-size:21px;font-weight:900;color:#140d24}
+.szinfo2 p{margin:6px 0 0;font-size:13.5px;color:#7A7390;line-height:1.7}
+.szpr{margin-top:8px;font-size:18px;font-weight:900;color:#140d24}
+.szg{padding:16px 0 4px;border-bottom:1px solid #EFECF5}
+.szgt{font-size:17px;font-weight:900;color:#140d24;margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.szgt i{font-style:normal;font-size:11px;font-weight:800;color:#E86A00;background:#FFF1E6;border-radius:8px;padding:2px 8px}
+.szgt i.opt{color:#7A7390;background:#F1EEF6}
+.szo{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;cursor:pointer}
+.szo b{display:block;font-size:15.5px;font-weight:800;color:#140d24}
+.szo b small{font-size:12px;font-weight:600;color:#9A93AE}
+.szo span{display:block;font-size:13px;color:#7A7390;margin-top:3px}
+.szo .rd{width:24px;height:24px;border-radius:50%;border:2px solid #CFC9DC;flex-shrink:0;box-sizing:border-box}
+.szo.on .rd{border-color:#5B1FC8;border-width:7px}
+.szo .ck{width:23px;height:23px;border-radius:7px;border:2px solid #CFC9DC;flex-shrink:0;position:relative;box-sizing:border-box}
+.szo.on .ck{background:#5B1FC8;border-color:#5B1FC8}
+.szo.on .ck::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+.szadd{justify-content:center!important;gap:10px!important}
+.szadd b::before{content:"·";margin-inline-end:10px;opacity:.7}
+
+/* baly-bar: صورة بحواف + عدّاد بالنص فوق زر عريض */
+.szbig{margin:52px 0 0!important;width:100%;height:auto!important;aspect-ratio:1/1;border-radius:18px!important;overflow:hidden}
+.szbar{flex-direction:column;align-items:stretch!important;gap:12px!important}
+.szqty{align-self:center;background:transparent!important;gap:26px!important}
+.szqty button{background:#F1EEF6!important;border:0!important;color:#5B1FC8!important;width:42px!important;height:42px!important}
+.szqty button.pl{background:#F1EEF6!important;color:#5B1FC8!important}
+.szqty span{font-size:19px!important;color:#5B1FC8!important}
+.szadd{width:100%;padding:17px 16px!important}
+
+/* full-img: الصورة كاملة بدون قص */
+.szbig{aspect-ratio:auto!important;height:auto!important;display:flex;align-items:center;justify-content:center;background:#F6F4FA}
+.szbig img{width:100%!important;height:auto!important;max-height:62vh;object-fit:contain!important}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -4983,7 +5034,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="stComm"></div>
       <div class="statwrap" style="display:none"><div class="stats" id="stStats"></div></div> <div id="stRecent" style="display:none"></div>
       </div> <div class="page" id="q_finance">
-      <div class="fhd"><div><h2>المالية</h2><p>مراجعة مبيعاتك وعمولة التطبيق</p></div>
+      <div class="fhd"><div><h2>المالية</h2><p id="finSub">مراجعة مبيعاتك وعمولة التطبيق</p></div>
         <span class="fmonth"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg><span id="finPerLbl">آخر 30 يوم</span></span></div>
       <div class="perbar" id="finPer" style="margin:0 0 14px"></div>
       <div id="stFinance"></div>
@@ -5055,6 +5106,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <span>د.ع</span>
       </div>
       <div class="optshead"><div><h4 class="opt-t">الأحجام <small class="szopt">اختياري</small></h4><p class="psub">مثل: وسط · كبير — الزبون يختار وحد بس، والسعر حسب الحجم</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div>
+      <div class="optshead"><div><h4 class="opt-t">الإضافات <small class="szopt">اختياري</small></h4><p class="psub">مثل: جبن +500 · صوص إضافي +250 — الزبون يختار أكثر من وحدة</p></div><button class="addopt" onclick="addOptRow()">+ إضافة</button></div><div id="optsBox2"></div>
       <label class="cf-lab" style="margin-top:16px">الوصف</label>
       <textarea id="pfDesc" class="cf-inp pf-ta" rows="3" placeholder="اكتب وصف عن المنتج…"></textarea>
       <label class="cf-lab" style="margin-top:16px">صورة المنتج</label>
@@ -6416,6 +6468,7 @@ function prodFormOpen(pid){
   _pfImg = p ? (p.img||'') : '';
   prodFormPaintImg();
   szRows = p && Array.isArray(p.sizes) ? p.sizes.map(z=>({n:z.n,p:z.p,d:z.d||''})) : []; szPaint();
+  optRows = p && Array.isArray(p.opts) ? p.opts.map(o=>({n:o.n,p:o.p,img:o.img||''})) : []; renderOpts();
 
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_prodform');
@@ -6472,7 +6525,7 @@ async function prodFormSave(){
     id, name:n, price, desc:String((ds&&ds.value)||'').trim(),
     cat: old && String(old.cat||'').trim() ? old.cat : _pfCat.name,
     img: _pfImg||'',
-    opts: (old && Array.isArray(old.opts)) ? old.opts : [],
+    opts: collectOpts(),
     sizes: _sz.sizes
   };
   if(old && old.avail===false) item.avail=false;
@@ -8568,8 +8621,7 @@ function dmCardHTML(item){
 function quickAdd(sid,pid){
   const sh=shops.find(x=>String(x.id)===String(sid)); if(!sh) return;
   const pr=(sh.products||[]).find(x=>String(x.id)===String(pid)); if(!pr) return;
-  if(pr.opts&&pr.opts.length){ openShop(sh.id); return toast('اختار الإضافات اللي تريدها') }
-  if(pSizes(pr).length){ curShop=sh; return addCart(pr.id) }
+  if(pHasChoice(pr)){ curShop=sh; return openSizeSheet(pr) }
   curShop=sh; addCart(pr.id);
 }
 /* شاهدتها مؤخراً */
@@ -8892,9 +8944,9 @@ function prodPH(){
 }
 function prodCtl(p){
   if(p.avail===false) return `<span class="ost-b dis">غير متوفر</span>`;
-  if(pSizes(p).length){
+  if(pHasChoice(p)){
     const n=cart.filter(x=>x.pid===p.id&&x.shopId===curShop.id).reduce((a,x)=>a+x.qty,0);
-    return `<div class="szctl"><button class="addb" onclick="addCart(${p.id})" aria-label="اختار الحجم">+</button>${n?`<span class="szcnt">${n}</span>`:''}</div>`;
+    return `<div class="szctl"><button class="addb" onclick="openItem(${p.id})" aria-label="اختار">+</button>${n?`<span class="szcnt">${n}</span>`:''}</div>`;
   }
   const c=cart.find(x=>x.pid===p.id&&x.shopId===curShop.id);
   return c
@@ -8916,9 +8968,9 @@ function renderTopSellers(){
     <div class="spsec">
       <h3>الأكثر مبيعاً</h3>
       <div class="sprow">${list.map(p=>`
-        <div class="spcard">
+        <div class="spcard" onclick="openItem(${p.id})">
           <div class="spcimg">${p.img?`<img src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
-            <div class="spcadd">${prodCtl(p)}</div></div>
+            <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
           <div class="spcnm">${esc(p.name)}</div>
           <div class="spcpr">${pPriceTxt(p)} د.ع</div>
         </div>`).join('')}</div>
@@ -8933,11 +8985,11 @@ function renderMenu(){
   const ps = _secProducts(all);
   if(!ps.length){ box.innerHTML=EMPTY('ما بيه منتجات بهذا القسم'); renderSpBar(); return }
   box.innerHTML=ps.map(p=>`
-    <div class="prod"${p.avail===false?' style="opacity:.55"':''}>
+    <div class="prod"${p.avail===false?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
         ${p.img?`<img class="pimg" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
         ${p.isNew?'<span class="pnew">جديد</span>':''}
-        <div class="pctl">${prodCtl(p)}</div>
+        <div class="pctl" onclick="event.stopPropagation()">${prodCtl(p)}</div>
       </div>
       <div class="pi">
         <h4>${esc(p.name)}</h4>
@@ -8964,16 +9016,20 @@ function renderSpBar(){
 }
 /* ═══ الأحجام: الزبون يختار وحد بس (وسط · كبير) — السعر من القاعدة (fix_order) ═══ */
 function pSizes(p){ return (p&&Array.isArray(p.sizes)?p.sizes:[]).filter(z=>z&&String(z.n||'').trim()&&Number(z.p)>0) }
+function pOpts(p){ return (p&&Array.isArray(p.opts)?p.opts:[]).filter(o=>o&&String(o.n||'').trim()) }
+function pHasChoice(p){ return pSizes(p).length>0 || pOpts(p).length>0 }
+function cartKey(c){ return (c.size||'')+'|'+(Array.isArray(c.opts)?c.opts.join(','):'') }
 function pPriceTxt(p){
   const z=pSizes(p);
   if(z.length>1){ const lo=Math.min(...z.map(x=>Number(x.p))); return 'من '+lo.toLocaleString() }
   if(z.length===1) return Number(z[0].p).toLocaleString();
   return Number(p.price||0).toLocaleString();
 }
-let _szP=null,_szSel=0,_szQ=1;
+let _szP=null,_szSel=0,_szQ=1,_szOpt=[];
 const SZ_TAG={'صغير':'S','وسط':'M','متوسط':'M','كبير':'L','عائلي':'XL','جامبو':'XL','سنكل':'S','دبل':'L'};
 function szTag(n,i,len){ const t=SZ_TAG[String(n).trim()]; if(t) return t; return (len===2?['M','L']:['S','M','L','XL','XXL','3XL'])[i]||String(i+1) }
-function openSizeSheet(p){ _szP=p; _szSel=0; _szQ=1; szSheetPaint() }
+function openSizeSheet(p){ _szP=p; _szSel=0; _szQ=1; _szOpt=[]; szSheetPaint() }
+function szTogOpt(i){ const k=_szOpt.indexOf(i); if(k>=0) _szOpt.splice(k,1); else _szOpt.push(i); szSheetPaint() }
 function szSheetPaint(){
   let el=document.getElementById('szSheet');
   if(!el){
@@ -8981,63 +9037,75 @@ function szSheetPaint(){
     el.addEventListener('click',e=>{ if(e.target===el) szClose() });
     document.body.appendChild(el);
   }
-  const z=pSizes(_szP); if(!z.length) return szClose();
+  const z=pSizes(_szP), ops=pOpts(_szP);
   if(_szSel>=z.length) _szSel=0;
-  const p=_szP, img=p.img?`<img src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`;
-  const cup='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 7h14l-1.5 13a1 1 0 0 1-1 .9h-9a1 1 0 0 1-1-.9z"/><path d="M4 7h16M8 7l1-3h6l1 3"/><path d="M9.5 12h5"/></svg>';
+  _szOpt=_szOpt.filter(i=>i<ops.length);
+  const optSum=_szOpt.reduce((a,i)=>a+(parseInt(ops[i].p)||0),0);
+  const base=z.length?Number(z[0].p):Number(_szP.price||0);
+  const unit=(z.length?Number(z[_szSel].p):Number(_szP.price||0))+optSum;
+  const _old=el.querySelector('.szcard'), _st=_old?_old.scrollTop:0;
+  const p=_szP, N=n=>Number(n).toLocaleString();
   el.innerHTML=`<div class="szcard">
-    <div class="szgrab"></div>
-    <div class="szhd">
-      <div class="szhimg">${img}</div>
-      <div class="szht"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}</div>
-      <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
-    </div>
-    <div class="szsec"><div class="szst"><span class="szsi">${cup}</span>اختر الحجم</div><p>يمكنك اختيار حجم واحد فقط، والسعر يختلف حسب الحجم.</p></div>
-    <div class="szlist">${z.map((x,i)=>`<div class="szrow${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()">
-      <span class="szml">${esc(x.d||'')}</span>
-      <span class="szim" style="--s:${(0.72+0.28*(z.length>1?i/(z.length-1):1)).toFixed(2)}">${img}</span>
-      <span class="szinfo"><span class="szn"><i class="sztg t${Math.min(i,3)}">${szTag(x.n,i,z.length)}</i>${esc(x.n)}</span><b>${Number(x.p).toLocaleString()} د.ع</b></span>
-      <span class="szrd"></span>
-    </div>`).join('')}</div>
+    <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
+    ${p.img?`<div class="szbig"><img src="${p.img}" alt=""></div>`:'<div style="height:52px"></div>'}
+    <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${N(base)} د.ع</div></div>
+    ${z.length?`<div class="szg"><div class="szgt">الحجم <i>مطلوب</i></div>
+      ${z.map((x,i)=>{const d=Number(x.p)-base; return `<div class="szo${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()"><div><b>${esc(x.n)}${x.d?` <small>${esc(x.d)}</small>`:''}</b><span>${d>0?'<bdi dir="ltr">+'+N(d)+'</bdi> د.ع':'السعر الأساسي'}</span></div><i class="rd"></i></div>`}).join('')}</div>`:''}
+    ${ops.length?`<div class="szg"><div class="szgt">الإضافات <i class="opt">اختياري</i></div>
+      ${ops.map((o,i)=>{const pr=parseInt(o.p)||0; return `<div class="szo${_szOpt.includes(i)?' on':''}" onclick="szTogOpt(${i})"><div><b>${esc(o.n)}</b><span>${pr?'<bdi dir="ltr">+'+N(pr)+'</bdi> د.ع':'مجاني'}</span></div><i class="ck"></i></div>`}).join('')}</div>`:''}
     <div class="szbar">
       <div class="szqty"><button class="pl" onclick="szQty(1)" aria-label="زيادة">+</button><span>${_szQ}</span><button onclick="szQty(-1)" aria-label="نقصان">−</button></div>
-      <button class="szadd" onclick="szConfirm()"><span>أضف إلى السلة</span><i></i><b>${(Number(z[_szSel].p)*_szQ).toLocaleString()} د.ع</b></button>
+      <button class="szadd" onclick="szConfirm()"><span>إضافة</span><b>${N(unit*_szQ)} د.ع</b></button>
     </div>
   </div>`;
   el.classList.add('on');
+  if(_st){ const nc=el.querySelector('.szcard'); if(nc) nc.scrollTop=_st }
 }
 function szQty(d){ _szQ=Math.max(1,Math.min(20,_szQ+d)); szSheetPaint() }
 function szClose(){ const el=document.getElementById('szSheet'); if(el) el.classList.remove('on') }
 function szConfirm(){
-  const z=pSizes(_szP)[_szSel]; if(!z) return szClose();
-  const pid=_szP.id, q=_szQ; szClose(); addCart(pid,z.n,q);
+  const zs=pSizes(_szP), z=zs[_szSel], ops=pOpts(_szP);
+  const on=_szOpt.slice().sort((a,b)=>a-b).map(i=>ops[i].n);
+  const pid=_szP.id, q=_szQ; szClose();
+  addCart(pid, zs.length&&z?z.n:null, q, on, true);
 }
-function addCart(pid,szName,addQ){
+/* v237: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
+function openItem(pid){
+  const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); if(!p) return;
+  if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
+  openSizeSheet(p);
+}
+function addCart(pid,szName,addQ,optNames,fromSheet){
   if(!isOpenNow(curShop)) return toast('المحل مسكّر الآن —'+nextOpenTxt(curShop));
   if(!requireLoc()) return;
   const p=(curShop.products||[]).find(x=>x.id===pid); if(!p)return;
   if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
   const _zs=pSizes(p); let sz=null;
   if(_zs.length){ sz=(szName!=null)?_zs.find(x=>x.n===szName):null; if(!sz) return openSizeSheet(p) }
+  const _po=pOpts(p);
+  if(_po.length && !fromSheet) return openSizeSheet(p);
+  const _on=(Array.isArray(optNames)?optNames:[]).filter(n=>_po.some(o=>o.n===n));
+  const _osum=_on.reduce((a,n)=>a+(parseInt((_po.find(o=>o.n===n)||{}).p)||0),0);
   if(cart.length&&cart[0].shopId!==curShop.id){
     return askConfirm(
       'سلتك بيها طلب من <b>'+esc(cart[0].shopName||'محل ثاني')+'</b>.<br>'
       +'إذا تكمّل، السلة الحالية تنمسح وتبدي سلة جديدة من <b>'+esc(curShop.name)+'</b>.',
       {title:'محل مختلف', ok:'امسح وكمّل', danger:true,
         icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'}
-    ).then(yes=>{ if(yes){ cart=[]; addCart(pid,szName,addQ) } });
+    ).then(yes=>{ if(yes){ cart=[]; addCart(pid,szName,addQ,optNames,fromSheet) } });
   }
-  const _sk=sz?sz.n:'';
-  const _ex=cart.find(c=>c.pid===p.id && c.shopId===curShop.id && (c.size||'')===_sk);
+  const _nl={size:sz?sz.n:undefined, opts:_on.length?_on:undefined};
+  const _ex=cart.find(c=>c.pid===p.id && c.shopId===curShop.id && cartKey(c)===cartKey(_nl));
+  const _lbl=[sz?sz.n:'', ..._on].filter(Boolean);
   const _aq=Math.max(1,parseInt(addQ)||1);
   if(_ex) _ex.qty+=_aq;
-  else cart.push(Object.assign({pid:p.id,name:sz?(p.name+' ('+sz.n+')'):p.name,price:sz?Number(sz.p):p.price,qty:_aq,img:p.img||'',desc:p.desc||'',shopId:curShop.id,shopName:curShop.name}, sz?{size:sz.n}:{}));
+  else cart.push(Object.assign({pid:p.id,name:_lbl.length?(p.name+' ('+_lbl.join('، ')+')'):p.name,price:(sz?Number(sz.p):Number(p.price||0))+_osum,qty:_aq,img:p.img||'',desc:p.desc||'',shopId:curShop.id,shopName:curShop.name}, sz?{size:sz.n}:{}, _on.length?{opts:_on}:{}));
   renderMenu();renderCart();renderSpBar();buzz([10,40,16]); toast('انضاف للسلة');
 }
 /* نفس المنتج يصير سطر واحد بالسلة والعدد يزيد */
 function mergeCart(){
   const m=[];
-  cart.forEach(c=>{ const x=m.find(y=>y.pid===c.pid && y.shopId===c.shopId && (y.size||'')===(c.size||'')); if(x) x.qty+=Number(c.qty||0); else m.push({...c}) });
+  cart.forEach(c=>{ const x=m.find(y=>y.pid===c.pid && y.shopId===c.shopId && cartKey(y)===cartKey(c)); if(x) x.qty+=Number(c.qty||0); else m.push({...c}) });
   if(m.length!==cart.length) cart=m;
 }
 function qty(pid,d){const i=cart.findIndex(c=>c.pid===pid);if(i<0)return;
@@ -9821,7 +9889,7 @@ async function submitOrder(){
   }
   const o={shopId:cart[0].shopId,shopName:cart[0].shopName,shopOwnerUid:ownerUid,
     customerUid:uid,customer:me.name,phone:me.phone,addr:me.addr,loc:me.loc||null,driverUid:'',
-    shopLoc:window.__shopLoc||null,shopPhone:window.__shopPhone||'',note:(orderNote||'').slice(0,300), offer_code:(promoNow()&&!promoNow().auto)?(orderCode||'').trim().toUpperCase():null,items:cart.map(c=>Object.assign({pid:c.pid,name:c.name,price:c.price,qty:c.qty,img:c.img||''}, c.size?{size:c.size}:{})),sub,
+    shopLoc:window.__shopLoc||null,shopPhone:window.__shopPhone||'',note:(orderNote||'').slice(0,300), offer_code:(promoNow()&&!promoNow().auto)?(orderCode||'').trim().toUpperCase():null,items:cart.map(c=>Object.assign({pid:c.pid,name:c.name,price:c.price,qty:c.qty,img:c.img||''}, c.size?{size:c.size}:{}, (Array.isArray(c.opts)&&c.opts.length)?{opts:c.opts}:{})),sub,
     serviceFee:svcFee(sub),deliveryFee:billCalc(sub).dlvPay,discount:billCalc(sub).disc,total:billCalc(sub).tot,
     status:'pending',createdAt:Date.now(),date:new Date().toLocaleString('ar-IQ')};
   try{
@@ -9961,7 +10029,7 @@ function renderTrack(){
   </svg>`;
   box.innerHTML=`
   <div class="trk-no">#${o.order_no||String(o.createdAt).slice(-4)}</div>
-  <div class="trk-ill">${gone?CANC:(done?BOXI:PAN)}</div>
+  ${_trMapOn(o)?`<div id="spMapSlot" class="sp-mslot"></div><div class="sp-mtx" id="spMapTx">${o.driver_loc&&o.driver_loc.lat?'':'🛵 ننتظر موقع السائق…'}</div>`:`<div class="trk-ill">${gone?CANC:(done?BOXI:PAN)}</div>`}
   ${!done?`<div class="trk-eta"><span>سيصلك الطلب في</span><b>${etaRange(o)}</b></div>`:''}
   ${!done?`<div class="trk-steps">
     <div class="nd${on(0)}${nx(0)}">${TRK_ICONS[0]}</div><div class="ln${on(1)}${lx(1)}"></div>
@@ -10011,6 +10079,7 @@ function renderTrack(){
     </div>
   </div>
   ${o.status==='delivered'?`<button class="big-btn stickybtn" onclick="reorder('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 12a8 8 0 1 1-2.6-5.9"/><path d="M20 3.5V9h-5.5"/></svg> اعادة الطلب</button>`:''}`;
+  if(_trMapOn(o)) spMapMount(_trAdapt(o));
 }
 
 function renderOrders(){ try{ _renderOrders(); if(trkOpen) renderTrack() }catch(e){ console.warn('renderOrders',e);
@@ -10191,6 +10260,13 @@ function reorder(oid){
       const z=zs.find(x=>x.n===i.size); if(!z){ missing++; return }
       items.push({pid:p.id,shopId:sh.id,name:p.name+' ('+z.n+')',price:Number(z.p),qty:i.qty,size:z.n});
     } else items.push({pid:p.id,shopId:sh.id,name:p.name,price:p.price,qty:i.qty});
+    const _it=items[items.length-1], po=pOpts(p);
+    if(Array.isArray(i.opts) && i.opts.length){
+      if(!i.opts.every(n=>po.some(o=>o.n===n))){ items.pop(); missing++; return }
+      _it.opts=i.opts.slice();
+      _it.price+=i.opts.reduce((a,n)=>a+(parseInt(po.find(o=>o.n===n).p)||0),0);
+      _it.name=p.name+' ('+[_it.size||'',...i.opts].filter(Boolean).join('، ')+')';
+    }
   });
   if(!items.length) return toast('منتجات هذا الطلب ما عادت متوفرة');
   cart=items; mergeCart(); curShop=sh; renderCart();
@@ -10316,6 +10392,9 @@ function renderSpTrack(box,id){
 }
 /* خريطة التتبع داخل صفحة اشتريلي — تبقى حية وما تنعاد مع كل تحديث */
 let _spMapEl=null,_spMap=null,_spMapId=null,_spMC=null,_spMD=null,_spML=null,_spFit=false;
+/* v237: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
+function _trMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['ontheway','arrived'].includes(o.status)) }
+function _trAdapt(o){ return {id:'o:'+o.id, loc:o.loc, driverLoc:o.driver_loc, status:o.status==='arrived'?'arrived':'purchased'} }
 function _spMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['assigned','purchased','arrived'].includes(o.status)) }
 async function spMapMount(o){
   const slot=document.getElementById('spMapSlot'); if(!slot) return;
@@ -10773,6 +10852,9 @@ function startShopClock(){
 function renderStore(){
   if(!myShopDoc)return;
   if(!window.__stPerInit){ window.__stPerInit=true; periodDays=30 }   /* المالية تبدأ بآخر 30 يوم مو اليوم */
+  /* v237: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
+  const __stf=!!(me && me.staff);
+  if(__stf){ periodDays=1; window.stMonth=0 }
   const sh=myShopDoc,os=myOrders;
   document.getElementById('stName').textContent=sh.name;
   try{ /* صورة المتجر بالهيدر، وإذا ما موجودة أو انكسر رابطها نرجع لشعار التطبيق */
@@ -10844,10 +10926,10 @@ function renderStore(){
   const sm=document.getElementById('stSummary');
   const __noRep = !!(me.staff && !me.staff.can_reports);   /* موظف بلا صلاحية تقارير */
   /* ملخص الرئيسية = هذا الشهر (من يوم 1 بتوقيت الجهاز) ويتصفّر مع بداية كل شهر */
-  const _mS=new Date(); _mS.setDate(1); _mS.setHours(0,0,0,0); const _mT=_mS.getTime();
+  const _mS=new Date(); if(!__stf) _mS.setDate(1); _mS.setHours(0,0,0,0); const _mT=_mS.getTime();
   const _monO   = os.filter(o=>_anyTs(o.createdAt)>=_mT);
   const _monDone= os.filter(o=>o.status==='delivered' && _anyTs(o.deliveredAt||o.createdAt)>=_mT);
-  const _monName= new Date().toLocaleDateString('ar-IQ',{month:'long'});
+  const _monName= __stf ? 'اليوم' : new Date().toLocaleDateString('ar-IQ',{month:'long'});
   if(sm) sm.innerHTML=`
     <div class="stsum">
       <div class="dt"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>
@@ -10969,7 +11051,13 @@ function renderStore(){
   try{
     const _pl=document.getElementById('finPerLbl'); if(_pl) _pl.textContent = window.stMonth ? new Date(window.stMonth).toLocaleDateString('ar-IQ',{month:'long',year:'numeric'}) : (periodDays===1?'اليوم':('آخر '+periodDays+(periodDays===7?' أيام':' يوم')));
     const _pb=document.getElementById('finPer');
-    if(_pb){
+    const _fs=document.getElementById('finSub'); if(_fs) _fs.textContent = __stf ? 'حساب اليوم فقط — باقي الحسابات عند صاحب المحل' : 'مراجعة مبيعاتك وعمولة التطبيق';
+    if(_pb && __stf){
+      _pb.innerHTML='<button class="perchip on">اليوم</button>';
+      const _mb0=document.getElementById('finMon'); if(_mb0) _mb0.style.display='none';
+    }
+    else if(_pb){
+      const _mb1=document.getElementById('finMon'); if(_mb1) _mb1.style.display='';
       _pb.innerHTML=[[1,'اليوم'],[7,'7 أيام'],[30,'30 يوم']].map(([d,l])=>`<button class="perchip${(!window.stMonth&&periodDays===d)?' on':''}" onclick="stPickMonth(0);setPeriod(${d},this)">${l}</button>`).join('');
       /* الأشهر: الحالي + السابقة (آخر 12 شهر) */
       let _mb=document.getElementById('finMon');
@@ -10982,6 +11070,16 @@ function renderStore(){
   }catch(e){}
   const fin=document.getElementById('stFinance');
   if(fin && __noRep){ fin.innerHTML=''; }
+  else if(fin && __stf){
+    const _n=n=>Number(n||0).toLocaleString();
+    fin.innerHTML=`
+    <div class="fsec"><i class="pu"></i><h3>مبيعات اليوم</h3></div>
+    <div class="fst">
+      <div class="fst-r"><div><b>مبيعات اليوم</b><small>قيمة الأكل والمنتجات</small></div><span class="pl">${_n(gross)} <small style="display:inline">د.ع</small></span></div>
+      <div class="fst-r"><div><b>الطلبات المكتملة اليوم</b></div><span class="pl">${doneP.length}</span></div>
+      <div class="fst-r"><div><b>الطلبات المرفوضة اليوم</b><small>ما تنحسب بالمبيعات</small></div><span class="mn">${rejP.length}</span></div>
+    </div>`;
+  }
   else if(fin){
     const _ic=invCalc(myComm.amount, myInv), _st=_ic.s;
     const _stTxt=_st==='paid'?'مسدد ✓':(_st==='pend'?'قيد المراجعة':(_st==='part'?'باقي '+_ic.rem.toLocaleString():'مستحق'));
@@ -11409,12 +11507,12 @@ function szCollect(){
   return {sizes:out};
 }
 function renderOpts(){
-  const b=document.getElementById('optsBox'); if(!b)return;
-  b.innerHTML=optRows.length?optRows.map((o,i)=>`<div class="optrow"> <button class="optimg ${o.img?'has':''}" onclick="pickOptImg(${i})" title="صورة الخيار">${o.img?`<img src="${o.img}"><span class="rmx" onclick="delOptImg(${i},event)">×</span>`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg>'}</button> <input class="optn" type="text" value="${(o.n||'').replace(/"/g,'&quot;')}" placeholder="اسم الإضافة" oninput="optRows[${i}].n=this.value"> <div class="optpw"><input class="optp" type="number" inputmode="numeric" value="${o.p||''}" placeholder="0" oninput="optRows[${i}].p=this.value"><span class="unit">د.ع</span></div> <button class="optdel" onclick="delOptRow(${i})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M6.5 7 7.4 20a1.4 1.4 0 0 0 1.4 1.3h6.4A1.4 1.4 0 0 0 16.6 20L17.5 7"/></svg></button></div>`).join('')
+  const html=optRows.length?optRows.map((o,i)=>`<div class="optrow"> <button class="optimg ${o.img?'has':''}" onclick="pickOptImg(${i})" title="صورة الخيار">${o.img?`<img src="${o.img}"><span class="rmx" onclick="delOptImg(${i},event)">×</span>`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg>'}</button> <input class="optn" type="text" value="${(o.n||'').replace(/"/g,'&quot;')}" placeholder="اسم الإضافة" oninput="optRows[${i}].n=this.value"> <div class="optpw"><input class="optp" type="number" inputmode="numeric" value="${o.p||''}" placeholder="0" oninput="optRows[${i}].p=this.value"><span class="unit">د.ع</span></div> <button class="optdel" onclick="delOptRow(${i})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9.5 7V5.2A1.2 1.2 0 0 1 10.7 4h2.6a1.2 1.2 0 0 1 1.2 1.2V7"/><path d="M6.5 7 7.4 20a1.4 1.4 0 0 0 1.4 1.3h6.4A1.4 1.4 0 0 0 16.6 20L17.5 7"/></svg></button></div>`).join('')
     :'<div class="optempty">ما أضفت أي خيار — اضغط «إضافة خيار»</div>';
+  ['optsBox','optsBox2'].forEach(id=>{ const b=document.getElementById(id); if(b) b.innerHTML=html });
 }
 function addOptRow(){ optRows.push({n:'',p:'',img:''}); renderOpts();
-  setTimeout(()=>{const el=document.querySelector('#optsBox .optrow:last-child .optn'); if(el)el.focus()},60) }
+  setTimeout(()=>{const pf=document.getElementById('q_prodform'); const el=document.querySelector((pf&&pf.classList.contains('on')?'#optsBox2':'#optsBox')+' .optrow:last-child .optn'); if(el)el.focus()},60) }
 function delOptRow(i){ optRows.splice(i,1); renderOpts() }
 function collectOpts(){
   return optRows.map(o=>({n:String(o.n||'').trim(),p:parseInt(o.p)||0,img:o.img||''})).filter(o=>o.n);
@@ -13466,6 +13564,7 @@ async function loadMyComm(){
 
 function renderMyComm(){
   const box=document.getElementById('stComm'); if(!box) return;
+  if(me && me.staff){ box.innerHTML=''; return }   /* v237: عمولة التطبيق وسدادها لصاحب المحل بس */
   const ic=invCalc(myComm.amount, myInv), st=ic.s;
   const dd=(myShopPer?myShopPer.e:_dueDate(new Date())).toLocaleDateString('ar-IQ');
   const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
@@ -13517,6 +13616,7 @@ function pcCopy(){
 }
 
 async function openPayCom(pi){
+  if(me && me.staff) return toast('سداد عمولة التطبيق عند صاحب المحل');
   const _pv=(typeof pi==='number')?myPrev[pi]:null;
   window._pcPer=_pv?_pv.key:null;
   const _inv=_pv?_pv.inv:myInv;
@@ -19994,7 +20094,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 /* v223 علامة زبون جديد */
 .nof-new{display:inline-block;vertical-align:middle;margin-inline-start:6px;background:#FFF1E6;color:#C2410C;border:1px solid #FDBA74;font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
 
-/* v229 سجل المبالغ المستلمة */
+/* v237 سجل المبالغ المستلمة */
 .cashlog{background:#fff;border:1px solid #EEE9F7;border-radius:18px;padding:12px 14px;margin:12px 0}
 .cashlog .cl-h{font-weight:900;font-size:14px;color:#3F0A92;margin-bottom:6px}
 .cashlog .cl-r{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #F3F0F8}
@@ -20104,7 +20204,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v229', t0=Date.now();
+  var VER='v237', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
