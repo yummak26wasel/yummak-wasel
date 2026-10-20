@@ -19,7 +19,7 @@
 #splash .sdot span:nth-child(2){animation-delay:.18s}#splash .sdot span:nth-child(3){animation-delay:.36s}
 @keyframes bl{0%,100%{opacity:.3;transform:scale(.85)}50%{opacity:1;transform:scale(1.15)}}
 
-/* v237 الأحجام */
+/* v243 الأحجام */
 .szopt{font-size:11px;font-weight:600;color:#8B84A0;margin-inline-start:4px}
 .szr .szidx{min-width:44px;font-size:10.5px;font-weight:800;color:#6A2FD0;text-align:center}
 .szctl{position:relative;display:inline-flex}
@@ -124,6 +124,42 @@
 /* full-img: الصورة كاملة بدون قص */
 .szbig{aspect-ratio:auto!important;height:auto!important;display:flex;align-items:center;justify-content:center;background:#F6F4FA}
 .szbig img{width:100%!important;height:auto!important;max-height:62vh;object-fit:contain!important}
+
+/* v243 وصل الحساب بعد التسليم */
+.rcp{margin-top:6px;text-align:right}
+.rcp-top{background:linear-gradient(135deg,#5B1FC8,#7B3FE4);color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:10px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.rcp-top span{font-size:13px;font-weight:700;opacity:.9}
+.rcp-top b{font-size:22px;font-weight:900;white-space:nowrap}.rcp-top b small{font-size:12px;opacity:.85}
+.rcp-r{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 4px;border-bottom:1px dashed #E6E1F0;font-size:14px}
+.rcp-r span{color:#5E5674;font-weight:700}
+.rcp-r b{font-weight:900;color:#140d24;white-space:nowrap}
+.rcp-r b.out{color:#D9480F}
+.rcp-r.me{border-bottom:0;background:#EAF8EF;border-radius:12px;margin-top:8px;padding:12px}
+.rcp-r.me span{color:#0E7A53}.rcp-r.me b{color:#0E7A53;font-size:17px}
+#askMsg .rcp b{margin:0!important;display:inline-block!important;line-height:1.2!important}
+#askMsg .rcp-top b{color:#fff!important}#askMsg .rcp-r b.out{color:#D9480F!important}#askMsg .rcp-r.me b{color:#0E7A53!important}#askMsg .rcp-r b{color:#140d24}
+
+/* v243 وصل السائق */
+#rcpSheet{position:fixed;inset:0;z-index:9600;background:rgba(20,10,40,.5);display:flex;align-items:center;justify-content:center;padding:18px;opacity:0;visibility:hidden;transition:opacity .2s,visibility .2s}
+#rcpSheet.on{opacity:1;visibility:visible}
+#rcpSheet,#rcpSheet *{-webkit-text-size-adjust:100%;text-size-adjust:100%;box-sizing:border-box}
+.rcb{width:100%;max-width:400px;background:#fff;border-radius:24px;padding:20px 18px 18px;box-shadow:0 12px 30px rgba(40,20,80,.25);transform:scale(.95);transition:transform .22s}
+#rcpSheet.on .rcb{transform:none}
+.rcb h3{margin:0 0 4px;text-align:center;font-size:19px;font-weight:900;color:#140d24}
+.rcb .sub{text-align:center;font-size:12.5px;color:#7A7390;margin-bottom:12px}
+.rcb .st{display:flex;align-items:center;gap:12px;position:relative;padding:10px 0}
+.rcb .dot{width:16px;height:16px;border-radius:50%;flex-shrink:0;border:3px solid #fff;box-shadow:0 0 0 2px currentColor;z-index:1;background:#fff}
+.rcb .st:not(.last)::after{content:"";position:absolute;right:7px;top:32px;height:22px;width:2px;background:#E6E1F0}
+.rcb .st .t{flex:1;font-size:14px;font-weight:700;color:#4A4360}
+.rcb .st .t small{display:block;font-size:11.5px;color:#9A93AE;font-weight:600}
+.rcb .st .v{font-size:16px;font-weight:900;white-space:nowrap;direction:ltr}
+.rcb .in{color:#5B1FC8}.rcb .out{color:#E8590C}
+.rcb .cut{border-top:2px dashed #E6E1F0;margin:10px -18px 12px;position:relative}
+.rcb .cut::before,.rcb .cut::after{content:"";position:absolute;top:-11px;width:20px;height:20px;border-radius:50%;background:#5c5470}
+.rcb .cut::before{right:-10px}.rcb .cut::after{left:-10px}
+.rcb .me{display:flex;align-items:center;justify-content:space-between;background:#EAF8EF;border-radius:16px;padding:14px 16px}
+.rcb .me span{font-weight:800;color:#0E7A53}.rcb .me b{font-size:24px;font-weight:900;color:#0E7A53;white-space:nowrap}
+.rcb .btn{margin-top:14px;width:100%;border:0;border-radius:16px;padding:15px;background:linear-gradient(135deg,#FF7A00,#FF9533);color:#fff;font:inherit;font-size:16px;font-weight:800;cursor:pointer}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -6906,19 +6942,36 @@ async function _trkPush(loc){
   }
 }
 
+/* v243: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
+   إذا الموقع مسدود من المتصفح نبلّغ السائق بوضوح بدل ما يفشل بصمت */
+let _locWarned=false;
+function getPosSmart(ok, fail){
+  if(!navigator.geolocation){ fail&&fail({code:2}); return }
+  navigator.geolocation.getCurrentPosition(ok, e=>{
+    if(e && e.code===1){ window.__locDenied=true; locDeniedWarn(); fail&&fail(e); return }
+    navigator.geolocation.getCurrentPosition(p=>{ window.__locDenied=false; ok(p) }, e2=>{
+      if(e2 && e2.code===1){ window.__locDenied=true; locDeniedWarn() }
+      fail&&fail(e2);
+    }, {enableHighAccuracy:false, maximumAge:60000, timeout:15000});
+  }, {enableHighAccuracy:true, maximumAge:8000, timeout:9000});
+}
+function locDeniedWarn(){
+  if(_locWarned) return; _locWarned=true;
+  try{ askConfirm('الموقع مسدود عن التطبيق، فالزبون ما يكدر يتابعك والمسار ما يطلع.<br><br><b>شلون تفتحه:</b><br>١. اضغط على علامة القفل 🔒 يم رابط الموقع فوك<br>٢. الأذونات ← الموقع ← <b>سماح</b><br>٣. تأكد إن GPS بالتلفون شغّال', {title:'فعّل الموقع', ok:'تمام', noCancel:true}) }catch(e){ toast('فعّل الموقع حتى الزبون يتابعك') }
+}
 function startDriverTracking(){
   if(_trkTimer) return;
   if(!navigator.geolocation) return;
   const tick=()=>{
     const {orders,special}=_trkActive();
     if(!orders.length && !special.length) return;      /* ماكو طلب نشط — ما نتعب البطارية */
-    navigator.geolocation.getCurrentPosition(p=>{
+    getPosSmart(p=>{
       const loc={lat:p.coords.latitude, lng:p.coords.longitude};
       if(_trkPrev && _dist(_trkPrev,loc)<TRK_MIN_MOVE) return;   /* ما تحرك */
       if(_trkPrev) _addKmToday(_dist(_trkPrev,loc));              /* نجمّع مسافة اليوم من نفس القراءة */
       _trkPrev=loc;
       _trkPush(loc);
-    },()=>{}, {enableHighAccuracy:true, maximumAge:8000, timeout:9000});
+    },()=>{});
   };
   tick();
   _trkTimer=setInterval(tick, TRK_EVERY);
@@ -7844,7 +7897,7 @@ function listenDriver(){
     const fresh=o=>{ const t=Number(o.createdAt||0); return !t || (nowT-t)<STALE };
     availOrders=all.filter(o=>!o.driverUid&&!o.driverPhone&&fresh(o)).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
     if(!firstDLoad&&me.duty!==false){
-      availOrders.forEach(o=>{ if(!seenReady.has(o.id)){seenReady.add(o.id);alarm('driver',o);dofShow(o,false)} });
+      availOrders.forEach(o=>{ if(!seenReady.has(o.id)){seenReady.add(o.id); if(!drvBusy()){ alarm('driver',o);dofShow(o,false) }} });
     }else{ availOrders.forEach(o=>seenReady.add(o.id)); firstDLoad=false }
     dofCheckGone();
     scheduleDriverRender();
@@ -7861,7 +7914,7 @@ function listenDriver(){
     specialAvailOrders=s.docs.map(d=>({...d.data(), id:d.id}))
       .filter(o=>!o.driverUid).sort((a,b)=>Number(b.createdAt||0)-Number(a.createdAt||0));
     if(!firstDLoad&&me.duty!==false){
-      specialAvailOrders.forEach(o=>{ if(!seenSpecial.has(o.id)){seenSpecial.add(o.id);alarm('driver',o);dofShow(o,true)} });
+      specialAvailOrders.forEach(o=>{ if(!seenSpecial.has(o.id)){seenSpecial.add(o.id); if(!drvBusy()){ alarm('driver',o);dofShow(o,true) }} });
     }else{ specialAvailOrders.forEach(o=>seenSpecial.add(o.id)); }
     dofCheckGone();
     scheduleDriverRender();
@@ -7904,9 +7957,13 @@ function __beepFallback(){
 let dofCur=null, dofTimer=null, dofRingT=null, dofSkip={}, dofLast=0;
 let dofWant=(()=>{ try{ return new URLSearchParams(location.search).get('dof')||'' }catch(e){ return '' } })();
 const DOF_SEC=30;
-function dofActive(){ return (myOrders||[]).some(o=>['assigned','ontheway','arrived'].includes(o.status)) }
+/* v243: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
+function dofActive(){ return (myOrders||[]).some(o=>['assigned','ontheway','arrived'].includes(o.status))
+  || (typeof mySpecialOrders!=='undefined' && (mySpecialOrders||[]).some(o=>['assigned','purchased','arrived'].includes(o.status))) }
+function drvBusy(){ return !!(me && me.role==='driver' && dofActive()) }
 function dofShow(o,sp){
   if(!o||!o.id||!me||me.role!=='driver'||me.duty===false) return;
+  if(drvBusy()) return;
   if(dofCur) return;
   dofCur={o, sp:!!sp, t0:Date.now()};
   dofRender(); dofRing();
@@ -9069,7 +9126,7 @@ function szConfirm(){
   const pid=_szP.id, q=_szQ; szClose();
   addCart(pid, zs.length&&z?z.n:null, q, on, true);
 }
-/* v237: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
+/* v243: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
 function openItem(pid){
   const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); if(!p) return;
   if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
@@ -9474,7 +9531,7 @@ async function submitSpecialOrder(){
 /* السائق: طلبات اشتريلي المتاحة — كارت صغير مثل المطاعم، والتفاصيل تنفتح بالضغط */
 function spDeclGet(){ try{ return JSON.parse(localStorage.getItem('lw_spdecl')||'[]')||[] }catch(e){ return [] } }
 function spDeclAdd(id){ const a=spDeclGet(); if(!a.includes(id)) a.push(id); try{ localStorage.setItem('lw_spdecl',JSON.stringify(a.slice(-200))) }catch(e){} }
-function spAvailVisible(){ const d=spDeclGet(); return (specialAvailOrders||[]).filter(o=>!d.includes(o.id)) }
+function spAvailVisible(){ if(typeof drvBusy==='function' && drvBusy()) return []; const d=spDeclGet(); return (specialAvailOrders||[]).filter(o=>!d.includes(o.id)) }
 function _spAgo(o){ const m=Math.max(0,Math.floor((Date.now()-Number(o.createdAt||0))/60000)); return m<1?'الآن':(m<60?'منذ '+m+' دقيقة':'منذ '+Math.floor(m/60)+' ساعة') }
 function renderSpecialDriverOrders(){
   const box=document.getElementById('specialAvailList'), cnt=document.getElementById('specialCnt');
@@ -9618,6 +9675,7 @@ async function spMiss(id,k,btn){
 async function takeSpecialOrder(id){
   if(!me||me.role!=='driver')return;
   if(me.duty===false)return toast('فعّل حالة الاستلام أولاً');
+  if(drvBusy()){ toast('عندك طلب شغّال — كمّله أول وبعدين تطلعلك طلبات جديدة'); return false }
   try{
     await rpc('claim_special',{p_order:id});
     try{ const o=(specialAvailOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق استلم طلبك',((me&&me.name)||'السائق')+' استلم طلبك وراح يشتريه',{type:'assigned'}) }catch(e){}
@@ -9651,6 +9709,8 @@ async function specialPurchased(id){
   if(!me||me.role!=='driver')return;
   try{
     await db.collection('specialOrders').doc(id).update({status:'purchased',purchasedAt:Date.now()});
+    /* v243: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
+    try{ const _o=(mySpecialOrders||[]).find(x=>x.id===id); if(_o){ _o.status='purchased'; _o.purchasedAt=Date.now() } setTimeout(()=>{ try{ openSpTrip(id) }catch(e){} },150) }catch(e){}
     try{ const o=(mySpecialOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق بالطريق إليك',((me&&me.name)||'السائق')+' اشترى أغراضك وطالع لعندك',{type:'ontheway'}) }catch(e){}
     toast('انحدّثت الحالة — اشتريت الطلب');
   }catch(e){toast('ما گدرنا نحدّث الحالة')}
@@ -10392,7 +10452,7 @@ function renderSpTrack(box,id){
 }
 /* خريطة التتبع داخل صفحة اشتريلي — تبقى حية وما تنعاد مع كل تحديث */
 let _spMapEl=null,_spMap=null,_spMapId=null,_spMC=null,_spMD=null,_spML=null,_spFit=false;
-/* v237: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
+/* v243: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
 function _trMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['ontheway','arrived'].includes(o.status)) }
 function _trAdapt(o){ return {id:'o:'+o.id, loc:o.loc, driverLoc:o.driver_loc, status:o.status==='arrived'?'arrived':'purchased'} }
 function _spMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['assigned','purchased','arrived'].includes(o.status)) }
@@ -10852,7 +10912,7 @@ function startShopClock(){
 function renderStore(){
   if(!myShopDoc)return;
   if(!window.__stPerInit){ window.__stPerInit=true; periodDays=30 }   /* المالية تبدأ بآخر 30 يوم مو اليوم */
-  /* v237: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
+  /* v243: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
   const __stf=!!(me && me.staff);
   if(__stf){ periodDays=1; window.stMonth=0 }
   const sh=myShopDoc,os=myOrders;
@@ -12251,7 +12311,7 @@ function _renderDriverBody(){
   }
 
   const nb=document.getElementById('dNew');
-  if(nb) nb.innerHTML = availOrders.length ? `
+  if(nb) nb.innerHTML = (availOrders.length && !drvBusy()) ? `
     <div class="newbar" onclick="document.getElementById('availList').scrollIntoView({behavior:'smooth',block:'center'})">
       <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg></div>
       <div class="tx"><b>طلبات جديدة</b><span>لديك ${availOrders.length} طلب جديد · اضغط لعرضها</span></div>
@@ -12305,7 +12365,11 @@ function _renderDriverBody(){
   if(mc){ mc.style.display=mine.length?'flex':'none'; mc.textContent=mine.length }
 
   const av=document.getElementById('availList');
+  const _busy=drvBusy();
   if(gate){ /* البوابة معروضة */ }
+  else if(_busy){
+    av.innerHTML='<div class="empty avail-empty"><div class="e"><svg viewBox="0 0 24 24" width="46" height="46" fill="none" stroke="#A78BFA" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></div><p><b>عندك طلب شغّال</b><br>كمّل طلبك الحالي أول، وبعدين ترجع تطلعلك الطلبات الجديدة.</p></div>';
+  }
   else if(me.duty===false){
     av.innerHTML='<div class="empty"><div class="e"><svg viewBox="0 0 24 24" width="44" height="44" fill="none" stroke="#B9AECB" stroke-width="1.6" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M8 13h8"/></svg></div><p><b>أنت غير متاح حالياً</b><br>شغّل حالة متاح لاستقبال الطلبات.</p></div>';
   }else if(!availOrders.length){
@@ -12550,6 +12614,7 @@ async function rpc(fn, args, _retried){
 
 async function claim(id){
   stopAlarm();
+  if(drvBusy()){ try{ dofClose&&dofClose() }catch(e){} return toast('عندك طلب شغّال — كمّله أول وبعدين تطلعلك طلبات جديدة') }
   try{
     await rpc('claim_order',{p_order:id});
     const c=availOrders.find(x=>x.id===id);
@@ -12612,11 +12677,11 @@ async function deliver(id){
       const _sub=cashToShop(o);
       const _svc=Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||0));
       setTimeout(()=>{
-        alert('استلمت '+Number(o.total||0).toLocaleString()+' د.ع من الزبون\n\n'
-          +'سدّد '+_sub.toLocaleString()+' د.ع لـ '+(o.shopName||'المحل')+'\n'
-          +'سدّد '+_svc.toLocaleString()+' د.ع عمولة للإدارة\n'
-          +'يبقى إلك '+Number(o.deliveryFee||SET.deliveryFee||1250).toLocaleString()+' د.ع');
-      },600);
+        /* v243: بدل نافذة المتصفح — نافذة التطبيق */
+        const _N=n=>Number(n||0).toLocaleString();
+        const _mine=Number(o.deliveryFee||SET.deliveryFee||1250);
+        drvReceipt({no:(o.order_no||String(o.createdAt||'').slice(-4)), total:o.total, shop:o.shopName||'المحل', toShop:_sub, fee:_svc, mine:_mine});
+      },500);
     }
     return true;
   }catch(e){ toast(e.message); return false }
@@ -12715,16 +12780,27 @@ function _tpTick(){
       try{ _tpMap.fitBounds(L.latLngBounds([[c.lat,c.lng],[o.shopLoc.lat,o.shopLoc.lng]]),{padding:[60,60],maxZoom:16}) }catch(e){}
       return _tpRoute(o.shopLoc,c);
     }
+    /* v243: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
+    const last=_trkPrev || o.driverLoc || o.driver_loc;
+    if(last && last.lat && c && c.lat){
+      _tpFrom='last';
+      if(_tpD) _tpD.setLatLng([last.lat,last.lng]);
+      else _tpD=L.marker([last.lat,last.lng],{icon:_DRV_ICON()}).addTo(_tpMap);
+      try{ _tpMap.fitBounds(L.latLngBounds([[c.lat,c.lng],[last.lat,last.lng]]),{padding:[60,60],maxZoom:16}) }catch(e){}
+      return _tpRoute(last,c);
+    }
+    if(c && c.lat){ try{ _tpMap.setView([c.lat,c.lng],16) }catch(e){} }
     const et=document.getElementById('tripEta');
-    if(et) et.textContent='شغّل الموقع حتى يطلع المسار';
+    if(et){ et.textContent = window.__locDenied ? '📍 الموقع مسدود — اضغط هنا' : (c&&c.lat ? '🏠 هذا موقع الزبون — اضغط حتى نحدد موقعك' : '📍 ما لكينا موقعك — اضغط حتى نحاول');
+      et.style.cursor='pointer';
+      et.onclick=()=>{ if(window.__locDenied){ _locWarned=false; locDeniedWarn() } else { et.textContent='… ندوّر على موقعك'; getPosSmart(p=>use({lat:p.coords.latitude,lng:p.coords.longitude}),fallback) } } }
   };
 
   _tpEtaAt=0;
   if(!navigator.geolocation) return fallback();
-  navigator.geolocation.getCurrentPosition(
+  getPosSmart(
     p=>use({lat:p.coords.latitude, lng:p.coords.longitude}),
-    fallback,
-    {enableHighAccuracy:true, maximumAge:15000, timeout:12000}
+    fallback
   );
 }
 
@@ -13564,7 +13640,7 @@ async function loadMyComm(){
 
 function renderMyComm(){
   const box=document.getElementById('stComm'); if(!box) return;
-  if(me && me.staff){ box.innerHTML=''; return }   /* v237: عمولة التطبيق وسدادها لصاحب المحل بس */
+  if(me && me.staff){ box.innerHTML=''; return }   /* v243: عمولة التطبيق وسدادها لصاحب المحل بس */
   const ic=invCalc(myComm.amount, myInv), st=ic.s;
   const dd=(myShopPer?myShopPer.e:_dueDate(new Date())).toLocaleDateString('ar-IQ');
   const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
@@ -16072,6 +16148,23 @@ function errMsg(e){
 let _askCb=null;
 const ASK_ICON='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 1c0 1.7-2.3 1.8-2.3 3.6"/><circle cx="12" cy="17" r=".15" fill="currentColor"/></svg>';
 const ASK_ICON_DANGER='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>';
+/* v243: وصل حساب السائق بعد التسليم (التصميم ٢) */
+function drvReceipt(d){
+  let el=document.getElementById('rcpSheet');
+  if(!el){ el=document.createElement('div'); el.id='rcpSheet'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
+  const N=n=>Number(n||0).toLocaleString();
+  el.innerHTML=`<div class="rcb">
+    <h3>تم التسليم ✓</h3><div class="sub">هذا حساب الطلب #${esc(String(d.no||''))}</div>
+    <div class="st in"><i class="dot"></i><span class="t">استلمت من الزبون</span><span class="v">${N(d.total)}</span></div>
+    <div class="st out"><i class="dot"></i><span class="t">سدّد للمحل<small>${esc(d.shop||'')}</small></span><span class="v">− ${N(d.toShop)}</span></div>
+    <div class="st out last"><i class="dot"></i><span class="t">عمولة الإدارة</span><span class="v">− ${N(d.fee)}</span></div>
+    <div class="cut"></div>
+    <div class="me"><span>يبقى إلك</span><b>${N(d.mine)} د.ع</b></div>
+    <button class="btn" onclick="document.getElementById('rcpSheet').classList.remove('on')">تمام</button>
+  </div>`;
+  requestAnimationFrame(()=>el.classList.add('on'));
+}
+
 function askConfirm(msg, opt){
   opt=opt||{};
   return new Promise(res=>{
@@ -16084,6 +16177,7 @@ function askConfirm(msg, opt){
     const ok=document.getElementById('askOkBt');
     ok.textContent = opt.ok||'حسناً';
     ok.className   = 'ask-ok'+(opt.danger?' danger':'');
+    const no=sh.querySelector('.ask-no'); if(no) no.style.display = opt.noCancel ? 'none' : '';
     _askCb=res; sh.classList.add('on');
   });
 }
@@ -17832,7 +17926,11 @@ html[data-theme=dark] #cApp .mkc .mk-hint.done{background:#16301f;color:#7ee0a4}
 .spx2-ft .earn{flex:none}
 .spx2-ft .earn span{display:block;font-size:11px;color:#948CA6}
 .spx2-ft .earn b{font-size:16px;font-weight:800;color:#4A11A6;white-space:nowrap}
-.spx2-ft .spx-go{flex:1;margin:0}
+.spx2-ft .spx-go{flex:1;margin:0;min-width:0}
+/* v243: ما يغطي الزر على الأجرة (تكبير الخط التلقائي بكروم) */
+.spx2,.spx2 *{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+.spx2-ft{display:grid!important;grid-template-columns:auto minmax(0,1fr)}
+.spx2-ft .earn{min-width:0}
 
 .spx2.spav.fresh{border-color:#22A06B;box-shadow:0 0 0 2px rgba(34,160,107,.18),0 4px 14px rgba(40,20,90,.06)}
 .spx2-hd .st.new{background:#E7F7EE;color:#15803D}
@@ -20094,7 +20192,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 /* v223 علامة زبون جديد */
 .nof-new{display:inline-block;vertical-align:middle;margin-inline-start:6px;background:#FFF1E6;color:#C2410C;border:1px solid #FDBA74;font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
 
-/* v237 سجل المبالغ المستلمة */
+/* v243 سجل المبالغ المستلمة */
 .cashlog{background:#fff;border:1px solid #EEE9F7;border-radius:18px;padding:12px 14px;margin:12px 0}
 .cashlog .cl-h{font-weight:900;font-size:14px;color:#3F0A92;margin-bottom:6px}
 .cashlog .cl-r{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #F3F0F8}
@@ -20204,7 +20302,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v237', t0=Date.now();
+  var VER='v243', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
