@@ -5515,6 +5515,7 @@ async function docUrl(ref){
 }
 
 const OTP_WORKER='https://leemak-otp.dhifvmy.workers.dev';
+const API_PUSH='https://leemak-api.dhifvmy.workers.dev';
 let otpToken='', otpOkPhone='', otpCore='', otpWait=0;
 
 async function otpApi(path,body){
@@ -6998,15 +6999,25 @@ async function __sendPush(target,title,body,data){
   try{
     const jwt=(window.__waselToken&&window.__waselToken())||'';
     if(!jwt) return;
-    await fetch(OTP_WORKER+'/push',{method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+jwt},
-      body:JSON.stringify(Object.assign({
+    const payload=Object.assign({
         title:__clean(title)||'واصل ليمَك',
         body:__clean(body),
         url:(data&&data.type==='new_order'&&data.order_id)?('/?nof='+encodeURIComponent(data.order_id)):((data&&(data.type==='ready'||data.type==='special'))?('/?dof='+encodeURIComponent(data.order_id||'1')):'/'),
         tag:(data&&data.type)||'lw',
         data:Object.assign({}, data||{})
-      },target))});
+      },target);
+    const hd={'Content-Type':'application/json','Authorization':'Bearer '+jwt};
+    const toApi=extra=>fetch(API_PUSH+'/push',{method:'POST',headers:hd,body:JSON.stringify(Object.assign({},payload,{shop_staff:undefined},extra))}).catch(()=>{});
+    const otp=fetch(OTP_WORKER+'/push',{method:'POST',headers:hd,body:JSON.stringify(payload)});
+    /* native app (Expo) tokens live in leemak-api */
+    if(target&&(target.user_id||target.role)) toApi({});
+    const r=await otp;
+    /* staff: leemak-otp returns staff ids, send each to the app server */
+    if(target&&target.shop_staff){
+      const j=await r.json().catch(()=>null);
+      const ids=(j&&Array.isArray(j.staff))?j.staff.slice(0,20):[];
+      await Promise.all(ids.map(id=>toApi({user_id:id})));
+    }
   }catch(e){ console.warn('push send:',e.message) }
 }
 async function pushTo(targetUid,title,body,data){
@@ -19825,7 +19836,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 /* v223 علامة زبون جديد */
 .nof-new{display:inline-block;vertical-align:middle;margin-inline-start:6px;background:#FFF1E6;color:#C2410C;border:1px solid #FDBA74;font-style:normal;font-size:11px;font-weight:800;padding:2px 8px;border-radius:999px}
 
-/* v224 سجل المبالغ المستلمة */
+/* v226 سجل المبالغ المستلمة */
 .cashlog{background:#fff;border:1px solid #EEE9F7;border-radius:18px;padding:12px 14px;margin:12px 0}
 .cashlog .cl-h{font-weight:900;font-size:14px;color:#3F0A92;margin-bottom:6px}
 .cashlog .cl-r{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid #F3F0F8}
@@ -19935,7 +19946,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v224', t0=Date.now();
+  var VER='v226', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
