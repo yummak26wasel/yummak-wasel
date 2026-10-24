@@ -334,7 +334,7 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .bn-save{width:100%;margin-top:18px;border:0;border-radius:16px;padding:15px;background:linear-gradient(135deg,#FF8A1F,#F97316);color:#fff;font:inherit;font-size:16px;font-weight:800;box-shadow:0 8px 18px -8px rgba(249,115,22,.6)}
 .bn-save:disabled{opacity:.6}
 .wic.bi{width:18px!important;height:18px!important;min-width:18px;flex:0 0 18px!important;display:inline-block!important;vertical-align:-3px;margin:0!important}
-/* v285: نظام أزرار موحّد */
+/* v286: نظام أزرار موحّد */
 .ub,.tp-go,.sps-go,.rf-no{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-height:50px!important;border-radius:14px!important;font-size:15px!important;font-weight:700!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;line-height:1.25!important}
 .ub-p,.tp-go,.sps-go{background:#4A1FA8!important;color:#fff!important;border:0!important}
 .ub-g,.tp-go.done{background:#E8760C!important;color:#fff!important;border:0!important}
@@ -5308,7 +5308,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v285</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v286</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7114,7 +7114,7 @@ function _fmtDist(m){
   return m<1000 ? Math.round(m)+' متر' : (m/1000).toFixed(1)+' كم';
 }
 
-/* v285: الطريق ووقت الوصول من «طريق» (يعرف شوارع العراق)، وإذا ما ردّ نرجع للسيرفر المجاني القديم */
+/* v286: الطريق ووقت الوصول من «طريق» (يعرف شوارع العراق)، وإذا ما ردّ نرجع للسيرفر المجاني القديم */
 async function routeFetch(pts){
   const path=pts.map(c=>Number(c.lng)+','+Number(c.lat)).join(';');
   try{
@@ -7212,7 +7212,7 @@ async function _trkPush(loc){
   }
 }
 
-/* v285: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
+/* v286: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
    إذا الموقع مسدود من المتصفح نبلّغ السائق بوضوح بدل ما يفشل بصمت */
 let _locWarned=false;
 function getPosSmart(ok, fail){
@@ -7837,7 +7837,7 @@ function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
   window.__sbPolicy = (me.role==='customer') ? CUST_POLICY : null;
   setTimeout(()=>{ try{ termsCheck() }catch(e){} },2500);
-  /* v285: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
+  /* v286: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
   if(me.role==='admin' || me.role==='store') try{ const _cs=()=>{ try{ rpc('cancel_stale_orders',{}).catch(()=>{}) }catch(e){} }; setTimeout(_cs,8000); if(!window.__csT) window.__csT=setInterval(_cs,5*60*1000) }catch(e){}
   document.getElementById('auth').classList.remove('on');
   subscribeTopics();
@@ -7895,7 +7895,7 @@ function applyShops(docs){
   try{ if(me && me.role==='customer') cartSync() }catch(e){}
 }
 
-/* ═══ v285: طريقة الاتصال مثل التطبيقات العالمية (طلبات / أوبر إيتس) ═══
+/* ═══ v286: طريقة الاتصال مثل التطبيقات العالمية (طلبات / أوبر إيتس) ═══
    - الزبون يتصفح: ماكو خط مباشر. المحلات تنجاب لما يفتح التطبيق وكل دقيقة تقريباً، من نسخة مخزّنة بالسيرفر.
    - الزبون عنده طلب شغّال: خط مباشر للطلب لحد ما يستلم (التتبع).
    - المحل والسائق والأدمن: خط مباشر طول الوقت (مثل قبل).
@@ -8278,7 +8278,7 @@ function __beepFallback(){
 let dofCur=null, dofTimer=null, dofRingT=null, dofSkip={}, dofLast=0;
 let dofWant=(()=>{ try{ return new URLSearchParams(location.search).get('dof')||'' }catch(e){ return '' } })();
 const DOF_SEC=30;
-/* v285: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
+/* v286: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
 function dofActive(){ return (myOrders||[]).some(o=>['assigned','ontheway','arrived'].includes(o.status))
   || (typeof mySpecialOrders!=='undefined' && (mySpecialOrders||[]).some(o=>['assigned','purchased','arrived'].includes(o.status))) }
 function drvBusy(){ return !!(me && me.role==='driver' && dofActive()) }
@@ -9447,7 +9447,7 @@ function szConfirm(){
   const pid=_szP.id, q=_szQ; szClose();
   addCart(pid, zs.length&&z?z.n:null, q, on, true);
 }
-/* v285: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
+/* v286: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
 function openItem(pid){
   const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); if(!p) return;
   if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
@@ -9708,7 +9708,7 @@ async function payCompOwed(drv,amt,name){
   try{ await rpc('admin_pay_comp',{p_driver:drv,p_amount:amt}); try{ pushTo(drv,'تعويض التوصيل المجاني','الإدارة سلّمتك '+Number(amt).toLocaleString()+' د.ع — أكّد الاستلام',{type:'comp'}) }catch(e){} toast('انبلّغ السائق — بانتظار تأكيده'); openCompOwed(true) }
   catch(e){ toast(errMsg(e)) }
 }
-/* v285: السلة تبقى محفوظة إذا الزبون طلع من التطبيق ورجع (3 أيام) — مثل التطبيقات العالمية */
+/* v286: السلة تبقى محفوظة إذا الزبون طلع من التطبيق ورجع (3 أيام) — مثل التطبيقات العالمية */
 const CART_DAYS=3;
 function cartKeyLS(){ return 'lw_cart_'+(uid||'') }
 function cartSave(){
@@ -10076,7 +10076,7 @@ async function specialPurchased(id){
   if(!me||me.role!=='driver')return;
   try{
     await db.collection('specialOrders').doc(id).update({status:'purchased',purchasedAt:Date.now()});
-    /* v285: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
+    /* v286: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
     try{ const _o=(mySpecialOrders||[]).find(x=>x.id===id); if(_o){ _o.status='purchased'; _o.purchasedAt=Date.now() } setTimeout(()=>{ try{ openSpTrip(id) }catch(e){} },150) }catch(e){}
     try{ const o=(mySpecialOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق بالطريق إليك',((me&&me.name)||'السائق')+' اشترى أغراضك وطالع لعندك',{type:'ontheway'}) }catch(e){}
     toast('انحدّثت الحالة — اشتريت الطلب');
@@ -10323,7 +10323,7 @@ async function submitOrder(){
     serviceFee:svcFee(sub),deliveryFee:billCalc(sub).dlvPay,discount:billCalc(sub).disc,total:billCalc(sub).tot,
     status:'pending',createdAt:Date.now(),date:new Date().toLocaleString('ar-IQ'),
     scheduled_for: schedTs()?schedTs().toISOString():null};
-  /* v285: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
+  /* v286: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
   if(!o.scheduled_for) delete o.scheduled_for;
   try{
     const _ref=await db.collection('orders').add(o);
@@ -10347,7 +10347,7 @@ async function submitOrder(){
     buzz([20,60,20,60,30]); toast('انرسل طلبك للمحل');
     setTimeout(npAsk, 900);
   }catch(e){toast(errMsg(e)); __revBusy=false;
-    /* v285: صنف خلص — نجيب المحلات من القاعدة مباشرة حتى السلة تشيله وحدها */
+    /* v286: صنف خلص — نجيب المحلات من القاعدة مباشرة حتى السلة تشيله وحدها */
     if(/خلص — شيله من السلة/.test(String(e&&e.message||e))) setTimeout(async()=>{ try{
       const c=await db.collection('shops').where('approved','==',true).get();
       if(c&&c.docs&&c.docs.length) applyShops(c.docs.map(d=>({...d.data(), id:d.id})));
@@ -10834,7 +10834,7 @@ function renderSpTrack(box,id){
 }
 /* خريطة التتبع داخل صفحة اشتريلي — تبقى حية وما تنعاد مع كل تحديث */
 let _spMapEl=null,_spMap=null,_spMapId=null,_spMC=null,_spMD=null,_spML=null,_spFit=false;
-/* v285: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
+/* v286: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
 function _trMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['ontheway','arrived'].includes(o.status)) }
 function _trAdapt(o){ return {id:'o:'+o.id, loc:o.loc, driverLoc:o.driver_loc, status:o.status==='arrived'?'arrived':'purchased'} }
 function _spMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['assigned','purchased','arrived'].includes(o.status)) }
@@ -10850,7 +10850,7 @@ async function spMapMount(o){
     await loadLeaflet();
     if(!_spMap){
       _spMap=L.map(_spMapEl,{zoomControl:false,attributionControl:false}).setView([o.loc.lat,o.loc.lng],15);
-      tarekyTiles(_spMap);   /* v285: تجربة خرائط طريق */
+      tarekyTiles(_spMap);   /* v286: تجربة خرائط طريق */
       _spMC=L.marker([o.loc.lat,o.loc.lng],{icon:_HOME_ICON()}).addTo(_spMap);
     }
     spMapUpdate(o);
@@ -10868,7 +10868,7 @@ function spMapUpdate(o){
   else _spML=L.polyline([ll,[c.lat,c.lng]],{color:'#5B2BC9',weight:4,opacity:.6,dashArray:'8 8'}).addTo(_spMap);
   if(!_spFit){ _spMap.fitBounds(L.latLngBounds([ll,[c.lat,c.lng]]),{padding:[40,40],maxZoom:17}); _spFit=true }
   const m=_dist(d,c);
-  /* v285: كل 30 ثانية نجيب الطريق الحقيقي ووقت الوصول */
+  /* v286: كل 30 ثانية نجيب الطريق الحقيقي ووقت الوصول */
   if(m>=80 && Date.now()-_spRtAt>30000){
     _spRtAt=Date.now(); const oid=o.id;
     routeFetch([d,c]).then(rt=>{
@@ -11308,7 +11308,7 @@ function startShopClock(){
 function renderStore(){
   if(!myShopDoc)return;
   if(!window.__stPerInit){ window.__stPerInit=true; periodDays=30 }   /* المالية تبدأ بآخر 30 يوم مو اليوم */
-  /* v285: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
+  /* v286: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
   const __stf=!!(me && me.staff);
   if(__stf){ periodDays=1; window.stMonth=0 }
   const sh=myShopDoc,os=myOrders;
@@ -11919,7 +11919,7 @@ async function setStatus(id,st){
     if(!yes) return;
   }
   stopAlarm();
-  /* v285: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
+  /* v286: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
   window.__stBusy=window.__stBusy||{};
   if(window.__stBusy[id]) return false;
   window.__stBusy[id]=1; setTimeout(()=>{ try{ delete window.__stBusy[id] }catch(e){} },4000);
@@ -13105,7 +13105,7 @@ async function deliver(id){
       const _sub=cashToShop(o);
       const _svc=Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||0));
       setTimeout(()=>{
-        /* v285: بدل نافذة المتصفح — نافذة التطبيق */
+        /* v286: بدل نافذة المتصفح — نافذة التطبيق */
         const _N=n=>Number(n||0).toLocaleString();
         const _mine=Number(o.deliveryFee||SET.deliveryFee||1250);
         drvReceipt({no:(o.order_no||String(o.createdAt||'').slice(-4)), total:o.total, shop:o.shopName||'المحل', toShop:_sub, fee:_svc, mine:_mine});
@@ -13208,7 +13208,7 @@ function _tpTick(){
       try{ _tpMap.fitBounds(L.latLngBounds([[c.lat,c.lng],[o.shopLoc.lat,o.shopLoc.lng]]),{padding:[60,60],maxZoom:16}) }catch(e){}
       return _tpRoute(o.shopLoc,c);
     }
-    /* v285: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
+    /* v286: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
     const last=_trkPrev || o.driverLoc || o.driver_loc;
     if(last && last.lat && c && c.lat){
       _tpFrom='last';
@@ -13439,7 +13439,7 @@ function inPeriod(ts){
   return (Date.now()-t) <= periodDays*86400000;
 }
 /* يقرا التاريخ بأي صيغة: رقم، نص أرقام، أو ISO */
-/* v285: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
+/* v286: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
 function shopFreeTs(sh){ const v=sh&&(sh.free_until||sh.freeUntil); const t=v?new Date(v).getTime():0; return isNaN(t)?0:t }
 function ordFree(o,sh){ const f=shopFreeTs(sh); if(!f) return false; const t=_anyTs(o.createdAt||o.created_at); return !!t && t<f }
 function freeBanner(sh){
@@ -13557,7 +13557,7 @@ function loadLeaflet(){
   });
   return leafletPromise;
 }
-/* ═══ v285: خرائط «طريق» (Tareky) — تجربة على شاشة تتبع الطلب بس ═══
+/* ═══ v286: خرائط «طريق» (Tareky) — تجربة على شاشة تتبع الطلب بس ═══
    خريطة حديثة (Vector): كل فتحة خريطة = وحدة وحدة، التحريك والتكبير مجاني.
    إذا ما اشتغلت لأي سبب ترجع خريطة OSM القديمة وحدها. */
 const TAREKY_PK='tareky_pk_BroXGz4OGQs5SvnEPPOAaK1szKu5KV960mQbBC';
@@ -13668,7 +13668,7 @@ async function openMap(mode, autoGps){
         if(ld)ld.classList.add('gone') }catch(e){} },180);
   }catch(e){ toast('الخريطة ما تحمّلت — تأكد من الإنترنت'); if(ld)ld.classList.add('gone') }
 }
-/* v285: البحث عن مكان بشاشة تحديد الموقع (من «طريق») */
+/* v286: البحث عن مكان بشاشة تحديد الموقع (من «طريق») */
 let _mqT=null, _mqSeq=0;
 function mapQIn(v){
   clearTimeout(_mqT); const box=document.getElementById('mapQRes');
@@ -13680,18 +13680,30 @@ async function mapQRun(q){
   const box=document.getElementById('mapQRes'); if(!box) return;
   const seq=++_mqSeq;
   box.innerHTML='<div class="mq-msg">⏳ نبحث…</div>';
+  const c=(pMap&&pMap.getCenter())||{lat:GEO.anah[0],lng:GEO.anah[1]};
+  const lat=c.lat.toFixed(5), lng=c.lng.toFixed(5), tk='&access_token='+TAREKY_PK;
+  const nm=x=>{ const n=x&&x.name; return (n&&typeof n==='object')?(n.ar||n.en||n.ckb||''):(n||'') };
+  const ar=v=>(v&&typeof v==='object')?(v.ar||v.en||v.name||''):(v||'');
+  const norm=x=>({n:nm(x), d:ar(x.area&&(x.area.name||x.area))||ar(x.description)||'', lat:Number(x.lat), lng:Number(x.lng), m:x.distanceMeters});
+  let items=[], bad=0;
   try{
-    const c=(pMap&&pMap.getCenter())||{lat:GEO.anah[0],lng:GEO.anah[1]};
-    const r=await fetch('https://api.tareky.com/v1/locations/search?q='+encodeURIComponent(q)+'&limit=6&lat='+c.lat.toFixed(5)+'&lng='+c.lng.toFixed(5)+'&access_token='+TAREKY_PK);
-    if(seq!==_mqSeq) return;
-    const j=await r.json().catch(()=>null);
-    const arr=Array.isArray(j)?j:((j&&(j.results||j.data||j.features))||[]);
-    const nm=x=>{ const n=x&&x.name; return (n&&typeof n==='object')?(n.ar||n.en||n.ckb||''):(n||'') };
-    const items=arr.map(x=>({n:nm(x), d:(x.area&&(x.area.ar||x.area))||x.description||'', lat:Number(x.lat), lng:Number(x.lng), m:x.distanceMeters})).filter(x=>x.n&&isFinite(x.lat)&&isFinite(x.lng));
-    window.__mqItems=items;
-    box.innerHTML=items.length ? items.map((x,i)=>`<button type="button" class="mq-it" onclick="mapQPick(${i})"><b>${esc(x.n)}</b><span>${esc(String(x.d||''))}${x.m!=null?' · '+_fmtDist(x.m):''}</span></button>`).join('')
-      : '<div class="mq-msg">ما لكينا شي — جرّب كلمة ثانية</div>';
-  }catch(e){ if(seq===_mqSeq) box.innerHTML='<div class="mq-msg">البحث ما اشتغل — حرّك الخريطة بإيدك</div>' }
+    /* 1) بحث الأماكن (الاسم: query، الرد: place) */
+    const r=await fetch('https://api.tareky.com/v1/locations/search?query='+encodeURIComponent(q)+'&limit=8&lat='+lat+'&lng='+lng+tk);
+    if(r.ok){ const j=await r.json().catch(()=>null); items=((j&&(j.place||j.places||j.results))||[]).map(norm) } else bad++;
+  }catch(e){ bad++ }
+  if(seq!==_mqSeq) return;
+  if(!items.filter(x=>x.n).length){
+    try{
+      /* 2) احتياط: تحويل الاسم لموقع (الاسم: q، الرد: results) */
+      const r2=await fetch('https://api.tareky.com/v1/locations/geocode?q='+encodeURIComponent(q)+'&limit=8&proximity='+lng+','+lat+tk);
+      if(r2.ok){ const j2=await r2.json().catch(()=>null); items=((j2&&j2.results)||[]).map(norm) } else bad++;
+    }catch(e){ bad++ }
+  }
+  if(seq!==_mqSeq) return;
+  items=items.filter(x=>x.n&&isFinite(x.lat)&&isFinite(x.lng));
+  window.__mqItems=items;
+  box.innerHTML=items.length ? items.map((x,i)=>`<button type="button" class="mq-it" onclick="mapQPick(${i})"><b>${esc(x.n)}</b><span>${esc(String(x.d||''))}${x.m!=null?' · '+_fmtDist(x.m):''}</span></button>`).join('')
+    : (bad>=2 ? '<div class="mq-msg">البحث ما اشتغل هسه — حرّك الخريطة بإيدك</div>' : '<div class="mq-msg">ما لكينا شي — جرّب كلمة ثانية</div>');
 }
 function mapQPick(i){
   const x=(window.__mqItems||[])[i]; if(!x||!pMap) return;
@@ -13761,7 +13773,7 @@ function preview(elId,loc,key){
   el.innerHTML=ph;
   /* الضغط يفتح الخريطة داخل التطبيق (مو قوقل) */
   el.onclick=()=>{ try{ openViewMap(loc, loc.zone||'الموقع', '') }catch(e){} };
-  /* v285: صورة خريطة جاهزة من «طريق» (أخف من خريطة كاملة)، وإذا ما نزلت نرجع للطريقة القديمة */
+  /* v286: صورة خريطة جاهزة من «طريق» (أخف من خريطة كاملة)، وإذا ما نزلت نرجع للطريقة القديمة */
   try{
     const w=Math.min(640, Math.max(240, Math.round(el.clientWidth||340)));
     const src='https://api.tareky.com/v1/static-map/light/'+Number(loc.lng).toFixed(5)+','+Number(loc.lat).toFixed(5)+',16/'+w+'x160@2x.webp?access_token='+TAREKY_PK;
@@ -14155,7 +14167,7 @@ async function loadMyComm(){
 
 function renderMyComm(){
   const box=document.getElementById('stComm'); if(!box) return;
-  if(me && me.staff){ box.innerHTML=''; return }   /* v285: عمولة التطبيق وسدادها لصاحب المحل بس */
+  if(me && me.staff){ box.innerHTML=''; return }   /* v286: عمولة التطبيق وسدادها لصاحب المحل بس */
   const ic=invCalc(myComm.amount, myInv), st=ic.s;
   const dd=(myShopPer?myShopPer.e:_dueDate(new Date())).toLocaleDateString('ar-IQ');
   const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
@@ -15031,7 +15043,7 @@ async function renderBanAdmin(){
       </div>
     </div>`).join('');
 }
-/* v285: إضافة/تعديل البانر بشاشة وحدة (بدل 5 نوافذ prompt) */
+/* v286: إضافة/تعديل البانر بشاشة وحدة (بدل 5 نوافذ prompt) */
 let _bn=null;
 const BN_ACTS=[['','ما يفتح شي'],['cat:all','الرئيسية — كل المحلات'],['cat:restaurant','المطاعم'],['cat:store','المتاجر'],['cat:sweet','الحلويات'],['cat:special','اشتريلي'],['shop','مطعم / محل معيّن'],['url','رابط خارجي']];
 function addBanner(){ _bn={id:null,img:'',title:'',body:'',action:'cat:restaurant',sort_no:(document.querySelectorAll('#bnAdmin .bnb.e').length||0)+1,_up:false}; bnPaint() }
@@ -16704,7 +16716,7 @@ function errMsg(e){
 let _askCb=null;
 const ASK_ICON='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 1c0 1.7-2.3 1.8-2.3 3.6"/><circle cx="12" cy="17" r=".15" fill="currentColor"/></svg>';
 const ASK_ICON_DANGER='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>';
-/* v285: وصل حساب السائق بعد التسليم (التصميم ٢) */
+/* v286: وصل حساب السائق بعد التسليم (التصميم ٢) */
 function drvReceipt(d){
   let el=document.getElementById('rcpSheet');
   if(!el){ el=document.createElement('div'); el.id='rcpSheet'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
@@ -16721,7 +16733,7 @@ function drvReceipt(d){
   requestAnimationFrame(()=>el.classList.add('on'));
 }
 
-/* ═══ v285: الطلبات اللي ما انسلّمت — مثل التطبيقات العالمية: قائمة + تبويبات + تفاصيل ═══ */
+/* ═══ v286: الطلبات اللي ما انسلّمت — مثل التطبيقات العالمية: قائمة + تبويبات + تفاصيل ═══ */
 let _rfList=[], _rfAt=0, _rfBusy=false, _rfTab='act', _rfSel=null;
 const RF_FAULT={customer:'الزبون',shop:'المطعم',driver:'السائق',none:'ماكو غلطان'};
 const RF_ST={due:['مستحق','due'],paid:['بانتظار تأكيد الاستلام','paid'],confirmed:['تم ✓','ok']};
@@ -16909,7 +16921,7 @@ async function rfConfirm(id){
 setTimeout(()=>{ try{ rfTick(true) }catch(e){} },6000);
 setInterval(()=>{ try{ rfTick(false) }catch(e){} },30000);
 
-/* ═══ v285: الحجز المسبق (طلب لوقت لاحق) — مثل Uber Eats: لحد أسبوع، الإلغاء قبل قبول المحل ═══ */
+/* ═══ v286: الحجز المسبق (طلب لوقت لاحق) — مثل Uber Eats: لحد أسبوع، الإلغاء قبل قبول المحل ═══ */
 let schedOn=false, schedDay=-1, schedHour=-1;
 const SCHED_ON=false;  /* قريباً — خليها true لما نشغّل الحجز */
 const SCHED_FROM=10, SCHED_TO=23;              /* ساعات الحجز: 10 الصبح لـ 11 بالليل */
@@ -16981,7 +16993,7 @@ function leadPaint(){
   document.querySelectorAll('.ldbox').forEach(b=>b.innerHTML=html);
 }
 
-/* ═══ v285: شروط الشراكة — موافقة المطعم من التطبيق (تنحفظ بالتاريخ ورقم النسخة) ═══ */
+/* ═══ v286: شروط الشراكة — موافقة المطعم من التطبيق (تنحفظ بالتاريخ ورقم النسخة) ═══ */
 const TERMS_V=1;
 const TERMS_HTML=`
 <h2>من نحن</h2>
@@ -17139,7 +17151,7 @@ function askClose(v){
   const cb=_askCb; _askCb=null; if(cb) cb(v);
 }
 
-/* v285: ولا رسالة تطلع للمستخدم بيها أكواد تقنية — نخلي الجملة العربية بس */
+/* v286: ولا رسالة تطلع للمستخدم بيها أكواد تقنية — نخلي الجملة العربية بس */
 const __TECH=/PGRST|JWT|violates|constraint|does not exist|function|relation|column|syntax|null value|TypeError|ReferenceError|undefined|is not |Failed to fetch|NetworkError|Load failed|AbortError|duplicate key|permission denied|row-level|"code"|"message"|[{}]|schema|invalid input|out of range|status \d{3}|Error:|\berror\b|\bnull\b|otpiq|fetch|[a-z]+_[a-z_]+\(|accepted|pending|ready|assigned|ontheway|arrived|delivered|rejected|cancelled/i;
 function __friendly(t){
   t=String(t==null?'':t);
@@ -21267,7 +21279,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v285', t0=Date.now();
+  var VER='v286', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
