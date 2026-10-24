@@ -1,6 +1,6 @@
 /* ═══════════════════════════════════════════════════════════
    طبقة الترجمة — Firestore ⇄ Supabase
-   واصل ليمَك · v6  (فواصل ذكية + إيقاف بالخلفية + تجديد الجلسة)
+   واصل ليمَك · v7  (سياسة اتصال مثل التطبيقات العالمية)
    ═══════════════════════════════════════════════════════════ */
 
 const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
@@ -42,6 +42,13 @@ function _rtInit(){
   }catch(e){ _rt=null }
 }
 
+/* ═══ سياسة الاتصال (v7) — مثل التطبيقات العالمية:
+   التطبيق يحدد (window.__sbPolicy) منو يفتح خط مباشر ولأي جدول، وكل شكد يسأل.
+   الزبون اللي يتصفح بس: ماكو خط مباشر. اللي عنده طلب شغّال: خط مباشر لحد ما يستلم. ═══ */
+function _pol(){ try{ return (typeof window!=='undefined' && window.__sbPolicy) || null }catch(e){ return null } }
+function _rtAllowed(tbl){ const p=_pol(); if(!p || typeof p.rt!=='function') return true; try{ return !!p.rt(tbl) }catch(e){ return true } }
+const _rtCh = new Map();        /* جدول → القناة (حتى نسكّرها لما ما يحتاجها أحد) */
+
 /* يشترك بجدول ويرجّع دالة إلغاء */
 function _rtWatch(tbl, fn){
   _rtInit();
@@ -52,7 +59,7 @@ function _rtWatch(tbl, fn){
     const set = new Set();
     _rtSubs.set(tbl, set);
     try{
-      _rt.channel('w_'+tbl)
+      const ch = _rt.channel('w_'+tbl)
         .on('postgres_changes', {event:'*', schema:'public', table:tbl}, ()=>{
           set.forEach(f=>{ try{ f() }catch(e){} });
         })
@@ -60,11 +67,19 @@ function _rtWatch(tbl, fn){
           if(st==='SUBSCRIBED'){ _rtOk=true; _rtTblOk[tbl]=true }
           else if(st==='CHANNEL_ERROR' || st==='TIMED_OUT' || st==='CLOSED'){ _rtTblOk[tbl]=false }
         });
+      _rtCh.set(tbl, ch);
     }catch(e){ _rtSubs.delete(tbl); return null }
   }
   const set=_rtSubs.get(tbl);
   set.add(fn);
-  return ()=>{ set.delete(fn) };
+  return ()=>{
+    set.delete(fn);
+    /* ماكو أحد يحتاج هالجدول: نسكّر القناة (وإذا ما بقت قنوات ينقطع الاتصال كله) */
+    if(!set.size){
+      const ch=_rtCh.get(tbl); _rtCh.delete(tbl); _rtSubs.delete(tbl); _rtTblOk[tbl]=false;
+      try{ if(ch && _rt) _rt.removeChannel(ch) }catch(e){}
+    }
+  };
 }
 
 /* ═══ فواصل الاستطلاع حسب أهمية البيانات ═══ */
@@ -86,6 +101,8 @@ const _POLL = {
 };
 const _RT_TABLES = ['orders','orders_available','special_orders','shops','notifications'];
 function _every(tbl){
+  const p=_pol();
+  if(p && typeof p.poll==='function'){ try{ const v=Number(p.poll(tbl)); if(v>0) return v }catch(e){} }
   /* الجداول اللي عليها Realtime — استطلاع بطيء كشبكة أمان بس */
   if(_rtTblOk[tbl] && _RT_TABLES.indexOf(tbl) > -1){
     /* الطلبات حرجة: حتى لو الاتصال الحي شغّال نبقي شبكة أمان كل 10 ثواني (مو 30) */
@@ -102,7 +119,8 @@ function _every(tbl){
 function _gapFor(tbl, fails){
   let g = _every(tbl);
   if(fails > 0) g = Math.min(20000, g * Math.pow(2, Math.min(fails, 3)));
-  return Math.round(g * (0.85 + Math.random() * 0.3));
+  const j = g >= 30000 ? (0.6 + Math.random() * 0.8) : (0.85 + Math.random() * 0.3);
+  return Math.round(g * j);
 }
 function _wakeFn(isDead, getT, setT, tick){
   let pend = null;
@@ -317,11 +335,12 @@ let _doc = function(coll, id){
           if(sig !== last){ last = sig; cb(snap) }
         }catch(e){ fails++; if(err) err(e) }
         busy = false;
-        if(!dead){ clearTimeout(timer); timer = setTimeout(tick, gap()) }
+        if(!dead){ try{ rtFix() }catch(e){} clearTimeout(timer); timer = setTimeout(tick, gap()) }
       };
       const wake = _wakeFn(() => dead, () => timer, t => { timer = t }, tick);
       _wake.add(wake); _tblAdd(tbl, wake);
-      const unRt = _rtWatch(tbl, wake);      /* تحديث فوري من القاعدة */
+      let unRt = _rtAllowed(tbl) ? _rtWatch(tbl, wake) : null;      /* تحديث فوري من القاعدة — حسب السياسة */
+      const rtFix = () => { const ok=_rtAllowed(tbl); if(ok && !unRt) unRt=_rtWatch(tbl, wake); else if(!ok && unRt){ unRt(); unRt=null } };
       tick();
       return () => {
         dead = true; clearTimeout(timer); _wake.delete(wake); _tblDel(tbl, wake);
@@ -392,11 +411,12 @@ function _query(coll, filters = [], order = null, lim = null){
           if(sig !== last){ last = sig; cb(snap) }
         }catch(e){ fails++; if(err) err(e) }
         busy = false;
-        if(!dead){ clearTimeout(timer); timer = setTimeout(tick, gap()) }
+        if(!dead){ try{ rtFix() }catch(e){} clearTimeout(timer); timer = setTimeout(tick, gap()) }
       };
       const wake = _wakeFn(() => dead, () => timer, t => { timer = t }, tick);
       _wake.add(wake); _tblAdd(tbl, wake);
-      const unRt = _rtWatch(tbl, wake);      /* تحديث فوري من القاعدة */
+      let unRt = _rtAllowed(tbl) ? _rtWatch(tbl, wake) : null;      /* تحديث فوري من القاعدة — حسب السياسة */
+      const rtFix = () => { const ok=_rtAllowed(tbl); if(ok && !unRt) unRt=_rtWatch(tbl, wake); else if(!ok && unRt){ unRt(); unRt=null } };
       tick();
       return () => {
         dead = true; clearTimeout(timer); _wake.delete(wake); _tblDel(tbl, wake);
@@ -454,3 +474,9 @@ _doc = function(coll, id){
   };
   return { ...d, update: wrap(d.update), set: wrap(d.set) };
 };
+
+/* v7: للتطبيق — تحديث فوري لجدول بعد ما نكتب، وتحويل صف من القاعدة لشكل التطبيق */
+if(typeof window !== 'undefined'){
+  window.__sbKick = function(tbl){ try{ _kick(tbl) }catch(e){} };
+  window.__sbIn = function(coll, row){ try{ return _in(coll, row) }catch(e){ return row } };
+}

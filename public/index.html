@@ -334,7 +334,7 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .bn-save{width:100%;margin-top:18px;border:0;border-radius:16px;padding:15px;background:linear-gradient(135deg,#FF8A1F,#F97316);color:#fff;font:inherit;font-size:16px;font-weight:800;box-shadow:0 8px 18px -8px rgba(249,115,22,.6)}
 .bn-save:disabled{opacity:.6}
 .wic.bi{width:18px!important;height:18px!important;min-width:18px;flex:0 0 18px!important;display:inline-block!important;vertical-align:-3px;margin:0!important}
-/* v281: نظام أزرار موحّد */
+/* v285: نظام أزرار موحّد */
 .ub,.tp-go,.sps-go,.rf-no{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-height:50px!important;border-radius:14px!important;font-size:15px!important;font-weight:700!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;line-height:1.25!important}
 .ub-p,.tp-go,.sps-go{background:#4A1FA8!important;color:#fff!important;border:0!important}
 .ub-g,.tp-go.done{background:#E8760C!important;color:#fff!important;border:0!important}
@@ -376,6 +376,24 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .tm-row i.ok{background:#E8F7EE;color:#15803D}.tm-row i.old{background:#FFF4E5;color:#B45309}.tm-row i.no{background:#FDECEC;color:#DC2626}
 .tm-empty{text-align:center;color:#8a84a0;padding:24px 0}
 .free-ban{display:flex;flex-direction:column;gap:2px;background:linear-gradient(135deg,#FFF4E5,#FDEBD3);border:1px solid #F6D3A6;border-radius:16px;padding:12px 14px;margin:0 0 14px}.free-ban b{color:#B45309;font-size:15px;font-weight:800}.free-ban span{color:#92400E;font-size:12.5px;font-weight:600}
+.leaflet-control-attribution{font-size:9px!important;background:rgba(255,255,255,.7)!important;padding:0 4px!important;border-radius:6px 0 0 0}
+.msearch{position:absolute;top:10px;left:10px;right:10px;z-index:1200}
+.msearch>.wic{position:absolute;right:12px;top:12px;width:20px;height:20px;color:#7A7490;pointer-events:none}
+.msearch input{width:100%;box-sizing:border-box;height:44px;border-radius:14px;border:1px solid #E6E1F0;background:#fff;padding:0 40px 0 12px;font:inherit;font-size:14.5px;box-shadow:0 4px 14px rgba(40,20,90,.12);outline:0}
+.msearch input:focus{border-color:#7B3FE4}
+#mapQRes{margin-top:6px;background:#fff;border-radius:14px;box-shadow:0 8px 22px rgba(40,20,90,.16);overflow:hidden;max-height:40vh;overflow-y:auto}
+#mapQRes:empty{display:none}
+.mq-it{display:block;width:100%;text-align:right;background:#fff;border:0;border-bottom:1px solid #F0EDF6;padding:10px 14px;font:inherit;cursor:pointer}
+.mq-it b{display:block;font-size:14px;color:#1f1640}.mq-it span{display:block;font-size:12px;color:#8a84a0;margin-top:2px}
+.mq-msg{padding:12px 14px;font-size:13px;color:#7A7490}
+#mapSheet .zonetag{top:62px!important}
+#pickMap .leaflet-top{top:56px}
+html[data-theme=dark] .msearch input,html[data-theme=dark] #mapQRes,html[data-theme=dark] .mq-it{background:#1f1a30;color:#ece8f7;border-color:#3a3354}
+html[data-theme=dark] .mq-it b{color:#ece8f7}
+.pvstat{position:relative;width:100%;height:160px;border-radius:12px;overflow:hidden;background:#EEF0F4}
+.pvstat img{width:100%;height:100%;object-fit:cover;display:block}
+.pvstat .pvpin{position:absolute;left:50%;top:50%;width:34px;height:34px;transform:translate(-50%,-100%)}
+.pvstat i{position:absolute;left:4px;bottom:2px;font-style:normal;font-size:9px;color:#555;background:rgba(255,255,255,.7);padding:0 4px;border-radius:4px}
 .sch-soon{display:flex;align-items:center;justify-content:space-between;background:#fff;border:1px dashed #d9d3ea;border-radius:14px;padding:12px 14px;margin:10px 0;color:#8a84a0;font-weight:700;font-size:14px}.sch-soon span{background:#f1ecfb;color:#5b21b6;border-radius:99px;padding:3px 10px;font-size:12px}
 .sch{background:#fff;border:1.5px solid #EEE9F6;border-radius:18px;padding:12px;margin-bottom:6px}
 .sch,.sch *{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -5290,7 +5308,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v281</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v285</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -5614,7 +5632,7 @@ body,.screen{background:#fff;color:var(--txt)}
     <div class="mstip" id="vmAddr"></div>
     <button class="big-btn" id="vmNav" style="background:#5B2BC9;color:#fff"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 2.5 2 10.2l7.6 2.9 2.9 7.6z"/><path d="M21.5 2.5 9.6 13.1"/></svg> افتح الملاحة بخرائط جوجل</button>
   </div>
-</div> </div> <div id="tripSheet"><div class="tp-map-wrap"><div id="tripMap"></div><button class="tp-x" onclick="closeTrip()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="tp-eta" id="tripEta">… يحسب المسار</div></div><div class="tp-card" id="tripCard"></div></div> <div id="mapSheet"> <div class="msheet"> <div class="mshead"><h4 id="mapTitle"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> حدد الموقع</h4> <button class="x" onclick="closeMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div> <div class="mapwrap"> <div id="pickMap"></div> <div class="maploading" id="mapLoad"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> … جاري تحميل الخريطة</div> <div class="ctrpin"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 43S38 30.6 38 19A14 14 0 1 0 10 19c0 11.6 14 24 14 24Z" fill="#5B2BC9" stroke="white" stroke-width="2"/><circle cx="24" cy="19" r="5.2" fill="white"/><circle cx="24" cy="19" r="2.7" fill="#F97402"/></svg></div> <div class="zonetag" id="zoneTag">داخل عانة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div> <button class="gpsbtn" onclick="gpsLocate()" title="موقعي الحالي"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></button> </div> <div class="msfoot"> <div class="mstip" id="mapTip">حرّك الخريطة لين يصير الدبوس <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> فوق المكان بالضبط، بعدين اضغط تثبيت.</div> <button class="big-btn" onclick="confirmMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> ثبّت هذا الموقع</button> <div class="coordline" id="coordLine"></div> </div> </div>
+</div> </div> <div id="tripSheet"><div class="tp-map-wrap"><div id="tripMap"></div><button class="tp-x" onclick="closeTrip()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button><div class="tp-eta" id="tripEta">… يحسب المسار</div></div><div class="tp-card" id="tripCard"></div></div> <div id="mapSheet"> <div class="msheet"> <div class="mshead"><h4 id="mapTitle"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> حدد الموقع</h4> <button class="x" onclick="closeMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button></div> <div class="mapwrap"> <div id="pickMap"></div> <div class="msearch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="mapQ" type="search" autocomplete="off" placeholder="ابحث: جامع، مستشفى، مدرسة، شارع…" oninput="mapQIn(this.value)"><div id="mapQRes"></div></div> <div class="maploading" id="mapLoad"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> … جاري تحميل الخريطة</div> <div class="ctrpin"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 43S38 30.6 38 19A14 14 0 1 0 10 19c0 11.6 14 24 14 24Z" fill="#5B2BC9" stroke="white" stroke-width="2"/><circle cx="24" cy="19" r="5.2" fill="white"/><circle cx="24" cy="19" r="2.7" fill="#F97402"/></svg></div> <div class="zonetag" id="zoneTag">داخل عانة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 6 9 17l-5-5"/></svg></div> <button class="gpsbtn" onclick="gpsLocate()" title="موقعي الحالي"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.6" fill="currentColor"/></svg></button> </div> <div class="msfoot"> <div class="mstip" id="mapTip">حرّك الخريطة لين يصير الدبوس <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> فوق المكان بالضبط، بعدين اضغط تثبيت.</div> <button class="big-btn" onclick="confirmMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> ثبّت هذا الموقع</button> <div class="coordline" id="coordLine"></div> </div> </div>
 </div>
 <div id="cdSheet" onclick="if(event.target===this)closeCallDrv()"> <div class="cdbox"> <div class="cdhead"> <h4>استدعاء سائق</h4> <button class="x" onclick="closeCallDrv()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button> </div> <div class="cdnote">السائق يجي لمحلك، ياخذ الطلب، ويوصله لزبونك.</div> <div class="fld"><label>اسم الزبون</label><input id="cdName" placeholder="مثال: أحمد"></div> <div class="fld"><label>رقم هاتف الزبون</label><input id="cdPhone" inputmode="numeric" placeholder="07XXXXXXXXX" style="direction:ltr;text-align:left"></div> <div class="fld"><label>عنوان الزبون</label><input id="cdAddr" placeholder="مثال: حي الضباط — قرب الجامع"></div> <div class="fld"><label>مبلغ البضاعة (د.ع)</label><input id="cdAmount" inputmode="numeric" placeholder="0"><div class="fldhelp">المبلغ الي يستلمه السائق من الزبون ويرجعه لك.</div></div> <div class="fld"><label>ملاحظة للسائق <span style="color:var(--mut);font-weight:600">(اختياري)</span></label><input id="cdNote" placeholder="مثال: كيس كبير — انتبه"></div> <button class="big-btn" id="cdBtn" onclick="sendCallDrv()">إرسال للسواق</button> <button class="big-btn ghost" onclick="closeCallDrv()">إلغاء</button> </div></div>
 <div id="svcSheet" onclick="if(event.target===this)closeSvc()"> <div class="svcbox"> <svg class="svcwave" viewBox="0 0 420 16" preserveAspectRatio="none" aria-hidden="true"> <path d="M0 9 Q105 0 210 7 T420 6 L420 16 L0 16Z" fill="#F97402"/></svg> <div class="svchead"> <h4>ما هي رسوم الخدمة؟</h4> <button class="x" onclick="closeSvc()" aria-label="إغلاق"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button> </div> <div class="svcbody"> <p>قد تُضاف رسوم خدمة بسيطة إلى طلبك، وتُحدد قيمتها حسب إجمالي قيمة مشترياتك.</p> <p>تبدأ رسوم الخدمة من 250 د.ع وتصل إلى 1,000 د.ع كحد أقصى.</p> <p>تساعدنا هذه الرسوم على تطوير خدماتنا وتقديم تجربة توصيل أسرع وأسهل لك.</p> </div> <button class="big-btn" onclick="closeSvc()">حسناً، فهمت</button> </div>
@@ -7026,7 +7044,7 @@ async function openViewMap(loc, title, addr){
     const el=document.getElementById('viewMap');
     if(!_vmMap){
       _vmMap=L.map(el,{zoomControl:true,attributionControl:false}).setView([loc.lat,loc.lng],17);
-      tiles().addTo(_vmMap);
+      tarekyTiles(_vmMap);
     }else{
       _vmMap.setView([loc.lat,loc.lng],17);
     }
@@ -7069,7 +7087,7 @@ async function openTrackMap(orderId, isSpecial){
     if(_vmMap){ _vmMap.remove(); _vmMap=null; _vmMarker=null }
     if(_tkMap){ _tkMap.remove(); _tkMap=null }
     _tkMap=L.map(el,{zoomControl:true,attributionControl:false}).setView([cust.lat,cust.lng],16);
-    tiles().addTo(_tkMap);
+    tarekyTiles(_tkMap);
     _tkC=L.marker([cust.lat,cust.lng],{icon:_HOME_ICON()}).addTo(_tkMap);
     if(drv && drv.lat){
       _tkD=L.marker([drv.lat,drv.lng],{icon:_DRV_ICON()}).addTo(_tkMap);
@@ -7096,20 +7114,25 @@ function _fmtDist(m){
   return m<1000 ? Math.round(m)+' متر' : (m/1000).toFixed(1)+' كم';
 }
 
+/* v285: الطريق ووقت الوصول من «طريق» (يعرف شوارع العراق)، وإذا ما ردّ نرجع للسيرفر المجاني القديم */
+async function routeFetch(pts){
+  const path=pts.map(c=>Number(c.lng)+','+Number(c.lat)).join(';');
+  try{
+    const r=await fetch('https://api.tareky.com/v1/directions/driving/'+path+'?overview=full&geometries=geojson&access_token='+TAREKY_PK);
+    if(r.ok){ const rt=((await r.json()).routes||[])[0]; if(rt && rt.geometry && Array.isArray(rt.geometry.coordinates)) return rt }
+  }catch(e){}
+  const r2=await fetch('https://router.project-osrm.org/route/v1/driving/'+path+'?overview=full&geometries=geojson');
+  if(!r2.ok) throw new Error('route');
+  const rt2=((await r2.json()).routes||[])[0]; if(!rt2) throw new Error('no route');
+  return rt2;
+}
 async function drawRoute(from, to){
   if(!_tkMap || !from || !to) return;
   /* ما نحسب المسار أكثر من مرة كل 20 ثانية */
   if(Date.now()-_tkEtaAt < 20000) return;
   _tkEtaAt=Date.now();
   try{
-    const url='https://router.project-osrm.org/route/v1/driving/'
-      +from.lng+','+from.lat+';'+to.lng+','+to.lat
-      +'?overview=full&geometries=geojson';
-    const r=await fetch(url);
-    if(!r.ok) throw new Error('route');
-    const j=await r.json();
-    const rt=(j.routes||[])[0];
-    if(!rt) throw new Error('no route');
+    const rt=await routeFetch([from,to]);
 
     const pts=rt.geometry.coordinates.map(c=>[c[1],c[0]]);
     if(_tkLine) _tkMap.removeLayer(_tkLine);
@@ -7189,7 +7212,7 @@ async function _trkPush(loc){
   }
 }
 
-/* v281: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
+/* v285: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
    إذا الموقع مسدود من المتصفح نبلّغ السائق بوضوح بدل ما يفشل بصمت */
 let _locWarned=false;
 function getPosSmart(ok, fail){
@@ -7812,9 +7835,10 @@ async function doAuth(){
 
 function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
+  window.__sbPolicy = (me.role==='customer') ? CUST_POLICY : null;
   setTimeout(()=>{ try{ termsCheck() }catch(e){} },2500);
-  /* v281: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
-  try{ const _cs=()=>{ try{ rpc('cancel_stale_orders',{}).catch(()=>{}) }catch(e){} }; setTimeout(_cs,8000); if(!window.__csT) window.__csT=setInterval(_cs,5*60*1000) }catch(e){}
+  /* v285: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
+  if(me.role==='admin' || me.role==='store') try{ const _cs=()=>{ try{ rpc('cancel_stale_orders',{}).catch(()=>{}) }catch(e){} }; setTimeout(_cs,8000); if(!window.__csT) window.__csT=setInterval(_cs,5*60*1000) }catch(e){}
   document.getElementById('auth').classList.remove('on');
   subscribeTopics();
   setTimeout(()=>{ initPush(true).then(refreshPushUI) },1500);
@@ -7871,9 +7895,52 @@ function applyShops(docs){
   try{ if(me && me.role==='customer') cartSync() }catch(e){}
 }
 
+/* ═══ v285: طريقة الاتصال مثل التطبيقات العالمية (طلبات / أوبر إيتس) ═══
+   - الزبون يتصفح: ماكو خط مباشر. المحلات تنجاب لما يفتح التطبيق وكل دقيقة تقريباً، من نسخة مخزّنة بالسيرفر.
+   - الزبون عنده طلب شغّال: خط مباشر للطلب لحد ما يستلم (التتبع).
+   - المحل والسائق والأدمن: خط مباشر طول الوقت (مثل قبل).
+   - مؤقت الإلغاء التلقائي: السيرفر وأجهزة المحل/الأدمن بس، مو تلفونات الزبائن. */
+const ORD_FINAL=['delivered','rejected','cancelled'];
+function custActive(){
+  return (myOrders||[]).some(o=>!ORD_FINAL.includes(o.status)) || (mySpecialOrders||[]).some(o=>!ORD_FINAL.includes(o.status));
+}
+const CUST_POLICY={
+  rt: tbl => (tbl==='orders' || tbl==='special_orders') && custActive(),
+  poll: tbl => tbl==='shops' ? 60000
+            : (tbl==='orders' || tbl==='special_orders') ? (custActive() ? 8000 : 60000)
+            : (tbl==='notifications' ? 60000 : 0)
+};
+async function fetchShopsFast(){
+  try{
+    const r=await fetch(API_PUSH+'/shops',{method:'GET'});
+    if(r.ok){
+      const rows=await r.json();
+      if(Array.isArray(rows) && rows.length) return rows.map(row=>({...(window.__sbIn?window.__sbIn('shops',row):row), id:row.id}));
+    }
+  }catch(e){}
+  const c=await db.collection('shops').where('approved','==',true).get();   /* احتياط: من القاعدة مباشرة */
+  return (c&&c.docs?c.docs:[]).map(d=>({...d.data(), id:d.id}));
+}
+let _shLoopT=null, _shLoopGen=0;
+function custShopsLoop(){
+  clearTimeout(_shLoopT); const gen=++_shLoopGen;
+  const go=async()=>{
+    if(gen!==_shLoopGen) return;
+    if(!document.hidden){
+      try{
+        const arr=await fetchShopsFast();
+        if(gen!==_shLoopGen) return;
+        if(arr.length){ applyShops(arr); shopsSyncedAt=Date.now(); try{ localStorage.setItem('lw_shops_at',String(shopsSyncedAt)) }catch(e){} conn(true) }
+      }catch(e){ conn(false) }
+    }
+    if(gen===_shLoopGen) _shLoopT=setTimeout(go, Math.round(60000*(0.6+Math.random()*0.8)));
+  };
+  go();
+}
 async function listenShops(force){
   const sl=document.getElementById('shopList');
   if(sl && !sl.innerHTML.trim()) sl.innerHTML=skeleton(4);
+  if(me && me.role==='customer'){ detachShops(); custShopsLoop(); return }
 
   try{ shopsSyncedAt = Number(localStorage.getItem('lw_shops_at')||0) }catch(e){}
 
@@ -7908,12 +7975,12 @@ function detachShops(){
 /* لما التطبيق ينخفي، نوقف الاستماع — وما نرجّعه إلا إذا الكاش قدم */
 document.addEventListener('visibilitychange',()=>{
   if(!me || me.role!=='customer') return;
-  if(document.hidden){ detachShops() }
+  if(document.hidden){ detachShops(); clearTimeout(_shLoopT); _shLoopGen++ }
   else { listenShops(true) }
 });
 
 /* سحب للتحديث اليدوي */
-function refreshShops(){ detachShops(); attachShops(); toast('نحدّث المحلات...') }
+function refreshShops(){ detachShops(); if(me && me.role==='customer') custShopsLoop(); else attachShops(); toast('نحدّث المحلات...') }
 /* ═══════════ تقييم المحلات ═══════════ */
 const RATE_DELAY = 0;   /* فوراً بعد التسليم */
 let rateOrder=null, rateStars=0, rateSkipped=[], rateStep='shop';
@@ -8211,7 +8278,7 @@ function __beepFallback(){
 let dofCur=null, dofTimer=null, dofRingT=null, dofSkip={}, dofLast=0;
 let dofWant=(()=>{ try{ return new URLSearchParams(location.search).get('dof')||'' }catch(e){ return '' } })();
 const DOF_SEC=30;
-/* v281: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
+/* v285: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
 function dofActive(){ return (myOrders||[]).some(o=>['assigned','ontheway','arrived'].includes(o.status))
   || (typeof mySpecialOrders!=='undefined' && (mySpecialOrders||[]).some(o=>['assigned','purchased','arrived'].includes(o.status))) }
 function drvBusy(){ return !!(me && me.role==='driver' && dofActive()) }
@@ -9380,7 +9447,7 @@ function szConfirm(){
   const pid=_szP.id, q=_szQ; szClose();
   addCart(pid, zs.length&&z?z.n:null, q, on, true);
 }
-/* v281: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
+/* v285: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
 function openItem(pid){
   const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); if(!p) return;
   if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
@@ -9641,7 +9708,7 @@ async function payCompOwed(drv,amt,name){
   try{ await rpc('admin_pay_comp',{p_driver:drv,p_amount:amt}); try{ pushTo(drv,'تعويض التوصيل المجاني','الإدارة سلّمتك '+Number(amt).toLocaleString()+' د.ع — أكّد الاستلام',{type:'comp'}) }catch(e){} toast('انبلّغ السائق — بانتظار تأكيده'); openCompOwed(true) }
   catch(e){ toast(errMsg(e)) }
 }
-/* v281: السلة تبقى محفوظة إذا الزبون طلع من التطبيق ورجع (3 أيام) — مثل التطبيقات العالمية */
+/* v285: السلة تبقى محفوظة إذا الزبون طلع من التطبيق ورجع (3 أيام) — مثل التطبيقات العالمية */
 const CART_DAYS=3;
 function cartKeyLS(){ return 'lw_cart_'+(uid||'') }
 function cartSave(){
@@ -9814,6 +9881,7 @@ async function submitSpecialOrder(){
   };
   try{
     await db.collection('specialOrders').add(o);
+    try{ window.__sbKick && window.__sbKick('special_orders') }catch(e){}
     pushDrivers('<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg> طلب شراء جديد',market+' <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h14M13 6l6 6-6 6"/></svg> '+me.addr,{type:'special', shop:String(market||''), addr:String(me.addr||''), total:String(Math.max(0,fee-_com))});
     toast('انرسل طلبك للسواق');
     setTimeout(npAsk, 900);
@@ -10008,7 +10076,7 @@ async function specialPurchased(id){
   if(!me||me.role!=='driver')return;
   try{
     await db.collection('specialOrders').doc(id).update({status:'purchased',purchasedAt:Date.now()});
-    /* v281: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
+    /* v285: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
     try{ const _o=(mySpecialOrders||[]).find(x=>x.id===id); if(_o){ _o.status='purchased'; _o.purchasedAt=Date.now() } setTimeout(()=>{ try{ openSpTrip(id) }catch(e){} },150) }catch(e){}
     try{ const o=(mySpecialOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق بالطريق إليك',((me&&me.name)||'السائق')+' اشترى أغراضك وطالع لعندك',{type:'ontheway'}) }catch(e){}
     toast('انحدّثت الحالة — اشتريت الطلب');
@@ -10255,7 +10323,7 @@ async function submitOrder(){
     serviceFee:svcFee(sub),deliveryFee:billCalc(sub).dlvPay,discount:billCalc(sub).disc,total:billCalc(sub).tot,
     status:'pending',createdAt:Date.now(),date:new Date().toLocaleString('ar-IQ'),
     scheduled_for: schedTs()?schedTs().toISOString():null};
-  /* v281: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
+  /* v285: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
   if(!o.scheduled_for) delete o.scheduled_for;
   try{
     const _ref=await db.collection('orders').add(o);
@@ -10263,6 +10331,7 @@ async function submitOrder(){
     try{
       if(_ref&&_ref.id&&!(myOrders||[]).some(x=>x.id===_ref.id)) myOrders=[{...o,id:_ref.id},...(myOrders||[])];
     }catch(e){}
+    try{ window.__sbKick && window.__sbKick('orders') }catch(e){}   /* يفتح خط التتبع المباشر فوراً */
     const sh=shops.find(s=>s.id===o.shopId);
     if(o.scheduled_for){ schedOn=false; schedDay=-1; schedHour=-1 }
     pushTo(ownerUid,o.scheduled_for?('📅 حجز جديد · '+fmtSched(o.scheduled_for)):'🔔 طلب جديد',o.customer+' — '+o.total.toLocaleString()+' د.ع',{type:'new_order', order_id:(_ref&&_ref.id)||'', shop_id:o.shopId||'', total:String(o.total||0), customer:String(o.customer||'')});
@@ -10278,6 +10347,11 @@ async function submitOrder(){
     buzz([20,60,20,60,30]); toast('انرسل طلبك للمحل');
     setTimeout(npAsk, 900);
   }catch(e){toast(errMsg(e)); __revBusy=false;
+    /* v285: صنف خلص — نجيب المحلات من القاعدة مباشرة حتى السلة تشيله وحدها */
+    if(/خلص — شيله من السلة/.test(String(e&&e.message||e))) setTimeout(async()=>{ try{
+      const c=await db.collection('shops').where('approved','==',true).get();
+      if(c&&c.docs&&c.docs.length) applyShops(c.docs.map(d=>({...d.data(), id:d.id})));
+    }catch(_){} },2600);
     if(btn){btn.disabled=false; btn.innerHTML='كلشي تمام'} cancelReview(); renderCheckout()}
 }
 const OCCLS=s=>({pending:'oc-red',accepted:'oc-amber',ready:'oc-amber',assigned:'oc-green',arrived:'oc-green',ontheway:'oc-green',purchased:'oc-green',delivered:'oc-gray',rejected:'oc-gray'}[s]||'oc-gray');
@@ -10760,7 +10834,7 @@ function renderSpTrack(box,id){
 }
 /* خريطة التتبع داخل صفحة اشتريلي — تبقى حية وما تنعاد مع كل تحديث */
 let _spMapEl=null,_spMap=null,_spMapId=null,_spMC=null,_spMD=null,_spML=null,_spFit=false;
-/* v281: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
+/* v285: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
 function _trMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['ontheway','arrived'].includes(o.status)) }
 function _trAdapt(o){ return {id:'o:'+o.id, loc:o.loc, driverLoc:o.driver_loc, status:o.status==='arrived'?'arrived':'purchased'} }
 function _spMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['assigned','purchased','arrived'].includes(o.status)) }
@@ -10776,13 +10850,14 @@ async function spMapMount(o){
     await loadLeaflet();
     if(!_spMap){
       _spMap=L.map(_spMapEl,{zoomControl:false,attributionControl:false}).setView([o.loc.lat,o.loc.lng],15);
-      tiles().addTo(_spMap);
+      tarekyTiles(_spMap);   /* v285: تجربة خرائط طريق */
       _spMC=L.marker([o.loc.lat,o.loc.lng],{icon:_HOME_ICON()}).addTo(_spMap);
     }
     spMapUpdate(o);
     setTimeout(()=>{ try{ _spMap.invalidateSize() }catch(e){} },120);
   }catch(e){ const t=document.getElementById('spMapTx'); if(t) t.textContent='ما گدرنا نحمّل الخريطة' }
 }
+let _spRtAt=0, _spEta=null;
 function spMapUpdate(o){
   if(!_spMap||!window.L) return;
   const d=o.driverLoc, c=o.loc, t=document.getElementById('spMapTx');
@@ -10793,8 +10868,21 @@ function spMapUpdate(o){
   else _spML=L.polyline([ll,[c.lat,c.lng]],{color:'#5B2BC9',weight:4,opacity:.6,dashArray:'8 8'}).addTo(_spMap);
   if(!_spFit){ _spMap.fitBounds(L.latLngBounds([ll,[c.lat,c.lng]]),{padding:[40,40],maxZoom:17}); _spFit=true }
   const m=_dist(d,c);
+  /* v285: كل 30 ثانية نجيب الطريق الحقيقي ووقت الوصول */
+  if(m>=80 && Date.now()-_spRtAt>30000){
+    _spRtAt=Date.now(); const oid=o.id;
+    routeFetch([d,c]).then(rt=>{
+      if(!_spMap || _spMapId!==oid || !_spML) return;
+      _spML.setLatLngs(rt.geometry.coordinates.map(p=>[p[1],p[0]]));
+      _spML.setStyle({dashArray:null,opacity:.8,weight:5});
+      _spEta={d:rt.distance,s:rt.duration,at:Date.now()};
+      const t2=document.getElementById('spMapTx');
+      if(t2 && o.status!=='assigned') t2.textContent='🛵 السائق على بُعد '+_fmtDist(rt.distance)+' · يوصلك خلال '+_fmtEta(rt.duration);
+    }).catch(()=>{});
+  }
+  const _fresh=_spEta && Date.now()-_spEta.at<60000;
   if(t) t.textContent = o.status==='assigned' ? ('🛒 السائق يتسوّق — يبعد عنك '+_fmtDist(m))
-                      : (m<80 ? '📍 السائق وصل يمّك' : ('🛵 السائق على بُعد '+_fmtDist(m)+' · تقريباً '+_fmtEta(m/7)));
+                      : (m<80 ? '📍 السائق وصل يمّك' : ('🛵 السائق على بُعد '+_fmtDist(_fresh?_spEta.d:m)+' · '+(_fresh?'يوصلك خلال '+_fmtEta(_spEta.s):'تقريباً '+_fmtEta(m/7))));
 }
 function renderCustomerSpecialOrders(mode){
   if(!mySpecialOrders.length)return '';
@@ -11220,7 +11308,7 @@ function startShopClock(){
 function renderStore(){
   if(!myShopDoc)return;
   if(!window.__stPerInit){ window.__stPerInit=true; periodDays=30 }   /* المالية تبدأ بآخر 30 يوم مو اليوم */
-  /* v281: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
+  /* v285: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
   const __stf=!!(me && me.staff);
   if(__stf){ periodDays=1; window.stMonth=0 }
   const sh=myShopDoc,os=myOrders;
@@ -11831,7 +11919,7 @@ async function setStatus(id,st){
     if(!yes) return;
   }
   stopAlarm();
-  /* v281: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
+  /* v285: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
   window.__stBusy=window.__stBusy||{};
   if(window.__stBusy[id]) return false;
   window.__stBusy[id]=1; setTimeout(()=>{ try{ delete window.__stBusy[id] }catch(e){} },4000);
@@ -12423,7 +12511,7 @@ async function renderAvailMap(gate){
     _amMap=L.map(el,{zoomControl:false,attributionControl:false,dragging:true,
       touchZoom:true,scrollWheelZoom:false,doubleClickZoom:false,tap:false})
       .setView(pts.length?[pts[0].shopLoc.lat,pts[0].shopLoc.lng]:(_amMe?[_amMe.lat,_amMe.lng]:[34.3699,41.9860]),pts.length?15:(_amMe?16:15));
-    tiles().addTo(_amMap);
+    tarekyTiles(_amMap);
     _amLayer=L.layerGroup().addTo(_amMap);
     el.style.setProperty('touch-action','none','important');
     
@@ -13017,7 +13105,7 @@ async function deliver(id){
       const _sub=cashToShop(o);
       const _svc=Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||0));
       setTimeout(()=>{
-        /* v281: بدل نافذة المتصفح — نافذة التطبيق */
+        /* v285: بدل نافذة المتصفح — نافذة التطبيق */
         const _N=n=>Number(n||0).toLocaleString();
         const _mine=Number(o.deliveryFee||SET.deliveryFee||1250);
         drvReceipt({no:(o.order_no||String(o.createdAt||'').slice(-4)), total:o.total, shop:o.shopName||'المحل', toShop:_sub, fee:_svc, mine:_mine});
@@ -13068,7 +13156,7 @@ async function openTrip(id,sp){
     const c=(o.loc&&o.loc.lat)?o.loc:null;
     _tpMap=L.map(el,{zoomControl:false,attributionControl:false})
             .setView(c?[c.lat,c.lng]:[34.3854,41.9838], c?16:14);
-    tiles().addTo(_tpMap); _tpS=null;
+    tarekyTiles(_tpMap); _tpS=null;
     if(c) _tpC=L.marker([c.lat,c.lng],{icon:_HOME_ICON()}).addTo(_tpMap);
     setTimeout(()=>{ try{_tpMap.invalidateSize()}catch(e){} },250);
     _tpTick();
@@ -13120,7 +13208,7 @@ function _tpTick(){
       try{ _tpMap.fitBounds(L.latLngBounds([[c.lat,c.lng],[o.shopLoc.lat,o.shopLoc.lng]]),{padding:[60,60],maxZoom:16}) }catch(e){}
       return _tpRoute(o.shopLoc,c);
     }
-    /* v281: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
+    /* v285: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
     const last=_trkPrev || o.driverLoc || o.driver_loc;
     if(last && last.lat && c && c.lat){
       _tpFrom='last';
@@ -13150,10 +13238,7 @@ async function _tpRoute(from,to,via){
   _tpEtaAt=Date.now();
   const et=document.getElementById('tripEta');
   try{
-    const url='https://router.project-osrm.org/route/v1/driving/'
-      +from.lng+','+from.lat+';'+(via?via.lng+','+via.lat+';':'')+to.lng+','+to.lat+'?overview=full&geometries=geojson';
-    const r=await fetch(url); if(!r.ok) throw new Error('route');
-    const rt=((await r.json()).routes||[])[0]; if(!rt) throw new Error('no route');
+    const rt=await routeFetch(via?[from,via,to]:[from,to]);
     const pts=rt.geometry.coordinates.map(c=>[c[1],c[0]]);
     if(_tpLine) _tpMap.removeLayer(_tpLine);
     _tpLine=L.polyline(pts,{color:'#FF7A00',weight:6,opacity:.85,lineCap:'round'}).addTo(_tpMap);
@@ -13163,7 +13248,7 @@ async function _tpRoute(from,to,via){
       if(_tpLine) _tpMap.removeLayer(_tpLine);
       _tpLine=L.polyline((via?[[from.lat,from.lng],[via.lat,via.lng],[to.lat,to.lng]]:[[from.lat,from.lng],[to.lat,to.lng]]),
         {color:'#FF7A00',weight:5,opacity:.6,dashArray:'8 8'}).addTo(_tpMap);
-      if(et) et.textContent=(_tpFrom==='shop'?'من المحل · ':'')+'يبعد '+_fmtDist(_dist(from,to))+' تقريباً (المسار الفعلي ما نزل: '+String(e&&e.message||e).slice(0,40)+')';
+      if(et) et.textContent=(_tpFrom==='shop'?'من المحل · ':'')+'يبعد '+_fmtDist(_dist(from,to))+' تقريباً';
     }catch(e2){}
   }
 }
@@ -13354,7 +13439,7 @@ function inPeriod(ts){
   return (Date.now()-t) <= periodDays*86400000;
 }
 /* يقرا التاريخ بأي صيغة: رقم، نص أرقام، أو ISO */
-/* v281: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
+/* v285: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
 function shopFreeTs(sh){ const v=sh&&(sh.free_until||sh.freeUntil); const t=v?new Date(v).getTime():0; return isNaN(t)?0:t }
 function ordFree(o,sh){ const f=shopFreeTs(sh); if(!f) return false; const t=_anyTs(o.createdAt||o.created_at); return !!t && t<f }
 function freeBanner(sh){
@@ -13472,6 +13557,43 @@ function loadLeaflet(){
   });
   return leafletPromise;
 }
+/* ═══ v285: خرائط «طريق» (Tareky) — تجربة على شاشة تتبع الطلب بس ═══
+   خريطة حديثة (Vector): كل فتحة خريطة = وحدة وحدة، التحريك والتكبير مجاني.
+   إذا ما اشتغلت لأي سبب ترجع خريطة OSM القديمة وحدها. */
+const TAREKY_PK='tareky_pk_BroXGz4OGQs5SvnEPPOAaK1szKu5KV960mQbBC';
+const TAREKY_STYLE='https://api.tareky.com/v1/styles/light?lang=ar&access_token='+TAREKY_PK;
+let _mlPromise=null;
+function _ldScript(src){ return new Promise((ok,no)=>{ const sc=document.createElement('script'); sc.src=src; sc.onload=ok; sc.onerror=()=>{ sc.remove(); no(new Error('load '+src)) }; document.head.appendChild(sc); setTimeout(()=>no(new Error('timeout')),15000) }) }
+function loadMapLibre(){
+  if(window.maplibregl && L.maplibreGL) return Promise.resolve();
+  if(_mlPromise) return _mlPromise;
+  _mlPromise=(async()=>{
+    if(!document.getElementById('ml-css')){ const c=document.createElement('link'); c.id='ml-css'; c.rel='stylesheet'; c.href='https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.css'; document.head.appendChild(c) }
+    if(!window.maplibregl) await _ldScript('https://cdn.jsdelivr.net/npm/maplibre-gl@4.7.1/dist/maplibre-gl.js');
+    try{ maplibregl.setRTLTextPlugin('https://cdn.jsdelivr.net/npm/@mapbox/mapbox-gl-rtl-text@0.2.3/mapbox-gl-rtl-text.min.js', true) }catch(e){}
+    if(!L.maplibreGL) await _ldScript('https://cdn.jsdelivr.net/npm/@maplibre/maplibre-gl-leaflet@0.0.22/leaflet-maplibre-gl.js');
+    if(!L.maplibreGL) throw new Error('no plugin');
+  })().catch(e=>{ _mlPromise=null; throw e });
+  return _mlPromise;
+}
+/* يحط خريطة طريق على خريطة Leaflet، وإذا فشلت يحط OSM */
+async function tarekyTiles(map){
+  let done=false;
+  const fallback=(why)=>{ if(done) return; done=true; try{ __silent(new Error(why),'tareky') }catch(_){} try{ tiles().addTo(map) }catch(_){} };
+  try{
+    if(!document.createElement('canvas').getContext('webgl')) return fallback('no webgl');
+    await loadMapLibre();
+    const lyr=L.maplibreGL({ style:TAREKY_STYLE, attributionControl:false });
+    lyr.addTo(map);
+    const gl=lyr.getMaplibreMap&&lyr.getMaplibreMap();
+    const tmr=setTimeout(()=>{ if(!done){ try{ map.removeLayer(lyr) }catch(_){} fallback('style timeout') } },9000);
+    if(gl){
+      gl.once('load',()=>{ if(!done){ done=true; clearTimeout(tmr) } });
+      gl.on('error',ev=>{ const st=ev&&ev.error&&ev.error.status; if(!done && (st===401||st===403||st===429||!gl.isStyleLoaded())){ clearTimeout(tmr); try{ map.removeLayer(lyr) }catch(_){} fallback('style error '+(st||'')) } });
+    }
+    try{ L.control.attribution({prefix:false,position:'bottomleft'}).addAttribution('© OpenMapTiles © OpenStreetMap').addTo(map) }catch(_){}
+  }catch(e){ fallback(String(e&&e.message||e)) }
+}
 function tiles(){
   /* خريطة OSM — ستايل هادئ يناسب هوية واصل ليمك، بدون API key */
   if(!document.getElementById('wl-tile-css')){
@@ -13519,7 +13641,7 @@ async function openMap(mode, autoGps){
           tap:false, inertia:true, bounceAtZoomLimits:false,
           maxBounds:L.latLngBounds(GEO.bounds), maxBoundsViscosity:0.15
         });
-        tiles().addTo(pMap);
+        tarekyTiles(pMap);
         L.circle(GEO.anah,{radius:1460,color:'#5917BC',weight:1.5,fillOpacity:.05,interactive:false}).addTo(pMap);
         L.circle(GEO.rayhana,{radius:2000,color:'#F97402',weight:1.5,fillOpacity:.05,interactive:false}).addTo(pMap);
         pMap.on('move',()=>{
@@ -13546,7 +13668,39 @@ async function openMap(mode, autoGps){
         if(ld)ld.classList.add('gone') }catch(e){} },180);
   }catch(e){ toast('الخريطة ما تحمّلت — تأكد من الإنترنت'); if(ld)ld.classList.add('gone') }
 }
-function closeMap(){ document.getElementById('mapSheet').classList.remove('on') }
+/* v285: البحث عن مكان بشاشة تحديد الموقع (من «طريق») */
+let _mqT=null, _mqSeq=0;
+function mapQIn(v){
+  clearTimeout(_mqT); const box=document.getElementById('mapQRes');
+  v=String(v||'').trim();
+  if(v.length<2){ if(box) box.innerHTML=''; return }
+  _mqT=setTimeout(()=>mapQRun(v),450);
+}
+async function mapQRun(q){
+  const box=document.getElementById('mapQRes'); if(!box) return;
+  const seq=++_mqSeq;
+  box.innerHTML='<div class="mq-msg">⏳ نبحث…</div>';
+  try{
+    const c=(pMap&&pMap.getCenter())||{lat:GEO.anah[0],lng:GEO.anah[1]};
+    const r=await fetch('https://api.tareky.com/v1/locations/search?q='+encodeURIComponent(q)+'&limit=6&lat='+c.lat.toFixed(5)+'&lng='+c.lng.toFixed(5)+'&access_token='+TAREKY_PK);
+    if(seq!==_mqSeq) return;
+    const j=await r.json().catch(()=>null);
+    const arr=Array.isArray(j)?j:((j&&(j.results||j.data||j.features))||[]);
+    const nm=x=>{ const n=x&&x.name; return (n&&typeof n==='object')?(n.ar||n.en||n.ckb||''):(n||'') };
+    const items=arr.map(x=>({n:nm(x), d:(x.area&&(x.area.ar||x.area))||x.description||'', lat:Number(x.lat), lng:Number(x.lng), m:x.distanceMeters})).filter(x=>x.n&&isFinite(x.lat)&&isFinite(x.lng));
+    window.__mqItems=items;
+    box.innerHTML=items.length ? items.map((x,i)=>`<button type="button" class="mq-it" onclick="mapQPick(${i})"><b>${esc(x.n)}</b><span>${esc(String(x.d||''))}${x.m!=null?' · '+_fmtDist(x.m):''}</span></button>`).join('')
+      : '<div class="mq-msg">ما لكينا شي — جرّب كلمة ثانية</div>';
+  }catch(e){ if(seq===_mqSeq) box.innerHTML='<div class="mq-msg">البحث ما اشتغل — حرّك الخريطة بإيدك</div>' }
+}
+function mapQPick(i){
+  const x=(window.__mqItems||[])[i]; if(!x||!pMap) return;
+  pMap.setView([x.lat,x.lng],17);
+  const box=document.getElementById('mapQRes'); if(box) box.innerHTML='';
+  const inp=document.getElementById('mapQ'); if(inp){ inp.value=x.n; inp.blur() }
+  try{ updateZone() }catch(e){}
+}
+function closeMap(){ document.getElementById('mapSheet').classList.remove('on'); try{ const b=document.getElementById('mapQRes'); if(b) b.innerHTML=''; const q=document.getElementById('mapQ'); if(q) q.value='' }catch(e){} }
 function refreshLocUI(){ try{ renderHomeLoc(); renderCart() }catch(e){} }
 
 function updateZone(){
@@ -13607,6 +13761,19 @@ function preview(elId,loc,key){
   el.innerHTML=ph;
   /* الضغط يفتح الخريطة داخل التطبيق (مو قوقل) */
   el.onclick=()=>{ try{ openViewMap(loc, loc.zone||'الموقع', '') }catch(e){} };
+  /* v285: صورة خريطة جاهزة من «طريق» (أخف من خريطة كاملة)، وإذا ما نزلت نرجع للطريقة القديمة */
+  try{
+    const w=Math.min(640, Math.max(240, Math.round(el.clientWidth||340)));
+    const src='https://api.tareky.com/v1/static-map/light/'+Number(loc.lng).toFixed(5)+','+Number(loc.lat).toFixed(5)+',16/'+w+'x160@2x.webp?access_token='+TAREKY_PK;
+    el.innerHTML='<div class="pvstat"><img alt="" loading="lazy"><svg class="pvpin" viewBox="0 0 48 48"><path d="M24 43S38 30.6 38 19A14 14 0 1 0 10 19c0 11.6 14 24 14 24Z" fill="#5B2BC9" stroke="#fff" stroke-width="2"/><circle cx="24" cy="19" r="5.2" fill="#fff"/></svg><i>© OpenStreetMap</i></div>';
+    const im=el.querySelector('img');
+    im.onerror=()=>{ try{ _previewLeaflet(el,loc,ph) }catch(_){} };
+    im.src=src;
+    return;
+  }catch(e){}
+  _previewLeaflet(el,loc,ph);
+}
+function _previewLeaflet(el,loc,ph){
   /* خريطة مصغّرة حقيقية بدل المربع الفاضي (إذا ماكو نت يبقى المربع) */
   (async()=>{
     try{
@@ -13988,7 +14155,7 @@ async function loadMyComm(){
 
 function renderMyComm(){
   const box=document.getElementById('stComm'); if(!box) return;
-  if(me && me.staff){ box.innerHTML=''; return }   /* v281: عمولة التطبيق وسدادها لصاحب المحل بس */
+  if(me && me.staff){ box.innerHTML=''; return }   /* v285: عمولة التطبيق وسدادها لصاحب المحل بس */
   const ic=invCalc(myComm.amount, myInv), st=ic.s;
   const dd=(myShopPer?myShopPer.e:_dueDate(new Date())).toLocaleDateString('ar-IQ');
   const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
@@ -14864,7 +15031,7 @@ async function renderBanAdmin(){
       </div>
     </div>`).join('');
 }
-/* v281: إضافة/تعديل البانر بشاشة وحدة (بدل 5 نوافذ prompt) */
+/* v285: إضافة/تعديل البانر بشاشة وحدة (بدل 5 نوافذ prompt) */
 let _bn=null;
 const BN_ACTS=[['','ما يفتح شي'],['cat:all','الرئيسية — كل المحلات'],['cat:restaurant','المطاعم'],['cat:store','المتاجر'],['cat:sweet','الحلويات'],['cat:special','اشتريلي'],['shop','مطعم / محل معيّن'],['url','رابط خارجي']];
 function addBanner(){ _bn={id:null,img:'',title:'',body:'',action:'cat:restaurant',sort_no:(document.querySelectorAll('#bnAdmin .bnb.e').length||0)+1,_up:false}; bnPaint() }
@@ -16537,7 +16704,7 @@ function errMsg(e){
 let _askCb=null;
 const ASK_ICON='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 1c0 1.7-2.3 1.8-2.3 3.6"/><circle cx="12" cy="17" r=".15" fill="currentColor"/></svg>';
 const ASK_ICON_DANGER='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>';
-/* v281: وصل حساب السائق بعد التسليم (التصميم ٢) */
+/* v285: وصل حساب السائق بعد التسليم (التصميم ٢) */
 function drvReceipt(d){
   let el=document.getElementById('rcpSheet');
   if(!el){ el=document.createElement('div'); el.id='rcpSheet'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
@@ -16554,7 +16721,7 @@ function drvReceipt(d){
   requestAnimationFrame(()=>el.classList.add('on'));
 }
 
-/* ═══ v281: الطلبات اللي ما انسلّمت — مثل التطبيقات العالمية: قائمة + تبويبات + تفاصيل ═══ */
+/* ═══ v285: الطلبات اللي ما انسلّمت — مثل التطبيقات العالمية: قائمة + تبويبات + تفاصيل ═══ */
 let _rfList=[], _rfAt=0, _rfBusy=false, _rfTab='act', _rfSel=null;
 const RF_FAULT={customer:'الزبون',shop:'المطعم',driver:'السائق',none:'ماكو غلطان'};
 const RF_ST={due:['مستحق','due'],paid:['بانتظار تأكيد الاستلام','paid'],confirmed:['تم ✓','ok']};
@@ -16742,7 +16909,7 @@ async function rfConfirm(id){
 setTimeout(()=>{ try{ rfTick(true) }catch(e){} },6000);
 setInterval(()=>{ try{ rfTick(false) }catch(e){} },30000);
 
-/* ═══ v281: الحجز المسبق (طلب لوقت لاحق) — مثل Uber Eats: لحد أسبوع، الإلغاء قبل قبول المحل ═══ */
+/* ═══ v285: الحجز المسبق (طلب لوقت لاحق) — مثل Uber Eats: لحد أسبوع، الإلغاء قبل قبول المحل ═══ */
 let schedOn=false, schedDay=-1, schedHour=-1;
 const SCHED_ON=false;  /* قريباً — خليها true لما نشغّل الحجز */
 const SCHED_FROM=10, SCHED_TO=23;              /* ساعات الحجز: 10 الصبح لـ 11 بالليل */
@@ -16814,7 +16981,7 @@ function leadPaint(){
   document.querySelectorAll('.ldbox').forEach(b=>b.innerHTML=html);
 }
 
-/* ═══ v281: شروط الشراكة — موافقة المطعم من التطبيق (تنحفظ بالتاريخ ورقم النسخة) ═══ */
+/* ═══ v285: شروط الشراكة — موافقة المطعم من التطبيق (تنحفظ بالتاريخ ورقم النسخة) ═══ */
 const TERMS_V=1;
 const TERMS_HTML=`
 <h2>من نحن</h2>
@@ -16972,7 +17139,7 @@ function askClose(v){
   const cb=_askCb; _askCb=null; if(cb) cb(v);
 }
 
-/* v281: ولا رسالة تطلع للمستخدم بيها أكواد تقنية — نخلي الجملة العربية بس */
+/* v285: ولا رسالة تطلع للمستخدم بيها أكواد تقنية — نخلي الجملة العربية بس */
 const __TECH=/PGRST|JWT|violates|constraint|does not exist|function|relation|column|syntax|null value|TypeError|ReferenceError|undefined|is not |Failed to fetch|NetworkError|Load failed|AbortError|duplicate key|permission denied|row-level|"code"|"message"|[{}]|schema|invalid input|out of range|status \d{3}|Error:|\berror\b|\bnull\b|otpiq|fetch|[a-z]+_[a-z_]+\(|accepted|pending|ready|assigned|ontheway|arrived|delivered|rejected|cancelled/i;
 function __friendly(t){
   t=String(t==null?'':t);
@@ -21100,7 +21267,7 @@ window.__silent = function(e, where){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v281', t0=Date.now();
+  var VER='v285', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
