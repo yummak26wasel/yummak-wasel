@@ -2,12 +2,12 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v306';
+const VER = 'leemak-v307';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 200;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
 const FONT = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\//;
-const PRE_IMG = ['/081cb4e0.png', '/792707e8.png', '/images/splash-bg.jpg'];   /* v306: صورة شاشة البداية صارت ملف (التطبيق أخف 100KB) */   /* الشعار — ينحفظ بالكاش الدائم */
+const PRE_IMG = ['/081cb4e0.png', '/792707e8.png'];   /* الشعار — ينحفظ بالكاش الدائم */
 const SHELL = ['/supabase.js', '/sb-layer.js', '/auth-layer.js', '/manifest.json'];   /* v303: مكتبة Supabase صارت من موقعنا */
 const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
