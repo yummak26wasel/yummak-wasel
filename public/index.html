@@ -357,7 +357,7 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .bn-save{width:100%;margin-top:18px;border:0;border-radius:16px;padding:15px;background:linear-gradient(135deg,#FF8A1F,#F97316);color:#fff;font:inherit;font-size:16px;font-weight:800;box-shadow:0 8px 18px -8px rgba(249,115,22,.6)}
 .bn-save:disabled{opacity:.6}
 .wic.bi{width:18px!important;height:18px!important;min-width:18px;flex:0 0 18px!important;display:inline-block!important;vertical-align:-3px;margin:0!important}
-/* v310: نظام أزرار موحّد */
+/* v315: نظام أزرار موحّد */
 .ub,.tp-go,.sps-go,.rf-no{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:8px!important;min-height:50px!important;border-radius:14px!important;font-size:15px!important;font-weight:700!important;background-image:none!important;box-shadow:none!important;text-shadow:none!important;line-height:1.25!important}
 .ub-p,.tp-go,.sps-go{background:#4A1FA8!important;color:#fff!important;border:0!important}
 .ub-g,.tp-go.done{background:#E8760C!important;color:#fff!important;border:0!important}
@@ -398,7 +398,7 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .tm-row i{font-style:normal;font-size:12px;font-weight:800;border-radius:99px;padding:4px 10px;white-space:nowrap}
 .tm-row i.ok{background:#E8F7EE;color:#15803D}.tm-row i.old{background:#FFF4E5;color:#B45309}.tm-row i.no{background:#FDECEC;color:#DC2626}
 .tm-empty{text-align:center;color:#8a84a0;padding:24px 0}
-/* v310: دليل الشراكة (مطاعم + سواق) — نفس شكل ملف الـPDF */
+/* v315: دليل الشراكة (مطاعم + سواق) — نفس شكل ملف الـPDF */
 #termsSheet{z-index:99995}
 .tgd{margin:0 -2px 4px;color:#2a2340;font-size:13.5px;line-height:1.8}
 .tgd b{font-weight:800}
@@ -475,7 +475,7 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .tm-tabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:9px 0;font:inherit;font-weight:800;font-size:13.5px;color:#6E6A7C}
 .tm-tabs button.on{background:#fff;color:#3B1A9E;box-shadow:0 1px 4px rgba(40,20,80,.12)}
 .tm-view{display:block;width:100%;border:1.5px solid #E3DDF3;background:#fff;color:#3B1A9E;border-radius:12px;padding:10px;font:inherit;font-weight:800;font-size:13.5px;margin-bottom:8px}
-/* v310: الإحصائيات وأخطاء التطبيق (لوحة المؤسس) */
+/* v315: الإحصائيات وأخطاء التطبيق (لوحة المؤسس) */
 .st-fn{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0 10px}
 .st-fn>div{background:#F7F4FE;border:1px solid #ECE6FA;border-radius:14px;padding:11px 12px;display:flex;flex-direction:column;gap:4px}
 .st-fn span{font-size:12.5px;color:#6b6585;font-weight:700}
@@ -488,6 +488,29 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .st-li b{color:#3B1A9E;font-weight:900;white-space:nowrap;font-variant-numeric:tabular-nums}
 .st-none{color:#8a84a0;font-size:13px;padding:4px 2px}
 .st-note{color:#8a84a0;font-size:11.5px;text-align:center;padding:10px 0 2px}
+/* v315: استهلاك السيرفر بلوحة الإدارة */
+.usg{margin:10px 0 4px;background:#fff;border:1px solid #E7E2F3;border-radius:16px;padding:10px 12px;cursor:pointer}
+.usg.warn{border-color:#F5C46B;background:#FFFBF2}.usg.bad{border-color:#F3A29B;background:#FFF5F4}
+.usg-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.usg-h b{font-size:13px;font-weight:900}.usg-h span{font-size:11px;color:#8a84a0;font-weight:700}
+.usg-g{display:grid;grid-template-columns:1fr 1fr;gap:6px 12px}
+.usg-g>div{display:flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:#5b5670}
+.usg-g span{min-width:58px}.usg-g i{flex:1;height:6px;border-radius:6px;background:#EEEAF6;overflow:hidden;display:block}
+.usg-g i em{display:block;height:100%;border-radius:6px}.usg-g b{min-width:32px;text-align:left;font-size:11.5px}
+.usg-li{display:flex;justify-content:space-between;align-items:center;padding:10px 2px;border-top:1px solid #F0EDF7;font-size:13px}
+.usg-li:first-child{border-top:0}.usg-li b{font-weight:900}.usg-li small{display:block;color:#8a84a0;font-size:11px;font-weight:700;margin-top:2px}
+html[data-theme=dark] .usg{background:#1e1930;border-color:#2e2747}html[data-theme=dark] .usg.warn{background:#2a2216}html[data-theme=dark] .usg.bad{background:#2c1a1a}
+.usg-sub{margin-top:8px;padding-top:7px;border-top:1px dashed #E7E2F3;font-size:12px;font-weight:800}
+.sb-row{display:flex;align-items:center;gap:8px;padding:10px 2px;border-top:1px solid #F0EDF7}.sb-row:first-child{border-top:0}
+.sb-row>div{flex:1}.sb-row b{font-size:13.5px;font-weight:900;display:block}.sb-row small{font-size:11px;color:#8a84a0;font-weight:700}
+.sb-row button{border:1px solid #E1DAF2;background:#F7F4FD;color:#4B2A9B;border-radius:10px;padding:7px 9px;font:inherit;font-size:12px;font-weight:800}
+.sb-row button.del{background:#FFF5F4;border-color:#F3CFC9;color:#B42318}
+.sb-days{min-width:62px;text-align:center;font-size:12px;font-weight:900;border-radius:10px;padding:5px 6px}
+.sb-add{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid #F0EDF7}
+.sb-add input,.sb-add select{width:100%;padding:10px;border:1px solid #E1DAF2;border-radius:11px;font:inherit;font-size:14px;background:#fff;color:inherit;box-sizing:border-box}
+.sb-add .full{grid-column:1/-1}.sb-add button{grid-column:1/-1;padding:12px;border:0;border-radius:12px;background:#4B2A9B;color:#fff;font:inherit;font-weight:900}
+html[data-theme=dark] .sb-row{border-color:#2e2747}html[data-theme=dark] .sb-add input,html[data-theme=dark] .sb-add select{background:#1e1930;border-color:#2e2747}
+html[data-theme=dark] .usg-g>div{color:#c9c3dc}html[data-theme=dark] .usg-g i{background:#2e2747}html[data-theme=dark] .usg-li{border-color:#2e2747}
 .er-row{border-bottom:1px solid #F0EDF6;padding:9px 2px}
 .er-row summary{list-style:none;cursor:pointer;display:flex;flex-direction:column;gap:3px}
 .er-row summary::-webkit-details-marker{display:none}
@@ -550,7 +573,7 @@ html[data-theme=dark] .mq-it b{color:#ece8f7}
 .cd-t b{color:#4A1FA8;font-size:16px}
 .cd-c{font-size:12px;color:#B45309;background:#FFF7EC;border-radius:10px;padding:7px 9px;margin-top:8px;font-weight:700}
 .ext-ban{background:#EEF4FF;color:#1D4ED8;border-radius:12px 12px 0 0;padding:7px 12px;font-size:12.5px;font-weight:800;margin-bottom:-6px}
-/* v310: توقيت المطعم */
+/* v315: توقيت المطعم */
 .cdb{display:flex;align-items:center;gap:7px;margin:8px 0 -2px;padding:9px 12px;border-radius:12px;background:#FFF7E6;color:#9A5B00;font-size:13.5px;font-weight:800;font-variant-numeric:tabular-nums}
 .cdb::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;flex-shrink:0;animation:cdP 1.2s ease-in-out infinite}
 @keyframes cdP{50%{opacity:.3}}
@@ -639,7 +662,7 @@ html[data-theme=dark] .mq-it b{color:#ece8f7}
       add('https://www.gstatic.com/firebasejs/10.12.2/firebase-messaging-compat.js');
     });
   }
-  /* v310: بعد ما تكمل الصفحة (أو بعد 5 ثواني) — إذا gstatic محجوب ما تضل الصفحة «تحمّل» */
+  /* v315: بعد ما تكمل الصفحة (أو بعد 5 ثواني) — إذا gstatic محجوب ما تضل الصفحة «تحمّل» */
   if(document.readyState==='complete') go(); else { window.addEventListener('load',go); setTimeout(go,5000) }
 })();
 </script> <script>
@@ -4042,7 +4065,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;gap:8px}
 .tp-go.done{background:var(--ok)}
 .tp-go .wic{width:19px;height:19px}
-/* v310: شاشة الرحلة — محطّات + مراجعة الطلب */
+/* v315: شاشة الرحلة — محطّات + مراجعة الطلب */
 .tp-eta{background:#fff!important;color:#1B1533!important;font-weight:800!important}
 .tb-stops{padding:2px 0 4px}
 .tb-stop{display:flex;align-items:center;gap:11px;position:relative;padding:0 0 14px}
@@ -5339,7 +5362,7 @@ body,.screen{background:#fff;color:var(--txt)}
 .off-shop{font-size:12px;color:var(--mut);font-weight:600;overflow:hidden;
   text-overflow:ellipsis;white-space:nowrap}
 </style>
-<script src="supabase.js"></script>   <!-- v310: مكتبة Supabase من موقعنا نفسه — إذا الجهاز الجديد ما يوصل لـjsdelivr ما يعلّگ التحميل -->
+<script src="supabase.js"></script>   <!-- v315: مكتبة Supabase من موقعنا نفسه — إذا الجهاز الجديد ما يوصل لـjsdelivr ما يعلّگ التحميل -->
 <script>window.supabase||document.write('<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"><\/script>')</script>
 <script src="sb-layer.js"></script>
 <script src="auth-layer.js"></script>
@@ -5536,7 +5559,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v310</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v315</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -5806,6 +5829,9 @@ body,.screen{background:#fff;color:var(--txt)}
 
       <div class="sechd" style="margin-top:18px"><h3>أخطاء التطبيق</h3>
         <span class="lnk" onclick="openErrAdmin()">عرض ›</span></div>
+
+      <div class="sechd" style="margin-top:18px"><h3>الاشتراكات ومواعيدها</h3>
+        <span class="lnk" onclick="openSubsAdmin()">عرض ›</span></div>
 
       <div class="sechd" style="margin-top:18px"><h3>البانرات</h3>
         <span class="lnk" onclick="addBanner()">+ بانر جديد</span></div>
@@ -6157,7 +6183,7 @@ async function docUrl(ref){
 
 const OTP_WORKER='https://leemak-otp.dhifvmy.workers.dev';
 const API_PUSH='https://leemak-api.dhifvmy.workers.dev';
-/* v310: طلب لموقع برّة بمهلة — إذا الموقع محجوب أو ما يرد، ما نعلّگ للأبد */
+/* v315: طلب لموقع برّة بمهلة — إذا الموقع محجوب أو ما يرد، ما نعلّگ للأبد */
 function _fto(url,opt,ms){
   const ac=new AbortController(); const t=setTimeout(()=>ac.abort(),ms||10000);
   return fetch(url,Object.assign({},opt||{},{signal:ac.signal})).then(r=>{ clearTimeout(t); return r },e=>{
@@ -6167,7 +6193,7 @@ let otpToken='', otpOkPhone='', otpCore='', otpWait=0;
 
 async function otpApi(path,body){
   const r=await _fto(OTP_WORKER+path,{method:'POST',
-    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},25000);   /* v310: مهلة */
+    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},25000);   /* v315: مهلة */
   const j=await r.json().catch(()=>({error:'رد غير مفهوم'}));
   if(!r.ok) throw new Error(j.error||'فشل الاتصال');
   return j;
@@ -6366,7 +6392,7 @@ function startStaffPoll(){
   if(_staffPollTimer) clearInterval(_staffPollTimer);
   _staffPollTimer=setInterval(async ()=>{
     if(!me || me.role!=='customer' || document.hidden) return;
-    /* v310: الزبون العادي (مو موظف) نتأكد عليه كل 5 دقايق بس، الموظف كل 20 ثانية */
+    /* v315: الزبون العادي (مو موظف) نتأكد عليه كل 5 دقايق بس، الموظف كل 20 ثانية */
     if(!me.staff && Date.now()-_staffChkAt<300000) return;
     _staffChkAt=Date.now();
     try{
@@ -7308,7 +7334,7 @@ async function openViewMap(loc, title, addr){
 /* ═══ خريطة تتبع الطلب — الزبون يشوف السائق ═══ */
 let _tkMap=null, _tkD=null, _tkC=null, _tkOrderId=null;
 
-/* v310: علامات الخريطة مثل التطبيقات العالمية — السائق دائرة بنفسجية، الزبون دبوس غامق، المحل دائرة بيضاء */
+/* v315: علامات الخريطة مثل التطبيقات العالمية — السائق دائرة بنفسجية، الزبون دبوس غامق، المحل دائرة بيضاء */
 const _DRV_ICON = () => L.divIcon({html:'<div style="width:38px;height:38px;border-radius:50%;background:#4A1FA8;border:3px solid #fff;box-sizing:border-box;box-shadow:0 0 0 7px rgba(74,31,168,.16),0 3px 10px rgba(20,10,40,.35);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></div>',className:'',iconSize:[38,38],iconAnchor:[19,19]});
 const _HOME_ICON = () => L.divIcon({html:'<svg width="32" height="42" viewBox="0 0 32 42" style="filter:drop-shadow(0 3px 4px rgba(20,10,40,.35))"><path d="M16 40.5S29.5 27.6 29.5 16.5a13.5 13.5 0 1 0-27 0C2.5 27.6 16 40.5 16 40.5z" fill="#1B1533" stroke="#fff" stroke-width="2.5"/><circle cx="16" cy="16.5" r="5.2" fill="#fff"/></svg>',className:'',iconSize:[32,42],iconAnchor:[16,40]});
 const _SHOP_PIN = () => L.divIcon({html:'<div style="width:36px;height:36px;border-radius:50%;background:#fff;border:3px solid #4A1FA8;box-sizing:border-box;box-shadow:0 3px 10px rgba(20,10,40,.3);display:flex;align-items:center;justify-content:center"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#4A1FA8" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></div>',className:'',iconSize:[36,36],iconAnchor:[18,18]});
@@ -7317,7 +7343,7 @@ function _routeLayer(pts,dashed){ return L.layerGroup([
   L.polyline(pts,{color:'#fff',weight:10,opacity:1,lineCap:'round',lineJoin:'round',interactive:false}),
   L.polyline(pts,{color:'#4A1FA8',weight:5.5,opacity:dashed?.75:1,lineCap:'round',lineJoin:'round',dashArray:dashed?'1 11':null,interactive:false})]) }
 function _routeSet(g,pts){ try{ g.eachLayer(l=>l.setLatLngs(pts)) }catch(e){} }
-/* v310: الطريق ينطلب مرة وحدة وينقص محلياً وراه السائق (مثل گوگل وأوبر) — نعيد نطلبه بس إذا طلع من الطريق */
+/* v315: الطريق ينطلب مرة وحدة وينقص محلياً وراه السائق (مثل گوگل وأوبر) — نعيد نطلبه بس إذا طلع من الطريق */
 function _rtNew(){ return {pts:null,key:'',dist:0,dur:0,busy:false} }
 function _rtNearest(pts,p){
   const R=111320, cs=Math.cos(p.lat*Math.PI/180); let best={d:1e12,i:0,q:[p.lat,p.lng]};
@@ -7405,11 +7431,11 @@ function _fmtDist(m){
   return m<1000 ? Math.round(m)+' متر' : (m/1000).toFixed(1)+' كم';
 }
 
-/* v310: الطريق ووقت الوصول من «طريق» (يعرف شوارع العراق)، وإذا ما ردّ نرجع للسيرفر المجاني القديم */
+/* v315: الطريق ووقت الوصول من «طريق» (يعرف شوارع العراق)، وإذا ما ردّ نرجع للسيرفر المجاني القديم */
 async function routeFetch(pts){
   const path=pts.map(c=>Number(c.lng)+','+Number(c.lat)).join(';');
   try{
-    const r=await _fto('https://api.tareky.com/v1/directions/driving/'+path+'?overview=full&geometries=geojson&access_token='+TAREKY_PK,null,8000);   /* v310: مهلة */
+    const r=await _fto('https://api.tareky.com/v1/directions/driving/'+path+'?overview=full&geometries=geojson&access_token='+TAREKY_PK,null,8000);   /* v315: مهلة */
     if(r.ok){ const rt=((await r.json()).routes||[])[0]; if(rt && rt.geometry && Array.isArray(rt.geometry.coordinates)) return rt }
   }catch(e){}
   const r2=await _fto('https://router.project-osrm.org/route/v1/driving/'+path+'?overview=full&geometries=geojson',null,10000);
@@ -7504,7 +7530,7 @@ async function _trkPush(loc){
   }
 }
 
-/* v310: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
+/* v315: موقع أذكى — دقة عالية أول، وإذا فشل (داخل بيت/نت ضعيف) نرجع لدقة عادية.
    إذا الموقع مسدود من المتصفح نبلّغ السائق بوضوح بدل ما يفشل بصمت */
 let _locWarned=false;
 function getPosSmart(ok, fail){
@@ -7736,7 +7762,7 @@ async function __sendPush(target,title,body,data){
       },target);
     const hd={'Content-Type':'application/json','Authorization':'Bearer '+jwt};
     const toApi=extra=>_fto(API_PUSH+'/push',{method:'POST',headers:hd,body:JSON.stringify(Object.assign({},payload,{shop_staff:undefined},extra))},15000).catch(()=>{});
-    const otp=_fto(OTP_WORKER+'/push',{method:'POST',headers:hd,body:JSON.stringify(payload)},15000);   /* v310: مهلة */
+    const otp=_fto(OTP_WORKER+'/push',{method:'POST',headers:hd,body:JSON.stringify(payload)},15000);   /* v315: مهلة */
     /* native app (Expo) tokens live in leemak-api */
     if(target&&(target.user_id||target.role)) toApi({});
     const r=await otp;
@@ -7867,7 +7893,7 @@ function rsPaint(){
 }
 async function rsApi(path,body){
   const r=await _fto(OTP_WORKER+path,{method:'POST',
-    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},25000);   /* v310: مهلة */
+    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},25000);   /* v315: مهلة */
   const j=await r.json().catch(()=>({error:'رد غير مفهوم'}));
   if(!r.ok) throw new Error(j.error||'فشل الاتصال');
   return j;
@@ -7949,7 +7975,7 @@ function hash(s){let h=5381;for(let i=0;i<s.length;i++)h=((h<<5)+h+s.charCodeAt(
    حتى تفتح التطبيق للكل: خلي BETA_ON = false */
 const BETA_ON = true;
 const BETA_PHONES = ['7724701099','7724201099','7724201000','7724201077'];
-/* v310: المطاعم والمتاجر والسواق يسجّلون من هسه — بس الزبون يشوف «قريباً» لحد الافتتاح */
+/* v315: المطاعم والمتاجر والسواق يسجّلون من هسه — بس الزبون يشوف «قريباً» لحد الافتتاح */
 function betaOk(p, role){ return !BETA_ON || role==='admin' || role==='driver' || role==='store' || BETA_PHONES.includes(phoneCore(p)) }
 function showSoon(){
   let v=document.getElementById('soonView');
@@ -8051,7 +8077,7 @@ async function doAuth(){
       const newUid=cred.user.uid;
 
       try{
-        /* v310: المستمسكات اللي تنتظر — تنرفع هسه بعد ما صار الحساب (لو فشلت: نطلّعه ونخليه يعيد، ما يضيع شي) */
+        /* v315: المستمسكات اللي تنتظر — تنرفع هسه بعد ما صار الحساب (لو فشلت: نطلّعه ونخليه يعيد، ما يضيع شي) */
         if(role==='driver'){
           const _pf=window.__dwFiles||{}, _x2=window.__drvExtra||{};
           for(const k of Object.keys(_pf)){
@@ -8084,7 +8110,7 @@ async function doAuth(){
 
       uid=newUid; me={uid,...data};
       if(role!=='customer'){
-        /* v310: تنبيه المؤسس بشريك جديد — الإضافة المباشرة جانت تنرفض دائماً، فصارت عبر الدالة المحمية + إشعار للتلفون */
+        /* v315: تنبيه المؤسس بشريك جديد — الإضافة المباشرة جانت تنرفض دائماً، فصارت عبر الدالة المحمية + إشعار للتلفون */
         const _nt=__clean((role==='store'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg> متجر جديد':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> سائق جديد')), _nb=name+' — '+phone+' ينتظر موافقتك';
         try{ await rpc('notify_insert',{p_to:null,p_to_role:'admin',p_title:_nt,p_body:_nb,p_data:{type:'signup',role}}) }catch(e){ __silent(e,'notifyInsert') }
         try{ __sendPush({role:'admin'},_nt,_nb,{type:'signup'}) }catch(e){}
@@ -8149,7 +8175,7 @@ function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
   window.__sbPolicy = (me.role==='customer') ? CUST_POLICY : ((me.role==='driver' || me.role==='store') ? STAFF_POLICY : null);
   setTimeout(()=>{ try{ termsCheck() }catch(e){} },2500);
-  /* v310: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
+  /* v315: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
   if(me.role==='admin' || me.role==='store') try{ const _cs=()=>{ try{ rpc('cancel_stale_orders',{}).catch(()=>{}) }catch(e){} }; setTimeout(_cs,8000); if(!window.__csT) window.__csT=setInterval(_cs,5*60*1000) }catch(e){}
   document.getElementById('auth').classList.remove('on');
   subscribeTopics();
@@ -8208,7 +8234,7 @@ function applyShops(docs){
   try{ if(me && me.role==='customer') cartSync() }catch(e){}
 }
 
-/* ═══ v310: طريقة الاتصال مثل التطبيقات العالمية (طلبات / أوبر إيتس) ═══
+/* ═══ v315: طريقة الاتصال مثل التطبيقات العالمية (طلبات / أوبر إيتس) ═══
    - الزبون يتصفح: ماكو خط مباشر. المحلات تنجاب لما يفتح التطبيق وكل دقيقة تقريباً، من نسخة مخزّنة بالسيرفر.
    - الزبون عنده طلب شغّال: خط مباشر للطلب لحد ما يستلم (التتبع).
    - المحل والسائق والأدمن: خط مباشر طول الوقت (مثل قبل).
@@ -8217,7 +8243,7 @@ const ORD_FINAL=['delivered','rejected','cancelled'];
 function custActive(){
   return (myOrders||[]).some(o=>!ORD_FINAL.includes(o.status)) || (mySpecialOrders||[]).some(o=>!ORD_FINAL.includes(o.status));
 }
-/* v310: السائق والمطعم — مراسلة الدعم تنسأل كل 45 ثانية، وكل 8 ثواني بس إذا شاشة المراسلة مفتوحة (حمل أقل على القاعدة) */
+/* v315: السائق والمطعم — مراسلة الدعم تنسأل كل 45 ثانية، وكل 8 ثواني بس إذا شاشة المراسلة مفتوحة (حمل أقل على القاعدة) */
 const STAFF_POLICY={
   rt: tbl => true,
   poll: tbl => {
@@ -8234,7 +8260,7 @@ const CUST_POLICY={
 };
 async function fetchShopsFast(){
   try{
-    const r=await _fto(API_PUSH+'/shops',{method:'GET'},8000);   /* v310: إذا ما ردّ خلال 8 ثواني نجيبها من القاعدة */
+    const r=await _fto(API_PUSH+'/shops',{method:'GET'},8000);   /* v315: إذا ما ردّ خلال 8 ثواني نجيبها من القاعدة */
     if(r.ok){
       const rows=await r.json();
       if(Array.isArray(rows) && rows.length) return rows.map(row=>({...(window.__sbIn?window.__sbIn('shops',row):row), id:row.id}));
@@ -8493,7 +8519,7 @@ function listenCustomerOrders(){
   db.collection('orders').where('customerUid','==',uid).where('createdAt','>=',sinceMs(DAYS_USER)).orderBy('createdAt','desc').limit(300).onSnapshot(s=>{
     const arr=s.docs.map(d=>({...d.data(), id:d.id})).sort((a,b)=>b.createdAt-a.createdAt);
     if(me.role==='customer') myOrders=arr; else cOrders=arr;
-    /* v310: إذا الزبون استخدم عرض جديد، شارته تختفي من الكروت */
+    /* v315: إذا الزبون استخدم عرض جديد، شارته تختفي من الكروت */
     try{ const _uo=arr.filter(x=>x.offer_id&&x.status!=='rejected'&&x.status!=='cancelled').map(x=>x.offer_id).sort().join(',');
       if(_uo!==window._usedOffSig){ const _prev=window._usedOffSig; window._usedOffSig=_uo; if(me.role==='customer'&&!(_prev===undefined&&_uo==='')&&(shops||[]).length){ renderShops(); try{ renderHomeOffers() }catch(e){} } } }catch(e){}
     /* ما نعيد بناء القائمة كاملة إلا إذا تغيّر شي يبان فعلاً بيها —
@@ -8603,7 +8629,7 @@ function __beepFallback(){
 let dofCur=null, dofTimer=null, dofRingT=null, dofSkip={}, dofLast=0;
 let dofWant=(()=>{ try{ return new URLSearchParams(location.search).get('dof')||'' }catch(e){ return '' } })();
 const DOF_SEC=30;
-/* v310: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
+/* v315: السائق اللي عنده طلب شغّال (مطعم أو اشتريلي) ما يطلعله ولا يستلم غيره لحد ما يكمّله */
 function dofActive(){ return (myOrders||[]).some(o=>['assigned','ontheway','arrived'].includes(o.status))
   || (typeof mySpecialOrders!=='undefined' && (mySpecialOrders||[]).some(o=>['assigned','purchased','arrived'].includes(o.status))) }
 function drvBusy(){ return !!(me && me.role==='driver' && dofActive()) }
@@ -9008,7 +9034,7 @@ function dwPick(k,v,el){
   dwValid();
 }
 const DW_PRIV=['idCard','resCard','vehDoc','license'];
-/* v310: المستمسكات خاصة — ما تنرفع إلا بعد ما ينعمل الحساب. لحد ذاك تبقى بالتلفون وتنرفع وحدها مع «إرسال الطلب» */
+/* v315: المستمسكات خاصة — ما تنرفع إلا بعد ما ينعمل الحساب. لحد ذاك تبقى بالتلفون وتنرفع وحدها مع «إرسال الطلب» */
 window.__dwFiles=window.__dwFiles||{};
 async function dwShot(inp,key,boxId){
   const f=inp.files&&inp.files[0]; if(!f) return;
@@ -9020,11 +9046,11 @@ async function dwShot(inp,key,boxId){
     inp.value=''; dwValid(); return;
   }
   if(box) box.innerHTML='<span class="dw-up">… جاري الرفع</span>';
-  else toast('… جاري رفع الصورة');   /* v310: الصورة الشخصية ما إلها مربع — نبيّن إنها دا ترفع */
+  else toast('… جاري رفع الصورة');   /* v315: الصورة الشخصية ما إلها مربع — نبيّن إنها دا ترفع */
   try{
     const url=await uploadImage(f,key,{size:1000,quality:0.82,private:isDoc});
     dwData[key]=url;
-    if(!box){ toast('انرفعت الصورة ✓'); try{ if(dwStep===2) dwPaint() }catch(_){} }   /* v310: تطلع الصورة بالدائرة فوراً */
+    if(!box){ toast('انرفعت الصورة ✓'); try{ if(dwStep===2) dwPaint() }catch(_){} }   /* v315: تطلع الصورة بالدائرة فوراً */
     if(box) box.innerHTML = isDoc
       ? '<span class="dw-ok2">✓ انرفع</span>'
       : '<img src="'+url+'">';
@@ -9070,7 +9096,7 @@ function dwPaint(){
   const bar=document.getElementById('dwBar');
   const n=document.getElementById('dwN');
   const nx=document.getElementById('dwNext');
-  /* v310: خطوة «موقعك الحالي» انشالت — 7 خطوات */
+  /* v315: خطوة «موقعك الحالي» انشالت — 7 خطوات */
   if(dwStep===5) dwStep=6;
   const _vs=dwStep>5?dwStep-1:dwStep;
   if(bar) bar.style.width=Math.round((_vs/7)*100)+'%';
@@ -9156,7 +9182,7 @@ function dwPaint(){
   if(dwStep===2){ try{ const _d=new Date(); _d.setFullYear(_d.getFullYear()-18); const _i=document.getElementById('dob'); if(_i) _i.max=_d.toISOString().slice(0,10) }catch(e){} }
   dwValid();
 }
-/* v310: عمر السائق لازم 18 سنة أو أكثر */
+/* v315: عمر السائق لازم 18 سنة أو أكثر */
 function dwAge(v){ const t=Date.parse(v||''); if(isNaN(t)) return -1; const b=new Date(t), n=new Date();
   let a=n.getFullYear()-b.getFullYear(); const m=n.getMonth()-b.getMonth(); if(m<0||(m===0&&n.getDate()<b.getDate())) a--; return a }
 function dwValid(){
@@ -9187,7 +9213,7 @@ function dwLoc(){
 async function dwNextStep(){
   if(dwStep===7) return dwSubmit();
   if(dwStep===8){ dwClose(); return }
-  dwStep++; if(dwStep===5) dwStep=6;   /* v310: نتخطى خطوة الموقع */
+  dwStep++; if(dwStep===5) dwStep=6;   /* v315: نتخطى خطوة الموقع */
   dwPaint();
 }
 async function dwSubmit(){
@@ -9225,7 +9251,7 @@ function wcGo(v){
   try{ if(v&&v!=='all') pickCat(v); }catch(e){}
   try{ buzz(14) }catch(e){}
 }
-const CAT_SOON=[];   /* v310: المتاجر والكوزمتك اشتغلت — ماكو قسم «قريباً» */
+const CAT_SOON=[];   /* v315: المتاجر والكوزمتك اشتغلت — ماكو قسم «قريباً» */
 function pickCat(v){
   if(v==='special'){ openSpecialOrder && openSpecialOrder(); return }
   if(CAT_SOON.includes(v)){ toast((v==='store'?'المتاجر':'الكوزمتك')+' — قريباً إن شاء الله'); try{ buzz(12) }catch(e){} return }
@@ -9281,7 +9307,7 @@ function pickFeatured(sh){
   return __feat[k];
 }
 
-/* v310: شارة الخصم على كارت المطعم — عرض لمطعم معيّن = على كارته بس، عرض لكل المطاعم = على كل الكروت */
+/* v315: شارة الخصم على كارت المطعم — عرض لمطعم معيّن = على كارته بس، عرض لكل المطاعم = على كل الكروت */
 /* الزبون استخدم هذا العرض قبل؟ (كل كود مرة وحدة لكل زبون — نفس شرط السيرفر) → الشارة تختفي عنده بس */
 function offUsedByMe(o){ return !!(me&&me.role==='customer'&&o&&(myOrders||[]).some(x=>x.offer_id===o.id&&x.status!=='rejected'&&x.status!=='cancelled')) }
 function shopBestOffer(s){
@@ -9481,7 +9507,7 @@ function renderShops(){
     const rest=shops.filter(s=>s.type==='restaurant').slice(0,6);
     const store=shops.filter(s=>s.type==='store').slice(0,6);
     if(!rest.length && !store.length){
-      /* v310: المحلات بعدها تنجاب — هيكل تحميل بدل «ماكو محلات» */
+      /* v315: المحلات بعدها تنجاب — هيكل تحميل بدل «ماكو محلات» */
       if(!window.__shopsLoaded){ box.innerHTML=skeleton(4); return }
       box.innerHTML='<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></div><p>ماكو محلات حالياً</p></div>';
       return;
@@ -9812,7 +9838,7 @@ function szConfirm(){
   const pid=_szP.id, q=_szQ; szClose();
   addCart(pid, zs.length&&z?z.n:null, q, on, true);
 }
-/* v310: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
+/* v315: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
 function openItem(pid){
   const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); if(!p) return;
   if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
@@ -9860,7 +9886,7 @@ function cartQty(i,d){cart[i].qty+=d;if(cart[i].qty<1)cart.splice(i,1);renderCar
    الخصم ينحسب من القاعدة (preview_offer) بنفس طريقة fix_order، فاللي يشوفه الزبون = اللي يندفع */
 let _pv={key:'',res:null};
 function cartSub(){ return cart.reduce((s,c)=>s+c.price*c.qty,0) }
-/* v310: أقل طلب من المطعم 3,000 د.ع (دليل الشراكة) — سعر الأكل قبل الخصم والتوصيل */
+/* v315: أقل طلب من المطعم 3,000 د.ع (دليل الشراكة) — سعر الأكل قبل الخصم والتوصيل */
 function minOrderVal(){ const v=Number(SET&&SET.minOrder); return (SET&&SET.minOrder!=null&&!isNaN(v)) ? v : 3000 }
 function minOrderNeed(){
   if(!cart.length) return 0;
@@ -9982,7 +10008,7 @@ async function promoApply(code){
 function promoClear(){ orderCode=''; _pv={key:'',res:null}; promoRefresh(true); promoRepaint(); toast('انشال الكوبون') }
 /* الفلوس اللي يسلّمها السائق للمطعم = سعر الأكل ناقص الخصم (اللي دفعه الزبون فعلاً)
    حصة التطبيق من الخصم يعوّضها التطبيق للمطعم بعدين */
-/* v310: توزيع فلوس الطلب للسائق — نفس الأرقام بكل مكان (شاشة الرحلة، طلباتي، وصل التسليم) */
+/* v315: توزيع فلوس الطلب للسائق — نفس الأرقام بكل مكان (شاشة الرحلة، طلباتي، وصل التسليم) */
 function drvSplit(o){
   const total=Number(o.total||0), toShop=cashToShop(o), disc=Number(o.discount||0);
   const svc=Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||0));
@@ -10105,7 +10131,7 @@ async function payCompOwed(drv,amt,name){
   try{ await rpc('admin_pay_comp',{p_driver:drv,p_amount:amt}); try{ pushTo(drv,'تعويض التوصيل المجاني','الإدارة سلّمتك '+Number(amt).toLocaleString()+' د.ع — أكّد الاستلام',{type:'comp'}) }catch(e){} toast('انبلّغ السائق — بانتظار تأكيده'); openCompOwed(true) }
   catch(e){ toast(errMsg(e)) }
 }
-/* v310: السلة تبقى محفوظة إذا الزبون طلع من التطبيق ورجع (3 أيام) — مثل التطبيقات العالمية */
+/* v315: السلة تبقى محفوظة إذا الزبون طلع من التطبيق ورجع (3 أيام) — مثل التطبيقات العالمية */
 const CART_DAYS=3;
 function cartKeyLS(){ return 'lw_cart_'+(uid||'') }
 function cartSave(){
@@ -10474,7 +10500,7 @@ async function specialPurchased(id){
   if(!me||me.role!=='driver')return;
   try{
     await db.collection('specialOrders').doc(id).update({status:'purchased',purchasedAt:Date.now()});
-    /* v310: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
+    /* v315: بعد الشراء تنفتح شاشة الرحلة والخريطة مباشرة */
     try{ const _o=(mySpecialOrders||[]).find(x=>x.id===id); if(_o){ _o.status='purchased'; _o.purchasedAt=Date.now() } setTimeout(()=>{ try{ const _ts=document.getElementById('tripSheet'); if(!(_ts&&_ts.classList.contains('on'))) openSpTrip(id) }catch(e){} },150) }catch(e){}
     try{ const o=(mySpecialOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق بالطريق إليك',((me&&me.name)||'السائق')+' اشترى أغراضك وطالع لعندك',{type:'ontheway'}) }catch(e){}
     toast('انحدّثت الحالة — اشتريت الطلب');
@@ -10724,7 +10750,7 @@ async function submitOrder(){
     serviceFee:svcFee(sub),deliveryFee:billCalc(sub).dlvPay,discount:billCalc(sub).disc,total:billCalc(sub).tot,
     status:'pending',createdAt:Date.now(),date:new Date().toLocaleString('ar-IQ'),
     scheduled_for: schedTs()?schedTs().toISOString():null};
-  /* v310: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
+  /* v315: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
   if(!o.scheduled_for) delete o.scheduled_for;
   try{
     const _ref=await db.collection('orders').add(o);
@@ -10749,7 +10775,7 @@ async function submitOrder(){
     try{ window.__trk&&__trk('order') }catch(e){}
     setTimeout(npAsk, 900);
   }catch(e){toast(errMsg(e)); __revBusy=false;
-    /* v310: صنف خلص — نجيب المحلات من القاعدة مباشرة حتى السلة تشيله وحدها */
+    /* v315: صنف خلص — نجيب المحلات من القاعدة مباشرة حتى السلة تشيله وحدها */
     if(/خلص — شيله من السلة/.test(String(e&&e.message||e))) setTimeout(async()=>{ try{
       const c=await db.collection('shops').where('approved','==',true).get();
       if(c&&c.docs&&c.docs.length) applyShops(c.docs.map(d=>({...d.data(), id:d.id})));
@@ -11241,7 +11267,7 @@ function renderSpTrack(box,id){
 }
 /* خريطة التتبع داخل صفحة اشتريلي — تبقى حية وما تنعاد مع كل تحديث */
 let _spMapEl=null,_spMap=null,_spMapId=null,_spMC=null,_spMD=null,_spML=null,_spFit=false;
-/* v310: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
+/* v315: نفس الخريطة للطلب العادي — لمن السائق يستلم الطلب (بالطريق / وصل) تنشال الطاوة وتطلع الخريطة */
 function _trMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['ontheway','arrived'].includes(o.status)) }
 function _trAdapt(o){ return {id:'o:'+o.id, loc:o.loc, driverLoc:o.driver_loc, status:o.status==='arrived'?'arrived':'purchased'} }
 function _spMapOn(o){ return !!(o && o.driverUid && o.loc && o.loc.lat && ['assigned','purchased','arrived'].includes(o.status)) }
@@ -11257,7 +11283,7 @@ async function spMapMount(o){
     await loadLeaflet();
     if(!_spMap){
       _spMap=L.map(_spMapEl,{zoomControl:false,attributionControl:false}).setView([o.loc.lat,o.loc.lng],15);
-      tarekyTiles(_spMap);   /* v310: تجربة خرائط طريق */
+      tarekyTiles(_spMap);   /* v315: تجربة خرائط طريق */
       _spMC=L.marker([o.loc.lat,o.loc.lng],{icon:_HOME_ICON()}).addTo(_spMap);
     }
     spMapUpdate(o);
@@ -11279,7 +11305,7 @@ function spMapUpdate(o){
   if(_spMD) _mkMove(_spMD,ll); else _spMD=L.marker(ll,{icon:_DRV_ICON(),zIndexOffset:500}).addTo(_spMap);
   if(!_spFit){ _spMap.fitBounds(L.latLngBounds([ll,[c.lat,c.lng]]),{padding:[40,40],maxZoom:17}); _spFit=true }
   const m=_dist(d,c), key=o.id+'|'+Number(c.lat).toFixed(5)+','+Number(c.lng).toFixed(5);
-  /* v310: الطريق مرة وحدة، وينقص محلياً — نعيد نطلبه بس إذا السائق طلع منه */
+  /* v315: الطريق مرة وحدة، وينقص محلياً — نعيد نطلبه بس إذا السائق طلع منه */
   let r=(_spRT.pts && _spRT.key===key) ? _rtTrim(_spRT,d,90) : null;
   if(r && !r.off){ _spDraw(r.pts); _spEta={d:r.dist,s:r.dur,at:Date.now()} }
   else{
@@ -11726,7 +11752,7 @@ function renderStore(){
   try{ pausePaint() }catch(e){}
   if(!myShopDoc)return;
   if(!window.__stPerInit){ window.__stPerInit=true; periodDays=30 }   /* المالية تبدأ بآخر 30 يوم مو اليوم */
-  /* v310: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
+  /* v315: الموظف يشوف حساب اليوم بس — باقي الفترات والعمولة لصاحب المحل والإدارة */
   const __stf=!!(me && me.staff);
   if(__stf){ periodDays=1; window.stMonth=0 }
   const sh=myShopDoc,os=myOrders;
@@ -11964,7 +11990,7 @@ function renderStore(){
     </div>`;
   }
   else if(fin){
-    const _ic=invCalc(myComm.amount, myInv), _st=_ic.s;
+    const _ic=invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]), _st=_ic.s;
     const _stTxt=_st==='paid'?'مسدد ✓':(_st==='pend'?'قيد المراجعة':(_st==='part'?'باقي '+_ic.rem.toLocaleString():'مستحق'));
     const _stCls=_st==='paid'?'ok':((_st==='pend'||_st==='part')?'pend':'due');
     const _n=n=>Number(n||0).toLocaleString();
@@ -11991,7 +12017,7 @@ function renderStore(){
 
     <div class="fsec"><i class="gn"></i><h3>الصافي</h3></div>
     <div class="fst-tot"><b>الصافي لك</b><span>${_n(net)}<small> د.ع</small></span></div>
-    <div class="fst-eq">المبيعات − خصومات المتجر − العمولة</div>`;   /* v310: شلنا «يدفعه الزبون» — مالها علاقة بحساب المطعم */
+    <div class="fst-eq">المبيعات − خصومات المتجر − العمولة</div>`;   /* v315: شلنا «يدفعه الزبون» — مالها علاقة بحساب المطعم */
   }
   const rec=os.slice(0,3);
   document.getElementById('stRecent').innerHTML=rec.length?rec.map(o=>ocard(o,true)).join('')
@@ -12338,7 +12364,7 @@ async function setStatus(id,st){
   let _prep=null;
   if(st==='accepted'){ _prep=await prepPick(); if(!_prep) return false; }
   stopAlarm();
-  /* v310: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
+  /* v315: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
   window.__stBusy=window.__stBusy||{};
   if(window.__stBusy[id]) return false;
   window.__stBusy[id]=1; setTimeout(()=>{ try{ delete window.__stBusy[id] }catch(e){} },4000);
@@ -12489,7 +12515,7 @@ function paintShopType(){
 
 /* ═══════ استدعاء سائق — للمتاجر ═══════ */
 function paintCallDrv(){
-  /* v310: الزر صار عائم تحت (مثل التطبيقات العالمية) — الكارت القديم انشال */
+  /* v315: الزر صار عائم تحت (مثل التطبيقات العالمية) — الكارت القديم انشال */
   const el=document.getElementById('stCallDrv'); if(el) el.innerHTML='';
   const fab=document.getElementById('extFab'); if(!fab) return;
   const ok = !!myShopDoc && !(me && me.staff && me.staff.can_orders!==true);
@@ -12561,7 +12587,7 @@ async function sendCallDrv(){
   }
 }
 /* شارة الطلب الخارجي بكروت طلبات المحل */
-/* ═══ v310: توقيت المطعم مثل التطبيقات العالمية ═══
+/* ═══ v315: توقيت المطعم مثل التطبيقات العالمية ═══
    1) عدّاد قبول 3 دقايق على الطلب الجديد  2) وقت التحضير يختاره المطعم (15/20/25)  3) زر واحد يوقّف الطلبات نص ساعة */
 const ACC_MS=3*60*1000;
 function _cdFmt(ms){ ms=Math.abs(ms); const t=Math.floor(ms/1000); return Math.floor(t/60)+':'+String(t%60).padStart(2,'0') }
@@ -13600,7 +13626,7 @@ async function deliver(id){
       const _sub=cashToShop(o);
       const _svc=Number(o.serviceFee!=null?o.serviceFee:svcFee(o.sub||0));
       setTimeout(()=>{
-        /* v310: بدل نافذة المتصفح — نافذة التطبيق */
+        /* v315: بدل نافذة المتصفح — نافذة التطبيق */
         const _N=n=>Number(n||0).toLocaleString();
         const _mine=Number(o.deliveryFee||SET.deliveryFee||1250);
         const _m=drvSplit(o);
@@ -13704,7 +13730,7 @@ function _tpTick(){
       try{ _tpMap.fitBounds(L.latLngBounds([[c.lat,c.lng],[o.shopLoc.lat,o.shopLoc.lng]]),{padding:[60,60],maxZoom:16}) }catch(e){}
       return _tpRoute(o.shopLoc,c);
     }
-    /* v310: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
+    /* v315: اشتريلي مثل المطعم — نبدي من آخر موقع معروف للسائق، وإذا ماكو نعرض موقع الزبون بس */
     const last=_trkPrev || o.driverLoc || o.driver_loc;
     if(last && last.lat && c && c.lat){
       _tpFrom='last';
@@ -13773,7 +13799,7 @@ function _tripPaint(){
   if(!o || o.status==='delivered' || o.status==='cancelled'){ closeTrip(); return }
   if(_tpSp) return _spTripPaint(card,o);
 
-  /* v310: شاشة الرحلة — محطّات (المحل ← الزبون) مثل طلبات، وقبل الاستلام «راجع الطلب» */
+  /* v315: شاشة الرحلة — محطّات (المحل ← الزبون) مثل طلبات، وقبل الاستلام «راجع الطلب» */
   const I=(d)=>`<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
   const IC={
     shop:I('<path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/>'),
@@ -13831,7 +13857,7 @@ function _spTripPaint(card,o){
     const done=its.filter((x,k)=>chk[k]||mis.includes(k)).length;
     const got=its.filter((x,k)=>chk[k]&&!mis.includes(k)).length;
     const pct=its.length?Math.round(done/its.length*100):0;
-    /* v310: هيدر التسوّق — مراحل بأرقام + 3 أرقام (بالقائمة / لكيتها / ما متوفر)، بدون إيموجي */
+    /* v315: هيدر التسوّق — مراحل بأرقام + 3 أرقام (بالقائمة / لكيتها / ما متوفر)، بدون إيموجي */
     const _X='<svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>';
     const _CL='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg>';
     const _stp=['قبلت','يتسوّق','بالطريق','سلّمت'].map((t,i)=>`<div class="${i<1?'on':(i===1?'cur':'')}"><i>${i<1?'✓':i+1}</i><span>${t}</span></div>`).join('');
@@ -13858,7 +13884,7 @@ function _spTripPaint(card,o){
   const btn = st==='purchased'
     ? `<button class="ub ub-p tp-go" onclick="tripAct('sp_arr')"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.5" r="2.5"/></svg> وصلت لعند الزبون</button>`
     : `<button class="ub ub-p tp-go" onclick="tripAct('sp_done')"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> سلّمت الطلب</button>`;
-  /* v310: نفس شكل المطعم — محطّات: السوق ✓ ← الزبون */
+  /* v315: نفس شكل المطعم — محطّات: السوق ✓ ← الزبون */
   const _ic=(d)=>`<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
   const _chk='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5l4 4 8-9"/></svg>';
   const _call=o.phone?`<a class="tb-b" href="tel:${o.phone}" aria-label="اتصال">${_ic('<path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/>')}</a>`:'';
@@ -13947,12 +13973,12 @@ function inPeriod(ts){
   return (Date.now()-t) <= periodDays*86400000;
 }
 /* يقرا التاريخ بأي صيغة: رقم، نص أرقام، أو ISO */
-/* v310: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
+/* v315: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
 function shopFreeTs(sh){ const v=sh&&(sh.free_until||sh.freeUntil); const t=v?new Date(v).getTime():0; return isNaN(t)?0:t }
 function ordFree(o,sh){ const f=shopFreeTs(sh); if(!f) return false; const t=_anyTs(o.createdAt||o.created_at); return !!t && t<f }
 function freeBanner(sh){
   const f=shopFreeTs(sh), now=Date.now();
-  /* v310: الـ 10 أيام تبدي من أول طلب */
+  /* v315: الـ 10 أيام تبدي من أول طلب */
   if(!f && sh && sh.free_pending) return `<div class="free-ban"><b><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" style="width:17px;height:17px;vertical-align:-3px"><rect x="3.5" y="8.5" width="17" height="4" rx="1"/><path d="M5 12.5V20h14v-7.5M12 8.5V20"/><path d="M12 8.5c-1.5-3.5-5.5-3.5-5.5-1.2 0 1.3 2.5 1.2 5.5 1.2zM12 8.5c1.5-3.5 5.5-3.5 5.5-1.2 0 1.3-2.5 1.2-5.5 1.2z"/></svg> أول 10 أيام بدون عمولة</b><span>تبدي من أول طلب يجيك</span></div>`;
   if(!f || f<=now) return '';
   const d=Math.ceil((f-now)/86400000);
@@ -14068,7 +14094,7 @@ function loadLeaflet(){
   });
   return leafletPromise;
 }
-/* ═══ v310: خرائط «طريق» (Tareky) — تجربة على شاشة تتبع الطلب بس ═══
+/* ═══ v315: خرائط «طريق» (Tareky) — تجربة على شاشة تتبع الطلب بس ═══
    خريطة حديثة (Vector): كل فتحة خريطة = وحدة وحدة، التحريك والتكبير مجاني.
    إذا ما اشتغلت لأي سبب ترجع خريطة OSM القديمة وحدها. */
 const TAREKY_PK='tareky_pk_BroXGz4OGQs5SvnEPPOAaK1szKu5KV960mQbBC';
@@ -14088,7 +14114,7 @@ function loadMapLibre(){
   return _mlPromise;
 }
 /* يحط خريطة طريق على خريطة Leaflet، وإذا فشلت يحط OSM */
-var MAP_TAREKY=false;   /* v310: رجعنا الخريطة القديمة (OSM) بكل الشاشات. true = خريطة «طريق» */
+var MAP_TAREKY=false;   /* v315: رجعنا الخريطة القديمة (OSM) بكل الشاشات. true = خريطة «طريق» */
 async function tarekyTiles(map){
   if(!MAP_TAREKY){ try{ tiles().addTo(map) }catch(_){} return; }
   let done=false;
@@ -14183,7 +14209,7 @@ async function openMap(mode, autoGps){
         if(ld)ld.classList.add('gone') }catch(e){} },180);
   }catch(e){ toast('الخريطة ما تحمّلت — تأكد من الإنترنت'); if(ld)ld.classList.add('gone') }
 }
-/* v310: البحث عن مكان بشاشة تحديد الموقع (من «طريق») */
+/* v315: البحث عن مكان بشاشة تحديد الموقع (من «طريق») */
 let _mqT=null, _mqSeq=0;
 function mapQIn(v){
   clearTimeout(_mqT); const box=document.getElementById('mapQRes');
@@ -14289,7 +14315,7 @@ function preview(elId,loc,key){
   el.innerHTML=ph;
   /* الضغط يفتح الخريطة داخل التطبيق (مو قوقل) */
   el.onclick=()=>{ try{ openViewMap(loc, loc.zone||'الموقع', '') }catch(e){} };
-  /* v310: صورة خريطة جاهزة من «طريق» (أخف من خريطة كاملة)، وإذا ما نزلت نرجع للطريقة القديمة */
+  /* v315: صورة خريطة جاهزة من «طريق» (أخف من خريطة كاملة)، وإذا ما نزلت نرجع للطريقة القديمة */
   if(MAP_TAREKY) try{
     const w=Math.min(640, Math.max(240, Math.round(el.clientWidth||340)));
     const src='https://api.tareky.com/v1/static-map/light/'+Number(loc.lng).toFixed(5)+','+Number(loc.lat).toFixed(5)+',16/'+w+'x160@2x.webp?access_token='+TAREKY_PK;
@@ -14643,10 +14669,12 @@ let allOrders=[],allUsers=[],allShops=[],pFil='driver';
 /* ══════════ عمولة المطعم — جهة المحل ══════════ */
 let myComm={sales:0,amount:0}, myInv=null, myPrev=[];
 /* حالة عمولة شهر: شكد انسدّ وشكد باقي — الفواتير القديمة المأشّرة مسدد تبقى مسدّدة كاملة */
-function invCalc(amount, inv){
+function invCalc(amount, inv, led){
   amount=Number(amount||0);
   const st=(inv&&inv.status)||'due';
-  const paid = inv && inv.paid_total!=null ? Number(inv.paid_total) : (st==='paid' ? amount : 0);
+  /* v315: إذا دفتر السيرفر موجود ناخذ منه (كل دفعة تسدّ أقدم عمولة أول) */
+  const paid = led ? Math.min(amount, Number(led.paid||0))
+             : (inv && inv.paid_total!=null ? Number(inv.paid_total) : (st==='paid' ? amount : 0));
   const rem = Math.max(0, amount-paid);
   let s;
   if(st==='pending') s='pend';
@@ -14655,6 +14683,30 @@ function invCalc(amount, inv){
   else s='due';
   return {paid, rem, s, amount};
 }
+/* شكد انسدّ بهاي الفاتورة نفسها — للحفظ بس (التسديد القديم بدون مجموع ينحسب بمبلغه الحقيقي) */
+function invOwn(amount, inv){
+  if(!inv) return 0;
+  if(inv.paid_total!=null) return Number(inv.paid_total);
+  return inv.status==='paid' ? (inv.amount_paid!=null ? Number(inv.amount_paid) : Number(amount||0)) : 0;
+}
+/* v315: دفتر عمولة المطاعم من السيرفر (shop_ledger) — نفس الرقم بكل الشاشات.
+   إذا السيرفر بعده قديم، نبقى عالحساب القديم بدون أخطاء. */
+let LED={}, LEDC={};
+const _ledK=(sid,per)=>sid+'|'+(per?per.from:'');
+const _rl=r=>LED[_ledK(r.shop.id, r.per)];
+async function loadLed(shopId, from, to){
+  let r=null;
+  /* الإدارة: شهر واحد + أي فترة عليها فلوس (حتى ما يتجاوز حد الأسطر). السيرفر القديم ما يعرف المدى، نعيد بدونه */
+  try{ r=await rpc('shop_ledger', shopId?{p_shop:shopId}:{p_shop:null, p_from:from||null, p_to:to||null}) }
+  catch(e){ if(!shopId){ try{ r=await rpc('shop_ledger',{p_shop:null}) }catch(_){ r=null } } else r=null }
+  const m={}, cr={};
+  (Array.isArray(r)?r:[]).forEach(x=>{ m[x.shop_id+'|'+String(x.p_start).slice(0,10)]=x; cr[x.shop_id]=Number(x.credit||0) });
+  if(shopId){ for(const k in LED) if(k.indexOf(shopId+'|')===0) delete LED[k]; Object.assign(LED,m); LEDC[shopId]=cr[shopId]||0 }
+  else { LED=m; LEDC=cr }
+  return Array.isArray(r);
+}
+/* كل الباقي على المطعم (كل الفترات) — null إذا الدفتر ما وصل */
+function ledOwe(shopId){ let t=0, n=0; for(const k in LED) if(k.indexOf(shopId+'|')===0){ t+=Number(LED[k].rem||0); n++ } return n?t:null }
 
 let myShopPer=null;
 async function loadMyComm(){
@@ -14667,6 +14719,7 @@ async function loadMyComm(){
   let all=[];
   try{ all=await sbGet('shop_invoices?select=*&shop_id=eq.'+me.shopId)||[] }catch(e){ all=[] }
   myInv=all.find(i=>String(i.period).slice(0,10)===myShopPer.key)||null;
+  if(!(me && me.staff)) await loadLed(me.shopId);
   /* فترات سابقة بعدها ما انسدّت — نفس حساب الإدارة بالضبط */
   myPrev=[];
   try{
@@ -14675,7 +14728,7 @@ async function loadMyComm(){
       const pers=shopPers(md).filter(p=>p.e<today).reverse();
       for(const per of pers){
         const c=await shopCom(me.shopId, per); if(c.amount<=0) continue;
-        const inv=all.find(i=>String(i.period).slice(0,10)===per.key)||null, cc=invCalc(c.amount,inv);
+        const inv=all.find(i=>String(i.period).slice(0,10)===per.key)||null, cc=invCalc(c.amount,inv,LED[_ledK(me.shopId,per)]);
         if(cc.s!=='paid') myPrev.push({d:per.s, per, key:per.key, amt:c.amount, inv, c:cc});
       }
     }
@@ -14685,8 +14738,9 @@ async function loadMyComm(){
 
 function renderMyComm(){
   const box=document.getElementById('stComm'); if(!box) return;
-  if(me && me.staff){ box.innerHTML=''; return }   /* v310: عمولة التطبيق وسدادها لصاحب المحل بس */
-  const ic=invCalc(myComm.amount, myInv), st=ic.s;
+  if(me && me.staff){ box.innerHTML=''; return }   /* v315: عمولة التطبيق وسدادها لصاحب المحل بس */
+  const ic=invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]), st=ic.s;
+  const _cr=Number(LEDC[me.shopId]||0);
   const dd=(myShopPer?myShopPer.e:_dueDate(new Date())).toLocaleDateString('ar-IQ');
   const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
   box.innerHTML=`
@@ -14695,6 +14749,7 @@ function renderMyComm(){
       <div class="v ${st==='paid'?'g':''}">${myComm.amount.toLocaleString()}<small> د.ع</small></div>
       <div class="rg">مبيعات ${myComm.sales.toLocaleString()} د.ع · ${myComm.rate!=null?Number(myComm.rate):shopPct()}% · تستحق ${dd}</div>
       ${ic.paid>0&&st!=='paid'?`<div class="rg" style="margin-top:4px;font-weight:800">سدّدت ${ic.paid.toLocaleString()} · باقي عليك ${ic.rem.toLocaleString()} د.ع</div>`:''}
+      ${_cr>0?`<div class="rg" style="margin-top:4px;font-weight:800;color:#0E8A5F">عندك رصيد ${_cr.toLocaleString()} د.ع — ينخصم من العمولة الجاية</div>`:''}
       ${(st==='due'||st==='part')
         ? `<button class="act" onclick="openPayCom()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/></svg> إبلاغ عن السداد</button>`
         : (st==='pend'
@@ -14702,6 +14757,7 @@ function renderMyComm(){
            : '<button class="act off" disabled>انسددت وانتأكدت</button>')}
     </div>
     ${myPrev.length?`<div class="prevm"><div class="h">⚠️ عليك عمولة من فترات سابقة</div>
+      <span style="display:block;margin:-2px 0 4px">أي مبلغ تدفعه يسدّ أقدم فترة أول</span>
       ${myPrev.map((p,i)=>`<div class="r"><div><b>${p.per.label}</b><span>${p.c.s==='pend'?'بانتظار تأكيد الإدارة':(p.c.paid>0?'سدّدت '+p.c.paid.toLocaleString()+' من '+p.amt.toLocaleString():'العمولة '+p.amt.toLocaleString())}</span></div>
         <em>${p.c.rem.toLocaleString()} د.ع</em>${p.c.s==='pend'?'':`<button onclick="openPayCom(${i})">سدّد</button>`}</div>`).join('')}</div>`:''}`;
 }
@@ -14743,7 +14799,7 @@ async function openPayCom(pi){
   const _inv=_pv?_pv.inv:myInv;
   if(_inv && _inv.status==='pending')
     return toast('عندك طلب سداد قيد المراجعة — انتظر تأكيد الإدارة');
-  const _ic=_pv?_pv.c:invCalc(myComm.amount, myInv);
+  const _ic=_pv?_pv.c:invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]);
   if(_ic.s==='paid' || _ic.rem<=0)
     return toast('عمولة هذا الشهر مسدّدة');
 
@@ -14823,6 +14879,8 @@ async function sendPayCom(){
   const amt=Number((document.getElementById('pc_amt')||{}).value||0);
   if(amt<=0) return toast('اكتب المبلغ المدفوع');
   if(amt!==Math.round(amt)) return toast('اكتب رقم صحيح بدون كسور');
+  const _ow=ledOwe(me.shopId);
+  if(_ow!=null && amt>_ow) return toast('المبلغ أكثر من كل اللي عليك ('+_ow.toLocaleString()+' د.ع)');
   const per=window._pcPer||(myShopPer?myShopPer.key:_pKey(new Date()));
   const row={
     shop_id: me.shopId, period: per, status:'pending', amount_paid: amt,
@@ -14877,7 +14935,8 @@ async function shopCom(shopId, per){
 }
 
 async function loadInv(){
-  await loadShopCyc();
+  const _y=invMonth.getFullYear(), _m=invMonth.getMonth();
+  await Promise.all([loadShopCyc(), loadLed(null, _ymd(new Date(_y,_m,1)), _ymd(new Date(_y,_m+1,0)))]);
   const pers=shopPers(invMonth);
   try{
     const st = await sbGet('shop_invoices?select=*&period=in.('+pers.map(p=>p.key).join(',')+')') || [];
@@ -14905,7 +14964,7 @@ function openInv(){
 function invNav(n){ invMonth=new Date(invMonth.getFullYear(), invMonth.getMonth()+n, 1); loadInv() }
 
 const _invSt = r => {
-  const c=invCalc(r.amount, r.inv);
+  const c=invCalc(r.amount, r.inv, _rl(r));
   if(c.s==='paid') return ['مسدد','paid','g'];
   if(c.s==='pend') return ['قيد المراجعة','pend','o'];
   if(c.s==='part') return ['باقي '+c.rem.toLocaleString(),'due','r'];
@@ -14914,7 +14973,7 @@ const _invSt = r => {
 
 function renderInv(){
   const mb=document.getElementById('invMonth');
-  if(mb){ const T={due:0,paid:0,rem:0}; invRows.forEach(r=>{ const c=invCalc(r.amount,r.inv); T.due+=r.amount; T.paid+=Math.min(c.paid,r.amount); T.rem+=c.rem });
+  if(mb){ const T={due:0,paid:0,rem:0}; invRows.forEach(r=>{ const c=invCalc(r.amount,r.inv,_rl(r)); T.due+=r.amount; T.paid+=Math.min(c.paid,r.amount); T.rem+=c.rem });
     const pc=T.due>0?Math.min(100,Math.round(T.paid/T.due*100)):100;
     mb.innerHTML=`
     <div class="ivh">
@@ -14952,12 +15011,12 @@ function renderInv(){
   if(box) box.innerHTML = list.length ? list.map(r=>{
     const [lbl,cls,col]=_invSt(r);
     const dd=_dueDate(invMonth).toLocaleDateString('ar-IQ');
-    const c=invCalc(r.amount,r.inv), paid=Math.min(c.paid,r.amount);
+    const c=invCalc(r.amount,r.inv,_rl(r)), paid=Math.min(c.paid,r.amount);
     const late=c.rem>0 && Date.now()>r.per.e.getTime()+86400000;
     const pill = c.s==='paid'?['مسدّدة','ok']:(c.s==='pend'?['تنتظر تأكيدك','wait']:(late?['متأخرة','late']:(paid>0?['جزئياً','part']:['مفتوحة','open'])));
     return `<button class="ixr ${pill[1]}" onclick="openInvOne('${r.rid}')">
       ${r.shop.img?`<img src="${r.shop.img}" alt="">`:`<div class="lg">${esc((r.shop.name||'؟').charAt(0))}</div>`}
-      <div class="t"><b>${esc(r.shop.name||'مطعم')}</b><span>${r.per.half?'<u class="hp">'+r.per.short+'</u> ':''}عمولة ${_n(r.amount)} · مبيعات ${_n(r.sales)}</span></div>
+      <div class="t"><b>${esc(r.shop.name||'مطعم')}</b><span>${r.per.half?'<u class="hp">'+r.per.short+'</u> ':''}عمولة ${_n(r.amount)} · مبيعات ${_n(r.sales)}${LEDC[r.shop.id]>0?` · <b style="display:inline;color:#0E8A5F">رصيد ${_n(LEDC[r.shop.id])}</b>`:''}</span></div>
       <div class="v"><b>${_n(c.s==='paid'?paid:c.rem)}<i>د.ع</i></b><em class="pill ${pill[1]}">${pill[0]}</em></div>
       <div class="pg"><i style="width:${r.amount>0?Math.min(100,Math.round(paid/r.amount*100)):100}%"></i></div>
     </button>`;
@@ -14974,14 +15033,15 @@ function openInvOne(id){
 function renderInvOne(){
   const box=document.getElementById('invOne'); if(!box) return;
   const r=_invR(); if(!r) return;
-  const iv=r.inv||{}, c=invCalc(r.amount,iv), paid=Math.min(c.paid,r.amount);
+  const iv=r.inv||{}, c=invCalc(r.amount,iv,_rl(r)), paid=Math.min(c.paid,r.amount);
   const pc=r.amount>0?Math.min(100,Math.round(paid/r.amount*100)):100;
   const due=r.per.e, late=c.rem>0 && Date.now()>due.getTime()+86400000;
   const pill = c.s==='paid'?['مسدّدة','ok']:(c.s==='pend'?['تنتظر تأكيدك','wait']:(late?['متأخرة','late']:(paid>0?['مسدّدة جزئياً','part']:['مفتوحة','open'])));
   const fd=v=>{ const t=_anyTs(v); return t?new Date(t).toLocaleDateString('ar-IQ',{day:'numeric',month:'short'}):'' };
   const dS=due.toLocaleDateString('ar-IQ',{day:'numeric',month:'short'}), ev=[];
   if(iv.reported_at) ev.push({ts:_anyTs(iv.reported_at), t:'المطعم بلّغ إنه دفع '+_n(iv.amount_paid)+' د.ع', d:fd(iv.reported_at), k:'w'});
-  if(iv.confirmed_at) ev.push({ts:_anyTs(iv.confirmed_at), t:'الإدارة أكّدت الاستلام'+(paid?' — المجموع '+_n(paid)+' د.ع':''), d:fd(iv.confirmed_at), k:'g'});
+  const own=invOwn(r.amount, r.inv), cr=Number(LEDC[r.shop.id]||0), ow=ledOwe(r.shop.id);
+  if(iv.confirmed_at) ev.push({ts:_anyTs(iv.confirmed_at), t:'الإدارة أكّدت الاستلام'+(own?' — '+_n(own)+' د.ع':'')+(own>paid&&_rl(r)?' (منها '+_n(own-paid)+' سدّت فترات ثانية)':''), d:fd(iv.confirmed_at), k:'g'});
   ev.sort((a,b)=>a.ts-b.ts);
   if(c.s!=='paid') ev.push({t:late?'عدّى آخر موعد للتسديد':'آخر موعد للتسديد', d:dS, k:late?'r':'f'});
   if(!ev.length) ev.push({t:'انسدّت', d:'', k:'g'});
@@ -15014,6 +15074,8 @@ function renderInvOne(){
     <div class="ix-l"><span>العمولة ${shopPct()}%</span><b>${_n(r.amount)}</b></div>
     ${paid?`<div class="ix-l g"><span>المدفوع</span><b>− ${_n(paid)}</b></div>`:''}
     <div class="ix-l tot"><span>الباقي</span><b>${_n(c.rem)} د.ع</b></div>
+    ${ow!=null&&ow!==c.rem?`<div class="ix-l"><span>كل اللي على المطعم (كل الفترات)</span><b>${_n(ow)} د.ع</b></div>`:''}
+    ${cr>0?`<div class="ix-l g"><span>⚠️ دفع زيادة — رصيد إله ينخصم من عمولته الجاية</span><b>${_n(cr)} د.ع</b></div>`:''}
   </div>
 
   <div class="ix-sec">
@@ -15024,7 +15086,7 @@ function renderInvOne(){
 }
 function invWa(){
   const r=_invR(); if(!r) return;
-  const c=invCalc(r.amount,r.inv||{}), paid=Math.min(c.paid,r.amount);
+  const c=invCalc(r.amount,r.inv||{},_rl(r)), paid=Math.min(c.paid,r.amount);
   const t=`واصل ليمَك — فاتورة عمولة ${r.per.label}\nالمطعم: ${r.shop.name||''}\nالمبيعات: ${_n(r.sales)} د.ع\nالعمولة (${shopPct()}%): ${_n(r.amount)} د.ع\nالمدفوع: ${_n(paid)} د.ع\nالباقي: ${_n(c.rem)} د.ع\nآخر موعد: ${r.per.e.toLocaleDateString('ar-IQ')}`;
   const ph=String(r.shop.phone||'').replace(/\D/g,'').replace(/^0/,'964');
   window.open('https://wa.me/'+ph+'?text='+encodeURIComponent(t),'_blank');
@@ -15032,35 +15094,46 @@ function invWa(){
 
 async function invMarkPaid(){
   const r=_invR(); if(!r) return;
-  const c=invCalc(r.amount, r.inv);
+  const c=invCalc(r.amount, r.inv, _rl(r)), ow=ledOwe(r.shop.id);
   window._impAmt=c.rem;
   const yes=await askConfirm(
     'كم استلمت من <b>'+esc(r.shop.name)+'</b> عن '+r.per.label+'؟'
     +'<div style="margin:10px 0 4px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ '+c.paid.toLocaleString():'')+' · <b>الباقي '+c.rem.toLocaleString()+'</b></div>'
+    +(ow!=null&&ow>c.rem?'<div style="margin:0 0 6px;font-size:12px;color:#8a849c">كل اللي عليه: '+ow.toLocaleString()+' د.ع · المبلغ يسدّ أقدم فترة أول</div>':'')
     +'<input type="number" inputmode="numeric" step="1" value="'+c.rem+'" oninput="window._impAmt=this.value" style="width:100%;padding:11px;border:1px solid #ddd;border-radius:12px;font:inherit;font-size:16px;text-align:center">',
     {title:'تسجيل التحصيل', ok:'إي حصّلتها', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>'});
   if(!yes) return;
   const amt=Number(window._impAmt||0);
   if(!(amt>0) || amt!==Math.round(amt)) return toast('اكتب مبلغ صحيح بدون كسور');
-  const tot=c.paid+amt, left=Math.max(0,r.amount-tot);
+  if(ow!=null && amt>ow){
+    const sure=await askConfirm('⚠️ المبلغ <b>'+amt.toLocaleString()+'</b> أكثر من كل اللي على <b>'+esc(r.shop.name)+'</b> ('+ow.toLocaleString()+' د.ع).'
+      +'<div style="margin-top:8px;font-size:13px">الزيادة '+(amt-ow).toLocaleString()+' د.ع تبقى رصيد إله وتنخصم من عمولته الجاية.</div><br>متأكد؟',
+      {title:'دفع زيادة', ok:'إي متأكد'});
+    if(!sure) return;
+  }
+  /* نحفظ فلوس هاي الفاتورة نفسها بس — توزيعها على الفترات يصير بالسيرفر */
+  const tot=invOwn(r.amount, r.inv)+amt, left=ow!=null?Math.max(0,ow-amt):Math.max(0,r.amount-tot);
   if(left>0) toast('انحفظ — باقي عليه '+left.toLocaleString()+' د.ع');
-  await _invSave({status:left>0?'partial':'paid', paid_total:tot, amount_paid:amt, method:'cash',
+  await _invSave({status:tot>=r.amount?'paid':'partial', paid_total:tot, amount_paid:amt, method:'cash',
                   paid_date:new Date().toISOString().slice(0,10),
                   confirmed_at:new Date().toISOString(), confirmed_by:uid});
 }
 async function invConfirm(){
   const r=_invR(); if(!r) return;
   const iv=r.inv||{};
-  const c=invCalc(r.amount, iv), got=Number(iv.amount_paid||0), tot=c.paid+got, left=Math.max(0,r.amount-tot);
+  const c=invCalc(r.amount, iv, _rl(r)), ow=ledOwe(r.shop.id), got=Number(iv.amount_paid||0), tot=invOwn(r.amount, iv)+got;
+  /* الباقي بعد التأكيد: من الدفتر (كل الفترات) إذا موجود، وإلا هاي الفترة بس */
+  const left=ow!=null?Math.max(0,ow-got):Math.max(0,r.amount-tot), over=ow!=null?Math.max(0,got-ow):0;
   const yes=await askConfirm(
     '<b>'+esc(r.shop.name)+'</b> أبلغ إنه سدّد <b>'+got.toLocaleString()+' د.ع</b>'
-    +'<div style="margin-top:8px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ قبل '+c.paid.toLocaleString():'')+'</div>'
-    +(left>0?'<div style="margin-top:6px;color:#C2362B;font-weight:800">⚠️ المبلغ ناقص — راح يبقى عليه '+left.toLocaleString()+' د.ع والفترة ما تتسكّر</div>'
+    +'<div style="margin-top:8px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ قبل '+c.paid.toLocaleString():'')+(ow!=null&&ow>c.rem?' · كل اللي عليه '+ow.toLocaleString():'')+'</div>'
+    +(over>0?'<div style="margin-top:6px;color:#B45309;font-weight:800">⚠️ المبلغ أكثر من اللي عليه بـ '+over.toLocaleString()+' د.ع — الزيادة تبقى رصيد إله</div>'
+     :left>0?'<div style="margin-top:6px;color:#C2362B;font-weight:800">⚠️ المبلغ ناقص — راح يبقى عليه '+left.toLocaleString()+' د.ع</div>'
             :'<div style="margin-top:6px;color:#0E8A5F;font-weight:800">✓ العمولة تنسدّ كاملة</div>')
     +'<br>تأكيد الاستلام؟',
     {title:'مراجعة السداد', ok:'إي استلمت', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>'});
   if(!yes) return;
-  await _invSave({status:left>0?'partial':'paid', paid_total:tot, confirmed_at:new Date().toISOString(), confirmed_by:uid});
+  await _invSave({status:tot>=r.amount?'paid':'partial', paid_total:tot, confirmed_at:new Date().toISOString(), confirmed_by:uid});
 }
 async function _invSave(patch){
   const r=_invR(); if(!r) return;
@@ -15088,7 +15161,7 @@ function renderAdminHead(){
       <p>ملخص شامل لأداء المنصة اليوم</p>
       <div class="dt"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3.5" y="5" width="17" height="15.5" rx="2.4"/><path d="M3.5 9.6h17M8.5 3.5V6M15.5 3.5V6"/></svg>
         ${new Date().toLocaleDateString('ar-IQ',{weekday:'long',day:'numeric',month:'long',year:'numeric'})}</div>
-    </div>`;
+    </div>`;  try{ if(typeof loadUsage==='function') loadUsage() }catch(e){}
 }
 
 function renderAdminComms(){
@@ -15564,7 +15637,7 @@ async function renderBanAdmin(){
       </div>
     </div>`).join('');
 }
-/* v310: إضافة/تعديل البانر بشاشة وحدة (بدل 5 نوافذ prompt) */
+/* v315: إضافة/تعديل البانر بشاشة وحدة (بدل 5 نوافذ prompt) */
 let _bn=null;
 const BN_ACTS=[['','ما يفتح شي'],['cat:all','الرئيسية — كل المحلات'],['cat:restaurant','المطاعم'],['cat:store','المتاجر'],['cat:sweet','الحلويات'],['cat:special','اشتريلي'],['shop','مطعم / محل معيّن'],['url','رابط خارجي']];
 function addBanner(){ _bn={id:null,img:'',title:'',body:'',action:'cat:restaurant',sort_no:(document.querySelectorAll('#bnAdmin .bnb.e').length||0)+1,_up:false}; bnPaint() }
@@ -16240,7 +16313,7 @@ function finNorm(row){
   if(k==='comp') sub = 'التطبيق دفع للسائق';
   const who = k==='setl' ? (r.drv_name||'سائق') : (r.who_name || (k==='shop'||k==='disc'?'مطعم':'سائق'));
   const id=String(r.id||'');
-  /* v310: رقم الوصل بالتسلسل (1، 2، 3...) من receipt_numbers.sql — وإذا بعده ما انشغل يبقى الكود القديم */
+  /* v315: رقم الوصل بالتسلسل (1، 2، 3...) من receipt_numbers.sql — وإذا بعده ما انشغل يبقى الكود القديم */
   return {k, id, no:(r.receipt_no!=null&&r.receipt_no!=='')?String(r.receipt_no):('WL-'+({drv:'D',shop:'S',disc:'C',comp:'F',setl:'T'}[k]||'X')+id.replace(/-/g,'').slice(0,6).toUpperCase()),
     at:new Date(row.at), amt, ok, title, sub, who, dir,
     phone:(k==='shop'||k==='disc')?(((allShops||[]).find(x=>x.id===r.shop_id)||{}).phone||''):(((allUsers||[]).find(x=>x.id===(r.driver_id||r.party_id))||{}).phone||''),
@@ -16333,7 +16406,7 @@ function finRenderRec(bd){
       <div class="v"><b class="${x.dir==='out'?'r':''}">${x.dir==='out'?'−':''}${_n(x.amt)}</b><span class="fstp ${x.ok?'ok':'wt'}">${x.ok?'مختوم':'ينتظر'}</span></div>
     </button>`).join(''):'<div class="fin-empty">ماكو وصولات بهالشهر</div>')}</div>`;
 }
-/* ═══ v310: ترتيب الوصولات — نفس الشكل، ويّا شعار + ختم + أرقام إنكليزية + وصلين بالورقة ═══ */
+/* ═══ v315: ترتيب الوصولات — نفس الشكل، ويّا شعار + ختم + أرقام إنكليزية + وصلين بالورقة ═══ */
 const _rxL = s => String(s==null?'':s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
 const _rxD = d => { d=new Date(d); return isNaN(d)?'':String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear() };
 const _rxT = d => { d=new Date(d); if(isNaN(d)) return ''; let h=d.getHours(); const m=String(d.getMinutes()).padStart(2,'0'), pm=h>=12; h=h%12||12; return h+':'+m+' '+(pm?'م':'ص') };
@@ -16415,7 +16488,7 @@ function finRecHTML(x){
 function _pRow(k,v,cls){ return `<div${cls?` class="${cls}"`:''}><span>${k}</span>${v}</div>` }
 function invPrint(){
   const r=_invR(); if(!r) return;
-  const iv=r.inv||{}, c=invCalc(r.amount,iv), paid=Math.min(c.paid,r.amount), ok=c.s==='paid';
+  const iv=r.inv||{}, c=invCalc(r.amount,iv,_rl(r)), paid=Math.min(c.paid,r.amount), ok=c.s==='paid';
   const no='WL-S'+String(r.shop.id).replace(/-/g,'').slice(0,4).toUpperCase()+'-'+r.per.from.replace(/-/g,'').slice(2);
   const html=`<div class="rcp">
     ${rcpHead('فاتورة عمولة مطعم','رقم الفاتورة','<bdi class="rn">'+no+'</bdi>',_rxD(new Date()))}
@@ -16441,7 +16514,7 @@ function invPrint(){
 function invPrintAll(){
   const rows=invRows.filter(r=>r.sales>0||r.inv); if(!rows.length) return toast('ماكو فواتير بهالشهر');
   const T={due:0,paid:0,rem:0};
-  const tr=rows.map(r=>{ const c=invCalc(r.amount,r.inv), pd=Math.min(c.paid,r.amount); T.due+=r.amount; T.paid+=pd; T.rem+=c.rem;
+  const tr=rows.map(r=>{ const c=invCalc(r.amount,r.inv,_rl(r)), pd=Math.min(c.paid,r.amount); T.due+=r.amount; T.paid+=pd; T.rem+=c.rem;
     return `<tr><td><bdi>${esc(r.shop.name||'')}</bdi>${r.per.half?'<br><small>'+esc(_rxL(r.per.short))+'</small>':''}</td><td class="m">${_rN(r.sales)}</td><td class="m">${_rN(r.amount)}</td><td class="m">${_rN(pd)}</td><td class="m">${_rN(c.rem)}</td><td>${c.s==='paid'?'مسدّد':(c.s==='pend'?'ينتظر':(pd>0?'جزئي':'غير مسدّد'))}</td></tr>` }).join('');
   const html=`<div class="rcp">
     ${rcpHead('كشف عمولات المطاعم — '+_rxM(invMonth),'التاريخ',_rxD(new Date()))}
@@ -16744,7 +16817,7 @@ function renderJoin2(){
       </div></div>`;
   const tp=t=>t==='restaurant'?'مطعم':t==='store'?'متجر':'خدمات';
   ps.sort(_byNew); pd.sort(_byNew);
-  if(pd.length) depLoad();   /* v310: حالة التأمينات */
+  if(pd.length) depLoad();   /* v315: حالة التأمينات */
   const html = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:tp(sh.type)+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
       ok:`okShop('${sh.id}',true)`,no:`rmShop('${sh.id}')`,del:`delShop('${sh.id}')`}))
     .concat(pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
@@ -16991,7 +17064,7 @@ async function viewDoc(ref){
   if(!u) return toast('ما گدرنا نفتح المستمسك');
   viewPhoto(u);
 }
-/* v310: عمر السائق جنب البطاقة — الإدارة تطابقه بثانيتين */
+/* v315: عمر السائق جنب البطاقة — الإدارة تطابقه بثانيتين */
 function drvAgeHtml(u){ const a=(u&&u.dob)?dwAge(u.dob):-1;
   return a>=0 ? `<b style="color:${a<18?'#DC2626':'inherit'}">العمر ${a} سنة</b> (مواليد ${new Date(u.dob).getFullYear()}) — طابقه ويّا البطاقة`
               : '<b style="color:#DC2626">ما كتب تاريخ ميلاده</b>' }
@@ -17334,7 +17407,7 @@ function errMsg(e){
 let _askCb=null;
 const ASK_ICON='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.3a2.6 2.6 0 0 1 5 1c0 1.7-2.3 1.8-2.3 3.6"/><circle cx="12" cy="17" r=".15" fill="currentColor"/></svg>';
 const ASK_ICON_DANGER='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>';
-/* v310: وصل حساب السائق بعد التسليم (التصميم ٢) */
+/* v315: وصل حساب السائق بعد التسليم (التصميم ٢) */
 function drvReceipt(d){
   let el=document.getElementById('rcpSheet');
   if(!el){ el=document.createElement('div'); el.id='rcpSheet'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
@@ -17352,7 +17425,7 @@ function drvReceipt(d){
   requestAnimationFrame(()=>el.classList.add('on'));
 }
 
-/* ═══ v310: الطلبات اللي ما انسلّمت — مثل التطبيقات العالمية: قائمة + تبويبات + تفاصيل ═══ */
+/* ═══ v315: الطلبات اللي ما انسلّمت — مثل التطبيقات العالمية: قائمة + تبويبات + تفاصيل ═══ */
 let _rfList=[], _rfAt=0, _rfBusy=false, _rfTab='act', _rfSel=null;
 const RF_FAULT={customer:'الزبون',shop:'المطعم',driver:'السائق',none:'ماكو غلطان'};
 const RF_ST={due:['مستحق','due'],paid:['بانتظار تأكيد الاستلام','paid'],confirmed:['تم ✓','ok']};
@@ -17366,7 +17439,7 @@ function rfRole(){
   return '';
 }
 async function rfLoad(force){
-  if(_rfBusy) return; if(!force && Date.now()-_rfAt<(rfRole()==='cus'?180000:20000)) return;   /* v310: الزبون كل 3 دقايق */
+  if(_rfBusy) return; if(!force && Date.now()-_rfAt<(rfRole()==='cus'?180000:20000)) return;   /* v315: الزبون كل 3 دقايق */
   _rfBusy=true;
   try{ const r=await rpc('rf_list',{}); _rfList=Array.isArray(r)?r:[] }catch(e){ __silent(e,'rfList') }
   _rfAt=Date.now(); _rfBusy=false;
@@ -17497,7 +17570,7 @@ function rfRepPaint(){
     <div class="rf-hint">الطلب يضل عندك وتنتظر. الإدارة تتصل بالزبون وتحل المشكلة.</div>
     <button class="rf-go" ${_rfReason?'':'disabled'} onclick="rfReportSend()">بلّغ الإدارة وانتظر</button></div>`;
 }
-/* ═══ v310: الزبون ما استلم → الطلب يضل ينتظر لحد ما الإدارة تحل المشكلة (مثل التطبيقات العالمية) ═══ */
+/* ═══ v315: الزبون ما استلم → الطلب يضل ينتظر لحد ما الإدارة تحل المشكلة (مثل التطبيقات العالمية) ═══ */
 const HOLD_MAX=10*60*1000; /* بعد 10 دقايق بلا رد من الإدارة، السائق يكدر يرجّع الطلب */
 const HOLD_PH='<svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg>';
 function holdOn(o){ return !!(o && o.hold_at && (o.status==='arrived'||o.status==='ontheway')) }
@@ -17637,7 +17710,7 @@ async function rfConfirm(id){
 setTimeout(()=>{ try{ rfTick(true) }catch(e){} },6000);
 setInterval(()=>{ try{ if(!document.hidden) rfTick(false) }catch(e){} },30000);
 
-/* ═══ v310: الحجز المسبق (طلب لوقت لاحق) — مثل Uber Eats: لحد أسبوع، الإلغاء قبل قبول المحل ═══ */
+/* ═══ v315: الحجز المسبق (طلب لوقت لاحق) — مثل Uber Eats: لحد أسبوع، الإلغاء قبل قبول المحل ═══ */
 let schedOn=false, schedDay=-1, schedHour=-1;
 const SCHED_ON=false;  /* قريباً — خليها true لما نشغّل الحجز */
 const SCHED_FROM=10, SCHED_TO=23;              /* ساعات الحجز: 10 الصبح لـ 11 بالليل */
@@ -17709,7 +17782,7 @@ function leadPaint(){
   document.querySelectorAll('.ldbox').forEach(b=>b.innerHTML=html);
 }
 
-/* ═══ v310: دليل الشراكة — المطاعم والسواق (الموافقة تنحفظ بالتاريخ ورقم النسخة) ═══ */
+/* ═══ v315: دليل الشراكة — المطاعم والسواق (الموافقة تنحفظ بالتاريخ ورقم النسخة) ═══ */
 const TERMS_V=2;        /* المطاعم — نسخة 2 (الدليل الجديد) */
 const DRV_TERMS_V=1;    /* السواق — نسخة 1 */
 const TG_OK_TXT='لقد اطلعت على كل الشروط وأوافق عليها';
@@ -18032,7 +18105,7 @@ async function openTermsAdmin(tab){
       return `<div class="tm-row"><div><b>${esc((D?r.name:r.shop_name)||(D?'سائق':'مطعم'))}</b><small>${v?('نسخة '+v+' · '+dt):'ما وافق بعد'}</small></div><i class="${cur?'ok':(v?'old':'no')}">${cur?'وافق':(v?'نسخة قديمة':'لا')}</i></div>` }).join('')||`<div class="tm-empty">ماكو ${D?'سواق':'مطاعم'}</div>`);
 }
 
-/* ═══ v310: تأمينات السائق (15,000 د.ع) — السائق يبلّغ «دفعت»، والإدارة تأكّد «استلمتها» وتفعّل حسابه ═══ */
+/* ═══ v315: تأمينات السائق (15,000 د.ع) — السائق يبلّغ «دفعت»، والإدارة تأكّد «استلمتها» وتفعّل حسابه ═══ */
 const DEP_AMT=15000;
 let _depMine=null, _depMineAt=0, _depMineBusy=false, depMap=null, _depAt=0;
 async function depMineLoad(){
@@ -18125,7 +18198,7 @@ function askClose(v){
   const cb=_askCb; _askCb=null; if(cb) cb(v);
 }
 
-/* v310: ولا رسالة تطلع للمستخدم بيها أكواد تقنية — نخلي الجملة العربية بس */
+/* v315: ولا رسالة تطلع للمستخدم بيها أكواد تقنية — نخلي الجملة العربية بس */
 const __TECH=/PGRST|JWT|violates|constraint|does not exist|function|relation|column|syntax|null value|TypeError|ReferenceError|undefined|is not |Failed to fetch|NetworkError|Load failed|AbortError|duplicate key|permission denied|row-level|"code"|"message"|[{}]|schema|invalid input|out of range|status \d{3}|Error:|\berror\b|\bnull\b|otpiq|fetch|[a-z]+_[a-z_]+\(|accepted|pending|ready|assigned|ontheway|arrived|delivered|rejected|cancelled/i;
 function __friendly(t){
   t=String(t==null?'':t);
@@ -21574,7 +21647,7 @@ html[data-theme=dark] .tp-spl button.no{background:#4a1f26;border-color:#6b2a2e;
 .tp-card>.sps-st span.nx{background:#EDE5FB;color:#5B2BC9;box-shadow:0 0 0 2px #C6A9F5 inset}
 .sps-ring{margin:-58px auto 0;width:140px;height:140px;border-radius:50%;background:conic-gradient(#16A34A 0 var(--p),#E7E2F1 var(--p) 100%);display:flex;align-items:center;justify-content:center;box-shadow:0 10px 28px rgba(70,96,26,.25);transition:background .3s}
 .sps-ring div{width:110px;height:110px;border-radius:50%;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center}
-/* v310: شاشة التسوّق — مراحل بأرقام + 3 أرقام */
+/* v315: شاشة التسوّق — مراحل بأرقام + 3 أرقام */
 .spx-hd{display:block!important;background:linear-gradient(160deg,#18884E,#0F5F35);color:#fff;padding:14px 16px 40px;border-radius:0 0 26px 26px}
 .spx-r{display:flex;align-items:center;gap:10px}.spx-r .t{flex:1;min-width:0}
 .spx-r b{display:block;font-size:20px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.spx-r small{opacity:.85;font-size:12.5px;font-weight:600}
@@ -21692,8 +21765,8 @@ html[data-theme=dark] #rateSheet #rateBtn{background:#7B4AE2}
 html[data-theme=dark] #rateSheet #rateBtn.dis{background:#2b2447!important;color:#6b6480!important}
 
 /* v158 الرئيسية الجديدة للمؤسس */
-#a_over.v2>*:not(#aHome):not(#aSetls):not(#aDiscOwed):not(#aCompOwed):not(#holdAdm):not(#rfAdm){display:none!important}
-#a_over.v2>#holdAdm{margin:12px 14px 14px}#a_over.v2>#rfAdm{margin:14px}
+#a_over.v2>*:not(#aHome):not(#aSetls):not(#aDiscOwed):not(#aCompOwed):not(#holdAdm):not(#rfAdm):not(#aUsage){display:none!important}
+#a_over.v2>#holdAdm{margin:12px 14px 14px}#a_over.v2>#rfAdm{margin:14px}#a_over.v2>#aUsage{margin:4px 14px 18px;position:relative;z-index:2}
 #a_over.v2{padding-top:0}
 .ah-warn{margin:10px 0 14px;background:#FFF7E6;border:1px solid #F5D08A;border-radius:14px;padding:12px 14px;font-size:13px;font-weight:700;color:#7A4A00;line-height:1.8}
 .ah-warn small{display:block;font-size:11px;color:#9a7a4a;font-weight:600;direction:ltr;text-align:right}
@@ -21765,7 +21838,7 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .fstp{display:inline-block;margin-top:3px;font-size:10.5px;font-weight:900;padding:0 7px;border:1.5px solid;border-radius:6px;transform:rotate(-4deg)}
 .fstp.ok{color:#0E8A5F;border-color:#0E8A5F}.fstp.wt{color:#C26A0A;border-color:#C26A0A}
 .fin-empty{text-align:center;color:#77708C;font-weight:700;padding:24px 0}
-/* v310 الوصولات: نفس الشكل مرتب + شعار + ختم */
+/* v315 الوصولات: نفس الشكل مرتب + شعار + ختم */
 .rcp{background:#fff;padding:20px 18px 14px;position:relative;color:#22113F;font-family:inherit;text-align:right}
 .rcp .rn{direction:ltr;unicode-bidi:isolate;font-variant-numeric:tabular-nums}
 .rcp .ph{display:flex;justify-content:space-between;align-items:center;gap:10px;border-bottom:2px solid #5B2BC9;padding-bottom:12px}
@@ -22264,9 +22337,9 @@ window.__silent = function(e, where){
 })();
 </script>
 <script>
-/* ══ v310: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
+/* ══ v315: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v310', seen={}, n=0, q=[], t=null;
+  var VER='v315', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -22291,7 +22364,7 @@ window.__silent = function(e, where){
   });
 })();
 
-/* ══ v310: إحصائيات بسيطة — بدون أي معلومة شخصية ══ */
+/* ══ v315: إحصائيات بسيطة — بدون أي معلومة شخصية ══ */
 (function(){
   var sent={}, sid=null;
   function getSid(){
@@ -22382,6 +22455,89 @@ async function errClear(b){
   if(!_erClr){ _erClr=1; b.textContent='متأكد؟ اضغط مرة ثانية'; return }
   try{ await rpc('client_errors_clear',{}); toast('انمسحت القائمة'); openErrAdmin() }catch(e){ toast(errMsg(e)) }
 }
+
+/* ══ v315 لوحة المؤسس: استهلاك السيرفر — يتحدّث كل 3 دقايق ويحذّرك قبل الامتلاء ══ */
+var _usg=null, _usgAt=0, _usgWarned=0;
+async function loadUsage(force){
+  if(!me || me.role!=='admin') return;
+  if(!force && Date.now()-_usgAt<170000){ renderUsage(); return }
+  _usgAt=Date.now();
+  var r=null; try{ r=await rpc('admin_usage',{}) }catch(e){ r=null }
+  _usg=(Array.isArray(r)&&r.length)?r:null;
+  try{ var sb=await sbGet('app_subs?select=*&order=renew_on.asc'); _subs=Array.isArray(sb)?sb:[] }catch(e){ _subs=[] }
+  renderUsage();
+}
+/* v315: الاشتراكات — كم يوم باقي */
+var _subs=[], _sbDel=null;
+function _subDays(x){ var t=new Date(); t.setHours(0,0,0,0); var d=new Date(String(x.renew_on).slice(0,10)+'T00:00:00'); return Math.round((d-t)/86400000) }
+function _subTxt(n){ return n<0?('خلص من '+(-n)+' يوم'):(n===0?'اليوم':(n===1?'باچر':('بعد '+n+' يوم'))) }
+function _subCol(n){ return n<=1?'#DC2626':(n<=7?'#D97706':'#0E8A5F') }
+function _usgCol(p){ return p>=85?'#DC2626':(p>=70?'#D97706':'#0E8A5F') }
+function renderUsage(){
+  var el=document.getElementById('aUsage');
+  if(!_usg){ if(el) el.remove(); return }
+  /* فوك الصفحة الرئيسية للإدارة (نفس مكان «طلبات معلّقة») */
+  if(!el){ var ref=document.getElementById('aHome'); if(!ref) return; el=document.createElement('div'); el.id='aUsage'; ref.insertAdjacentElement('beforebegin',el) }
+  var top=_usg.reduce(function(a,x){ return Math.max(a,Number(x.pct)||0) },0);
+  el.innerHTML='<div class="usg'+(top>=85?' bad':(top>=70?' warn':''))+'" onclick="openUsageAdmin()">'+
+    '<div class="usg-h"><b>'+(top>=85?'⚠️ السيرفر قرب يمتلي':(top>=70?'🔔 السيرفر: انتبه':'السيرفر ✓'))+'</b><span>يتحدّث كل 3 دقايق ›</span></div>'+
+    '<div class="usg-g">'+_usg.map(function(x){ var p=Number(x.pct)||0, w=Math.min(100,p);
+      return '<div><span>'+esc(x.short||x.label||'')+'</span><i><em style="width:'+w+'%;background:'+_usgCol(p)+'"></em></i><b style="color:'+_usgCol(p)+'">'+p+'%</b></div>' }).join('')+'</div>'+
+    (function(){ var near=(_subs||[]).map(function(x){ return [x,_subDays(x)] }).filter(function(a){ return a[1]<=7 }).sort(function(a,b){ return a[1]-b[1] });
+      return near.length?'<div class="usg-sub" style="color:'+_subCol(near[0][1])+'" onclick="event.stopPropagation();openSubsAdmin()">🔔 اشتراك '+esc(near[0][0].name)+': '+_subTxt(near[0][1])+(near.length>1?' (+'+(near.length-1)+')':'')+'</div>':'' })()+
+    '</div>';
+  if(top>=85 && Date.now()-_usgWarned>30*60000){ _usgWarned=Date.now(); try{ toast('⚠️ السيرفر قرب يمتلي — شوف لوحة الإدارة'); beep() }catch(e){} }
+}
+async function openUsageAdmin(){
+  var el=_stSheet('usgAdm');
+  el.innerHTML='<div class="szcard tm-card"><button class="szx" onclick="document.getElementById(\'usgAdm\').classList.remove(\'on\')">×</button>'+
+    '<div class="tm-hd"><b>استهلاك السيرفر</b><span>Supabase المجاني</span></div><div class="tm-list">⏳ جاري التحميل…</div></div>';
+  el.classList.add('on');
+  await loadUsage(true);
+  var box=el.querySelector('.tm-list'); if(!box) return;
+  if(!_usg){ box.innerHTML='<div class="tm-empty">شغّل usage_alert.sql أول</div>'; return }
+  var N=function(v){ return (Number(v)||0).toLocaleString('en-US') };
+  box.innerHTML=_usg.map(function(x){ var p=Number(x.pct)||0;
+      return '<div class="usg-li"><div><b>'+esc(x.label||'')+'</b><small>'+N(x.used)+' من '+N(x.lim)+'</small></div><b style="color:'+_usgCol(p)+'">'+p+'%</b></div>' }).join('')+
+    '<div class="st-note">يوصلك إشعار إذا أي شي عدّى 70% و85% و95%.<br>الإنترنت المصروف (الحد 5 گيگا بالشهر) شوفه مرة بالشهر من Supabase ← Usage.</div>';
+}
+async function openSubsAdmin(){
+  var el=_stSheet('subsAdm'); _sbDel=null;
+  el.innerHTML='<div class="szcard tm-card"><button class="szx" onclick="document.getElementById(\'subsAdm\').classList.remove(\'on\')">×</button>'+
+    '<div class="tm-hd"><b>الاشتراكات ومواعيدها</b><span>يوصلك تنبيه قبل 7 و3 و1 يوم</span></div><div class="tm-list">⏳ جاري التحميل…</div></div>';
+  el.classList.add('on');
+  try{ var sb=await sbGet('app_subs?select=*&order=renew_on.asc'); _subs=Array.isArray(sb)?sb:[] }
+  catch(e){ el.querySelector('.tm-list').innerHTML='<div class="tm-empty">شغّل usage_alert.sql أول</div>'; return }
+  _subsPaint(); renderUsage();
+}
+function _subsPaint(){
+  var box=document.querySelector('#subsAdm .tm-list'); if(!box) return;
+  var EV={month:'كل شهر',year:'كل سنة',once:'مرة وحدة'};
+  var td=new Date(); var ymd=td.getFullYear()+'-'+String(td.getMonth()+1).padStart(2,'0')+'-'+String(td.getDate()).padStart(2,'0');
+  box.innerHTML=((_subs||[]).length?_subs.map(function(x){ var n=_subDays(x);
+      return '<div class="sb-row"><div><b>'+esc(x.name)+'</b><small>'+String(x.renew_on).slice(0,10)+' · '+(EV[x.every]||'')+(x.note?' · '+esc(x.note):'')+'</small></div>'+
+        '<span class="sb-days" style="color:'+_subCol(n)+';background:'+_subCol(n)+'14">'+_subTxt(n)+'</span>'+
+        (x.every!=='once'?'<button onclick="subRenew(\''+x.id+'\')">جدّدت ✓</button>':'')+
+        '<button class="del" onclick="subDel(\''+x.id+'\',this)">حذف</button></div>' }).join('')
+    :'<div class="tm-empty">بعد ما ضفت اشتراكات</div>')+
+    '<div class="sb-add"><input id="sbN" class="full" placeholder="اسم الاشتراك (مثلاً Claude، الدومين، Apple)" maxlength="60">'+
+      '<input id="sbD" type="date" value="'+ymd+'"><select id="sbE"><option value="month">كل شهر</option><option value="year">كل سنة</option><option value="once">مرة وحدة</option></select>'+
+      '<input id="sbT" class="full" placeholder="ملاحظة (اختياري) — مثلاً السعر أو الإيميل" maxlength="80">'+
+      '<button onclick="subAdd()">+ أضف اشتراك</button></div>';
+}
+async function subAdd(){
+  var n=((document.getElementById('sbN')||{}).value||'').trim(), d=(document.getElementById('sbD')||{}).value, e=(document.getElementById('sbE')||{}).value||'month', t=((document.getElementById('sbT')||{}).value||'').trim();
+  if(!n) return toast('اكتب اسم الاشتراك'); if(!d) return toast('اختار موعد التجديد');
+  try{ await sbPost('app_subs',{name:n.slice(0,60), renew_on:d, every:e, note:t||null}); toast('انضاف ✓'); openSubsAdmin() }catch(err){ toast(errMsg(err)) }
+}
+async function subRenew(id){
+  try{ var d=await rpc('subs_renew',{p_id:id}); toast('تمام — الموعد الجاي '+String(d||'').slice(0,10)); openSubsAdmin() }catch(err){ toast(errMsg(err)) }
+}
+async function subDel(id,b){
+  if(_sbDel!==id){ _sbDel=id; b.textContent='متأكد؟'; return }
+  try{ await sbDel('app_subs?id=eq.'+id); toast('انحذف'); openSubsAdmin() }catch(err){ toast(errMsg(err)) }
+}
+setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me.role==='admin') loadUsage() }catch(e){} }, 20000);   /* السؤال للسيرفر كل 3 دقايق بس */
 </script>
 <div class="pmz" id="promoSheet">
   <div class="pmz-card">
@@ -22421,7 +22577,7 @@ async function errClear(b){
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v310', t0=Date.now();
+  var VER='v315', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
