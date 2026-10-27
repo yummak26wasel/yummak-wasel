@@ -1,10 +1,65 @@
 /* ═══════════════════════════════════════════════════════════
    طبقة الترجمة — Firestore ⇄ Supabase
-   واصل ليمَك · v7  (سياسة اتصال مثل التطبيقات العالمية)
+   واصل ليمَك · v8  (سياسة اتصال مثل التطبيقات العالمية + طريق احتياطي)
    ═══════════════════════════════════════════════════════════ */
 
 const SB_URL = "https://obvxqyfmcmldruauhsgw.supabase.co";
 const SB_KEY = "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq";
+
+/* ═══ v8: طريقين للقاعدة ═══
+   عادةً التطبيق يحچي ويا القاعدة مباشرة (أسرع وما يكلّف شي).
+   إذا الطريق المباشر انسد (شبكة حاجبة أو ما يرد) يحوّل تلقائياً على الجسر (leemak-db)
+   ويبقى عليه 10 دقايق، وبعدها يرجع يجرّب المباشر.
+   القراءة تنعاد تلقائياً على الطريق الثاني. الكتابة (طلب، دفع...) ما تنعاد أبداً حتى ما تتكرر.
+   حتى تطفي الجسر: خلّي SB_BRIDGE = "" */
+const SB_BRIDGE = "https://leemak-db.dhifvmy.workers.dev";
+(function(){
+  if(typeof window === 'undefined' || typeof window.fetch !== 'function' || !SB_BRIDGE) return;
+  const D = SB_URL, B = SB_BRIDGE.replace(/\/+$/, ''), K = 'lw_sb_road';
+  const _f = window.fetch.bind(window);
+  let road = 'D', until = 0;
+  try{ const s = JSON.parse(localStorage.getItem(K) || 'null'); if(s && s.until > Date.now() && (s.road === 'B' || s.road === 'D')){ road = s.road; until = s.until } }catch(e){}
+  const cur = () => Date.now() < until ? road : 'D';
+  const flip = to => { road = to; until = Date.now() + 10 * 60000; try{ localStorage.setItem(K, JSON.stringify({ road, until })) }catch(e){} };
+  /* رد الجسر يُعتبر فاشل إذا خطأ من Cloudflare (الجسر ما گدر يوصل). وإذا الجسر مو مرفوع أو خلص حدّه
+     يرد بدون إذن CORS، فالمتصفح يرفضه لوحده ويصير فشل */
+  const bad = (w, r) => w === 'B' && (r.status === 502 || r.status === 503 || r.status === 504 || (r.status >= 520 && r.status <= 530));
+  window.__sbRoad = () => cur();
+  window.fetch = function(input, init){
+    const url = typeof input === 'string' ? input : (input instanceof URL ? input.href : null);
+    if(!url || url.indexOf(D + '/') !== 0) return _f(input, init);
+    init = init || {};
+    const m = String(init.method || 'GET').toUpperCase();
+    const path = url.slice(D.length);
+    const safe = m === 'GET' || m === 'HEAD' || /^\/auth\/v1\/token\?/.test(path);
+    const first = cur(), second = first === 'D' ? 'B' : 'D';
+    const go = (w, limit) => new Promise((ok, no) => {
+      const sig = init.signal;
+      if(sig && sig.aborted) return no(sig.reason || new DOMException('Aborted', 'AbortError'));
+      const ac = new AbortController(); let t = null;
+      const onA = () => ac.abort(sig.reason);
+      if(sig) sig.addEventListener('abort', onA, { once: true });
+      if(limit) t = setTimeout(() => ac.abort(new Error('slow')), limit);
+      _f((w === 'B' ? B : D) + path, Object.assign({}, init, { signal: ac.signal }))
+        .then(r => { if(bad(w, r)) throw new Error('bridge ' + r.status); ok(r) })
+        .catch(no)
+        .finally(() => { clearTimeout(t); if(sig) sig.removeEventListener('abort', onA) });
+    });
+    return go(first, safe ? 12000 : 0).catch(e => {
+      if(init.signal && init.signal.aborted) throw e;   /* اللي طلب استسلم بنفسه */
+      flip(second);                                     /* الطلبات الجاية من الطريق الثاني */
+      if(!safe) throw e;                                /* الكتابة: ما نعيدها تلقائياً */
+      return go(second, 0);
+    });
+  };
+  /* الصور: إذا صورة من القاعدة ما نزلت، نجيبها من الجسر */
+  if(typeof document !== 'undefined') document.addEventListener('error', ev => {
+    const t = ev.target; if(!t || t.tagName !== 'IMG' || t.dataset.sbB) return;
+    const s = t.currentSrc || t.src || '', P = D + '/storage/v1/object/public/';
+    if(s.indexOf(P) !== 0) return;
+    t.dataset.sbB = '1'; t.src = B + s.slice(D.length);
+  }, true);
+})();
 
 /* ═══════════ Realtime ═══════════
    القاعدة تدز التغييرات فوراً بدل ما التطبيق يسأل.
