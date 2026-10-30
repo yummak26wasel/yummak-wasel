@@ -1806,6 +1806,9 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .authhero{position:relative;z-index:2;text-align:center;padding:2px 20px 14px;flex-shrink:0}
 .authlogo{width:230px;max-width:68%;height:auto;display:block;margin:0 auto;
   filter:drop-shadow(0 12px 26px rgba(91,43,201,.18))}
+/* v345: التلفونات القصيرة — نصغّر اللوكو حتى «سجّل الآن» يبين بدون سحب */
+@media (max-height:760px){ .authlogo{width:160px} }
+@media (max-height:700px){ .authlogo{width:110px} .authhero{padding-bottom:4px} .authsub{display:none} #auth .hint{margin-top:10px;padding:11px 14px} }
 .authhi{font-family:'Cairo',sans-serif;color:#2A0763;font-size:26px;font-weight:800;margin-top:12px}
 .authsub{color:#8B8797;font-size:13px;font-weight:600;margin-top:6px}
 
@@ -1881,7 +1884,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .gbtn:active{background:#FAF9FD}
 .gbtn svg{width:20px;height:20px}
 
-#auth .hint{margin:16px 0 0;font-size:13px;font-weight:600;color:#8B8797}
+#auth .hint{margin:16px 0 4px;padding:13px 14px;border:1.5px solid #DDD0FA;background:#F5F0FF;border-radius:16px;font-size:14px;font-weight:600;color:#6B6585;cursor:pointer;-webkit-tap-highlight-color:transparent}#auth .hint:active{background:#ECE3FF}
 #auth .hint b{color:var(--g);cursor:pointer;font-weight:800}
 .authwave{display:block;width:calc(100% + 34px);margin:14px -17px 0;height:44px;margin-top:auto}
 
@@ -5669,8 +5672,7 @@ body,.screen{background:#fff;color:var(--txt)}
         </div>
         <input type="hidden" id="aVeh" value="دراجة">
         <input type="file" id="aPhoto" accept="image/*" style="display:none" onchange="pickPhoto(this)">
-      </div> </div> <div class="authrow"> <span class="forgot" onclick="forgotPass()">نسيت كلمة المرور؟<i>›</i></span> <label class="rem"><input type="checkbox" id="aRemember" checked><i></i><span>تذكرني</span></label> </div> <button class="big-btn authbtn" id="authBtn" onclick="doAuth()"> <span id="authBtnTxt">دخول</span><i class="ar"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></button> <div class="ordiv"><span>أو</span></div> <button class="gbtn" onclick="toast('تسجيل Google — قريباً إن شاء الله')"> <svg viewBox="0 0 48 48"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.7-.4-3.9H24v7.1h12c-.2 1.8-1.5 4.6-4.4 6.4l6.7 5.2C42.2 35.1 45 30 45 24z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.4c-1.8 1.3-4.3 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.2 15.4 46 24 46z"/><path fill="#FBBC05" d="M11.5 28.4c-.5-1.4-.7-2.9-.7-4.4s.3-3 .7-4.4l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 9.9l7.1-5.5z"/><path fill="#EA4335" d="M24 10.2c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4 29.9 2 24 2 15.4 2 8 6.8 4.4 14.1l7.1 5.5C13.3 14.2 18.2 10.2 24 10.2z"/></svg>
-      تسجيل الدخول بواسطة Google</button> <div class="hint" id="authHint">ما عندك حساب؟ <b onclick="setMode('signup')">سجّل الآن</b> ›</div> <svg class="authwave" viewBox="0 0 420 58" preserveAspectRatio="none" aria-hidden="true"> <path d="M0 30 Q118 0 238 20 T420 10 L420 58 L0 58Z" fill="#F97402"/> <path d="M0 45 Q120 18 250 37 T420 28 L420 58 L0 58Z" fill="#5B2BC9"/> </svg> </div>
+      </div> </div> <div class="authrow"> <span class="forgot" onclick="forgotPass()">نسيت كلمة المرور؟<i>›</i></span> <label class="rem"><input type="checkbox" id="aRemember" checked><i></i><span>تذكرني</span></label> </div> <button class="big-btn authbtn" id="authBtn" onclick="doAuth()"> <span id="authBtnTxt">دخول</span><i class="ar"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i></button> <!-- v345: شلنا زر Google (ما جان شغّال — بس يگول قريباً) حتى يبين «سجّل الآن» --> <div class="hint" id="authHint" onclick="setMode(mode==='signup'?'login':'signup')">ما عندك حساب؟ <b>سجّل الآن</b> ›</div> <svg class="authwave" viewBox="0 0 420 58" preserveAspectRatio="none" aria-hidden="true"> <path d="M0 30 Q118 0 238 20 T420 10 L420 58 L0 58Z" fill="#F97402"/> <path d="M0 45 Q120 18 250 37 T420 28 L420 58 L0 58Z" fill="#5B2BC9"/> </svg> </div>
 </div> <!-- ═══ CUSTOMER ═══ -->
 <div class="screen" id="cApp"> <div class="hdr"> <div class="side"> <button class="iconbtn" onclick="tab('orders',document.querySelectorAll('#cNav button')[2])"> <svg viewBox="0 0 24 24"><path d="M18 8a6 6 0 1 0-12 0c0 6-2.5 7-2.5 7h17S18 14 18 8z"/> <path d="M10.3 20a2 2 0 0 0 3.4 0"/></svg> <span class="dot" id="notifDot" style="display:none">0</span> </button> </div> <div class="brandc"> <img src="792707e8.png" alt=""> <div class="btxt"> <div class="b1">واصل <span>ليمَك</span></div> <div class="b2">— من يمهم ليمك —</div> </div> </div> <div class="side"> <button class="iconbtn" id="themeBtn" onclick="toggleTheme()" aria-label="الوضع الليلي"> <svg class="th-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/></svg><svg class="th-moon" viewBox="0 0 24 24"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg> </button> </div> </div> <button class="out" id="backPanel" style="display:none;position:relative;margin:10px 14px 0;z-index:70;background:#F3EEFF;border:0;border-radius:22px;padding:9px 16px;color:#5B2BC9;font-family:inherit;font-size:13px;font-weight:900;cursor:pointer" onclick="closeShopping()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 12H5M11 6l-6 6 6 6"/></svg> لوحتي</button> <div class="body"> <div class="page on" id="p_home">
 
@@ -5763,7 +5765,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v344</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v345</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -8032,8 +8034,8 @@ function setMode(m,el){
   const bt=document.getElementById('authBtnTxt');
   if(bt)bt.textContent=m==='signup'?'إنشاء الحساب':'دخول';
   document.getElementById('authHint').innerHTML=m==='signup'
-    ?'عندك حساب؟ <b onclick="setMode(\'login\')">سجّل دخول</b> ›'
-    :'ما عندك حساب؟ <b onclick="setMode(\'signup\')">سجّل الآن</b> ›';
+    ?'عندك حساب؟ <b>سجّل دخول</b> ›'
+    :'ما عندك حساب؟ <b>سجّل الآن</b> ›';   /* v345: المربع كله ينضغط */
   hideErr(); try{ termsSync() }catch(e){}
 }
 /* تذكرني — يخلي الحساب مفتوح حتى لو سكّر التطبيق */
@@ -8256,6 +8258,41 @@ function showSoon(){
     document.body.appendChild(v) }
   v.classList.add('on');
 }
+/* v345: قبل ما نصرف رمز واتساب بالتسجيل — إذا الرقم مسجّل وكلمة المرور صحيحة:
+   نفس النوع ← ندخّله مباشرة · نوع ثاني ← نگله يبدّل التبويب. غير هيج (رقم جديد أو كلمة مرور غلط) ← الرمز مثل قبل.
+   ما نگول «الرقم مسجّل» لأي واحد — بس للي يعرف كلمة المرور (حتى الغرباء ما يعرفون منو مسجّل). */
+async function __preSignupCheck(core,pass){
+  let cred=null, usedEmail='';
+  signingUp=true;
+  try{
+    const alts=EMAIL_ALTS(core);
+    for(let i=0;i<alts.length;i++){
+      try{ cred=await auth.signInWithEmailAndPassword(alts[i],pass); usedEmail=alts[i]; break }catch(e){}
+    }
+    if(!cred){ signingUp=false; return 'new' }
+    const d=await db.collection('users').doc(cred.user.uid).get();
+    if(!d.exists){ await auth.signOut(); signingUp=false; return 'new' }   /* حساب ما اكتمل — يكمّل بالطريق العادي */
+    const R=d.data().role||'';
+    if(R!=='admin' && R!==role){
+      await auth.signOut(); signingUp=false; busy(false);
+      const r={store:'متجر',driver:'سائق',customer:'عميل'}[R]||'دور ثاني';
+      showErr('هذا الرقم مسجّل كـ '+r+' — بدّل التبويب وسجّل دخول');
+      return 'done';
+    }
+    uid=cred.user.uid; me={uid,...d.data()};
+    try{ const c=await db.collection('settings').doc('app').get();
+      if(c.exists) SET={...SET,...c.data()} }catch(e){}
+    saveEmailAlt(core,usedEmail);
+    signingUp=false; busy(false);
+    document.getElementById('auth').classList.remove('on');
+    toast('عندك حساب — دخّلناك');
+    enter();
+    return 'done';
+  }catch(e){
+    try{ if(cred) await auth.signOut() }catch(_){}
+    signingUp=false; return 'new';
+  }
+}
 async function doAuth(){
   hideErr();
   const core=phoneCore(document.getElementById('aPhone').value);
@@ -8301,7 +8338,9 @@ async function doAuth(){
       }
 
       /* ═══ تأكيد الرقم بالواتساب قبل فتح الحساب ═══ */
-      if(otpOkPhone!==core){ busy(false); return otpStart(core) }
+      if(otpOkPhone!==core){
+        if((await __preSignupCheck(core,pass))==='done') return;
+        busy(false); return otpStart(core) }
 
       signingUp=true;
       let cred;
@@ -21190,7 +21229,7 @@ html[data-theme=dark] .ordiv{color:#a8a2bd}
 html[data-theme=dark] .ordiv::before,html[data-theme=dark] .ordiv::after{background:#2b2447}
 html[data-theme=dark] .gbtn{border:1.5px solid #3a3354;background:#1f1a30;color:#ece8f7}
 html[data-theme=dark] .gbtn:active{background:#2b2447}
-html[data-theme=dark] #auth .hint{color:#a8a2bd}
+html[data-theme=dark] #auth .hint{color:#a8a2bd;background:#2b2447;border-color:#3a3354}
 html[data-theme=dark] #auth .fld input,html[data-theme=dark] #auth .fld select{border:1.5px solid #3a3354;background:#1f1a30}
 html[data-theme=dark] #auth .fld label{color:#ece8f7}
 html[data-theme=dark] .svcbox{background:#1f1a30}
@@ -23028,7 +23067,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v344', seen={}, n=0, q=[], t=null;
+  var VER='v345', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -23280,7 +23319,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v344', t0=Date.now();
+  var VER='v345', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
