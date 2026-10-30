@@ -635,6 +635,21 @@ html[data-theme=dark] .mq-it b{color:#ece8f7}
 .of-nc input:checked+i{background:#E8760C;border-color:#E8760C}
 .of-nc input:checked+i::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
 .of-nc b{display:block;font-size:14px;color:#92400E}.of-nc small{display:block;font-size:12px;color:#B45309;margin-top:3px;font-weight:600;line-height:1.6}
+/* v349: عرض واحد لأكثر من مطعم — قائمة تأشير */
+.of-multi .of-mhd{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:7px}
+.of-multi .of-mhd b{font-size:13px;font-weight:800;color:var(--g)}
+.of-multi .of-mhd span{display:flex;gap:6px}
+.of-multi .of-mhd button{border:1px solid #E3DCF3;background:#F6F2FD;color:var(--g);border-radius:10px;padding:6px 10px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.fld.of-multi input.of-mq{margin-bottom:8px;padding:10px 12px}
+.of-ml{max-height:280px;overflow:auto;border:1px solid #E9E4F3;border-radius:14px;background:#fff;padding:2px 10px}
+.fld .of-mi{display:flex;align-items:center;gap:10px;padding:11px 2px;margin:0;border-bottom:1px solid #F3F0F8;font-size:14px;font-weight:700;cursor:pointer;position:relative}
+.fld .of-mi:last-child{border-bottom:0}
+.fld .of-mi input{position:absolute;opacity:0;pointer-events:none;width:1px}
+.of-mi i{width:22px;height:22px;flex:0 0 22px;border-radius:7px;border:2px solid #CFC3EA;background:#fff;position:relative;box-sizing:border-box}
+.of-mi input:checked+i{background:var(--g);border-color:var(--g)}
+.of-mi input:checked+i::after{content:"";position:absolute;left:6px;top:2px;width:6px;height:11px;border:solid #fff;border-width:0 2.5px 2.5px 0;transform:rotate(45deg)}
+html[data-theme=dark] .of-ml{background:#1f1a30;border-color:#3a3354}
+html[data-theme=dark] .fld .of-mi{border-color:#2c2542}
 .cd-loc{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;border:1.5px dashed #CFC4EC;background:#F7F4FD;color:#4A1FA8;border-radius:12px;padding:12px;font:inherit;font-weight:800;font-size:14px;cursor:pointer;text-align:right}
 .cd-loc .wic{width:20px;height:20px;flex:0 0 20px}
 .cd-loc.on{border-style:solid;border-color:#16A34A;background:#ECFDF3;color:#15803D}
@@ -5765,7 +5780,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v348</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v349</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -9640,9 +9655,15 @@ function pickFeatured(sh){
 /* v324: شارة الخصم على كارت المطعم — عرض لمطعم معيّن = على كارته بس، عرض لكل المطاعم = على كل الكروت */
 /* الزبون استخدم هذا العرض قبل؟ (كل كود مرة وحدة لكل زبون — نفس شرط السيرفر) → الشارة تختفي عنده بس */
 function offUsedByMe(o){ return !!(me&&me.role==='customer'&&o&&(myOrders||[]).some(x=>x.offer_id===o.id&&x.status!=='rejected'&&x.status!=='cancelled')) }
+/* v349: العرض يشمل هذا المحل؟ مطعم واحد (shop_id) أو قائمة مطاعم (shop_ids) أو كل المحلات — نفس شرط السيرفر */
+function offIds(o){ return (o&&Array.isArray(o.shop_ids))?o.shop_ids.filter(Boolean):[] }
+function offFor(o,sid){ if(!o) return false; if(o.shop_id) return o.shop_id===sid; const L=offIds(o); return !L.length || (!!sid && L.includes(sid)) }
+function offMulti(o){ return !!(o && !o.shop_id && offIds(o).length) }
+function nShops(n){ n=Number(n)||0; return n===1?'محل واحد':n===2?'محلين':(n<=10?n+' محلات':n+' محل') }
 function shopBestOffer(s){
   const now=Date.now();
-  const L=(typeof myOffers!=='undefined'&&Array.isArray(myOffers)?myOffers:[]).filter(o=>o&&(o.shop_id===s.id||!o.shop_id)&&o.is_active!==false
+  /* بس العروض الي إلها كود — الخصم ينطبق بس إذا الزبون اختار الكود (ماكو تطبيق تلقائي) */
+  const L=(typeof myOffers!=='undefined'&&Array.isArray(myOffers)?myOffers:[]).filter(o=>o&&offFor(o,s.id)&&o.code&&o.is_active!==false
     &&!(o.starts_at&&Date.parse(o.starts_at)>now)&&!(o.ends_at&&Date.parse(o.ends_at)<now)
     &&!(o.uses_limit&&Number(o.uses_count||0)>=o.uses_limit)&&!offUsedByMe(o));
   const top=k=>L.filter(o=>o.kind===k).reduce((m,o)=>Math.max(m,Number(o.value||0)),0);
@@ -9966,7 +9987,7 @@ function openShop(id){
 function renderShopOffers(){
   const box=document.getElementById('shopOffers'); if(!box||!curShop) return;
   const list=(typeof allOffers!=='undefined'&&Array.isArray(allOffers))
-    ? allOffers.filter(o=>!o.shop_id||o.shop_id===curShop.id) : [];
+    ? allOffers.filter(o=>offFor(o,curShop.id)) : [];
   if(!list.length){ box.innerHTML=''; return }
   box.innerHTML=`<div class="spoff">${list.map(o=>`
     <div class="spoffc">
@@ -10271,7 +10292,7 @@ function promoWhy(r){ if(!r) return 'ما گدرنا نتحقق — جرّب م�
 function _promoList(){
   const sid=cart[0]&&cart[0].shopId, now=Date.now();
   const _used=new Set((myOrders||[]).filter(x=>!['rejected','cancelled'].includes(x.status)).map(x=>x.offer_id||x.offerId).filter(Boolean));
-  return (myOffers||[]).filter(o=>o.code && o.is_active!==false && !_used.has(o.id) && (!o.shop_id||o.shop_id===sid)
+  return (myOffers||[]).filter(o=>o.code && o.is_active!==false && !_used.has(o.id) && offFor(o,sid)
     && !(o.starts_at&&Date.parse(o.starts_at)>now) && !(o.ends_at&&Date.parse(o.ends_at)<now)
     && !(o.uses_limit&&Number(o.uses_count||0)>=o.uses_limit));
 }
@@ -10991,7 +11012,7 @@ async function applyPromo(){
   if(o.starts_at && new Date(o.starts_at).getTime() > now) return promoSheetShow(v,'notyet');
 
   const shopId=(cart[0]&&cart[0].shopId)||(curShop&&curShop.id)||null;
-  if(o.shop_id && shopId && o.shop_id!==shopId) return promoSheetShow(v,'shop');
+  if(shopId && !offFor(o,shopId)) return promoSheetShow(v,'shop');
 
   const sub=cart.reduce((s,c)=>s+c.price*c.qty,0);
   if(o.min_order && sub < o.min_order) return promoSheetShow(v,'min',o.min_order);
@@ -11906,7 +11927,7 @@ function offCardHTML(o){
     <div class="off-tx">
       <span class="off-badge">${v.n}<small>${v.s||(o.kind==='fixed'?'د.ع':'')}</small></span><span class="off-lbl">${o.kind==='free_delivery'?'توصيل':'خصم'}</span>
       <div class="off-name">${esc(o.title||'عرض')}</div>
-      <div class="off-shop">${sh?esc(sh.name):'كل المطاعم'}</div>
+      <div class="off-shop">${sh?esc(sh.name):(offMulti(o)?('على '+nShops(offIds(o).length)):'كل المطاعم')}</div>
       <span class="off-cta">اطلب الآن</span>
     </div>
     <div class="off-img">${img}</div>
@@ -11916,7 +11937,7 @@ function renderHomeOffers(){
   const sec=document.getElementById('offSec'), wrap=document.getElementById('offWrap'), track=document.getElementById('offTrack');
   if(!track||!wrap||!sec) return;
   const now=Date.now();
-  const list=(myOffers||[]).filter(o=>offValidNow(o,now)&&!offUsedByMe(o)).slice(0,10);
+  const list=(myOffers||[]).filter(o=>o.code&&offValidNow(o,now)&&!offUsedByMe(o)).slice(0,10);
   if(!list.length){
     sec.style.display='none'; wrap.style.display='none';
     track.innerHTML='';
@@ -11933,6 +11954,12 @@ function openDisc(){
 }
 
 function _offCat(o){
+  if(offMulti(o)){   /* v349: عرض لكم محل — إذا كلهم مطاعم = مطاعم، كلهم متاجر = متاجر، خليط = الكل */
+    const ts=offIds(o).map(id=>(shops.find(x=>x.id===id)||{}).type).filter(Boolean);
+    if(ts.length && ts.every(t=>t==='restaurant')) return 'restaurant';
+    if(ts.length && ts.every(t=>t!=='restaurant')) return 'store';
+    return 'all';
+  }
   if(!o.shop_id) return 'all';
   const sh=shops.find(x=>x.id===o.shop_id);
   return sh ? (sh.type==='restaurant'?'restaurant':'store') : 'all';
@@ -11969,7 +11996,7 @@ function renderDisc(){
     const days = o.ends_at ? Math.max(0,Math.ceil((Date.parse(o.ends_at)-now)/86400000)) : null;
     const hot  = top>0 && Number(o.uses_count||0)===top;
     const _k = cat==='all'?'a':(isFood?'f':'s');
-    const _cl = cat==='all'?'كل المحلات':(isFood?'المطاعم':'السوبرماركت');
+    const _cl = offMulti(o)?nShops(offIds(o).length):(cat==='all'?'كل المحلات':(isFood?'المطاعم':'السوبرماركت'));
     return `<div class="tkw"><div class="tk ${_k}">
       <div class="tk-st"><b>${v.n}<small>${v.s}</small></b><span>${v.s==='%'?'خصم':'د.ع خصم'}</span></div>
       <div class="tk-bd">
@@ -16553,8 +16580,8 @@ function renderOffers(){
   el.innerHTML = allOffers.map(o=>{
     const st=offState(o);
     const shopNm = o.shop_id
-      ? ((allShops.find(x=>x.id===o.shop_id)||{}).name || 'محل محذوف')
-      : 'كل المطاعم';
+      ? esc((allShops.find(x=>x.id===o.shop_id)||{}).name || 'محل محذوف')
+      : (offMulti(o) ? `<a href="javascript:void 0" onclick="offShowShops('${o.id}')" style="color:var(--g)">${nShops(offIds(o).length)} ‹</a>` : 'كل المطاعم');
     const val = o.kind==='percent' ? o.value+'%'
               : o.kind==='fixed'   ? Number(o.value).toLocaleString()+' د.ع'
               : 'توصيل مجاني';
@@ -16589,7 +16616,11 @@ function offerForm(o){
   const isNew=!o; o=o||{kind:'percent',bearer:'shop',min_order:0,is_active:true};
   const d = v => { if(!v) return ''; const t=new Date(v); t.setMinutes(t.getMinutes()-t.getTimezoneOffset()); return t.toISOString().slice(0,16); };
   const opts = allShops.filter(x=>x.approved===true)
-    .map(x=>`<option value="${x.id}" ${o.shop_id===x.id?'selected':''}>${x.name}</option>`).join('');
+    .map(x=>`<option value="${x.id}" ${o.shop_id===x.id?'selected':''}>${esc(x.name)}</option>`).join('');
+  /* v349: عرض واحد لأكثر من مطعم — قائمة تأشير */
+  const _mIds=offIds(o), _isM=offMulti(o);
+  const mList = allShops.filter(x=>x.approved===true||_mIds.includes(x.id))
+    .map(x=>`<label class="of-mi" data-n="${esc(String(x.name||'').toLowerCase())}"><input type="checkbox" value="${x.id}" ${_mIds.includes(x.id)?'checked':''} onchange="ofMultiCount()"><i></i><span>${esc(x.name||'محل')}</span></label>`).join('');
 
   document.getElementById('offList').innerHTML=`
     <div class="offform">
@@ -16597,7 +16628,11 @@ function offerForm(o){
       <div class="fld"><label>عنوان العرض</label>
         <input id="ofT" value="${o.title||''}" placeholder="مثال: خصم رمضان"></div>
       <div class="fld"><label>المطعم</label>
-        <select id="ofS"><option value="">كل المطاعم</option>${opts}</select></div>
+        <select id="ofS" onchange="ofMultiShow()"><option value="">كل المطاعم</option><option value="__multi" ${_isM?'selected':''}>✓ اختار أكثر من مطعم…</option>${opts}</select></div>
+      <div class="fld of-multi" id="ofMulti" style="display:${_isM?'block':'none'}">
+        <div class="of-mhd"><b id="ofMN">مأشّر 0</b><span><button type="button" onclick="ofMultiAll(true)">أشّر الكل</button><button type="button" onclick="ofMultiAll(false)">شيل الكل</button></span></div>
+        <input class="of-mq" id="ofMQ" placeholder="ابحث عن مطعم…" oninput="ofMultiFilter()">
+        <div class="of-ml" id="ofML">${mList||'<div style="padding:12px;color:#8a8399">ماكو محلات مفعّلة</div>'}</div></div>
       <div class="fld"><label>نوع الخصم</label>
         <select id="ofK">
           <option value="percent" ${o.kind==='percent'?'selected':''}>نسبة مئوية %</option>
@@ -16610,15 +16645,11 @@ function offerForm(o){
         <input id="ofX" type="number" inputmode="numeric" value="${o.max_discount||''}" placeholder="اتركه فارغ = بلا سقف"></div>
       <div class="fld"><label>الحد الأدنى للطلب (د.ع)</label>
         <input id="ofM" type="number" inputmode="numeric" value="${o.min_order||0}"></div>
-      <div class="fld"><label>كود الخصم</label>
+      <div class="fld"><label>كود الخصم (لازم — الزبون يكتبه أو يختاره بالسلة)</label>
         <input id="ofC" value="${o.code||''}" placeholder="مثال: RAMADAN25" style="text-transform:uppercase"></div>
       <div class="fld"><label>عدد الاستخدامات (اتركه فارغ = بلا حد)</label>
         <input id="ofU" type="number" inputmode="numeric" value="${o.uses_limit||''}" placeholder="مثال: 30"></div>
-      <div class="fld"><label>طريقة التفعيل</label>
-        <select id="ofA">
-          <option value="0" ${!o.auto_apply?'selected':''}>الزبون يكتب الكود</option>
-          <option value="1" ${o.auto_apply?'selected':''}>ينطبق تلقائياً بلا كود</option>
-        </select></div>
+      <input type="hidden" id="ofA" value="0"><!-- v349: ماكو تطبيق تلقائي — الخصم بس بالكود (نفس السيرفر) -->
       <div class="fld"><label>من يتحمّل الخصم</label>
         <select id="ofB">
           <option value="shop" ${o.bearer==='shop'?'selected':''}>المطعم</option>
@@ -16644,7 +16675,18 @@ function offerForm(o){
       <button class="big-btn" onclick="saveOffer('${isNew?'':o.id}')">حفظ العرض</button>
       <button class="big-btn ghost" onclick="renderOffers()">إلغاء</button>
     </div>`;
+  ofMultiCount();
 }
+/* v349: قائمة المطاعم بالعرض */
+function ofMultiShow(){ const s=document.getElementById('ofS'), b=document.getElementById('ofMulti'); if(s&&b) b.style.display=(s.value==='__multi')?'block':'none'; ofMultiCount() }
+function ofMultiPicked(){ return [...document.querySelectorAll('#ofML input[type=checkbox]:checked')].map(x=>x.value) }
+function ofMultiCount(){ const el=document.getElementById('ofMN'); if(el) el.textContent='مأشّر '+ofMultiPicked().length }
+function ofMultiAll(on){ document.querySelectorAll('#ofML .of-mi').forEach(l=>{ if(l.style.display!=='none'){ const c=l.querySelector('input'); if(c) c.checked=!!on } }); ofMultiCount() }
+function ofMultiFilter(){ const q=String((document.getElementById('ofMQ')||{}).value||'').trim().toLowerCase();
+  document.querySelectorAll('#ofML .of-mi').forEach(l=>{ l.style.display=(!q||String(l.dataset.n||'').includes(q))?'':'none' }) }
+function offShowShops(id){ const o=(allOffers||[]).find(x=>x.id===id); if(!o) return;
+  const names=offIds(o).map(s=>(allShops.find(x=>x.id===s)||{}).name||'محل محذوف');
+  toast(names.join(' · ')) }
 
 async function saveOffer(id){
   const g=x=>document.getElementById(x).value.trim();
@@ -16667,9 +16709,17 @@ async function saveOffer(id){
     sort_no: g('ofO')===''?null:(parseInt(g('ofO'))||0),
     no_commission: !!(document.getElementById('ofNC')||{}).checked
   };
-  if(body.no_commission && !body.shop_id) return toast('العرض بدون عمولة لازم يكون لمطعم معيّن');
+  /* v349: مطعم واحد = shop_id · كم مطعم = shop_ids · كل المحلات = الاثنين فارغين */
+  body.shop_ids=null;
+  if(body.shop_id==='__multi'){
+    const ids=ofMultiPicked();
+    if(!ids.length) return toast('أشّر على المطاعم الي يشملها العرض');
+    if(ids.length===1){ body.shop_id=ids[0] } else { body.shop_id=null; body.shop_ids=ids }
+  }
+  body.auto_apply=false;
+  if(body.no_commission && !body.shop_id && !body.shop_ids) return toast('العرض بدون عمولة لازم يكون لمطعم معيّن أو مطاعم مختارة');
   if(!body.title) return toast('اكتب عنوان العرض');
-  if(!body.auto_apply && !body.code) return toast('اكتب كود الخصم أو خلّيه تلقائي');
+  if(!body.code) return toast('اكتب كود الخصم');
   if(body.kind!=='free_delivery' && body.value<=0) return toast('حدد قيمة الخصم');
   if(body.kind==='percent' && body.value>90) return toast('النسبة كبيرة — أقصى 90%');
 
@@ -16678,6 +16728,7 @@ async function saveOffer(id){
     catch(e1){
       /* إذا أعمدة الصورة/اللون/الترتيب مو مضافة بقاعدة البيانات بعد — نحفظ العرض بدونها */
       if(/no_commission/i.test(String((e1&&e1.message)||e1))){ toast('شغّل ملف offer_no_commission.sql أول'); return }
+      if(/shop_ids/i.test(String((e1&&e1.message)||e1))){ toast('شغّل ملف offers_multi.sql أول'); return }
       if(!/column|img|card_color|sort_no/i.test(String((e1&&e1.message)||e1))) throw e1;
       delete body.img; delete body.card_color; delete body.sort_no;
       await sbSend(id?('offers?id=eq.'+id):'offers', id?'PATCH':'POST', body);
@@ -23404,7 +23455,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v348', seen={}, n=0, q=[], t=null;
+  var VER='v349', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -23656,7 +23707,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v348', t0=Date.now();
+  var VER='v349', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
