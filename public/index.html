@@ -5780,7 +5780,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v349</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v350</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -14772,13 +14772,17 @@ async function openMap(mode, autoGps){
            shop:'حدد موقع محلك بدقة حتى المندوب يلگيه بسرعة.',
            ext:'حرّك الخريطة لين يصير الدبوس فوق بيت الزبون. تكدر تبحث باسم مكان قريب منه.'};
   if(mode==='ext') T.ext='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> وين بيت الزبون؟';
+  /* v350: الإدارة تصحّح موقع محل */
+  if(mode==='adminShop'){ T.adminShop=T.shop.replace(/وين موقع محلك؟/,'')+' صحّح موقع «'+esc((_amShop&&_amShop.name)||'المحل')+'»';
+    P.adminShop='حرّك الخريطة لين يصير الدبوس فوق المحل بالضبط، وبعدين اضغط «ثبّت هذا الموقع». تكدر تبحث باسم مكان قريب منه.' }
   document.getElementById('mapTitle').innerHTML=T[mode]||T.delivery;
   document.getElementById('mapTip').textContent=P[mode]||P.delivery;
+  document.getElementById('mapSheet').classList.toggle('am', mode==='adminShop');
   document.getElementById('mapSheet').classList.add('on');
   const ld=document.getElementById('mapLoad'); if(ld)ld.classList.remove('gone');
 
   let start=GEO.anah, z=15;
-  const cur = mode==='ext' ? (_cdLoc || (myShopDoc&&myShopDoc.loc)) : (mode==='shop' ? (myShopDoc&&myShopDoc.loc) : (me&&me.loc));
+  const cur = mode==='adminShop' ? (_amShop&&_amShop.loc) : mode==='ext' ? (_cdLoc || (myShopDoc&&myShopDoc.loc)) : (mode==='shop' ? (myShopDoc&&myShopDoc.loc) : (me&&me.loc));
   if(cur && cur.lat){ start=[cur.lat,cur.lng]; z=17 }
 
   if(autoGps) setTimeout(()=>{ try{ gpsLocate() }catch(e){} }, 900);
@@ -14904,6 +14908,17 @@ async function confirmMap(){
   if(!inZone(c.lat,c.lng)) return toast('الموقع خارج عانة والريحانة — ما نوصّل هناك');
   const loc={lat:+c.lat.toFixed(6), lng:+c.lng.toFixed(6), zone:zoneName(c.lat,c.lng)};
   if(pMode==='ext'){ _cdLoc=loc; closeMap(); cdLocPaint(); cdFareLoad(); return }
+  if(pMode==='adminShop'){   /* v350: الإدارة تصحّح موقع المحل */
+    const sh=_amShop; if(!sh) return closeMap();
+    try{
+      const r=await rpc('admin_set_shop_loc',{p_shop:sh.id, p_lat:loc.lat, p_lng:loc.lng, p_zone:loc.zone});
+      sh.loc=(r&&r.lat)?r:loc;
+      const a=(allShops||[]).find(x=>x.id===sh.id); if(a) a.loc=sh.loc;
+      closeMap(); toast('انحفظ موقع '+(sh.name||'المحل'));
+      try{ dmShops(); if(dMap) dMap.setView([sh.loc.lat,sh.loc.lng],17,{animate:true}) }catch(_){}
+    }catch(e){ toast(/function|schema|Could not find/i.test(errMsg(e))?'شغّل admin_shop_loc.sql أول':'ما انحفظ: '+errMsg(e)) }
+    return;
+  }
   try{
     if(pMode==='shop'){
       await db.collection('shops').doc(me.shopId).update({loc});
@@ -17770,11 +17785,18 @@ function dmShops(){
     const ic=L.divIcon({className:'dm-pin', iconSize:[40,52], iconAnchor:[20,46],
       html:`<div class="dm-s ${op?'':'cl'}">${sh.img?`<img src="${esc(sh.img)}" alt="">`:'🏪'}</div><em>${esc(String(sh.name||'').slice(0,14))}</em>`});
     L.marker([sh.loc.lat, sh.loc.lng],{icon:ic, zIndexOffset:-500}).addTo(dShopLayer)
-      .bindPopup(`<div class="dm-pop"><b>🏪 ${esc(sh.name||'محل')}</b><span>${op?'مفتوح هسه':'مسكّر هسه'}</span>${sh.phone?`<a href="tel:${esc(sh.phone)}">📞 اتصال</a>`:''}</div>`);
+      .bindPopup(`<div class="dm-pop"><b>🏪 ${esc(sh.name||'محل')}</b><span>${op?'مفتوح هسه':'مسكّر هسه'}</span>${sh.phone?`<a href="tel:${esc(sh.phone)}">📞 اتصال</a>`:''}<button type="button" class="dm-fix" onclick="amFixShopLoc('${sh.id}')">📍 صحّح الموقع</button></div>`);
   });
   window.__dmShopPts=withLoc.map(x=>[x.loc.lat,x.loc.lng]);
   const n=document.getElementById('dmShopNote');
-  if(n) n.innerHTML=noLoc.length?`<div class="dm-note">⚠️ ${noLoc.length===1?'محل ما محدد موقعه':noLoc.length+' محلات ما محددة موقعها'} على الخريطة: <b>${noLoc.map(x=>esc(x.name||'محل')).join('، ')}</b><br><span>خلّيهم يحددونه من حساب المحل ← الإعدادات ← «الموقع» ← تحديد.</span></div>`:'';
+  if(n) n.innerHTML=noLoc.length?`<div class="dm-note">⚠️ ${noLoc.length===1?'محل ما محدد موقعه':noLoc.length+' محلات ما محددة موقعها'} على الخريطة: ${noLoc.map(x=>`<button type="button" class="dm-fix" onclick="amFixShopLoc('${x.id}')">📍 ${esc(x.name||'محل')}</button>`).join(' ')}<br><span>اضغط على اسم المحل وحدد موقعه انته، أو خلّيهم يحددونه من حساب المحل ← الإعدادات ← «الموقع» ← تحديد.</span></div>`:'';
+}
+/* v350: الإدارة تصحّح موقع محل — يفتح شاشة تحديد الموقع على مكانه الحالي */
+let _amShop=null;
+function amFixShopLoc(id){
+  const sh=(allShops||[]).find(x=>x.id===id); if(!sh) return toast('المحل مو موجود');
+  _amShop=sh; try{ dMap&&dMap.closePopup() }catch(e){}
+  openMap('adminShop', false);
 }
 function dmFocus(id){
   const m=dMarks[id];
@@ -23355,6 +23377,10 @@ html[data-theme=dark] #aoSheet .aoitems{background:#2b2447}html[data-theme=dark]
 .dm-pin em{position:absolute;left:50%;top:44px;transform:translateX(-50%);text-align:center;font-style:normal;font-size:11px;font-weight:800;color:#140d24;background:#fff;border-radius:8px;padding:0 6px;white-space:nowrap;box-shadow:0 1px 4px rgba(0,0,0,.15);max-width:120px;overflow:hidden;text-overflow:ellipsis;direction:rtl}
 .dm-pop{font-family:'Cairo',sans-serif;text-align:right;direction:rtl;min-width:170px}
 .dm-pop b{display:block;font-size:14px}.dm-pop span{display:block;font-size:12.5px;color:#5B5470;margin-top:2px}.dm-pop small{display:block;color:#8a849c;margin-top:2px}
+/* v350: تصحيح موقع المحل من الإدارة */
+.dm-fix{display:inline-block;margin:6px 0 0 6px;border:1px solid #E3DCF3;background:#F6F2FD;color:var(--g);font:inherit;font-size:12.5px;font-weight:800;border-radius:10px;padding:4px 10px;cursor:pointer}
+#dmapSheet .dm-note .dm-fix{margin:4px 0 2px 4px;background:#fff;border-color:#F0D2A4;color:#8A4B00}
+#mapSheet.am{z-index:9500}
 .dm-pop a{display:inline-block;margin-top:6px;background:#EEF9F1;color:#15803D;font-weight:800;border-radius:10px;padding:4px 10px;text-decoration:none}
 html[data-theme=dark] #dmapSheet{background:#15121f}html[data-theme=dark] #dmapSheet .dm-top,html[data-theme=dark] #dmapSheet .dm-row{background:#1f1a30}
 html[data-theme=dark] #dmapSheet .dm-top b,html[data-theme=dark] #dmapSheet .dm-row b{color:#fff}
@@ -23455,7 +23481,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v349', seen={}, n=0, q=[], t=null;
+  var VER='v350', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -23707,7 +23733,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v349', t0=Date.now();
+  var VER='v350', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
