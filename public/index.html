@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v357</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v358</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -10032,7 +10032,7 @@ function openShop(id){
         <div class="splogo">${curShop.img?`<img src="${curShop.img}" alt="">`:FALLBACK}</div>
         <div class="spnm">
           <h2>${esc(curShop.name)}</h2>
-          <span class="sptype">${({restaurant:'مطعم',store:'سوبر ماركت',cosmetics:'كوزمتك',sweet:'حلويات',veg:'مخضر'})[SEC_LBL[curShop.section]?curShop.section:curShop.type]||'متجر'}</span>
+          <span class="sptype">${/* v358: أقسام منتجات المحل نفسه (مثل الكارت بالرئيسية)، وإذا ماكو: نوع المحل — «متجر» بدل «سوبر ماركت» */ (Array.isArray(curShop.cats)&&curShop.cats.length)?esc(curShop.cats.slice(0,3).join(' · ')):(({restaurant:'مطعم',store:'متجر',cosmetics:'كوزمتك',sweet:'حلويات',veg:'مخضر'})[SEC_LBL[curShop.section]?curShop.section:curShop.type]||'متجر')}</span>
         </div>
         <span class="spstate ${open?'op':'cl'}">${open?'مفتوح الآن':'مسكّر'}</span>
       </div>
@@ -12429,7 +12429,7 @@ function renderStore(){
   if(mySetCard){
     const salesToday2=os.filter(o=>o.status==='delivered' && (o.date||'').includes(today)).reduce((a,o)=>a+Number(o.sub||0),0);
     const rt2=shopRating(sh);
-    const typeName2=({restaurant:'مطعم',store:'سوبر ماركت',cosmetics:'كوزمتك',sweet:'حلويات'})[sh.type]||'متجر';
+    const typeName2=({restaurant:'مطعم',store:'متجر',cosmetics:'كوزمتك',sweet:'حلويات',veg:'مخضر'})[sh.type]||'متجر';
     mySetCard.innerHTML=`
       <div class="mysh-top">
         <div class="mysh-lg">${sh.img?`<img src="${sh.img}">`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg>'}</div>
@@ -12608,7 +12608,7 @@ function renderStore(){
   }
   if(!document.getElementById('optsBox').dataset.init){document.getElementById('optsBox').dataset.init='1';renderOpts()}
   ss_name.textContent=sh.name;
-  ss_type.textContent=({restaurant:'مطعم',store:'سوبر ماركت',cosmetics:'كوزمتك',sweet:'حلويات'})[sh.type]||'متجر';
+  ss_type.textContent=({restaurant:'مطعم',store:'متجر',cosmetics:'كوزمتك',sweet:'حلويات',veg:'مخضر'})[sh.type]||'متجر';
   const rr=document.getElementById('ss_rate');
   if(rr){const c=Number(sh.rCnt)||0; rr.innerHTML=c?('<svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> '+((Number(sh.rSum)||0)/c).toFixed(1)+' — '+c+' تقييم'):'ما وصل تقييم بعد'}
   ss_phone.textContent=sh.phone;
@@ -23840,7 +23840,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v357', seen={}, n=0, q=[], t=null;
+  var VER='v358', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24092,7 +24092,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v357', t0=Date.now();
+  var VER='v358', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
