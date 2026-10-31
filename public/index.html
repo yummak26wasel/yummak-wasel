@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v366</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v367</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -15663,6 +15663,7 @@ function renderMyComm(){
       <div class="rg">مبيعات ${myComm.sales.toLocaleString()} د.ع · ${comRateTxt(myComm.rate)} · تستحق ${dd}</div>
       ${ic.paid>0&&st!=='paid'?`<div class="rg" style="margin-top:4px;font-weight:800">سدّدت ${ic.paid.toLocaleString()} · باقي عليك ${ic.rem.toLocaleString()} د.ع</div>`:''}
       ${_cr>0?`<div class="rg" style="margin-top:4px;font-weight:800;color:#0E8A5F">عندك رصيد ${_cr.toLocaleString()} د.ع — ينخصم من العمولة الجاية</div>`:''}
+      ${myInv&&myInv.reject_reason&&st!=='pend'?`<div class="rjnote">❌ دفعتك الأخيرة (${Number(myInv.amount_paid||0).toLocaleString()} د.ع) انرفضت: ${esc(myInv.reject_reason)}<small>سدّد مرة ثانية، أو راسل الإدارة إذا تشوف إنه غلط.</small></div>`:''}
       ${(st==='due'||st==='part')
         ? `<button class="act" onclick="openPayCom()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/></svg> إبلاغ عن السداد</button>`
         : (st==='pend'
@@ -15671,7 +15672,7 @@ function renderMyComm(){
     </div>
     ${myPrev.length?`<div class="prevm"><div class="h">⚠️ عليك عمولة من فترات سابقة</div>
       <span style="display:block;margin:-2px 0 4px">أي مبلغ تدفعه يسدّ أقدم فترة أول</span>
-      ${myPrev.map((p,i)=>`<div class="r"><div><b>${p.per.label}</b><span>${p.c.s==='pend'?'بانتظار تأكيد الإدارة':(p.c.paid>0?'سدّدت '+p.c.paid.toLocaleString()+' من '+p.amt.toLocaleString():'العمولة '+p.amt.toLocaleString())}</span></div>
+      ${myPrev.map((p,i)=>`<div class="r"><div><b>${p.per.label}</b><span>${p.inv&&p.inv.reject_reason&&p.c.s!=='pend'?'❌ انرفضت: '+esc(p.inv.reject_reason)+' · ':''}${p.c.s==='pend'?'بانتظار تأكيد الإدارة':(p.c.paid>0?'سدّدت '+p.c.paid.toLocaleString()+' من '+p.amt.toLocaleString():'العمولة '+p.amt.toLocaleString())}</span></div>
         <em>${p.c.rem.toLocaleString()} د.ع</em>${p.c.s==='pend'?'':`<button onclick="openPayCom(${i})">سدّد</button>`}</div>`).join('')}</div>`:''}`;
 }
 
@@ -15954,12 +15955,13 @@ function renderInvOne(){
   const dS=due.toLocaleDateString('ar-IQ',{day:'numeric',month:'short'}), ev=[];
   if(iv.reported_at) ev.push({ts:_anyTs(iv.reported_at), t:'المطعم بلّغ إنه دفع '+_n(iv.amount_paid)+' د.ع', d:fd(iv.reported_at), k:'w'});
   const own=invOwn(r.amount, r.inv), cr=Number(LEDC[r.shop.id]||0), ow=ledOwe(r.shop.id);
+  if(iv.rejected_at && iv.status!=='pending') ev.push({ts:_anyTs(iv.rejected_at), t:'الإدارة رفضت الدفعة'+(iv.reject_reason?': '+iv.reject_reason:''), d:fd(iv.rejected_at), k:'r'});
   if(iv.confirmed_at) ev.push({ts:_anyTs(iv.confirmed_at), t:'الإدارة أكّدت الاستلام'+(own?' — '+_n(own)+' د.ع':'')+(own>paid&&_rl(r)?' (منها '+_n(own-paid)+' سدّت فترات ثانية)':''), d:fd(iv.confirmed_at), k:'g'});
   ev.sort((a,b)=>a.ts-b.ts);
   if(c.s!=='paid') ev.push({t:late?'عدّى آخر موعد للتسديد':'آخر موعد للتسديد', d:dS, k:late?'r':'f'});
   if(!ev.length) ev.push({t:'انسدّت', d:'', k:'g'});
   const act = c.s==='pend'
-    ? `<button class="ix-b main" onclick="invConfirm()"><i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></i><span>تأكيد</span></button>`
+    ? `<button class="ix-b main" onclick="invConfirm()"><i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></i><span>تأكيد</span></button><button class="ix-b rej" onclick="invReject()"><i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg></i><span>رفض</span></button>`
     : (c.s==='paid' ? '' : `<button class="ix-b main" onclick="invMarkPaid()"><i><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg></i><span>تحصيل</span></button>`);
   box.innerHTML=`
   <div class="ix">
@@ -16034,19 +16036,52 @@ async function invMarkPaid(){
 async function invConfirm(){
   const r=_invR(); if(!r) return;
   const iv=r.inv||{};
-  const c=invCalc(r.amount, iv, _rl(r)), ow=ledOwe(r.shop.id), got=Number(iv.amount_paid||0), tot=invOwn(r.amount, iv)+got;
-  /* الباقي بعد التأكيد: من الدفتر (كل الفترات) إذا موجود، وإلا هاي الفترة بس */
-  const left=ow!=null?Math.max(0,ow-got):Math.max(0,r.amount-tot), over=ow!=null?Math.max(0,got-ow):0;
+  const c=invCalc(r.amount, iv, _rl(r)), ow=ledOwe(r.shop.id), rep0=Number(iv.amount_paid||0);
+  /* v367: إنت تحدد شكد وصلك فعلاً — افتراضياً نفس الي بلّغ عنه المطعم */
+  window._icAmt=rep0;
   const yes=await askConfirm(
-    '<b>'+esc(r.shop.name)+'</b> أبلغ إنه سدّد <b>'+got.toLocaleString()+' د.ع</b>'
-    +'<div style="margin-top:8px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ قبل '+c.paid.toLocaleString():'')+(ow!=null&&ow>c.rem?' · كل اللي عليه '+ow.toLocaleString():'')+'</div>'
-    +(over>0?'<div style="margin-top:6px;color:#B45309;font-weight:800">⚠️ المبلغ أكثر من اللي عليه بـ '+over.toLocaleString()+' د.ع — الزيادة تبقى رصيد إله</div>'
-     :left>0?'<div style="margin-top:6px;color:#C2362B;font-weight:800">⚠️ المبلغ ناقص — راح يبقى عليه '+left.toLocaleString()+' د.ع</div>'
-            :'<div style="margin-top:6px;color:#0E8A5F;font-weight:800">✓ العمولة تنسدّ كاملة</div>')
-    +'<br>تأكيد الاستلام؟',
-    {title:'مراجعة السداد', ok:'إي استلمت', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>'});
+    '<b>'+esc(r.shop.name)+'</b> بلّغ إنه دفع <b>'+rep0.toLocaleString()+' د.ع</b>'
+    +'<div style="margin-top:8px;font-size:13px">العمولة '+r.amount.toLocaleString()+(c.paid>0?' · انسدّ قبل '+c.paid.toLocaleString():'')+(ow!=null&&ow>c.rem?' · كل الي عليه '+ow.toLocaleString():'')+'</div>'
+    +'<div style="margin:12px 0 4px;font-size:13px;font-weight:800">شكد وصلك فعلاً؟</div>'
+    +'<input type="number" inputmode="numeric" step="1" value="'+rep0+'" oninput="window._icAmt=this.value" style="width:100%;padding:11px;border:1px solid #ddd;border-radius:12px;font:inherit;font-size:16px;text-align:center">'
+    +'<div style="margin-top:6px;font-size:12px;color:#8a849c">إذا ما وصلك شي، اضغط «رفض» بدل التأكيد.</div>',
+    {title:'مراجعة السداد', ok:'إي استلمت', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/></svg>'});
   if(!yes) return;
-  await _invSave({status:tot>=r.amount?'paid':'partial', paid_total:tot, confirmed_at:new Date().toISOString(), confirmed_by:uid});
+  const got=Number(window._icAmt||0);
+  if(!(got>0) || got!==Math.round(got)) return toast('اكتب مبلغ صحيح — وإذا ما وصلك شي اضغط «رفض»');
+  const tot=invOwn(r.amount, iv)+got;
+  const left=ow!=null?Math.max(0,ow-got):Math.max(0,r.amount-tot), over=ow!=null?Math.max(0,got-ow):0;
+  if(over>0){
+    const sure=await askConfirm('⚠️ المبلغ أكثر من كل الي عليه بـ <b>'+over.toLocaleString()+' د.ع</b> — الزيادة تبقى رصيد إله وتنخصم من عمولته الجاية.<br>متأكد؟',{title:'دفع زيادة', ok:'إي متأكد'});
+    if(!sure) return;
+  }
+  const ok=await _invSave({status:tot>=r.amount?'paid':'partial', paid_total:tot, confirmed_at:new Date().toISOString(), confirmed_by:uid});
+  if(!ok) return;
+  if(left>0) toast('انحفظ — باقي عليه '+left.toLocaleString()+' د.ع');
+  const own=r.shop.ownerUid||r.shop.owner_id;
+  if(own) try{ pushTo(own,'✅ انستلمت دفعتك', got.toLocaleString()+' د.ع'+(got!==rep0?' (بلّغت '+rep0.toLocaleString()+')':'')+(left>0?' · باقي عليك '+left.toLocaleString():' · انسدّت'),{type:'pay_ok'}) }catch(e){}
+}
+/* v367: رفض دفعة ما وصلت — يطلع وصل مختوم «مرفوض» والمطعم يوصله السبب */
+async function invReject(){
+  const r=_invR(); if(!r) return;
+  const iv=r.inv||{};
+  if(!iv.id || iv.status!=='pending') return toast('ماكو دفعة تنتظر التأكيد');
+  window._irWhy='';
+  const chips=['الفلوس ما وصلتني','وصلني مبلغ أقل','ما لكيت التحويل','رقم الحوالة غلط'];
+  const yes=await askConfirm('ترفض دفعة <b>'+esc(r.shop.name)+'</b> (<b>'+Number(iv.amount_paid||0).toLocaleString()+' د.ع</b>)؟'
+    +'<div class="irc">'+chips.map(c=>'<button type="button" onclick="window._irWhy=this.textContent;var t=document.getElementById(\'irWhy\');if(t)t.value=this.textContent;this.parentNode.querySelectorAll(\'button\').forEach(b=>b.classList.toggle(\'on\',b===this))">'+c+'</button>').join('')+'</div>'
+    +'<textarea id="irWhy" rows="2" placeholder="أو اكتب السبب…" oninput="window._irWhy=this.value"></textarea>'
+    +'<div style="margin-top:6px;font-size:12px;color:#8a849c">المطعم يوصله إشعار بالسبب، ويطلع وصل مختوم «مرفوض». الفلوس الي أكّدتها قبل ما تتغيّر.</div>',
+    {title:'رفض الدفعة', ok:'إي، ارفضها', danger:true});
+  if(!yes) return;
+  const why=String(window._irWhy||'').trim();
+  if(!why) return toast('اختار أو اكتب سبب الرفض');
+  try{ await rpc('admin_reject_shop_payment',{p_invoice:iv.id, p_reason:why}) }
+  catch(e){ return toast(/function|schema|Could not find/i.test(errMsg(e))?'شغّل shop_payments.sql أول':'خطأ: '+errMsg(e)) }
+  const own=r.shop.ownerUid||r.shop.owner_id;
+  if(own) try{ pushTo(own,'❌ دفعة العمولة انرفضت', Number(iv.amount_paid||0).toLocaleString()+' د.ع — '+why,{type:'pay_rejected'}) }catch(e){}
+  toast('انرفضت — ووصل المطعم إشعار بالسبب');
+  try{ await loadInv(); renderInvOne() }catch(e){}
 }
 async function _invSave(patch){
   const r=_invR(); if(!r) return;
@@ -16056,7 +16091,8 @@ async function _invSave(patch){
     else   await sbPost('shop_invoices', {shop_id:r.shop.id, period:r.per.key, ...patch});
     toast('انحفظ');
     await loadInv(); renderInvOne();
-  }catch(e){ toast(errMsg(e)) }
+    return true;
+  }catch(e){ toast(errMsg(e)); return false }
 }
 
 /* ══════════ نظرة عامة — الرأس والعمولات ══════════ */
@@ -17290,13 +17326,19 @@ function finMonthNav(n){
 /* وصل موحّد من أي جدول */
 function finNorm(row){
   const r=row.r||{}, k=row.kind, st=String(r.status||'').toLowerCase();
-  if(k==='shop' && !(st==='paid'||st==='pending'||st==='partial')) return null;           /* فاتورة ما تسدّدت = مو وصل */
+  if(k==='shop' && !(st==='paid'||st==='pending'||st==='partial'||st==='rejected')) return null;   /* فاتورة ما تسدّدت = مو وصل · v367: المرفوضة وصل هم */
+  const rej = st==='rejected';
   const amt=Number(r.amount!=null?r.amount:(r.total!=null?r.total:(r.commission!=null?r.commission:0)))||0;
   const ok = ['confirmed','paid','done','ok','partial'].includes(st) || (!st && (k==='disc'||k==='comp'));
   const [title,dir]=FIN_K[k]||['تسديد','in'];
   let sub='';
   if(k==='drv') sub = r.fee_type==='driver_fee'?'عمولة السائق':'رسوم خدمة التطبيق';
-  if(k==='shop') sub = 'عمولة شهر '+(r.period?new Date(new Date(r.period).getTime()+86400000*2).toLocaleDateString('ar-IQ',{month:'long',year:'numeric'}):'')+(st==='partial'?' · جزء (باقي عليه)':'');
+  if(k==='shop'){
+    sub = 'عمولة شهر '+(r.period?new Date(new Date(r.period).getTime()+86400000*2).toLocaleDateString('ar-IQ',{month:'long',year:'numeric'}):'')+(st==='partial'?' · جزء (باقي عليه)':'');
+    if(rej) sub += ' · انرفضت: '+(r.reject_reason||'');
+    else if(st==='paid' && r.amount_reported!=null && Number(r.amount_reported)!==amt) sub += ' · بلّغ '+_n(r.amount_reported)+' ووصل '+_n(amt);
+    if(r.source==='admin') sub += ' · تحصيل من الإدارة';
+  }
   if(k==='setl') sub = (r.drv_name||'سائق')+' ← '+(r.shop_name||'مطعم')+(r.orders_count?(' · '+r.orders_count+' طلب'):'');
   if(k==='disc') sub = 'التطبيق دفع للمطعم';
   if(k==='comp') sub = 'التطبيق دفع للسائق';
@@ -17304,7 +17346,7 @@ function finNorm(row){
   const id=String(r.id||'');
   /* v324: رقم الوصل بالتسلسل (1، 2، 3...) من receipt_numbers.sql — وإذا بعده ما انشغل يبقى الكود القديم */
   return {k, id, no:(r.receipt_no!=null&&r.receipt_no!=='')?String(r.receipt_no):('WL-'+({drv:'D',shop:'S',disc:'C',comp:'F',setl:'T'}[k]||'X')+id.replace(/-/g,'').slice(0,6).toUpperCase()),
-    at:new Date(row.at), amt, ok, title, sub, who, dir,
+    at:new Date(row.at), amt, ok, rej, title, sub, who, dir,
     phone:(k==='shop'||k==='disc')?(((allShops||[]).find(x=>x.id===r.shop_id)||{}).phone||''):(((allUsers||[]).find(x=>x.id===(r.driver_id||r.party_id))||{}).phone||''),
     raw:r};
 }
@@ -17392,7 +17434,7 @@ function finRenderRec(bd){
     <button class="stub" onclick="finOpenRec(${all.indexOf(x)})">
       <div class="d"><b>${x.at.getDate()}</b><span>${x.at.toLocaleDateString('ar-IQ',{month:'short'})}</span></div>
       <div class="m"><b>${esc(x.who)}</b><small>${x.title} · ${esc(x.sub)}</small></div>
-      <div class="v"><b class="${x.dir==='out'?'r':''}">${x.dir==='out'?'−':''}${_n(x.amt)}</b><span class="fstp ${x.ok?'ok':'wt'}">${x.ok?'مختوم':'ينتظر'}</span></div>
+      <div class="v"><b class="${x.dir==='out'?'r':''}${x.rej?' xx':''}">${x.dir==='out'?'−':''}${_n(x.amt)}</b><span class="fstp ${x.ok?'ok':(x.rej?'no':'wt')}">${x.ok?'مختوم':x.rej?'مرفوض':'ينتظر'}</span></div>
     </button>`).join(''):'<div class="fin-empty">ماكو وصولات بهالشهر</div>')}</div>`;
 }
 /* ═══ v324: ترتيب الوصولات — نفس الشكل، ويّا شعار + ختم + أرقام إنكليزية + وصلين بالورقة ═══ */
@@ -17464,11 +17506,12 @@ function finRecHTML(x){
       ${rcpRow('المستلم', recv)}
       ${r.orders_count?rcpRow('عدد الطلبات', _rN(r.orders_count)):''}
       ${r.method?rcpRow('طريقة الدفع', r.method==='cash'?'نقدي':'تحويل'):''}
-      ${rcpRow('الحالة', ok?'مسدّد ومؤكَّد':'<i class="w">بانتظار التأكيد</i>')}
+      ${x.k==='shop'&&r.amount_reported!=null&&Number(r.amount_reported)!==Number(x.amt)?rcpRow('بلّغ المطعم', _rN(r.amount_reported)+' د.ع'):''}
+      ${rcpRow('الحالة', ok?'مسدّد ومؤكَّد':(x.rej?'<i class="r">مرفوض'+(r.reject_reason?' — '+esc(r.reject_reason):'')+'</i>':'<i class="w">بانتظار التأكيد</i>'))}
     </div>
     <div class="tot"><span>المبلغ</span><b>${_rN(x.amt)} د.ع</b></div>
     <div class="wd">${tafqeet(x.amt)}</div>
-    <div class="sig"><div>دفع<b><bdi>${c+payerN}</bdi></b></div>${ok?rcpSeal('','مسدّد',x.at):rcpSeal('w','ينتظر','')}<div>استلم وأكّد<b><bdi>${c+recvN}</bdi></b></div></div>
+    <div class="sig"><div>دفع<b><bdi>${c+payerN}</bdi></b></div>${ok?rcpSeal('','مسدّد',x.at):(x.rej?rcpSeal('r','مرفوض',x.at):rcpSeal('w','ينتظر',''))}<div>${x.rej?'رفض':'استلم وأكّد'}<b><bdi>${c+recvN}</bdi></b></div></div>
     ${rcpFt()}
   </div>`;
 }
@@ -17549,7 +17592,7 @@ function finShowRec(x){
   requestAnimationFrame(()=>sh.classList.add('on'));
 }
 function finWa(x){
-  const t=`واصل ليمَك — وصل رقم ${x.no}\n${x.title} — ${x.sub}\n${x.dir==='out'?'المستلم':'الدافع'}: ${x.who}\nالمبلغ: ${_n(x.amt)} د.ع\nالتاريخ: ${x.at.toLocaleDateString('ar-IQ')}\nالحالة: ${x.ok?'مسدّد ومؤكَّد ✓':'بانتظار التأكيد'}`;
+  const t=`واصل ليمَك — وصل رقم ${x.no}\n${x.title} — ${x.sub}\n${x.dir==='out'?'المستلم':'الدافع'}: ${x.who}\nالمبلغ: ${_n(x.amt)} د.ع\nالتاريخ: ${x.at.toLocaleDateString('ar-IQ')}\nالحالة: ${x.ok?'مسدّد ومؤكَّد ✓':(x.rej?'مرفوض ✗'+(x.raw&&x.raw.reject_reason?' — '+x.raw.reject_reason:''):'بانتظار التأكيد')}`;
   const ph=String(x.phone||'').replace(/\D/g,'').replace(/^0/,'964');
   window.open('https://wa.me/'+(ph||'')+'?text='+encodeURIComponent(t),'_blank');
 }
@@ -17573,7 +17616,7 @@ function finPrintMonth(){
   const inn=sum('in'), out=sum('out'), mid=sum('mid');
   const grp=(dir,lbl)=>{ const L=all.filter(x=>x.dir===dir); if(!L.length) return '';
     return `<tr class="grp"><td colspan="6">${lbl}</td></tr>`+L.map(x=>{ const r=x.raw||{};
-      return `<tr><td><bdi class="rn">${esc(x.no)}</bdi></td><td>${_rxD(x.at)}</td><td>${x.title}</td><td><bdi>${esc(x.who)}</bdi>${x.k==='setl'?' ← <bdi>'+esc(r.shop_name||'مطعم')+'</bdi>':''}</td><td class="m">${_rN(x.amt)}</td><td>${x.ok?'مؤكّد':'ينتظر'}</td></tr>` }).join('') };
+      return `<tr><td><bdi class="rn">${esc(x.no)}</bdi></td><td>${_rxD(x.at)}</td><td>${x.title}</td><td><bdi>${esc(x.who)}</bdi>${x.k==='setl'?' ← <bdi>'+esc(r.shop_name||'مطعم')+'</bdi>':''}</td><td class="m">${_rN(x.amt)}</td><td>${x.ok?'مؤكّد':(x.rej?'مرفوض':'ينتظر')}</td></tr>` }).join('') };
   const head=`<div class="rcp">
     ${rcpHead('كشف وصولات '+mAr,'عدد الوصولات',_rN(all.length))}
     <table class="ptab"><tr><th>رقم الوصل</th><th>التاريخ</th><th>النوع</th><th>الاسم</th><th>المبلغ</th><th>الحالة</th></tr>
@@ -17588,7 +17631,7 @@ function finPrintMonth(){
 function finCsv(){
   const all=(finRecs||[]); if(!all.length) return toast('ماكو وصولات بهالشهر');
   const q=v=>'"'+String(v==null?'':v).replace(/"/g,'""')+'"';
-  const rows=[['رقم الوصل','التاريخ','الوقت','النوع','التفاصيل','الاسم','الهاتف','المبلغ','الاتجاه','الحالة']].concat(all.map(x=>[x.no,x.at.toLocaleDateString('en-GB'),x.at.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),x.title,x.sub,x.who,x.phone,x.amt,x.dir==='out'?'دفع التطبيق':(x.dir==='in'?'استلم التطبيق':'بين سائق ومطعم'),x.ok?'مؤكد':'ينتظر']));
+  const rows=[['رقم الوصل','التاريخ','الوقت','النوع','التفاصيل','الاسم','الهاتف','المبلغ','الاتجاه','الحالة']].concat(all.map(x=>[x.no,x.at.toLocaleDateString('en-GB'),x.at.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'}),x.title,x.sub,x.who,x.phone,x.amt,x.dir==='out'?'دفع التطبيق':(x.dir==='in'?'استلم التطبيق':'بين سائق ومطعم'),x.ok?'مؤكد':(x.rej?'مرفوض':'ينتظر')]));
   const csv='﻿'+rows.map(r=>r.map(q).join(',')).join('\r\n');
   const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
   a.download='wasel-receipts-'+finMonth.getFullYear()+'-'+String(finMonth.getMonth()+1).padStart(2,'0')+'.csv';
@@ -23343,7 +23386,15 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .fin-list .stub .m{flex:1;padding:10px 12px;min-width:0}.fin-list .stub .m b{display:block;font-size:13.5px;font-weight:800}.fin-list .stub .m small{font-size:11.5px;color:#77708C;font-weight:600}
 .fin-list .stub .v{padding:10px 12px;text-align:left;flex:none}.fin-list .stub .v b{display:block;font-size:15px;font-weight:900}.fin-list .stub .v b.r{color:#C2362B}
 .fstp{display:inline-block;margin-top:3px;font-size:10.5px;font-weight:900;padding:0 7px;border:1.5px solid;border-radius:6px;transform:rotate(-4deg)}
-.fstp.ok{color:#0E8A5F;border-color:#0E8A5F}.fstp.wt{color:#C26A0A;border-color:#C26A0A}
+.fstp.ok{color:#0E8A5F;border-color:#0E8A5F}.fstp.wt{color:#C26A0A;border-color:#C26A0A}.fstp.no{color:#C2362B;border-color:#C2362B}
+.stub .v b.xx{text-decoration:line-through;opacity:.55}
+.ix-b.rej{background:#FDECEC!important;color:#B42318!important}
+.irc{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 8px}
+.irc button{border:1.5px solid #E6E0F3;background:#fff;color:#2b2240;border-radius:999px;padding:7px 11px;font:inherit;font-size:12.5px;font-weight:700}
+.irc button.on{background:#FDECEC;border-color:#E25555;color:#B42318}
+#irWhy{width:100%;border:1.5px solid #E3DCF3;border-radius:12px;padding:9px 11px;font:inherit;font-size:15px;resize:vertical;box-sizing:border-box}
+.rjnote{margin-top:8px;background:rgba(194,54,43,.1);color:#B42318;border-radius:12px;padding:9px 11px;font-size:12.5px;font-weight:800;line-height:1.6}
+.rjnote small{display:block;font-weight:600;opacity:.85}
 .fin-empty{text-align:center;color:#77708C;font-weight:700;padding:24px 0}
 /* v324 الوصولات: نفس الشكل مرتب + شعار + ختم */
 .rcp{background:#fff;padding:20px 18px 14px;position:relative;color:#22113F;font-family:inherit;text-align:right}
@@ -23359,7 +23410,7 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .rcp .kv div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:13.5px;padding:8px 0;border-bottom:1px dashed #E6E2EE}
 .rcp .kv span{color:#77708C;font-weight:600;flex:none}
 .rcp .kv b{font-weight:700;text-align:left;color:#22113F}
-.rcp .kv i.w{font-style:normal;color:#C26A0A}
+.rcp .kv i.w{font-style:normal;color:#C26A0A}.rcp .kv i.r{font-style:normal;color:#C2362B}
 .rcp .tot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;background:#F4F0FD;border-radius:12px;padding:10px 14px}
 .rcp .tot+.tot{margin-top:6px}
 .rcp .tot span{font-weight:800;color:#5B2BC9;font-size:14px}
@@ -24054,7 +24105,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v366', seen={}, n=0, q=[], t=null;
+  var VER='v367', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24306,7 +24357,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v366', t0=Date.now();
+  var VER='v367', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
