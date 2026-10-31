@@ -5780,7 +5780,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v351</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v352</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -12197,6 +12197,16 @@ function renderStore(){
   /* v327: المحل اللي بعده ما انعتمد: تنبيه واضح بدل ما يحتار ليش ما تجيه طلبات */
   try{
     let _pb=document.getElementById('stPend'); const _pend=sh.approved===false;
+    /* v352: المحل المرفوض يشوف السبب، وإذا مو نهائي يرسل طلبه مرة ثانية */
+    const _rjT=(_pend&&sh.rejected_at)?('❌ طلب محلك ما انقبل — السبب: '+(sh.reject_reason||'—')+(sh.reject_final?' (قرار نهائي — راسل الإدارة)':'')):'';
+    if(_pb && (_pb.dataset.rj||'')!==_rjT){ _pb.remove(); _pb=null }
+    if(_pend && !_pb && _rjT){
+      _pb=document.createElement('div'); _pb.id='stPend'; _pb.className='st-pend rj'; _pb.dataset.rj=_rjT;
+      _pb.textContent=_rjT;
+      if(!sh.reject_final){ const _b=document.createElement('button'); _b.type='button'; _b.textContent='صلّحت؟ أرسل طلبي مرة ثانية'; _b.onclick=rjResubmit; _pb.appendChild(_b) }
+      const _h=document.getElementById('stName'), _hd=_h&&_h.closest('header,.st-head,.sthd,.hdr,.top');
+      if(_hd&&_hd.parentNode) _hd.parentNode.insertBefore(_pb,_hd.nextSibling); else { const _sa=document.getElementById('sApp'); if(_sa) _sa.prepend(_pb) }
+    }
     if(_pend && !_pb){
       _pb=document.createElement('div'); _pb.id='stPend'; _pb.className='st-pend';
       _pb.textContent='⏳ محلك بعده قيد المراجعة — الزبائن ما يشوفونه وما توصلك طلبات لحد ما توافق الإدارة';
@@ -14008,6 +14018,7 @@ const RPC_KICK={
   admin_set_driver_status:['profiles'], deposit_set:['profiles'], deposit_report:['profiles'], self_patch_defaults:['profiles'],
   /* المحلات والمنيو */
   admin_set_shop_approved:['shops','profiles'], admin_set_shop_section:['shops'], admin_set_shop_loc:['shops'],
+  admin_reject_join:['profiles','shops'], admin_unreject_join:['profiles','shops'], self_resubmit_join:['profiles','shops'],
   shop_product_upsert:['shops'], shop_product_delete:['shops'], shop_pause:['shops'],
   /* الطلبات */
   admin_cancel_order:['orders'], admin_release_order:['orders'], admin_mark_orders_paid:['orders'],
@@ -15296,6 +15307,8 @@ function listenMyUser(){
   });
 }
 function gateHTML(){
+  /* v352: طلب الانضمام انرفض — نبيّن السبب، وإذا مو نهائي يكدر يرسله مرة ثانية */
+  if(me.rejected_at && me.approved!==true) return `<div class="blockmsg rj"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div> <h3>طلب انضمامك ما انقبل</h3><div class="rjwhy">السبب: ${esc(me.reject_reason||'—')}</div>${me.reject_final?'<p>هذا القرار نهائي. إذا عندك سؤال راسل الإدارة.</p>':'<p>إذا صلّحت السبب، أرسل طلبك مرة ثانية والإدارة تراجعه.</p><button class="rjbt" onclick="rjResubmit()">أرسل طلبي مرة ثانية</button>'}<button class="rjbt ghost" onclick="rjSupport()">راسل الإدارة</button></div>`;
   if(!me.approved) return `<div class="blockmsg"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg></div> <h3 style="color:var(--o2)">حسابك قيد المراجعة</h3> <p>المؤسس لازم يوافق على انضمامك قبل ما تبدأ تستلم طلبات.<br>راح ننبّهك أول ما تنقبل.</p>${me.role==='driver'?depBoxDriver():''}</div>`;
   if(me.blocked===true) return `<div class="blockmsg"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div> <h3>حسابك موقوف</h3><p>تواصل مع إدارة واصل ليمَك.</p></div>`;
   const over=overdueMs();
@@ -17532,7 +17545,9 @@ const _isNew4h=x=>{ const t=_jd(x); return !!t && Date.now()-t < 4*3600*1000 };
 function _av(img,txt){ return img?`<img class="pav" src="${img}" alt="">`:`<div class="pav">${esc(String(txt||'؟').charAt(0))}</div>` }
 function renderJoin2(){
   const box=document.getElementById('aPending'); if(!box) return;
-  const ps=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true), pd=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true);
+  /* v352: المرفوضين ما يبينون بطلبات الانضمام — ينحطّون بقائمة «المرفوضين» تحت */
+  const ps=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&!x.rejected_at), pd=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&!u.rejected_at);
+  const rjS=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&x.rejected_at), rjD=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&u.rejected_at);
   const jb=document.getElementById('joinCnt'); if(jb){ const n=ps.length+pd.length; jb.style.display=n?'flex':'none'; jb.textContent=n }
   const card=(o)=>`<div class="jc">
       <div class="jc-h">${_av(o.img,o.name)}<div class="t"><b>${esc(o.name||'—')}</b><span>${o.sub}</span></div><em class="pill ${o.tag[1]}">${o.tag[0]}</em></div>
@@ -17549,11 +17564,14 @@ function renderJoin2(){
   ps.sort(_byNew); pd.sort(_byNew);
   if(pd.length) depLoad();   /* v324: حالة التأمينات */
   const html = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:tp(sh.type)+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
-      ok:`okShop('${sh.id}',true)`,no:`rmShop('${sh.id}')`,del:`delShop('${sh.id}')`}))
+      ok:`okShop('${sh.id}',true)`,no:`openReject('shop','${sh.id}')`,del:`delShop('${sh.id}')`}))
     .concat(pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
-      note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`blockUser('${u.uid||u.id}',true)`,del:`delUser('${u.uid||u.id}')`}))).join('');
+      note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`}))).join('');
+  const rjAll=rjS.map(x=>({k:'shop',id:x.id,n:x.name,r:x.reject_reason,f:x.reject_final,t:x.rejected_at})).concat(rjD.map(u=>({k:'driver',id:u.uid||u.id,n:u.name,r:u.reject_reason,f:u.reject_final,t:u.rejected_at})))
+    .sort((a,b)=>String(b.t).localeCompare(String(a.t)));
+  const rjHtml=rjAll.length?`<details class="rj-list"><summary>المرفوضين (${rjAll.length}) ‹</summary>${rjAll.map(x=>`<div class="rj-row"><div><b>${x.k==='shop'?'🏪':'🛵'} ${esc(x.n||'—')}</b><span>${esc(x.r||'')}${x.f?' · نهائي':''}</span></div><button type="button" onclick="unReject('${x.k}','${x.id}')">تراجع</button></div>`).join('')}</details>`:'';
   box.innerHTML=`<div class="pg-h"><h2>طلبات الانضمام</h2><span>${ps.length+pd.length} ينتظر موافقتك</span></div>`
-    + (html||'<div class="pg-empty">✓ ماكو طلبات انضمام</div>');
+    + (html||'<div class="pg-empty">✓ ماكو طلبات انضمام</div>') + rjHtml;
   const t=document.querySelector('#a_join>h3.ttl'); if(t) t.style.display='none';
 }
 function renderPeople2(fromQ){
@@ -19250,6 +19268,82 @@ async function depSet(id,st){
     await depLoad(true);
   }catch(e){ toast('ما انحفظ: '+errMsg(e)) }
 }
+/* ═══ v352: رفض طلب الانضمام ويا السبب — السائق/المحل يشوف السبب بالتطبيق ويوصله إشعار ═══ */
+const RJ_REASONS={
+  driver:[['age','العمر أقل من 18 سنة',1],['docs','المستمسكات مو واضحة أو ناقصة'],['photo','الصورة الشخصية مو واضحة'],['veh','صورة المركبة ناقصة أو مو واضحة'],['dep','ما وصلت التأمينات'],['area','ساكن خارج منطقة التوصيل']],
+  shop:[['info','معلومات المحل ناقصة'],['img','صورة المحل مو واضحة'],['menu','المنيو فارغ أو ناقص'],['area','المحل خارج منطقة التوصيل'],['dup','المحل مسجّل قبل بحساب ثاني']]
+};
+let _rj=null;
+function openReject(kind,id){
+  const isD=kind==='driver';
+  const o=isD?(allUsers||[]).find(x=>(x.uid||x.id)===id):(allShops||[]).find(x=>x.id===id);
+  if(!o) return toast('الحساب مو موجود');
+  _rj={kind,id,name:o.name||'',owner:isD?id:(o.ownerUid||o.owner_id||''),pick:{}};
+  let sh=document.getElementById('rjSheet');
+  if(!sh){ sh=document.createElement('div'); sh.id='rjSheet'; sh.onclick=e=>{ if(e.target===sh) rjClose() }; document.body.appendChild(sh) }
+  sh.innerHTML=`<div class="rjbox"><div class="rjh"><div><b>رفض ${isD?'السائق':'المحل'}: ${esc(o.name||'')}</b><span>اختار السبب — راح يوصله ويشوفه بالتطبيق</span></div><button type="button" class="rjx" onclick="rjClose()" aria-label="سد">✕</button></div>
+    <div class="rjq">ليش ترفضه؟ (تكدر تختار أكثر من سبب)</div>
+    <div class="rjc">${RJ_REASONS[kind].map(([k,l])=>`<button type="button" data-k="${k}" onclick="rjPick('${k}')">${l}</button>`).join('')}</div>
+    <div class="rjq">سبب ثاني أو ملاحظة (اختياري)</div>
+    <textarea id="rjNote" maxlength="200" placeholder="مثال: ارسل صورة البطاقة واضحة" oninput="rjPrev()"></textarea>
+    <label class="rjfin"><input type="checkbox" id="rjFin" onchange="rjPrev()"><span>رفض نهائي — ما يكدر يرسل طلبه مرة ثانية من التطبيق</span></label>
+    <div class="rjprev" id="rjPrev"></div>
+    <button type="button" class="rjgo" id="rjGo" onclick="rjSend()">ارفضه وبلّغه</button></div>`;
+  sh.classList.add('on'); rjPrev();
+}
+function rjClose(){ const sh=document.getElementById('rjSheet'); if(sh) sh.classList.remove('on'); _rj=null }
+function rjPick(k){
+  if(!_rj) return; _rj.pick[k]=!_rj.pick[k];
+  const b=document.querySelector('#rjSheet .rjc button[data-k="'+k+'"]'); if(b) b.classList.toggle('on',!!_rj.pick[k]);
+  const def=(RJ_REASONS[_rj.kind]||[]).find(x=>x[0]===k);
+  if(def&&def[2]&&_rj.pick[k]){ const f=document.getElementById('rjFin'); if(f) f.checked=true }   /* العمر = رفض نهائي */
+  rjPrev();
+}
+function rjText(){
+  if(!_rj) return '';
+  const L=(RJ_REASONS[_rj.kind]||[]).filter(x=>_rj.pick[x[0]]).map(x=>x[1]);
+  const n=String((document.getElementById('rjNote')||{}).value||'').trim();
+  return L.join(' · ')+(n?(L.length?' — ':'')+n:'');
+}
+function rjPrev(){
+  const t=rjText(), p=document.getElementById('rjPrev'), g=document.getElementById('rjGo'), fin=!!(document.getElementById('rjFin')||{}).checked;
+  if(p) p.innerHTML=t?('راح يوصله: <b>'+esc(t)+'</b>'+(fin?'<br>وما يكدر يرسل طلبه مرة ثانية.':'<br>ويكدر يصلّح ويرسل طلبه مرة ثانية.')):'اختار سبب واحد على الأقل، أو اكتب ملاحظة.';
+  if(g) g.disabled=!t;
+}
+async function rjSend(){
+  if(!_rj) return; const t=rjText(); if(!t) return toast('اختار سبب الرفض');
+  const fin=!!(document.getElementById('rjFin')||{}).checked, r=_rj, g=document.getElementById('rjGo');
+  if(g){ g.disabled=true; g.textContent='… نرفضه' }
+  try{
+    await rpc('admin_reject_join',{p_kind:r.kind, p_id:r.id, p_reason:t, p_final:fin});
+    const L=r.kind==='driver'?allUsers:allShops, o=(L||[]).find(x=>(x.uid||x.id)===r.id);
+    if(o){ o.rejected_at=new Date().toISOString(); o.reject_reason=t; o.reject_final=fin; o.approved=false; if(r.kind==='driver') o.blocked=true }
+    try{ if(r.owner) pushTo(r.owner, r.kind==='driver'?'طلب انضمامك ما انقبل':'طلب محلك ما انقبل', 'السبب: '+t, {type:'join_reject'}) }catch(e){}
+    rjClose(); toast('انرفض وانبلّغ بالسبب'); try{ renderAdmin() }catch(e){}
+  }catch(e){
+    if(g){ g.disabled=false; g.textContent='ارفضه وبلّغه' }
+    toast(/function|schema|Could not find/i.test(errMsg(e))?'شغّل join_reject.sql أول':'ما انرفض: '+errMsg(e));
+  }
+}
+async function unReject(kind,id){
+  const L=kind==='driver'?allUsers:allShops, o=(L||[]).find(x=>(x.uid||x.id)===id)||{};
+  if(!await askConfirm('ترجّع <b>'+esc(o.name||'هذا الحساب')+'</b> لطلبات الانضمام؟<div style="margin-top:6px;font-size:12.5px">يرجع ينتظر موافقتك من جديد.</div>',{title:'تراجع عن الرفض',ok:'إي، رجّعه'})) return;
+  try{ await rpc('admin_unreject_join',{p_kind:kind,p_id:id}); o.rejected_at=null; o.reject_reason=null; o.reject_final=false; if(kind==='driver') o.blocked=false; toast('رجع لطلبات الانضمام'); try{ renderAdmin() }catch(e){} }
+  catch(e){ toast(errMsg(e)) }
+}
+/* المرفوض يرسل طلبه مرة ثانية (سائق أو صاحب محل) */
+async function rjResubmit(){
+  if(!await askConfirm('صلّحت السبب؟ نرسل طلبك للإدارة مرة ثانية حتى تراجعه.',{title:'إرسال الطلب مرة ثانية',ok:'إي، أرسله'})) return;
+  try{
+    await rpc('self_resubmit_join',{});
+    try{ await rpc('notify_insert',{p_to:null,p_to_role:'admin',p_title:'طلب انضمام رجع',p_body:((me&&me.name)||'')+' صلّح وأرسل طلبه مرة ثانية',p_data:{type:'join'}}) }catch(e){}
+    if(me){ me.rejected_at=null; me.reject_reason=null; me.blocked=false }
+    if(typeof myShopDoc!=='undefined'&&myShopDoc){ myShopDoc.rejected_at=null; myShopDoc.reject_reason=null }
+    toast('انرسل — انتظر موافقة الإدارة');
+    try{ if(me.role==='driver'){ renderDriverAccount(); renderDriver() } else renderStore() }catch(e){}
+  }catch(e){ toast(errMsg(e)) }
+}
+function rjSupport(){ try{ dtab('set',document.querySelectorAll('#dNav button')[3]); setTimeout(()=>{ const c=document.getElementById('myChatD'); if(c) c.scrollIntoView({behavior:'smooth',block:'center'}) },300) }catch(e){} }
 /* موافقة السائق: إذا ما دفع التأمينات، ننبّه قبل التفعيل */
 async function okDrvJoin(id){
   const d=(depMap&&!depMap.__err)?(depMap[id]||{status:'none'}):null;
@@ -23424,6 +23518,40 @@ html[data-theme=dark] #aoSheet .aoitems{background:#2b2447}html[data-theme=dark]
 .dm-fix{display:inline-block;margin:6px 0 0 6px;border:1px solid #E3DCF3;background:#F6F2FD;color:var(--g);font:inherit;font-size:12.5px;font-weight:800;border-radius:10px;padding:4px 10px;cursor:pointer}
 #dmapSheet .dm-note .dm-fix{margin:4px 0 2px 4px;background:#fff;border-color:#F0D2A4;color:#8A4B00}
 #mapSheet.am{z-index:9500}
+/* v352: رفض طلب الانضمام ويا السبب */
+#rjSheet{position:fixed;inset:0;background:rgba(20,4,50,.55);z-index:9600;display:none;align-items:flex-end}
+#rjSheet.on{display:flex}
+#rjSheet .rjbox{background:#fff;width:100%;max-width:560px;margin:0 auto;border-radius:24px 24px 0 0;max-height:90vh;overflow:auto;padding:16px 16px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(20,4,50,.2)}
+#rjSheet .rjh{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+#rjSheet .rjh>div{flex:1;min-width:0}#rjSheet .rjh b{display:block;font-size:17px;font-weight:800;color:#140d24}#rjSheet .rjh span{font-size:12.5px;color:#8a849c}
+#rjSheet .rjx{width:34px;height:34px;border-radius:50%;border:0;background:#F3F0F8;color:#5B5470;font-size:15px;flex:none}
+#rjSheet .rjq{font-size:13px;font-weight:800;color:#5B5470;margin:12px 0 8px}
+#rjSheet .rjc{display:flex;flex-wrap:wrap;gap:8px}
+#rjSheet .rjc button{border:1.5px solid #E6E0F3;background:#fff;color:#2b2240;border-radius:999px;padding:9px 13px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;text-align:right}
+#rjSheet .rjc button.on{background:#FDECEC;border-color:#E25555;color:#B42318}
+#rjSheet .rjc button.on::before{content:'✓ '}
+#rjSheet textarea{width:100%;min-height:70px;border:1.5px solid #E6E0F3;border-radius:14px;padding:10px 12px;font:inherit;font-size:14px;resize:vertical;box-sizing:border-box;margin-top:4px}
+#rjSheet .rjfin{display:flex;align-items:flex-start;gap:9px;margin-top:12px;font-size:12.5px;font-weight:700;color:#7A5600;background:#FFF6DB;border:1px solid #F3DE9C;border-radius:12px;padding:10px 11px;cursor:pointer}
+#rjSheet .rjfin input{width:18px;height:18px;margin:1px 0 0;accent-color:#B42318;flex:none}
+#rjSheet .rjprev{margin-top:12px;background:#F7F5FB;border-radius:12px;padding:10px 12px;font-size:12.5px;color:#5B5470;line-height:1.7}
+#rjSheet .rjprev b{color:#140d24}
+#rjSheet .rjgo{width:100%;margin-top:14px;border:0;border-radius:16px;padding:14px;background:#D92D20;color:#fff;font:inherit;font-size:15px;font-weight:800;cursor:pointer}
+#rjSheet .rjgo:disabled{opacity:.5}
+.rj-list{margin-top:14px}
+.rj-list>summary{list-style:none;cursor:pointer;font-size:13.5px;font-weight:800;color:#8a849c;padding:10px 4px}
+.rj-list>summary::-webkit-details-marker{display:none}
+.rj-row{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #F0ECF8;border-radius:14px;padding:10px 12px;margin-bottom:8px}
+.rj-row>div{flex:1;min-width:0}.rj-row b{display:block;font-size:14px}.rj-row span{display:block;font-size:12px;color:#B42318;margin-top:2px;line-height:1.6}
+.rj-row button{border:1px solid #E3DCF3;background:#F6F2FD;color:var(--g);border-radius:10px;padding:7px 10px;font:inherit;font-size:12px;font-weight:800;flex:none}
+.blockmsg.rj h3{color:#B42318}.blockmsg.rj .ic{color:#D92D20}
+.blockmsg .rjwhy{background:#FDECEC;color:#B42318;border-radius:12px;padding:10px 12px;margin:10px 0 4px;font-size:13.5px;font-weight:700;line-height:1.7}
+.blockmsg .rjbt{display:block;width:100%;margin-top:10px;border:0;border-radius:14px;padding:12px;font:inherit;font-size:14px;font-weight:800;cursor:pointer;background:var(--g);color:#fff}
+.blockmsg .rjbt.ghost{background:#F3F0F8;color:#3b2f57}
+.st-pend.rj{background:#FDECEC;color:#B42318;border-color:#F5C2C0}
+.st-pend.rj button{display:block;margin-top:8px;border:0;border-radius:10px;padding:8px 12px;background:#B42318;color:#fff;font:inherit;font-size:12.5px;font-weight:800}
+html[data-theme=dark] #rjSheet .rjbox{background:#1f1a30}html[data-theme=dark] #rjSheet .rjh b{color:#ece8f7}
+html[data-theme=dark] #rjSheet .rjc button,html[data-theme=dark] #rjSheet textarea{background:#15121f;color:#ece8f7;border-color:#3a3354}
+html[data-theme=dark] .rj-row{background:#1f1a30;border-color:#2c2542}
 /* v351: صفحة الإعدادات مرتّبة — أزرار سريعة فوق + أقسام تنفتح وتنسد */
 .cfg-acts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
 .cfg-acts button{display:flex;flex-direction:column;align-items:center;gap:7px;background:#fff;border:1px solid #ECE7F6;border-radius:16px;padding:12px 4px 11px;font:inherit;color:#22113F;cursor:pointer;box-shadow:0 2px 10px rgba(91,43,201,.05)}
@@ -23553,7 +23681,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v351', seen={}, n=0, q=[], t=null;
+  var VER='v352', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -23805,7 +23933,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v351', t0=Date.now();
+  var VER='v352', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
@@ -23821,11 +23949,20 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
       var sp=document.getElementById('splash');
       if(sp && !sp.classList.contains('gone')) return;
       var scr=[].some.call(document.querySelectorAll('.screen.on'),vis);
-      if(scr){ if(window.__wdOn){ window.__wdOn=0; L.classList.remove('on') } return }   /* التطبيق ظهر — نشيل اللي حطّيناه */
+      if(scr){ if(window.__wdOn){ window.__wdOn=0; L.classList.remove('on'); ['loadHint','loadRetry'].forEach(function(id){ var x=document.getElementById(id); if(x) x.remove() }) } return }   /* التطبيق ظهر — نشيل اللي حطّيناه */
       if(!L.classList.contains('on')){ window.__wdOn=1; L.classList.add('on') }
+      if(window.__wdOn){   /* v352: النت مقطوع أو ضعيف — نكتبها بوضوح، وبعد 25 ثانية زر «حاول مرة ثانية» */
+        var T=document.getElementById('loadTxt'), s=(Date.now()-t0)/1000, off=navigator.onLine===false;
+        if(T) T.textContent = off ? 'ماكو اتصال بالإنترنت' : (s>=8 ? 'الإنترنت ضعيف — نحاول نوصل…' : 'جاري التحميل...');
+        var hb=document.getElementById('loadHint');
+        if(!hb && T){ hb=document.createElement('div'); hb.id='loadHint'; hb.style.cssText='margin-top:10px;font-size:13.5px;font-weight:600;opacity:.85;max-width:300px;line-height:1.8;text-align:center;color:#fff;padding:0 16px'; T.parentNode.insertBefore(hb,T.nextSibling) }
+        if(hb) hb.textContent = off ? 'شغّل الواي فاي أو بيانات الموبايل — يكمل وحده أول ما يرجع النت' : (s>=8 ? 'لا تسدّ التطبيق، يفتح وحده أول ما يوصل' : '');
+        var rb=document.getElementById('loadRetry');
+        if(!rb && hb && (off||s>=25)){ rb=document.createElement('button'); rb.id='loadRetry'; rb.type='button'; rb.textContent='حاول مرة ثانية'; rb.onclick=function(){ location.reload() }; rb.style.cssText='margin-top:14px;border:0;border-radius:16px;padding:12px 28px;background:#F97402;color:#fff;font:inherit;font-size:15px;font-weight:800;box-shadow:0 8px 20px rgba(249,116,2,.35)'; hb.parentNode.insertBefore(rb,hb.nextSibling) }
+      }
     }catch(e){}
   }
-  setInterval(function(){ if(Date.now()-t0<60000) tick() },500);
+  setInterval(function(){ if(Date.now()-t0<60000 || window.__wdOn) tick() },500);
   /* الصفحة كلها انقرت هنا — نبدي التطبيق مباشرة بدون ما ننتظر أي ملف خارجي */
   try{ if(!window.__booted && typeof initFirebase==='function') initFirebase() }catch(e){ window.__step='err:'+(e&&e.message||e) }
   window.addEventListener('error',function(ev){ try{ if(window.__step!=='ready') window.__step='err:'+String(ev.message||'').slice(0,40) }catch(_){} });
