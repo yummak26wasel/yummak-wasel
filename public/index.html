@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v355</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v356</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -17670,7 +17670,7 @@ function renderPeople2(fromQ){
   if(pFil==='store') list=shp.filter(m).sort(_byNew).map(sh=>row({jd:_jdTxt(sh),isNew:_isNew4h(sh),name:sh.name,img:sh.img,phone:sh.phone,
       tag:sh.approved?(isOpenNow(sh)?['مفتوح','ok']:['مسكّر','open']):['موقوف','late'], cls:sh.approved?'':'off',
       sub:'<span dir="ltr">'+esc(sh.phone||'')+'</span> · '+(sh.products||[]).length+' منتج · '+allOrders.filter(o=>o.shopId===sh.id).length+' طلب',
-      extra:secPickHTML(sh),
+      extra:secPickHTML(sh), open:`openAdminShop('${sh.id}')`,
       tog:`<button class="ic" onclick="okShop('${sh.id}',${!sh.approved})" aria-label="${sh.approved?'إيقاف':'تفعيل'}">${sh.approved?`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg>`:`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg>`}</button>`,
       del:`delShop('${sh.id}')`})).join('');
   else list=(pFil==='driver'?drv:cus).filter(m).sort(_byNew).map(u=>{ const id=u.uid||u.id;
@@ -17921,6 +17921,47 @@ function dmFocus(id){
   dMap.setView(m.getLatLng(),17,{animate:true}); m.openPopup();
   try{ document.getElementById('dmMap').scrollIntoView({behavior:'smooth',block:'start'}) }catch(e){}
 }
+/* ═══ v356: الإدارة تفتح أي محل وتشوف شنو بيه: المعلومات + المنيو كامل ═══ */
+function openAdminShop(id){
+  const sh=(allShops||[]).find(x=>x.id===id); if(!sh) return toast('المحل مو موجود');
+  let el=document.getElementById('asSheet');
+  if(!el){ el=document.createElement('div'); el.id='asSheet'; el.onclick=e=>{ if(e.target===el) el.classList.remove('on') }; document.body.appendChild(el) }
+  const own=(allUsers||[]).find(u=>(u.uid||u.id)===(sh.ownerUid||sh.owner_id))||{};
+  const ps=Array.isArray(sh.products)?sh.products:[];
+  const ords=(allOrders||[]).filter(o=>o.shopId===sh.id), done=ords.filter(o=>o.status==='delivered').length;
+  let op=false; try{ op=isOpenNow(sh) }catch(e){}
+  const H=(typeof shopHours==='function')?shopHours(sh):{open:'',close:''}, f12=t=>{ try{ return fmt12(t) }catch(e){ return t } };
+  const rate=(Number(sh.rCnt)>0)?(Number(sh.rSum)/Number(sh.rCnt)).toFixed(1)+' ⭐ ('+sh.rCnt+')':'ماكو تقييم';
+  const hasLoc=!!(sh.loc&&sh.loc.lat);
+  const st=sh.approved?(op?['مفتوح هسه','ok']:['مسكّر هسه','open']):(sh.rejected_at?['مرفوض','late']:['موقوف — ينتظر التفعيل','late']);
+  /* المنيو حسب الأقسام */
+  const byCat={}; ps.forEach(p=>{ const c=String(p.cat||'').trim()||'بدون قسم'; (byCat[c]=byCat[c]||[]).push(p) });
+  const price=p=>{ const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.p):[]; if(sz.length){ const v=sz.map(z=>Number(z.p)||0); return Math.min(...v).toLocaleString()+(v.length>1?' – '+Math.max(...v).toLocaleString():'') } return Number(p.price||0).toLocaleString() };
+  const menu=ps.length?Object.keys(byCat).map(c=>`<div class="as-cat">${esc(c)} <i>${byCat[c].length}</i></div>`+byCat[c].map(p=>`<div class="as-p${p.avail===false?' na':''}">
+      ${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:'<span class="as-ph">🍽️</span>'}
+      <div><b>${esc(p.name||'منتج')}</b>${p.desc?`<span>${esc(String(p.desc).slice(0,80))}</span>`:''}${p.avail===false?'<em>غير متوفر</em>':''}</div>
+      <strong>${price(p)} <small>د.ع</small></strong></div>`).join('')).join('')
+    :'<div class="as-empty">ماكو ولا منتج — صاحب المحل بعده ما ضاف المنيو</div>';
+  el.innerHTML=`<div class="asbox">
+    <div class="as-top">${(sh.cover_url||sh.img)?`<img class="as-cv" src="${esc(sh.cover_url||sh.img)}" alt="">`:''}<button type="button" class="as-x" onclick="document.getElementById('asSheet').classList.remove('on')" aria-label="سد">✕</button></div>
+    <div class="as-h">${_av(sh.img,sh.name)}<div><b>${esc(sh.name||'محل')}</b><span>${esc((SEC_LBL&&SEC_LBL[shopSec(sh)])||'')} · <em class="pill ${st[1]}">${st[0]}</em></span></div></div>
+    ${sh.rejected_at?`<div class="as-warn">سبب الرفض: ${esc(sh.reject_reason||'—')}</div>`:''}
+    <div class="as-grid">
+      <div><span>صاحب المحل</span><b>${esc(own.name||'—')}</b></div>
+      <div><span>الهاتف</span><b dir="ltr">${sh.phone?`<a href="tel:${esc(sh.phone)}">${esc(sh.phone)}</a>`:'—'}</b></div>
+      <div><span>الدوام</span><b>${H.open?f12(H.open)+' – '+f12(H.close):'—'}</b></div>
+      <div><span>التقييم</span><b>${rate}</b></div>
+      <div><span>الطلبات</span><b>${ords.length} · انسلّم ${done}</b></div>
+      <div><span>المنتجات</span><b>${ps.length}${ps.filter(p=>p.avail===false).length?' · '+ps.filter(p=>p.avail===false).length+' غير متوفر':''}</b></div>
+      <div class="w"><span>الموقع</span><b>${hasLoc?'محدد ✓':'ما محدد'} <button type="button" class="as-lk" onclick="document.getElementById('asSheet').classList.remove('on');amFixShopLoc('${sh.id}')">📍 ${hasLoc?'صحّح':'حدد'} الموقع</button></b></div>
+      ${sh.addr?`<div class="w"><span>العنوان</span><b>${esc(sh.addr)}</b></div>`:''}
+    </div>
+    <div class="as-mh">المنيو <i>${ps.length}</i></div>
+    <div class="as-menu">${menu}</div>
+  </div>`;
+  el.classList.add('on');
+}
+
 /* v330: الإدارة تختار قسم المحل بالرئيسية */
 function secPickHTML(sh){
   const cur=shopSec(sh);
@@ -23599,6 +23640,39 @@ html[data-theme=dark] #aoSheet .aoitems{background:#2b2447}html[data-theme=dark]
 .dm-fix{display:inline-block;margin:6px 0 0 6px;border:1px solid #E3DCF3;background:#F6F2FD;color:var(--g);font:inherit;font-size:12.5px;font-weight:800;border-radius:10px;padding:4px 10px;cursor:pointer}
 #dmapSheet .dm-note .dm-fix{margin:4px 0 2px 4px;background:#fff;border-color:#F0D2A4;color:#8A4B00}
 #mapSheet.am{z-index:9500}
+/* v356: تفاصيل المحل للإدارة */
+#asSheet{position:fixed;inset:0;background:rgba(20,4,50,.55);z-index:9450;display:none;align-items:flex-end}
+#asSheet.on{display:flex}
+#asSheet .asbox{background:#fff;width:100%;max-width:560px;margin:0 auto;border-radius:24px 24px 0 0;max-height:90vh;overflow:auto;padding:0 0 calc(18px + env(safe-area-inset-bottom));box-shadow:0 -10px 30px rgba(20,4,50,.2)}
+#asSheet .as-top{position:relative;min-height:54px}
+#asSheet .as-cv{display:block;width:100%;height:140px;object-fit:cover;border-radius:24px 24px 0 0}
+#asSheet .as-x{position:absolute;top:10px;left:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#3b2f57;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+#asSheet .as-h{display:flex;align-items:center;gap:12px;padding:12px 16px 4px}
+#asSheet .as-h .pav{width:52px;height:52px;border-radius:16px;flex:none}
+#asSheet .as-h>div{flex:1;min-width:0}#asSheet .as-h b{display:block;font-size:18px;font-weight:800;color:#140d24}
+#asSheet .as-h span{display:block;font-size:12.5px;color:#8a849c;margin-top:3px}
+#asSheet .as-warn{margin:8px 16px 0;background:#FDECEC;color:#B42318;border-radius:12px;padding:9px 12px;font-size:13px;font-weight:700}
+#asSheet .as-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 16px}
+#asSheet .as-grid>div{background:#F8F6FC;border-radius:12px;padding:9px 11px;min-width:0}
+#asSheet .as-grid>div.w{grid-column:1/-1}
+#asSheet .as-grid span{display:block;font-size:11.5px;color:#8a849c}
+#asSheet .as-grid b{display:block;font-size:13.5px;color:#140d24;margin-top:2px;overflow:hidden;text-overflow:ellipsis}
+#asSheet .as-grid a{color:var(--g);text-decoration:none}
+#asSheet .as-lk{margin-inline-start:8px;border:1px solid #E3DCF3;background:#fff;color:var(--g);border-radius:9px;padding:3px 9px;font:inherit;font-size:12px;font-weight:800}
+#asSheet .as-mh{padding:6px 16px 4px;font-size:15px;font-weight:800;color:#140d24}
+#asSheet .as-mh i,#asSheet .as-cat i{font-style:normal;font-size:12px;color:#8a849c;font-weight:700;margin-inline-start:4px}
+#asSheet .as-menu{padding:0 16px}
+#asSheet .as-cat{margin:12px 0 6px;font-size:13.5px;font-weight:800;color:var(--g)}
+#asSheet .as-p{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F3F0F8}
+#asSheet .as-p img,#asSheet .as-ph{width:52px;height:52px;border-radius:12px;object-fit:cover;flex:none;background:#F3EEFD;display:flex;align-items:center;justify-content:center;font-size:20px}
+#asSheet .as-p>div{flex:1;min-width:0}#asSheet .as-p b{display:block;font-size:14px;color:#140d24}
+#asSheet .as-p span{display:block;font-size:12px;color:#8a849c;margin-top:2px;line-height:1.5}
+#asSheet .as-p em{display:inline-block;margin-top:3px;font-style:normal;font-size:11px;font-weight:800;color:#B42318;background:#FDECEC;border-radius:8px;padding:1px 7px}
+#asSheet .as-p.na{opacity:.6}
+#asSheet .as-p strong{font-size:14px;color:#140d24;white-space:nowrap}#asSheet .as-p strong small{font-size:11px;color:#8a849c;font-weight:700}
+#asSheet .as-empty{background:#FFF6E8;color:#9A5B00;border-radius:12px;padding:12px;font-size:13px;font-weight:700;text-align:center;margin-top:6px}
+.pr2 .t[onclick]{cursor:pointer}
+html[data-theme=dark] #asSheet .asbox{background:#1f1a30}html[data-theme=dark] #asSheet .as-grid>div{background:#15121f}
 /* v352: رفض طلب الانضمام ويا السبب */
 #rjSheet{position:fixed;inset:0;background:rgba(20,4,50,.55);z-index:9600;display:none;align-items:flex-end}
 #rjSheet.on{display:flex}
@@ -23762,7 +23836,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v355', seen={}, n=0, q=[], t=null;
+  var VER='v356', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24014,7 +24088,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v355', t0=Date.now();
+  var VER='v356', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
