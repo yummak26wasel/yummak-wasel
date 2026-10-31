@@ -1,0 +1,37 @@
+name: loadtest
+# اختبار ضغط (قراءة بس) — يشتغل بس من ينرفع شي لفرع loadtest، والنتيجة تنحفظ بنفس الفرع
+on:
+  push:
+    branches: [loadtest]
+    paths: ['loadtest/leemak-k6.js', 'loadtest/run.txt']
+permissions:
+  contents: write
+concurrency:
+  group: loadtest
+  cancel-in-progress: false
+jobs:
+  k6:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: install k6
+        run: |
+          curl -sSL https://github.com/grafana/k6/releases/download/v0.54.0/k6-v0.54.0-linux-amd64.tar.gz | tar xz
+          sudo mv k6-v0.54.0-linux-amd64/k6 /usr/local/bin/k6
+          k6 version
+      - name: run
+        run: |
+          MAX=$(grep -oE '^MAX=[0-9]+' loadtest/run.txt 2>/dev/null | cut -d= -f2); MAX=${MAX:-300}
+          echo "MAX=$MAX started $(date -u +%FT%TZ)" > loadtest/out.txt
+          k6 run --no-color -e MAX=$MAX --summary-export=loadtest/summary.json loadtest/leemak-k6.js >> loadtest/out.txt 2>&1 || echo "k6 exit $?" >> loadtest/out.txt
+          echo "finished $(date -u +%FT%TZ)" >> loadtest/out.txt
+          tail -60 loadtest/out.txt
+      - name: save results
+        if: always()
+        run: |
+          git config user.name "yummak26wasel"
+          git config user.email "yummak26wasel@users.noreply.github.com"
+          git add -f loadtest/out.txt loadtest/summary.json || true
+          git commit -m "loadtest results $(date -u +%FT%TZ)" || exit 0
+          git push origin HEAD:loadtest
