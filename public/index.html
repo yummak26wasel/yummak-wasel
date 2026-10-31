@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v365</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v366</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -17790,6 +17790,7 @@ const _byNew=(a,b)=>_jd(b)-_jd(a);
 /* v347: «جديد» على اللي انضم بآخر 4 ساعات — بعدها تختفي لحالها */
 const _isNew4h=x=>{ const t=_jd(x); return !!t && Date.now()-t < 4*3600*1000 };
 function _av(img,txt){ return img?`<img class="pav" src="${img}" alt="">`:`<div class="pav">${esc(String(txt||'؟').charAt(0))}</div>` }
+let joinFil='';   /* v366: طلبات الانضمام قسمين — السواق · المطاعم والمحلات */
 function renderJoin2(){
   const box=document.getElementById('aPending'); if(!box) return;
   /* v352: المرفوضين ما يبينون بطلبات الانضمام — ينحطّون بقائمة «المرفوضين» تحت */
@@ -17810,15 +17811,19 @@ function renderJoin2(){
   const tp=t=>t==='restaurant'?'مطعم':t==='store'?'متجر':'خدمات';
   ps.sort(_byNew); pd.sort(_byNew);
   if(pd.length) depLoad();   /* v324: حالة التأمينات */
-  const html = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:tp(sh.type)+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
-      ok:`okShop('${sh.id}',true)`,no:`openReject('shop','${sh.id}')`,del:`delShop('${sh.id}')`}))
-    .concat(pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
-      note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`}))).join('');
+  if(!joinFil || (joinFil==='driver'&&!pd.length&&ps.length) || (joinFil==='shop'&&!ps.length&&pd.length)) joinFil = pd.length||!ps.length ? 'driver' : 'shop';
+  const seg=`<div class="seg jseg">${[['driver','السواق',pd.length],['shop','المطاعم والمحلات',ps.length]].map(([v,l,n])=>`<button type="button" class="${joinFil===v?'on':''}" onclick="joinFil='${v}';renderJoin2()">${l}<i>${n}</i></button>`).join('')}</div>`;
+  const htmlS = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:tp(sh.type)+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
+      ok:`okShop('${sh.id}',true)`,no:`openReject('shop','${sh.id}')`,del:`delShop('${sh.id}')`})).join('');
+  const htmlD = pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
+      note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`})).join('');
+  const html = joinFil==='shop' ? htmlS : htmlD;
   const rjAll=rjS.map(x=>({k:'shop',id:x.id,n:x.name,r:x.reject_reason,f:x.reject_final,t:x.rejected_at})).concat(rjD.map(u=>({k:'driver',id:u.uid||u.id,n:u.name,r:u.reject_reason,f:u.reject_final,t:u.rejected_at})))
+    .filter(x=>x.k===(joinFil==='shop'?'shop':'driver'))
     .sort((a,b)=>String(b.t).localeCompare(String(a.t)));
   const rjHtml=rjAll.length?`<details class="rj-list"><summary>المرفوضين (${rjAll.length}) ‹</summary>${rjAll.map(x=>`<div class="rj-row"><div><b>${x.k==='shop'?'🏪':'🛵'} ${esc(x.n||'—')}</b><span>${esc(x.r||'')}${x.f?' · نهائي':''}</span></div><button type="button" onclick="unReject('${x.k}','${x.id}')">تراجع</button></div>`).join('')}</details>`:'';
-  box.innerHTML=`<div class="pg-h"><h2>طلبات الانضمام</h2><span>${ps.length+pd.length} ينتظر موافقتك</span></div>`
-    + (html||'<div class="pg-empty">✓ ماكو طلبات انضمام</div>') + rjHtml;
+  box.innerHTML=`<div class="pg-h"><h2>طلبات الانضمام</h2><span>${ps.length+pd.length} ينتظر موافقتك</span></div>` + seg
+    + (html||`<div class="pg-empty">✓ ماكو طلبات ${joinFil==='shop'?'محلات':'سواق'}</div>`) + rjHtml;
   const t=document.querySelector('#a_join>h3.ttl'); if(t) t.style.display='none';
 }
 function renderPeople2(fromQ){
@@ -20433,6 +20438,8 @@ async function initPush(silent){
 .pmo-cnt{font-size:12px;font-weight:700;color:var(--mut);text-align:center;margin-top:10px}
 
 /* ═══ رسالة تفعيل الإشعارات ═══ */
+/* v366: تبويب طلبات الانضمام */
+#aPending .jseg{margin:0 0 12px}
 /* v363: شريط «فعّل الإشعارات» للسائق والمحل والإدارة */
 .pban{display:flex;align-items:center;gap:10px;background:#FFF6E8;border:1.5px solid #F5D9A8;border-radius:16px;padding:11px 12px;margin:0 0 12px}
 .pban .pb-t{flex:1;min-width:0}.pban b{display:block;font-size:14px;font-weight:800;color:#7A4A00}
@@ -24047,7 +24054,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v365', seen={}, n=0, q=[], t=null;
+  var VER='v366', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24299,7 +24306,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v365', t0=Date.now();
+  var VER='v366', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
