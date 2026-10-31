@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v369</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v370</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -17596,6 +17596,25 @@ function finWa(x){
   const ph=String(x.phone||'').replace(/\D/g,'').replace(/^0/,'964');
   window.open('https://wa.me/'+(ph||'')+'?text='+encodeURIComponent(t),'_blank');
 }
+/* v370: تطبيق المتجر (WebView) ما يدعم window.print — إذا التطبيق يعرف يطبع (LEEMAK_NATIVE_PRINT)
+   ندزله الوصل كصفحة HTML كاملة ويطبعها هو (expo-print). وإذا ما يعرف، نكول للمستخدم يفتحها من Chrome */
+function _nativePrint(title){
+  const rn=window.ReactNativeWebView;
+  if(!(rn && rn.postMessage && window.LEEMAK_NATIVE_PRINT)) return false;
+  try{
+    const pa=document.getElementById('printArea'); if(!pa) return false;
+    let css='';
+    for(const ss of document.styleSheets){ let rules; try{ rules=ss.cssRules }catch(e){ continue }
+      for(const r of rules){ const t=r.cssText||''; if(/\.rcp|#printArea|\.ptab|\.seal|\.cut|\.pbrk/.test(t)) css+=t+'\n' } }
+    const html='<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
+      +'<title>'+esc(title||'واصل ليمَك')+'</title><base href="'+location.origin+'/">'
+      +'<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap">'
+      +'<style>'+css+' html,body{margin:0;background:#fff;font-family:Cairo,Tahoma,sans-serif;color:#1f1640} #printArea{display:block!important;padding:8px}</style>'
+      +'</head><body><div id="printArea">'+pa.innerHTML+'</div></body></html>';
+    rn.postMessage(JSON.stringify({type:'print', title:title||'واصل ليمَك', html}));
+    return true;
+  }catch(e){ __silent(e,'nativePrint'); return false }
+}
 /* طباعة / حفظ PDF — ورقة نظيفة بدون باقي التطبيق */
 function finPrint(list,title,extra){
   let pa=document.getElementById('printArea'); if(!pa){ pa=document.createElement('div'); pa.id='printArea'; document.body.appendChild(pa) }
@@ -17606,6 +17625,9 @@ function finPrint(list,title,extra){
   /* ننتظر الشعار يتحمّل حتى يطلع بالورقة */
   const imgs=[...pa.querySelectorAll('img')].filter(i=>!i.complete);
   Promise.race([Promise.all(imgs.map(i=>new Promise(r=>{ i.onload=i.onerror=r }))), new Promise(r=>setTimeout(r,1500))]).then(()=>{
+    if(_nativePrint(title)){ document.body.classList.remove('printing'); document.title=old; toast('جاري فتح الطباعة…'); return }
+    if(pushIsNative()){ document.body.classList.remove('printing'); document.title=old;
+      askConfirm('الطباعة ما تشتغل من داخل تطبيق المتجر بعد.<div style="margin-top:8px;font-size:13px">افتح <b>leemak.app</b> من متصفح Chrome، وادخل بحسابك، واطبع من هناك (أو «حفظ كـ PDF»).</div>',{title:'الطباعة',ok:'فهمت'}); return }
     setTimeout(()=>{ try{ window.print() }catch(e){} setTimeout(()=>{ document.body.classList.remove('printing'); document.title=old },800) },100);
   });
 }
@@ -24137,7 +24159,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v369', seen={}, n=0, q=[], t=null;
+  var VER='v370', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24389,7 +24411,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v369', t0=Date.now();
+  var VER='v370', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
