@@ -498,12 +498,16 @@ const db = {
       onSnapshot: (cb,e) => q.onSnapshot(cb,e),
       async add(data){
         const tbl = _TBL[name] || name;
-        const [row] = await _req(tbl, {
+        /* v362: الإشعارات — المرسل أحياناً ما يكدر يقرأ الإشعار الي يرسله (مثلاً سائق يبلّغ الإدارة)،
+           فطلب «رجّعلي الصف» كان ينرفض. نرسله بدون ما نطلب الصف. */
+        const minimal = tbl === 'notifications';
+        const res = await _req(tbl, {
           method: 'POST',
-          headers: { 'Prefer': 'return=representation' },
+          headers: { 'Prefer': minimal ? 'return=minimal' : 'return=representation' },
           body: JSON.stringify(_out(name, data))
         });
-        return { id: row.id };
+        const row = Array.isArray(res) ? res[0] : null;
+        return { id: row ? row.id : null };
       }
     };
   }
