@@ -3,6 +3,10 @@ main = "worker/app.js"
 compatibility_date = "2024-09-01"
 # العنوان القديم يبقى شغّال (تطبيق الأندرويد والآيفون عليه)
 workers_dev = true
+# عنواننا الخاص — ما تحجبه شبكات الواي فاي
+routes = [
+  { pattern = "leemak.app", custom_domain = true }
+]
 
 [assets]
 directory = "./public"
