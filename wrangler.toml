@@ -1,6 +1,23 @@
 name = "leemak-app"
+main = "worker/app.js"
 compatibility_date = "2024-09-01"
+# العنوان القديم يبقى شغّال (تطبيق الأندرويد والآيفون عليه)
+workers_dev = true
 
 [assets]
 directory = "./public"
+binding = "ASSETS"
 not_found_handling = "single-page-application"
+
+# ممرّات للسيرفرات من نفس عنوان التطبيق (worker/app.js)
+[[services]]
+binding = "OTP"
+service = "leemak-otp"
+
+[[services]]
+binding = "API"
+service = "leemak-api"
+
+[[services]]
+binding = "DB"
+service = "leemak-db"
