@@ -26,7 +26,8 @@ async function nudge(req, env) {
   let b = {};
   try { b = await req.json(); } catch (e) {}
   const ids = (Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => UUID_RE.test(x)).slice(0, 20);
-  const msgs = []; let checked = 0, sent = 0;
+  /* إذا اكو أكثر من طلب لنفس المحل بنفس اللحظة: إشعار واحد «عندك 3 طلبات» بدل 3 إشعارات ورا بعض */
+  const byTok = new Map(); let checked = 0, sent = 0;
   for (const id of ids) {
     let info = null;
     try {
@@ -40,17 +41,28 @@ async function nudge(req, env) {
     if (!info || !Array.isArray(info.users) || !info.users.length) continue;
     checked++;
     const users = info.users.map(String).filter(x => UUID_RE.test(x)).slice(0, 10);
-    const data = { url: '/?nof=' + encodeURIComponent(id), tag: 'new_order', type: 'new_order', order_id: id,
-                   shop_id: String(info.shop_id || ''), total: String(info.total || 0) };
-    const body = 'طلب بقيمة ' + Number(info.total || 0).toLocaleString('en-US') + ' د.ع — الزبون ينتظر، اقبله هسه';
     for (const u of users) {
       const L = await env.PUSH.list({ prefix: 'u:' + u + ':' });
       for (const k of L.keys) {
         const t = await env.PUSH.get(k.name);
-        if (t) msgs.push({ to: t, title: '⏰ طلب ينتظر قبولك', body, priority: 'high', channelId: 'orders', data,
-                           sound: 'new_order.wav', interruptionLevel: 'time-sensitive' });
+        if (!t) continue;
+        const g = byTok.get(t) || { orders: [], total: 0, shop: String(info.shop_id || '') };
+        g.orders.push(id); g.total += Number(info.total || 0);
+        byTok.set(t, g);
       }
     }
+  }
+  const msgs = [];
+  for (const [t, g] of byTok) {
+    const n = g.orders.length, first = g.orders[0];
+    msgs.push({
+      to: t,
+      title: n > 1 ? '⏰ عندك ' + n + ' طلبات تنتظر قبولك' : '⏰ طلب ينتظر قبولك',
+      body: n > 1 ? 'الزبائن ينتظرون — اقبلها هسه' : 'طلب بقيمة ' + g.total.toLocaleString('en-US') + ' د.ع — الزبون ينتظر، اقبله هسه',
+      priority: 'high', channelId: 'orders', sound: 'new_order.wav', interruptionLevel: 'time-sensitive',
+      data: { url: '/?nof=' + encodeURIComponent(first), tag: 'new_order', type: 'new_order', order_id: first,
+              shop_id: g.shop, total: String(g.total), count: String(n) }
+    });
   }
   for (let i = 0; i < msgs.length; i += 100) {
     try {
