@@ -113,8 +113,13 @@ const auth = {
 
   onAuthStateChanged(cb){
     _watchers.push(cb);
-    /* نجهّز العميل أول — عشان الجلسة المحفوظة تنقرأ قبل النداء */
-    _client().then(() => cb(auth.currentUser)).catch(() => cb(auth.currentUser));
+    /* نجهّز العميل أول — عشان الجلسة المحفوظة تنقرأ قبل النداء.
+       v353: إذا عنده جلسة محفوظة ما ننتظر تجديدها من النت أكثر من ثانية ونص — ندخله، والتجديد يكمل بالخلفية
+       (بالنت الضعيف كان يعلّك هنا لحد 30 ثانية قبل ما يفتح أي شي. أي طلب بتوكن قديم يتجدد ويتعاد وحده) */
+    let fired = false;
+    const fire = () => { if(fired) return; fired = true; cb(auth.currentUser) };
+    _client().then(fire).catch(fire);
+    if(_load()) setTimeout(fire, 1500);
     return () => { const i = _watchers.indexOf(cb); if(i > -1) _watchers.splice(i,1) };
   },
 

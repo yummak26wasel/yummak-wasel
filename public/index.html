@@ -2304,6 +2304,8 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   background:#DC2626;color:#fff;font-family:inherit;font-size:12px;font-weight:800;
   box-shadow:0 2px 10px rgba(0,0,0,.18)}
 #offBar.on{display:flex}
+#slowBar{position:fixed;left:10px;right:10px;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:9990;display:none;justify-content:center;padding:8px 12px;border-radius:12px;background:#FFF4E5;color:#9A5B00;border:1px solid #F6D3A6;font-size:12px;font-weight:800;box-shadow:0 4px 14px rgba(0,0,0,.12);text-align:center}
+#slowBar.on{display:flex}
 #offBar .wic{width:16px;height:16px}
 #dApp .alertbar,#sApp .alertbar{position:relative;z-index:1;margin:0}
 #dApp .top,#sApp .top{z-index:51}
@@ -5780,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v352</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v353</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6551,10 +6553,27 @@ function boot(){
   auth.onAuthStateChanged(async u=>{
     if(signingUp) return;                 // التسجيل يكمّل بنفسه
     window.__step=u?'user':'login';
-    if(!u){ uid=null; me=null; busy(false); document.getElementById('auth').classList.add('on');
+    if(!u){ uid=null; me=null; bootClear(); busy(false); document.getElementById('auth').classList.add('on');
       if(_staffPollTimer){ clearInterval(_staffPollTimer); _staffPollTimer=null }
       return }
     uid=u.uid;
+    /* v353: فتح فوري من آخر نسخة محفوظة (الزبون والسائق والمحل) — الحساب والإعدادات تتحدث بالخلفية.
+       قبل: ينتظر الحساب ثم الإعدادات من النت، وبالنت الضعيف يعلّك على «جاري التحميل» */
+    try{
+      const _bc=bootLoad(uid);
+      if(_bc && !_bc.staff && ['customer','driver','store'].includes(_bc.me.role) && betaOk(_bc.me.phone, _bc.me.role)){
+        me={uid,..._bc.me}; SET={...SET,...(_bc.set||{})}; _bootRole=_bc.me.role;
+        document.getElementById('auth').classList.remove('on');
+        try{ loadBanners() }catch(e){}
+        try{ if(me.role==='customer') setTimeout(wcShow,700) }catch(e){}
+        window.__step='enter';
+        busy(false); enter();
+        window.__step='ready';
+        try{ startStaffPoll() }catch(e){} try{ staffWatch() }catch(e){}
+        setTimeout(bootRefresh, 300);
+        return;
+      }
+    }catch(e){ __silent(e,'bootFast') }
     try{
       const d=await db.collection('users').doc(uid).get();
       if(!d.exists){ await auth.signOut(); busy(false);
@@ -6585,6 +6604,7 @@ function boot(){
         try{ await rpc('self_patch_defaults',{}); me={...me,...fix} }
         catch(e){ console.warn('fix',e.message) }
       }
+      bootSave();   /* v353: المرة الجاية يفتح فوراً */
       document.getElementById('auth').classList.remove('on');
       startStaffPoll();
       try{ staffWatch() }catch(e){}
@@ -6594,6 +6614,38 @@ function boot(){
     }catch(e){ busy(false); document.getElementById('auth').classList.add('on'); showErr('خطأ: '+e.message) }
   });
 }
+/* ═══ v353: نسخة محفوظة من الحساب والإعدادات (مثل التطبيقات العالمية) ═══
+   التطبيق يفتح فوراً من آخر نسخة، وبعدين يجيب الجديد من النت بالخلفية ويحدّث الشاشة.
+   إذا الحساب انحذف أو تغيّر نوعه، يرجع يفتح من جديد بالطريقة العادية */
+const _BOOT_K='lw_boot_v1';
+function bootSave(){ try{ if(!uid||!me) return; const m={...me}; const st=!!m.staff; delete m.staff;
+  localStorage.setItem(_BOOT_K, JSON.stringify({uid, me:m, set:SET, staff:st, at:Date.now()})) }catch(e){} }
+function bootLoad(id){ try{ const b=JSON.parse(localStorage.getItem(_BOOT_K)||'null');
+  if(b && b.uid===id && b.me && b.me.role && Date.now()-(b.at||0) < 30*864e5) return b }catch(e){} return null }
+function bootClear(){ try{ localStorage.removeItem(_BOOT_K) }catch(e){} }
+let _bootTry=0, _bootRole=null;   /* نوع الحساب الي فتحنا بيه من النسخة المحفوظة */
+async function bootRefresh(){
+  if(!uid||!me) return;
+  try{
+    const d=await db.collection('users').doc(uid).get();
+    if(!d.exists){ bootClear(); try{ await auth.signOut() }catch(_){} location.reload(); return }
+    const fresh={uid,...d.data()};
+    if(fresh.role!==(_bootRole||me.role) || !betaOk(fresh.phone, fresh.role)){ bootClear(); location.reload(); return }
+    me={...me,...fresh};
+    try{ const c=await db.collection('settings').doc('app').get(); if(c && c.exists) SET={...SET,...c.data()} }catch(e){}
+    if(me.role==='customer'){ try{ await loadStaff() }catch(e){} if(me.staff){ bootSave(); location.reload(); return } }
+    bootSave(); _bootTry=0; conn(true);
+    try{
+      if(me.role==='customer'){ renderAccount(); renderHomeLoc(); renderCart(); myFare=null; loadFare() }
+      else if(me.role==='driver'){ renderDriverAccount(); renderDriver() }
+      else if(me.role==='store'){ renderStore() }
+    }catch(e){}
+  }catch(e){
+    conn(false);
+    _bootTry++; setTimeout(bootRefresh, Math.min(60000, 6000*_bootTry));   /* النت ضعيف — نعيد المحاولة بهدوء */
+  }
+}
+
 /* ═══════════════════════════════════════════════
    الموظفين — الموظف حسابه زبون، ويقدر يبدّل
    للوحة المتجر إذا صاحب المحل ضافه
@@ -8566,8 +8618,15 @@ function confirmLogout(){ closeLogout(); unsubscribeTopics(); auth.signOut().the
 const SHOPS_TTL = 10*60*1000;          /* الكاش يبقى طازج 10 دقائق */
 let shopsUnsub = null, shopsSyncedAt = 0;
 
+const _SHC_K='lw_shops_cache_v1';
+let _shcT=null;
+function shopsCacheSave(docs){   /* v353: آخر قائمة محلات (ويا المنيو) محفوظة بالتلفون — تبين فوراً المرة الجاية */
+  clearTimeout(_shcT); _shcT=setTimeout(()=>{ try{ if(!me||me.role!=='customer') return; const s=JSON.stringify({at:Date.now(), rows:docs}); if(s.length<1800000) localStorage.setItem(_SHC_K,s) }catch(e){} },1500);
+}
+function shopsCacheLoad(){ try{ const c=JSON.parse(localStorage.getItem(_SHC_K)||'null'); if(c && Array.isArray(c.rows) && c.rows.length && Date.now()-(c.at||0)<7*864e5) return c.rows }catch(e){} return null }
 function applyShops(docs){
   shops = docs; window.__shopsLoaded = true;
+  try{ if(me && me.role==='customer' && !docs.__cached) shopsCacheSave(docs) }catch(e){}
   renderShops();
   renderDailyMeals();
   if(curShop){ const f=shops.find(x=>x.id===curShop.id); if(f){ curShop=f; renderMenu() } }
@@ -8598,14 +8657,15 @@ const CUST_POLICY={
             : (tbl==='orders' || tbl==='special_orders') ? (custActive() ? 8000 : 60000)
             : (tbl==='notifications' ? 60000 : 0)
 };
+let _apiBadUntil=0;   /* v353: بعض شبكات الواي فاي تحجب عناوين workers.dev — إذا فشل، نروح للقاعدة مباشرة 10 دقايق بدون انتظار */
 async function fetchShopsFast(){
-  try{
+  if(Date.now()>=_apiBadUntil) try{
     const r=await _fto(API_PUSH+'/shops',{method:'GET'},8000);   /* v324: إذا ما ردّ خلال 8 ثواني نجيبها من القاعدة */
     if(r.ok){
       const rows=await r.json();
       if(Array.isArray(rows) && rows.length) return rows.map(row=>({...(window.__sbIn?window.__sbIn('shops',row):row), id:row.id}));
     }
-  }catch(e){}
+  }catch(e){ _apiBadUntil=Date.now()+10*60000 }
   const c=await db.collection('shops').where('approved','==',true).get();   /* احتياط: من القاعدة مباشرة */
   return (c&&c.docs?c.docs:[]).map(d=>({...d.data(), id:d.id}));
 }
@@ -8628,7 +8688,9 @@ function custShopsLoop(){
 async function listenShops(force){
   const sl=document.getElementById('shopList');
   if(sl && !sl.innerHTML.trim()) sl.innerHTML=skeleton(4);
-  if(me && me.role==='customer'){ detachShops(); custShopsLoop(); return }
+  if(me && me.role==='customer'){
+    if(!window.__shopsLoaded){ const _c=shopsCacheLoad(); if(_c){ _c.__cached=true; applyShops(_c) } }   /* v353: من النسخة المحفوظة فوراً */
+    detachShops(); custShopsLoop(); return }
 
   try{ shopsSyncedAt = Number(localStorage.getItem('lw_shops_at')||0) }catch(e){}
 
@@ -8938,7 +9000,18 @@ function listenDriver(){
     scheduleDriverRender();
   },e=>console.warn('mySpecialOrders',e.message));
 }
-function conn(ok){const e=document.getElementById('s_conn'); if(e)e.innerHTML=ok?'<span class="wdot" style="background:#16A34A"></span> متصل':'<span class="wdot" style="background:#DC2626"></span> منقطع'}
+function conn(ok){const e=document.getElementById('s_conn'); if(e)e.innerHTML=ok?'<span class="wdot" style="background:#16A34A"></span> متصل':'<span class="wdot" style="background:#DC2626"></span> منقطع';try{slowBar(!ok)}catch(e){}}
+/* v353: شريط صغير «الإنترنت ضعيف» لما ما نكدر نحدّث — والتطبيق يبقى شغّال على آخر نسخة محفوظة */
+let _slowN=0;
+function slowBar(bad){
+  try{
+    _slowN = bad ? _slowN+1 : 0;
+    let b=document.getElementById('slowBar');
+    if(!b){ if(!bad) return; b=document.createElement('div'); b.id='slowBar'; document.body.appendChild(b) }
+    b.textContent='📶 الإنترنت ضعيف — نعرض آخر نسخة محفوظة، ونحدّث أول ما يتحسن';
+    b.classList.toggle('on', bad && _slowN>=1 && navigator.onLine!==false);
+  }catch(e){}
+}
 
 /* ══════ ALARM ══════ */
 let actx=null,alarmTimer=null;
@@ -23681,7 +23754,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v352', seen={}, n=0, q=[], t=null;
+  var VER='v353', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -23933,7 +24006,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v352', t0=Date.now();
+  var VER='v353', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
