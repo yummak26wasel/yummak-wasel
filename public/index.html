@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v367</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v368</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -17869,13 +17869,34 @@ function renderJoin2(){
     + (html||`<div class="pg-empty">✓ ماكو طلبات ${joinFil==='shop'?'محلات':'سواق'}</div>`) + rjHtml;
   const t=document.querySelector('#a_join>h3.ttl'); if(t) t.style.display='none';
 }
+/* v368: حالة إشعارات كل سائق ومحل — تبين بقائمة المشتركين نفسها */
+let PUSHST=null, _pushStAt=0, _pushStBusy=false;
+async function pushStLoad(){
+  if(_pushStBusy || (PUSHST && Date.now()-_pushStAt<60000)) return;
+  _pushStBusy=true;
+  try{
+    const rows=await rpc('admin_push_status',{});
+    const m={}; (Array.isArray(rows)?rows:[]).forEach(r=>{ m[String(r.id)]=r.has_token?'on':(r.push_state||'none') });
+    PUSHST=m; _pushStAt=Date.now();
+    try{ renderPeople2(1) }catch(e){}
+  }catch(e){ PUSHST=PUSHST||{} }
+  finally{ _pushStBusy=false }
+}
+const PB_L={on:['🔔 الإشعارات توصله','ok'], native:['📱 تطبيق المتجر','part'], off:['🔕 ما فعّل الإشعارات','late'], denied:['🔕 رافض الإشعارات','late'], error:['⚠️ الإشعارات ما اشتغلت','late'], unsupported:['📵 جهازه ما يدعم','wait'], none:['🔔 ما فتح التطبيق بعد التحديث','wait']};
+function pushBadge(id){
+  if(!PUSHST || !id) return '';
+  const L=PB_L[PUSHST[String(id)]||'none']||PB_L.none;
+  return `<span class="pbadge ${L[1]}">${L[0]}</span>`;
+}
 function renderPeople2(fromQ){
   const box=document.getElementById('aPeople'); if(!box) return;
   const drv=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'), shp=(allShops||[]).filter(_notDeleted), cus=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='customer');
   const T=[['driver','السواق',drv.length],['store','المحلات',shp.length],['customer','الزبائن',cus.length]];
   const pf=document.getElementById('pFilter');
   if(pf && !fromQ) pf.innerHTML=`<div class="seg">${T.map(([v,l,n])=>`<button class="${pFil===v?'on':''}" onclick="pFil='${v}';renderAdmin()">${l}<i>${n}</i></button>`).join('')}</div>
-    <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="pSrch" placeholder="ابحث بالاسم أو الرقم…" value="${esc(pQ)}" oninput="pQ=this.value;renderPeople2(1)"></div>`;
+    <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="pSrch" placeholder="ابحث بالاسم أو الرقم…" value="${esc(pQ)}" oninput="pQ=this.value;renderPeople2(1)"></div>`
+    + (pFil!=='customer'?`<button type="button" class="tm-view pb-btn" onclick="openPushAdmin('${pFil==='store'?'store':'driver'}')">🔔 منو مفعّل الإشعارات ومنو لا ›</button>`:'');
+  if(pFil!=='customer') pushStLoad();
   const q=pQ.trim().toLowerCase(), m=x=>!q||String(x.name||'').toLowerCase().includes(q)||String(x.phone||'').includes(q);
   const row=o=>`<div class="pr2 ${o.cls||''}">
       ${_av(o.img,o.name)}
@@ -17889,7 +17910,7 @@ function renderPeople2(fromQ){
   if(pFil==='store') list=shp.filter(m).sort(_byNew).map(sh=>row({jd:_jdTxt(sh),isNew:_isNew4h(sh),name:sh.name,img:sh.img,phone:sh.phone,
       tag:sh.approved?(isOpenNow(sh)?['مفتوح','ok']:['مسكّر','open']):['موقوف','late'], cls:sh.approved?'':'off',
       sub:'<span dir="ltr">'+esc(sh.phone||'')+'</span> · '+(sh.products||[]).length+' منتج · '+allOrders.filter(o=>o.shopId===sh.id).length+' طلب',
-      extra:secPickHTML(sh), open:`openAdminShop('${sh.id}')`,
+      extra:pushBadge(sh.ownerUid||sh.owner_id)+secPickHTML(sh), open:`openAdminShop('${sh.id}')`,
       tog:`<button class="ic" onclick="okShop('${sh.id}',${!sh.approved})" aria-label="${sh.approved?'إيقاف':'تفعيل'}">${sh.approved?`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg>`:`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg>`}</button>`,
       del:`delShop('${sh.id}')`})).join('');
   else list=(pFil==='driver'?drv:cus).filter(m).sort(_byNew).map(u=>{ const id=u.uid||u.id;
@@ -17900,7 +17921,7 @@ function renderPeople2(fromQ){
       if(pFil==='driver'){ sub+=' · '+allOrders.filter(o=>o.driverUid===id&&o.status==='delivered').length+' توصيلة'+(u.dob?' · العمر '+dwAge(u.dob):'');
         try{ const b=_bal(id); if(b.rem>0) warn='عليه '+_n(b.rem)+' د.ع للتطبيق' }catch(e){} }
       else sub+=' · '+allOrders.filter(o=>o.customerUid===id).length+' طلب'+(u.addr?' · '+esc(u.addr):'');
-      return row({jd:_jdTxt(u),isNew:_isNew4h(u),name:u.name,img:u.photo,phone:u.phone,tag:st,cls:(u.blocked&&!pend)?'off':'',sub,warn,
+      return row({jd:_jdTxt(u),isNew:_isNew4h(u),name:u.name,img:u.photo,phone:u.phone,tag:st,cls:(u.blocked&&!pend)?'off':'',sub,warn,extra:pFil==='driver'?pushBadge(id):'',
         open:pFil==='driver'?`openDrOne('${id}')`:'',
         tog:pend?(u.rejected_at?`<button class="ic" onclick="unReject('driver','${id}')" aria-label="تراجع عن الرفض" title="تراجع عن الرفض"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h10a6 6 0 0 1 0 12h-3"/></svg></button>`:`<button class="ic ok" onclick="okDrvJoin('${id}')" aria-label="موافقة" title="موافقة"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></button>`)
          :`<button class="ic" onclick="blockUser('${id}',${!u.blocked})" aria-label="${u.blocked?'تفعيل':'إيقاف'}">${u.blocked?`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 5l12 7-12 7z"/></svg>`:`<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5v14M15 5v14"/></svg>`}</button>`,
@@ -20481,6 +20502,10 @@ async function initPush(silent){
 .pmo-cnt{font-size:12px;font-weight:700;color:var(--mut);text-align:center;margin-top:10px}
 
 /* ═══ رسالة تفعيل الإشعارات ═══ */
+/* v368: شارة الإشعارات بقائمة المشتركين */
+.pbadge{display:inline-block;margin-top:5px;font-size:11.5px;font-weight:800;border-radius:99px;padding:3px 9px;background:#F3F0F8;color:#5B5470}
+.pbadge.ok{background:#E8F7EE;color:#15803D}.pbadge.late{background:#FDECEC;color:#B42318}.pbadge.part{background:#EEF2FF;color:#3B4FC4}.pbadge.wait{background:#FFF4E5;color:#B45309}
+.pb-btn{margin:0 0 10px}
 /* v366: تبويب طلبات الانضمام */
 #aPending .jseg{margin:0 0 12px}
 /* v363: شريط «فعّل الإشعارات» للسائق والمحل والإدارة */
@@ -24105,7 +24130,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v367', seen={}, n=0, q=[], t=null;
+  var VER='v368', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24357,7 +24382,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v367', t0=Date.now();
+  var VER='v368', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
