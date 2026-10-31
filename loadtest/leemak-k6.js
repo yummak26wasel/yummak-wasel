@@ -40,13 +40,16 @@ export default function (cfg) {
   const db = (path) => ({ method: 'GET', url: `${cfg.url}/rest/v1/${path}`, params: { headers: H, tags: { step: 'db' } } });
 
   /* 1 · فتح التطبيق: الصفحة وملفاتها */
-  const P = { headers: { 'Accept-Encoding': 'br, gzip' }, tags: { step: 'page' } };   /* مثل المتصفح: الملفات مضغوطة */
-  const r1 = http.batch([
-    { method: 'GET', url: `${SITE}/`, params: P },
-    { method: 'GET', url: `${SITE}/sb-layer.js`, params: P },
-    { method: 'GET', url: `${SITE}/auth-layer.js`, params: P },
-  ]);
-  check(r1[0], { 'page 200': (r) => r.status === 200 });
+  /* الي رجعوا للتطبيق عندهم الصفحة محفوظة بالتلفون؛ بس 1 من كل 5 ينزّلها من جديد */
+  if (Math.random() < 0.2) {
+    const P = { headers: { 'Accept-Encoding': 'br, gzip' }, tags: { step: 'page' }, responseType: 'none' };
+    const r1 = http.batch([
+      { method: 'GET', url: `${SITE}/`, params: P },
+      { method: 'GET', url: `${SITE}/sb-layer.js`, params: P },
+      { method: 'GET', url: `${SITE}/auth-layer.js`, params: P },
+    ]);
+    check(r1[0], { 'page 200': (r) => r.status === 200 });
+  }
 
   /* 2 · الي يجيبه التطبيق أول ما ينفتح */
   const r2 = http.batch([
