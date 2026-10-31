@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v354';
+const VER = 'leemak-v355';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 200;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -15,21 +15,21 @@ const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|pr
 const IMG = /\.(png|jpe?g|webp|gif|svg|ico|woff2?)$/i;
 /* v352: صفحة «جاري التحميل / الإنترنت ضعيف / ماكو إنترنت» بنفس شكل التطبيق (بدل الشاشة البيضة أو الدائرة الصغيرة).
    تطلع إذا التطبيق بعده ما محفوظ بالتلفون والنت بطيء — وتفتح التطبيق وحدها أول ما يخلص تحميله */
-const LOAD_HTML = `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2B0A86"><title>واصل ليمَك</title>
+const LOAD_HTML = `<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#ffffff"><title>واصل ليمَك</title>
 <style>html,body{margin:0;height:100%}
-body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:#fff;text-align:center;padding:24px;box-sizing:border-box;overflow:hidden;
-background:radial-gradient(90% 55% at 100% 0%,#7A22F0 0%,rgba(122,34,240,0) 70%),linear-gradient(180deg,#2B0A86 0%,#1F0666 45%,#250879 75%,#2E0B8C 100%)}
-.lg{font-size:30px;font-weight:900;letter-spacing:.3px}.lg i{font-style:normal;color:#F97402}
-.sp{width:58px;height:58px;border-radius:50%;box-sizing:border-box;border:5px solid rgba(190,160,255,.45);border-top-color:#F97402;border-right-color:#F97402;animation:r .8s linear infinite;filter:drop-shadow(0 0 8px rgba(249,116,2,.55))}
+body{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;font-family:system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;color:#2b2240;text-align:center;padding:24px;box-sizing:border-box;overflow:hidden;
+background:#fff}
+.lg{font-size:30px;font-weight:900;letter-spacing:.3px;color:#F97402}.lg i{font-style:normal;color:#5B2BC9}
+.sp{width:58px;height:58px;border-radius:50%;box-sizing:border-box;border:5px solid #E9E2F7;border-top-color:#F97402;border-right-color:#5B2BC9;animation:r .8s linear infinite}
 @keyframes r{to{transform:rotate(360deg)}}
-.off .sp{animation:none;border-color:rgba(255,255,255,.22);filter:none}
+.off .sp{animation:none;border-color:#E9E2F7;filter:none}
 .wf{display:none;width:58px;height:58px}.off .wf{display:block}.off .sp{display:none}
 h2{margin:4px 0 0;font-size:19px;font-weight:800}
-p{margin:0;font-size:14px;opacity:.82;line-height:1.8;max-width:320px}
+p{margin:0;font-size:14px;color:#5B5470;line-height:1.8;max-width:320px}
 button{margin-top:4px;border:0;border-radius:16px;padding:13px 30px;background:#F97402;color:#fff;font:inherit;font-size:16px;font-weight:800;display:none;box-shadow:0 8px 20px rgba(249,116,2,.35)}</style></head><body>
 <div class="lg">واصل <i>ليمَك</i></div>
 <div class="sp"></div>
-<svg class="wf" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/><path d="M5 12.6a10 10 0 0 1 4-2.4M19 12.6a10 10 0 0 0-2.5-1.8"/><path d="M2 8.8a15 15 0 0 1 4.5-2.8M22 8.8A15 15 0 0 0 11 5"/><circle cx="12" cy="19.6" r=".9" fill="#fff"/></svg>
+<svg class="wf" viewBox="0 0 24 24" fill="none" stroke="#5B2BC9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18"/><path d="M8.5 16.4a5 5 0 0 1 7 0"/><path d="M5 12.6a10 10 0 0 1 4-2.4M19 12.6a10 10 0 0 0-2.5-1.8"/><path d="M2 8.8a15 15 0 0 1 4.5-2.8M22 8.8A15 15 0 0 0 11 5"/><circle cx="12" cy="19.6" r=".9" fill="#5B2BC9"/></svg>
 <h2 id="t">جاري تحميل التطبيق…</h2>
 <p id="s">لحظات — نحمّل آخر نسخة</p>
 <button id="b" type="button" onclick="location.reload()">حاول هسه</button>
