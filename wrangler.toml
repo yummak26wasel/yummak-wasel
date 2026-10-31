@@ -25,3 +25,8 @@ service = "leemak-api"
 [[services]]
 binding = "DB"
 service = "leemak-db"
+
+# v372: رموز إشعارات تطبيق المتجر (نفس KV مال leemak-api) — حتى «طلب ينتظر قبولك» ينبعث من السيرفر
+[[kv_namespaces]]
+binding = "PUSH"
+id = "84e62138385c4ab78fd59e8c0bd82951"
