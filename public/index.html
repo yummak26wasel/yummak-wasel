@@ -5629,7 +5629,7 @@ body,.screen{background:#fff;color:var(--txt)}
     <div class="wc-cards">
       <button type="button" class="wc-c sm" onclick="wcGo('store')">
         <div class="wc-i"><img src="cat-buy-1.png" alt=""></div>
-        <b>أريد أتسوّق</b><span>من السوبر ماركت والمحلات التجارية</span>
+        <b>أريد أتسوّق</b><span>من المتاجر والمحلات التجارية</span>
         <i class="wc-a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></i>
       </button>
       <button type="button" class="wc-c rs" onclick="wcGo('restaurant')">
@@ -5665,7 +5665,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <div class="tpick" id="tPick">
           <button type="button" class="tcard sm" data-v="store" onclick="pickType('store',this)">
             <div class="ti"><img src="cat-buy-1.png" alt=""></div>
-            <b>سوبر ماركت</b><span>مواد غذائية ومنتجات الاستهلاك اليومي</span>
+            <b>متجر</b><span>سوبر ماركت، طرشي، مكتبة، وكل المحلات الثانية</span>
             <i class="tr"></i>
           </button>
           <button type="button" class="tcard rs" data-v="restaurant" onclick="pickType('restaurant',this)">
@@ -5782,7 +5782,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v360</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v361</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -11981,7 +11981,7 @@ async function saveUserInfo(){
 let myOffers=[], dscCat='all';
 const DSC_CATS=[['all','الكل','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12.6 2.6 21 11l-9.4 9.4L3 12V4.5a1.9 1.9 0 0 1 1.9-1.9z"/><circle cx="8" cy="8" r="1.4"/></svg>'],
   ['restaurant','طعام','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 3v7a2.5 2.5 0 0 0 5 0V3M7.5 10v11"/><path d="M17 3c-1.7 1-2.5 3-2.5 5.5S15.3 13 17 13v8"/></svg>'],
-  ['store','سوبرماركت','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg>'],
+  ['store','متاجر','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg>'],
   ['event','مناسبات','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="8.5" width="18" height="12" rx="2"/><path d="M12 8.5v12M3 13h18"/><path d="M12 8.5C10 5 5.5 3.5 5.5 6.5S9.5 8.5 12 8.5zM12 8.5c2-3.5 6.5-5 6.5-2S14.5 8.5 12 8.5z"/></svg>']];
 
 async function loadOffersC(){
@@ -12085,7 +12085,7 @@ function renderDisc(){
     const days = o.ends_at ? Math.max(0,Math.ceil((Date.parse(o.ends_at)-now)/86400000)) : null;
     const hot  = top>0 && Number(o.uses_count||0)===top;
     const _k = cat==='all'?'a':(isFood?'f':'s');
-    const _cl = offMulti(o)?nShops(offIds(o).length):(cat==='all'?'كل المحلات':(isFood?'المطاعم':'السوبرماركت'));
+    const _cl = offMulti(o)?nShops(offIds(o).length):(cat==='all'?'كل المحلات':(isFood?'المطاعم':'المتاجر'));
     return `<div class="tkw"><div class="tk ${_k}">
       <div class="tk-st"><b>${v.n}<small>${v.s}</small></b><span>${v.s==='%'?'خصم':'د.ع خصم'}</span></div>
       <div class="tk-bd">
@@ -23877,7 +23877,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v360', seen={}, n=0, q=[], t=null;
+  var VER='v361', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24129,7 +24129,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v360', t0=Date.now();
+  var VER='v361', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
