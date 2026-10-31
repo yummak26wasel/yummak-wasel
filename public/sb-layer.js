@@ -12,7 +12,9 @@ const SB_KEY = "sb_publishable_HJxHDApXLZVPVQ1p8wqq6w_ELPotqfq";
    ويبقى عليه 10 دقايق، وبعدها يرجع يجرّب المباشر.
    القراءة تنعاد تلقائياً على الطريق الثاني. الكتابة (طلب، دفع...) ما تنعاد أبداً حتى ما تتكرر.
    حتى تطفي الجسر: خلّي SB_BRIDGE = "" */
-const SB_BRIDGE = "https://leemak-db.dhifvmy.workers.dev";
+/* v354: على عنواننا الخاص (leemak.app) الجسر يمر من نفس العنوان (/_db) — ما ينحجب مثل workers.dev */
+const SB_BRIDGE = (typeof location !== 'undefined' && location.protocol === 'https:' && !/\.workers\.dev$/.test(location.hostname))
+  ? location.origin + '/_db' : "https://leemak-db.dhifvmy.workers.dev";
 (function(){
   if(typeof window === 'undefined' || typeof window.fetch !== 'function' || !SB_BRIDGE) return;
   const D = SB_URL, B = SB_BRIDGE.replace(/\/+$/, ''), K = 'lw_sb_road';
