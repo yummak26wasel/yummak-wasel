@@ -789,6 +789,43 @@ html[data-theme=dark] .tchip.on{background:#2b2447;border-color:#8B6CF0;color:#d
 .wg-pv{margin:12px 0 4px;font-size:14px;text-align:center}
 .wg-pv s{color:#9A93AC;margin-right:6px;font-size:12.5px}
 .wg-save:disabled{opacity:.5}
+/* v390: الأقسام الفرعية — صف صور داخل القسم (الزبون) + شريط بصفحة القسم (صاحب المحل) */
+.mksubs{display:flex;gap:10px;overflow-x:auto;padding:4px 2px 12px;margin:0 0 4px;scrollbar-width:none;overscroll-behavior-x:contain}
+.mksubs::-webkit-scrollbar{display:none}
+.mksub{flex:0 0 76px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;padding:0;cursor:pointer;font:inherit;color:#6B6480;touch-action:manipulation}
+.mksi{width:70px;height:70px;border-radius:50%;background:#fff;border:2px solid #EEE9F6;display:flex;align-items:center;justify-content:center;overflow:hidden;box-sizing:border-box}
+.mksi img{width:86%;height:86%;object-fit:contain}
+.mksi svg{width:28px;height:28px;color:#B9B0CC}
+.mksi b{font-size:14px;font-weight:900;color:var(--g)}
+.mksub em{font-style:normal;font-size:12px;font-weight:700;line-height:1.35;text-align:center;max-width:76px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mksub.on .mksi{border:2.5px solid #1E1530}
+.mksub.on em{color:#1E1530;font-weight:900}
+.mksub:focus-visible .mksi{outline:2px solid var(--g);outline-offset:2px}
+html[data-theme=dark] .mksub em{color:#bdb5d3}
+html[data-theme=dark] .mksub.on em{color:#fff}
+html[data-theme=dark] .mksub.on .mksi{border-color:#fff}
+#cpSubs:empty{display:none}
+.cps{margin:4px 0 12px;padding:12px;border-radius:16px;background:#F7F4FD}
+.cps-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-bottom:8px}
+.cps-h b{font-size:14.5px;font-weight:900}
+.cps-h span{font-size:11.5px;color:#7A7290}
+.cps-row{display:flex;gap:10px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.cps-row::-webkit-scrollbar{display:none}
+.cps-t{flex:0 0 78px;display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:0;padding:0;font:inherit;color:#1E1530;cursor:pointer;touch-action:manipulation}
+.cps-i{width:64px;height:64px;border-radius:18px;background:#fff;border:1.5px solid #E6E1F0;display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:22px}
+.cps-i img{width:100%;height:100%;object-fit:cover}
+.cps-t em{font-style:normal;font-size:12px;font-weight:800;text-align:center;line-height:1.3;max-width:78px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cps-t small{font-size:10.5px;color:#7A7290}
+.cps-t.add .cps-i{border:2px dashed #CDBDF2;color:var(--g);font-size:28px;font-weight:300}
+.cps-t.add em{color:var(--g)}
+.cps-sub{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:12.5px;color:#5B5470}
+.cps-sub b{color:#1E1530}
+.cps-sub .cps-img{width:52px;height:52px;flex:0 0 52px}
+.cps-btn{border:0;border-radius:10px;padding:7px 10px;font:inherit;font-size:12px;font-weight:800;cursor:pointer;background:#fff;color:var(--g)}
+.cps-btn.rm{color:#C0392B}
+html[data-theme=dark] .cps{background:#231d36}
+html[data-theme=dark] .cps-t,html[data-theme=dark] .cps-sub b{color:#ece8f7}
+html[data-theme=dark] .cps-btn{background:#1a1528}
 /* v388: صورة المنتج — نشيل الخلفية ونحفظها بيضاء وحدها */
 .bgx-one{position:relative;width:62%;max-width:240px;margin:8px auto 6px;border-radius:18px;overflow:hidden;border:2px solid #E6E1F0;background:#fff}
 .bgx-im{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#fff}
@@ -6038,7 +6075,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v389</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v390</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7402,6 +7439,13 @@ function shopCatList(){
   return Object.keys(m).map(c=>({name:c, count:m[c]}));
 }
 
+let _catPids={};
+/* v390: عدد منتجات القسم الرئيسي = منتجاته + منتجات أقسامه الفرعية (بدون تكرار) */
+function _catCntAll(id){
+  const set=new Set(_catPids[id]||[]);
+  _cSubs(myCats,id).forEach(x=>(_catPids[x.id]||[]).forEach(p=>set.add(p)));
+  return set.size || (_catCnt[id]||0);
+}
 async function loadShopCats(){
   if(!me||!me.shopId){ myCats=[]; _catCnt={}; renderCatsPage(); return }
   try{
@@ -7410,12 +7454,12 @@ async function loadShopCats(){
     myCats=[];
     toast('ما گدرنا نجيب التصنيفات: '+String(e.message||e).slice(0,70));
   }
-  _catCnt={};
+  _catCnt={}; _catPids={};
   if(myCats.length){
     try{
       const ids=myCats.map(c=>c.id).join(',');
-      const rows=await sbGet('product_categories?select=category_id&category_id=in.('+ids+')');
-      rows.forEach(r=>{ _catCnt[r.category_id]=(_catCnt[r.category_id]||0)+1 });
+      const rows=await sbGet('product_categories?select=product_id,category_id&category_id=in.('+ids+')');
+      rows.forEach(r=>{ _catCnt[r.category_id]=(_catCnt[r.category_id]||0)+1; (_catPids[r.category_id]=_catPids[r.category_id]||new Set()).add(String(r.product_id)) });
     }catch(e){ }
   }
   await loadTopProducts();
@@ -7442,11 +7486,12 @@ function _topCat(){
 function renderCatsPage(){
   const box=document.getElementById('catsBox')||document.getElementById('catList'); if(!box) return;
   const cnt=document.getElementById('catCount');
-  if(cnt) cnt.textContent=myCats.length;
+  const _tops=_cTop(myCats);   /* v390: الأقسام الفرعية تطلع داخل قسمها */
+  if(cnt) cnt.textContent=_tops.length;
 
   const noCat=((myShopDoc&&myShopDoc.products)||[]).filter(p=>!String(p.cat||'').trim()).length;
 
-  if(!myCats.length){
+  if(!_tops.length){
     box.innerHTML='<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>'
       +'<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>'
       +(_mkMine()?'<div id="bnMine"></div>':'');
@@ -7465,15 +7510,15 @@ function renderCatsPage(){
       </span>
     </div>` : '';
 
-  let html=topRow+'<div id="catRows">'+myCats.map(c=>{
+  let html=topRow+'<div id="catRows">'+_tops.map(c=>{
     const q=JSON.stringify(c.id).replace(/"/g,'&quot;');
-    const off=c.visible===false;
+    const off=c.visible===false, _ns=_cSubs(myCats,c.id).length;
     return `
     <div class="cat-row${off?' hid':''}" data-cid="${esc(c.id)}">
       ${_mkMine()?`<button type="button" class="cat-img${c.img?' has':''}" onclick="catImgPick(${q})" aria-label="صورة القسم">${c.img?`<img src="${esc(c.img)}" alt="">`:'<span>📷</span><em>صورة</em>'}</button>`:''}
       <div class="cat-nm" onclick="catProdsOpen(${q})" style="cursor:pointer">
         <b>${esc(c.name)}${off?' <em>مخفي</em>':''}</b>
-        <span>${_catCnt[c.id]||0} منتج</span>
+        <span>${_catCntAll(c.id)} منتج${_ns?' · '+_ns+' أقسام فرعية':''}</span>
       </div>
       <button class="cat-ic ed" onclick="catProdsOpen(${q})" aria-label="تعديل">
         <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg>
@@ -7490,7 +7535,7 @@ function renderCatsPage(){
 
   if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
 
-  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.</div><div id="bnMine"></div>';   /* v384 */
+  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div>';   /* v384 · v390 */
   box.innerHTML=html;
   catBindDrag();
   if(_mkMine()) loadMyBanners();
@@ -7499,7 +7544,7 @@ function renderCatsPage(){
 /* ═══════════════════════════════════════════════
    إدارة منتجات التصنيف
    ═══════════════════════════════════════════════ */
-let _cpCat=null, _cpLinks=[], _cpTab=1, _cpSel=[], _cpQ1='', _cpQ2='';
+let _cpCat=null, _cpLinks=[], _cpTab=1, _cpSel=[], _cpQ1='', _cpQ2='', _cpParent=null;
 
 function _cpProducts(){ return (myShopDoc&&Array.isArray(myShopDoc.products))?myShopDoc.products:[] }
 function _cpPid(p){ return String(p&&p.id!=null?p.id:'') }
@@ -7507,6 +7552,7 @@ function _cpPid(p){ return String(p&&p.id!=null?p.id:'') }
 async function catProdsOpen(catId){
   _cpCat = (catId===TOP_CAT_ID) ? _topCat() : (myCats.find(x=>x.id===catId) || null);
   if(!_cpCat) return toast('ماكو تصنيف');
+  _cpParent = (_cpCat.parent_id && myCats.find(x=>x.id===_cpCat.parent_id)) || null;   /* v390 */
   _cpTab=1; _cpSel=[]; _cpQ1=''; _cpQ2='';
   if(_cpCat.auto){
     await loadTopProducts();
@@ -7528,6 +7574,7 @@ async function catProdsOpen(catId){
 }
 
 function catProdsClose(){
+  if(_cpParent){ const pid=_cpParent.id; _cpParent=null; return catProdsOpen(pid) }   /* v390: من القسم الفرعي نرجع لقسمه */
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_cats');
   if(pg) pg.classList.add('on');
@@ -7535,6 +7582,30 @@ function catProdsClose(){
 }
 
 function cpTab(n){ _cpTab=n; _cpSel=[]; catProdsRender() }
+/* v390: شريط الأقسام الفرعية بصفحة القسم (السوبر ماركت والكوزمتك) */
+function cpSubsPaint(){
+  let el=document.getElementById('cpSubs');
+  const tabs=document.getElementById('cpTabs');
+  if(!el && tabs){ el=document.createElement('div'); el.id='cpSubs'; tabs.parentNode.insertBefore(el,tabs) }
+  if(!el) return;
+  if(!_cpCat || _cpCat.auto || !_mkMine()){ el.innerHTML=''; return }
+  const q=v=>JSON.stringify(v).replace(/"/g,'&quot;');
+  if(_cpParent){
+    const c=_cpCat;
+    el.innerHTML=`<div class="cps"><div class="cps-sub">
+      <button type="button" class="cps-i cps-img" onclick="catImgPick(${q(c.id)})" aria-label="صورة القسم الفرعي">${c.img?`<img src="${esc(c.img)}" alt="">`:'📷'}</button>
+      <div style="flex:1;min-width:0">قسم فرعي داخل <b>«${esc(_cpParent.name)}»</b><br><small>اضغط المربع وحط صورته — تطلع للزبون بصف الأقسام الفرعية</small></div>
+      <button type="button" class="cps-btn rm" onclick="catRemove(${q(c.id)})">حذف</button>
+    </div></div>`;
+    return;
+  }
+  if(window._subOk===false){ el.innerHTML='<div class="cps"><div class="cps-h"><b>الأقسام الفرعية</b></div><div class="cps-sub">تحتاج تحديث بالقاعدة — شغّل subcats_v390.sql</div></div>'; return }
+  const subs=_cSubs(myCats,_cpCat.id);
+  el.innerHTML=`<div class="cps"><div class="cps-h"><b>الأقسام الفرعية</b><span>مثل: غسيل الصحون · مواد التنظيف</span></div>
+    <div class="cps-row">${subs.map(x=>`<button type="button" class="cps-t" onclick="catProdsOpen(${q(x.id)})"><span class="cps-i">${x.img?`<img loading="lazy" src="${esc(x.img)}" alt="">`:'📂'}</span><em>${esc(x.name)}</em><small>${_catCnt[x.id]||0} منتج</small></button>`).join('')}
+      <button type="button" class="cps-t add" onclick="catOpenForm(null,${q(_cpCat.id)})"><span class="cps-i">+</span><em>قسم فرعي</em></button></div>
+    ${subs.length?'<div class="cp-hint" style="margin:8px 0 0">منتجات الأقسام الفرعية تطلع للزبون بهذا القسم هم.</div>':''}</div>`;
+}
 function cpSearch1(v){ _cpQ1=String(v||'').trim(); cpPaintList() }
 function cpSearch2(v){ _cpQ2=String(v||'').trim(); cpPaintList() }
 
@@ -7546,7 +7617,8 @@ function _cpThumb(p){
 
 function catProdsRender(){
   const t=document.getElementById('cpSub');
-  if(t) t.textContent = _cpCat ? _cpCat.name : '';
+  if(t) t.textContent = _cpCat ? (_cpParent ? _cpParent.name+' ← '+_cpCat.name : _cpCat.name) : '';
+  try{ cpSubsPaint() }catch(e){ console.warn('cpSubs', e) }
   const rb=document.getElementById('cpRenameBt');
   if(rb) rb.style.display = (_cpCat&&_cpCat.auto) ? 'none' : '';
   const inCount=_cpLinks.length;
@@ -7826,7 +7898,8 @@ async function catDragEnd(){
   _dragRow=null;
   const wrap=document.getElementById('catRows'); if(!wrap) return;
   const ids=[...wrap.children].map(r=>r.getAttribute('data-cid'));
-  const same = ids.every((id,i)=> myCats[i] && myCats[i].id===id);
+  const _tp=_cTop(myCats);
+  const same = ids.every((id,i)=> _tp[i] && _tp[i].id===id);
   if(same) return;
   try{
     for(let i=0;i<ids.length;i++){
@@ -7860,21 +7933,24 @@ async function catSyncProducts(oldName, newName){
 }
 
 /* ═══ شاشة إضافة / تعديل تصنيف ═══ */
-let _cfId=null, _cfVis=true;
+let _cfId=null, _cfVis=true, _cfParent=null, _cfFrom=null;
 
 function catAdd(){ catOpenForm(null) }
 function catRename(id){ catOpenForm(id) }
-function catRenameFromProds(){ if(_cpCat && !_cpCat.auto) catRename(_cpCat.id) }
+function catRenameFromProds(){ if(_cpCat && !_cpCat.auto){ const id=_cpCat.id; catOpenForm(id); _cfFrom=id } }
 
-function catOpenForm(id){
+function catOpenForm(id, parent){
   _cfId=id||null;
   const c = id ? myCats.find(x=>x.id===id) : null;
+  _cfParent = parent || (c && c.parent_id) || null;   /* v390: قسم فرعي */
+  _cfFrom = parent || null;
+  const par = _cfParent ? myCats.find(x=>x.id===_cfParent) : null;
   _cfVis = c ? (c.visible!==false) : true;
   const t=document.getElementById('cfTitle');
   const sub=document.getElementById('cfSub');
   const nm=document.getElementById('cfName');
-  if(t) t.textContent = c ? 'تعديل التصنيف' : 'إضافة تصنيف جديد';
-  if(sub) sub.textContent = c ? 'قم بتعديل معلومات التصنيف' : 'قم بإدخال معلومات التصنيف';
+  if(t) t.textContent = par ? (c ? 'تعديل القسم الفرعي' : 'إضافة قسم فرعي') : (c ? 'تعديل التصنيف' : 'إضافة تصنيف جديد');
+  if(sub) sub.textContent = par ? ('داخل «'+par.name+'» — مثل: غسيل الصحون') : (c ? 'قم بتعديل معلومات التصنيف' : 'قم بإدخال معلومات التصنيف');
   if(nm) nm.value = c ? c.name : '';
   catFormPaintToggle();
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
@@ -7891,10 +7967,12 @@ function catFormPaintToggle(){
 function catFormToggle(){ _cfVis=!_cfVis; catFormPaintToggle() }
 
 function catFormClose(){
+  const back=_cfFrom; _cfFrom=null;
+  if(back){ return loadShopCats().then(()=>{ if(myCats.some(x=>x.id===back)) catProdsOpen(back); else catFormClose() }) }   /* v390: نرجع لصفحة القسم */
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_cats');
   if(pg) pg.classList.add('on');
-  loadShopCats();
+  return loadShopCats();
 }
 
 async function catFormSave(){
@@ -7904,11 +7982,14 @@ async function catFormSave(){
   if(myCats.some(x=>x.name===n && x.id!==_cfId)){ toast('الاسم مستخدم بتصنيف ثاني'); return }
 
   if(!_cfId){
-    const mx=myCats.reduce((a,c)=>Math.max(a, c.sort||0), 0);
+    const sib=_cfParent ? _cSubs(myCats,_cfParent) : myCats;
+    const mx=sib.reduce((a,c)=>Math.max(a, c.sort||0), 0);
+    const row={shop_id:me.shopId, name:n, sort:mx+1, visible:_cfVis};
+    if(_cfParent) row.parent_id=_cfParent;   /* v390 */
     try{
-      await sbPost('shop_categories',{shop_id:me.shopId, name:n, sort:mx+1, visible:_cfVis});
-    }catch(e){ toast('ما گدرنا نضيف: '+String(e.message||e).slice(0,90)); return }
-    toast('انضاف التصنيف');
+      await sbPost('shop_categories',row);
+    }catch(e){ toast(/parent_id|column|schema/i.test(String(e.message||e))?'شغّل subcats_v390.sql أول':('ما گدرنا نضيف: '+String(e.message||e).slice(0,90))); return }
+    toast(_cfParent?'انضاف القسم الفرعي ✓':'انضاف التصنيف');
     catFormClose();
     return;
   }
@@ -7934,10 +8015,11 @@ async function catToggle(id){
 }
 
 async function catMove(id, dir){
-  const i=myCats.findIndex(x=>x.id===id);
+  const L=_cTop(myCats);
+  const i=L.findIndex(x=>x.id===id);
   const j=i+dir;
-  if(i<0 || j<0 || j>=myCats.length) return;
-  const a=myCats[i], b=myCats[j];
+  if(i<0 || j<0 || j>=L.length) return;
+  const a=L[i], b=L[j];
   try{
     await sbPatch('shop_categories?id=eq.'+a.id, {sort:(b.sort||0)});
     await sbPatch('shop_categories?id=eq.'+b.id, {sort:(a.sort||0)});
@@ -7947,8 +8029,8 @@ async function catMove(id, dir){
 
 async function catRemove(id){
   const c=myCats.find(x=>x.id===id); if(!c) return;
-  const num=_catCnt[c.id]||0;
-  const yes=await askConfirm('تشيل تصنيف «'+c.name+'»؟<br>'+num+' منتج راح يصيرون بلا قسم — المنتجات ما تنحذف.', {title:'حذف التصنيف', ok:'نعم، احذفه', danger:true});
+  const num=_catCnt[c.id]||0, ns=_cSubs(myCats,c.id).length;
+  const yes=await askConfirm('تشيل '+(c.parent_id?'القسم الفرعي':'تصنيف')+' «'+c.name+'»؟<br>'+num+' منتج راح يصيرون بلا قسم — المنتجات ما تنحذف.'+(ns?'<br>وأقسامه الفرعية ('+ns+') تبقى وتصير أقسام رئيسية.':''), {title:'حذف التصنيف', ok:'نعم، احذفه', danger:true});
   if(!yes) return;
   try{
     await sbDel('shop_categories?id=eq.'+id);
@@ -7956,6 +8038,7 @@ async function catRemove(id){
   await catSyncProducts(c.name, '');
   toast('انشال التصنيف');
   await loadShopCats();
+  if(_cpCat && _cpCat.id===id && document.getElementById('q_catprods')?.classList.contains('on')) catProdsClose();   /* v390: كنا داخل القسم الي انحذف */
 }
 
 /* ═══════════════════════════════════════════════
@@ -10699,7 +10782,7 @@ function openShop(id){
     ${open?'':`<div class="closedbanner"><span class="wdot" style="background:#DC2626"></span> هذا المحل مسكّر الآن<br>${nextOpenTxt(curShop)}</div>`}`;
 
   renderShopOffers();
-  menuSec='__all';
+  menuSec='__all'; menuSub='';
   shopQ=''; { const _sb=document.getElementById('shopSearch'); if(_sb) _sb.dataset.sid='' }   /* v383 */
   _shopCats=[]; _shopLinks={}; _shopTop=[];
   renderMenu();
@@ -10720,7 +10803,7 @@ function renderShopOffers(){
       <div class="spofft"><b>${o.title||'عرض'}</b><span>${o.body||o.desc||''}</span></div>
     </div>`).join('')}</div>`;
 }
-let menuSec='__all';
+let menuSec='__all', menuSub='';   /* v390: menuSub = القسم الفرعي المختار داخل menuSec */
 let _shopCats=[], _shopLinks={}, _shopTop=[];
 
 async function loadShopPublicCats(){
@@ -10757,19 +10840,41 @@ function _secProducts(all){
   if(menuSec==='__top')
     return all.filter(p=>_shopTop.includes(String(p.id)))
               .sort((a,b)=>_shopTop.indexOf(String(a.id))-_shopTop.indexOf(String(b.id)));
-  const ids=_shopLinks[menuSec];
+  const ids=_secIds(menuSec, menuSub);
   if(ids && ids.length) return all.filter(p=>ids.includes(String(p.id)));
-  const c=_shopCats.find(x=>x.id===menuSec);
-  const nm=c?c.name:menuSec;
+  const c=_shopCats.find(x=>x.id===(menuSub||menuSec));
+  const nm=c?c.name:(menuSub||menuSec);
+  if(!menuSub){   /* v390: القسم الرئيسي = منتجاته + منتجات أقسامه الفرعية */
+    const names=[nm].concat(_cSubs(_shopCats,menuSec).map(x=>x.name));
+    return all.filter(x=>names.includes(String(x.cat||'').trim()));
+  }
   return all.filter(x=>String(x.cat||'').trim()===nm);
+}
+function _secIds(sec, sub){
+  if(sub) return _shopLinks[sub];
+  const subs=_cSubs(_shopCats,sec);
+  if(!subs.length) return _shopLinks[sec];
+  const set=new Set(_shopLinks[sec]||[]);
+  subs.forEach(x=>(_shopLinks[x.id]||[]).forEach(id=>set.add(id)));
+  return [...set];
 }
 /* ═══ v383: صفحة السوبر ماركت — بحث داخل المحل + شبكة الأقسام بالصور + صف لكل قسم (مثل تطبيقات الماركت، بطريقتنا) ═══ */
 let shopQ='';
 function _isMarket(s){ return !!s && (shopSec(s)==='market' || shopSec(s)==='cosmetics') }   /* v384: الماركت والكوزمتك نفس الصفحة */
 function _useShopSearch(s){ return _isMarket(s) || ((s&&s.products)||[]).length>=15 }
 function _normAr(t){ return String(t||'').toLowerCase().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ً-ْـ]/g,'').replace(/\s+/g,' ').trim() }
-function shopCatList(){ return _shopCats.length ? _shopCats.map(c=>({id:c.id,name:c.name,img:c.img||''})) : menuSections().map(n=>({id:n,name:n})) }
-function prodsOfSec(id){ const keep=menuSec; menuSec=id; let r=[]; try{ r=_secProducts((curShop&&curShop.products)||[]) }finally{ menuSec=keep } return r }
+function shopCatList(){ return _shopCats.length ? _cTop(_shopCats).map(c=>({id:c.id,name:c.name,img:c.img||''})) : menuSections().map(n=>({id:n,name:n})) }
+function prodsOfSec(id){ const keep=menuSec, ks=menuSub; menuSec=id; menuSub=''; let r=[]; try{ r=_secProducts((curShop&&curShop.products)||[]) }finally{ menuSec=keep; menuSub=ks } return r }
+function _prodsOfSub(id){ const ks=menuSub; menuSub=id; let r=[]; try{ r=_secProducts((curShop&&curShop.products)||[]) }finally{ menuSub=ks } return r }
+/* v390: صف الأقسام الفرعية فوك منتجات القسم — «الكل» + كل قسم فرعي بصورته */
+function _mkSubRow(subs){
+  const main=_shopCats.find(c=>c.id===menuSec)||{};
+  const allPs=prodsOfSec(menuSec);
+  const tiles=[{id:'',name:'الكل',img:main.img||(allPs.find(p=>p.img)||{}).img||''}].concat(subs.map(x=>({id:x.id,name:x.name,img:x.img||(_prodsOfSub(x.id).find(p=>p.img)||{}).img||''})));
+  return `<div class="mksubs" role="tablist">${tiles.map(t=>{ const on=(t.id||'')===(menuSub||'');
+    return `<button type="button" role="tab" aria-selected="${on}" class="mksub${on?' on':''}" onclick="pickSub(${_secAttr(t.id)})"><span class="mksi">${t.img?`<img loading="lazy" decoding="async" src="${esc(t.img)}" alt="">`:(t.id?prodPH():'<b>الكل</b>')}</span><em>${esc(t.name)}</em></button>` }).join('')}</div>`;
+}
+function pickSub(v){ menuSub=v||''; renderMenu() }
 function _mkHome(){ return _isMarket(curShop) && menuSec==='__all' && !String(shopQ||'').trim() }
 function _secAttr(v){ return JSON.stringify(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;') }
 /* v384: الخصم — «السعر قبل الخصم» للعرض بس: الزبون يدفع سعر المنتج نفسه (ما يتغيّر شي بالحساب) */
@@ -10821,7 +10926,15 @@ function spCardHTML(p){
         </div>`;
 }
 /* ═══ v384: صور الأقسام + بنرات عروض الماركت (تنزل للزبون بعد موافقة الإدارة) ═══ */
-async function _catsGet(q){ try{ return await sbGet(q.replace('select=id,name,sort,visible','select=id,name,sort,visible,img')) }catch(e){ return await sbGet(q) } }
+async function _catsGet(q){
+  const B='select=id,name,sort,visible';
+  try{ const r=await sbGet(q.replace(B,B+',img,parent_id')); window._subOk=true; return r }catch(e){}   /* v390: الأقسام الفرعية */
+  window._subOk=false;
+  try{ return await sbGet(q.replace(B,B+',img')) }catch(e){ return await sbGet(q) }
+}
+/* v390: الأقسام الفرعية — قسم بيه parent_id يطلع داخل قسمه الرئيسي، مو بالقائمة الرئيسية */
+function _cTop(list){ return (list||[]).filter(c=>!c.parent_id) }
+function _cSubs(list,id){ return (list||[]).filter(c=>c.parent_id && String(c.parent_id)===String(id)).sort((a,b)=>(a.sort||0)-(b.sort||0)) }
 function _mkMine(){ return !!(typeof myShopDoc!=='undefined' && myShopDoc && _isMarket(myShopDoc)) }
 function _bnImgOk(u){ return typeof u==='string' && u.indexOf(SB_URL+'/storage/v1/object/public/images/banners/')===0 }
 /* — صاحب المحل: صورة القسم — */
@@ -10839,7 +10952,9 @@ async function catImgUp(inp){
     if(!url) return;
     await sbPatch('shop_categories?id=eq.'+encodeURIComponent(id),{img:url});
     const c=(myCats||[]).find(x=>x.id===id); if(c) c.img=url;
-    renderCatsPage(); toast('انحفظت صورة القسم ✓');
+    if(_cpCat && _cpCat.id===id) _cpCat.img=url;
+    renderCatsPage(); try{ if(document.getElementById('q_catprods').classList.contains('on')) cpSubsPaint() }catch(e){}
+    toast('انحفظت صورة القسم ✓');
   }catch(e){ toast(/img|column|schema/i.test(errMsg(e))?'شغّل market_v384.sql أول':('ما انحفظت: '+errMsg(e))) }
   inp.value='';
 }
@@ -11037,7 +11152,11 @@ function renderMkRows(box,cats){
     +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${rest.slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
   return true;
 }
-function pickSec(v){ menuSec=v; renderMenu();
+function pickSec(v){
+  /* v390: إذا هذا قسم فرعي (مثلاً من بنر) — نفتح قسمه الرئيسي ونختاره */
+  const c=_shopCats.find(x=>x.id===v);
+  if(c && c.parent_id && _shopCats.some(x=>x.id===c.parent_id)){ menuSec=c.parent_id; menuSub=v } else { menuSec=v; menuSub='' }
+  renderMenu();
   const t=document.getElementById('menuTabs'); if(t)t.scrollIntoView({behavior:'smooth',block:'start'}) }
 function renderMenuTabs(){
   const box=document.getElementById('menuTabs'), ttl=document.getElementById('secTtl');
@@ -11045,11 +11164,12 @@ function renderMenuTabs(){
   if(_mkHome() || String(shopQ||'').trim()){ box.innerHTML=''; if(ttl) ttl.textContent=''; return }   /* v383 */
   let T=null;
   if(_shopCats.length){
-    const valid=['__all'].concat(_shopTop.length?['__top']:[]).concat(_shopCats.map(c=>c.id));
-    if(!valid.includes(menuSec)) menuSec='__all';
+    const _tops=_cTop(_shopCats);   /* v390: التبويبات للأقسام الرئيسية بس */
+    const valid=['__all'].concat(_shopTop.length?['__top']:[]).concat(_tops.map(c=>c.id));
+    if(!valid.includes(menuSec)){ menuSec='__all'; menuSub='' }
     T=[['__all','الكل']]
       .concat(_shopTop.length?[['__top','الأكثر مبيعاً']]:[])
-      .concat(_shopCats.map(c=>[c.id,c.name]));
+      .concat(_tops.map(c=>[c.id,c.name]));
     if(T.length<2){ box.innerHTML=''; if(ttl)ttl.textContent=''; menuSec='__all'; return }
   }else{
     const secs=menuSections();
@@ -11116,8 +11236,12 @@ function renderMenu(){
     if(!ps.length){ box.innerHTML=EMPTY('ما لگينا «'+esc(String(shopQ).trim())+'» بهذا المحل'); renderSpBar(); return }
   } else if(_cats && renderMkRows(box,_cats)){ if(_ttl) _ttl.textContent=''; renderSpBar(); return }
   else var ps = _secProducts(all);
-  if(!ps.length){ box.innerHTML=EMPTY(_isMarket(curShop)?'هذا القسم بعده ما بيه منتجات':'ما بيه منتجات بهذا القسم'); renderSpBar(); return }
-  if(_isMarket(curShop)){ box.innerHTML='<div class="mkpg">'+ps.map(mkCardHTML).join('')+'</div>'; renderSpBar(); return }   /* v384 */
+  /* v390: صف الأقسام الفرعية داخل قسم السوبر ماركت */
+  const _subs=(!_q && _isMarket(curShop) && menuSec!=='__all' && menuSec!=='__top') ? _cSubs(_shopCats,menuSec) : [];
+  if(menuSub && !_subs.some(x=>x.id===menuSub)){ menuSub=''; ps=_secProducts(all) }
+  const _subRow=_subs.length?_mkSubRow(_subs):'';
+  if(!ps.length){ box.innerHTML=_subRow+EMPTY(_isMarket(curShop)?'هذا القسم بعده ما بيه منتجات':'ما بيه منتجات بهذا القسم'); renderSpBar(); return }
+  if(_isMarket(curShop)){ box.innerHTML=_subRow+'<div class="mkpg">'+ps.map(mkCardHTML).join('')+'</div>'; renderSpBar(); return }   /* v384 */
   box.innerHTML=ps.map(p=>`
     <div class="prod"${p.avail===false?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
@@ -25102,7 +25226,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v389', seen={}, n=0, q=[], t=null;
+  var VER='v390', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25354,7 +25478,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v389', t0=Date.now();
+  var VER='v390', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

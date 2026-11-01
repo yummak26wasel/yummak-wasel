@@ -46,7 +46,7 @@ async function nudge(req, env) {
       for (const k of L.keys) {
         const t = await env.PUSH.get(k.name);
         if (!t) continue;
-        const g = byTok.get(t) || { orders: [], total: 0, shop: String(info.shop_id || '') };
+        const g = byTok.get(t) || { orders: [], total: 0, shop: String(info.shop_id || ''), p: (k.metadata || {}).p };
         g.orders.push(id); g.total += Number(info.total || 0);
         byTok.set(t, g);
       }
@@ -55,14 +55,18 @@ async function nudge(req, env) {
   const msgs = [];
   for (const [t, g] of byTok) {
     const n = g.orders.length, first = g.orders[0];
-    msgs.push({
+    const m = {
       to: t,
       title: n > 1 ? '⏰ عندك ' + n + ' طلبات تنتظر قبولك' : '⏰ طلب ينتظر قبولك',
       body: n > 1 ? 'الزبائن ينتظرون — اقبلها هسه' : 'طلب بقيمة ' + g.total.toLocaleString('en-US') + ' د.ع — الزبون ينتظر، اقبله هسه',
       priority: 'high', channelId: 'orders', sound: 'new_order.wav', interruptionLevel: 'time-sensitive',
       data: { url: '/?nof=' + encodeURIComponent(first), tag: 'new_order', type: 'new_order', order_id: first,
               shop_id: g.shop, total: String(g.total), count: String(n) }
-    });
+    };
+    /* v390: تطبيق الأندرويد بعده ما مسوي قناة «orders» — إشعار بقناة مو موجودة التلفون يرميه والشاشة مسدودة.
+       لحد ما عزوز يضيفها: نخليه على القناة العادية (تنخلق وحدها) حتى يوصل ويرن */
+    if (g.p === 'android') { delete m.channelId; m.sound = 'default'; }
+    msgs.push(m);
   }
   for (let i = 0; i < msgs.length; i += 100) {
     try {
