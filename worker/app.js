@@ -140,7 +140,8 @@ async function pushTestIos(env) {
 
 /* v390 (فحص مؤقت): أجهزة شخص واحد بتطبيق المتجر — كم جهاز ونوعه (بدون الرموز نفسها).
    مع send=1: إشعار تجربة ظاهر لأجهزته (مرة بالدقيقة كحد أقصى) ويرجّع جواب Expo و Apple */
-async function pushTestUser(env, uid, send) {
+async function pushTestUser(env, uid, send, opt) {
+  opt = opt || {};
   if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
   if (!UUID_RE.test(uid)) return jres({ error: 'bad uid' }, 400);
   const L = await env.PUSH.list({ prefix: 'u:' + uid + ':' });
@@ -149,10 +150,12 @@ async function pushTestUser(env, uid, send) {
   if (await env.PUSH.get('diag:u')) return jres({ error: 'wait a minute' }, 429);
   await env.PUSH.put('diag:u', '1', { expirationTtl: 60 });
   const toks = [];
-  for (const d of devs) { const t = await env.PUSH.get(d.key); if (t) toks.push({ t, d }); }
+  for (const d of devs) { if (opt.p && d.p !== opt.p) continue; const t = await env.PUSH.get(d.key); if (t) toks.push({ t, d }); }
   const r = await fetch(EXPO_SEND, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-    body: JSON.stringify(toks.map(x => ({ to: x.t, title: '🔔 تجربة من السيرفر', body: 'إذا وصلك هذا وانسمع، إشعارات الطلبات شغّالة ✓',
-      priority: 'high', channelId: 'orders', sound: 'new_order.wav', interruptionLevel: 'time-sensitive', data: { type: 'test', url: '/' } }))) });
+    body: JSON.stringify(toks.map(x => { const m = { to: x.t, title: '🔔 تجربة من السيرفر', body: 'إذا وصلك هذا وانسمع، إشعارات الطلبات شغّالة ✓',
+      priority: 'high', channelId: 'orders', sound: 'new_order.wav', interruptionLevel: 'time-sensitive', data: { type: 'test', url: '/' } };
+      if (opt.noch) { delete m.channelId; m.sound = 'default'; m.title = '🔔 تجربة ٢ من السيرفر'; }
+      return m; })) });
   const j = await r.json().catch(() => null);
   const tks = (j && j.data) || [];
   const ids = tks.map(x => x && x.id).filter(Boolean);
@@ -217,7 +220,8 @@ export default {
     if (url.pathname === '/_bg') return bgRemove(req, env, url);
     if (url.pathname === '/_nudge') return nudge(req, env);
     if (url.pathname === '/_pushstats') return pushStats(env);
-    if (url.pathname === '/_pushtest') return url.searchParams.get('u') ? pushTestUser(env, url.searchParams.get('u'), url.searchParams.get('send') === '1')
+    if (url.pathname === '/_pushtest') return url.searchParams.get('u') ? pushTestUser(env, url.searchParams.get('u'), url.searchParams.get('send') === '1',
+                                                { p: url.searchParams.get('p') || '', noch: url.searchParams.get('ch') === '0' })
                                             : (url.searchParams.get('ios') ? pushTestIos(env) : pushTestAdmin(env));
     for (const pre in MAP) {
       if (url.pathname !== pre && !url.pathname.startsWith(pre + '/')) continue;
