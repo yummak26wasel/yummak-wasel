@@ -735,7 +735,7 @@ html[data-theme=dark] .fld .of-mi{border-color:#2c2542}
 .tchip .tci.rs{background-image:url(cat-food-1.png)}
 .tchip .tci.sm{background-image:url(cat-store-1.png)}
 .tchip .tci.tc-mk{background-image:url(cat-market.png)}
-.tchip .tci.tc-ph{background-image:url(cat-pharm.png)}
+.tchip .tci.tc-ph{background-image:url(cat-medsup.png)}
 /* v379: خمس أنواع — ثلاثة فوگ واثنين جوّا بالنص، الصورة فوگ الاسم */
 .tchips.t5{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
 .tchips.t5 .tchip{grid-column:span 2;flex-direction:column;gap:3px;height:70px;padding:6px 4px}
@@ -5693,7 +5693,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <div class="tchips t5" id="tPick">
           <button type="button" class="tchip" data-v="restaurant" onclick="pickType('restaurant',this)"><i class="tci rs"></i><b>مطعم</b></button>
           <button type="button" class="tchip" data-v="market" onclick="pickType('market',this)"><i class="tci tc-mk"></i><b>سوبر ماركت</b></button>
-          <button type="button" class="tchip" data-v="pharmacy" onclick="pickType('pharmacy',this)"><i class="tci tc-ph"></i><b>صيدلية</b></button>
+          <button type="button" class="tchip" data-v="pharmacy" onclick="pickType('pharmacy',this)"><i class="tci tc-ph"></i><b>مستلزمات طبية</b></button>
           <button type="button" class="tchip" data-v="store" onclick="pickType('store',this)"><i class="tci sm"></i><b>متجر</b></button>
           <button type="button" class="tchip" data-v="cosmetics" onclick="pickType('cosmetics',this)"><i class="tci cs"></i><b>كوزمتك</b></button>
         </div>
@@ -5799,7 +5799,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v379</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v380</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -9669,7 +9669,7 @@ function renderCats(){
     ['market',     'cat-market.png', 'سوبر ماركت'],   /* v379 */
     ['special',    'cat-buy-1.png', 'اشتريلي'],
     ['veg',        'cat-veg.png',   'مخضر'],   /* v346 */
-    ['pharmacy',   'cat-pharm.png', 'صيدليات'],   /* v379 */
+    ['pharmacy',   'cat-medsup.png', 'مستلزمات طبية'],   /* v379 · v380: مستلزمات طبية مو أدوية (الأدوية ممنوع تتوصّل) */
     ['store',      'cat-store-1.png', 'متاجر'],
     ['cosmetics',  'cat-cosm-2.png',  'كوزمتك']   /* v379: الصورة بدون الكلمة المكتوبة بيها */
   ];
@@ -9681,7 +9681,7 @@ function renderCats(){
   const cab=document.getElementById('catAllBtn'); if(cab) cab.style.display=(cat!=='all')?'inline-flex':'none';
   const t=document.getElementById('listTtl');
   if(t) t.textContent={all:'كل المحلات',restaurant:'المطاعم',store:'المتاجر',
-                       sweet:'الحلويات',cosmetics:'كوزمتك',veg:'المخضر',gifts:'هدايا',market:'سوبر ماركت',pharmacy:'الصيدليات',
+                       sweet:'الحلويات',cosmetics:'كوزمتك',veg:'المخضر',gifts:'هدايا',market:'سوبر ماركت',pharmacy:'المستلزمات الطبية',
                        other:'الخدمات'}[cat]||'كل المحلات';
 }
 /* ══════════ معالج تسجيل السائق — ٨ خطوات ══════════ */
@@ -9917,7 +9917,7 @@ function wcGo(v){
   try{ buzz(14) }catch(e){}
 }
 const CAT_SOON=[];   /* v324: المتاجر والكوزمتك اشتغلت — ماكو قسم «قريباً» */
-/* v379: السوبر ماركت والصيدليات يطلع عليهم «قريباً» لحد ما ينفتح أول محل بيهم */
+/* v379: السوبر ماركت والمستلزمات الطبية يطلع عليهم «قريباً» لحد ما ينفتح أول محل بيهم */
 function catSoon(v){ if(CAT_SOON.includes(v)) return true; if(v!=='market'&&v!=='pharmacy') return false; return !!window.__shopsLoaded && !(shops||[]).some(s=>shopSec(s)===v) }
 function pickCat(v){
   if(v==='special'){ openSpecialOrder && openSpecialOrder(); return }
@@ -10184,8 +10184,8 @@ function renderDailyMeals(){
 /* v330: قسم المحل بالرئيسية (مطاعم · حلويات · متاجر · كوزمتك) — الإدارة تختاره من لوحتها.
    إذا الإدارة ما اختارت: حسب نوع المحل بالتسجيل (ونفس البحث بالاسم للحلويات والكوزمتك مثل قبل).
    القسم بس للعرض — قوانين المطعم (الشروط، الأيام المجانية، العمولة) تبقى حسب نوع التسجيل. */
-const SEC_LBL={restaurant:'مطاعم',sweet:'حلويات',market:'سوبر ماركت',pharmacy:'صيدليات',store:'متاجر',cosmetics:'كوزمتك',veg:'مخضر'};   /* v346: مخضر · v379: سوبر ماركت وصيدليات */
-const SEC_ONE={restaurant:'مطعم',sweet:'حلويات',market:'سوبر ماركت',pharmacy:'صيدلية',store:'متجر',cosmetics:'كوزمتك',veg:'مخضر'};
+const SEC_LBL={restaurant:'مطاعم',sweet:'حلويات',market:'سوبر ماركت',pharmacy:'مستلزمات طبية',store:'متاجر',cosmetics:'كوزمتك',veg:'مخضر'};   /* v346: مخضر · v379: سوبر ماركت وصيدليات */
+const SEC_ONE={restaurant:'مطعم',sweet:'حلويات',market:'سوبر ماركت',pharmacy:'مستلزمات طبية',store:'متجر',cosmetics:'كوزمتك',veg:'مخضر'};
 const SWEET_RE=/حلوي|كيك|دونات|آيس|ايس|شوكولا|معجن|حلا|بوظة/, COSM_RE=/كوزمت|تجميل|مكياج|عطور|كوزمي/, VEG_RE=/مخضر|خضار|خضرو|فواكه|فاكهة/;
 function shopSec(s){ if(!s) return ''; if(SEC_LBL[s.section]) return s.section; return SEC_LBL[s.type]?s.type:'store' }
 function inSec(s,c){
@@ -10206,7 +10206,7 @@ function renderShops(){
   if(cat==='all' && !q){
     if(ttlWrap) ttlWrap.style.display='none';
     try{ renderRecent() }catch(e){}
-    const SECS=[['restaurant','مطاعم قريبة منك'],['sweet','حلويات'],['market','سوبر ماركت'],['veg','مخضر'],['pharmacy','صيدليات'],['store','متاجر قريبة منك'],['cosmetics','كوزمتك']]
+    const SECS=[['restaurant','مطاعم قريبة منك'],['sweet','حلويات'],['market','سوبر ماركت'],['veg','مخضر'],['pharmacy','مستلزمات طبية'],['store','متاجر قريبة منك'],['cosmetics','كوزمتك']]
       .map(([c,t])=>[c,t,shops.filter(s=>shopSec(s)===c).slice(0,6)]).filter(x=>x[2].length);
     if(!SECS.length){
       /* v324: المحلات بعدها تنجاب — هيكل تحميل بدل «ماكو محلات» */
@@ -24265,7 +24265,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v379', seen={}, n=0, q=[], t=null;
+  var VER='v380', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24517,7 +24517,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v379', t0=Date.now();
+  var VER='v380', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

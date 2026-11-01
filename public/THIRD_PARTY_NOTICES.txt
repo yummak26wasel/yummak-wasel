@@ -1,6 +1,6 @@
 Third-party assets used by واصل ليمَك
 
-cat-market.png, cat-pharm.png — from Microsoft Fluent Emoji (https://github.com/microsoft/fluentui-emoji), resized.
+cat-market.png, cat-pharm.png, cat-medsup.png — made from Microsoft Fluent Emoji (https://github.com/microsoft/fluentui-emoji), resized/combined.
 
 MIT License
 
