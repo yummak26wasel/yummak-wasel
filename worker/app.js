@@ -75,10 +75,23 @@ async function nudge(req, env) {
   return jres({ ok: true, orders: ids.length, checked, devices: msgs.length, sent });
 }
 
+/* v373: كم جهاز مسجّل بتطبيق المتجر (أعداد بس — بدون أي اسم أو رقم) */
+async function pushStats(env) {
+  if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
+  const by = {}; let total = 0, cursor;
+  do {
+    const r = await env.PUSH.list({ prefix: 'u:', cursor });
+    for (const k of r.keys) { total++; const role = (k.metadata && k.metadata.r) || '?'; by[role] = (by[role] || 0) + 1; }
+    cursor = r.list_complete ? undefined : r.cursor;
+  } while (cursor);
+  return jres({ ok: true, devices: total, by_role: by });
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     if (url.pathname === '/_nudge') return nudge(req, env);
+    if (url.pathname === '/_pushstats') return pushStats(env);
     for (const pre in MAP) {
       if (url.pathname !== pre && !url.pathname.startsWith(pre + '/')) continue;
       const svc = env[MAP[pre]];
