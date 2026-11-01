@@ -30,3 +30,7 @@ service = "leemak-db"
 [[kv_namespaces]]
 binding = "PUSH"
 id = "84e62138385c4ab78fd59e8c0bd82951"
+
+# v387: شيل خلفية صور المنتجات (Cloudflare Images — segment=foreground) ← worker/app.js /_bg
+[images]
+binding = "IMAGES"

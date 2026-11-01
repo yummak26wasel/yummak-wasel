@@ -138,9 +138,48 @@ async function pushTestIos(env) {
                 receipt: receipt && { status: receipt.status, error: receipt.details && receipt.details.error, message: receipt.message && String(receipt.message).slice(0, 140) } });
 }
 
+/* ═══ v387: شيل خلفية صورة المنتج — Cloudflare Images (segment=foreground، ذكاء اصطناعي)
+   ناخذ بس روابط صورنا العامة (Supabase /images/) — ما نقبل صور من برّة، حتى محد يستغله.
+   يرجّع المنتج بخلفية شفافة (webp)، والتطبيق يقص حواليه ويحطه بالنص على أبيض.
+   الحساب المجاني: 5,000 صورة بالشهر — نفس الصورة ما تنحسب مرتين بنفس الشهر. */
+const IMG_PATH = '/storage/v1/object/public/images/';
+function b64(buf) {
+  const u = new Uint8Array(buf); let s = '';
+  for (let i = 0; i < u.length; i += 0x8000) s += String.fromCharCode.apply(null, u.subarray(i, i + 0x8000));
+  return btoa(s);
+}
+async function bgRemove(req, env, url) {
+  let src = url.searchParams.get('u') || '';
+  if (req.method === 'POST') { try { const b = await req.json(); src = String((b && b.url) || ''); } catch (e) { src = ''; } }
+  else if (req.method !== 'GET') return jres({ error: 'method' }, 405);
+  let su = null;
+  try { su = new URL(src); } catch (e) {}
+  if (!su || su.origin !== SB_URL || !su.pathname.startsWith(IMG_PATH) || su.search || su.pathname.length > 300)
+    return jres({ error: 'bad url' }, 400);
+  if (!env.IMAGES) return jres({ error: 'images not bound' }, 501);
+  let r;
+  try { r = await fetch(su.toString()); } catch (e) { return jres({ error: 'fetch' }, 502); }
+  if (!r.ok || !r.body) return jres({ error: 'source ' + r.status }, 404);
+  if (Number(r.headers.get('content-length') || 0) > 8e6) return jres({ error: 'too big' }, 413);
+  try {
+    const out = (await env.IMAGES.input(r.body)
+      .transform({ width: 1000, height: 1000, fit: 'scale-down', segment: 'foreground' })
+      .output({ format: 'image/webp', quality: 90 })).response();
+    const type = out.headers.get('content-type') || 'image/webp';
+    if (url.searchParams.get('b64')) {   /* فحص من السيرفر: نفس الصورة بس كنص */
+      const buf = await out.arrayBuffer();
+      return jres({ ok: true, type, bytes: buf.byteLength, b64: b64(buf) });
+    }
+    return new Response(out.body, { headers: { 'Content-Type': type, 'Cache-Control': 'private, max-age=600' } });
+  } catch (e) {
+    return jres({ error: 'transform', message: String((e && e.message) || e).slice(0, 200) }, 502);
+  }
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
+    if (url.pathname === '/_bg') return bgRemove(req, env, url);
     if (url.pathname === '/_nudge') return nudge(req, env);
     if (url.pathname === '/_pushstats') return pushStats(env);
     if (url.pathname === '/_pushtest') return url.searchParams.get('ios') ? pushTestIos(env) : pushTestAdmin(env);
