@@ -816,6 +816,150 @@ html[data-theme=dark] .wgcard{background:#1a1528;color:#ece8f7}
 .mksh button{flex-shrink:0;border:0;background:none;color:var(--g);font:inherit;font-weight:800;font-size:13px;cursor:pointer;padding:4px 0}
 html[data-theme=dark] .shsrch{background:#1f1a30;border-color:#3a3354}
 html[data-theme=dark] .mkci{background:#1f1a30}
+
+/* v384: صور الأقسام + البنرات */
+.cat-img{flex-shrink:0;width:52px;height:52px;border-radius:14px;border:1.5px dashed #CDBDF2;background:#F7F4FD;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0;overflow:hidden;cursor:pointer;font:inherit}
+.cat-img.has{border-style:solid;border-color:#E6E1F0;background:#fff}
+.cat-img img{width:100%;height:100%;object-fit:cover}
+.cat-img span{font-size:16px;line-height:1}
+.cat-img em{font-style:normal;font-size:10px;color:#7A7290;font-weight:700}
+.bnm{margin:16px 0 8px;padding:14px;border:1.5px solid #E6E1F0;border-radius:18px;background:#fff}
+.bnm-h b{display:block;font-size:15px}
+.bnm-h span{display:block;font-size:12px;color:#7A7290;margin-top:2px}
+.bnm-it{display:flex;align-items:center;gap:10px;margin-top:12px;padding-top:12px;border-top:1px solid #F0EDF6}
+.bnm-it img{width:96px;height:48px;border-radius:10px;object-fit:cover;flex-shrink:0;background:#F3F0F8;cursor:pointer}
+.bnm-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px;font-size:12px;color:#5B5470}
+.bnm-tx small{color:#C0392B;font-size:11.5px}
+.bnst{font-style:normal;font-weight:800;font-size:12px}
+.bnst.wait{color:#B45309}.bnst.ok{color:#15803D}.bnst.no{color:#C0392B}
+.bnm-del{flex-shrink:0;border:0;background:#FDECEA;width:34px;height:34px;border-radius:10px;font-size:15px;cursor:pointer}
+.bnm-add{margin-top:12px;width:100%;border:1.5px dashed #CDBDF2;background:#F7F4FD;color:var(--g);border-radius:14px;padding:12px;font:inherit;font-weight:800;font-size:14px;cursor:pointer}
+.bnm-max{margin-top:10px;font-size:12px;color:#7A7290;text-align:center}
+.bn-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;aspect-ratio:2/1;border:2px dashed #CDBDF2;border-radius:16px;background:#F7F4FD;cursor:pointer;overflow:hidden;text-align:center}
+.bn-ph span{font-size:15px;font-weight:800;color:var(--g)}
+.bn-ph em{font-style:normal;font-size:12px;color:#7A7290;padding:4px}
+.bn-ph img{width:100%;height:100%;object-fit:cover}
+.bn-k{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 10px}
+.bn-k button{border:1.5px solid #E6E1F0;background:#fff;border-radius:999px;padding:7px 12px;font:inherit;font-size:13px;font-weight:700;cursor:pointer;color:#2C2440}
+.bn-k button.on{border-color:var(--g);background:#F5F0FF;color:var(--g)}
+.bn-sel{width:100%;box-sizing:border-box;padding:12px;border:1.5px solid #E6E1F0;border-radius:12px;font:inherit;font-size:16px;background:#fff;color:#2C2440;margin-bottom:6px}
+.bnj-img{width:100%;aspect-ratio:2/1;object-fit:cover;border-radius:14px;margin:8px 0;background:#F3F0F8;cursor:pointer}
+.bnj-a{display:flex;gap:8px}
+.sbn{margin:6px 0 10px}
+.sbn-tr{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.sbn-tr::-webkit-scrollbar{display:none}
+.sbn-it{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:2/1;border:0;padding:0;border-radius:20px;overflow:hidden;background:#F3F0F8;cursor:pointer}
+.sbn-it img{width:100%;height:100%;object-fit:cover;display:block}
+.sbn-dots{display:flex;justify-content:center;gap:6px;margin-top:8px}
+.sbn-dots i{width:7px;height:7px;border-radius:999px;background:#D9D2E9;transition:width .2s,background-color .2s}
+.sbn-dots i.on{width:22px;background:var(--g)}
+html[data-theme=dark] .bnm{background:#1f1a30;border-color:#3a3354}
+html[data-theme=dark] .cat-img{background:#231d36;border-color:#4a3f6e}
+html[data-theme=dark] .bn-sel,html[data-theme=dark] .bn-k button{background:#1f1a30;border-color:#3a3354;color:#ece8f7}
+
+/* v384: صفحة الماركت والكوزمتك — مثل «تسوق حسب الفئة» */
+.mkttl{margin:16px 0 2px;font-size:19px;font-weight:800}
+.mkgrid{grid-auto-columns:92px;gap:16px 10px}
+.mkci{width:90px;height:90px;border-radius:24px;background:#F4F2F8;box-shadow:none}
+.mkci img{object-fit:contain;padding:9px;box-sizing:border-box;mix-blend-mode:multiply}
+.mkcat b{font-size:13px;font-weight:700}
+.mkbar{position:relative;width:110px;height:5px;margin:4px auto 6px;border-radius:999px;background:#ECE8F3;overflow:hidden}
+.mkbar i{position:absolute;top:0;bottom:0;right:0;width:30%;border-radius:999px;background:#2C2440;transition:right .08s linear}
+html[data-theme=dark] .mkci{background:#231d36}
+html[data-theme=dark] .mkci img{mix-blend-mode:normal}
+html[data-theme=dark] .mkbar{background:#3a3354}
+html[data-theme=dark] .mkbar i{background:#d9ccff}
+
+/* v384: الماركت والكوزمتك — صفحة داخلية (بلا الهيدر العام والغلاف والشريط السفلي) */
+#cApp.mkmode > .hdr, #cApp.mkmode #cNav, #cApp.mkmode #shopHero, #cApp.mkmode #shopInfo .spinfo{display:none!important}
+#cApp.mkmode #spBar.on{bottom:calc(12px + env(safe-area-inset-bottom))}
+#cApp.mkmode .page.sp{padding-bottom:84px}
+#cApp.mkmode #shopSearch{position:sticky;top:0;z-index:40;margin:0;padding:calc(8px + env(safe-area-inset-top)) 0 6px;background:var(--bg,#fff);box-sizing:border-box}
+.mkhd{display:flex;align-items:center;gap:10px}
+.mkhd .shsrch{flex:1;min-width:0;margin:0;height:46px;border-radius:999px;background:#F4F2F8;border-color:transparent}
+.mkback{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1.5px solid #E6E1F0;background:#fff;display:grid;place-items:center;cursor:pointer;color:#2C2440}
+.mkback svg{width:22px;height:22px}
+.mkinfo{display:flex;align-items:center;gap:8px;margin:10px 2px 2px;font-size:12.5px;color:#6b6480;flex-wrap:wrap}
+.mkinfo img{width:26px;height:26px;border-radius:8px;object-fit:cover}
+.mkinfo b{font-size:14px;color:var(--v-ink,#2C2440);margin-left:2px}
+.mkinfo span.op{color:#15803D;font-weight:800}
+.mkinfo span.cl{color:#C0392B;font-weight:800}
+.sbn-it{flex:0 0 86%}
+.sbn-it:only-child{flex-basis:100%}
+.mkhint{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 16px;border-radius:16px;background:#fff;box-shadow:0 -2px 18px rgba(23,17,43,.10);font-size:14px;font-weight:800;color:#2C2440}
+.mkhint svg{width:20px;height:20px;color:var(--g)}
+html[data-theme=dark] .mkhd .shsrch{background:#231d36}
+html[data-theme=dark] .mkback,html[data-theme=dark] .mkhint{background:#1f1a30;border-color:#3a3354;color:#ece8f7}
+
+/* v384: كروت منتجات الماركت */
+.mkp{position:relative;display:flex;flex-direction:column;gap:2px;min-width:0;cursor:pointer;text-align:right}
+.mkp.off{opacity:.5}
+.mkp-im{position:relative;aspect-ratio:1/1;border-radius:18px;background:#F5F4F8;overflow:hidden;margin-bottom:7px}
+.mkp-im img{width:100%;height:100%;object-fit:contain;padding:12px;box-sizing:border-box;mix-blend-mode:multiply}
+.mkp-im .px{width:100%;height:100%;display:grid;place-items:center;color:#C9BFE3}
+.mkp-im .px svg{width:36px;height:36px}
+.mkp-add{position:absolute;left:7px;bottom:7px}
+#p_shop .mkp-add .addb{width:36px;height:36px;border-radius:50%;background:#fff;color:var(--g);box-shadow:0 3px 12px rgba(40,20,90,.18);font-size:22px;line-height:1}
+#p_shop .mkp-add .qty{background:#fff;border-radius:999px;box-shadow:0 3px 12px rgba(40,20,90,.18);padding:3px 5px;gap:6px}
+#p_shop .mkp-add .qty button{width:28px;height:28px;border-radius:50%;border:0;background:#F3F0FA;color:var(--g);font-size:17px;font-weight:800}
+#p_shop .mkp-add .qty span{min-width:16px;text-align:center;font-weight:800;font-size:14px;color:#2C2440}
+#p_shop .mkp-add .qty{width:auto;min-width:0;justify-content:center}
+#p_shop .mkp-add .szcnt{top:-6px;right:-6px}
+.mkp-add .ost-b{font-size:10.5px;padding:3px 8px;border-radius:999px;background:#fff}
+.mkp-pr{font-size:15px;font-weight:800;color:#2C2440;line-height:1.3}
+.mkp-pr small{font-size:11px;font-weight:700;color:#6b6480}
+.mkp-nm{font-size:13px;font-weight:600;line-height:1.4;color:#2C2440;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mkp-ds{font-size:12px;color:#9A93AC;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mkpg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 10px;padding-top:4px}
+#cApp.mkmode .sprow{gap:12px}
+#cApp.mkmode .sprow .mkp{flex:0 0 124px}
+#cApp.mkmode .spsec h3,#cApp.mkmode .mksh h3{font-size:18px;font-weight:800}
+html[data-theme=dark] .mkp-im{background:#231d36}
+html[data-theme=dark] .mkp-im img{mix-blend-mode:normal}
+html[data-theme=dark] .mkp-pr,html[data-theme=dark] .mkp-nm{color:#ece8f7}
+html[data-theme=dark] #p_shop .mkp-add .addb,html[data-theme=dark] #p_shop .mkp-add .qty{background:#1f1a30}
+
+/* v384: الخصم + نصايح الصور */
+.mkp-off{position:absolute;top:8px;right:8px;background:#E11D48;color:#fff;font-size:11.5px;font-weight:800;padding:3px 8px;border-radius:999px;direction:ltr}
+.mkp-pr.sale{color:#E11D48}
+.mkp-pr s{font-size:12px;font-weight:600;color:#9A93AC;margin-right:4px}
+.szwas{font-size:14px;color:#9A93AC;font-weight:600}
+.szoff{font-style:normal;font-size:12px;background:#E11D48;color:#fff;border-radius:999px;padding:2px 8px;font-weight:800;direction:ltr;display:inline-block}
+.wasl{display:block;margin:14px 0 6px;font-size:13.5px;font-weight:800}
+.wasl em{font-style:normal;font-size:11.5px;color:#9A93AC;font-weight:600}
+.wasin{display:flex;align-items:center;gap:8px;border:1.5px solid #E6E1F0;border-radius:12px;background:#fff;padding:0 12px}
+.wasin input{flex:1;min-width:0;border:0;background:none;padding:12px 0;font:inherit;font-size:16px;outline:0}
+.wasin span{color:#7A7290;font-weight:700;font-size:13px}
+.wasprev{margin-top:6px;font-size:12.5px;color:#5B5470;line-height:1.6}
+.wasprev s{color:#9A93AC}
+.wasprev em{font-style:normal;background:#E11D48;color:#fff;border-radius:999px;padding:1px 7px;font-weight:800;direction:ltr;display:inline-block}
+.wasprev .bad{color:#C0392B;font-weight:700}
+.phtip{margin:8px 0 4px;padding:10px 12px;border-radius:12px;background:#F7F4FD;font-size:12.5px;color:#5B5470;line-height:1.7}
+html[data-theme=dark] .phtip{background:#231d36;color:#cfc8e6}
+html[data-theme=dark] .wasin{background:#1f1a30;border-color:#3a3354}
+
+/* v384: كرت المنتج — الصورة عدلة وكاملة على أبيض، وزر + بنفسجي دائري يطلع من طرف الصورة (مثل المثال) */
+.mkp-im{background:#fff;border-radius:16px;overflow:visible;margin-bottom:14px}
+.mkp-im img{object-fit:contain;padding:2px;mix-blend-mode:normal;border-radius:16px}
+.mkp-im .px{background:#F5F4F8;border-radius:16px}
+.mkp-add{left:2px;bottom:-12px}
+#p_shop .mkp-add .addb{width:44px;height:44px;border-radius:50%;background:var(--g);color:#fff;border:3px solid #fff;box-shadow:0 4px 14px rgba(91,43,201,.35);font-size:24px}
+#p_shop .mkp-add .qty{border:2px solid #fff;box-shadow:0 4px 14px rgba(91,43,201,.25)}
+.mkp-nm{color:var(--g);font-weight:800;font-size:14px;margin-top:4px}
+.mkp-ds{margin-top:1px}
+.mkp-pr{margin-top:4px}
+html[data-theme=dark] .mkp-im{background:#fff}
+html[data-theme=dark] .mkp-nm{color:#c9b8ff}
+
+/* v384: «نفذ» */
+.avl{font-size:11px;font-weight:800}
+.avl.on{color:#15803D}.avl.off{color:#C0392B}
+.mkp.off .mkp-add .ost-b{background:#C0392B;color:#fff}
+
+/* v384: أقسام الماركت ثابتة تحت البحث (مثل طلبات مارت) */
+#cApp.mkmode #menuTabs{position:sticky;top:var(--mkhd,96px);z-index:35;background:var(--bg,#fff);padding:6px 0 4px}
+#cApp.mkmode #menuTabs .mtab{white-space:nowrap}
+#cApp.mkmode .secttl{font-size:18px;font-weight:800}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -5844,6 +5988,7 @@ body,.screen{background:#fff;color:var(--txt)}
   <div id="shopInfo"></div>
   <div id="shopOffers"></div>
   <div id="shopSearch"></div>
+  <div id="shopBanners"></div>
   <div id="shopCatGrid"></div>
   <div id="menuTabs"></div>
   <div id="shopTop"></div>
@@ -5870,7 +6015,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v383</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v384</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -5899,7 +6044,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="stFinance"></div>
       <div id="stDiscOwed"></div>
       <div id="stCash"></div>
-      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <div class="ldbox"></div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
+      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج على خلفية بيضاء وبضو النهار، وخلي المنتج بالنص ويملأ الصورة. الصورة تنگص مربع وحدها.</div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="wasbox"></div><div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <div class="ldbox"></div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
       <div class="stf-hd">
         <div>
           <h3>التصنيفات</h3>
@@ -5964,12 +6109,12 @@ body,.screen{background:#fff;color:var(--txt)}
         <input id="pfPrice" type="number" inputmode="numeric" class="cf-inp" placeholder="أدخل السعر">
         <span>د.ع</span>
       </div>
-      <div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div>
+      <div class="wasbox"></div><div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div>
       <div class="optshead"><div><h4 class="opt-t">الإضافات <small class="szopt">اختياري</small></h4><p class="psub">مثل: جبن +500 · صوص إضافي +250 — الزبون يختار أكثر من وحدة</p></div><button class="addopt" onclick="addOptRow()">+ إضافة</button></div><div id="optsBox2"></div><div class="ldbox"></div>
       <label class="cf-lab" style="margin-top:16px">الوصف</label>
       <textarea id="pfDesc" class="cf-inp pf-ta" rows="3" placeholder="اكتب وصف عن المنتج…"></textarea>
       <label class="cf-lab" style="margin-top:16px">صورة المنتج</label>
-      <div class="pf-box" id="pfBox" onclick="document.getElementById('pfPhoto').click()"></div>
+      <div class="pf-box" id="pfBox" onclick="document.getElementById('pfPhoto').click()"></div><div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج على خلفية بيضاء وبضو النهار، وخلي المنتج بالنص ويملأ الصورة. الصورة تنگص مربع وحدها.</div>
       <input type="file" id="pfPhoto" accept="image/*" style="display:none" onchange="prodFormPick(this)">
       <div class="cf-acts">
         <button class="cf-save" onclick="prodFormSave()">حفظ المنتج</button>
@@ -7132,7 +7277,7 @@ function shopCatList(){
 async function loadShopCats(){
   if(!me||!me.shopId){ myCats=[]; _catCnt={}; renderCatsPage(); return }
   try{
-    myCats = await sbGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+me.shopId+'&order=sort.asc');
+    myCats = await _catsGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+me.shopId+'&order=sort.asc');
   }catch(e){
     myCats=[];
     toast('ما گدرنا نجيب التصنيفات: '+String(e.message||e).slice(0,70));
@@ -7175,7 +7320,9 @@ function renderCatsPage(){
 
   if(!myCats.length){
     box.innerHTML='<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>'
-      +'<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>';
+      +'<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>'
+      +(_mkMine()?'<div id="bnMine"></div>':'');
+    if(_mkMine()) loadMyBanners();
     return;
   }
 
@@ -7195,6 +7342,7 @@ function renderCatsPage(){
     const off=c.visible===false;
     return `
     <div class="cat-row${off?' hid':''}" data-cid="${esc(c.id)}">
+      ${_mkMine()?`<button type="button" class="cat-img${c.img?' has':''}" onclick="catImgPick(${q})" aria-label="صورة القسم">${c.img?`<img src="${esc(c.img)}" alt="">`:'<span>📷</span><em>صورة</em>'}</button>`:''}
       <div class="cat-nm" onclick="catProdsOpen(${q})" style="cursor:pointer">
         <b>${esc(c.name)}${off?' <em>مخفي</em>':''}</b>
         <span>${_catCnt[c.id]||0} منتج</span>
@@ -7214,8 +7362,10 @@ function renderCatsPage(){
 
   if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
 
+  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.</div><div id="bnMine"></div>';   /* v384 */
   box.innerHTML=html;
   catBindDrag();
+  if(_mkMine()) loadMyBanners();
 }
 
 /* ═══════════════════════════════════════════════
@@ -7424,6 +7574,7 @@ function prodFormOpen(pid){
   optRows = p && Array.isArray(p.opts) ? p.opts.map(o=>({n:o.n,p:o.p,img:o.img||''})) : []; renderOpts();
   pfLead = pLead(p); leadPaint();
   pfKg={on:!!pKgW(p), w:(p&&p.w)?String(p.w):''}; kgPaint();   /* v381 */
+  pfWas=(p&&p.was)?String(p.was):''; wasPaint();   /* v384 */
 
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_prodform');
@@ -7474,6 +7625,7 @@ async function prodFormSave(){
   const price=_sz.p ? _sz.p : parseInt((pr&&pr.value)||0);
   if(!n){ toast('اكتب اسم المنتج'); if(nm) nm.focus(); return }
   if(!price || price<=0){ toast('اكتب سعر صحيح'); if(pr) pr.focus(); return }
+  const _wc=wasCollect(price,_sz.sizes.length>0||_kg.on); if(_wc.err) return toast(_wc.err); const _was=_wc.was;
 
   const old = _pfId ? _cpProducts().find(x=>_cpPid(x)===_pfId) : null;
   const id  = _pfId ? (old ? old.id : _pfId) : Date.now();
@@ -7484,6 +7636,7 @@ async function prodFormSave(){
     opts: collectOpts(),
     sizes: _sz.sizes,
     byKg: _kg.on?true:undefined, w: _kg.on?_kg.w:undefined,   /* v381 */
+    was: _was||undefined,   /* v384: السعر قبل الخصم (للعرض بس — الزبون يدفع السعر) */
     lead: pfLead>0 ? pfLead : undefined,
     sizeLabel: (_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined
   };
@@ -10392,6 +10545,7 @@ function openShop(id){
   _shopCats=[]; _shopLinks={}; _shopTop=[];
   renderMenu();
   try{ loadShopPublicCats() }catch(e){ console.warn('shopCats', e) }
+  try{ loadShopBanners() }catch(e){ console.warn('shopBanners', e) }   /* v384 */
   scrollTopAll();
 }
 
@@ -10415,7 +10569,7 @@ async function loadShopPublicCats(){
   if(!curShop) return;
   const sid=curShop.id;
   try{
-    _shopCats = await sbGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+sid+'&visible=is.true&order=sort.asc') || [];
+    _shopCats = await _catsGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+sid+'&visible=is.true&order=sort.asc') || [];
   }catch(e){ _shopCats=[] }
   if(_shopCats.length){
     try{
@@ -10452,14 +10606,54 @@ function _secProducts(all){
 }
 /* ═══ v383: صفحة السوبر ماركت — بحث داخل المحل + شبكة الأقسام بالصور + صف لكل قسم (مثل تطبيقات الماركت، بطريقتنا) ═══ */
 let shopQ='';
-function _isMarket(s){ return !!s && shopSec(s)==='market' }
+function _isMarket(s){ return !!s && (shopSec(s)==='market' || shopSec(s)==='cosmetics') }   /* v384: الماركت والكوزمتك نفس الصفحة */
 function _useShopSearch(s){ return _isMarket(s) || ((s&&s.products)||[]).length>=15 }
 function _normAr(t){ return String(t||'').toLowerCase().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ً-ْـ]/g,'').replace(/\s+/g,' ').trim() }
-function shopCatList(){ return _shopCats.length ? _shopCats.map(c=>({id:c.id,name:c.name})) : menuSections().map(n=>({id:n,name:n})) }
+function shopCatList(){ return _shopCats.length ? _shopCats.map(c=>({id:c.id,name:c.name,img:c.img||''})) : menuSections().map(n=>({id:n,name:n})) }
 function prodsOfSec(id){ const keep=menuSec; menuSec=id; let r=[]; try{ r=_secProducts((curShop&&curShop.products)||[]) }finally{ menuSec=keep } return r }
 function _mkHome(){ return _isMarket(curShop) && menuSec==='__all' && !String(shopQ||'').trim() }
 function _secAttr(v){ return JSON.stringify(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;') }
+/* v384: الخصم — «السعر قبل الخصم» للعرض بس: الزبون يدفع سعر المنتج نفسه (ما يتغيّر شي بالحساب) */
+let pfWas='';
+function pWas(p){ const w=Number(p&&p.was), b=Number(p&&p.price); return (w>b && b>0 && !pSizes(p).length && !pKgW(p)) ? w : 0 }
+function pOffPct(p){ const w=pWas(p); return w ? Math.round((w-Number(p.price))/w*100) : 0 }
+function _wasPriceOf(b){ const pg=b&&b.closest?b.closest('.page,#sApp')||document:document; const i=pg.querySelector('#pfPrice')||pg.querySelector('#pp'); return parseInt((i&&i.value)||0)||0 }
+function wasPrev(){
+  document.querySelectorAll('.wasbox').forEach(b=>{ const el=b.querySelector('.wasprev'); if(!el) return;
+    const pr=_wasPriceOf(b), w=parseInt(pfWas)||0;
+    el.innerHTML = !w ? 'إذا عندك خصم، اكتب السعر القديم هنا — السعر فوگ يبقى هو الي يدفعه الزبون'
+      : (pr>0 && w>pr ? 'يطلع للزبون: <b>'+pr.toLocaleString()+' د.ع</b> <s>'+w.toLocaleString()+'</s> <em>-'+Math.round((w-pr)/w*100)+'%</em>'
+      : '<span class="bad">لازم يكون أكبر من السعر الحالي</span>');
+  });
+}
+function wasPaint(){
+  const on=_mkMine();
+  document.querySelectorAll('.wasbox').forEach(b=>{
+    if(!on){ b.innerHTML=''; return }
+    b.innerHTML=`<label class="wasl">🏷️ السعر قبل الخصم <em>اختياري</em></label><div class="wasin"><input type="number" inputmode="numeric" value="${esc(String(pfWas||''))}" placeholder="مثلاً 750" oninput="pfWas=this.value;wasPrev()"><span>د.ع</span></div><div class="wasprev"></div>`;
+  });
+  wasPrev();
+}
+function wasCollect(price,noDisc){
+  const w=parseInt(pfWas)||0;
+  if(!w || !_mkMine() || noDisc) return {was:0};
+  if(w<=price) return {err:'السعر قبل الخصم لازم يكون أكبر من السعر الحالي — أو امسحه'};
+  return {was:w};
+}
+document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'||t.id==='pp')) wasPrev() });
+/* v384: كرت منتج مثل تطبيقات الماركت العالمية — صورة كبيرة على خلفية فاتحة، زر + أبيض، السعر ثم الاسم ثم الحجم */
+function mkCardHTML(p){
+  return `<div class="mkp${p.avail===false?' off':''}" onclick="openItem(${p.id})">
+    <div class="mkp-im">${p.img?`<img loading="lazy" decoding="async" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
+      ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
+      <div class="mkp-add" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
+    <div class="mkp-nm">${esc(p.name)}</div>
+    ${p.desc?`<div class="mkp-ds">${esc(p.desc)}</div>`:''}
+    <div class="mkp-pr${pWas(p)?' sale':''}">${pPriceTxt(p)} <small>د.ع</small>${pWas(p)?` <s>${pWas(p).toLocaleString()}</s>`:''}</div>
+  </div>`;
+}
 function spCardHTML(p){
+  if(_isMarket(curShop)) return mkCardHTML(p);
   return `<div class="spcard" onclick="openItem(${p.id})">
           <div class="spcimg">${p.img?`<img loading="lazy" decoding="async" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
             <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
@@ -10467,11 +10661,189 @@ function spCardHTML(p){
           <div class="spcpr">${pPriceTxt(p)} د.ع</div>
         </div>`;
 }
+/* ═══ v384: صور الأقسام + بنرات عروض الماركت (تنزل للزبون بعد موافقة الإدارة) ═══ */
+async function _catsGet(q){ try{ return await sbGet(q.replace('select=id,name,sort,visible','select=id,name,sort,visible,img')) }catch(e){ return await sbGet(q) } }
+function _mkMine(){ return !!(typeof myShopDoc!=='undefined' && myShopDoc && _isMarket(myShopDoc)) }
+function _bnImgOk(u){ return typeof u==='string' && u.indexOf(SB_URL+'/storage/v1/object/public/images/banners/')===0 }
+/* — صاحب المحل: صورة القسم — */
+function catImgPick(id){
+  let f=document.getElementById('catImgFile');
+  if(!f){ f=document.createElement('input'); f.type='file'; f.accept='image/*'; f.id='catImgFile'; f.style.display='none'; f.onchange=()=>catImgUp(f); document.body.appendChild(f) }
+  window._catImgId=id; f.value=''; f.click();
+}
+async function catImgUp(inp){
+  const file=inp.files&&inp.files[0], id=window._catImgId; if(!file||!id) return;
+  toast('… جاري رفع صورة القسم');
+  try{
+    const url=await uploadImage(file,'cats',{size:500,square:true,quality:0.82});
+    await sbPatch('shop_categories?id=eq.'+encodeURIComponent(id),{img:url});
+    const c=(myCats||[]).find(x=>x.id===id); if(c) c.img=url;
+    renderCatsPage(); toast('انحفظت صورة القسم ✓');
+  }catch(e){ toast(/img|column|schema/i.test(errMsg(e))?'شغّل market_v384.sql أول':('ما انحفظت: '+errMsg(e))) }
+  inp.value='';
+}
+/* — صاحب المحل: بنراته — */
+let _bnMine=[], _bnNew=null;
+async function loadMyBanners(){
+  if(!me||!me.shopId) return;
+  try{ _bnMine=await sbGet('shop_banners?select=*&shop_id=eq.'+me.shopId+'&order=created_at.desc')||[] }catch(e){ _bnMine=null }
+  renderMyBanners();
+}
+function _bnTargetTxt(b){
+  if(b.target_kind==='product'){ const p=((myShopDoc&&myShopDoc.products)||[]).find(x=>String(x.id)===String(b.target)); return 'يودّي للمنتج «'+esc(p?p.name:'—')+'»' }
+  if(b.target_kind==='cat'){ const c=(myCats||[]).find(x=>String(x.id)===String(b.target)); return 'يودّي لقسم «'+esc(c?c.name:b.target)+'»' }
+  return 'صورة بس';
+}
+function renderMyBanners(){
+  const box=document.getElementById('bnMine'); if(!box) return;
+  if(_bnMine===null){ box.innerHTML='<div class="bnm"><div class="bnm-h"><b>🖼️ بنرات العروض</b><span>ما گدرنا نجيب البنرات — جرّب بعد شوية</span></div></div>'; return }
+  const act=_bnMine.filter(b=>b.status!=='rejected').length;
+  const ST={pending:['⏳ ينتظر موافقة الإدارة','wait'],approved:['✅ منشور للزبائن','ok'],rejected:['❌ مرفوض','no']};
+  box.innerHTML=`<div class="bnm"><div class="bnm-h"><b>🖼️ بنرات العروض</b><span>تطلع للزبون بصفحة محلك بعد موافقة الإدارة · حدها 5</span></div>
+    ${_bnMine.map(b=>{ const st=ST[b.status]||ST.pending; return `<div class="bnm-it"><img src="${_bnImgOk(b.img)?b.img:''}" alt="" onclick="viewPhoto('${_bnImgOk(b.img)?b.img:''}')">
+      <div class="bnm-tx"><em class="bnst ${st[1]}">${st[0]}</em><span>${_bnTargetTxt(b)}</span>${b.status==='rejected'&&b.reject_reason?`<small>السبب: ${esc(b.reject_reason)}</small>`:''}</div>
+      <button type="button" class="bnm-del" onclick="sbmDel('${b.id}')" aria-label="حذف">🗑</button></div>` }).join('')}
+    ${act<5?'<button type="button" class="bnm-add" onclick="sbmAddOpen()">+ أضف بنر عروض</button>':'<div class="bnm-max">وصلت 5 بنرات — احذف وحدة حتى تضيف</div>'}
+  </div>`;
+}
+async function sbmDel(id){
+  const ok=await askConfirm('تحذف هذا البنر؟',{title:'حذف البنر',ok:'إي، احذفه',danger:true}); if(!ok) return;
+  try{ await rpc('shop_banner_del',{p_id:id}); toast('انحذف'); loadMyBanners() }catch(e){ toast('ما انحذف: '+errMsg(e)) }
+}
+function sbmAddOpen(){ _bnNew={img:'',kind:'none',target:'',up:false,busy:false}; sbmPaint() }
+function sbmClose(){ const el=document.getElementById('sbmSheet'); if(el) el.classList.remove('on'); _bnNew=null }
+function _bnCatOpts(){ return (myCats&&myCats.length) ? myCats.map(c=>({v:String(c.id),n:c.name})) : [...new Set(((myShopDoc&&myShopDoc.products)||[]).map(p=>String(p.cat||'').trim()).filter(Boolean))].map(n=>({v:n,n})) }
+function sbmPaint(){
+  if(!_bnNew) return;
+  let el=document.getElementById('sbmSheet');
+  if(!el){ el=document.createElement('div'); el.id='sbmSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) sbmClose() }); document.body.appendChild(el) }
+  const B=_bnNew, prods=((myShopDoc&&myShopDoc.products)||[]).filter(p=>p.avail!==false), cats=_bnCatOpts();
+  const opts=B.kind==='product'?prods.map(p=>({v:String(p.id),n:p.name})):(B.kind==='cat'?cats:[]);
+  const ready=_bnImgOk(B.img) && (B.kind==='none'||B.target) && !B.up && !B.busy;
+  el.innerHTML=`<div class="wgcard">
+    <button class="wgx" onclick="sbmClose()" aria-label="سكّر">×</button>
+    <h3>🖼️ بنر عروض جديد</h3>
+    <p class="wg-h">صورة عرضية (مثل 2:1) — مثلاً «اشتري قطعة والثانية علينا». تطلع للزبائن بعد موافقة الإدارة.</p>
+    <div class="bn-ph" onclick="document.getElementById('sbmFile').click()">${B.up?'<span>… جاري رفع الصورة</span>':(B.img?`<img src="${B.img}" alt=""><em>اضغط لتغيير الصورة</em>`:'<span>📷 اختار صورة البنر</span>')}</div>
+    <input type="file" id="sbmFile" accept="image/*" style="display:none" onchange="sbmPick(this)">
+    <label class="wg-l">لما الزبون يضغط على البنر:</label>
+    <div class="bn-k">${[['none','ما يصير شي'],['product','يفتح منتج'],['cat','يفتح قسم']].map(([k,l])=>`<button type="button" class="${B.kind===k?'on':''}" onclick="_bnNew.kind='${k}';_bnNew.target='';sbmPaint()">${l}</button>`).join('')}</div>
+    ${B.kind!=='none'?`<select class="bn-sel" onchange="_bnNew.target=this.value;sbmPaint()"><option value="">— اختار ${B.kind==='product'?'المنتج':'القسم'} —</option>${opts.map(o=>`<option value="${esc(o.v)}"${o.v===B.target?' selected':''}>${esc(o.n)}</option>`).join('')}</select>`:''}
+    <button class="big-btn wg-save" ${ready?'':'disabled'} onclick="sbmSave()">${B.busy?'… جاري الإرسال':'إرسال للإدارة'}</button>
+  </div>`;
+  el.classList.add('on');
+}
+async function sbmPick(inp){
+  const f=inp.files&&inp.files[0]; if(!f||!_bnNew) return;
+  _bnNew.up=true; sbmPaint();
+  try{ const u=await uploadImage(f,'banners',{size:1200,quality:0.82}); if(_bnNew) _bnNew.img=u }
+  catch(e){ toast('ما انرفعت الصورة: '+String(e.message||e).slice(0,70)) }
+  if(_bnNew){ _bnNew.up=false; sbmPaint() }
+  inp.value='';
+}
+async function sbmSave(){
+  const B=_bnNew; if(!B||B.busy) return;
+  B.busy=true; sbmPaint();
+  try{
+    await rpc('shop_banner_add',{p_shop:me.shopId, p_img:B.img, p_kind:B.kind, p_target:B.kind==='none'?null:B.target});
+    try{ pushAdmins('🖼️ بنر جديد ينتظر موافقتك',((myShopDoc&&myShopDoc.name)||'محل')+' رفع بنر عروض — شوفه بطلبات الانضمام ← البنرات',{type:'banner'}) }catch(_){}
+    toast('انرسل للإدارة ✓ — يطلع للزبائن بعد الموافقة');
+    sbmClose(); loadMyBanners();
+  }catch(e){
+    if(_bnNew){ _bnNew.busy=false; sbmPaint() }
+    toast(/function|schema|Could not find/i.test(errMsg(e))?'شغّل market_v384.sql أول':('ما انرسل: '+errMsg(e)));
+  }
+}
+/* — الإدارة: موافقة البنرات — */
+let _bnPend=[], _bnPendAt=0, _bnPendBusy=false;
+async function bnPendLoad(force){
+  if(_bnPendBusy || (!force && Date.now()-_bnPendAt<60000)) return;
+  _bnPendBusy=true;
+  try{
+    const r=await rpc('admin_banners_pending',{}); const nx=Array.isArray(r)?r:[];
+    const ch=JSON.stringify(nx.map(x=>x.id))!==JSON.stringify((_bnPend||[]).map(x=>x.id));
+    _bnPend=nx; _bnPendAt=Date.now();
+    if(ch){ try{ renderJoin2() }catch(e){} }
+  }catch(e){ _bnPendAt=Date.now() }
+  finally{ _bnPendBusy=false }
+}
+function bnPendHTML(){
+  return (_bnPend||[]).map(b=>`<div class="jc bnj">
+    <div class="jc-h"><div class="t"><b>🖼️ ${esc(b.shop_name||'—')}</b><span>${b.target_kind==='product'?'يودّي للمنتج «'+esc(b.target_name||'—')+'»':(b.target_kind==='cat'?'يودّي لقسم «'+esc(b.target_name||'—')+'»':'صورة بس')}</span></div><em class="pill wait">بنر جديد</em></div>
+    <img class="bnj-img" src="${_bnImgOk(b.img)?b.img:''}" alt="" onclick="viewPhoto('${_bnImgOk(b.img)?b.img:''}')">
+    <div class="jc-a bnj-a"><button class="ok" onclick="bnDecide('${b.id}',true)">✓ موافقة</button><button class="no" onclick="bnRejOpen('${b.id}')">✕ رفض</button></div>
+  </div>`).join('');
+}
+async function bnDecide(id,ok,reason){
+  try{
+    const r=await rpc('admin_banner_decide',{p_id:id, p_ok:!!ok, p_reason:reason||null});
+    if(r&&r.owner) pushTo(r.owner, ok?'✅ انقبل البنر':'❌ البنر انرفض', ok?'بنرك صار يطلع للزبائن بصفحة محلك':('السبب: '+(reason||'')+' — عدّله وارفعه من جديد'), {type:'banner'});
+    _bnPend=(_bnPend||[]).filter(x=>x.id!==id); toast(ok?'انقبل ✓':'انرفض'); renderJoin2();
+  }catch(e){ toast('ما صار: '+errMsg(e)) }
+}
+function bnRejOpen(id){
+  let el=document.getElementById('sbmRej');
+  if(!el){ el=document.createElement('div'); el.id='sbmRej'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
+  const R=['الصورة مو واضحة','بيها كتابة أو سعر غلط','صورة مو مناسبة','المنتج مو موجود'];
+  el.innerHTML=`<div class="wgcard"><button class="wgx" onclick="document.getElementById('sbmRej').classList.remove('on')" aria-label="سكّر">×</button>
+    <h3>❌ رفض البنر</h3><p class="wg-h">السبب يوصل لصاحب المحل:</p>
+    <div class="bn-k">${R.map(r=>`<button type="button" onclick="document.getElementById('sbmWhy').value=this.textContent">${r}</button>`).join('')}</div>
+    <input id="sbmWhy" class="bn-sel" type="text" maxlength="200" placeholder="أو اكتب السبب…">
+    <button class="big-btn wg-save" onclick="const w=document.getElementById('sbmWhy').value.trim(); if(!w) return toast('اكتب السبب'); document.getElementById('sbmRej').classList.remove('on'); bnDecide('${id}',false,w)">رفض وإرسال السبب</button></div>`;
+  el.classList.add('on');
+}
+/* — الزبون: بنرات صفحة الماركت — */
+let _shopBn={sid:null,list:[]}, __sbnT=null;
+async function loadShopBanners(){
+  const sid=curShop&&curShop.id; _shopBn={sid,list:[]};
+  if(!sid||!_isMarket(curShop)) return;
+  try{ const r=await sbGet('shop_banners?select=id,img,target_kind,target,sort,created_at&shop_id=eq.'+sid+'&status=eq.approved&order=sort.asc,created_at.desc&limit=5')||[]; if(curShop&&curShop.id===sid){ _shopBn={sid,list:r.filter(b=>_bnImgOk(b.img))}; renderShopBanners() } }catch(e){}
+}
+function renderShopBanners(){
+  const box=document.getElementById('shopBanners'); if(!box) return;
+  const L=(_shopBn.sid===(curShop&&curShop.id))?_shopBn.list:[];
+  if(!_mkHome()||!L.length){ box.innerHTML=''; clearInterval(__sbnT); return }
+  if(box.dataset.k===L.map(b=>b.id).join(',') && box.querySelector('.sbn')) return;
+  box.dataset.k=L.map(b=>b.id).join(',');
+  box.innerHTML=`<div class="sbn"><div class="sbn-tr" onscroll="sbnDots()">${L.map((b,i)=>`<button type="button" class="sbn-it" onclick="sbnTap(${i})"><img src="${b.img}" alt="" loading="${i?'lazy':'eager'}" decoding="async"></button>`).join('')}</div>
+    ${L.length>1?`<div class="sbn-dots">${L.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`;
+  clearInterval(__sbnT);
+  if(L.length>1) __sbnT=setInterval(sbnNext,4500);
+}
+function _sbnCur(){ const w=document.querySelector('#shopBanners .sbn-tr'); if(!w) return 0; const c=w.getBoundingClientRect(), mid=c.left+c.width/2; let best=0,bd=1e9;
+  [...w.children].forEach((el,i)=>{ const r=el.getBoundingClientRect(), d=Math.abs(r.left+r.width/2-mid); if(d<bd){bd=d;best=i} }); return best }
+function sbnDots(){ const i=_sbnCur(); document.querySelectorAll('#shopBanners .sbn-dots i').forEach((d,k)=>d.classList.toggle('on',k===i)); window.__sbnHold=Date.now() }
+function sbnNext(){
+  const w=document.querySelector('#shopBanners .sbn-tr'); if(!w||document.hidden){ if(!w) clearInterval(__sbnT); return }
+  if(Date.now()-(window.__sbnHold||0)<4000) return;
+  const r0=w.getBoundingClientRect(); if(r0.bottom<0||r0.top>innerHeight) return;   /* مو ظاهر — ما نحرّكه */
+  const n=w.children.length, i=(_sbnCur()+1)%n, el=w.children[i], tr=el.getBoundingClientRect();
+  w.scrollTo({left:Math.round(w.scrollLeft+(tr.left-r0.left)),behavior:'smooth'}); setTimeout(()=>{ window.__sbnHold=0 },600);
+}
+function sbnTap(i){
+  const b=(_shopBn.list||[])[i]; if(!b) return;
+  if(b.target_kind==='product'){ const p=((curShop&&curShop.products)||[]).find(x=>String(x.id)===String(b.target)); if(p) openItem(p.id); else toast('هذا المنتج ما عاد متوفر') }
+  else if(b.target_kind==='cat'){ pickSec(b.target) }
+}
+function mkModeSync(){
+  const app=document.getElementById('cApp'), pg=document.getElementById('p_shop'); if(!app||!pg) return;
+  const on=pg.classList.contains('on') && _isMarket(curShop);
+  app.classList.toggle('mkmode', !!on);
+  if(!pg.classList.contains('on')){ const b=document.getElementById('spBar'); if(b&&b.querySelector('.mkhint')){ b.innerHTML=''; b.classList.remove('on') } }
+}
+(function(){ try{ const pg=document.getElementById('p_shop'); if(pg && window.MutationObserver) new MutationObserver(mkModeSync).observe(pg,{attributes:true,attributeFilter:['class']}) }catch(e){} })();
 function renderShopSearch(){
   const box=document.getElementById('shopSearch'); if(!box) return;
   if(!curShop||!_useShopSearch(curShop)){ box.innerHTML=''; box.dataset.sid=''; return }
   if(box.dataset.sid===String(curShop.id) && box.querySelector('input')) return;   /* يبقى نفسه حتى الكيبورد ما ينسد */
   box.dataset.sid=String(curShop.id);
+  if(_isMarket(curShop)){   /* v384: صفحة داخلية مثل التطبيقات العالمية — رجوع + بحث، وتحتها سطر المحل */
+    const op=isOpenNow(curShop), rt=curShop.rCnt?((curShop.rSum/curShop.rCnt).toFixed(1)):'';
+    box.innerHTML=`<div class="mkhd"><button type="button" class="mkback" onclick="goHome()" aria-label="رجوع"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button><label class="shsrch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" enterkeyhint="search" placeholder="ابحث في ${esc(curShop.name||'المحل')}…" value="${esc(shopQ)}" oninput="shopQ=this.value;renderMenu()"><button type="button" class="shsx" aria-label="مسح" onclick="event.preventDefault();shopQ='';const i=this.parentNode.querySelector('input');i.value='';renderMenu()">×</button></label></div>
+      <div class="mkinfo">${curShop.img?`<img src="${esc(curShop.img)}" alt="">`:''}<b>${esc(curShop.name||'')}</b><span class="${op?'op':'cl'}">${op?'مفتوح':'مسكّر'}</span><span>⏱ ${etaTxt()}</span>${rt?`<span>⭐ ${rt}</span>`:''}</div>`;
+    requestAnimationFrame(()=>{ try{ document.documentElement.style.setProperty('--mkhd',(box.offsetHeight||96)+'px') }catch(e){} });
+    return;
+  }
   box.innerHTML=`<label class="shsrch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" enterkeyhint="search" placeholder="ابحث في ${esc(curShop.name||'المحل')}…" value="${esc(shopQ)}" oninput="shopQ=this.value;renderMenu()"><button type="button" class="shsx" aria-label="مسح" onclick="event.preventDefault();shopQ='';const i=this.parentNode.querySelector('input');i.value='';renderMenu()">×</button></label>`;
 }
 function _mkCats(){ return shopCatList().map(c=>Object.assign({},c,{ps:prodsOfSec(c.id)})).filter(c=>c.ps.length) }
@@ -10481,14 +10853,24 @@ function renderCatGrid(cats){
   cats=cats||_mkCats();
   if(cats.length<2){ box.innerHTML=''; return }
   const rows=cats.length>=9?3:(cats.length>=5?2:1);
-  box.innerHTML=`<div class="mkgrid" style="--rows:${rows}">${cats.map(c=>{ const im=(c.ps.find(p=>p.img)||{}).img;
-    return `<button type="button" class="mkcat" onclick="pickSec(${_secAttr(c.id)})"><span class="mkci">${im?`<img loading="lazy" decoding="async" src="${esc(im)}" alt="">`:prodPH()}</span><b>${esc(c.name)}</b></button>` }).join('')}</div>`;
+  box.innerHTML=`<h3 class="mkttl">تسوق حسب القسم</h3><div class="mkgrid" style="--rows:${rows}" onscroll="mkBar(this)">${cats.map(c=>{ const im=c.img||(c.ps.find(p=>p.img)||{}).img;
+    return `<button type="button" class="mkcat" onclick="pickSec(${_secAttr(c.id)})"><span class="mkci">${im?`<img loading="lazy" decoding="async" src="${esc(im)}" alt="">`:prodPH()}</span><b>${esc(c.name)}</b></button>` }).join('')}</div><div class="mkbar"><i></i></div>`;
+  requestAnimationFrame(()=>{ const g=box.querySelector('.mkgrid'); if(g) mkBar(g) });
+}
+function mkBar(g){
+  const bar=g&&g.nextElementSibling; if(!bar||!bar.classList.contains('mkbar')) return;
+  const max=g.scrollWidth-g.clientWidth, th=bar.firstElementChild;
+  if(max<=4){ bar.style.display='none'; return } bar.style.display='';
+  const w=Math.max(18,Math.round(g.clientWidth/g.scrollWidth*100)), r=Math.min(1,Math.abs(g.scrollLeft)/max);
+  th.style.width=w+'%'; th.style.right=(r*(100-w))+'%';
 }
 function renderMkRows(box,cats){
   if(!cats.length) return false;
   const seen=new Set(); cats.forEach(c=>c.ps.forEach(p=>seen.add(String(p.id))));
   const rest=((curShop&&curShop.products)||[]).filter(p=>!seen.has(String(p.id)));
-  box.innerHTML=cats.map(c=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
+  const _offs=((curShop&&curShop.products)||[]).filter(p=>p.avail!==false&&pWas(p)).sort((a,b)=>pOffPct(b)-pOffPct(a));
+  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>🔥 العروض</h3></div><div class="sprow">${_offs.slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
+    +cats.map(c=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
       <div class="sprow">${c.ps.slice(0,12).map(spCardHTML).join('')}</div></div>`).join('')
     +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${rest.slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
   return true;
@@ -10526,7 +10908,7 @@ function prodPH(){
    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>';
 }
 function prodCtl(p){
-  if(p.avail===false) return `<span class="ost-b dis">غير متوفر</span>`;
+  if(p.avail===false) return `<span class="ost-b dis">${_isMarket(curShop)?'نفذ':'غير متوفر'}</span>`;
   if(pHasChoice(p)){
     const n=cart.filter(x=>x.pid===p.id&&x.shopId===curShop.id).reduce((a,x)=>a+x.qty,0);
     return `<div class="szctl"><button class="addb" onclick="openItem(${p.id})" aria-label="اختار">+</button>${n?`<span class="szcnt">${n}</span>`:''}</div>`;
@@ -10556,9 +10938,11 @@ function renderTopSellers(){
 function renderMenu(){
   const box=document.getElementById('menu'),all=curShop.products||[];
   renderShopSearch();
+  mkModeSync();
   renderMenuTabs();
   const _cats=_mkHome()?_mkCats():null;
   renderCatGrid(_cats);
+  renderShopBanners();
   renderTopSellers();
   const EMPTY=t=>'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>'+t+'</p></div>';
   if(!all.length){ box.innerHTML=EMPTY('هذا المحل ما ضاف منتجات بعد'); renderSpBar(); return }
@@ -10571,6 +10955,7 @@ function renderMenu(){
   } else if(_cats && renderMkRows(box,_cats)){ if(_ttl) _ttl.textContent=''; renderSpBar(); return }
   else var ps = _secProducts(all);
   if(!ps.length){ box.innerHTML=EMPTY('ما بيه منتجات بهذا القسم'); renderSpBar(); return }
+  if(_isMarket(curShop)){ box.innerHTML='<div class="mkpg">'+ps.map(mkCardHTML).join('')+'</div>'; renderSpBar(); return }   /* v384 */
   box.innerHTML=ps.map(p=>`
     <div class="prod"${p.avail===false?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
@@ -10593,7 +10978,10 @@ function renderSpBar(){
   const mine=cart.filter(c=>curShop&&c.shopId===curShop.id);
   const n=mine.reduce((a,c)=>a+c.qty,0);
   const t=mine.reduce((a,c)=>a+c.price*c.qty,0);
-  if(!n){ bar.innerHTML=''; bar.classList.remove('on'); return }
+  if(!n){
+    if(curShop && _isMarket(curShop) && document.getElementById('p_shop').classList.contains('on')){   /* v384 */
+      bar.classList.add('on'); bar.innerHTML=`<div class="mkhint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>تسوّق الآن — أقل طلب ${minOrderVal().toLocaleString()} د.ع</div>`; return }
+    bar.innerHTML=''; bar.classList.remove('on'); return }
   bar.classList.add('on');
   bar.innerHTML=`
     <button class="spbar" onclick="tab('cart',document.querySelectorAll('#cNav button')[1])">
@@ -10658,7 +11046,7 @@ function szSheetPaint(){
   el.innerHTML=`<div class="szcard">
     <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
     ${p.img?`<div class="szbig"><img src="${p.img}" alt=""></div>`:`<div class="szbig szph">${prodPH()}<span>${esc(p.name)}</span></div>`}
-    <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${pKgW(p)?'≈ ':''}${N(z.length?Number(z[_szSel].p):base)} د.ع</div>${kgInfoHTML(p)}${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
+    <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${pKgW(p)?'≈ ':''}${N(z.length?Number(z[_szSel].p):base)} د.ع${pWas(p)?` <s class="szwas">${N(pWas(p))}</s> <em class="szoff">-${pOffPct(p)}%</em>`:''}</div>${kgInfoHTML(p)}${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
     ${z.length?`<div class="szg"><div class="szgt">${esc(p.sizeLabel||'الحجم')} <i>مطلوب</i></div>
       ${z.map((x,i)=>`<div class="szo szo-z${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()"><div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr">${N(x.p)} د.ع</em><i class="rd"></i></div>`).join('')}</div>`:''}
     ${ops.length?`<div class="szg"><div class="szgt">الإضافات <i class="opt">اختياري</i></div>
@@ -10682,7 +11070,7 @@ function szConfirm(){
 /* v324: الضغط على المنتج يفتح نافذته — مثل التطبيقات العالمية */
 function openItem(pid){
   const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); if(!p) return;
-  if(p.avail===false) return toast('هذا المنتج غير متوفر حالياً');
+  if(p.avail===false) return toast(_isMarket(curShop)?'هذا المنتج نفذ':'هذا المنتج غير متوفر حالياً');
   openSizeSheet(p);
 }
 function addCart(pid,szName,addQ,optNames,fromSheet){
@@ -13004,7 +13392,7 @@ function renderStore(){
 
   const ps=sh.products||[];
   document.getElementById('stMenu').innerHTML=ps.length?ps.map(p=>`<div class="prod"${p.avail===false?' style="opacity:.6"':''}>${p.img?`<img loading="lazy" decoding="async" class="pimg" src="${p.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
-    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${pPriceLbl(p)}</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${pSizes(p).length?`<div class="optcnt">${pSizes(p).map(z=>esc(z.n)).join(' · ')}</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img loading="lazy" decoding="async" class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?'متوفر — اضغط لإيقافه':'غير متوفر — اضغط لتفعيله'}"></div> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
+    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${pPriceLbl(p)}</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${pSizes(p).length?`<div class="optcnt">${pSizes(p).map(z=>esc(z.n)).join(' · ')}</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img loading="lazy" decoding="async" class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?(_mkMine()?'متوفر — اضغط إذا نفذ':'متوفر — اضغط لإيقافه'):(_mkMine()?'نفذ — اضغط إذا رجع':'غير متوفر — اضغط لتفعيله')}"></div><small class="avl ${p.avail!==false?'on':'off'}">${p.avail!==false?'متوفر':(_mkMine()?'نفذ':'غير متوفر')}</small> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
     :'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>ضيف أول منتج</p></div>';
   paintShopType();
   const dl=document.getElementById('catOpts');
@@ -13720,10 +14108,11 @@ async function addProduct(){
   const n=pn.value.trim(),p=_sz.p?_sz.p:parseInt(pp.value),d=pd.value.trim(),ct=(document.getElementById('pc').value||'').trim();
   if(!n)return toast('اكتب اسم المنتج');
   if(!p||p<=0)return toast('اكتب سعر صحيح');
+  const _wc=wasCollect(p,_sz.sizes.length>0||_kg.on); if(_wc.err) return toast(_wc.err);   /* v384 */
   const opts=collectOpts();
   const item={
     id: editingProdId!==null ? editingProdId : Date.now(),
-    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, byKg:_kg.on?true:undefined, w:_kg.on?_kg.w:undefined, lead:(pfLead>0?pfLead:undefined), sizeLabel:(_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined, avail:editingProdAvail
+    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, byKg:_kg.on?true:undefined, w:_kg.on?_kg.w:undefined, was:_wc.was||undefined, lead:(pfLead>0?pfLead:undefined), sizeLabel:(_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined, avail:editingProdAvail
   };
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
@@ -13776,6 +14165,7 @@ function editProduct(id){
   szRows=(Array.isArray(p.sizes)?p.sizes:[]).map(z=>({n:z.n,p:z.p,d:z.d||''})); szLabel=p.sizeLabel||''; szPaint();
   pfLead=pLead(p); leadPaint();
   pfKg={on:!!pKgW(p), w:(p&&p.w)?String(p.w):''}; kgPaint();   /* v381 */
+  pfWas=(p&&p.was)?String(p.was):''; wasPaint();   /* v384 */
   const t=document.getElementById('prodPanelTtl'); if(t)t.textContent='تعديل المنتج';
   const su=document.getElementById('prodPanelSub'); if(su)su.textContent='عدّل بيانات المنتج واحفظ التغييرات';
   const ab=document.getElementById('addProdBtn'); if(ab)ab.textContent='حفظ التعديل';
@@ -13791,6 +14181,7 @@ function cancelEditProduct(){
   szRows=[]; szLabel=''; szPaint();
   pfLead=0; leadPaint();
   pfKg={on:false,w:''}; kgPaint();   /* v381 */
+  pfWas=''; wasPaint();   /* v384 */
   resetProdBox();
   const t=document.getElementById('prodPanelTtl'); if(t)t.textContent='إضافة منتج جديد';
   const su=document.getElementById('prodPanelSub'); if(su)su.textContent='أضف منتجاتك بسهولة واجذب المزيد من العملاء';
@@ -18221,7 +18612,9 @@ function renderJoin2(){
   /* v352: المرفوضين ما يبينون بطلبات الانضمام — ينحطّون بقائمة «المرفوضين» تحت */
   const ps=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&!x.rejected_at), pd=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&!u.rejected_at);
   const rjS=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&x.rejected_at), rjD=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&u.rejected_at);
-  const jb=document.getElementById('joinCnt'); if(jb){ const n=ps.length+pd.length; jb.style.display=n?'flex':'none'; jb.textContent=n }
+  try{ bnPendLoad() }catch(e){}   /* v384: بنرات تنتظر موافقتك */
+  const _nb=(_bnPend||[]).length;
+  const jb=document.getElementById('joinCnt'); if(jb){ const n=ps.length+pd.length+_nb; jb.style.display=n?'flex':'none'; jb.textContent=n }
   const card=(o)=>`<div class="jc">
       <div class="jc-h">${_av(o.img,o.name)}<div class="t"><b>${esc(o.name||'—')}</b><span>${o.sub}</span></div><em class="pill ${o.tag[1]}">${o.tag[0]}</em></div>
       ${o.jd?`<div class="jd">🗓️ ${o.jd}</div>`:''}
@@ -18238,18 +18631,18 @@ function renderJoin2(){
   ps.sort(_byNew); pd.sort(_byNew);
   if(pd.length) depLoad();   /* v324: حالة التأمينات */
   if(!joinFil || (joinFil==='driver'&&!pd.length&&ps.length) || (joinFil==='shop'&&!ps.length&&pd.length)) joinFil = pd.length||!ps.length ? 'driver' : 'shop';
-  const seg=`<div class="seg jseg">${[['driver','السواق',pd.length],['shop','المطاعم والمحلات',ps.length]].map(([v,l,n])=>`<button type="button" class="${joinFil===v?'on':''}" onclick="joinFil='${v}';renderJoin2()">${l}<i>${n}</i></button>`).join('')}</div>`;
+  const seg=`<div class="seg jseg">${[['driver','السواق',pd.length],['shop','المطاعم والمحلات',ps.length]].concat((_nb||joinFil==='banner')?[['banner','البنرات',_nb]]:[]).map(([v,l,n])=>`<button type="button" class="${joinFil===v?'on':''}" onclick="joinFil='${v}';renderJoin2()">${l}<i>${n}</i></button>`).join('')}</div>`;
   const htmlS = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:(SEC_ONE[shopSec(sh)]||tp(sh.type))+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
       ok:`okShop('${sh.id}',true)`,no:`openReject('shop','${sh.id}')`,del:`delShop('${sh.id}')`,view:`openAdminShop('${sh.id}')`})).join('');
   const htmlD = pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
       note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`})).join('');
-  const html = joinFil==='shop' ? htmlS : htmlD;
+  const html = joinFil==='banner' ? bnPendHTML() : (joinFil==='shop' ? htmlS : htmlD);
   const rjAll=rjS.map(x=>({k:'shop',id:x.id,n:x.name,r:x.reject_reason,f:x.reject_final,t:x.rejected_at})).concat(rjD.map(u=>({k:'driver',id:u.uid||u.id,n:u.name,r:u.reject_reason,f:u.reject_final,t:u.rejected_at})))
     .filter(x=>x.k===(joinFil==='shop'?'shop':'driver'))
     .sort((a,b)=>String(b.t).localeCompare(String(a.t)));
   const rjHtml=rjAll.length?`<details class="rj-list"><summary>المرفوضين (${rjAll.length}) ‹</summary>${rjAll.map(x=>`<div class="rj-row"><div><b>${x.k==='shop'?'🏪':'🛵'} ${esc(x.n||'—')}</b><span>${esc(x.r||'')}${x.f?' · نهائي':''}</span></div><button type="button" onclick="unReject('${x.k}','${x.id}')">تراجع</button></div>`).join('')}</details>`:'';
-  box.innerHTML=`<div class="pg-h"><h2>طلبات الانضمام</h2><span>${ps.length+pd.length} ينتظر موافقتك</span></div>` + seg
-    + (html||`<div class="pg-empty">✓ ماكو طلبات ${joinFil==='shop'?'محلات':'سواق'}</div>`) + rjHtml;
+  box.innerHTML=`<div class="pg-h"><h2>طلبات الانضمام</h2><span>${ps.length+pd.length+_nb} ينتظر موافقتك</span></div>` + seg
+    + (html||`<div class="pg-empty">✓ ماكو ${joinFil==='banner'?'بنرات تنتظر':('طلبات '+(joinFil==='shop'?'محلات':'سواق'))}</div>`) + (joinFil==='banner'?'':rjHtml);
   const t=document.querySelector('#a_join>h3.ttl'); if(t) t.style.display='none';
 }
 /* v368: حالة إشعارات كل سائق ومحل — تبين بقائمة المشتركين نفسها */
@@ -19752,7 +20145,22 @@ ${TG_ACC}
 <tr><td>الزبون ما رد أو رفض يستلم الطلب</td><td>التطبيق يدفع للمطعم سعر الوجبة بالحساب، والزبون ياخذ إنذار، وإذا تكررت ينحظر</td></tr></table>
 <div class="tgd-box s">إذا تكررت الشكاوى على المطعم <b>3 مرات بالشهر</b> ينطيه التطبيق إنذار، وإذا استمرت يتوقف مؤقتاً لحد ما تنحل.</div></div>
 
-<div class="tgd-sec"><div class="tgd-h"><em>📝</em><b>إنهاء الاتفاق والموافقة</b><i>09</i></div>
+<div class="tgd-sec"><div class="tgd-h"><em>🛒</em><b>السوبر ماركت والكوزمتك</b><i>09</i></div>
+<div class="tgd-box m">⚠️ <b>أهم قاعدة: أي منتج ينفذ عندك، أشّره «نفذ» بالتطبيق فوراً.</b><br>تفتح «قائمتي» بتطبيقك وتطفي المنتج، وأول ما يرجع تشغّله.</div>
+<div class="tgd-box s">💸 <b>الغرامة:</b> إذا طلب زبون منتج وطلع نافذ عندك، تنسجل عليك <b>غرامة بقيمة سعر المنتج</b>، وتنخصم بالحساب.</div>
+<ul class="tgd-ck">
+  <li>إذا انطلب منتج نافذ، اتصل بالزبون قبل لا تجهّز الطلب، و<b>ممنوع تبدّله بمنتج ثاني بدون موافقته</b>.</li>
+  <li><b>الأسعار</b> نفس سعر المحل بالضبط، وتحدّثها أول بأول.</li>
+  <li><b>الخصم:</b> «السعر قبل الخصم» لازم يكون السعر الحقيقي الي چنت تبيع بيه. ممنوع سعر وهمي.</li>
+  <li><b>ممنوع</b> أي منتج منتهي الصلاحية. والكوزمتك <b>منتجات أصلية بس</b>، وممنوع التقليد.</li>
+  <li><b>الصور:</b> صورة المنتج نفسه، واضحة، على خلفية بيضاء. واكتب الحجم أو الوزن بالوصف، مثل «1 لتر» أو «500 غم».</li>
+  <li><b>الأقسام:</b> كل منتج بقسمه الصحيح، وحط صورة لكل قسم.</li>
+  <li><b>البنرات</b> تنزل بعد موافقة الإدارة، وممنوع يكون بيها سعر أو معلومة غلط.</li>
+  <li><b>التغليف:</b> المجمدات والمنظفات كل وحدة بكيس منفصل عن الأكل.</li>
+  <li>إذا تكرر طلب منتجات نافذة عند نفس المحل، ينطيه التطبيق إنذار، وإذا استمر يتوقف مؤقتاً.</li>
+</ul></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>📝</em><b>إنهاء الاتفاق والموافقة</b><i>10</i></div>
 <ul class="tgd-plain">
   <li>كل طرف يكدر ينهي الاتفاق بإشعار مكتوب قبل <b>7 أيام</b>، وتنصفّى كل المستحقات قبل الإنهاء.</li>
   <li>وإذا التطبيق راد يغيّر العمولة أو أي شرط بهذا الدليل، <b>يبلّغ المطعم قبل 30 يوم</b>.</li>
@@ -24531,7 +24939,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v383', seen={}, n=0, q=[], t=null;
+  var VER='v384', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24783,7 +25191,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v383', t0=Date.now();
+  var VER='v384', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
