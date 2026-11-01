@@ -164,7 +164,7 @@ async function bgRemove(req, env, url) {
   try {
     const pw = Math.min(400, Math.max(64, Number(url.searchParams.get('w')) || 0));   /* فحص: نسخة صغيرة */
     let h = env.IMAGES.input(r.body)
-      .transform({ width: 1000, height: 1000, fit: 'scale-down', segment: 'foreground' });
+      .transform({ width: 1200, height: 1200, fit: 'scale-down', segment: 'foreground' });
     if (url.searchParams.get('b64') && url.searchParams.get('w')) h = h.transform({ width: pw, height: pw, fit: 'scale-down' });
     const out = (await h.output({ format: 'image/webp', quality: 90 })).response();
     const type = out.headers.get('content-type') || 'image/webp';
