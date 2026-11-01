@@ -87,11 +87,32 @@ async function pushStats(env) {
   return jres({ ok: true, devices: total, by_role: by });
 }
 
+/* v373 (فحص مؤقت): إشعار تجربة لأجهزة الإدارة بس — مرة بالدقيقة كحد أقصى — ويرجّع جواب Expo (نجح/السبب) */
+async function pushTestAdmin(env) {
+  if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
+  if (await env.PUSH.get('diag:last')) return jres({ error: 'wait a minute' }, 429);
+  await env.PUSH.put('diag:last', '1', { expirationTtl: 60 });
+  const toks = []; let cursor;
+  do {
+    const r = await env.PUSH.list({ prefix: 'u:', cursor });
+    for (const k of r.keys) if (k.metadata && k.metadata.r === 'admin') { const t = await env.PUSH.get(k.name); if (t) toks.push({ t, p: k.metadata.p || '?' }); }
+    cursor = r.list_complete ? undefined : r.cursor;
+  } while (cursor);
+  if (!toks.length) return jres({ ok: true, devices: 0 });
+  const r = await fetch(EXPO_SEND, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify(toks.map(x => ({ to: x.t, title: '🔔 تجربة من السيرفر', body: 'إذا وصلك هذا، إشعارات تطبيق المتجر شغّالة ✓',
+      priority: 'high', channelId: 'orders', sound: 'default', data: { type: 'test', url: '/' } }))) });
+  const j = await r.json().catch(() => null);
+  const res = ((j && j.data) || []).map((x, i) => ({ platform: toks[i] && toks[i].p, status: x.status, error: x.details && x.details.error, message: x.message && String(x.message).slice(0, 120) }));
+  return jres({ ok: true, devices: toks.length, http: r.status, results: res, top: j && j.errors });
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     if (url.pathname === '/_nudge') return nudge(req, env);
     if (url.pathname === '/_pushstats') return pushStats(env);
+    if (url.pathname === '/_pushtest') return pushTestAdmin(env);
     for (const pre in MAP) {
       if (url.pathname !== pre && !url.pathname.startsWith(pre + '/')) continue;
       const svc = env[MAP[pre]];
