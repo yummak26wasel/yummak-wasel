@@ -6027,7 +6027,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v385</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v386</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -10895,7 +10895,8 @@ function renderShopSearch(){
   }
   box.innerHTML=`<label class="shsrch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" enterkeyhint="search" placeholder="ابحث في ${esc(curShop.name||'المحل')}…" value="${esc(shopQ)}" oninput="shopQ=this.value;renderMenu()"><button type="button" class="shsx" aria-label="مسح" onclick="event.preventDefault();shopQ='';const i=this.parentNode.querySelector('input');i.value='';renderMenu()">×</button></label>`;
 }
-function _mkCats(){ return shopCatList().map(c=>Object.assign({},c,{ps:prodsOfSec(c.id)})).filter(c=>c.ps.length) }
+function _mkCatsAll(){ return shopCatList().map(c=>Object.assign({},c,{ps:prodsOfSec(c.id)})) }
+function _mkCats(){ return _mkCatsAll().filter(c=>c.ps.length) }   /* الصفوف: بس الأقسام الي بيها منتجات · الشبكة: كل الأقسام (v386) */
 function renderCatGrid(cats){
   const box=document.getElementById('shopCatGrid'); if(!box) return;
   if(!_mkHome()){ box.innerHTML=''; return }
@@ -10989,12 +10990,12 @@ function renderMenu(){
   renderShopSearch();
   mkModeSync();
   renderMenuTabs();
-  const _cats=_mkHome()?_mkCats():null;
-  renderCatGrid(_cats);
+  const _all=_mkHome()?_mkCatsAll():null, _cats=_all?_all.filter(c=>c.ps.length):null;
+  renderCatGrid(_all);   /* v386: الأقسام تطلع حتى لو بعدها فاضية */
   renderShopBanners();
   renderTopSellers();
   const EMPTY=t=>'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>'+t+'</p></div>';
-  if(!all.length){ box.innerHTML=EMPTY('هذا المحل ما ضاف منتجات بعد'); renderSpBar(); return }
+  if(!all.length){ box.innerHTML=EMPTY(menuSec!=='__all'?'هذا القسم بعده ما بيه منتجات':'هذا المحل ما ضاف منتجات بعد'); renderSpBar(); return }
   /* v383: بحث داخل المحل · وصفحة السوبر ماركت الرئيسية (صف لكل قسم) */
   const _q=_normAr(shopQ), _ttl=document.getElementById('secTtl');
   if(_q){
@@ -11003,7 +11004,7 @@ function renderMenu(){
     if(!ps.length){ box.innerHTML=EMPTY('ما لگينا «'+esc(String(shopQ).trim())+'» بهذا المحل'); renderSpBar(); return }
   } else if(_cats && renderMkRows(box,_cats)){ if(_ttl) _ttl.textContent=''; renderSpBar(); return }
   else var ps = _secProducts(all);
-  if(!ps.length){ box.innerHTML=EMPTY('ما بيه منتجات بهذا القسم'); renderSpBar(); return }
+  if(!ps.length){ box.innerHTML=EMPTY(_isMarket(curShop)?'هذا القسم بعده ما بيه منتجات':'ما بيه منتجات بهذا القسم'); renderSpBar(); return }
   if(_isMarket(curShop)){ box.innerHTML='<div class="mkpg">'+ps.map(mkCardHTML).join('')+'</div>'; renderSpBar(); return }   /* v384 */
   box.innerHTML=ps.map(p=>`
     <div class="prod"${p.avail===false?' style="opacity:.55"':''} onclick="openItem(${p.id})">
@@ -24988,7 +24989,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v385', seen={}, n=0, q=[], t=null;
+  var VER='v386', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25240,7 +25241,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v385', t0=Date.now();
+  var VER='v386', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
