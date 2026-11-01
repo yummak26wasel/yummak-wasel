@@ -747,6 +747,53 @@ html[data-theme=dark] .fld .of-mi{border-color:#2c2542}
 .tchip:active{transform:scale(.97)}
 html[data-theme=dark] .tchip{background:#1f1a30;border-color:#3a3354;color:#ece8f7}
 html[data-theme=dark] .tchip.on{background:#2b2447;border-color:#8B6CF0;color:#d9ccff}
+
+/* v381: البيع بالوزن */
+.kgchip{display:inline-block;margin-top:4px;font-size:11px;font-weight:700;color:#7A4B00;background:#FFF4E0;border-radius:8px;padding:2px 8px}
+.kginfo{margin:8px 0 2px;padding:10px 12px;border-radius:14px;background:#FFF7EA;border:1px solid #F8DDB0;font-size:13px;color:#5A3A00;line-height:1.6}
+.kginfo span{display:block;font-size:12px;color:#7A5B2A;margin-top:2px}
+.kgl{font-size:11.5px;font-weight:700;color:#8A5A00;margin-top:3px;line-height:1.5}
+.kgl.ok{color:#15803D}
+.kgl a{color:var(--g);text-decoration:underline;cursor:pointer}
+.kgbill{display:flex;gap:8px;align-items:flex-start;margin:10px 0;padding:10px 12px;border-radius:14px;background:#FFF7EA;border:1px solid #F8DDB0;font-size:12.5px;color:#5A3A00;line-height:1.6}
+.kgtog{display:flex;gap:10px;align-items:flex-start;margin:14px 0 4px;padding:12px;border:1.5px solid #E6E1F0;border-radius:14px;background:#fff;cursor:pointer}
+.kgtog input{width:20px;height:20px;margin-top:2px;flex-shrink:0;accent-color:var(--g)}
+.kgtog i{display:none}
+.kgtog b{display:block;font-size:14px}
+.kgtog em{display:block;font-style:normal;font-size:12px;color:#7A7290;margin-top:2px}
+.kgf{margin:6px 0 10px;padding:12px;border-radius:14px;background:#F7F4FD}
+.kgf label{display:block;font-size:13px;font-weight:700;margin:8px 0 6px}
+.kgf input{width:100%;box-sizing:border-box;padding:12px;border:1.5px solid #E6E1F0;border-radius:12px;font:inherit;font-size:16px;background:#fff}
+.kgnote{font-size:13px;color:#4A11A6}
+.kgprev{margin-top:8px;font-size:13px;color:#2C2440}
+.kghelp{margin-top:6px;font-size:11.5px;color:#7A7290}
+.wg-row{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:12.5px;color:#8A5A00;flex-wrap:wrap}
+.wg-row.ok{color:#15803D}
+.wg-row img{width:40px;height:40px;border-radius:10px;object-fit:cover;cursor:pointer;border:1px solid #E6E1F0}
+.wg-row button{border:1px solid #E6E1F0;background:#fff;border-radius:999px;padding:4px 12px;font:inherit;font-size:12px;font-weight:800;color:var(--g);cursor:pointer}
+.wg-btn{margin-top:8px;width:100%;border:0;border-radius:12px;padding:10px 12px;background:#FFF1DE;color:#8A4B00;font:inherit;font-size:13.5px;font-weight:800;cursor:pointer}
+.wgsh{position:fixed;inset:0;z-index:10050;background:rgba(20,4,50,.55);display:none;align-items:flex-end;justify-content:center}
+.wgsh.on{display:flex}
+.wgcard{position:relative;width:100%;max-width:520px;max-height:92vh;overflow-y:auto;overscroll-behavior:contain;background:#fff;border-radius:24px 24px 0 0;padding:20px 16px calc(18px + env(safe-area-inset-bottom))}
+.wgcard h3{margin:0 0 4px;font-size:17px;padding-left:36px}
+.wgcard h3 small{font-size:13px;color:#7A7290}
+.wgx{position:absolute;top:12px;left:12px;width:34px;height:34px;border-radius:50%;border:0;background:#F3F0F8;font-size:20px;cursor:pointer}
+.wg-h{margin:0 0 10px;font-size:12.5px;color:#7A7290;line-height:1.6}
+.wg-l{display:block;font-size:13.5px;font-weight:800;margin:12px 0 6px}
+.wg-in{width:100%;box-sizing:border-box;padding:14px;border:1.5px solid #E6E1F0;border-radius:14px;font:inherit;font-size:22px;font-weight:800;text-align:center;direction:ltr}
+.wg-msg{min-height:16px;font-size:12px;color:#C0392B;margin-top:4px}
+.wg-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;min-height:120px;border:2px dashed #CDBDF2;border-radius:16px;background:#F7F4FD;cursor:pointer;overflow:hidden;text-align:center}
+.wg-ph span{font-size:15px;font-weight:800;color:var(--g)}
+.wg-ph em{font-style:normal;font-size:12px;color:#7A7290;padding-bottom:6px}
+.wg-ph img{width:100%;max-height:220px;object-fit:contain;background:#fff}
+.wg-pv{margin:12px 0 4px;font-size:14px;text-align:center}
+.wg-pv s{color:#9A93AC;margin-right:6px;font-size:12.5px}
+.wg-save:disabled{opacity:.5}
+html[data-theme=dark] .kginfo,html[data-theme=dark] .kgbill{background:#2a2216;border-color:#4a3a20;color:#f1dfbf}
+html[data-theme=dark] .kgchip{background:#3a2a10;color:#f6cf8a}
+html[data-theme=dark] .kgtog{background:#1f1a30;border-color:#3a3354}
+html[data-theme=dark] .kgf{background:#231d36}
+html[data-theme=dark] .wgcard{background:#1a1528;color:#ece8f7}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -5799,7 +5846,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v380</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v381</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -5828,7 +5875,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="stFinance"></div>
       <div id="stDiscOwed"></div>
       <div id="stCash"></div>
-      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <div class="ldbox"></div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
+      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <div class="ldbox"></div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
       <div class="stf-hd">
         <div>
           <h3>التصنيفات</h3>
@@ -5893,7 +5940,7 @@ body,.screen{background:#fff;color:var(--txt)}
         <input id="pfPrice" type="number" inputmode="numeric" class="cf-inp" placeholder="أدخل السعر">
         <span>د.ع</span>
       </div>
-      <div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div>
+      <div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div>
       <div class="optshead"><div><h4 class="opt-t">الإضافات <small class="szopt">اختياري</small></h4><p class="psub">مثل: جبن +500 · صوص إضافي +250 — الزبون يختار أكثر من وحدة</p></div><button class="addopt" onclick="addOptRow()">+ إضافة</button></div><div id="optsBox2"></div><div class="ldbox"></div>
       <label class="cf-lab" style="margin-top:16px">الوصف</label>
       <textarea id="pfDesc" class="cf-inp pf-ta" rows="3" placeholder="اكتب وصف عن المنتج…"></textarea>
@@ -7222,7 +7269,7 @@ function cpPaintList(){
         <div class="cp-row">
           <span class="cp-rank">${i+1}</span>
           <div class="cp-th">${_cpThumb(p)}</div>
-          <div class="cp-nm"><b>${esc(p.name||'')}</b><span>${Number(p.price||0).toLocaleString()} د.ع</span></div>
+          <div class="cp-nm"><b>${esc(p.name||'')}</b><span>${pPriceLbl(p)}</span></div>
         </div>`).join('')
         : '<div class="stf-empty">ماكو مبيعات بعد</div>');
     return;
@@ -7241,7 +7288,7 @@ function cpPaintList(){
       + (list.length ? list.map(p=>`
         <div class="cp-row">
           <div class="cp-th">${_cpThumb(p)}</div>
-          <div class="cp-nm" onclick="prodFormOpen(${JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;')})" style="cursor:pointer"><b>${esc(p.name||'')}</b><span>${Number(p.price||0).toLocaleString()} د.ع</span></div>
+          <div class="cp-nm" onclick="prodFormOpen(${JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;')})" style="cursor:pointer"><b>${esc(p.name||'')}</b><span>${pPriceLbl(p)}</span></div>
           <button class="cp-rm" onclick="cpRemove(${JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;')})">
             <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.5 12h7"/></svg> إزالة
           </button>
@@ -7268,7 +7315,7 @@ function cpPaintList(){
         const on=_cpSel.includes(id);
         return `<div class="cp-row pick${on?' on':''}" onclick="cpToggle(${JSON.stringify(id).replace(/"/g,'&quot;')})">
           <span class="cp-ck${on?' on':''}"></span>
-          <div class="cp-nm"><b>${esc(p.name||'')}</b><span>${Number(p.price||0).toLocaleString()} د.ع</span></div>
+          <div class="cp-nm"><b>${esc(p.name||'')}</b><span>${pPriceLbl(p)}</span></div>
           <div class="cp-th">${_cpThumb(p)}</div>
         </div>`}).join('')
       : '<div class="stf-empty">كل المنتجات موجودة بهذا التصنيف</div>')
@@ -7352,6 +7399,7 @@ function prodFormOpen(pid){
   szRows = p && Array.isArray(p.sizes) ? p.sizes.map(z=>({n:z.n,p:z.p,d:z.d||''})) : []; szLabel=(p&&p.sizeLabel)||''; szPaint();
   optRows = p && Array.isArray(p.opts) ? p.opts.map(o=>({n:o.n,p:o.p,img:o.img||''})) : []; renderOpts();
   pfLead = pLead(p); leadPaint();
+  pfKg={on:!!pKgW(p), w:(p&&p.w)?String(p.w):''}; kgPaint();   /* v381 */
 
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_prodform');
@@ -7397,7 +7445,8 @@ async function prodFormSave(){
   const pr=document.getElementById('pfPrice');
   const ds=document.getElementById('pfDesc');
   const n=String((nm&&nm.value)||'').trim();
-  const _sz=szCollect(); if(_sz.err) return toast(_sz.err);
+  const _kg=kgCollect(); if(_kg.err) return toast(_kg.err);
+  const _sz=_kg.on?{p:0,sizes:[]}:szCollect(); if(_sz.err) return toast(_sz.err);
   const price=_sz.p ? _sz.p : parseInt((pr&&pr.value)||0);
   if(!n){ toast('اكتب اسم المنتج'); if(nm) nm.focus(); return }
   if(!price || price<=0){ toast('اكتب سعر صحيح'); if(pr) pr.focus(); return }
@@ -7410,6 +7459,7 @@ async function prodFormSave(){
     img: _pfImg||'',
     opts: collectOpts(),
     sizes: _sz.sizes,
+    byKg: _kg.on?true:undefined, w: _kg.on?_kg.w:undefined,   /* v381 */
     lead: pfLead>0 ? pfLead : undefined,
     sizeLabel: (_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined
   };
@@ -10012,7 +10062,7 @@ function shopCardHTML(s){
     const ps=pickFeatured(s);
     const feat=ps.length?`<div class="feat">${ps.map(pp=>`
       <div class="fitem">${pp.img?`<img loading="lazy" decoding="async" src="${pp.img}">`:`<div class="fx">${s.type==='restaurant'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>'}</div>`}
-        <div class="fn">${esc(pp.name)}</div> <div class="fp">${Number(pp.price||0).toLocaleString()}</div> </div>`).join('')}</div>`:'';
+        <div class="fn">${esc(pp.name)}</div> <div class="fp">${pBase(pp).toLocaleString()}</div> </div>`).join('')}</div>`:'';
     const _st = shopSubtitle(s);
     const catsTxt = _st ? _st
       : (SEC_ONE[shopSec(s)]||'متجر');
@@ -10459,6 +10509,7 @@ function renderMenu(){
         <h4>${esc(p.name)}</h4>
         ${p.desc?`<p>${esc(p.desc)}</p>`:''}
         <div class="pr">${pPriceTxt(p)} د.ع</div>
+        ${pKgW(p)?`<div class="kgchip">⚖️ ${Number(p.price||0).toLocaleString()} د.ع للكيلو · القطعة ≈ ${kgTxt(pKgW(p))} كغم</div>`:''}
       </div>
     </div>`).join('');
   renderSpBar();
@@ -10479,11 +10530,33 @@ function renderSpBar(){
     </button>`;
 }
 /* ═══ الأحجام: الزبون يختار وحد بس (وسط · كبير) — السعر من القاعدة (fix_order) ═══ */
-function pSizes(p){ return (p&&Array.isArray(p.sizes)?p.sizes:[]).filter(z=>z&&String(z.n||'').trim()&&Number(z.p)>0) }
+/* ═══ v381: البيع بالوزن — سعر المنتج = سعر الكيلو، وللقطعة وزن تقريبي (w).
+   سعر القطعة التقريبي = الكيلو × الوزن (لأقرب 250) — نفس fix_order بالسيرفر. المحل يكتب الوزن الحقيقي ويصوّر الميزان (shop_set_weight) ═══ */
+function pKgW(p){ if(!p||!(p.byKg===true||p.byKg==='true')) return 0; const w=Number(p.w); return (w>=0.05&&w<=50)?w:0 }
+function r250(v){ const x=Math.round(Number(v||0)*1000)/1000; return Math.max(250, Math.round(x/250+1e-9)*250) }
+function pBase(p){ const w=pKgW(p); return w ? r250(Number(p.price||0)*w) : Number(p.price||0) }
+function kgTxt(n){ return String(Math.round(Number(n||0)*100)/100) }
+function parseKg(v){ const t=String(v==null?'':v).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[٫,]/g,'.').replace(/[^\d.]/g,''); const n=parseFloat(t); return isFinite(n)?n:NaN }
+function pPriceLbl(p){ return Number((p&&p.price)||0).toLocaleString()+' د.ع'+(pKgW(p)?' / كغم':'') }
+function itLine(i){ return (i&&i.lt!=null&&i.lt!=='') ? Number(i.lt) : Number((i&&i.price)||0)*Number((i&&i.qty)||0) }
+function itWeighed(i){ return !!(i&&i.kg&&i.aw!=null&&i.aw!=='') }
+function _wImgOk(u){ return typeof u==='string' && u.indexOf(SB_URL+'/storage/v1/object/public/images/weights/')===0 }
+function itKgHTML(i){
+  if(!i||!i.kg) return '';
+  if(itWeighed(i)) return `<div class="kgl ok">⚖️ ${kgTxt(i.aw)} كغم${_wImgOk(i.wimg)?` · <a onclick="event.stopPropagation();viewPhoto('${i.wimg}')">📷 صورة الميزان</a>`:''}</div>`;
+  return `<div class="kgl">⚖️ تقريباً ${kgTxt(Number(i.w||0)*Number(i.qty||1))} كغم — ينوزن بالمحل</div>`;
+}
+function kgInfoHTML(p){
+  const w=pKgW(p); if(!w) return '';
+  return `<div class="kginfo">⚖️ <b>يتباع بالوزن</b> — ${Number(p.price||0).toLocaleString()} د.ع للكيلو · القطعة تقريباً ${kgTxt(w)} كغم<span>المحل يوزنه ويصوّرلك الميزان، والسعر النهائي حسب الوزن الحقيقي (يفرق لحد 20%).</span></div>`;
+}
+const KG_BILL_NOTE='<div class="kgbill">⚖️ <span>بسلتك أغراض <b>بالوزن</b> — مبلغها تقريبي. المحل يوزنها ويصوّرلك الميزان، والمبلغ النهائي يطلعلك بالطلب (يفرق لحد 20%).</span></div>';
+function pSizes(p){ if(pKgW(p)) return []; return (p&&Array.isArray(p.sizes)?p.sizes:[]).filter(z=>z&&String(z.n||'').trim()&&Number(z.p)>0) }
 function pOpts(p){ return (p&&Array.isArray(p.opts)?p.opts:[]).filter(o=>o&&String(o.n||'').trim()) }
-function pHasChoice(p){ return pSizes(p).length>0 || pOpts(p).length>0 }
+function pHasChoice(p){ return pKgW(p)>0 || pSizes(p).length>0 || pOpts(p).length>0 }
 function cartKey(c){ return (c.size||'')+'|'+(Array.isArray(c.opts)?c.opts.join(','):'') }
 function pPriceTxt(p){
+  if(pKgW(p)) return '≈ '+pBase(p).toLocaleString();
   const z=pSizes(p);
   if(z.length>1){ const lo=Math.min(...z.map(x=>Number(x.p))); return 'من '+lo.toLocaleString() }
   if(z.length===1) return Number(z[0].p).toLocaleString();
@@ -10505,21 +10578,21 @@ function szSheetPaint(){
   if(_szSel>=z.length) _szSel=0;
   _szOpt=_szOpt.filter(i=>i<ops.length);
   const optSum=_szOpt.reduce((a,i)=>a+(parseInt(ops[i].p)||0),0);
-  const base=z.length?Number(z[0].p):Number(_szP.price||0);
-  const unit=(z.length?Number(z[_szSel].p):Number(_szP.price||0))+optSum;
+  const base=z.length?Number(z[0].p):pBase(_szP);
+  const unit=(z.length?Number(z[_szSel].p):pBase(_szP))+optSum;
   const _old=el.querySelector('.szcard'), _st=_old?_old.scrollTop:0;
   const p=_szP, N=n=>Number(n).toLocaleString();
   el.innerHTML=`<div class="szcard">
     <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
     ${p.img?`<div class="szbig"><img src="${p.img}" alt=""></div>`:`<div class="szbig szph">${prodPH()}<span>${esc(p.name)}</span></div>`}
-    <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${N(z.length?Number(z[_szSel].p):base)} د.ع</div>${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
+    <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${pKgW(p)?'≈ ':''}${N(z.length?Number(z[_szSel].p):base)} د.ع</div>${kgInfoHTML(p)}${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
     ${z.length?`<div class="szg"><div class="szgt">${esc(p.sizeLabel||'الحجم')} <i>مطلوب</i></div>
       ${z.map((x,i)=>`<div class="szo szo-z${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()"><div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr">${N(x.p)} د.ع</em><i class="rd"></i></div>`).join('')}</div>`:''}
     ${ops.length?`<div class="szg"><div class="szgt">الإضافات <i class="opt">اختياري</i></div>
       ${ops.map((o,i)=>{const pr=parseInt(o.p)||0; return `<div class="szo${_szOpt.includes(i)?' on':''}" onclick="szTogOpt(${i})"><div><b>${esc(o.n)}</b><span>${pr?'<bdi dir="ltr">+'+N(pr)+'</bdi> د.ع':'مجاني'}</span></div><i class="ck"></i></div>`}).join('')}</div>`:''}
     <div class="szbar">
       <div class="szqty"><button class="pl" onclick="szQty(1)" aria-label="زيادة">+</button><span>${_szQ}</span><button onclick="szQty(-1)" aria-label="نقصان">−</button></div>
-      <button class="szadd" onclick="szConfirm()"><span>إضافة</span><b>${N(unit*_szQ)} د.ع</b></button>
+      <button class="szadd" onclick="szConfirm()"><span>إضافة</span><b>${pKgW(p)?'≈ ':''}${N(unit*_szQ)} د.ع</b></button>
     </div>
   </div>`;
   el.classList.add('on');
@@ -10564,7 +10637,7 @@ function addCart(pid,szName,addQ,optNames,fromSheet){
   const _lbl=[sz?sz.n:'', ..._on].filter(Boolean);
   const _aq=Math.max(1,parseInt(addQ)||1);
   if(_ex) _ex.qty+=_aq;
-  else cart.push(Object.assign({pid:p.id,name:_lbl.length?(p.name+' ('+_lbl.join('، ')+')'):p.name,price:(sz?Number(sz.p):Number(p.price||0))+_osum,qty:_aq,img:p.img||'',desc:p.desc||'',shopId:curShop.id,shopName:curShop.name}, sz?{size:sz.n}:{}, _on.length?{opts:_on}:{}));
+  else cart.push(Object.assign({pid:p.id,name:_lbl.length?(p.name+' ('+_lbl.join('، ')+')'):p.name,price:(sz?Number(sz.p):pBase(p))+_osum,qty:_aq,img:p.img||'',desc:p.desc||'',shopId:curShop.id,shopName:curShop.name}, sz?{size:sz.n}:{}, _on.length?{opts:_on}:{}, pKgW(p)?{kg:1,w:pKgW(p)}:{}));
   renderMenu();renderCart();renderSpBar();buzz([10,40,16]); toast('انضاف للسلة');
   try{ window.__trk&&__trk('cart') }catch(e){}
 }
@@ -10858,13 +10931,14 @@ function cartSync(){
     for(const c of cart){
       const p=(sh.products||[]).find(x=>String(x.id)===String(c.pid));
       if(!p || p.avail===false){ changed=true; continue }
-      const zs=pSizes(p); let base=Number(p.price||0);
+      const zs=pSizes(p); let base=pBase(p);
       if(c.size){ const z=zs.find(x=>x.n===c.size); if(!z){ changed=true; continue } base=Number(z.p) }
       else if(zs.length){ changed=true; continue }
       const po=pOpts(p), on=(Array.isArray(c.opts)?c.opts:[]).filter(n=>po.some(o=>o.n===n));
       if(Array.isArray(c.opts) && on.length!==c.opts.length){ changed=true; continue }
       const price=base+on.reduce((a,n)=>a+(parseInt((po.find(o=>o.n===n)||{}).p)||0),0);
       if(price!==Number(c.price)){ changed=true; c.price=price }
+      if(pKgW(p)){ c.kg=1; c.w=pKgW(p) } else { delete c.kg; delete c.w }   /* v381 */
       c.shopName=sh.name||c.shopName; out.push(c);
     }
     if(changed){ cart=out; renderCart(); toast(cart.length?'تحدّثت سلتك حسب أسعار المحل الحالية':'المنتجات اللي بسلتك ما عادت متوفرة') }
@@ -10899,10 +10973,10 @@ function renderCart(){
       ${c.img?`<img class="pimg" src="${c.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
       <div class="ci"> <div class="cn">${esc(c.name)}</div>
         ${c.desc?`<div class="cd">${c.desc}</div>`:''}
-        <div class="cp">${(c.price*c.qty).toLocaleString()} د.ع</div> </div> <div class="stepper"> <button onclick="cartQty(${i},1)">+</button> <span>${c.qty}</span> <button onclick="cartQty(${i},-1)">−</button> </div></div>`).join('')}
+        <div class="cp">${c.kg?'≈ ':''}${(c.price*c.qty).toLocaleString()} د.ع</div>${c.kg?`<div class="kgl">⚖️ تقريباً ${kgTxt(Number(c.w||0)*c.qty)} كغم — السعر النهائي حسب الوزن</div>`:''} </div> <div class="stepper"> <button onclick="cartQty(${i},1)">+</button> <span>${c.qty}</span> <button onclick="cartQty(${i},-1)">−</button> </div></div>`).join('')}
     ${upsellHTML()}
     <div class="seclbl">ملاحظات للمحل</div> <textarea class="notes" id="ck_note" placeholder="مثال: بدون بصل، الجرس خربان دگ تلفون..."
-      oninput="orderNote=this.value">${orderNote||''}</textarea> <div class="bill">${billHTML(sub)}</div>
+      oninput="orderNote=this.value">${orderNote||''}</textarea> ${cart.some(c=>c.kg)?KG_BILL_NOTE:''}<div class="bill">${billHTML(sub)}</div>
     ${hasLoc()?'':'<div class="locset no" style="margin-top:12px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3.6 2.8 19.4h18.4z"/><path d="M12 9.5v4.2M12 16.6v.1"/></svg> <b>موقعك مو محدّد</b><br>ما تكدر تكمّل الطلب قبل ما تحدده على الخريطة.</div>'}
     ${minOrderNeed()>0?`<div class="mo-need"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 7.5v5M12 16v.1"/></svg><span>أقل طلب من المطعم <b>${minOrderVal().toLocaleString()} د.ع</b> — أضف <b>${minOrderNeed().toLocaleString()} د.ع</b> بعد</span></div>`:''}
     <button class="big-btn stickybtn ${hasLoc()?'':'needloc'} ${minOrderNeed()>0?'mo-off':''}" onclick="${hasLoc()?'goCheckout()':"openMap('delivery')"}">
@@ -10931,7 +11005,7 @@ function upsCard(p){
   return '<div class="ups-it" data-pid="'+esc(String(p.id))+'" onclick="upsAdd(this.dataset.pid)">'
     +'<div class="ups-im">'+(p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy" onerror="this.remove()">':'<div class="px">'+prodPH()+'</div>')
     +'<span class="ups-plus" aria-label="أضف">+</span></div>'
-    +'<b>'+esc(p.name)+'</b><span>'+Number(p.price||0).toLocaleString('en-US')+' د.ع</span></div>';
+    +'<b>'+esc(p.name)+'</b><span>'+(pKgW(p)?'≈ ':'')+pBase(p).toLocaleString('en-US')+' د.ع</span></div>';
 }
 function _upsCards(g){
   const kd=g.ot.length?UPS_D:UPS_D+UPS_O, ko=g.dr.length?UPS_O:UPS_D+UPS_O;
@@ -11367,7 +11441,7 @@ function renderCheckout(){
   const ib=document.getElementById('ck_items');
   if(ib) ib.innerHTML=cart.map(c=>`<div class="ckitem">
       ${c.img?`<img src="${c.img}">`:'<div class="ckx"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
-      <div class="cki"><b>${esc(c.name)}</b><span>${c.qty} × ${c.price.toLocaleString()} د.ع</span></div> <div class="ckp">${(c.price*c.qty).toLocaleString()}</div> </div>`).join('');
+      <div class="cki"><b>${esc(c.name)}</b><span>${c.qty} × ${c.kg?'≈ ':''}${c.price.toLocaleString()} د.ع${c.kg?' · ⚖️ بالوزن':''}</span></div> <div class="ckp">${c.kg?'≈ ':''}${(c.price*c.qty).toLocaleString()}</div> </div>`).join('')+(cart.some(c=>c.kg)?KG_BILL_NOTE:'');
   document.getElementById('ck_addr').textContent = me.addr || 'ما حددت عنوانك — اضغط تغيير';
   const ls=document.getElementById('ck_locstate');
   if(me.loc&&me.loc.lat){
@@ -11711,9 +11785,9 @@ function renderTrack(){
   <div class="trk-det" id="trkDet">
     ${(o.items||[]).map(i=>`<div class="trk-it">
       <div class="ig">${i.img?`<img src="${i.img}" alt="" onerror="this.style.display='none'">`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>'}</div>
-      <div class="nm">${esc(i.name||'—')}</div>
+      <div class="nm">${esc(i.name||'—')}${itKgHTML(i)}</div>
       <span class="qt">×${i.qty||1}</span>
-      <span class="pr">${Number((i.price||0)*(i.qty||1)).toLocaleString()} د.ع</span>
+      <span class="pr">${i.kg&&!itWeighed(i)?'≈ ':''}${itLine(i).toLocaleString()} د.ع</span>
     </div>`).join('')}
     <div class="trk-bill">
       <div class="bl"><span>سعر المنتجات</span><b>${Number(o.sub||0).toLocaleString()} د.ع</b></div>
@@ -11842,7 +11916,7 @@ const TRKI=[
         <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr||'—')}</span> </div>
       <div class="ordbill" onclick="this.nextElementSibling.classList.toggle('on')"> <b>${o.total.toLocaleString()} د.ع <i>›</i></b> <span>الفاتورة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span> </div>
       <div class="orditems">
-        ${(o.items||[]).map(i=>`<div class="oitem"><span>${esc(i.name)} × ${i.qty}</span><b>${(i.price*i.qty).toLocaleString()}</b></div>`).join('')}
+        ${(o.items||[]).map(i=>`<div class="oitem"><span>${esc(i.name)} × ${i.qty}${itWeighed(i)?' · ⚖️ '+kgTxt(i.aw)+' كغم':''}</span><b>${i.kg&&!itWeighed(i)?'≈ ':''}${itLine(i).toLocaleString()}</b></div>`).join('')}
         <div class="oitem sep"><span>سعر المنتجات</span><b>${Number(o.sub||0).toLocaleString()}</b></div>
         ${o.serviceFee?`<div class="oitem"><span>رسوم الخدمة</span><b>${Number(o.serviceFee).toLocaleString()}</b></div>`:''}
         <div class="oitem"><span>أجرة التوصيل</span><b>${Number(o.deliveryFee||SET.deliveryFee).toLocaleString()}</b></div> <div class="oitem tot"><span>المجموع الكلي</span><b>${Number(o.total||0).toLocaleString()} د.ع</b></div> </div>
@@ -11905,7 +11979,7 @@ function reorder(oid){
     if(zs.length){
       const z=zs.find(x=>x.n===i.size); if(!z){ missing++; return }
       items.push({pid:p.id,shopId:sh.id,name:p.name+' ('+z.n+')',price:Number(z.p),qty:i.qty,size:z.n});
-    } else items.push({pid:p.id,shopId:sh.id,name:p.name,price:p.price,qty:i.qty});
+    } else items.push(Object.assign({pid:p.id,shopId:sh.id,name:p.name,price:pBase(p),qty:i.qty}, pKgW(p)?{kg:1,w:pKgW(p)}:{}));
     const _it=items[items.length-1], po=pOpts(p);
     if(Array.isArray(i.opts) && i.opts.length){
       if(!i.opts.every(n=>po.some(o=>o.n===n))){ items.pop(); missing++; return }
@@ -12857,7 +12931,7 @@ function renderStore(){
 
   const ps=sh.products||[];
   document.getElementById('stMenu').innerHTML=ps.length?ps.map(p=>`<div class="prod"${p.avail===false?' style="opacity:.6"':''}>${p.img?`<img loading="lazy" decoding="async" class="pimg" src="${p.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
-    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${p.price.toLocaleString()} د.ع</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${pSizes(p).length?`<div class="optcnt">${pSizes(p).map(z=>esc(z.n)).join(' · ')}</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img loading="lazy" decoding="async" class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?'متوفر — اضغط لإيقافه':'غير متوفر — اضغط لتفعيله'}"></div> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
+    <div class="pi"><h4>${esc(p.name)}</h4><p>${esc(p.desc||'')}</p><div class="pr">${pPriceLbl(p)}</div>${p.cat?`<div class="optcnt cat">${p.cat}</div>`:''}${(p.opts&&p.opts.length)?`<div class="optcnt">+${p.opts.length} إضافات</div>`:''}${pSizes(p).length?`<div class="optcnt">${pSizes(p).map(z=>esc(z.n)).join(' · ')}</div>`:''}${(p.opts&&p.opts.some(o=>o.img))?`<div style="display:flex;gap:5px;margin-top:6px;flex-wrap:wrap">${p.opts.filter(o=>o.img).map(o=>`<img loading="lazy" decoding="async" class="optthumb" src="${o.img}" title="${o.n}">`).join('')}</div>`:''}</div> <div style="display:flex;flex-direction:column;align-items:center;gap:8px"> <div class="tg${p.avail!==false?' on':''}" onclick="toggleProdAvail(${p.id})" title="${p.avail!==false?'متوفر — اضغط لإيقافه':'غير متوفر — اضغط لتفعيله'}"></div> <button class="btn" style="background:var(--g);color:#fff" onclick="editProduct(${p.id})">تعديل</button> <button class="btn d" onclick="delProduct(${p.id})">حذف</button></div></div>`).join('')
     :'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>ضيف أول منتج</p></div>';
   paintShopType();
   const dl=document.getElementById('catOpts');
@@ -13060,7 +13134,7 @@ function renderOrdDet(){
   const _oph=_end?'':o.phone, _ocu=_end?'':o.customer;
 
   const its=o.items||[];
-  const sub=Number(o.sub||its.reduce((a,i)=>a+Number(i.price||0)*Number(i.qty||0),0));
+  const sub=Number(o.sub||its.reduce((a,i)=>a+itLine(i),0));
   const dlv=Number(o.deliveryFee||SET.deliveryFee||1250);
 
   const acts = o.status==='pending'
@@ -13099,13 +13173,13 @@ function renderOrdDet(){
     ${o.loc&&o.loc.lat?`<button class="odt-map" onclick="odtMap()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> موقع الزبون على الخريطة</button>`:''}
 
     <div class="odt-sec">${_IXSVG} الأصناف المطلوبة (${its.length})</div>
-    ${its.map(i=>{
+    ${its.map((i,ix)=>{
       const im=_prodImg(i.pid), q=Number(i.qty||0), pr=Number(i.price||0);
       return `<div class="odt-it">
         ${im?`<img src="${im}" alt="">`:`<div class="ix">${_IXSVG}</div>`}
         <div class="odt-ii"><b>${esc(i.name||'')}</b>
-          <div class="pr">${(pr*q).toLocaleString()} د.ع</div>
-          <span class="un">${pr.toLocaleString()} د.ع للسعر الواحد</span></div>
+          <div class="pr">${i.kg&&!itWeighed(i)?'≈ ':''}${itLine(i).toLocaleString()} د.ع</div>
+          <span class="un">${i.kg?(Number(i.ppk||0).toLocaleString()+' د.ع للكيلو'):(pr.toLocaleString()+' د.ع للسعر الواحد')}</span>${i.kg?wgRowHTML(o,ix,i):''}</div>
         <div class="odt-qty"><b>\u00d7${q}</b><span>الكمية</span></div>
       </div>`;
     }).join('')}
@@ -13144,7 +13218,7 @@ function _ocard0(o,act){
   return `<div class="oc ${OCCLS(o.status)}"> <div class="oh"><span class="oid">#${ONO(o)}</span><span class="st st-${o.status}">${LBL[o.status]}</span></div> <div class="ccard"> <div class="cav">${(o.customer||'؟').charAt(0)}</div> <div class="cinf"><div class="clbl">رقم الزبون</div> <div class="cnm">${esc(o.customer)}</div> <div class="cph">${o.phone}</div></div> <a class="callb" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a> </div> <div class="od"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr)}</div>
     ${o.loc&&o.loc.lat?`<a class="navbtn g" style="display:inline-flex;margin:6px 0" onclick="openViewMap(${JSON.stringify(o.loc).replace(/"/g,'&quot;')},'موقع الزبون',${JSON.stringify(o.addr||'').replace(/"/g,'&quot;')});return false" href="#"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> موقع الزبون على الخريطة</a>`:''}
     ${o.note?`<div class="od" style="color:var(--o2);font-weight:700"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M14.5 6.5l3 3"/></svg> ${esc(o.note)}</div>`:''}
-    ${o.items.map(i=>`<div class="itemline">• ${esc(i.name)} × ${i.qty} — ${(i.price*i.qty).toLocaleString()} د.ع</div>`).join('')}
+    ${o.items.map(i=>`<div class="itemline">• ${esc(i.name)} × ${i.qty}${i.kg?(itWeighed(i)?' · ⚖️ '+kgTxt(i.aw)+' كغم':' · ⚖️ بالوزن'):''} — ${itLine(i).toLocaleString()} د.ع</div>`).join('')}
     ${o.driverName?`<div class="drvcard">
       ${o.driverPhoto?`<img class="avat sm" src="${o.driverPhoto}">`:'<div class="avat sm" style="display:flex;align-items:center;justify-content:center;background:#fff"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></div>'}
       <div class="di"><b>${esc(o.driverName)}</b><span>${o.driverPhone||'—'}</span></div></div>`:''}
@@ -13154,6 +13228,116 @@ function _ocard0(o,act){
       ${o.status==='accepted'?`<button class="btn o" onclick="setStatus('${o.id}','ready')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg> جاهز — نادِ مندوب</button>`:''}
     </div>`:''}</div>`;
 }
+/* ═══ v381: المنتج بالوزن — بفورم المنتج (الجديد والقديم) ═══ */
+let pfKg={on:false,w:''};
+function _kgPriceOf(b){ const pg=b&&b.closest?b.closest('.page,#sApp')||document:document; const i=pg.querySelector('#pfPrice')||pg.querySelector('#pp'); return parseInt((i&&i.value)||0)||0 }
+function kgPrev(){
+  document.querySelectorAll('.kgbox').forEach(b=>{
+    const el=b.querySelector('.kgprev'); if(!el) return;
+    const pr=_kgPriceOf(b), w=parseKg(pfKg.w);
+    el.innerHTML=(pr>0&&w>=0.05&&w<=50)
+      ? 'الزبون يشوف: تقريباً <b>'+r250(pr*w).toLocaleString()+' د.ع</b> للقطعة'
+      : 'اكتب سعر الكيلو فوگ ووزن القطعة التقريبي';
+  });
+}
+function kgPaint(){
+  const on=!!pfKg.on;
+  document.querySelectorAll('.kgbox').forEach(b=>{
+    b.innerHTML=`<label class="kgtog"><input type="checkbox" ${on?'checked':''} onchange="pfKg.on=this.checked;kgPaint()"><i></i><span><b>⚖️ يتباع بالوزن (بالكيلو)</b><em>مثل الدجاج واللحم والخضرة — الزبون يدفع حسب الوزن الحقيقي</em></span></label>`
+      +(on?`<div class="kgf"><div class="kgnote">السعر الي فوگ = <b>سعر الكيلو</b></div>
+        <label>وزن القطعة التقريبي (كغم)</label>
+        <input type="text" inputmode="decimal" value="${esc(String(pfKg.w||''))}" placeholder="مثلاً 2" oninput="pfKg.w=this.value;kgPrev()">
+        <div class="kgprev"></div>
+        <div class="kghelp">لما يجي طلب، تكتب الوزن الحقيقي وتصوّر الميزان. المسموح يفرق لحد 20% عن التقريبي.</div></div>`:'');
+    const sb=b.parentNode&&b.parentNode.querySelector('.szbox');
+    if(sb){ sb.style.display=on?'none':''; const h=sb.previousElementSibling; if(h&&h.classList.contains('optshead')) h.style.display=on?'none':'' }
+  });
+  kgPrev();
+}
+function kgCollect(){
+  if(!pfKg.on) return {on:false};
+  const w=parseKg(pfKg.w);
+  if(!(w>=0.05&&w<=50)) return {err:'اكتب وزن القطعة التقريبي بالكيلو (مثلاً 2)'};
+  return {on:true, w:Math.round(w*100)/100};
+}
+document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'||t.id==='pp')&&pfKg.on) kgPrev() });
+
+/* ═══ v381: المحل يكتب الوزن الحقيقي ويصوّر الميزان ═══ */
+let _wg=null;
+function _wgEst(i){ return Number(i.w||0)*Number(i.qty||1) }
+function _wgRange(i){ const e=_wgEst(i); return [Math.round(e*0.8*100)/100, Math.round(e*1.2*100)/100] }
+function _wgLine(i,kg){ return r250(Number(i.ppk||0)*kg)+Number(i.optp||0)*Number(i.qty||1) }
+function _wgCan(o){ return (o.status==='accepted'||o.status==='ready') && !o.picked_at }
+function wgRowHTML(o,ix,i){
+  const can=_wgCan(o), est=_wgEst(i);
+  if(itWeighed(i)) return `<div class="wg-row ok"><span>⚖️ <b>${kgTxt(i.aw)} كغم</b></span>${_wImgOk(i.wimg)?`<img src="${i.wimg}" onclick="viewPhoto('${i.wimg}')" alt="">`:''}${can?`<button type="button" onclick="wgOpen(${ix})">تعديل</button>`:''}</div>`;
+  if(o.status==='pending') return `<div class="wg-row">⚖️ تقريباً ${kgTxt(est)} كغم — اقبل الطلب وبعدين اكتب الوزن</div>`;
+  if(!can) return `<div class="wg-row">⚖️ تقريباً ${kgTxt(est)} كغم — ما انوزن</div>`;
+  return `<button type="button" class="wg-btn" onclick="wgOpen(${ix})">⚖️ اكتب الوزن وصوّر الميزان</button>`;
+}
+function wgOpen(ix){
+  const o=(myOrders||[]).find(x=>x.id===_odId); if(!o) return;
+  const i=(o.items||[])[ix]; if(!i||!i.kg) return;
+  if(!_wgCan(o)) return toast('الوزن ينكتب بعد قبول الطلب وقبل لا يستلمه السايق');
+  _wg={oid:o.id, ix, kg:itWeighed(i)?String(i.aw):'', img:_wImgOk(i.wimg)?i.wimg:'', busy:false, up:false};
+  wgPaint();
+}
+function wgClose(){ const el=document.getElementById('wgSheet'); if(el) el.classList.remove('on'); _wg=null }
+function wgPaint(keepFocus){
+  if(!_wg) return;
+  const o=(myOrders||[]).find(x=>x.id===_wg.oid); const i=o&&(o.items||[])[_wg.ix]; if(!i) return wgClose();
+  let el=document.getElementById('wgSheet');
+  if(!el){ el=document.createElement('div'); el.id='wgSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) wgClose() }); document.body.appendChild(el) }
+  const [lo,hi]=_wgRange(i), kg=parseKg(_wg.kg), okKg=kg>=lo&&kg<=hi, line=okKg?_wgLine(i,kg):null;
+  const msg=!_wg.kg?'':(isNaN(kg)?'اكتب رقم':(okKg?'':'لازم بين '+kgTxt(lo)+' و '+kgTxt(hi)+' كغم'));
+  if(keepFocus){
+    const m=el.querySelector('.wg-msg'), pv=el.querySelector('.wg-pv'), sv=el.querySelector('.wg-save');
+    if(m) m.textContent=msg; if(pv) pv.innerHTML=line!=null?('السعر: <b>'+line.toLocaleString()+' د.ع</b> <s>≈ '+itLine(i).toLocaleString()+'</s>'):'';
+    if(sv) sv.disabled=!(okKg&&_wg.img)||_wg.busy||_wg.up; return;
+  }
+  el.innerHTML=`<div class="wgcard">
+    <button class="wgx" onclick="wgClose()" aria-label="سكّر">×</button>
+    <h3>⚖️ وزن: ${esc(i.name||'')} <small>×${Number(i.qty||1)}</small></h3>
+    <p class="wg-h">تقريباً ${kgTxt(_wgEst(i))} كغم · المسموح من ${kgTxt(lo)} إلى ${kgTxt(hi)} كغم · ${Number(i.ppk||0).toLocaleString()} د.ع للكيلو</p>
+    <label class="wg-l">1. الوزن الحقيقي (كغم)</label>
+    <input class="wg-in" type="text" inputmode="decimal" value="${esc(_wg.kg)}" placeholder="مثلاً ${kgTxt(_wgEst(i))}" oninput="_wg.kg=this.value;wgPaint(true)">
+    <div class="wg-msg">${msg}</div>
+    <label class="wg-l">2. صورة الميزان بعد الذبح</label>
+    <div class="wg-ph" onclick="document.getElementById('wgFile').click()">${_wg.up?'<span>… جاري رفع الصورة</span>':(_wg.img?`<img src="${_wg.img}" alt=""><em>اضغط لتصوير ثاني</em>`:'<span>📷 صوّر الميزان</span><em>لازم يبين الرقم بالصورة</em>')}</div>
+    <input type="file" id="wgFile" accept="image/*" style="display:none" onchange="wgPick(this)">
+    <div class="wg-pv">${line!=null?('السعر: <b>'+line.toLocaleString()+' د.ع</b> <s>≈ '+itLine(i).toLocaleString()+'</s>'):''}</div>
+    <button class="big-btn wg-save" ${(okKg&&_wg.img&&!_wg.busy&&!_wg.up)?'':'disabled'} onclick="wgSave()">${_wg.busy?'… جاري الحفظ':'حفظ الوزن وإرسال للزبون'}</button>
+  </div>`;
+  el.classList.add('on');
+}
+async function wgPick(inp){
+  const f=inp.files&&inp.files[0]; if(!f||!_wg) return;
+  _wg.up=true; wgPaint();
+  try{ const u=await uploadImage(f,'weights',{size:1000,quality:0.8}); if(_wg) _wg.img=u }
+  catch(e){ toast('ما انرفعت الصورة: '+String(e.message||e).slice(0,70)) }
+  if(_wg){ _wg.up=false; wgPaint() }
+  inp.value='';
+}
+async function wgSave(){
+  if(!_wg||_wg.busy) return;
+  const o=(myOrders||[]).find(x=>x.id===_wg.oid); const i=o&&(o.items||[])[_wg.ix]; if(!i) return wgClose();
+  const kg=parseKg(_wg.kg), [lo,hi]=_wgRange(i);
+  if(!(kg>=lo&&kg<=hi)) return toast('الوزن لازم بين '+kgTxt(lo)+' و '+kgTxt(hi)+' كغم');
+  if(!_wImgOk(_wg.img)) return toast('صوّر الميزان أول');
+  _wg.busy=true; wgPaint();
+  try{
+    const r=await rpc('shop_set_weight',{p_order:o.id, p_idx:_wg.ix, p_kg:kg, p_img:_wg.img});
+    i.aw=Number(r&&r.kg!=null?r.kg:kg); i.wimg=_wg.img; i.lt=Number(r&&r.line!=null?r.line:_wgLine(i,kg));
+    if(r&&r.items_total!=null) o.sub=Number(r.items_total);
+    if(r&&r.total!=null) o.total=Number(r.total);
+    pushTo(o.customerUid,'⚖️ انوزن طلبك',(i.name||'صنف')+': '+kgTxt(i.aw)+' كغم — مبلغ طلبك صار '+Number(o.total||0).toLocaleString()+' د.ع'+(o.shopName?' — '+o.shopName:''),{type:'weight',order:o.id});
+    toast('انحفظ الوزن ✓ ووصل للزبون');
+    wgClose(); renderOrdDet();
+  }catch(e){
+    if(_wg){ _wg.busy=false; wgPaint() }
+    toast(/function|schema|Could not find/i.test(errMsg(e))?'شغّل weigh_v381.sql أول':('ما انحفظ: '+errMsg(e)));
+  }
+}
 async function setStatus(id,st){
   if(st==='rejected'){
     const yes=await askConfirm('متأكد تريد ترفض الطلب؟', {title:'رفض الطلب', ok:'نعم، ارفضه', danger:true,
@@ -13162,6 +13346,10 @@ async function setStatus(id,st){
   }
   let _prep=null;
   if(st==='accepted'){ _prep=await prepPick(); if(!_prep) return false; }
+  if(st==='ready'){   /* v381: أغراض بالوزن ما انوزنت */
+    const _ow=(myOrders||[]).find(x=>x.id===id), _nw=((_ow&&_ow.items)||[]).filter(i=>i&&i.kg&&!itWeighed(i)).length;
+    if(_nw){ const go=await askConfirm('بالطلب '+_nw+' صنف بالوزن ما كتبت وزنه.<div style="margin-top:6px;font-size:13px">إذا تكمّل، الزبون يدفع السعر التقريبي. الأفضل اكتب الوزن وصوّر الميزان أول.</div>',{title:'⚖️ الوزن',ok:'كمّل بالتقريبي'}); if(!go) return false; }
+  }
   stopAlarm();
   /* v324: ضغطتين ورا بعض، أو المحل والموظف ضغطوا سوا — نمنع الطلب الثاني */
   window.__stBusy=window.__stBusy||{};
@@ -13452,14 +13640,15 @@ function extBanner(o){
 }
 
 async function addProduct(){
-  const _sz=szCollect(); if(_sz.err) return toast(_sz.err);
+  const _kg=kgCollect(); if(_kg.err) return toast(_kg.err);
+  const _sz=_kg.on?{p:0,sizes:[]}:szCollect(); if(_sz.err) return toast(_sz.err);
   const n=pn.value.trim(),p=_sz.p?_sz.p:parseInt(pp.value),d=pd.value.trim(),ct=(document.getElementById('pc').value||'').trim();
   if(!n)return toast('اكتب اسم المنتج');
   if(!p||p<=0)return toast('اكتب سعر صحيح');
   const opts=collectOpts();
   const item={
     id: editingProdId!==null ? editingProdId : Date.now(),
-    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, lead:(pfLead>0?pfLead:undefined), sizeLabel:(_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined, avail:editingProdAvail
+    name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, byKg:_kg.on?true:undefined, w:_kg.on?_kg.w:undefined, lead:(pfLead>0?pfLead:undefined), sizeLabel:(_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined, avail:editingProdAvail
   };
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
@@ -13511,6 +13700,7 @@ function editProduct(id){
   optRows=(p.opts||[]).map(o=>({n:o.n,p:o.p,img:o.img||''})); renderOpts();
   szRows=(Array.isArray(p.sizes)?p.sizes:[]).map(z=>({n:z.n,p:z.p,d:z.d||''})); szLabel=p.sizeLabel||''; szPaint();
   pfLead=pLead(p); leadPaint();
+  pfKg={on:!!pKgW(p), w:(p&&p.w)?String(p.w):''}; kgPaint();   /* v381 */
   const t=document.getElementById('prodPanelTtl'); if(t)t.textContent='تعديل المنتج';
   const su=document.getElementById('prodPanelSub'); if(su)su.textContent='عدّل بيانات المنتج واحفظ التغييرات';
   const ab=document.getElementById('addProdBtn'); if(ab)ab.textContent='حفظ التعديل';
@@ -13525,6 +13715,7 @@ function cancelEditProduct(){
   optRows=[]; renderOpts();
   szRows=[]; szLabel=''; szPaint();
   pfLead=0; leadPaint();
+  pfKg={on:false,w:''}; kgPaint();   /* v381 */
   resetProdBox();
   const t=document.getElementById('prodPanelTtl'); if(t)t.textContent='إضافة منتج جديد';
   const su=document.getElementById('prodPanelSub'); if(su)su.textContent='أضف منتجاتك بسهولة واجذب المزيد من العملاء';
@@ -14792,7 +14983,7 @@ function _tripPaint(){
   const nItems=its.reduce((a,i)=>a+Number(i.qty||0),0);
   const review = toShop ? `<div class="tb-rev">
       <div class="tb-rev-h"><b>راجع الطلب قبل ما تطلع</b><span>طلب <bdi>#${esc(ONO(o))}</bdi></span></div>
-      ${its.map(i=>`<div class="tb-it"><i>${Number(i.qty||0)}×</i><span>${esc(i.name)}</span></div>`).join('')}
+      ${its.map(i=>`<div class="tb-it"><i>${Number(i.qty||0)}×</i><span>${esc(i.name)}${itWeighed(i)?' · ⚖️ '+kgTxt(i.aw)+' كغم':''}</span></div>`).join('')}
       ${o.note?`<div class="tb-note">📝 ${esc(o.note)}</div>`:''}
       <div class="tb-rev-f">تأكد إن رقم الطلب والأغراض نفس اللي بالكيس</div>
     </div>` : '';
@@ -16964,7 +17155,7 @@ function peekBackup(id){
   if(box.style.display==='block'){ box.style.display='none'; return }
   const ps=Array.isArray(b.products)?b.products:[];
   box.innerHTML = ps.length
-    ? ps.map(p=>`• ${esc(p.name||'—')} — ${Number(p.price||0).toLocaleString()} د.ع`).join('<br>')
+    ? ps.map(p=>`• ${esc(p.name||'—')} — ${pPriceLbl(p)}`).join('<br>')
     : 'القائمة كانت فارغة بهذي النسخة';
   box.style.display='block';
 }
@@ -18115,7 +18306,7 @@ function aoOpen(id){
     <div class="aorow"><i>👤</i><div><b>${esc(o.customer||'زبون')}</b><span dir="ltr">${esc(o.phone||'')}</span></div>${tel(o.phone,'اتصل بالزبون')}</div>
     <div class="aorow"><i>📍</i><div><b>${esc(o.addr||'—')}</b>${o.note?`<span>ملاحظة: ${esc(o.note)}</span>`:''}</div></div>
     ${o.driverName?`<div class="aorow"><i>🛵</i><div><b>${esc(o.driverName)}</b><span dir="ltr">${esc(o.driverPhone||'')}</span></div>${tel(o.driverPhone,'اتصل بالسائق')}</div>`:''}
-    ${items.length?`<div class="aoitems">${items.map(it=>`<div><span>${esc(it.name||'')} <em>×${Number(it.qty||1)}</em></span><b>${n(Number(it.price||0)*Number(it.qty||1))}</b></div>`).join('')}</div>`:''}
+    ${items.length?`<div class="aoitems">${items.map(it=>`<div><span>${esc(it.name||'')} <em>×${Number(it.qty||1)}</em>${itKgHTML(it)}</span><b>${n(itLine(it))}</b></div>`).join('')}</div>`:''}
     <div class="aosum">
       <div><span>المواد</span><b>${n(o.sub)}</b></div>
       <div><span>التوصيل</span><b>${n(o.deliveryFee)}</b></div>
@@ -18296,7 +18487,7 @@ function openAdminShop(id){
   const st=sh.approved?(op?['مفتوح هسه','ok']:['مسكّر هسه','open']):(sh.rejected_at?['مرفوض','late']:['موقوف — ينتظر التفعيل','late']);
   /* المنيو حسب الأقسام */
   const byCat={}; ps.forEach(p=>{ const c=String(p.cat||'').trim()||'بدون قسم'; (byCat[c]=byCat[c]||[]).push(p) });
-  const price=p=>{ const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.p):[]; if(sz.length){ const v=sz.map(z=>Number(z.p)||0); return Math.min(...v).toLocaleString()+(v.length>1?' – '+Math.max(...v).toLocaleString():'') } return Number(p.price||0).toLocaleString() };
+  const price=p=>{ const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.p):[]; if(sz.length){ const v=sz.map(z=>Number(z.p)||0); return Math.min(...v).toLocaleString()+(v.length>1?' – '+Math.max(...v).toLocaleString():'') } return Number(p.price||0).toLocaleString()+(pKgW(p)?' / كغم':'') };
   const menu=ps.length?Object.keys(byCat).map(c=>`<div class="as-cat">${esc(c)} <i>${byCat[c].length}</i></div>`+byCat[c].map(p=>`<div class="as-p${p.avail===false?' na':''}">
       ${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:'<span class="as-ph">🍽️</span>'}
       <div><b>${esc(p.name||'منتج')}</b>${p.desc?`<span>${esc(String(p.desc).slice(0,80))}</span>`:''}${p.avail===false?'<em>غير متوفر</em>':''}</div>
@@ -24265,7 +24456,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v380', seen={}, n=0, q=[], t=null;
+  var VER='v381', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24517,7 +24708,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v380', t0=Date.now();
+  var VER='v381', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
