@@ -78,13 +78,14 @@ async function nudge(req, env) {
 /* v373: كم جهاز مسجّل بتطبيق المتجر (أعداد بس — بدون أي اسم أو رقم) */
 async function pushStats(env) {
   if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
-  const by = {}; let total = 0, cursor;
+  const by = {}, plat = {}; let total = 0, cursor;
   do {
     const r = await env.PUSH.list({ prefix: 'u:', cursor });
-    for (const k of r.keys) { total++; const role = (k.metadata && k.metadata.r) || '?'; by[role] = (by[role] || 0) + 1; }
+    for (const k of r.keys) { total++; const m = k.metadata || {}; const role = m.r || '?', p = m.p || '?';
+      by[role] = (by[role] || 0) + 1; plat[p] = (plat[p] || 0) + 1; }
     cursor = r.list_complete ? undefined : r.cursor;
   } while (cursor);
-  return jres({ ok: true, devices: total, by_role: by });
+  return jres({ ok: true, devices: total, by_role: by, by_platform: plat });
 }
 
 /* v373 (فحص مؤقت): إشعار تجربة لأجهزة الإدارة بس — مرة بالدقيقة كحد أقصى — ويرجّع جواب Expo (نجح/السبب) */
