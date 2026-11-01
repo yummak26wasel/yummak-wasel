@@ -2425,6 +2425,18 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
   border-radius:12px;padding:8px 11px;font-size:12px;font-weight:800;cursor:pointer;
   font-family:inherit;flex:none}
 .cp-rm .wic{width:15px;height:15px}
+/* v391: أزرار المنتج بصفحة التصنيف */
+.cp-row.cp-r2{flex-wrap:wrap}
+.cp-row.cp-r2.out .cp-th{opacity:.5}
+.cp-act{flex-basis:100%;display:flex;gap:7px;margin-top:9px;padding-top:9px;border-top:1px dashed #EFECF7}
+.cp-b{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:11px;padding:8px 6px;min-height:38px;font-family:inherit;font-size:12.5px;font-weight:800;cursor:pointer;touch-action:manipulation;white-space:nowrap}
+.cp-b .wic{width:15px;height:15px}
+.cp-b.ed{background:#F3EEFF;color:var(--g)}
+.cp-b.av.on{background:#ECFDF3;color:#15803D}
+.cp-b.av.off{background:#FFF4E5;color:#B45309}
+.cp-b.rm{background:#FEF2F2;color:#DC2626}
+.cp-b .tg{transform:scale(.72);margin:-4px -6px;pointer-events:none}
+.cp-out{font-style:normal;display:inline-block;margin-inline-start:4px;font-size:11px;font-weight:800;color:#B45309;background:#FFF4E5;border-radius:6px;padding:1px 6px;vertical-align:middle}
 .cp-ck{width:22px;height:22px;border-radius:7px;border:2px solid #D8D3E8;background:#fff;
   flex:none;position:relative}
 .cp-ck.on{border-color:var(--g);background:var(--g)}
@@ -6075,7 +6087,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v390</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v391</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7659,14 +7671,18 @@ function cpPaintList(){
          <input type="text" placeholder="ابحث عن منتج لإضافته لهذا التصنيف…" value="${esc(q)}" oninput="cpSearch1(this.value)">
        </div>
        <div class="cp-sec">المنتجات الحالية في هذا التصنيف</div>`
-      + (list.length ? list.map(p=>`
-        <div class="cp-row">
+      + (list.length ? list.map(p=>{ const q=JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;'), on=p.avail!==false, OUT=_mkMine()?'نفذ':'غير متوفر';
+        /* v391: لكل منتج: تعديل · متوفر/نفذ · إزالة من التصنيف */
+        return `
+        <div class="cp-row cp-r2${on?'':' out'}">
           <div class="cp-th">${_cpThumb(p)}</div>
-          <div class="cp-nm" onclick="prodFormOpen(${JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;')})" style="cursor:pointer"><b>${esc(p.name||'')}</b><span>${pPriceLbl(p)}</span></div>
-          <button class="cp-rm" onclick="cpRemove(${JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;')})">
-            <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.5 12h7"/></svg> إزالة
-          </button>
-        </div>`).join('')
+          <div class="cp-nm" onclick="prodFormOpen(${q})" style="cursor:pointer"><b>${esc(p.name||'')}${on?'':` <em class="cp-out">${OUT}</em>`}</b><span>${pPriceLbl(p)}</span></div>
+          <div class="cp-act">
+            <button type="button" class="cp-b ed" onclick="prodFormOpen(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg> تعديل</button>
+            <button type="button" class="cp-b av ${on?'on':'off'}" onclick="cpAvail(${q})" aria-pressed="${on}"><span class="tg${on?' on':''}" aria-hidden="true"></span> ${on?'متوفر':OUT}</button>
+            <button type="button" class="cp-b rm" onclick="cpRemove(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.5 12h7"/></svg> إزالة</button>
+          </div>
+        </div>` }).join('')
         : '<div class="stf-empty">ماكو منتجات بهذا التصنيف</div>')
       + `<button class="cat-add" onclick="cpGoNewProduct()">
            <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة منتج جديد</button>
@@ -7725,6 +7741,16 @@ async function _cpSyncCat(pid, catName, add){
   }catch(e){ console.warn('cpSyncCat', e) }
 }
 
+/* v391: متوفر / نفذ من صفحة التصنيف — نفس زر «قائمتي» */
+async function cpAvail(pid){
+  const p=_cpProducts().find(x=>_cpPid(x)===pid); if(!p) return;
+  const nv=!(p.avail!==false), item=Object.assign({},p,{avail:nv});
+  p.avail=nv; cpPaintList();
+  try{
+    await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
+    toast(nv?'رجع متوفر ✓':(_mkMine()?'تأشّر «نفذ» — الزبون يشوفه نفذ وما يگدر يطلبه':'صار غير متوفر'));
+  }catch(e){ p.avail=!nv; cpPaintList(); toast('ما گدرنا نغيّر الحالة: '+String(e.message||e).slice(0,70)) }
+}
 async function cpRemove(pid){
   if(!_cpCat) return;
   try{
@@ -23239,6 +23265,11 @@ html[data-theme=dark] .cp-row{background:#1f1a30;border:1px solid #3a3354}
 html[data-theme=dark] .cp-row.pick.on{background:#2b2447}
 html[data-theme=dark] .cp-th{color:#a8a2bd}
 html[data-theme=dark] .cp-rm{background:#3a2a1a;color:#ed8d8d}
+html[data-theme=dark] .cp-act{border-top-color:#3a3354}
+html[data-theme=dark] .cp-b.ed{background:#2a2244;color:#c9b6ff}
+html[data-theme=dark] .cp-b.av.on{background:#163323;color:#7ee2a8}
+html[data-theme=dark] .cp-b.av.off,html[data-theme=dark] .cp-out{background:#3a2a10;color:#f6cf8a}
+html[data-theme=dark] .cp-b.rm{background:#3a1a1a;color:#ed8d8d}
 html[data-theme=dark] .cp-ck{border:2px solid #3a3354;background:#1f1a30}
 html[data-theme=dark] .cp-ck.on::after{border:solid #3a3354}
 html[data-theme=dark] .cp-alt{background:#1f1a30}
@@ -25226,7 +25257,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v390', seen={}, n=0, q=[], t=null;
+  var VER='v391', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25478,7 +25509,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v390', t0=Date.now();
+  var VER='v391', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
