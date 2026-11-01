@@ -162,9 +162,11 @@ async function bgRemove(req, env, url) {
   if (!r.ok || !r.body) return jres({ error: 'source ' + r.status }, 404);
   if (Number(r.headers.get('content-length') || 0) > 8e6) return jres({ error: 'too big' }, 413);
   try {
-    const out = (await env.IMAGES.input(r.body)
-      .transform({ width: 1000, height: 1000, fit: 'scale-down', segment: 'foreground' })
-      .output({ format: 'image/webp', quality: 90 })).response();
+    const pw = Math.min(400, Math.max(64, Number(url.searchParams.get('w')) || 0));   /* فحص: نسخة صغيرة */
+    let h = env.IMAGES.input(r.body)
+      .transform({ width: 1000, height: 1000, fit: 'scale-down', segment: 'foreground' });
+    if (url.searchParams.get('b64') && url.searchParams.get('w')) h = h.transform({ width: pw, height: pw, fit: 'scale-down' });
+    const out = (await h.output({ format: 'image/webp', quality: 90 })).response();
     const type = out.headers.get('content-type') || 'image/webp';
     if (url.searchParams.get('b64')) {   /* فحص من السيرفر: نفس الصورة بس كنص */
       const buf = await out.arrayBuffer();
