@@ -789,22 +789,17 @@ html[data-theme=dark] .tchip.on{background:#2b2447;border-color:#8B6CF0;color:#d
 .wg-pv{margin:12px 0 4px;font-size:14px;text-align:center}
 .wg-pv s{color:#9A93AC;margin-right:6px;font-size:12.5px}
 .wg-save:disabled{opacity:.5}
-/* v387: صورة المنتج — قبل وبعد (شيل الخلفية) */
-.bgx-two{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:6px 0 4px}
-.bgx-t{position:relative;border:2.5px solid #E6E1F0;border-radius:18px;background:#fff;padding:0;overflow:hidden;cursor:pointer;font:inherit;color:#1E1530;touch-action:manipulation}
-.bgx-t.on{border-color:var(--g);box-shadow:0 6px 16px rgba(91,43,201,.18)}
-.bgx-t:disabled{cursor:default}
+/* v388: صورة المنتج — نشيل الخلفية ونحفظها بيضاء وحدها */
+.bgx-one{position:relative;width:62%;max-width:240px;margin:8px auto 6px;border-radius:18px;overflow:hidden;border:2px solid #E6E1F0;background:#fff}
 .bgx-im{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;background:#fff}
 .bgx-im img{width:100%;height:100%;object-fit:cover;display:block}
-.bgx-t b{display:block;padding:8px 6px 9px;font-size:13px;font-weight:800;text-align:center;border-top:1px solid #F0ECF7}
-.bgx-t .ck{position:absolute;top:8px;right:8px;z-index:1;width:24px;height:24px;border-radius:50%;background:var(--g);color:#fff;display:none;align-items:center;justify-content:center;font-size:14px;font-weight:900}
-.bgx-t.on .ck{display:flex}
-.bgx-wait{display:flex;flex-direction:column;align-items:center;gap:8px;font-size:12px;color:#7A7290;padding:10px;text-align:center;line-height:1.6}
-.bgx-spin{width:30px;height:30px;border-radius:50%;border:3px solid #E6E1F0;border-top-color:var(--g);animation:bgxs .9s linear infinite}
+.bgx-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:10px;text-align:center;font-size:13px;font-weight:800;color:#3b2a6b;background:rgba(255,255,255,.62);line-height:1.6}
+.bgx-msg{margin:6px 0 2px;font-size:13.5px;font-weight:700;text-align:center;line-height:1.7;color:#5B5470}
+.bgx-spin{width:32px;height:32px;border-radius:50%;border:3px solid #E6E1F0;border-top-color:var(--g);animation:bgxs .9s linear infinite}
 @keyframes bgxs{to{transform:rotate(360deg)}}
 @media (prefers-reduced-motion:reduce){.bgx-spin{animation-duration:2.4s}}
-html[data-theme=dark] .bgx-t{border-color:#3a3354}
-html[data-theme=dark] .bgx-t.on{border-color:#9d7bff}
+html[data-theme=dark] .bgx-one{border-color:#3a3354}
+html[data-theme=dark] .bgx-msg{color:#cfc8e6}
 html[data-theme=dark] .kginfo,html[data-theme=dark] .kgbill{background:#2a2216;border-color:#4a3a20;color:#f1dfbf}
 html[data-theme=dark] .kgchip{background:#3a2a10;color:#f6cf8a}
 html[data-theme=dark] .kgtog{background:#1f1a30;border-color:#3a3354}
@@ -6043,7 +6038,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v387</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v388</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6072,7 +6067,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="stFinance"></div>
       <div id="stDiscOwed"></div>
       <div id="stCash"></div>
-      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج بضو النهار وخلّيه يبين كله. التطبيق يشيل الخلفية ويخليها بيضاء ويحط المنتج بالنص وحده ✨ — وتگدر تختار الصورة الأصلية.</div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="wasbox"></div><div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <div class="ldbox"></div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
+      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div></div> <label class="flab">صورة المنتج</label> <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div> <div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج بضو النهار وخلّيه يبين كله. التطبيق يشيل الخلفية ويخليها بيضاء ويحط المنتج بالنص وحده ✨</div> <input type="file" id="prPhoto" accept="image/*" style="display:none" onchange="pickProdPhoto(this)"> <input type="file" id="optPhoto" accept="image/*" style="display:none" onchange="optImgPicked(this)"> <div class="frow"> <div class="fld2"><label class="flab">اسم المنتج</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.6 13.6l-7 7a2 2 0 0 1-2.8 0l-7.4-7.4A2 2 0 0 1 3 11.8V4a1 1 0 0 1 1-1h7.8a2 2 0 0 1 1.4.6l7.4 7.4a2 2 0 0 1 0 2.6z"/><circle cx="7.5" cy="7.5" r="1.2"/></svg></span> <input type="text" id="pn" placeholder="مثال: برجر دجاج حار"></div></div> <div class="fld2"><label class="flab">السعر الأساسي</label> <div class="iw"><span class="ib o"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg></span> <input type="number" id="pp" placeholder="أدخل السعر" inputmode="numeric"><span class="unit">د.ع</span></div></div> </div> <div class="wasbox"></div><div class="kgbox"></div><div class="optshead"><div><h4 class="opt-t">الأحجام / النكهات <small class="szopt">اختياري</small></h4><p class="psub">حجم (وسط · كبير) أو نكهة (سبايسي · جبن) — الزبون يختار وحد بس</p></div><button class="addopt" onclick="szAddRow()">+ إضافة حجم</button></div><div class="szbox"></div> <label class="flab">القسم</label> <div class="iw"><span class="ib" id="pcIcon" onclick="toggleCatPicker()" style="cursor:pointer"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.6"/><rect x="14" y="3" width="7" height="7" rx="1.6"/><rect x="3" y="14" width="7" height="7" rx="1.6"/><rect x="14" y="14" width="7" height="7" rx="1.6"/></svg></span> <input type="text" id="pc" list="catOpts" placeholder="مثال: ساندويش · اجنحة · مشروبات" onfocus="renderCatPicker()"></div> <div class="catdrop" id="catDrop" style="display:none"></div> <datalist id="catOpts"></datalist> <div class="optnote" style="text-align:right;margin:6px 2px 0">الأقسام تظهر للزبون كتبويبات فوق القائمة</div> <label class="flab">الوصف</label> <div class="iw"><span class="ib"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span> <input type="text" id="pd" placeholder="اكتب وصفًا مختصرًا وجذابًا للمنتج"></div> <div class="optshead"> <div><h4 class="opt-t">إضافات اختيارية</h4><p class="psub">أضف خيارات إضافية للمنتج مع سعر إضافي</p></div> <button class="addopt" onclick="addOptRow()">+ إضافة خيار</button> </div> <div id="optsBox"></div> <div class="optnote"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg> يمكن للعميل اختيار أكثر من إضافة</div> <div class="ldbox"></div> <button class="big-btn o" id="addProdBtn" onclick="addProduct()">إضافة المنتج</button> <button class="big-btn" id="cancelProdBtn" style="display:none;background:#EFECF7;color:#5B5470;margin-top:9px" onclick="cancelEditProduct()">إلغاء التعديل</button></div> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> قائمتي</h3><div id="stMenu"></div> </div> <div class="page" id="q_cats">
       <div class="stf-hd">
         <div>
           <h3>التصنيفات</h3>
@@ -6142,7 +6137,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <label class="cf-lab" style="margin-top:16px">الوصف</label>
       <textarea id="pfDesc" class="cf-inp pf-ta" rows="3" placeholder="اكتب وصف عن المنتج…"></textarea>
       <label class="cf-lab" style="margin-top:16px">صورة المنتج</label>
-      <div class="pf-box" id="pfBox" onclick="document.getElementById('pfPhoto').click()"></div><div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج بضو النهار وخلّيه يبين كله. التطبيق يشيل الخلفية ويخليها بيضاء ويحط المنتج بالنص وحده ✨ — وتگدر تختار الصورة الأصلية.</div>
+      <div class="pf-box" id="pfBox" onclick="document.getElementById('pfPhoto').click()"></div><div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج بضو النهار وخلّيه يبين كله. التطبيق يشيل الخلفية ويخليها بيضاء ويحط المنتج بالنص وحده ✨</div>
       <input type="file" id="pfPhoto" accept="image/*" style="display:none" onchange="prodFormPick(this)">
       <div class="cf-acts">
         <button class="cf-save" onclick="prodFormSave()">حفظ المنتج</button>
@@ -6686,8 +6681,7 @@ async function docUrl(ref){
    1) نرفع الصورة كاملة (بدون قص) لمجلد bgsrc
    2) السيرفر (/_bg — ذكاء اصطناعي من Cloudflare) يرجّع المنتج بخلفية شفافة
    3) هنا نلگى حدود المنتج ونكبّره بالنص على مربع أبيض
-   4) صاحب المحل يختار: «بخلفية بيضاء» أو «الأصلية» — ونرفع الي اختاره
-   إذا السيرفر ما رد أو الصورة ما ضبطت: تبقى «الأصلية» — نفس الحفظ القديم بالضبط */
+   4) v388: نحفظ البيضاء وحدها — ماكو اختيار «الأصلية» (طلب عبد) */
 async function _upBlob(blob, folder){
   const tok=(window.__waselToken&&window.__waselToken())||SB_KEY;
   const name=(folder||'misc')+'/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.jpg';
@@ -6721,74 +6715,71 @@ async function _bgCompose(cut, size){
   } finally { try{ URL.revokeObjectURL(im.src) }catch(e){} }
 }
 let _bgx=null;
-function _bgxFree(B){ if(!B) return; try{ B.origUrl&&URL.revokeObjectURL(B.origUrl) }catch(e){} try{ B.cleanUrl&&URL.revokeObjectURL(B.cleanUrl) }catch(e){} }
+function _bgxFree(B){ if(!B) return; try{ B.origUrl&&URL.revokeObjectURL(B.origUrl) }catch(e){} }
 function bgxClose(){
-  const B=_bgx; if(B&&B.saving) return;
+  const B=_bgx; if(B&&B.st==='saving') return;
   const el=document.getElementById('bgxSheet'); if(el) el.classList.remove('on');
   _bgx=null; if(B){ const d=B.done; B.done=null; _bgxFree(B); if(d) d(null) }
+}
+function _bgxEnd(B,url){
+  const el=document.getElementById('bgxSheet'); if(el) el.classList.remove('on');
+  const d=B.done; B.done=null; if(_bgx===B) _bgx=null; _bgxFree(B); if(d) d(url);
 }
 function bgxPaint(){
   const B=_bgx; if(!B) return;
   let el=document.getElementById('bgxSheet');
   if(!el){ el=document.createElement('div'); el.id='bgxSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) bgxClose() }); document.body.appendChild(el) }
-  const right = B.clean ? `<img src="${B.cleanUrl}" alt="المنتج بخلفية بيضاء">`
-    : (B.fail ? '<div class="bgx-wait">هالصورة ما ضبطت<br>اعتمد الأصلية أو صوّر من جديد</div>'
-              : '<div class="bgx-wait" aria-live="polite"><span class="bgx-spin"></span>… جاري شيل الخلفية</div>');
-  const canSave = !B.saving && (B.pick==='orig' || !!B.clean);
+  const busy=B.st==='work'||B.st==='saving';
+  const ov=busy?`<div class="bgx-ov" aria-live="polite"><span class="bgx-spin"></span>${B.st==='saving'?'… جاري الحفظ':'… جاري شيل الخلفية'}</div>`:'';
+  const msg=B.st==='nofind'?'ما لگينا المنتج بالصورة 🤔<br>صوّره من قريب وبضو زين، وجرب مرة ثانية.'
+          :(B.st==='err'?'ما انحفظت الصورة: '+esc(String(B.err||'').slice(0,70))+'<br>تأكد من النت وجرب مرة ثانية.':'');
   el.innerHTML=`<div class="wgcard">
-    <button class="wgx" onclick="bgxClose()" aria-label="سكّر"${B.saving?' disabled':''}>×</button>
+    <button class="wgx" onclick="bgxClose()" aria-label="سكّر"${B.st==='saving'?' disabled':''}>×</button>
     <h3>✨ ${esc(B.title)}</h3>
-    <p class="wg-h">التطبيق يشيل الخلفية ويخلي المنتج بالنص على أبيض — مثل التطبيقات العالمية. اختار الي تعجبك.</p>
-    <div class="bgx-two">
-      <button type="button" class="bgx-t${B.pick==='clean'?' on':''}"${B.saving?' disabled':''} onclick="bgxPick('clean')"><span class="ck"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div class="bgx-im">${right}</div><b>بخلفية بيضاء ✨</b></button>
-      <button type="button" class="bgx-t${B.pick==='orig'?' on':''}"${B.saving?' disabled':''} onclick="bgxPick('orig')"><span class="ck"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg></span><div class="bgx-im"><img src="${B.origUrl}" alt="الصورة الأصلية"></div><b>الأصلية</b></button>
-    </div>
-    <button class="big-btn wg-save"${canSave?'':' disabled'} onclick="bgxSave()">${B.saving?'… جاري الحفظ':(B.pick==='clean'&&!B.clean&&!B.fail?'… لحظة':'اعتمد الصورة')}</button>
+    <p class="wg-h">نشيل الخلفية ونخلي المنتج بالنص على أبيض — مثل التطبيقات العالمية. لحظات وتنحفظ وحدها.</p>
+    <div class="bgx-one"><div class="bgx-im"><img src="${B.origUrl}" alt=""></div>${ov}</div>
+    ${msg?`<p class="bgx-msg">${msg}</p><button class="big-btn wg-save" onclick="bgxClose()">تمام</button>`:''}
   </div>`;
   el.classList.add('on');
 }
-function bgxPick(k){ if(!_bgx||_bgx.saving) return; if(k==='clean'&&_bgx.fail) return; _bgx.pick=k; bgxPaint() }
-/* يفتح الشيت ويرجّع رابط الصورة الي انحفظت — أو null إذا سكّره بدون حفظ */
+/* يشيل الخلفية ويحفظ الصورة البيضاء — يرجّع رابطها، أو null إذا سكّر أو الصورة ما ضبطت.
+   إذا خدمة شيل الخلفية نفسها ما ردّت (مو مشكلة بالصورة): نحفظ الصورة مربعة مثل قبل حتى المحل ما يوگف */
 function photoClean(file, o){
   o=o||{};
   return new Promise(done=>{
     if(_bgx){ const old=_bgx; _bgx=null; if(old.done) old.done(null); _bgxFree(old) }
-    const B=_bgx={file, o, title:o.title||'صورة المنتج', pick:'clean', clean:null, cleanUrl:'', fail:false, saving:false, done, origUrl:URL.createObjectURL(file)};
+    const B=_bgx={file, o, title:o.title||'صورة المنتج', st:'work', done, origUrl:URL.createObjectURL(file)};
     bgxPaint();
     (async()=>{
+      let cut=null;
       try{
         const src=await shrinkImage(file, 1200, false, 0.88);
         const srcUrl=await _upBlob(src, 'bgsrc');
         if(_bgx!==B) return;
         const r=await _fto(location.origin+'/_bg',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:srcUrl})},35000);
-        if(!r.ok || !/^image\//.test(r.headers.get('content-type')||'')) throw new Error('bg '+r.status);
-        const clean=await _bgCompose(await r.blob(), o.size||720);
-        if(_bgx!==B) return;
-        B.clean=clean; B.cleanUrl=URL.createObjectURL(clean);
+        if(r.ok && /^image\//.test(r.headers.get('content-type')||'')) cut=await r.blob();
+        else console.warn('bg', r.status);
+      }catch(e){ console.warn('bg', e&&e.message) }
+      if(_bgx!==B) return;
+      let white=null;
+      if(cut){
+        try{ white=await _bgCompose(cut, o.size||720) }
+        catch(e){ if(_bgx!==B) return; B.st='nofind'; bgxPaint(); return }   /* الصورة ما ضبطت — يصوّر من جديد */
+      }
+      if(_bgx!==B) return;
+      B.st='saving'; bgxPaint();
+      try{
+        const url = white
+          ? await _upBlob(white, o.folder||'products')
+          : await uploadImage(file, o.folder||'products', {size:o.origSize||600, square:true, quality:o.quality||0.8});
+        _bgxEnd(B, url);
+        if(!white) setTimeout(()=>toast('انحفظت الصورة — شيل الخلفية ما اشتغل هسه، جربه بعدين'),1600);
       }catch(e){
         if(_bgx!==B) return;
-        B.fail=true; if(!B.saving) B.pick='orig';
-        console.warn('bg', e&&e.message);
+        B.st='err'; B.err=e&&e.message||e; bgxPaint();
       }
-      bgxPaint();
     })();
   });
-}
-async function bgxSave(){
-  const B=_bgx; if(!B||B.saving) return;
-  if(B.pick==='clean' && !B.clean) return;
-  B.saving=true; bgxPaint();
-  try{
-    const url = B.pick==='clean'
-      ? await _upBlob(B.clean, B.o.folder||'products')
-      : await uploadImage(B.file, B.o.folder||'products', {size:B.o.origSize||600, square:true, quality:B.o.quality||0.8});
-    const el=document.getElementById('bgxSheet'); if(el) el.classList.remove('on');
-    const d=B.done; B.done=null; if(_bgx===B) _bgx=null; _bgxFree(B);
-    if(d) d(url);
-  }catch(e){
-    B.saving=false; bgxPaint();
-    toast('ما انحفظت الصورة: '+String(e.message||e).slice(0,70));
-  }
 }
 
 /* v354: على عنواننا الخاص (leemak.app) السيرفرات تمر من نفس العنوان (/_otp و /_api) —
@@ -7732,7 +7723,7 @@ function prodFormPaintImg(){
 
 async function prodFormPick(inp){
   const f=inp.files&&inp.files[0]; inp.value=''; if(!f) return;
-  /* v387: قبل/بعد — نشيل الخلفية ونخلي المنتج بالنص على أبيض */
+  /* v388: نشيل الخلفية ونحفظها بيضاء والمنتج بالنص */
   const url=await photoClean(f,{folder:'products',size:720,origSize:600,quality:0.8});
   if(!url) return;                                  /* سكّر بدون حفظ — تبقى الصورة القديمة */
   _pfImg=url; toast('انحفظت الصورة ✓');
@@ -10843,7 +10834,7 @@ async function catImgUp(inp){
   const file=inp.files&&inp.files[0], id=window._catImgId; if(!file||!id) return;
   inp.value='';
   try{
-    /* v387: قبل/بعد — نشيل الخلفية ونخلي الصورة بالنص على أبيض */
+    /* v388: نشيل الخلفية ونحفظها بيضاء */
     const url=await photoClean(file,{folder:'cats',size:500,origSize:500,quality:0.82,title:'صورة القسم'});
     if(!url) return;
     await sbPatch('shop_categories?id=eq.'+encodeURIComponent(id),{img:url});
@@ -16363,7 +16354,7 @@ async function pickProdPhoto(inp){
   const f=inp.files&&inp.files[0]; inp.value=''; if(!f)return;
   const b=document.getElementById('prBox');
   try{
-    /* v387: قبل/بعد — نشيل الخلفية ونخلي المنتج بالنص على أبيض */
+    /* v388: نشيل الخلفية ونحفظها بيضاء والمنتج بالنص */
     const url=await photoClean(f,{folder:'products',size:720,origSize:600,quality:0.8});
     if(!url) return;                                /* سكّر بدون حفظ — تبقى الصورة القديمة */
     prodPhoto=url;
@@ -25111,7 +25102,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v387', seen={}, n=0, q=[], t=null;
+  var VER='v388', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25363,7 +25354,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v387', t0=Date.now();
+  var VER='v388', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
