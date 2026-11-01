@@ -733,8 +733,16 @@ html[data-theme=dark] .fld .of-mi{border-color:#2c2542}
 .tchip b{font-size:14.5px;font-weight:800;white-space:nowrap}
 .tchip .tci{width:30px;height:30px;flex-shrink:0;background:center/contain no-repeat}
 .tchip .tci.rs{background-image:url(cat-food-1.png)}
-.tchip .tci.sm{background-image:url(cat-buy-1.png)}
-.tchip .tci.cs{background-image:url(cat-cosm.png);background-size:177%;background-position:47% 16%}
+.tchip .tci.sm{background-image:url(cat-store-1.png)}
+.tchip .tci.tc-mk{background-image:url(cat-market.png)}
+.tchip .tci.tc-ph{background-image:url(cat-pharm.png)}
+/* v379: خمس أنواع — ثلاثة فوگ واثنين جوّا بالنص، الصورة فوگ الاسم */
+.tchips.t5{display:grid;grid-template-columns:repeat(6,minmax(0,1fr))}
+.tchips.t5 .tchip{grid-column:span 2;flex-direction:column;gap:3px;height:70px;padding:6px 4px}
+.tchips.t5 .tchip:nth-child(4){grid-column:2/span 2}
+.tchips.t5 .tchip b{font-size:13.5px}
+.tchips.t5 .tchip .tci{width:30px;height:30px}
+.tchip .tci.cs{background-image:url(cat-cosm-2.png)}
 .tchip.on{border-color:var(--g);background:#F5F0FF;color:var(--g);box-shadow:0 0 0 3px rgba(91,43,201,.12)}
 .tchip:active{transform:scale(.97)}
 html[data-theme=dark] .tchip{background:#1f1a30;border-color:#3a3354;color:#ece8f7}
@@ -5682,8 +5690,10 @@ body,.screen{background:#fff;color:var(--txt)}
       العربية<i></i></button> <button class="apin" onclick="toast('مدينة عانة – الأنبار')" aria-label="الموقع"> <svg viewBox="0 0 24 24"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg> </button> </div> <div class="authhero"> <img class="authlogo" src="081cb4e0.png" alt="واصل ليمَك"> <h1 class="authhi">مرحباً بك!</h1> <p class="authsub">سجّل دخولك لتطلب ما تريد بسرعة وسهولة</p> </div> <div class="authcard"> <div class="rtabs" id="roleSeg"> <button class="on" onclick="setRole('customer',this)"> <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M4.8 20c.9-3.6 3.8-5.5 7.2-5.5s6.3 1.9 7.2 5.5"/></svg> <span>عميل</span><i></i></button> <button onclick="setRole('store',this)"> <svg viewBox="0 0 24 24"><path d="M4 9h16l-1 11H5z"/><path d="M4 9l1.6-4.5h12.8L20 9"/><path d="M9 20v-5h6v5"/></svg> <span>متجر</span><i></i></button> <button onclick="setRole('driver',this)"> <svg viewBox="0 0 24 24"><circle cx="5.5" cy="17" r="3"/><circle cx="18.5" cy="17" r="3"/><path d="M8.5 17h7l-2.6-7H16"/><path d="M13 6h3l1.6 5"/></svg> <span>سائق</span><i></i></button> </div> <div class="err" id="authErr"></div> <div class="ifld"> <label>رقم الهاتف</label> <div class="ibox"> <span class="ic"><svg viewBox="0 0 24 24"><path d="M6.6 3h3l1.5 4-2 1.4a12 12 0 0 0 5.5 5.5l1.4-2 4 1.5v3a2 2 0 0 1-2.2 2A16.8 16.8 0 0 1 4.6 5.2 2 2 0 0 1 6.6 3z"/></svg></span> <input type="tel" id="aPhone" placeholder="07XXXXXXXXX" inputmode="numeric" autocomplete="tel"> </div> </div> <div class="ifld"> <label>كلمة المرور</label> <div class="ibox"> <span class="ic"><svg viewBox="0 0 24 24"><rect x="4.5" y="10.5" width="15" height="10" rx="2.5"/><path d="M8 10.5V7.8a4 4 0 0 1 8 0v2.7"/></svg></span> <input type="password" id="aPass" placeholder="٦ خانات على الأقل" autocomplete="current-password"> <button type="button" class="eye" onclick="togglePass(this)" aria-label="إظهار كلمة المرور"> <svg viewBox="0 0 24 24"><path class="e1" d="M2.5 12S6 5.8 12 5.8 21.5 12 21.5 12 18 18.2 12 18.2 2.5 12 2.5 12z"/><circle class="e1" cx="12" cy="12" r="3.1"/><path class="e2" d="M4 20 20 4"/></svg> </button> </div> </div> <div id="signupOnly" style="display:none"> <div class="fld"><label>الاسم الكامل</label><input type="text" id="aName" placeholder="اسمك"></div> <div id="fCustomer"><div class="fld"><label>العنوان في عانة</label> <input type="text" id="aAddr" placeholder="الحي / الشارع / أقرب نقطة دالة"></div></div> <div id="fStore" style="display:none"> <div class="photobox" id="shBox" onclick="document.getElementById('shPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></div> <div class="tx">صورة المحل — مهمة</div> <div class="sub">واجهة المحل أو شعارك.<br>هي أول شي يشوفه الزبون.</div> </div> <input type="file" id="shPhoto" accept="image/*" style="display:none" onchange="pickShopPhoto(this,'shBox')"> <div class="fld"><label>اسم المطعم / المتجر</label><input type="text" id="aStore" placeholder="مثال: مطعم الرافدين"></div> <input type="hidden" id="aType" value="">
       <div class="fld">
         <label>نوع المحل</label>
-        <div class="tchips" id="tPick">
+        <div class="tchips t5" id="tPick">
           <button type="button" class="tchip" data-v="restaurant" onclick="pickType('restaurant',this)"><i class="tci rs"></i><b>مطعم</b></button>
+          <button type="button" class="tchip" data-v="market" onclick="pickType('market',this)"><i class="tci tc-mk"></i><b>سوبر ماركت</b></button>
+          <button type="button" class="tchip" data-v="pharmacy" onclick="pickType('pharmacy',this)"><i class="tci tc-ph"></i><b>صيدلية</b></button>
           <button type="button" class="tchip" data-v="store" onclick="pickType('store',this)"><i class="tci sm"></i><b>متجر</b></button>
           <button type="button" class="tchip" data-v="cosmetics" onclick="pickType('cosmetics',this)"><i class="tci cs"></i><b>كوزمتك</b></button>
         </div>
@@ -5789,7 +5799,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v378</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v379</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -8601,7 +8611,9 @@ async function doAuth(){
         const stype=(document.getElementById('aType').value||'').trim();
         if(!stype){busy(false);return showErr('اختر نوع متجرك')}
         { const _tc=document.getElementById('aTerms'); if(!_tc||!_tc.checked){busy(false);return showErr('لازم توافق على شروط الشراكة — أشّر على المربع')} }
-        shopPayload={name:sname,type:stype,phone,open:true,approved:false,products:[],tgChat:'',img:shopPhoto||''};
+        const _sec=(stype==='market'||stype==='pharmacy')?stype:null;   /* v379: السوبر ماركت والصيدلية = قوانين المتاجر، بس قسمهم بالرئيسية لحالهم */
+        shopPayload={name:sname,type:_sec?'store':stype,phone,open:true,approved:false,products:[],tgChat:'',img:shopPhoto||''};
+        if(_sec) shopPayload.section=_sec;
       }else{
         if(!driverPhoto){busy(false);return showErr('لازم ترفع صورتك الشخصية — إجبارية للسواق')}
         if(!dwData.terms){busy(false);return showErr('لازم توافق على شروط السواق — أشّر على المربع')}
@@ -8820,6 +8832,7 @@ function shopsCacheSave(docs){   /* v353: آخر قائمة محلات (ويا �
 function shopsCacheLoad(){ try{ const c=JSON.parse(localStorage.getItem(_SHC_K)||'null'); if(c && Array.isArray(c.rows) && c.rows.length && Date.now()-(c.at||0)<7*864e5) return c.rows }catch(e){} return null }
 function applyShops(docs){
   shops = docs; window.__shopsLoaded = true;
+  try{ renderCats() }catch(e){}   /* v379: «قريباً» على الأقسام الفاضية */
   try{ if(me && me.role==='customer' && !docs.__cached) shopsCacheSave(docs) }catch(e){}
   renderShops();
   renderDailyMeals();
@@ -9653,20 +9666,22 @@ function renderCats(){
     /* v346: شلنا «الكل» — تضغط القسم المختار مرة ثانية (علامة ✕) وترجع لكل المحلات */
     ['restaurant', 'cat-food-1.png','مطاعم'],
     ['sweet',      'cat-sweet-1.png', 'حلويات'],
+    ['market',     'cat-market.png', 'سوبر ماركت'],   /* v379 */
     ['special',    'cat-buy-1.png', 'اشتريلي'],
     ['veg',        'cat-veg.png',   'مخضر'],   /* v346 */
+    ['pharmacy',   'cat-pharm.png', 'صيدليات'],   /* v379 */
     ['store',      'cat-store-1.png', 'متاجر'],
-    ['cosmetics',  'cat-cosm.png',  'كوزمتك']
+    ['cosmetics',  'cat-cosm-2.png',  'كوزمتك']   /* v379: الصورة بدون الكلمة المكتوبة بيها */
   ];
   const el=document.getElementById('catCards'); if(!el)return;
   el.innerHTML=C.map(([v,img,l])=>
-    `<div class="catc ${cat===v?'on':''}${CAT_SOON.includes(v)?' soon':''}" onclick="pickCat('${v}')">${CAT_SOON.includes(v)?'<em class="cat-soon">قريباً</em>':''}${cat===v?'<em class="cat-x" aria-label="إلغاء">✕</em>':''}
+    `<div class="catc ${cat===v?'on':''}${catSoon(v)?' soon':''}" onclick="pickCat('${v}')">${catSoon(v)?'<em class="cat-soon">قريباً</em>':''}${cat===v?'<em class="cat-x" aria-label="إلغاء">✕</em>':''}
        <img src="${img}" alt="" onerror="this.onerror=null;this.src=this.src.replace('.png','-1.png')"><span>${l}</span></div>`).join('');
   /* v348: لما تختار قسم، يطلع زر «الكل ✕» بنص سطر «الأقسام» حتى ترجع لكل المحلات */
   const cab=document.getElementById('catAllBtn'); if(cab) cab.style.display=(cat!=='all')?'inline-flex':'none';
   const t=document.getElementById('listTtl');
   if(t) t.textContent={all:'كل المحلات',restaurant:'المطاعم',store:'المتاجر',
-                       sweet:'الحلويات',cosmetics:'كوزمتك',veg:'المخضر',gifts:'هدايا',
+                       sweet:'الحلويات',cosmetics:'كوزمتك',veg:'المخضر',gifts:'هدايا',market:'سوبر ماركت',pharmacy:'الصيدليات',
                        other:'الخدمات'}[cat]||'كل المحلات';
 }
 /* ══════════ معالج تسجيل السائق — ٨ خطوات ══════════ */
@@ -9902,9 +9917,11 @@ function wcGo(v){
   try{ buzz(14) }catch(e){}
 }
 const CAT_SOON=[];   /* v324: المتاجر والكوزمتك اشتغلت — ماكو قسم «قريباً» */
+/* v379: السوبر ماركت والصيدليات يطلع عليهم «قريباً» لحد ما ينفتح أول محل بيهم */
+function catSoon(v){ if(CAT_SOON.includes(v)) return true; if(v!=='market'&&v!=='pharmacy') return false; return !!window.__shopsLoaded && !(shops||[]).some(s=>shopSec(s)===v) }
 function pickCat(v){
   if(v==='special'){ openSpecialOrder && openSpecialOrder(); return }
-  if(CAT_SOON.includes(v)){ toast((v==='store'?'المتاجر':'الكوزمتك')+' — قريباً إن شاء الله'); try{ buzz(12) }catch(e){} return }
+  if(catSoon(v)){ toast((SEC_LBL[v]||'هذا القسم')+' — قريباً إن شاء الله'); try{ buzz(12) }catch(e){} return }
   cat = (cat===v ? 'all' : v);
   renderCats(); renderShops();
 }
@@ -9998,7 +10015,7 @@ function shopCardHTML(s){
         <div class="fn">${esc(pp.name)}</div> <div class="fp">${Number(pp.price||0).toLocaleString()}</div> </div>`).join('')}</div>`:'';
     const _st = shopSubtitle(s);
     const catsTxt = _st ? _st
-      : (({restaurant:'مطعم',sweet:'حلويات',store:'متجر',cosmetics:'كوزمتك',veg:'مخضر'})[shopSec(s)]||'متجر');
+      : (SEC_ONE[shopSec(s)]||'متجر');
     const actLbl = s.type==='restaurant' ? 'قائمة المطعم' : 'تسوق الآن';
     const hoursTxt = op
       ? ('يفتح لين '+(H.close?(typeof fmt12==='function'?fmt12(H.close):H.close):'—'))
@@ -10167,7 +10184,8 @@ function renderDailyMeals(){
 /* v330: قسم المحل بالرئيسية (مطاعم · حلويات · متاجر · كوزمتك) — الإدارة تختاره من لوحتها.
    إذا الإدارة ما اختارت: حسب نوع المحل بالتسجيل (ونفس البحث بالاسم للحلويات والكوزمتك مثل قبل).
    القسم بس للعرض — قوانين المطعم (الشروط، الأيام المجانية، العمولة) تبقى حسب نوع التسجيل. */
-const SEC_LBL={restaurant:'مطاعم',sweet:'حلويات',store:'متاجر',cosmetics:'كوزمتك',veg:'مخضر'};   /* v346: مخضر */
+const SEC_LBL={restaurant:'مطاعم',sweet:'حلويات',market:'سوبر ماركت',pharmacy:'صيدليات',store:'متاجر',cosmetics:'كوزمتك',veg:'مخضر'};   /* v346: مخضر · v379: سوبر ماركت وصيدليات */
+const SEC_ONE={restaurant:'مطعم',sweet:'حلويات',market:'سوبر ماركت',pharmacy:'صيدلية',store:'متجر',cosmetics:'كوزمتك',veg:'مخضر'};
 const SWEET_RE=/حلوي|كيك|دونات|آيس|ايس|شوكولا|معجن|حلا|بوظة/, COSM_RE=/كوزمت|تجميل|مكياج|عطور|كوزمي/, VEG_RE=/مخضر|خضار|خضرو|فواكه|فاكهة/;
 function shopSec(s){ if(!s) return ''; if(SEC_LBL[s.section]) return s.section; return SEC_LBL[s.type]?s.type:'store' }
 function inSec(s,c){
@@ -10188,7 +10206,7 @@ function renderShops(){
   if(cat==='all' && !q){
     if(ttlWrap) ttlWrap.style.display='none';
     try{ renderRecent() }catch(e){}
-    const SECS=[['restaurant','مطاعم قريبة منك'],['sweet','حلويات'],['veg','مخضر'],['store','متاجر قريبة منك'],['cosmetics','كوزمتك']]
+    const SECS=[['restaurant','مطاعم قريبة منك'],['sweet','حلويات'],['market','سوبر ماركت'],['veg','مخضر'],['pharmacy','صيدليات'],['store','متاجر قريبة منك'],['cosmetics','كوزمتك']]
       .map(([c,t])=>[c,t,shops.filter(s=>shopSec(s)===c).slice(0,6)]).filter(x=>x[2].length);
     if(!SECS.length){
       /* v324: المحلات بعدها تنجاب — هيكل تحميل بدل «ماكو محلات» */
@@ -10276,7 +10294,7 @@ function openShop(id){
         <div class="splogo">${curShop.img?`<img src="${curShop.img}" alt="">`:FALLBACK}</div>
         <div class="spnm">
           <h2>${esc(curShop.name)}</h2>
-          <span class="sptype">${/* v358: أقسام منتجات المحل نفسه (مثل الكارت بالرئيسية)، وإذا ماكو: نوع المحل — «متجر» بدل «سوبر ماركت» */ shopSubtitle(curShop)?esc(shopSubtitle(curShop)):(({restaurant:'مطعم',store:'متجر',cosmetics:'كوزمتك',sweet:'حلويات',veg:'مخضر'})[SEC_LBL[curShop.section]?curShop.section:curShop.type]||'متجر')}</span>
+          <span class="sptype">${/* v358: أقسام منتجات المحل نفسه (مثل الكارت بالرئيسية)، وإذا ماكو: نوع المحل — «متجر» بدل «سوبر ماركت» */ shopSubtitle(curShop)?esc(shopSubtitle(curShop)):(SEC_ONE[SEC_LBL[curShop.section]?curShop.section:curShop.type]||'متجر')}</span>
         </div>
         <span class="spstate ${open?'op':'cl'}">${open?'مفتوح الآن':'مسكّر'}</span>
       </div>
@@ -17955,7 +17973,7 @@ function renderJoin2(){
   if(pd.length) depLoad();   /* v324: حالة التأمينات */
   if(!joinFil || (joinFil==='driver'&&!pd.length&&ps.length) || (joinFil==='shop'&&!ps.length&&pd.length)) joinFil = pd.length||!ps.length ? 'driver' : 'shop';
   const seg=`<div class="seg jseg">${[['driver','السواق',pd.length],['shop','المطاعم والمحلات',ps.length]].map(([v,l,n])=>`<button type="button" class="${joinFil===v?'on':''}" onclick="joinFil='${v}';renderJoin2()">${l}<i>${n}</i></button>`).join('')}</div>`;
-  const htmlS = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:tp(sh.type)+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
+  const htmlS = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:(SEC_ONE[shopSec(sh)]||tp(sh.type))+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],
       ok:`okShop('${sh.id}',true)`,no:`openReject('shop','${sh.id}')`,del:`delShop('${sh.id}')`,view:`openAdminShop('${sh.id}')`})).join('');
   const htmlD = pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
       note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`})).join('');
@@ -24247,7 +24265,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v378', seen={}, n=0, q=[], t=null;
+  var VER='v379', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24499,7 +24517,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v378', t0=Date.now();
+  var VER='v379', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
