@@ -108,12 +108,42 @@ async function pushTestAdmin(env) {
   return jres({ ok: true, devices: toks.length, http: r.status, results: res, top: j && j.errors });
 }
 
+/* v373 (فحص مؤقت): إشعار صامت (ما يبين للشخص) لجهاز آيفون واحد — سائق أو محل — حتى نعرف إذا مفتاح Apple مضبوط */
+async function pushTestIos(env) {
+  if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
+  if (await env.PUSH.get('diag:ios')) return jres({ error: 'wait a minute' }, 429);
+  await env.PUSH.put('diag:ios', '1', { expirationTtl: 60 });
+  let pick = null, any = null, cursor;
+  do {
+    const r = await env.PUSH.list({ prefix: 'u:', cursor });
+    for (const k of r.keys) { const m = k.metadata || {}; if (m.p !== 'ios') continue;
+      if (!any) any = k; if (!pick && (m.r === 'store' || m.r === 'driver' || m.r === 'admin')) pick = k; }
+    cursor = r.list_complete ? undefined : r.cursor;
+  } while (cursor && !pick);
+  const k = pick || any; if (!k) return jres({ ok: true, ios_devices: 0 });
+  const t = await env.PUSH.get(k.name);
+  const r = await fetch(EXPO_SEND, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify([{ to: t, _contentAvailable: true, priority: 'normal', data: { type: 'diag' } }]) });
+  const j = await r.json().catch(() => null);
+  const tk = j && j.data && j.data[0];
+  let receipt = null;
+  if (tk && tk.id) {
+    await new Promise(z => setTimeout(z, 4000));
+    const rr = await fetch('https://exp.host/--/api/v2/push/getReceipts', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({ ids: [tk.id] }) });
+    const jj = await rr.json().catch(() => null);
+    receipt = jj && jj.data && jj.data[tk.id] || null;
+  }
+  return jres({ ok: true, role: (k.metadata || {}).r, ticket: tk && { status: tk.status, error: tk.details && tk.details.error, message: tk.message && String(tk.message).slice(0, 140) },
+                receipt: receipt && { status: receipt.status, error: receipt.details && receipt.details.error, message: receipt.message && String(receipt.message).slice(0, 140) } });
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     if (url.pathname === '/_nudge') return nudge(req, env);
     if (url.pathname === '/_pushstats') return pushStats(env);
-    if (url.pathname === '/_pushtest') return pushTestAdmin(env);
+    if (url.pathname === '/_pushtest') return url.searchParams.get('ios') ? pushTestIos(env) : pushTestAdmin(env);
     for (const pre in MAP) {
       if (url.pathname !== pre && !url.pathname.startsWith(pre + '/')) continue;
       const svc = env[MAP[pre]];
