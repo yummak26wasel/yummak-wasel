@@ -794,6 +794,28 @@ html[data-theme=dark] .kgchip{background:#3a2a10;color:#f6cf8a}
 html[data-theme=dark] .kgtog{background:#1f1a30;border-color:#3a3354}
 html[data-theme=dark] .kgf{background:#231d36}
 html[data-theme=dark] .wgcard{background:#1a1528;color:#ece8f7}
+
+/* v383: صفحة السوبر ماركت */
+.shsrch{display:flex;align-items:center;gap:8px;margin:12px 0 6px;padding:0 14px;height:48px;border:1.5px solid #E6E1F0;border-radius:16px;background:#fff;cursor:text}
+.shsrch svg{width:20px;height:20px;color:var(--g);flex-shrink:0}
+.shsrch input{flex:1;min-width:0;border:0;background:none;font:inherit;font-size:15px;outline:0;color:inherit;-webkit-appearance:none;appearance:none}
+.shsrch input::-webkit-search-cancel-button{display:none}
+.shsx{flex-shrink:0;border:0;background:#F3F0F8;width:26px;height:26px;border-radius:50%;font-size:17px;line-height:1;color:#6b6480;cursor:pointer}
+.shsrch input:placeholder-shown + .shsx{display:none}
+.mkgrid{display:grid;grid-auto-flow:column;grid-template-rows:repeat(var(--rows,3),auto);grid-auto-columns:86px;gap:14px 10px;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none;padding:8px 2px 12px;margin:6px 0 4px}
+.mkgrid::-webkit-scrollbar{display:none}
+.mkcat{display:flex;flex-direction:column;align-items:center;gap:7px;border:0;background:none;padding:0;font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.mkcat:active{transform:scale(.96)}
+.mkci{width:78px;height:78px;border-radius:22px;background:#fff;box-shadow:var(--v-sh,0 4px 14px rgba(40,20,90,.08));display:flex;align-items:center;justify-content:center;overflow:hidden}
+.mkci img{width:100%;height:100%;object-fit:cover}
+.mkci svg{width:34px;height:34px;color:#C4B5E8}
+.mkcat b{font-size:12.5px;font-weight:700;line-height:1.35;text-align:center;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.mksec{margin:16px 0 4px}
+.mksh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:8px}
+.mksh h3{margin:0;font-size:17px;font-weight:800}
+.mksh button{flex-shrink:0;border:0;background:none;color:var(--g);font:inherit;font-weight:800;font-size:13px;cursor:pointer;padding:4px 0}
+html[data-theme=dark] .shsrch{background:#1f1a30;border-color:#3a3354}
+html[data-theme=dark] .mkci{background:#1f1a30}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -5821,6 +5843,8 @@ body,.screen{background:#fff;color:var(--txt)}
   <div id="shopHero"></div>
   <div id="shopInfo"></div>
   <div id="shopOffers"></div>
+  <div id="shopSearch"></div>
+  <div id="shopCatGrid"></div>
   <div id="menuTabs"></div>
   <div id="shopTop"></div>
   <h3 class="secttl" id="secTtl"></h3>
@@ -5846,7 +5870,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v382</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v383</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -10364,6 +10388,7 @@ function openShop(id){
 
   renderShopOffers();
   menuSec='__all';
+  shopQ=''; { const _sb=document.getElementById('shopSearch'); if(_sb) _sb.dataset.sid='' }   /* v383 */
   _shopCats=[]; _shopLinks={}; _shopTop=[];
   renderMenu();
   try{ loadShopPublicCats() }catch(e){ console.warn('shopCats', e) }
@@ -10425,11 +10450,55 @@ function _secProducts(all){
   const nm=c?c.name:menuSec;
   return all.filter(x=>String(x.cat||'').trim()===nm);
 }
+/* ═══ v383: صفحة السوبر ماركت — بحث داخل المحل + شبكة الأقسام بالصور + صف لكل قسم (مثل تطبيقات الماركت، بطريقتنا) ═══ */
+let shopQ='';
+function _isMarket(s){ return !!s && shopSec(s)==='market' }
+function _useShopSearch(s){ return _isMarket(s) || ((s&&s.products)||[]).length>=15 }
+function _normAr(t){ return String(t||'').toLowerCase().replace(/[أإآ]/g,'ا').replace(/ة/g,'ه').replace(/ى/g,'ي').replace(/[ً-ْـ]/g,'').replace(/\s+/g,' ').trim() }
+function shopCatList(){ return _shopCats.length ? _shopCats.map(c=>({id:c.id,name:c.name})) : menuSections().map(n=>({id:n,name:n})) }
+function prodsOfSec(id){ const keep=menuSec; menuSec=id; let r=[]; try{ r=_secProducts((curShop&&curShop.products)||[]) }finally{ menuSec=keep } return r }
+function _mkHome(){ return _isMarket(curShop) && menuSec==='__all' && !String(shopQ||'').trim() }
+function _secAttr(v){ return JSON.stringify(v).replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;') }
+function spCardHTML(p){
+  return `<div class="spcard" onclick="openItem(${p.id})">
+          <div class="spcimg">${p.img?`<img loading="lazy" decoding="async" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
+            <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
+          <div class="spcnm">${esc(p.name)}</div>
+          <div class="spcpr">${pPriceTxt(p)} د.ع</div>
+        </div>`;
+}
+function renderShopSearch(){
+  const box=document.getElementById('shopSearch'); if(!box) return;
+  if(!curShop||!_useShopSearch(curShop)){ box.innerHTML=''; box.dataset.sid=''; return }
+  if(box.dataset.sid===String(curShop.id) && box.querySelector('input')) return;   /* يبقى نفسه حتى الكيبورد ما ينسد */
+  box.dataset.sid=String(curShop.id);
+  box.innerHTML=`<label class="shsrch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="search" enterkeyhint="search" placeholder="ابحث في ${esc(curShop.name||'المحل')}…" value="${esc(shopQ)}" oninput="shopQ=this.value;renderMenu()"><button type="button" class="shsx" aria-label="مسح" onclick="event.preventDefault();shopQ='';const i=this.parentNode.querySelector('input');i.value='';renderMenu()">×</button></label>`;
+}
+function _mkCats(){ return shopCatList().map(c=>Object.assign({},c,{ps:prodsOfSec(c.id)})).filter(c=>c.ps.length) }
+function renderCatGrid(cats){
+  const box=document.getElementById('shopCatGrid'); if(!box) return;
+  if(!_mkHome()){ box.innerHTML=''; return }
+  cats=cats||_mkCats();
+  if(cats.length<2){ box.innerHTML=''; return }
+  const rows=cats.length>=9?3:(cats.length>=5?2:1);
+  box.innerHTML=`<div class="mkgrid" style="--rows:${rows}">${cats.map(c=>{ const im=(c.ps.find(p=>p.img)||{}).img;
+    return `<button type="button" class="mkcat" onclick="pickSec(${_secAttr(c.id)})"><span class="mkci">${im?`<img loading="lazy" decoding="async" src="${esc(im)}" alt="">`:prodPH()}</span><b>${esc(c.name)}</b></button>` }).join('')}</div>`;
+}
+function renderMkRows(box,cats){
+  if(!cats.length) return false;
+  const seen=new Set(); cats.forEach(c=>c.ps.forEach(p=>seen.add(String(p.id))));
+  const rest=((curShop&&curShop.products)||[]).filter(p=>!seen.has(String(p.id)));
+  box.innerHTML=cats.map(c=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
+      <div class="sprow">${c.ps.slice(0,12).map(spCardHTML).join('')}</div></div>`).join('')
+    +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${rest.slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
+  return true;
+}
 function pickSec(v){ menuSec=v; renderMenu();
   const t=document.getElementById('menuTabs'); if(t)t.scrollIntoView({behavior:'smooth',block:'start'}) }
 function renderMenuTabs(){
   const box=document.getElementById('menuTabs'), ttl=document.getElementById('secTtl');
   if(!box)return;
+  if(_mkHome() || String(shopQ||'').trim()){ box.innerHTML=''; if(ttl) ttl.textContent=''; return }   /* v383 */
   let T=null;
   if(_shopCats.length){
     const valid=['__all'].concat(_shopTop.length?['__top']:[]).concat(_shopCats.map(c=>c.id));
@@ -10477,26 +10546,30 @@ function renderTopSellers(){
     : [];
   const top = byTop.length ? byTop : all.filter(p=>p.top||p.best).slice(0,10);
   const list=top.length?top:all.slice(0,6);
-  if(menuSec!=='__all' || list.length<3){ box.innerHTML=''; return }
+  if(menuSec!=='__all' || list.length<3 || String(shopQ||'').trim()){ box.innerHTML=''; return }
   box.innerHTML=`
     <div class="spsec">
       <h3>الأكثر مبيعاً</h3>
-      <div class="sprow">${list.map(p=>`
-        <div class="spcard" onclick="openItem(${p.id})">
-          <div class="spcimg">${p.img?`<img loading="lazy" decoding="async" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
-            <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
-          <div class="spcnm">${esc(p.name)}</div>
-          <div class="spcpr">${pPriceTxt(p)} د.ع</div>
-        </div>`).join('')}</div>
+      <div class="sprow">${list.map(spCardHTML).join('')}</div>
     </div>`;
 }
 function renderMenu(){
   const box=document.getElementById('menu'),all=curShop.products||[];
+  renderShopSearch();
   renderMenuTabs();
+  const _cats=_mkHome()?_mkCats():null;
+  renderCatGrid(_cats);
   renderTopSellers();
   const EMPTY=t=>'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>'+t+'</p></div>';
   if(!all.length){ box.innerHTML=EMPTY('هذا المحل ما ضاف منتجات بعد'); renderSpBar(); return }
-  const ps = _secProducts(all);
+  /* v383: بحث داخل المحل · وصفحة السوبر ماركت الرئيسية (صف لكل قسم) */
+  const _q=_normAr(shopQ), _ttl=document.getElementById('secTtl');
+  if(_q){
+    if(_ttl) _ttl.textContent='نتائج البحث';
+    var ps=all.filter(p=>_normAr((p.name||'')+' '+(p.desc||'')+' '+(p.cat||'')).includes(_q));
+    if(!ps.length){ box.innerHTML=EMPTY('ما لگينا «'+esc(String(shopQ).trim())+'» بهذا المحل'); renderSpBar(); return }
+  } else if(_cats && renderMkRows(box,_cats)){ if(_ttl) _ttl.textContent=''; renderSpBar(); return }
+  else var ps = _secProducts(all);
   if(!ps.length){ box.innerHTML=EMPTY('ما بيه منتجات بهذا القسم'); renderSpBar(); return }
   box.innerHTML=ps.map(p=>`
     <div class="prod"${p.avail===false?' style="opacity:.55"':''} onclick="openItem(${p.id})">
@@ -24458,7 +24531,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v382', seen={}, n=0, q=[], t=null;
+  var VER='v383', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -24710,7 +24783,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v382', t0=Date.now();
+  var VER='v383', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
