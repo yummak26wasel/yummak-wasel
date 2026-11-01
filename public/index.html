@@ -960,6 +960,17 @@ html[data-theme=dark] .mkp-nm{color:#c9b8ff}
 #cApp.mkmode #menuTabs{position:sticky;top:var(--mkhd,96px);z-index:35;background:var(--bg,#fff);padding:6px 0 4px}
 #cApp.mkmode #menuTabs .mtab{white-space:nowrap}
 #cApp.mkmode .secttl{font-size:18px;font-weight:800}
+
+/* v385: اشتغل ويانا سائق */
+.drvjoin{display:flex;align-items:center;gap:12px;margin:14px 0 6px;padding:14px;border-radius:18px;background:linear-gradient(135deg,#F5F0FF,#FFF4E8);border:1.5px solid #E9DFFB;cursor:pointer}
+.drvjoin .dj-ic{width:46px;height:46px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:24px;flex-shrink:0;box-shadow:0 3px 10px rgba(91,43,201,.12)}
+.drvjoin div{flex:1;min-width:0}
+.drvjoin b{display:block;font-size:15px;color:#2C2440}
+.drvjoin span{display:block;font-size:12px;color:#7A7290;margin-top:2px}
+.drvjoin em{font-style:normal;color:var(--g);font-size:20px;font-weight:800}
+html[data-theme=dark] .drvjoin{background:linear-gradient(135deg,#2b2447,#3a2a1a);border-color:#3a3354}
+html[data-theme=dark] .drvjoin b{color:#ece8f7}
+html[data-theme=dark] .drvjoin .dj-ic{background:#1f1a30}
 </style>
 <div id="splash"> <div class="sdot"><span></span><span></span><span></span></div>
 </div><script>window.__splT0=Date.now()</script>
@@ -6009,13 +6020,14 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" onclick="goSup('faq')"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.8.9c0 1.7-2.4 2.2-2.4 3.7M12 17.4v.1"/></svg></div><div class="mt">الأسئلة الشائعة</div><div class="ma">‹</div></div>
           <div class="mrow" onclick="goSup('call')"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></div><div class="mt">مركز المساعدة</div><div class="ma">‹</div></div>
         </div>
+        <div class="drvjoin" onclick="dwUpgradeOpen()"><span class="dj-ic">🛵</span><div><b>اشتغل ويانا سائق</b><span>قدّم من نفس حسابك — بدون حساب جديد</span></div><em>‹</em></div>
         <div id="supBox"></div>
         <div class="seclbl2" id="accSettings">الإعدادات</div>
         <div class="mlist">
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v384</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v385</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -8857,7 +8869,9 @@ async function doAuth(){
       /* ═══ تأكيد الرقم بالواتساب قبل فتح الحساب ═══ */
       if(otpOkPhone!==core){
         if((await __preSignupCheck(core,pass))==='done') return;
-        busy(false); return otpStart(core) }
+        /* v385: رقم سمحتله الإدارة يسجّل بدون رمز (otp_verified) */
+        let _pre=false; try{ _pre=(await rpc('otp_preverified',{p_phone:'964'+core}))===true }catch(e){}
+        if(_pre){ otpOkPhone=core } else { busy(false); return otpStart(core) } }
 
       signingUp=true;
       let cred;
@@ -10016,8 +10030,8 @@ function dwPaint(){
         '<input type="file" id="f_photo" accept="image/*" style="display:none" onchange="dwShot(this,\'photo\',\'\')"></div>'+
        '<div class="dw-note">صورة واضحة لوجهك — الزبون راح يشوفها</div>'+
        dwField('name','الاسم الكامل','text',dwData.name,'أحمد محمد علي')+
-       dwField('phone','رقم الهاتف','tel',dwData.phone,'07XX XXX XXXX')+
-       dwField('pass','كلمة المرور','password',dwData.pass,'٦ خانات على الأقل')+
+       (dwData.up?'':dwField('phone','رقم الهاتف','tel',dwData.phone,'07XX XXX XXXX')+
+       dwField('pass','كلمة المرور','password',dwData.pass,'٦ خانات على الأقل'))+
        dwField('dob','تاريخ الميلاد — لازم 18 سنة أو أكثر','date',dwData.dob,'')+'<div class="dw-age" id="dwAgeMsg"></div>'+
        dwField('addr','العنوان / المنطقة','text',dwData.addr,'عانة — حي الكرامة');
     nx.textContent='التالي ›';
@@ -10082,8 +10096,8 @@ function dwValid(){
   let ok=true;
   if(dwStep===2){
     ok = !!(dwData.photo && (dwData.name||'').trim() &&
-            phoneCore(dwData.phone||'').length>=9 &&
-            (dwData.pass||'').length>=6 && (dwData.addr||'').trim() && dwAge(dwData.dob)>=18);
+            (dwData.up || (phoneCore(dwData.phone||'').length>=9 &&
+            (dwData.pass||'').length>=6)) && (dwData.addr||'').trim() && dwAge(dwData.dob)>=18);
     const _am=document.getElementById('dwAgeMsg');
     if(_am){ const _a=dwAge(dwData.dob); _am.textContent = (dwData.dob && _a>=0 && _a<18) ? 'لازم يكون عمرك 18 سنة أو أكثر حتى تشتغل سائق' : '' }
   }
@@ -10104,11 +10118,12 @@ function dwLoc(){
 }
 async function dwNextStep(){
   if(dwStep===7) return dwSubmit();
-  if(dwStep===8){ dwClose(); return }
+  if(dwStep===8){ dwClose(); if(dwData.up){ try{ location.reload() }catch(e){} } return }
   dwStep++; if(dwStep===5) dwStep=6;   /* v324: نتخطى خطوة الموقع */
   dwPaint();
 }
 async function dwSubmit(){
+  if(dwData.up) return dwUpgradeSubmit();   /* v385: زبون يصير سائق */
   const nx=document.getElementById('dwNext');
   nx.disabled=true; nx.textContent='… جاري الإرسال';
   try{
@@ -10130,6 +10145,40 @@ async function dwSubmit(){
     toast(errMsg(e));
     nx.disabled=false; nx.textContent='إرسال الطلب ›';
   }
+}
+
+/* ═══ v385: الزبون يقدّم يصير سائق من نفس حسابه (نفس الرقم) — الحساب يتحول «سائق» وينتظر موافقة الإدارة.
+   السائق يگدر يطلب لنفسه («اطلب لنفسك»)، وإذا ما انقبل أو غيّر رأيه يرجع زبون بضغطة ═══ */
+async function dwUpgradeOpen(){
+  if(!me||!uid) return;
+  const act=(myOrders||[]).filter(o=>o&&o.customerUid===uid&&!['delivered','cancelled','canceled','rejected'].includes(o.status));
+  if(act.length) return toast('عندك طلب شغّال — قدّم بعد ما يوصل طلبك');
+  const ok=await askConfirm('حسابك يتحول لحساب <b>سائق</b> وينتظر موافقة الإدارة.<div style="margin-top:8px;font-size:13px">من حساب السائق تگدر تطلب لنفسك عادي. وإذا ما انقبلت أو غيّرت رأيك، ترجع زبون بضغطة.</div>',{title:'🛵 اشتغل ويانا سائق',ok:'إي، قدّم'});
+  if(!ok) return;
+  dwData={veh:'دراجة', payout:'cash', up:true, name:me.name||'', phone:me.phone||'', addr:me.addr||'', photo:me.photo||''};
+  dwStep=1; dwPaint(); document.getElementById('drvWiz').classList.add('on');
+}
+async function dwUpgradeSubmit(){
+  const nx=document.getElementById('dwNext');
+  nx.disabled=true; nx.textContent='… جاري الإرسال';
+  try{
+    await db.collection('users').doc(uid).update({
+      role:'driver', name:(dwData.name||me.name||'').trim(), addr:dwData.addr||'', photo:dwData.photo||'',
+      vehicle:dwData.veh||'دراجة', dob:dwData.dob||null, plate:dwData.plate||'', vehColor:dwData.color||'',
+      vehImg:dwData.vehImg||'', idCard:dwData.idCard||'', resCard:dwData.resCard||'', vehDoc:dwData.vehDoc||'', license:dwData.license||'',
+      payout:'cash', duty:true });
+    try{ await rpc('terms_accept',{p_version:DRV_TERMS_V}) }catch(e){ __silent(e,'drvTerms') }
+    try{ pushAdmins('🛵 طلب سائق جديد',(dwData.name||me.name||'زبون')+' (زبون بالتطبيق) قدّم يصير سائق — شوفه بطلبات الانضمام',{type:'join'}) }catch(e){}
+    dwStep=8; dwPaint();
+  }catch(e){
+    toast('ما انرسل: '+errMsg(e));
+    nx.disabled=false; nx.textContent='إرسال الطلب ›';
+  }
+}
+async function drvBackToCustomer(){
+  const ok=await askConfirm('تلغي طلب السائق وترجع حسابك زبون؟',{title:'ارجع زبون',ok:'إي، رجّعني'}); if(!ok) return;
+  try{ await db.collection('users').doc(uid).update({role:'customer', duty:false}); toast('رجعت زبون ✓'); setTimeout(()=>{ try{ location.reload() }catch(e){} },600) }
+  catch(e){ toast('ما صار: '+errMsg(e)) }
 }
 
 const WC_KEY='lw_welcome_seen';
@@ -16306,8 +16355,8 @@ function listenMyUser(){
 }
 function gateHTML(){
   /* v352: طلب الانضمام انرفض — نبيّن السبب، وإذا مو نهائي يكدر يرسله مرة ثانية */
-  if(me.rejected_at && me.approved!==true) return `<div class="blockmsg rj"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div> <h3>طلب انضمامك ما انقبل</h3><div class="rjwhy">السبب: ${esc(me.reject_reason||'—')}</div>${me.reject_final?'<p>هذا القرار نهائي. إذا عندك سؤال راسل الإدارة.</p>':'<p>إذا صلّحت السبب، أرسل طلبك مرة ثانية والإدارة تراجعه.</p><button class="rjbt" onclick="rjResubmit()">أرسل طلبي مرة ثانية</button>'}<button class="rjbt ghost" onclick="rjSupport()">راسل الإدارة</button></div>`;
-  if(!me.approved) return `<div class="blockmsg"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg></div> <h3 style="color:var(--o2)">حسابك قيد المراجعة</h3> <p>المؤسس لازم يوافق على انضمامك قبل ما تبدأ تستلم طلبات.<br>راح ننبّهك أول ما تنقبل.</p>${me.role==='driver'?depBoxDriver():''}</div>`;
+  if(me.rejected_at && me.approved!==true) return `<div class="blockmsg rj"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg></div> <h3>طلب انضمامك ما انقبل</h3><div class="rjwhy">السبب: ${esc(me.reject_reason||'—')}</div>${me.reject_final?'<p>هذا القرار نهائي. إذا عندك سؤال راسل الإدارة.</p>':'<p>إذا صلّحت السبب، أرسل طلبك مرة ثانية والإدارة تراجعه.</p><button class="rjbt" onclick="rjResubmit()">أرسل طلبي مرة ثانية</button>'}<button class="rjbt ghost" onclick="rjSupport()">راسل الإدارة</button>${me.role==='driver'?'<button class="rjbt ghost" onclick="drvBackToCustomer()">ارجع زبون</button>':''}</div>`;
+  if(!me.approved) return `<div class="blockmsg"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg></div> <h3 style="color:var(--o2)">حسابك قيد المراجعة</h3> <p>المؤسس لازم يوافق على انضمامك قبل ما تبدأ تستلم طلبات.<br>راح ننبّهك أول ما تنقبل.</p>${me.role==='driver'?depBoxDriver():''}${me.role==='driver'?'<button class="rjbt ghost" onclick="drvBackToCustomer()">ألغِ طلبي وارجع زبون</button>':''}</div>`;
   if(me.blocked===true) return `<div class="blockmsg"><div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M5.6 5.6l12.8 12.8"/></svg></div> <h3>حسابك موقوف</h3><p>تواصل مع إدارة واصل ليمَك.</p></div>`;
   const over=overdueMs();
   if(over>0){
@@ -24939,7 +24988,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v384', seen={}, n=0, q=[], t=null;
+  var VER='v385', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25191,7 +25240,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v384', t0=Date.now();
+  var VER='v385', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
