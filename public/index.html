@@ -909,6 +909,18 @@ html[data-theme=dark] .mkci{background:#1f1a30}
 /* v384: صور الأقسام + البنرات */
 .cat-img{flex-shrink:0;width:52px;height:52px;border-radius:14px;border:1.5px dashed #CDBDF2;background:#F7F4FD;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:0;overflow:hidden;cursor:pointer;font:inherit}
 .cat-img.has{border-style:solid;border-color:#E6E1F0;background:#fff}
+/* v399: أسهم الترتيب + قائمة الأقسام الفرعية */
+.cat-mv{display:flex;flex-direction:column;gap:4px;flex-shrink:0}
+.cat-mv button{width:38px;height:24px;border:0;border-radius:9px;background:var(--g3,#F1ECFA);color:var(--g);display:grid;place-items:center;padding:0;cursor:pointer;touch-action:manipulation}
+.cat-mv button svg{width:16px;height:16px}
+.cat-mv button:disabled{opacity:.3;cursor:default}
+.cps-r{display:flex;align-items:center;gap:10px;background:#fff;border-radius:14px;padding:8px;margin-bottom:8px}
+.cps-nm{flex:1;min-width:0;border:0;background:none;padding:0;text-align:right;font:inherit;color:inherit;cursor:pointer}
+.cps-nm b{display:block;font-size:14px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cps-nm small{display:block;font-size:11.5px;color:#7A7290;margin-top:2px}
+.cps-add{width:100%;border:2px dashed #CDBDF2;background:#fff;color:var(--g);border-radius:14px;padding:12px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
+html[data-theme=dark] .cps-r,html[data-theme=dark] .cps-add{background:#1a1528}
+html[data-theme=dark] .cat-mv button{background:#2a2244;color:#c9b6ff}
 .cat-img img{width:100%;height:100%;object-fit:cover}
 .cat-img span{font-size:16px;line-height:1}
 .cat-img em{font-style:normal;font-size:10px;color:#7A7290;font-weight:700}
@@ -6147,7 +6159,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v398</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v399</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7587,7 +7599,7 @@ function renderCatsPage(){
     const off=c.visible===false, _ns=_cSubs(myCats,c.id).length;
     return `
     <div class="cat-row${off?' hid':''}" data-cid="${esc(c.id)}">
-      ${_mkMine()?`<button type="button" class="cat-img${c.img?' has':''}" onclick="catImgPick(${q})" aria-label="صورة القسم">${c.img?`<img src="${esc(c.img)}" alt="">`:'<span>📷</span><em>صورة</em>'}</button>`:''}
+      ${_mkMine()?`<button type="button" class="cat-img${c.img?' has':''}" onclick="catImgPick(${q})" aria-label="صورة القسم">${c.img?`<img src="${esc(c.img)}" alt="">`:'<span>📷</span><em>أضف صورة</em>'}</button>`:''}
       <div class="cat-nm" onclick="catProdsOpen(${q})" style="cursor:pointer">
         <b>${esc(c.name)}${off?' <em>مخفي</em>':''}</b>
         <span>${_catCntAll(c.id)} منتج${_ns?' · '+_ns+' أقسام فرعية':''}</span>
@@ -7598,8 +7610,9 @@ function renderCatsPage(){
       <button class="cat-ic rm" onclick="catRemove(${q})" aria-label="حذف">
         <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>
       </button>
-      <span class="cat-ic dg" aria-label="اسحب للترتيب">
-        <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16M4 12h16M4 16h16"/></svg>
+      <span class="cat-mv">   <!-- v399: ترتيب بالأسهم — أسهل من السحب بالتلفون -->
+        <button type="button" onclick="catReorder(${q},-1)" aria-label="لفوك"${_tops[0]&&_tops[0].id===c.id?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+        <button type="button" onclick="catReorder(${q},1)" aria-label="لجوه"${_tops[_tops.length-1]&&_tops[_tops.length-1].id===c.id?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
       </span>
     </div>`}).join('')+'</div>';
 
@@ -7607,7 +7620,7 @@ function renderCatsPage(){
 
   if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
 
-  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div>';   /* v384 · v390 */
+  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>↕️ رتّب الأقسام بالأسهم — الي فوك يطلع أول للزبون.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div>';   /* v384 · v390 · v399 */
   box.innerHTML=html;
   catBindDrag();
   if(_mkMine()) loadMyBanners();
@@ -7673,10 +7686,18 @@ function cpSubsPaint(){
   }
   if(window._subOk===false){ el.innerHTML='<div class="cps"><div class="cps-h"><b>الأقسام الفرعية</b></div><div class="cps-sub">تحتاج تحديث بالقاعدة — شغّل subcats_v390.sql</div></div>'; return }
   const subs=_cSubs(myCats,_cpCat.id);
+  /* v399: لكل قسم فرعي: صورته (اضغط وغيّرها) · اسمه (اضغط وافتحه) · أسهم الترتيب */
   el.innerHTML=`<div class="cps"><div class="cps-h"><b>الأقسام الفرعية</b><span>مثل: غسيل الصحون · مواد التنظيف</span></div>
-    <div class="cps-row">${subs.map(x=>`<button type="button" class="cps-t" onclick="catProdsOpen(${q(x.id)})"><span class="cps-i">${x.img?`<img loading="lazy" src="${esc(x.img)}" alt="">`:'📂'}</span><em>${esc(x.name)}</em><small>${_catCnt[x.id]||0} منتج</small></button>`).join('')}
-      <button type="button" class="cps-t add" onclick="catOpenForm(null,${q(_cpCat.id)})"><span class="cps-i">+</span><em>قسم فرعي</em></button></div>
-    ${subs.length?'<div class="cp-hint" style="margin:8px 0 0">منتجات الأقسام الفرعية تطلع للزبون بهذا القسم هم.</div>':''}</div>`;
+    ${subs.map((x,i)=>`<div class="cps-r">
+        <button type="button" class="cat-img${x.img?' has':''}" onclick="catImgPick(${q(x.id)})" aria-label="صورة القسم الفرعي">${x.img?`<img loading="lazy" src="${esc(x.img)}" alt="">`:'<span>📷</span><em>أضف صورة</em>'}</button>
+        <button type="button" class="cps-nm" onclick="catProdsOpen(${q(x.id)})"><b>${esc(x.name)}</b><small>${_catCnt[x.id]||0} منتج · اضغط لإضافة منتجات</small></button>
+        <span class="cat-mv">
+          <button type="button" onclick="catReorder(${q(x.id)},-1)" aria-label="لفوك"${i===0?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
+          <button type="button" onclick="catReorder(${q(x.id)},1)" aria-label="لجوه"${i===subs.length-1?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        </span>
+      </div>`).join('')}
+    <button type="button" class="cps-add" onclick="catOpenForm(null,${q(_cpCat.id)})">+ إضافة قسم فرعي</button>
+    ${subs.length?'<div class="cp-hint" style="margin:8px 0 0">📷 حط صورة لكل قسم فرعي — تطلع للزبون بالدوائر فوك المنتجات. ومنتجاتها تطلع بهذا القسم هم.</div>':''}</div>`;
 }
 function cpSearch1(v){ _cpQ1=String(v||'').trim(); cpPaintList() }
 function cpSearch2(v){ _cpQ2=String(v||'').trim(); cpPaintList() }
@@ -8100,6 +8121,25 @@ async function catToggle(id){
   }catch(e){ toast('ما گدرنا نحفظ: '+String(e.message||e).slice(0,70)) }
 }
 
+/* v399: يبدّل مكان القسم ويا الي قبله/بعده، ويرقّم الإخوة من جديد (1، 2، 3…) حتى ما يتعلّگ إذا الأرقام متشابهة */
+let _catReBusy=false;
+async function catReorder(id, dir){
+  if(_catReBusy) return;
+  const c=myCats.find(x=>x.id===id); if(!c) return;
+  const sib=c.parent_id ? _cSubs(myCats,c.parent_id) : _cTop(myCats);
+  const i=sib.findIndex(x=>x.id===id), j=i+dir;
+  if(i<0 || j<0 || j>=sib.length) return;
+  const arr=sib.slice(); const t=arr[i]; arr[i]=arr[j]; arr[j]=t;
+  _catReBusy=true;
+  try{
+    for(let k=0;k<arr.length;k++){
+      if((arr[k].sort||0)!==k+1){ await sbPatch('shop_categories?id=eq.'+arr[k].id,{sort:k+1}); arr[k].sort=k+1 }
+    }
+  }catch(e){ toast('ما گدرنا نرتّب: '+String(e.message||e).slice(0,70)) }
+  _catReBusy=false;
+  await loadShopCats();
+  try{ if(document.getElementById('q_catprods').classList.contains('on') && _cpCat){ _cpCat=myCats.find(x=>x.id===_cpCat.id)||_cpCat; cpSubsPaint() } }catch(e){}
+}
 async function catMove(id, dir){
   const L=_cTop(myCats);
   const i=L.findIndex(x=>x.id===id);
@@ -25417,7 +25457,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v398', seen={}, n=0, q=[], t=null;
+  var VER='v399', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25669,7 +25709,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v398', t0=Date.now();
+  var VER='v399', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
