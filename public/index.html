@@ -2774,6 +2774,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 
 .spmeta{display:flex;gap:8px;margin-top:13px}
 .of-ss{margin-top:6px;font-size:12.5px;color:#5B5470;line-height:1.6}
+.of-fdn{background:#F1ECFF;border:1px solid #DDD3FA;color:#3D2A78;border-radius:14px;padding:11px 13px;font-size:13px;line-height:1.6}
 .of-ss b{color:var(--g)}
 /* v398: زر الاستشارة (واتساب) */
 .spcons{display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border-radius:16px;background:#E9F9EF;color:#166534;text-decoration:none;border:1.5px solid #BFE9CF;-webkit-tap-highlight-color:transparent}
@@ -6180,7 +6181,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v405</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v406</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -13825,12 +13826,12 @@ function renderStore(){
   const comVal = _pct, comKind='percent', comSet = comVal;
   /* الطلب الخارجي: أجرة ثابتة بدل النسبة (نفس حساب السيرفر) */
   const _extOrd = doneP.filter(o=>o.source==='external' && !ordFree(o,myShopDoc));
-  const _extFee = _pct>0 ? _extOrd.reduce((a,o)=>a+Number(o.ext_fee||0),0) : 0;
+  const _extFee = _extOrd.reduce((a,o)=>a+Math.round(ordComU(o)/10000),0);
   const _noPct = doneP.filter(o=>ordFree(o,myShopDoc)||o.no_commission===true);
   const _freeG = _noPct.reduce((a,o)=>a+Number(o.sub||0),0);
   const _extG = _extOrd.reduce((a,o)=>a+Number(o.sub||0),0);
   /* v332: كل طلب ينحسب لوحده بالشرائح، والتقريب على المجموع (نفس السيرفر) */
-  const shopCom = tierSum(doneP.filter(o=>o.source!=='external' && !(ordFree(o,myShopDoc)||o.no_commission===true)).map(o=>o.sub)) + _extFee;
+  const shopCom = ordComSum(doneP.filter(o=>!(ordFree(o,myShopDoc)||o.no_commission===true)));
   const comSub = tierLbl()+(_freeG>0?(' · بدون عمولة على '+_freeG.toLocaleString()+' (عروض أو أول 10 أيام)'):'')+(_extOrd.length?(' · '+_extOrd.length+' استدعاء دلفيري = '+_extFee.toLocaleString()):'');
   const net = gross - shopCom - disc;
 
@@ -17422,6 +17423,11 @@ function tierU(total, tiers){   /* عمولة طلب واحد × 10000 */
 }
 function tierCom(total, tiers){ return Math.round(tierU(total,tiers)/10000) }          /* عمولة طلب واحد */
 function tierSum(totals){ return Math.round((totals||[]).reduce((a,t)=>a+tierU(t),0)/10000) }  /* عمولة مجموعة طلبات */
+/* v406: عمولة الطلب الواصل تنحفظ بالسيرفر (shop_com) — تغيير النسبة بعدين ما يغيّر القديم */
+function ordComU(o){ if(o&&o.shop_com!=null&&o.shop_com!=='') return Math.round(Number(o.shop_com)*10000);
+  if(o&&o.source==='external') return shopPct()>0 ? Number(o.ext_fee||0)*10000 : 0;
+  return tierU(o&&o.sub) }
+function ordComSum(list){ return Math.round((list||[]).reduce((a,o)=>a+ordComU(o),0)/10000) }
 function tierPct(total){ const t=Number(total)||0; return t>0 ? tierU(t)/100/t : shopPct() }      /* النسبة الفعلية لطلب */
 function pctTxt(p){ return (Math.round(Number(p)*100)/100)+'%' }
 function comRateTxt(rate){ return comTiers() ? 'بالشرائح' : ((rate!=null?Number(rate):shopPct())+'%') }
@@ -17445,8 +17451,7 @@ function renderAdminComms(){
   const el=document.getElementById('aComms'); if(!el) return;
   const dlv=(allOrders||[]).filter(o=>o.status==='delivered');
   const _shOf=o=>(allShops||[]).find(x=>x.id===o.shopId);
-  const shopCom = tierSum(dlv.filter(o=>o.no_commission!==true && o.source!=='external' && !ordFree(o,_shOf(o))).map(o=>o.sub))
-                + (shopPct()>0 ? dlv.filter(o=>o.source==='external' && !ordFree(o,_shOf(o))).reduce((a,o)=>a+Number(o.ext_fee||0),0) : 0);
+  const shopCom = ordComSum(dlv.filter(o=>o.no_commission!==true && !ordFree(o,_shOf(o))));
   const drvCom  = dlv.reduce((a,o)=>a+Number(o.commission||0),0);
   const appFee  = dlv.reduce((a,o)=>a+Number(o.serviceFee||o.service_fee||0),0);
   const row=(cls,ic,ttl,sub,v)=>`
@@ -18214,7 +18219,7 @@ function renderOffers(){
     const val = o.kind==='percent' ? o.value+'%'
               : o.kind==='fixed'   ? Number(o.value).toLocaleString()+' د.ع'
               : 'توصيل مجاني';
-    const bear = o.bearer==='shop'?'المطعم' : o.bearer==='app'?'التطبيق' : ofShareTxt(o);
+    const bear = o.kind==='free_delivery'?'التطبيق' : o.bearer==='shop'?'المطعم' : o.bearer==='app'?'التطبيق' : ofShareTxt(o);
     const dts = d => d ? new Date(d).toLocaleString('ar-IQ',{year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit'}) : '—';
     return `<div class="offc">
       <div class="offh">
@@ -18279,13 +18284,14 @@ function offerForm(o){
       <div class="fld"><label>عدد الاستخدامات (اتركه فارغ = بلا حد)</label>
         <input id="ofU" type="number" inputmode="numeric" value="${o.uses_limit||''}" placeholder="مثال: 30"></div>
       <input type="hidden" id="ofA" value="0"><!-- v349: ماكو تطبيق تلقائي — الخصم بس بالكود (نفس السيرفر) -->
-      <div class="fld"><label>من يتحمّل الخصم</label>
+      <div class="fld of-fdn" id="ofFDN" style="display:${o.kind==='free_delivery'?'block':'none'}">🚚 التوصيل المجاني: <b>التطبيق</b> يدفع أجرة التوصيل للسايق كاملة</div>   <!-- v406 -->
+      <div class="fld" id="ofBBox" style="display:${o.kind==='free_delivery'?'none':'block'}"><label>من يتحمّل الخصم</label>
         <select id="ofB" onchange="ofShareSync()">
           <option value="shop" ${o.bearer==='shop'?'selected':''}>المطعم</option>
           <option value="app" ${o.bearer==='app'?'selected':''}>التطبيق</option>
           <option value="both" ${o.bearer==='both'?'selected':''}>مشترك</option>
         </select></div>
-      <div class="fld" id="ofSSBox" style="display:${o.bearer==='both'?'block':'none'}"><label>حصة المطعم <small id="ofSSU"></small></label>   <!-- v405 -->
+      <div class="fld" id="ofSSBox" style="display:${(o.bearer==='both'&&o.kind!=='free_delivery')?'block':'none'}"><label>حصة المطعم <small id="ofSSU"></small></label>   <!-- v405 -->
         <input id="ofSS" type="number" inputmode="decimal" value="${o.shop_share??''}" placeholder="فارغ = نص بنص" oninput="ofShareSync()">
         <div class="of-ss" id="ofSSH"></div></div>
       <div class="fld"><label class="of-nc"><input type="checkbox" id="ofNC" ${o.no_commission?'checked':''}><i></i><span><b>بدون عمولة 5.5% على طلبات هذا العرض</b><small>بطلب المطعم — الطلبات اللي تنطلب بهالعرض ما تنحسب عليها عمولة، وبعد ما يخلص العرض ترجع طبيعية</small></span></label></div>
@@ -18320,8 +18326,10 @@ function ofShareTxt(o){
 }
 function ofShareSync(){
   const b=document.getElementById('ofB'), box=document.getElementById('ofSSBox'); if(!b||!box) return;
-  box.style.display=b.value==='both'?'block':'none';
   const k=(document.getElementById('ofK')||{}).value, u=document.getElementById('ofSSU'), h=document.getElementById('ofSSH');
+  const _fd=k==='free_delivery', bb=document.getElementById('ofBBox'), fdn=document.getElementById('ofFDN');   /* v406 */
+  if(bb) bb.style.display=_fd?'none':'block'; if(fdn) fdn.style.display=_fd?'block':'none';
+  box.style.display=(!_fd&&b.value==='both')?'block':'none';
   if(u) u.textContent='('+_ofUnit(k)+')';
   const raw=String((document.getElementById('ofSS')||{}).value||'').trim();
   if(!h) return;
@@ -18372,6 +18380,8 @@ async function saveOffer(id){
     if(ids.length===1){ body.shop_id=ids[0] } else { body.shop_id=null; body.shop_ids=ids }
   }
   body.auto_apply=false;
+  /* v406: التوصيل المجاني — التطبيق يدفع للسايق دائماً */
+  if(body.kind==='free_delivery') body.bearer='app';
   /* v405: حصة المطعم — بس للمشترك */
   { const raw=String((document.getElementById('ofSS')||{}).value||'').trim();
     body.shop_share=(body.bearer==='both' && raw!=='') ? Number(raw) : null;
@@ -20457,7 +20467,7 @@ setInterval(()=>{
 },1000);
 async function rfDecide(id,f){
   const r=(_rfList||[]).find(x=>x.id===id); if(!r) return;
-  const N=n=>Number(n||0).toLocaleString(), com=(shopPct()>0?tierCom(r.food):0), net=Number(r.food||0)-com;
+  const N=n=>Number(n||0).toLocaleString(), com=(r.com_now!=null?Number(r.com_now):(shopPct()>0?tierCom(r.food):0)), net=Number(r.food||0)-com;
   const note=((document.getElementById('rfNote')||{}).value||'').trim();
   const msg = f==='customer' ? `التطبيق يدفع للمطعم <b>${N(net)}</b> وللسائق <b>${N(r.fee)}</b>، وينحسب رفض على الزبون.`
             : f==='shop' ? `المطعم يدفع للسائق <b>${N(r.fee)}</b>.`
@@ -25524,7 +25534,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v405', seen={}, n=0, q=[], t=null;
+  var VER='v406', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25776,7 +25786,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v405', t0=Date.now();
+  var VER='v406', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
