@@ -6159,7 +6159,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v400</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v401</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7685,18 +7685,28 @@ function cpSubsPaint(){
   }
   if(window._subOk===false){ el.innerHTML='<div class="cps"><div class="cps-h"><b>الأقسام الفرعية</b></div><div class="cps-sub">تحتاج تحديث بالقاعدة — شغّل subcats_v390.sql</div></div>'; return }
   const subs=_cSubs(myCats,_cpCat.id);
-  /* v399: لكل قسم فرعي: صورته (اضغط وغيّرها) · اسمه (اضغط وافتحه) · أسهم الترتيب */
+  /* v401: الأقسام الفرعية بنفس شكل وترتيب الأقسام الرئيسية — صورة · اسم · تعديل · حذف · اسحب ☰ للترتيب */
   el.innerHTML=`<div class="cps"><div class="cps-h"><b>الأقسام الفرعية</b><span>مثل: غسيل الصحون · مواد التنظيف</span></div>
-    ${subs.map((x,i)=>`<div class="cps-r">
-        <button type="button" class="cat-img${x.img?' has':''}" onclick="catImgPick(${q(x.id)})" aria-label="صورة القسم الفرعي">${x.img?`<img loading="lazy" src="${esc(x.img)}" alt="">`:'<span>📷</span><em>أضف صورة</em>'}</button>
-        <button type="button" class="cps-nm" onclick="catProdsOpen(${q(x.id)})"><b>${esc(x.name)}</b><small>${_catCnt[x.id]||0} منتج · اضغط لإضافة منتجات</small></button>
-        <span class="cat-mv">
-          <button type="button" onclick="catReorder(${q(x.id)},-1)" aria-label="لفوك"${i===0?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
-          <button type="button" onclick="catReorder(${q(x.id)},1)" aria-label="لجوه"${i===subs.length-1?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+    <div id="subRows" data-parent="${esc(_cpCat.id)}">${subs.map(x=>{ const off=x.visible===false; return `
+      <div class="cat-row${off?' hid':''}" data-cid="${esc(x.id)}">
+        <button type="button" class="cat-img${x.img?' has':''}" onclick="catImgPick(${q(x.id)})" aria-label="صورة القسم الفرعي">${x.img?`<img loading="lazy" src="${esc(x.img)}" alt="">`:'<span>📷</span><em>صورة</em>'}</button>
+        <div class="cat-nm" onclick="catProdsOpen(${q(x.id)})" style="cursor:pointer">
+          <b>${esc(x.name)}${off?' <em>مخفي</em>':''}</b>
+          <span>${_catCnt[x.id]||0} منتج</span>
+        </div>
+        <button class="cat-ic ed" onclick="catProdsOpen(${q(x.id)})" aria-label="تعديل">
+          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg>
+        </button>
+        <button class="cat-ic rm" onclick="catRemove(${q(x.id)})" aria-label="حذف">
+          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>
+        </button>
+        <span class="cat-ic dg" aria-label="اسحب للترتيب">
+          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16M4 12h16M4 16h16"/></svg>
         </span>
-      </div>`).join('')}
-    <button type="button" class="cps-add" onclick="catOpenForm(null,${q(_cpCat.id)})">+ إضافة قسم فرعي</button>
-    ${subs.length?'<div class="cp-hint" style="margin:8px 0 0">📷 حط صورة لكل قسم فرعي — تطلع للزبون بالدوائر فوك المنتجات. ومنتجاتها تطلع بهذا القسم هم.</div>':''}</div>`;
+      </div>` }).join('')}</div>
+    <button class="cat-add" onclick="catOpenForm(null,${q(_cpCat.id)})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة قسم فرعي</button>
+    ${subs.length?'<div class="cp-hint" style="margin:8px 0 0">📷 حط صورة لكل قسم فرعي — تطلع للزبون بالدوائر فوك المنتجات. اسحب ☰ حتى ترتّبها.</div>':''}</div>`;
+  catBindDrag('subRows');
 }
 function cpSearch1(v){ _cpQ1=String(v||'').trim(); cpPaintList() }
 function cpSearch2(v){ _cpQ2=String(v||'').trim(); cpPaintList() }
@@ -7961,8 +7971,8 @@ async function prodFormSave(){
 
 /* ═══ سحب وإفلات لترتيب التصنيفات ═══ */
 let _dragRow=null;
-function catBindDrag(){
-  const wrap=document.getElementById('catRows'); if(!wrap) return;
+function catBindDrag(id){
+  const wrap=document.getElementById(id||'catRows'); if(!wrap) return;   /* v401: ونفسه للأقسام الفرعية (subRows) */
   wrap.querySelectorAll('.cat-ic.dg').forEach(h=>{
     h.addEventListener('touchstart', catDragStart, {passive:false});
     h.addEventListener('mousedown', catDragStart);
@@ -7976,6 +7986,7 @@ function catDragStart(e){
   e.preventDefault();
   _dragRow=e.currentTarget.closest('.cat-row');
   if(!_dragRow) return;
+  _dragWrap=_dragRow.parentElement;
   _dragRow.classList.add('drag');
   document.addEventListener('touchmove', catDragMove, {passive:false});
   document.addEventListener('mousemove', catDragMove);
@@ -7989,7 +8000,7 @@ function catDragMove(e){
   const el=document.elementFromPoint(p.x,p.y);
   const over=el && el.closest ? el.closest('.cat-row') : null;
   if(!over || over===_dragRow) return;
-  const wrap=document.getElementById('catRows'); if(!wrap) return;
+  const wrap=_dragWrap||document.getElementById('catRows'); if(!wrap || over.parentElement!==wrap) return;
   const rows=[...wrap.children];
   if(rows.indexOf(over) < rows.indexOf(_dragRow)) wrap.insertBefore(_dragRow, over);
   else wrap.insertBefore(_dragRow, over.nextSibling);
@@ -8002,9 +8013,10 @@ async function catDragEnd(){
   if(!_dragRow) return;
   _dragRow.classList.remove('drag');
   _dragRow=null;
-  const wrap=document.getElementById('catRows'); if(!wrap) return;
-  const ids=[...wrap.children].map(r=>r.getAttribute('data-cid'));
-  const _tp=_cTop(myCats);
+  const wrap=_dragWrap||document.getElementById('catRows'); _dragWrap=null; if(!wrap) return;
+  const ids=[...wrap.children].map(r=>r.getAttribute('data-cid')).filter(Boolean);
+  const _par=wrap.id==='subRows' ? wrap.getAttribute('data-parent') : null;
+  const _tp=_par ? _cSubs(myCats,_par) : _cTop(myCats);
   const same = ids.every((id,i)=> _tp[i] && _tp[i].id===id);
   if(same) return;
   try{
@@ -8017,7 +8029,9 @@ async function catDragEnd(){
     toast('ما گدرنا نحفظ الترتيب: '+String(e.message||e).slice(0,60));
     await loadShopCats();
   }
+  if(_par) try{ cpSubsPaint() }catch(e){}
 }
+let _dragWrap=null;
 
 /* يزامن حقل cat داخل منتجات المحل حتى واجهة الزبون تبقى شغالة */
 async function catSyncProducts(oldName, newName){
@@ -8164,6 +8178,7 @@ async function catRemove(id){
   toast('انشال التصنيف');
   await loadShopCats();
   if(_cpCat && _cpCat.id===id && document.getElementById('q_catprods')?.classList.contains('on')) catProdsClose();   /* v390: كنا داخل القسم الي انحذف */
+  else if(document.getElementById('q_catprods')?.classList.contains('on')) try{ cpSubsPaint() }catch(e){}   /* v401 */
 }
 
 /* ═══════════════════════════════════════════════
@@ -25456,7 +25471,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v400', seen={}, n=0, q=[], t=null;
+  var VER='v401', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25708,7 +25723,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v400', t0=Date.now();
+  var VER='v401', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
