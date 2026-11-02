@@ -818,6 +818,14 @@ html[data-theme=dark] .mksub.on em{color:#c9b6ff}
 .mkcl .wdot{width:7px;height:7px;border-radius:50%;background:#DC2626;flex-shrink:0}
 #cApp.mkmode #shopInfo .closedbanner,#cApp.mkmode #menuTabs,#cApp.mkmode #secTtl{display:none!important}
 #cApp.mkmode #shopCatGrid .mkttl{display:none}
+.mkskel{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px 12px;padding:18px 2px}
+.mkskel div{display:flex;flex-direction:column;align-items:center;gap:10px}
+.mkskel i{width:84px;height:84px;border-radius:22px;background:#F1EEF7}
+.mkskel b{width:62px;height:12px;border-radius:6px;background:#F1EEF7}
+.mkskel i,.mkskel b{animation:mksk 1.2s ease-in-out infinite alternate}
+@keyframes mksk{from{opacity:1}to{opacity:.45}}
+@media (prefers-reduced-motion:reduce){.mkskel i,.mkskel b{animation:none}}
+html[data-theme=dark] .mkskel i,html[data-theme=dark] .mkskel b{background:#231d36}
 #cApp.mkmode .mkci{background:transparent}
 #cApp.mkmode .mkgrid{margin-top:12px}
 .mkchips{display:flex;gap:10px;flex-wrap:wrap;margin:4px 0 0}
@@ -6120,7 +6128,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v392</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v393</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -10844,6 +10852,7 @@ function openShop(id){
   menuSec='__all'; menuSub=''; mkOff=false; mkTop=false;
   shopQ=''; { const _sb=document.getElementById('shopSearch'); if(_sb) _sb.dataset.sid='' }   /* v383 */
   _shopCats=[]; _shopLinks={}; _shopTop=[];
+  _shopCatsFromCache(curShop.id);   /* v393 */
   renderMenu();
   try{ loadShopPublicCats() }catch(e){ console.warn('shopCats', e) }
   try{ loadShopBanners() }catch(e){ console.warn('shopBanners', e) }   /* v384 */
@@ -10866,27 +10875,44 @@ let menuSec='__all', menuSub='';   /* v390: menuSub = القسم الفرعي ا
 let _shopCats=[], _shopLinks={}, _shopTop=[];
 
 async function loadShopPublicCats(){
-  _shopCats=[]; _shopLinks={}; _shopTop=[];
   if(!curShop) return;
   const sid=curShop.id;
+  /* v393: نجيبها بمتغيرات محلية ونحطها مرة وحدة — حتى ما تطلع الصفحة نص مرسومة (البيض گبل وبعدين الأقسام) */
+  let cats=null, links={}, top=[], ok=true;
   try{
-    _shopCats = await _catsGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+sid+'&visible=is.true&order=sort.asc') || [];
-  }catch(e){ _shopCats=[] }
-  if(_shopCats.length){
+    cats = await _catsGet('shop_categories?select=id,name,sort,visible&shop_id=eq.'+sid+'&visible=is.true&order=sort.asc') || [];
+  }catch(e){ cats=null; ok=false }
+  if(cats && cats.length){
     try{
-      const ids=_shopCats.map(c=>c.id).join(',');
+      const ids=cats.map(c=>c.id).join(',');
       const rows=await sbGet('product_categories?select=product_id,category_id&category_id=in.('+ids+')') || [];
       rows.forEach(r=>{
         const k=r.category_id;
-        (_shopLinks[k]=_shopLinks[k]||[]).push(String(r.product_id));
+        (links[k]=links[k]||[]).push(String(r.product_id));
       });
-    }catch(e){}
+    }catch(e){ ok=false }
   }
   try{
     const r=await rpc('shop_top_products',{p_shop:sid, p_days:30, p_limit:10});
-    _shopTop=(r||[]).map(x=>String(x.pid));
-  }catch(e){ _shopTop=[] }
-  if(curShop && curShop.id===sid) renderMenu();
+    top=(r||[]).map(x=>String(x.pid));
+  }catch(e){ top=_shopTop||[] }
+  if(!curShop || curShop.id!==sid) return;
+  if(cats){ _shopCats=cats; _shopLinks=links; }
+  _shopTop=top; _shopCatsReady=true;
+  if(cats && ok){ try{ localStorage.setItem('lw_sc_'+sid, JSON.stringify({cats:_shopCats,links:_shopLinks,top:_shopTop,at:Date.now()})) }catch(e){} }
+  renderMenu();
+}
+/* v393: الأقسام من آخر زيارة — الصفحة تطلع صحيحة من أول لحظة، وبعدين تتحدّث من السيرفر */
+let _shopCatsReady=true;
+function _shopCatsFromCache(sid){
+  _shopCatsReady=false;
+  try{
+    const c=JSON.parse(localStorage.getItem('lw_sc_'+sid)||'null');
+    if(c && Array.isArray(c.cats)){ _shopCats=c.cats; _shopLinks=c.links||{}; _shopTop=c.top||[]; _shopCatsReady=true }
+  }catch(e){}
+}
+function _mkSkel(){
+  return '<div class="mkskel" aria-hidden="true">'+Array.from({length:9},()=>'<div><i></i><b></b></div>').join('')+'</div>';
 }
 
 function menuSections(){
@@ -11310,6 +11336,10 @@ function renderMenu(){
   mkModeSync();
   try{ mkHeadSync() }catch(e){}
   renderMenuTabs();
+  if(_isMarket(curShop) && !_shopCatsReady && !String(shopQ||'').trim()){   /* v393: أول زيارة — هيكل رمادي لحد ما توصل الأقسام */
+    const g=document.getElementById('shopCatGrid'); if(g) g.innerHTML='';
+    box.innerHTML=_mkSkel(); renderSpBar(); return;
+  }
   const _all=_mkHome()?_mkCatsAll():null, _cats=_all?_all.filter(c=>c.ps.length):null;
   renderCatGrid(_all);   /* v386: الأقسام تطلع حتى لو بعدها فاضية */
   renderShopBanners();
@@ -25329,7 +25359,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v392', seen={}, n=0, q=[], t=null;
+  var VER='v393', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25581,7 +25611,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v392', t0=Date.now();
+  var VER='v393', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
