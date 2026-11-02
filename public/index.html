@@ -2773,6 +2773,8 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .spstate.cl{background:#FDECEA;color:#C92A2A}
 
 .spmeta{display:flex;gap:8px;margin-top:13px}
+.of-ss{margin-top:6px;font-size:12.5px;color:#5B5470;line-height:1.6}
+.of-ss b{color:var(--g)}
 /* v398: زر الاستشارة (واتساب) */
 .spcons{display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border-radius:16px;background:#E9F9EF;color:#166534;text-decoration:none;border:1.5px solid #BFE9CF;-webkit-tap-highlight-color:transparent}
 .spcons:active{transform:scale(.98)}
@@ -6178,7 +6180,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v404</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v405</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -18212,7 +18214,7 @@ function renderOffers(){
     const val = o.kind==='percent' ? o.value+'%'
               : o.kind==='fixed'   ? Number(o.value).toLocaleString()+' د.ع'
               : 'توصيل مجاني';
-    const bear = o.bearer==='shop'?'المطعم' : o.bearer==='app'?'التطبيق' : 'مشترك';
+    const bear = o.bearer==='shop'?'المطعم' : o.bearer==='app'?'التطبيق' : ofShareTxt(o);
     const dts = d => d ? new Date(d).toLocaleString('ar-IQ',{year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit'}) : '—';
     return `<div class="offc">
       <div class="offh">
@@ -18278,11 +18280,14 @@ function offerForm(o){
         <input id="ofU" type="number" inputmode="numeric" value="${o.uses_limit||''}" placeholder="مثال: 30"></div>
       <input type="hidden" id="ofA" value="0"><!-- v349: ماكو تطبيق تلقائي — الخصم بس بالكود (نفس السيرفر) -->
       <div class="fld"><label>من يتحمّل الخصم</label>
-        <select id="ofB">
+        <select id="ofB" onchange="ofShareSync()">
           <option value="shop" ${o.bearer==='shop'?'selected':''}>المطعم</option>
           <option value="app" ${o.bearer==='app'?'selected':''}>التطبيق</option>
           <option value="both" ${o.bearer==='both'?'selected':''}>مشترك</option>
         </select></div>
+      <div class="fld" id="ofSSBox" style="display:${o.bearer==='both'?'block':'none'}"><label>حصة المطعم <small id="ofSSU"></small></label>   <!-- v405 -->
+        <input id="ofSS" type="number" inputmode="decimal" value="${o.shop_share??''}" placeholder="فارغ = نص بنص" oninput="ofShareSync()">
+        <div class="of-ss" id="ofSSH"></div></div>
       <div class="fld"><label class="of-nc"><input type="checkbox" id="ofNC" ${o.no_commission?'checked':''}><i></i><span><b>بدون عمولة 5.5% على طلبات هذا العرض</b><small>بطلب المطعم — الطلبات اللي تنطلب بهالعرض ما تنحسب عليها عمولة، وبعد ما يخلص العرض ترجع طبيعية</small></span></label></div>
       <div class="fld"><label>صورة الكارد (اختياري)</label>
         <div id="ofImgBox" style="margin-bottom:8px">${o.img?`<img src="${o.img}" alt="" style="width:100%;max-height:150px;object-fit:cover;border-radius:14px">`:''}</div>
@@ -18303,6 +18308,29 @@ function offerForm(o){
       <button class="big-btn ghost" onclick="renderOffers()">إلغاء</button>
     </div>`;
   ofMultiCount();
+  try{ document.getElementById('ofK').addEventListener('change',ofShareSync); document.getElementById('ofV').addEventListener('input',ofShareSync); ofShareSync() }catch(e){}
+}
+/* ═══ v405: العرض المشترك — حصة المطعم بنفس وحدة الخصم، والباقي على التطبيق ═══ */
+function _ofUnit(k){ return k==='percent'?'%':(k==='fixed'?'د.ع':'% من التوصيل') }
+function ofShareTxt(o){
+  if(o.shop_share==null||o.shop_share==='') return 'مشترك (نص بنص)';
+  const k=o.kind, sh=Number(o.shop_share), v=k==='free_delivery'?100:Number(o.value||0), ap=Math.max(0,v-sh);
+  const f=x=>k==='fixed'?Number(x).toLocaleString():String(+Number(x).toFixed(2));
+  return `مشترك: المطعم ${f(sh)}${k==='fixed'?' د.ع':'%'} · التطبيق ${f(ap)}${k==='fixed'?' د.ع':'%'}`;
+}
+function ofShareSync(){
+  const b=document.getElementById('ofB'), box=document.getElementById('ofSSBox'); if(!b||!box) return;
+  box.style.display=b.value==='both'?'block':'none';
+  const k=(document.getElementById('ofK')||{}).value, u=document.getElementById('ofSSU'), h=document.getElementById('ofSSH');
+  if(u) u.textContent='('+_ofUnit(k)+')';
+  const raw=String((document.getElementById('ofSS')||{}).value||'').trim();
+  if(!h) return;
+  if(raw===''){ h.textContent='فارغ = نص بنص بين المطعم والتطبيق'; return }
+  const v=k==='free_delivery'?100:Number((document.getElementById('ofV')||{}).value||0), sh=Number(raw);
+  if(!(sh>=0)){ h.textContent='اكتب رقم صحيح'; return }
+  if(v>0 && sh>v){ h.innerHTML='<b style="color:#C0392B">حصة المطعم أكبر من الخصم نفسه</b>'; return }
+  const ap=Math.max(0,v-sh), f=x=>k==='fixed'?Number(x).toLocaleString()+' د.ع':(+Number(x).toFixed(2))+'%';
+  h.innerHTML=`المطعم يتحمل <b>${f(sh)}</b> · التطبيق يتحمل <b>${f(ap)}</b>`;
 }
 /* v349: قائمة المطاعم بالعرض */
 function ofMultiShow(){ const s=document.getElementById('ofS'), b=document.getElementById('ofMulti'); if(s&&b) b.style.display=(s.value==='__multi')?'block':'none'; ofMultiCount() }
@@ -18344,6 +18372,14 @@ async function saveOffer(id){
     if(ids.length===1){ body.shop_id=ids[0] } else { body.shop_id=null; body.shop_ids=ids }
   }
   body.auto_apply=false;
+  /* v405: حصة المطعم — بس للمشترك */
+  { const raw=String((document.getElementById('ofSS')||{}).value||'').trim();
+    body.shop_share=(body.bearer==='both' && raw!=='') ? Number(raw) : null;
+    if(body.shop_share!=null){
+      const lim=body.kind==='free_delivery'?100:body.value;
+      if(!(body.shop_share>=0)) return toast('حصة المطعم لازم رقم صحيح');
+      if(lim>0 && body.shop_share>lim) return toast('حصة المطعم أكبر من الخصم نفسه');
+    } }
   if(body.no_commission && !body.shop_id && !body.shop_ids) return toast('العرض بدون عمولة لازم يكون لمطعم معيّن أو مطاعم مختارة');
   if(!body.title) return toast('اكتب عنوان العرض');
   if(!body.code) return toast('اكتب كود الخصم');
@@ -18355,6 +18391,7 @@ async function saveOffer(id){
     catch(e1){
       /* إذا أعمدة الصورة/اللون/الترتيب مو مضافة بقاعدة البيانات بعد — نحفظ العرض بدونها */
       if(/no_commission/i.test(String((e1&&e1.message)||e1))){ toast('شغّل ملف offer_no_commission.sql أول'); return }
+      if(/shop_share/i.test(String((e1&&e1.message)||e1))){ toast('شغّل ملف offer_share_v405.sql أول'); return }
       if(/shop_ids/i.test(String((e1&&e1.message)||e1))){ toast('شغّل ملف offers_multi.sql أول'); return }
       if(!/column|img|card_color|sort_no/i.test(String((e1&&e1.message)||e1))) throw e1;
       delete body.img; delete body.card_color; delete body.sort_no;
@@ -25487,7 +25524,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v404', seen={}, n=0, q=[], t=null;
+  var VER='v405', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25739,7 +25776,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v404', t0=Date.now();
+  var VER='v405', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
