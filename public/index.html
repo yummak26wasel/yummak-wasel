@@ -6159,7 +6159,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v399</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v400</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7599,7 +7599,7 @@ function renderCatsPage(){
     const off=c.visible===false, _ns=_cSubs(myCats,c.id).length;
     return `
     <div class="cat-row${off?' hid':''}" data-cid="${esc(c.id)}">
-      ${_mkMine()?`<button type="button" class="cat-img${c.img?' has':''}" onclick="catImgPick(${q})" aria-label="صورة القسم">${c.img?`<img src="${esc(c.img)}" alt="">`:'<span>📷</span><em>أضف صورة</em>'}</button>`:''}
+      ${_mkMine()?`<button type="button" class="cat-img${c.img?' has':''}" onclick="catImgPick(${q})" aria-label="صورة القسم">${c.img?`<img src="${esc(c.img)}" alt="">`:'<span>📷</span><em>صورة</em>'}</button>`:''}
       <div class="cat-nm" onclick="catProdsOpen(${q})" style="cursor:pointer">
         <b>${esc(c.name)}${off?' <em>مخفي</em>':''}</b>
         <span>${_catCntAll(c.id)} منتج${_ns?' · '+_ns+' أقسام فرعية':''}</span>
@@ -7610,9 +7610,8 @@ function renderCatsPage(){
       <button class="cat-ic rm" onclick="catRemove(${q})" aria-label="حذف">
         <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4.5 6.5h15M9 6.5V4.6a1.1 1.1 0 0 1 1.1-1.1h3.8a1.1 1.1 0 0 1 1.1 1.1v1.9"/><path d="M6.5 6.5 7.6 20a1.1 1.1 0 0 0 1.1 1h6.6a1.1 1.1 0 0 0 1.1-1L17.5 6.5"/></svg>
       </button>
-      <span class="cat-mv">   <!-- v399: ترتيب بالأسهم — أسهل من السحب بالتلفون -->
-        <button type="button" onclick="catReorder(${q},-1)" aria-label="لفوك"${_tops[0]&&_tops[0].id===c.id?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6-6 6 6"/></svg></button>
-        <button type="button" onclick="catReorder(${q},1)" aria-label="لجوه"${_tops[_tops.length-1]&&_tops[_tops.length-1].id===c.id?' disabled':''}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+      <span class="cat-ic dg" aria-label="اسحب للترتيب">
+        <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h16M4 12h16M4 16h16"/></svg>
       </span>
     </div>`}).join('')+'</div>';
 
@@ -7620,7 +7619,7 @@ function renderCatsPage(){
 
   if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
 
-  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>↕️ رتّب الأقسام بالأسهم — الي فوك يطلع أول للزبون.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div>';   /* v384 · v390 · v399 */
+  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div>';   /* v384 · v390 · v399 */
   box.innerHTML=html;
   catBindDrag();
   if(_mkMine()) loadMyBanners();
@@ -25457,7 +25456,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v399', seen={}, n=0, q=[], t=null;
+  var VER='v400', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25709,7 +25708,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v399', t0=Date.now();
+  var VER='v400', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
