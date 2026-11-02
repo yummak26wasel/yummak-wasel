@@ -2742,6 +2742,25 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .spstate.cl{background:#FDECEA;color:#C92A2A}
 
 .spmeta{display:flex;gap:8px;margin-top:13px}
+/* v398: زر الاستشارة (واتساب) */
+.spcons{display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border-radius:16px;background:#E9F9EF;color:#166534;text-decoration:none;border:1.5px solid #BFE9CF;-webkit-tap-highlight-color:transparent}
+.spcons:active{transform:scale(.98)}
+.spcons svg{width:30px;height:30px;flex-shrink:0;color:#16A34A}
+.spcons span{display:flex;flex-direction:column;gap:2px;min-width:0}
+.spcons b{font-size:15px;font-weight:900}
+.spcons small{font-size:12px;color:#3F7A55}
+html[data-theme=dark] .spcons{background:#12301e;border-color:#1f5134;color:#98e1bb}
+html[data-theme=dark] .spcons small{color:#7cc59b}
+.cst{background:#fff;border-radius:20px;padding:16px;margin:12px 0;box-shadow:0 3px 14px rgba(91,43,201,.07);border:1px solid #F0EBFA}
+.cst-h{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.cst-h>div:nth-child(2){flex:1;min-width:0}
+.cst-h b{display:block;font-size:15px;font-weight:900}
+.cst-h small{display:block;font-size:12px;color:#7A7290;line-height:1.5}
+.cst-ic{font-size:24px}
+.cst-l{display:block;font-size:13px;font-weight:800;margin:12px 0 6px}
+.cst-in{width:100%;box-sizing:border-box;padding:12px 14px;border:1.5px solid #E6E1F0;border-radius:14px;font:inherit;font-size:16px;background:#fff;color:inherit}
+html[data-theme=dark] .cst{background:#1f1a30;border-color:#3a3354}
+html[data-theme=dark] .cst-in{background:#1a1528;border-color:#3a3354}
 .spm{flex:1;min-width:0;background:#FAF8FE;border-radius:12px;padding:9px 6px;
   display:flex;flex-direction:column;align-items:center;gap:2px;text-align:center}
 .spm svg{width:17px;height:17px;color:var(--g)}
@@ -6128,7 +6147,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v397</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v398</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6247,7 +6266,7 @@ body,.screen{background:#fff;color:var(--txt)}
       </button>
       <div id="stfList"></div>
     </div> <div class="page" id="q_set">
-    <div class="mycard" id="mySetCard"></div>
+    <div class="mycard" id="mySetCard"></div><div id="cstCard"></div>
     <div class="qgrid">
       <button class="qact" onclick="stab('orders',null)"><span class="qi o"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg></span>الطلبات</button>
       <button class="qact" onclick="stab('menu',null)"><span class="qi p"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 2h12l2 6v12a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8z"/><path d="M9 8a3 3 0 0 0 6 0"/></svg></span>المنتجات</button>
@@ -10520,6 +10539,43 @@ function offMulti(o){ return !!(o && !o.shop_id && offIds(o).length) }
 function nShops(n){ n=Number(n)||0; return n===1?'محل واحد':n===2?'محلين':(n<=10?n+' محلات':n+' محل') }
 /* v359: أقسام منتجات المحل (من «القسم» الي يكتبه صاحب المحل لكل منتج) — تنكتب تحت اسم المحل */
 /* v360: الوصف تحت اسم المحل — الإدارة تكتبه بنفسها (مثل «طرشي · مخللات»). إذا فارغ: أقسام منتجات المحل */
+/* v398: صاحب الصيدلية يشغّل زر الاستشارة ويكتب اسم الدكتور ورقم واتسابه */
+let _cst=null;
+function cstPaint(){
+  const box=document.getElementById('cstCard'); if(!box) return;
+  const sh=(typeof myShopDoc!=='undefined')?myShopDoc:null;
+  if(!sh || shopSec(sh)!=='pharmacy' || (me && me.staff)){ box.innerHTML=''; return }
+  const c=sh.consult||{};
+  if(!_cst || _cst.sid!==sh.id) _cst={sid:sh.id, on:!!c.on, name:c.name||'', wa:c.wa?('0'+String(c.wa).slice(3)):(String(sh.phone||sh.ownerPhone||'').replace(/\D/g,'').replace(/^964/,'0')), busy:false};
+  const C=_cst;
+  box.innerHTML=`<div class="cst">
+    <div class="cst-h"><span class="cst-ic">💬</span><div><b>زر الاستشارة</b><small>يطلع للزبون بصفحة صيدليتك — يضغطه ويفتح واتساب الدكتور</small></div>
+      <div class="tg${C.on?' on':''}" role="switch" aria-checked="${C.on}" onclick="_cst.on=!_cst.on;cstPaint()"></div></div>
+    <label class="cst-l">اسم الدكتور</label><input class="cst-in" maxlength="40" placeholder="مثال: دكتور عمر" value="${esc(C.name)}" oninput="_cst.name=this.value">
+    <label class="cst-l">رقم الواتساب</label><input class="cst-in" type="tel" inputmode="tel" dir="ltr" maxlength="14" placeholder="07801234567" value="${esc(C.wa)}" oninput="_cst.wa=this.value">
+    <button class="big-btn" ${C.busy?'disabled':''} onclick="cstSave()">${C.busy?'… جاري الحفظ':'حفظ'}</button>
+  </div>`;
+}
+async function cstSave(){
+  const C=_cst; if(!C||C.busy) return;
+  C.busy=true; cstPaint();
+  try{
+    const r=await rpc('shop_set_consult',{p_shop:me.shopId, p_on:!!C.on, p_name:String(C.name||'').trim(), p_phone:String(C.wa||'')});
+    if(myShopDoc) myShopDoc.consult=r;
+    toast(C.on?'انحفظ ✓ الزر يطلع للزبائن بصفحة صيدليتك':'انحفظ ✓ الزر مخفي');
+  }catch(e){ toast(/shop_set_consult|function/i.test(errMsg(e))?'شغّل consult_v398.sql أول':errMsg(e)) }
+  C.busy=false; cstPaint();
+}
+/* ═══ v398: زر «استشارة دكتور …» بصفحة الصيدلية — يفتح واتساب الدكتور ويا رسالة جاهزة ═══ */
+function consultOf(s){ const c=s&&s.consult; return (c && c.on && /^9647\d{9}$/.test(String(c.wa||''))) ? c : null }
+function consultBtnHTML(s){
+  const c=consultOf(s); if(!c) return '';
+  const nm=String(c.name||'الصيدلاني').trim();
+  const msg='مرحبا '+nm+' 👋\nعندي استشارة — من تطبيق واصل ليمك';
+  return `<a class="spcons" href="https://wa.me/${c.wa}?text=${encodeURIComponent(msg)}" target="_blank" rel="noopener">
+    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.2a9.7 9.7 0 0 0-8.3 14.8L2.3 21.8l4.9-1.3A9.7 9.7 0 1 0 12 2.2zm0 17.6a7.9 7.9 0 0 1-4-1.1l-.3-.2-2.9.8.8-2.8-.2-.3A7.9 7.9 0 1 1 12 19.8zm4.4-5.9c-.2-.1-1.4-.7-1.7-.8-.2-.1-.4-.1-.5.1l-.8 1c-.1.2-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.5-.4h-.5a.9.9 0 0 0-.7.3 2.8 2.8 0 0 0-.9 2.1 4.9 4.9 0 0 0 1 2.6 11.2 11.2 0 0 0 4.3 3.8c1.6.7 2.2.7 3 .6a2.6 2.6 0 0 0 1.7-1.2 2.1 2.1 0 0 0 .1-1.2c0-.1-.2-.2-.4-.3z"/></svg>
+    <span><b>استشارة ${esc(nm)}</b><small>اسأل قبل ما تطلب — يفتح واتساب</small></span></a>`;
+}
 function shopSubtitle(s){
   const t=String((s&&s.tagline)||'').replace(/\s+/g,' ').trim(); if(t) return t;
   const c=shopCatsList(s); return c.length?c.slice(0,3).join(' · '):'';
@@ -10845,6 +10901,7 @@ function openShop(id){
           <b>${etaTxt()}</b><span>وقت التوصيل</span>
         </div>
       </div>
+      ${consultBtnHTML(curShop)}
     </div>
     ${open?'':`<div class="closedbanner"><span class="wdot" style="background:#DC2626"></span> هذا المحل مسكّر الآن<br>${nextOpenTxt(curShop)}</div>`}`;
 
@@ -13660,6 +13717,7 @@ function renderStore(){
       </div>`;
   }
 
+  try{ cstPaint() }catch(e){ console.warn('consult', e) }   /* v398 */
   const pfS=document.getElementById('stPerf');
   if(pfS) pfS.innerHTML=`
     <div class="pgrid" style="grid-template-columns:1fr 1fr">
@@ -25359,7 +25417,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v397', seen={}, n=0, q=[], t=null;
+  var VER='v398', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25611,7 +25669,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v397', t0=Date.now();
+  var VER='v398', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
