@@ -158,6 +158,10 @@ const auth = {
       if(m.includes('already') || m.includes('registered'))
         throw Object.assign(new Error('الرقم مسجّل مسبقاً'),
           { code: 'auth/email-already-in-use' });
+      /* v422: باسورد مسرّب/مشهور (حماية Supabase) — رسالة واضحة */
+      if((String(error.code||'')==='weak_password' && ((error.reasons||[]).includes('pwned') || /known|easy to guess|pwned|leak/i.test(m))) || /known to be weak|easy to guess|pwned/i.test(m))
+        throw Object.assign(new Error('كلمة المرور مكشوفة'),
+          { code: 'auth/pwned-password' });
       if(m.includes('at least') || m.includes('weak'))
         throw Object.assign(new Error('كلمة المرور ضعيفة'),
           { code: 'auth/weak-password' });
