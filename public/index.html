@@ -6201,7 +6201,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v417</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v418</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6981,7 +6981,7 @@ async function otpSend(){
   if(b){b.disabled=true;b.textContent='... جاري الإرسال'}
   try{
     const j=await otpApi('/send',{phone:'964'+otpCore});
-    otpToken=j.token||'';
+    otpToken=j.token||''; try{ suSave() }catch(_){}
     toast('انرسل الرمز — شوف الواتساب');
     otpTick(60);
   }catch(e){ otpErr(e.message); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} }
@@ -7007,6 +7007,8 @@ async function otpConfirm(){
     await otpApi('/verify',{phone:'964'+otpCore,code,token:otpToken});
     otpOkPhone=otpCore;
     otpClose();
+    { const pw=document.getElementById('aPass');
+      if(pw && String(pw.value||'').trim().length<6){ toast('انتأكد رقمك ✓ — اكتب كلمة المرور واضغط «إنشاء الحساب»'); try{ pw.focus() }catch(_){} return } }
     toast('انتأكد رقمك — نكمّل الحساب');
     doAuth();
   }catch(e){ otpErr(e.message) }
@@ -7086,7 +7088,7 @@ function boot(){
   auth.onAuthStateChanged(async u=>{
     if(signingUp) return;                 // التسجيل يكمّل بنفسه
     window.__step=u?'user':'login';
-    if(!u){ uid=null; me=null; bootClear(); busy(false); document.getElementById('auth').classList.add('on');
+    if(!u){ uid=null; me=null; bootClear(); busy(false); document.getElementById('auth').classList.add('on'); try{ suRestore() }catch(_){}
       if(_staffPollTimer){ clearInterval(_staffPollTimer); _staffPollTimer=null }
       return }
     uid=u.uid;
@@ -8903,6 +8905,58 @@ async function pushDrivers(title,body,data){
 
 /* ══════ AUTH ══════ */
 let mode='login',role='customer';
+/* v418: مسودة التسجيل — إذا طلع من التطبيق بنص التسجيل (مثلاً يشوف رمز الواتساب) ورجع، يلگى كلشي مثل ما خلّاه.
+   كلمة المرور ما تنحفظ أبداً. تنمسح بعد ما يكمل الحساب، أو بعد ساعتين. */
+const SU_KEY='lw_su_draft', SU_TTL=2*3600*1000;
+function suSave(){
+  try{
+    if(mode!=='signup' || uid) return;
+    const g=id=>{ const e=document.getElementById(id); return e?String(e.value||''):'' };
+    const t=document.getElementById('aTerms');
+    let old=null; try{ old=JSON.parse(localStorage.getItem(SU_KEY)||'null') }catch(e){}
+    const otp=(otpToken&&otpCore)?{tok:otpToken, core:otpCore, at:(old&&old.otp&&old.otp.tok===otpToken)?old.otp.at:Date.now()}:null;
+    const d={t:Date.now(), role, phone:g('aPhone'), name:g('aName'), addr:g('aAddr'), store:g('aStore'), type:g('aType'), veh:g('aVeh'),
+             terms:!!(t&&t.checked), tt:(t&&t.dataset.t)||'', shopPhoto:shopPhoto||'', driverPhoto:(typeof driverPhoto==='string'?driverPhoto:''), otp};
+    if(!(d.phone||d.name||d.store||d.addr)) return;
+    localStorage.setItem(SU_KEY, JSON.stringify(d));
+  }catch(e){}
+}
+function suClear(){ try{ localStorage.removeItem(SU_KEY) }catch(e){} }
+let _suDone=false;
+function suRestore(){
+  if(_suDone) return; _suDone=true;
+  let d=null; try{ d=JSON.parse(localStorage.getItem(SU_KEY)||'null') }catch(e){}
+  if(!d) return;
+  if(Date.now()-Number(d.t||0)>SU_TTL){ suClear(); return }
+  try{
+    setMode('signup');
+    const rb=[...document.querySelectorAll('#roleSeg button')].find(b=>(b.getAttribute('onclick')||'').indexOf("'"+d.role+"'")>-1);
+    if(rb) setRole(d.role, rb);
+    const s=(id,v)=>{ const e=document.getElementById(id); if(e && v) e.value=v };
+    s('aPhone',d.phone); s('aName',d.name); s('aAddr',d.addr); s('aStore',d.store); s('aVeh',d.veh);
+    if(d.type){ const tb=[...document.querySelectorAll('#tPick button')].find(b=>(b.getAttribute('onclick')||'').indexOf("'"+d.type+"'")>-1); pickType(d.type, tb||null) }
+    const t=document.getElementById('aTerms'); if(t && d.terms){ t.checked=true; if(d.tt) t.dataset.t=d.tt }
+    if(d.shopPhoto){ shopPhoto=d.shopPhoto; const b=document.getElementById('shBox');
+      if(b){ b.classList.add('has'); b.innerHTML=`<img src="${d.shopPhoto}" style="width:100%;max-width:260px;height:auto;border-radius:12px;margin:0 auto 7px;display:block"> <div class="tx">انرفعت الصورة</div><div class="sub">اضغط لتغييرها</div>` } }
+    if(d.driverPhoto){ driverPhoto=d.driverPhoto; const b=document.getElementById('phBox');
+      if(b){ b.classList.add('has'); b.innerHTML=`<img src="${d.driverPhoto}" alt=""><div class="tx">انرفعت صورتك</div><div class="sub">اضغط لتغييرها</div>` } }
+    try{ termsSync() }catch(e){}
+    /* كان ينتظر رمز الواتساب — نرجّع نافذة الرمز نفسها (الرمز صالح 10 دقايق) */
+    if(d.otp && d.otp.tok && Date.now()-Number(d.otp.at||0) < 10*60*1000){
+      otpCore=d.otp.core; otpToken=d.otp.tok; otpErr('');
+      const inp=document.getElementById('otpCode'); if(inp) inp.value='';
+      const ph=document.getElementById('otpPhone'); if(ph) ph.textContent='+964 '+otpCore;
+      document.getElementById('otpSheet').classList.add('on');
+      const left=60-Math.floor((Date.now()-Number(d.otp.at))/1000); if(left>0) otpTick(left); else { const b=document.getElementById('otpAgain'); if(b){ b.disabled=false; b.textContent='إعادة إرسال الرمز' } }
+    }
+    const pw=document.getElementById('aPass'); if(pw && !pw.value) pw.placeholder='اكتب كلمة المرور مرة ثانية';
+    toast('رجّعنا معلوماتك — كمّل التسجيل');
+  }catch(e){ __silent(e,'suRestore') }
+}
+document.addEventListener('input', e=>{ try{ if(e.target && e.target.closest && e.target.closest('#auth')) suSave() }catch(_){} }, true);
+document.addEventListener('change', e=>{ try{ if(e.target && e.target.closest && e.target.closest('#auth')) suSave() }catch(_){} }, true);
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) suSave() });
+window.addEventListener('pagehide', ()=>suSave());
 function pickType(v,el){
   const inp=document.getElementById('aType'); if(inp) inp.value=v;
   document.querySelectorAll('#tPick button').forEach(b=>b.classList.remove('on'));
@@ -8910,6 +8964,7 @@ function pickType(v,el){
   try{ buzz(12) }catch(e){}
   try{ const c=document.getElementById('aTerms'); if(c && c.dataset.t && c.dataset.t!==v){ c.checked=false } }catch(e){}
   try{ termsSync() }catch(e){}
+  try{ suSave() }catch(e){}
 }
 function setMode(m,el){
   mode=m;
@@ -9062,6 +9117,7 @@ function setRole(r,el){
   document.getElementById('fStore').style.display=r==='store'?'block':'none';
   document.getElementById('fDriver').style.display=r==='driver'?'block':'none';
   hideErr(); try{ termsSync() }catch(e){}
+  try{ suSave() }catch(e){}
 }
 function showErr(t){const e=document.getElementById('authErr');e.textContent=(typeof __friendly==='function'?__friendly(t):t);e.classList.add('on')}
 function hideErr(){document.getElementById('authErr').classList.remove('on')}
@@ -9302,7 +9358,8 @@ async function doAuth(){
           data.shopId=sd.id;
         }
         await db.collection('users').doc(newUid).set(data);
-        if(shopPayload){ try{ await rpc('terms_accept',{p_version:shopTermsV(shopPayload.type)}) }catch(e){ __silent(e,'termsAccept') } shopPhoto=null }   /* v417: صورة التسجيل انحفظت — ما تبقى معلّقة */
+        if(shopPayload){ try{ await rpc('terms_accept',{p_version:shopTermsV(shopPayload.type)}) }catch(e){ __silent(e,'termsAccept') } shopPhoto=null }
+        suClear();   /* v418: الحساب صار — المسودة ما نحتاجها */   /* v417: صورة التسجيل انحفظت — ما تبقى معلّقة */
         if(role==='driver'){
           const _rc=(window.__drvExtra||{}).resCard;   /* بطاقة السكن — تنحفظ لحالها حتى ما يفشل التسجيل إذا terms_v2.sql بعده ما انشغل */
           if(_rc){ try{ await db.collection('users').doc(newUid).update({resCard:_rc}) }catch(e){ __silent(e,'resCard') } }
@@ -16210,7 +16267,7 @@ async function pickPhoto(inp){
     box.innerHTML='<div class="tx">… جاري رفع الصورة</div><div class="sub">لحظة</div>' }
   try{
     const url=await uploadImage(f,'drivers',{size:500,square:true,quality:0.82});
-    driverPhoto=url;
+    driverPhoto=url; try{ suSave() }catch(_){}
     if(box) box.innerHTML=`<img src="${url}" alt=""><div class="tx">انرفعت صورتك</div><div class="sub">اضغط لتغييرها</div>`;
   }catch(e){
     driverPhoto=null;
@@ -16707,7 +16764,7 @@ async function pickShopPhoto(inp,boxId){
     b.innerHTML='<div class="tx">… جاري رفع الصورة</div><div class="sub">لحظة</div>' }
   try{
     const url=await uploadImage(f,'shops',{size:900,quality:0.82});
-    shopPhoto=url;
+    shopPhoto=url; try{ suSave() }catch(_){}
     if(b) b.innerHTML=`<img src="${url}" style="width:100%;max-width:260px;height:auto;border-radius:12px;margin:0 auto 7px;display:block"> <div class="tx">انرفعت الصورة</div><div class="sub">اضغط لتغييرها</div>`;
     toast('انرفعت صورة المحل');
   }catch(e){
@@ -25644,7 +25701,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v417', seen={}, n=0, q=[], t=null;
+  var VER='v418', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25896,7 +25953,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v417', t0=Date.now();
+  var VER='v418', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
