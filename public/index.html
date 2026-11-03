@@ -6185,7 +6185,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v411</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v412</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -16882,6 +16882,17 @@ let allOrders=[],allUsers=[],allShops=[],pFil='driver';
 
 /* ══════════ عمولة المطعم — جهة المحل ══════════ */
 let myComm={sales:0,amount:0}, myInv=null, myPrev=[];
+/* v412: الطلب المرفوض (غلط الزبون أو السايق) ينحسب مثل طلب عادي — عمولته داخل عمولة الفترة (للعرض) */
+function refComOf(shopId, per){
+  let c=0, n=0;
+  if(!per) return {c,n};
+  let L=[]; try{ L=_rfList||[] }catch(e){}
+  L.forEach(r=>{
+    if(r.shop_id!==shopId || r.status!=='decided' || !['customer','driver'].includes(r.fault) || !r.decided_at) return;
+    const k=_ymd(new Date(r.decided_at)); if(k>=per.from && k<=per.to){ c+=Number(r.commission||0); n++ }
+  });
+  return {c,n};
+}
 /* حالة عمولة شهر: شكد انسدّ وشكد باقي — الفواتير القديمة المأشّرة مسدد تبقى مسدّدة كاملة */
 function invCalc(amount, inv, led){
   amount=Number(amount||0);
@@ -16962,6 +16973,7 @@ function renderMyComm(){
       <div class="hd"><span>${myShopPer&&myShopPer.half?'عمولة هذي الفترة ('+myShopPer.short+')':'عمولة هذا الشهر'}</span><span class="ist ${tag[1]}" style="position:static">${tag[0]}</span></div>
       <div class="v ${st==='paid'?'g':''}">${myComm.amount.toLocaleString()}<small> د.ع</small></div>
       <div class="rg">مبيعات ${myComm.sales.toLocaleString()} د.ع · ${comRateTxt(myComm.rate)} · تستحق ${dd}</div>
+      ${(()=>{ const q=refComOf(me.shopId,myShopPer); return q.c>0?`<div class="rg" style="margin-top:4px">منها عمولة ${q.n} ${q.n===1?'طلب مرفوض':'طلبات مرفوضة'}: ${q.c.toLocaleString()} د.ع</div>`:'' })()}
       ${ic.paid>0&&st!=='paid'?`<div class="rg" style="margin-top:4px;font-weight:800">سدّدت ${ic.paid.toLocaleString()} · باقي عليك ${ic.rem.toLocaleString()} د.ع</div>`:''}
       ${_cr>0?`<div class="rg" style="margin-top:4px;font-weight:800;color:#0E8A5F">عندك رصيد ${_cr.toLocaleString()} د.ع — ينخصم من العمولة الجاية</div>`:''}
       ${myInv&&myInv.reject_reason&&st!=='pend'?`<div class="rjnote">❌ دفعتك الأخيرة (${Number(myInv.amount_paid||0).toLocaleString()} د.ع) انرفضت: ${esc(myInv.reject_reason)}<small>سدّد مرة ثانية، أو راسل الإدارة إذا تشوف إنه غلط.</small></div>`:''}
@@ -17288,6 +17300,7 @@ function renderInvOne(){
     <h6>الملخّص</h6>
     <div class="ix-l"><span>مبيعات ${r.per.half?'الفترة':'الشهر'}</span><b>${_n(r.sales)}</b></div>
     <div class="ix-l"><span>العمولة ${comRateTxt()}</span><b>${_n(r.amount)}</b></div>
+    ${(()=>{ const q=refComOf(r.shop.id,r.per); return q.c>0?`<div class="ix-l"><span>منها عمولة طلبات مرفوضة (${q.n})</span><b>${_n(q.c)}</b></div>`:'' })()}
     ${paid?`<div class="ix-l g"><span>المدفوع</span><b>− ${_n(paid)}</b></div>`:''}
     <div class="ix-l tot"><span>الباقي</span><b>${_n(c.rem)} د.ع</b></div>
     ${ow!=null&&ow!==c.rem?`<div class="ix-l"><span>كل اللي على المطعم (كل الفترات)</span><b>${_n(ow)} د.ع</b></div>`:''}
@@ -20217,7 +20230,8 @@ function drvReceipt(d){
 let _rfList=[], _rfAt=0, _rfBusy=false, _rfTab='act', _rfSel=null;
 const RF_FAULT={customer:'الزبون',shop:'المطعم',driver:'السائق',none:'ماكو غلطان'};
 const RF_ST={due:['مستحق','due'],paid:['بانتظار تأكيد الاستلام','paid'],confirmed:['تم ✓','ok']};
-/* v411: الطلب المرفوض ينسدّ بنهاية الدورة حسب الاتفاق — المطعم طرف: ويا حساب المحل، غير هيج: ويا حساب السايق (due_on من السيرفر) */
+/* v412: الطلب المرفوض ينسدّ بنهاية الدورة حسب الاتفاق — المطعم طرف: ويا حساب المحل، غير هيج: ويا حساب السايق (due_on من السيرفر).
+   المطعم ياخذ سعر الأكل كامل، وعمولته تنضاف على عمولة الشهر */
 const _RF_MON=['كانون الثاني','شباط','آذار','نيسان','أيار','حزيران','تموز','آب','أيلول','تشرين الأول','تشرين الثاني','كانون الأول'];
 function rfToday(){ const d=new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0') }
 function rfDueOk(d){ return !d || !d.due_on || String(d.due_on).slice(0,10) <= rfToday() }
@@ -20516,11 +20530,11 @@ setInterval(()=>{
 },1000);
 async function rfDecide(id,f){
   const r=(_rfList||[]).find(x=>x.id===id); if(!r) return;
-  const N=n=>Number(n||0).toLocaleString(), com=(r.com_now!=null?Number(r.com_now):(shopPct()>0?tierCom(r.food):0)), net=Number(r.food||0)-com;
+  const N=n=>Number(n||0).toLocaleString(), com=(r.com_now!=null?Number(r.com_now):(shopPct()>0?tierCom(r.food):0)), net=Number(r.food||0), _ct=com>0?` عمولته (<b>${N(com)}</b>) تنضاف على عمولة الشهر.`:'';
   const note=((document.getElementById('rfNote')||{}).value||'').trim();
-  const msg = f==='customer' ? `التطبيق يدفع للمطعم <b>${N(net)}</b> وللسائق <b>${N(r.fee)}</b> بنهاية الدورة، وينحسب رفض على الزبون.`
+  const msg = f==='customer' ? `التطبيق يدفع للمطعم <b>${N(net)}</b> (سعره كامل) وللسائق <b>${N(r.fee)}</b> بنهاية الدورة.${_ct} وينحسب رفض على الزبون.`
             : f==='shop' ? `المطعم يدفع للسائق <b>${N(r.fee)}</b> — بنهاية الدورة.`
-            : f==='driver' ? `السائق يدفع للمطعم <b>${N(net)}</b> — بنهاية الدورة.`
+            : f==='driver' ? `السائق يدفع للمطعم <b>${N(net)}</b> (سعره كامل) بنهاية الدورة.${_ct}`
             : 'الطلب ينلغي بس، ولا أحد يدفع شي.';
   const yes=await askConfirm(msg,{title:'الغلطان: '+RF_FAULT[f], ok:'إي، أكّد'});
   if(!yes) return;
@@ -25583,7 +25597,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v411', seen={}, n=0, q=[], t=null;
+  var VER='v412', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25835,7 +25849,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v411', t0=Date.now();
+  var VER='v412', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
