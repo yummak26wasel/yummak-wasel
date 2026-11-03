@@ -191,6 +191,20 @@
 .rf-st.due{background:#FFF1E6;color:#C2410C}.rf-st.paid{background:#EEF2FF;color:#4338CA}.rf-st.ok{background:#EAF8EF;color:#0E7A53}
 .rf-bt{flex-shrink:0;border:0;border-radius:12px;padding:11px 16px;background:#5B1FC8;color:#fff;font:inherit;font-size:13.5px;font-weight:800;cursor:pointer}
 .rf-bt.ok{background:#0E7A53}
+.odt-ret{margin-top:14px}
+.ret-r{background:#FFF7ED;border:1px solid #FBD5A8;border-radius:14px;padding:10px 12px;margin:8px 0}.ret-r b{display:block;color:#C2410C;font-weight:900}.ret-r span{font-size:12px;color:#7A7390}
+.ret-n{text-align:center;color:#8B84A0;font-weight:800;font-size:13px;padding:10px}
+.odt-btn.ret{width:100%;background:#fff;color:#C2410C;border:1.5px solid #FBD5A8}.odt-btn.ret.go{background:#C2410C;color:#fff;border:0;margin-top:12px}
+.ret-sheet{position:fixed;inset:0;z-index:9999;background:rgba(20,13,36,.45);display:none;align-items:flex-end;justify-content:center}.ret-sheet.on{display:flex}
+.ret-b{overflow:auto;padding:2px 4px}
+.ret-l{font-weight:900;font-size:13.5px;color:#140d24;margin:12px 0 6px}
+.ret-it{display:flex;align-items:center;justify-content:space-between;gap:10px;border-top:1px solid #F0EDF6;padding:9px 0}.ret-it b{display:block;font-size:13.5px}.ret-it span{font-size:11.5px;color:#8B84A0}
+.ret-st{display:flex;align-items:center;gap:10px}.ret-st button{width:34px;height:34px;border-radius:10px;border:1.5px solid #E6DEF7;background:#fff;font-size:18px;font-weight:900;color:#4A11A6}.ret-st b{min-width:18px;text-align:center}
+.ret-b input,.ret-b textarea{width:100%;border:1.5px solid #E6DEF7;border-radius:12px;padding:11px;font:inherit;font-size:15px;box-sizing:border-box}
+.ret-h{font-size:11.5px;color:#8B84A0;margin-top:5px}
+.ret-why{display:flex;gap:8px;flex-wrap:wrap}.ret-why button{border:1.5px solid #E6DEF7;background:#fff;border-radius:20px;padding:8px 14px;font:inherit;font-weight:800;color:#4A11A6}.ret-why button.on{background:#4A11A6;color:#fff;border-color:#4A11A6}
+.ret-b textarea{margin-top:10px}
+.stm-t tr.ret{background:#FFF7ED}.stm-x{border:0;background:#FDECEC;color:#B42318;border-radius:8px;padding:2px 8px;font:inherit;font-size:11px;font-weight:800;margin-inline-start:6px}
 .stm-bt{display:block;width:100%;margin-top:10px;border:1.5px solid #E6DEF7;background:#fff;color:#4A11A6;border-radius:14px;padding:11px;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
 #stmSheet{position:fixed;inset:0;z-index:9999;background:rgba(20,13,36,.45);display:none;align-items:flex-end;justify-content:center}
 #stmSheet.on{display:flex}
@@ -6201,7 +6215,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v418</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v419</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -14278,7 +14292,78 @@ function renderOrdDet(){
       <div class="h"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 15.5a2 2 0 0 1-2 2H8l-4 3.5v-15a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg> ملاحظات الزبون</div>
       <p>${esc(o.note)}</p></div>`:''}
 
-    ${acts}`;
+    ${acts}
+    ${(o.status==='delivered' && ((myShopDoc&&myShopDoc.type)||'')!=='restaurant')?'<div id="odtRet" class="odt-ret"></div>':''}`;
+  try{ if(document.getElementById('odtRet')) retLoad(o) }catch(e){}
+}
+
+/* ═══ v419: الإرجاع — سوبر ماركت / كوزمتك / صيدلية، خلال يومين من التوصيل ═══
+   المحل يرجّع للزبون بإيده ويسجّله هنا. العمولة تنحسب من جديد على الباقي، والفرق ينشال من عمولة الشهر. */
+const RET_H=48, RET_WHY={wrong:'غلط',damaged:'تالف',expired:'منتهي',other:'غيره'};
+function retOk(o){ const at=_anyTs(o.delivered_at||o.deliveredAt||o.createdAt||o.created_at); return !at || (Date.now()-at) < RET_H*3600*1000 }
+async function retLoad(o){
+  const box=document.getElementById('odtRet'); if(!box) return;
+  let L=[]; try{ L=await rpc('order_returns_of',{p_order:o.id})||[] }catch(e){ L=[] }
+  if(_odId!==o.id) return;
+  const ok=L.filter(x=>x.status==='done'), tot=ok.reduce((a,x)=>a+Number(x.amount||0),0), left=Math.max(0,Number(o.sub||0)-tot);
+  const N=n=>Number(n||0).toLocaleString();
+  box.innerHTML=`<div class="odt-sec">↩️ الإرجاع</div>
+    ${ok.length?ok.map(x=>`<div class="ret-r"><b>رجع ${N(x.amount)} د.ع</b><span>${RET_WHY[x.reason]||esc(x.reason||'')}${x.note?' · '+esc(x.note):''} · ${new Date(x.at).toLocaleDateString('ar-IQ',{day:'numeric',month:'short'})}${Number(x.com_diff)>0?' · عمولتك نقصت '+N(x.com_diff):''}</span></div>`).join(''):''}
+    ${left>0 && retOk(o) ? `<button class="odt-btn ret" onclick="retOpen()">↩️ إرجاع غرض من هذا الطلب</button>`
+      : (left<=0 ? '<div class="ret-n">رجع كل الطلب</div>' : '<div class="ret-n">الإرجاع خلال يومين من التوصيل بس</div>')}`;
+  box.dataset.left=left;
+}
+let _rtx=null;
+function retOpen(){
+  const o=(myOrders||[]).find(x=>x.id===_odId); if(!o) return;
+  const left=Number((document.getElementById('odtRet')||{}).dataset?.left||o.sub||0);
+  _rtx={o, q:{}, reason:'', manual:null, left};
+  let sh=document.getElementById('retSheet');
+  if(!sh){ sh=document.createElement('div'); sh.id='retSheet'; sh.className='ret-sheet'; sh.addEventListener('click',e=>{ if(e.target===sh) sh.classList.remove('on') }); document.body.appendChild(sh) }
+  retPaint(); requestAnimationFrame(()=>sh.classList.add('on'));
+}
+function _rtUnit(i){ const q=Math.max(1,Number(i.qty||1)); return i.kg ? itLine(i) : Math.round(itLine(i)/q) }
+function _rtSum(){ const its=_rtx.o.items||[]; return its.reduce((a,i,ix)=>a+(_rtx.q[ix]||0)*_rtUnit(i),0) }
+function retQ(ix,d){ const i=(_rtx.o.items||[])[ix]; if(!i) return; const mx=i.kg?1:Math.max(1,Number(i.qty||1)); _rtx.q[ix]=Math.max(0,Math.min(mx,(_rtx.q[ix]||0)+d)); _rtx.manual=null; retPaint() }
+function retWhy(k){ _rtx.reason=k; retPaint() }
+function retPaint(){
+  const sh=document.getElementById('retSheet'); if(!sh||!_rtx) return;
+  const N=n=>Number(n||0).toLocaleString(), its=_rtx.o.items||[], auto=Math.min(_rtSum(),_rtx.left), amt=_rtx.manual!=null?_rtx.manual:auto;
+  const note=(document.getElementById('rtNote')||{}).value||'';
+  sh.innerHTML=`<div class="stm-p"><div class="stm-h"><b>↩️ إرجاع — طلب #${esc(ONO(_rtx.o))}</b><button onclick="document.getElementById('retSheet').classList.remove('on')" aria-label="سكّر">×</button></div>
+    <div class="ret-b">
+      <div class="ret-l">شنو رجع؟</div>
+      ${its.map((i,ix)=>`<div class="ret-it"><div><b>${esc(i.name||'')}</b><span>${i.kg?'بالوزن · '+N(itLine(i)):N(_rtUnit(i))+' د.ع للواحد · طلب '+Number(i.qty||1)}</span></div>
+        <div class="ret-st"><button onclick="retQ(${ix},-1)">−</button><b>${_rtx.q[ix]||0}</b><button onclick="retQ(${ix},1)">+</button></div></div>`).join('')}
+      <div class="ret-l">مبلغ الإرجاع (يرجع للزبون منك)</div>
+      <input id="rtAmt" type="number" inputmode="numeric" value="${amt||''}" placeholder="0" oninput="_rtx.manual=this.value===''?null:Number(this.value)">
+      <div class="ret-h">الباقي بالفاتورة: ${N(_rtx.left)} د.ع · التوصيل ورسوم الخدمة ما ترجع</div>
+      <div class="ret-l">ليش رجع؟</div>
+      <div class="ret-why">${Object.entries(RET_WHY).map(([k,l])=>`<button class="${_rtx.reason===k?'on':''}" onclick="retWhy('${k}')">${l}</button>`).join('')}</div>
+      <textarea id="rtNote" rows="2" placeholder="ملاحظة (اختياري)">${esc(note)}</textarea>
+      <button class="odt-btn ret go" onclick="retSave()">سجّل الإرجاع</button>
+    </div></div>`;
+}
+async function retSave(){
+  if(!_rtx) return;
+  const amt=Math.round(Number((document.getElementById('rtAmt')||{}).value||0));
+  if(!(amt>0)) return toast('اكتب مبلغ الإرجاع');
+  if(amt>_rtx.left) return toast('المبلغ أكبر من الباقي بالفاتورة');
+  if(!_rtx.reason) return toast('اختار ليش رجع');
+  const its=(_rtx.o.items||[]).map((i,ix)=>({name:i.name, qty:_rtx.q[ix]||0, price:_rtUnit(i)})).filter(x=>x.qty>0);
+  const note=((document.getElementById('rtNote')||{}).value||'').trim();
+  const yes=await askConfirm('ترجّع للزبون <b>'+amt.toLocaleString()+' د.ع</b> بإيدك؟<br><small>عمولتك تنحسب من جديد على الباقي.</small>',{title:'تأكيد الإرجاع',ok:'إي، سجّل'});
+  if(!yes) return;
+  try{
+    const r=await rpc('shop_return_order',{p_order:_rtx.o.id, p_amount:amt, p_items:its.length?its:null, p_reason:_rtx.reason, p_note:note||null});
+    const d=Number((r&&r.com_diff)||0);
+    toast('انسجّل الإرجاع'+(d>0?' — عمولتك نقصت '+d.toLocaleString():''));
+    const no=ONO(_rtx.o), sn=(myShopDoc&&myShopDoc.name)||'محل';
+    try{ await rpc('notify_insert',{p_to:null,p_to_role:'admin',p_title:'↩️ إرجاع — '+sn,p_body:'طلب #'+no+': رجع '+amt.toLocaleString()+' د.ع ('+(RET_WHY[_rtx.reason]||'')+')'+(note?' — '+note:''),p_data:{type:'return',id:String(_rtx.o.id)}}) }catch(e){}
+    try{ if(typeof pushAdmins==='function') pushAdmins('↩️ إرجاع — '+sn,'طلب #'+no+': رجع '+amt.toLocaleString()+' د.ع',{type:'return'}) }catch(e){}
+    document.getElementById('retSheet').classList.remove('on');
+    retLoad(_rtx.o);
+  }catch(e){ const m=errMsg(e); toast(/shop_return_order|PGRST202|Could not find/i.test(m)?'الإرجاع يحتاج ملف accounts_v419.sql بالسيرفر':m) }
 }
 
 function odtMap(){
@@ -16975,7 +17060,7 @@ async function openStmt(kind, id, name){
   requestAnimationFrame(()=>sh.classList.add('on'));
   let rows;
   try{ rows=await rpc('acct_statement',{p_kind:kind, p_id:id}) }
-  catch(e){ const m=errMsg(e); sh.querySelector('.stm-e').textContent=/acct_statement|PGRST202|Could not find|404/i.test(m)?'الكشف يحتاج ملف accounts_v416.sql بالسيرفر':'تعذّر التحميل: '+m; return }
+  catch(e){ const m=errMsg(e); sh.querySelector('.stm-e').textContent=/acct_statement|PGRST202|Could not find|404/i.test(m)?'الكشف يحتاج ملف accounts_v419.sql بالسيرفر':'تعذّر التحميل: '+m; return }
   rows=Array.isArray(rows)?rows:[];
   const MN=['كانون الثاني','شباط','آذار','نيسان','أيار','حزيران','تموز','آب','أيلول','تشرين الأول','تشرين الثاني','كانون الأول'];
   const dt=v=>{ const a=String(v||'').slice(0,10).split('-'); return a.length<3?'':Number(a[2])+' '+MN[Number(a[1])-1] };
@@ -16984,6 +17069,7 @@ async function openStmt(kind, id, name){
   const lbl=kind==='shop'?'عمولة':'رسوم';
   const body=rows.map(r=>{
     const b=Number(r.bal||0), bal = b===0?'<b class="z">0 ✓ انصفر</b>':(b<0?`<b class="g">إله ${N(-b)}</b>`:`<b>${N(b)}</b>`);
+    if(r.t==='ret') return `<tr class="ret"><td>${dt(r.d1)}</td><td>إرجاع · طلب #${r.no}${(me&&me.role==='admin'&&r.rid)?` <button class="stm-x" onclick="retCancel('${r.rid}','${kind}','${id}','${esc(String(name||'').replace(/'/g,''))}')">إلغاء</button>`:''}</td><td class="c">− ${N(r.amt)}</td><td></td><td>${bal}</td></tr>`;
     return r.t==='pay'
       ? `<tr class="pay"><td>${dt(r.d1)}</td><td>تسديد${r.no!=null?' · وصل '+r.no:''}</td><td></td><td class="c">${N(r.amt)}</td><td>${bal}</td></tr>`
       : `<tr><td>${rng(r.d1,r.d2)}</td><td>${lbl} اليوم · ${r.n} ${Number(r.n)===1?'طلب':'طلبات'}${Number(r.nr)>0?' (منها '+r.nr+' مرفوض)':''}</td><td class="d">${N(r.amt)}</td><td></td><td>${bal}</td></tr>`;
@@ -16993,6 +17079,11 @@ async function openStmt(kind, id, name){
     ${rows.length?`<div class="stm-w"><table class="stm-t"><thead><tr><th>التاريخ</th><th>البيان</th><th>عليه</th><th>دفع</th><th>الرصيد</th></tr></thead><tbody>${body}</tbody></table></div>
     <div class="stm-f">${last>0?'الباقي عليه: <b>'+N(last)+' د.ع</b>':(last<0?'إله عندنا: <b>'+N(-last)+' د.ع</b>':'الحساب <b>صفر ✓</b>')}</div>`:'<div class="stm-e">ماكو حركات لحد هسه</div>'}`;
   const w=sh.querySelector('.stm-w'); if(w) w.scrollTop=w.scrollHeight;
+}
+async function retCancel(rid,kind,id,name){
+  const yes=await askConfirm('تلغي هذا الإرجاع؟ عمولته ترجع على المحل.',{title:'إلغاء الإرجاع',ok:'إي، ألغيه'});
+  if(!yes) return;
+  try{ await rpc('admin_cancel_return',{p_id:rid}); toast('انلغى الإرجاع'); openStmt(kind,id,name) }catch(e){ toast(errMsg(e)) }
 }
 /* حالة عمولة شهر: شكد انسدّ وشكد باقي — الفواتير القديمة المأشّرة مسدد تبقى مسدّدة كاملة */
 function invCalc(amount, inv, led){
@@ -25701,7 +25792,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v418', seen={}, n=0, q=[], t=null;
+  var VER='v419', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -25953,7 +26044,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v418', t0=Date.now();
+  var VER='v419', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
