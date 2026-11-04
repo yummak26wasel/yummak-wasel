@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v432</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v433</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -11005,6 +11005,14 @@ function inSec(s,c){
   if(c==='veg') return s.type==='veg'||VEG_RE.test(s.name||'');
   return s.type===c;
 }
+/* v433: ترتيب المحلات يتبدّل بكل فتحة للتطبيق — كل مرة ناس تصعد وناس تنزل (عدالة بين المحلات).
+   بنفس الفتحة يبقى ثابت (ما ينط). المفتوح يبقى دائماً فوق المسكّر. البحث يبقى مثل ما هو. */
+const _OPEN_SEED=(Math.random()*4294967295)>>>0;
+function _rotKey(id){ let h=_OPEN_SEED; const t=String(id||''); for(let i=0;i<t.length;i++){ h=Math.imul(h^t.charCodeAt(i),2654435761)>>>0 } h^=h>>>15; return h>>>0 }
+function shopsRotated(list){
+  const op=x=>{ try{ return ((typeof isOpenNow==='function')?isOpenNow(x):(x.open!==false))?1:0 }catch(e){ return 1 } };
+  return list.slice().sort((a,b)=>(op(b)-op(a)) || (_rotKey(a.id)-_rotKey(b.id)));
+}
 function renderShops(){
   try{ paintOrdSoon() }catch(e){}
   const qe=document.getElementById('q'),q=qe?qe.value.trim():'';
@@ -11017,7 +11025,7 @@ function renderShops(){
     if(ttlWrap) ttlWrap.style.display='none';
     try{ renderRecent() }catch(e){}
     const SECS=[['restaurant','مطاعم قريبة منك'],['sweet','حلويات'],['market','سوبر ماركت'],['veg','مخضر'],['pharmacy','مستلزمات طبية'],['store','متاجر قريبة منك'],['cosmetics','كوزمتك']]
-      .map(([c,t])=>[c,t,shops.filter(s=>shopSec(s)===c).slice(0,6)]).filter(x=>x[2].length);
+      .map(([c,t])=>[c,t,shopsRotated(shops.filter(s=>shopSec(s)===c)).slice(0,6)]).filter(x=>x[2].length);
     if(!SECS.length){
       /* v324: المحلات بعدها تنجاب — هيكل تحميل بدل «ماكو محلات» */
       if(!window.__shopsLoaded){ box.innerHTML=skeleton(4); return }
@@ -11037,6 +11045,7 @@ function renderShops(){
   else if(cat==='gifts'){ list=list.filter(s=>s.type==='gifts'||/هدايا|هديه|هدية|ورد|زهور|تغليف/.test(s.name||'')) }
   else if(cat!=='all'){ list=list.filter(s=>s.type===cat) }
   if(q)list=list.filter(s=>s.name.includes(q));
+  else list=shopsRotated(list);   /* v433 */
   if(!list.length){box.innerHTML='<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></div><p>ما لكينا نتيجة</p><div class="sub2">جرّب اسم ثاني أو غيّر التصنيف</div></div>';return}
   box.innerHTML=list.map(shopCardHTML).join('');
 }
@@ -26097,7 +26106,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v432', seen={}, n=0, q=[], t=null;
+  var VER='v433', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26349,7 +26358,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v432', t0=Date.now();
+  var VER='v433', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
