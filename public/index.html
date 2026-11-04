@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v433</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v434</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -11005,13 +11005,43 @@ function inSec(s,c){
   if(c==='veg') return s.type==='veg'||VEG_RE.test(s.name||'');
   return s.type===c;
 }
-/* v433: ترتيب المحلات يتبدّل بكل فتحة للتطبيق — كل مرة ناس تصعد وناس تنزل (عدالة بين المحلات).
-   بنفس الفتحة يبقى ثابت (ما ينط). المفتوح يبقى دائماً فوق المسكّر. البحث يبقى مثل ما هو. */
+/* v434: ترتيب ذكي مثل التطبيقات العالمية:
+   1) المفتوح دائماً فوق المسكّر
+   2) بعدين نقاط: القرب من الزبون + التقييم + سرعة القبول (وقلة الرفض) + دفعة للمحل الجديد + شوية تبديل للعدالة
+   بنفس الفتحة الترتيب ثابت (ما ينط)، وبكل فتحة جديدة يتبدّل شوية. أرقام السرعة من السيرفر تنحفظ للفتحة الجاية. */
 const _OPEN_SEED=(Math.random()*4294967295)>>>0;
 function _rotKey(id){ let h=_OPEN_SEED; const t=String(id||''); for(let i=0;i<t.length;i++){ h=Math.imul(h^t.charCodeAt(i),2654435761)>>>0 } h^=h>>>15; return h>>>0 }
+const _RANK_K='lw_rank_v1';
+let _rankStats=(function(){ try{ const c=JSON.parse(localStorage.getItem(_RANK_K)||'null'); return (c&&c.s)||{} }catch(e){ return {} } })();
+let _rankLoaded=false;
+function rankStatsRefresh(){
+  if(_rankLoaded) return; _rankLoaded=true;
+  setTimeout(async()=>{ try{ const r=await rpc('shop_rank_stats',{}); if(r&&typeof r==='object'){ localStorage.setItem(_RANK_K,JSON.stringify({at:Date.now(),s:r})) } }catch(e){} },4000);   /* للفتحة الجاية — ما نغيّر الترتيب قدام الزبون */
+}
+function shopScore(x){
+  const cl=v=>Math.max(0,Math.min(1,v));
+  let sc=0;
+  /* القرب (25%) */
+  let d=0.5; try{ if(me&&me.loc&&me.loc.lat&&x.loc&&x.loc.lat){ d=1-cl(_dist(x.loc,me.loc)/5000) } }catch(e){}
+  sc+=0.25*d;
+  /* التقييم (30%) — موزون حتى المحل اللي عنده تقييم واحد ما يقفز */
+  let r=0.5; try{ const R=shopRating(x); if(R&&R.cnt){ const adj=(R.avg*R.cnt+4*5)/(R.cnt+5); r=cl((adj-3)/2) } }catch(e){}
+  sc+=0.30*r;
+  /* سرعة القبول وقلة الرفض (25%) — بس إذا عنده 5 طلبات أو أكثر بآخر 30 يوم */
+  let v=0.5; const st=_rankStats&&_rankStats[x.id];
+  if(st && Number(st.n)>=5){ const acc=Number(st.acc); const a=isNaN(acc)||!st.acc?0.5:1-cl((acc-60)/540); v=0.6*a+0.4*(1-cl(Number(st.bad)||0)) }
+  sc+=0.25*v;
+  /* محل جديد (أول أسبوعين أو بعده ما وصله طلب) */
+  try{ const t=_anyTs(x.created_at)||_anyTs(x.createdAt); if(x.free_pending===true || (t && Date.now()-t<14*864e5)) sc+=0.12 }catch(e){}
+  /* شوية تبديل للعدالة (20%) */
+  sc+=0.20*(_rotKey(x.id)/4294967295);
+  return sc;
+}
 function shopsRotated(list){
+  try{ rankStatsRefresh() }catch(e){}
   const op=x=>{ try{ return ((typeof isOpenNow==='function')?isOpenNow(x):(x.open!==false))?1:0 }catch(e){ return 1 } };
-  return list.slice().sort((a,b)=>(op(b)-op(a)) || (_rotKey(a.id)-_rotKey(b.id)));
+  const S=new Map(list.map(x=>[x.id,shopScore(x)]));
+  return list.slice().sort((a,b)=>(op(b)-op(a)) || (S.get(b.id)-S.get(a.id)));
 }
 function renderShops(){
   try{ paintOrdSoon() }catch(e){}
@@ -26106,7 +26136,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v433', seen={}, n=0, q=[], t=null;
+  var VER='v434', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26358,7 +26388,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v433', t0=Date.now();
+  var VER='v434', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
