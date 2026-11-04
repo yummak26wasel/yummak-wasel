@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v447</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v448</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -12466,6 +12466,7 @@ async function submitSpecialOrder(){
   if(!spBudgetOk(spBudgetRaw())){ spBudgetMark(true); return toast('اكتب المبلغ التقريبي رقم صحيح بدون كسور') }
   if(!me.loc||!me.loc.lat)return toast('حدد موقعك على الخريطة أولاً');
   if(!me.addr||!me.addr.trim())return toast('اكتب عنوان التوصيل أولاً');
+  if(!(await locGuard(document.querySelector('[onclick="submitSpecialOrder()"]')))) return;   /* v448 */
   const fee=fareNow();   /* نفس أجرة توصيل الطلبات: داخل الدائرة الأساسية، وخارجها حسب المسافة */
   const budget=spBudget();
   const svc=spSvcFee();
@@ -12840,7 +12841,44 @@ async function checkout(){
   if((cartLead()>0||schedOn) && !schedTs()) return toast('اختار يوم وساعة الحجز');
   const shNow=shops.find(x=>x.id===cart[0].shopId);
   if(shNow && !isOpenNow(shNow) && !schedTs()) return toast('المحل سكّر —'+nextOpenTxt(shNow)+(typeof SCHED_ON!=='undefined'&&SCHED_ON?' — تكدر تحجز لوقت ثاني':''));
+  if(!(await locGuard(document.getElementById('ck_btn')))) return;   /* v448 */
   openReview();
+}
+/* ═══ v448: قبل ما ينرسل الطلب — إذا التلفون بعيد عن العنوان المحفوظ نسأله وين نوصّل (مثل طلبات وكريم).
+   قريب = ينرسل عادي بدون أي سؤال. ما نطلب إذن موقع جديد بالمتصفح (بس إذا سامح من قبل)، وأي خلل بالـGPS = نكمّل عادي ═══ */
+const LG_FAR=400;
+let __lgSkip='', __lgBusy=false;
+function _lgKey(){ return (me&&me.loc&&me.loc.lat) ? Number(me.loc.lat).toFixed(4)+','+Number(me.loc.lng).toFixed(4) : '' }
+function _lgPos(){ return new Promise(res=>{
+  let done=false; const fin=v=>{ if(!done){ done=true; res(v) } };
+  setTimeout(()=>fin(null),5000);
+  try{ navigator.geolocation.getCurrentPosition(p=>fin(p&&p.coords?{lat:p.coords.latitude,lng:p.coords.longitude,acc:Number(p.coords.accuracy)||0}:null),
+    ()=>fin(null),{enableHighAccuracy:true,timeout:5000,maximumAge:120000}) }catch(e){ fin(null) }
+}) }
+async function locGuard(btn){
+  if(__lgBusy) return false;                       /* ضغط مرتين — ننتظر الأول */
+  if(!me || !me.loc || !me.loc.lat || !navigator.geolocation) return true;
+  if(__lgSkip && __lgSkip===_lgKey()) return true;  /* گال «لعنواني» قبل شوية */
+  __lgBusy=true; let old=null;
+  try{
+    if(!window.ReactNativeWebView){
+      if(!(navigator.permissions && navigator.permissions.query)) return true;
+      try{ const s=await navigator.permissions.query({name:'geolocation'}); if(s.state!=='granted') return true }catch(e){ return true }
+    }
+    if(btn){ old=btn.innerHTML; btn.disabled=true; btn.textContent='… نتأكد من موقعك' }
+    const c=await _lgPos();
+    if(btn && old!=null){ btn.disabled=false; btn.innerHTML=old; old=null }
+    if(!c || c.acc>500) return true;                 /* الـGPS مو دقيق — ما نزعجه */
+    if(!inZone(c.lat,c.lng)) return true;            /* برّا عانة والريحانة — أكيد يطلب لعنوانه */
+    if(_dist(me.loc,c) < Math.max(LG_FAR, c.acc)) return true;
+    const here=await askConfirm('التلفون يگول إنك هسه بعيد عن عنوانك المحفوظ.<div style="margin-top:8px;font-size:13px">عنوانك: <b>'+esc(me.addr||'—')+'</b></div>',
+      {title:'إنت بمكان ثاني؟ وين نوصّل الطلب؟', ok:'📍 لمكاني هسه', no:'🏠 لعنواني',
+       icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg>'});
+    if(!here){ __lgSkip=_lgKey(); return true }
+    window.__lgAddr=1; openMap('delivery',true);    /* تنفتح الخريطة على مكانه هسه */
+    return false;
+  }catch(e){ return true }
+  finally{ __lgBusy=false; if(btn && old!=null){ btn.disabled=false; btn.innerHTML=old } }
 }
 function openReview(){
   if(__ordSending) return toast('طلبك دا ينرسل — لحظة');   /* v445: قبل: يگدر يرجع ويرسل مرة ثانية = طلبين */
@@ -16972,7 +17010,7 @@ function mapQPick(i){
   const inp=document.getElementById('mapQ'); if(inp){ inp.value=x.n; inp.blur() }
   try{ updateZone() }catch(e){}
 }
-function closeMap(){ document.getElementById('mapSheet').classList.remove('on'); if(pMode==='ext'){ try{ document.getElementById('cdSheet').classList.add('on') }catch(e){} } try{ const b=document.getElementById('mapQRes'); if(b) b.innerHTML=''; const q=document.getElementById('mapQ'); if(q) q.value='' }catch(e){} }
+function closeMap(){ window.__lgAddr=0; document.getElementById('mapSheet').classList.remove('on'); if(pMode==='ext'){ try{ document.getElementById('cdSheet').classList.add('on') }catch(e){} } try{ const b=document.getElementById('mapQRes'); if(b) b.innerHTML=''; const q=document.getElementById('mapQ'); if(q) q.value='' }catch(e){} }
 function refreshLocUI(){ try{ renderHomeLoc(); renderCart() }catch(e){} }
 
 function updateZone(){
@@ -17004,6 +17042,7 @@ function gpsLocate(){
 /* ── تثبيت الموقع ── */
 async function confirmMap(){
   if(!pMap)return;
+  const _lg=!!window.__lgAddr;   /* v448: جاي من سؤال «إنت بمكان ثاني؟» */
   const c=pMap.getCenter();
   if(!inZone(c.lat,c.lng)) return toast('الموقع خارج عانة والريحانة — ما نوصّل هناك');
   const loc={lat:+c.lat.toFixed(6), lng:+c.lng.toFixed(6), zone:zoneName(c.lat,c.lng)};
@@ -17030,7 +17069,14 @@ async function confirmMap(){
       closeMap();
       try{ renderCheckout() }catch(e){}
       renderAccount(); renderHomeLoc(); renderCart();
-      toast(_farMove?'انثبّت موقعك — تأكد إن العنوان المكتوب يناسب المكان الجديد':'انثبّت موقعك —'+loc.zone);   /* v445 */
+      if(_lg && _farMove) setTimeout(async()=>{   /* v448: مكان جديد — يكتب عنوانه حتى السائق يلگاه */
+        const v=await askText('اكتب عنوان المكان الجديد — حتى السائق يلگاه','مثال: بيت أبو علي — قرب جامع الحي');
+        if(v && v.trim()){ me.addr=v.trim().slice(0,200);
+          try{ await db.collection('users').doc(uid).update({addr:me.addr}); try{ bootSave() }catch(_){} }catch(e){}
+          try{ renderCheckout() }catch(e){} try{ renderAccount(); renderHomeLoc() }catch(e){} }
+        toast('تمام ✓ — هسه اضغط «إرسال الطلب»');
+      },350);
+      else toast(_farMove?'انثبّت موقعك — تأكد إن العنوان المكتوب يناسب المكان الجديد':'انثبّت موقعك —'+loc.zone);   /* v445 */
       // نحاول نحفظه بالحساب، وإذا فشل الطلب يبقى يشتغل
       try{ await db.collection('users').doc(uid).update({loc}); try{ bootSave() }catch(_){} }
       catch(e){ console.warn('loc save',e.message); toast('الموقع انثبّت لهذا الطلب، بس ما انحفظ بحسابك — تأكد من النت') }   /* v445: قبل بصمت */
@@ -22171,7 +22217,7 @@ function askConfirm(msg, opt){
     const ok=document.getElementById('askOkBt');
     ok.textContent = opt.ok||'حسناً';
     ok.className   = 'ask-ok'+(opt.danger?' danger':'');
-    const no=sh.querySelector('.ask-no'); if(no) no.style.display = opt.noCancel ? 'none' : '';
+    const no=sh.querySelector('.ask-no'); if(no){ no.style.display = opt.noCancel ? 'none' : ''; no.textContent = opt.no || 'إلغاء' }   /* v448: opt.no = اسم الزر الثاني */
     _askCb=res; sh.classList.add('on');
   });
 }
@@ -26645,7 +26691,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v447', seen={}, n=0, q=[], t=null;
+  var VER='v448', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26897,7 +26943,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v447', t0=Date.now();
+  var VER='v448', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
