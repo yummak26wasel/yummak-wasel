@@ -12,6 +12,7 @@ const _DOM  = '@wasel.app';
 
 let _sb = null;
 let _live = null;          /* آخر توكن حي */
+let _selfOut = false;      /* v445: إحنا اللي طلّعنا المستخدم (زر خروج) — مو انتهاء جلسة */
 
 /* ── تحميل SDK وتهيئة العميل ── */
 async function _client(){
@@ -33,6 +34,15 @@ async function _client(){
   /* أي تغيّر بالجلسة (دخول · تجديد · خروج) نحدّث التوكن */
   _sb.auth.onAuthStateChange((_e, session) => {
     _live = session ? session.access_token : null;
+    /* v445: الجلسة انتهت أو انسحبت (مثلاً تجديدها انرفض) — قبل كان التطبيق يكمل «بدون حساب» بصمت:
+       المحل يشوف قائمة طلبات فاضية وما يرن. هسه نرجّعه لشاشة الدخول ويا رسالة واضحة */
+    if(_e === 'SIGNED_OUT' && !_selfOut && _load()){
+      _clear();
+      try{ sessionStorage.setItem('lw_sess_exp','1') }catch(e){}
+      try{ localStorage.removeItem('lw_boot_v1') }catch(e){}
+      setTimeout(() => { try{ location.reload() }catch(e){} }, 300);
+      return;
+    }
     if(session){
       _save({
         uid: session.user.id,
@@ -87,7 +97,7 @@ window.__waselRefresh = async function(){
 
 /* ── توحيد الرقم: أي صيغة ← 964XXXXXXXXX ── */
 function _norm(v){
-  let p = String(v || '').replace(/\D/g, '');
+  let p = String(v || '').replace(/[٠-٩]/g, d => String(d.charCodeAt(0) - 1632)).replace(/[۰-۹]/g, d => String(d.charCodeAt(0) - 1776)).replace(/\D/g, '');
   if(p.startsWith('00964')) p = p.slice(5);
   if(p.startsWith('964'))   p = p.slice(3);
   p = p.replace(/^0+/, '');
@@ -136,6 +146,11 @@ const auth = {
       if(m.includes('Invalid login') || m.includes('Invalid'))
         throw Object.assign(new Error('الرقم أو كلمة المرور غلط'),
           { code: 'auth/invalid-credential' });
+      /* v445: كثرة المحاولات / حساب موقوف — رسالة عربية بدل الإنگليزي */
+      if(/rate limit|too many/i.test(m) || error.status === 429)
+        throw Object.assign(new Error('محاولات كثيرة — انتظر شوية وجرّب'), { code: 'auth/too-many-requests' });
+      if(/banned/i.test(m))
+        throw Object.assign(new Error('حسابك موقوف — تواصل ويا الدعم'), { code: 'auth/user-disabled' });
       throw Object.assign(new Error(m), { code: 'auth/error' });
     }
 
@@ -176,7 +191,9 @@ const auth = {
 
   async signOut(){
     const sb = await _client();
-    try{ await sb.auth.signOut() }catch(e){}
+    _selfOut = true;
+    /* v445: نطلّع هذا التلفون بس — قبل الخروج من تلفون واحد (أو تبويب غلط) يطلّع الحساب من كل التلفونات */
+    try{ await sb.auth.signOut({ scope: 'local' }) }catch(e){}
     _live = null;
     _clear(); _notify(null);
   },

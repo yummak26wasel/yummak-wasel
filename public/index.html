@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link rel="manifest" href="/manifest.json">
-<link rel="apple-touch-icon" href="https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/icon-192-2.png">
+<link rel="apple-touch-icon" href="https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/app-icon-maskable-512.png">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#5B2BC9">
 <script>window.__errs=[];window.addEventListener("error",function(e){try{var t=e.target,m;if(e.message){m=String(e.message).slice(0,70)+(e.filename?"@"+String(e.filename).split("/").pop().slice(0,24)+":"+e.lineno:"")}else if(t&&t.tagName==="SCRIPT"){m="✗ "+String(t.src).split("/").pop().slice(0,30)}if(m)window.__errs.push(m)}catch(_){}},true);</script>
@@ -1359,7 +1359,7 @@ h3.ttl{font-size:14px;font-weight:800;margin:4px 0 12px}
 .sup .t{font-weight:700;font-size:12px}
 .alertbar{background:var(--o);color:#fff;padding:10px 14px;font-size:13px;font-weight:800;text-align:center;cursor:pointer;display:none}
 .alertbar.on{display:block}
-.toast{position:fixed;bottom:104px;right:50%;transform:translateX(50%);background:#222;color:#fff;padding:11px 20px;border-radius:24px;font-size:13px;font-weight:700;z-index:999;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;max-width:90%}
+.toast{position:fixed;bottom:104px;right:50%;transform:translateX(50%);background:#222;color:#fff;padding:11px 20px;border-radius:24px;font-size:13px;font-weight:700;z-index:100060;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;max-width:90%}
 #auth.on ~ .toast{bottom:26px}
 .toast.on{opacity:1;bottom:112px}
 .load{position:fixed;inset:0;background:rgba(255,255,255,.94);display:none;flex-direction:column;
@@ -4317,7 +4317,7 @@ html[data-theme=dark] .cst-in{background:#1a1528;border-color:#3a3354}
 #comSheet{position:fixed;inset:0;background:rgba(20,4,50,.55);z-index:9999;
   display:none;align-items:flex-end;backdrop-filter:blur(2px)}
 #comSheet.on{display:flex;animation:svcFade .2s}
-#otpSheet{position:fixed;inset:0;background:rgba(20,4,50,.6);z-index:10000;
+#otpSheet{position:fixed;inset:0;background:rgba(20,4,50,.6);z-index:99995;
   display:none;align-items:flex-end;backdrop-filter:blur(2px)}
 #otpSheet.on{display:flex;animation:svcFade .2s}
 #otpSheet #otpCode:focus{border-color:var(--g2)}
@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v444</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v445</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6813,15 +6813,17 @@ let myFare = null, fareBusy = false;
 
 function fareNow(){ return Number(myFare || SET.deliveryFee || 1250) }
 
+let _fareAgain=false;
 async function loadFare(){
   if(!me || !me.loc || !me.loc.lat){ myFare=null; return null }
-  if(fareBusy) return myFare;
+  if(fareBusy){ _fareAgain=true; return myFare }   /* v445: إذا تغيّر الموقع وهو يحسب — نعيد الحساب بعده (قبل: يطلع رقم قديم) */
   fareBusy = true;
   try{
     const v = await rpc('calc_fare', { p_lat: me.loc.lat, p_lng: me.loc.lng });
     myFare = Number(v) || null;
   }catch(e){ console.warn('fare', e.message); myFare = null }
   fareBusy = false;
+  if(_fareAgain){ _fareAgain=false; return loadFare() }
   try{ renderCart() }catch(e){}
   try{ if(document.getElementById('p_checkout').classList.contains('on')) renderCheckout() }catch(e){}
   try{ renderShops() }catch(e){}
@@ -6873,11 +6875,15 @@ async function uploadImage(file, folder, opts){
   const name = priv
     ? me_id+'/'+(folder||'doc')+'_'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.jpg'
     : (folder||'misc')+'/'+Date.now()+'_'+Math.random().toString(36).slice(2,8)+'.jpg';
-  const r=await fetch(SB_URL+'/storage/v1/object/'+bucket+'/'+name,{
+  /* v445: مهلة دقيقة ونص — قبل: بالنت الضعيف يبقى «جاري رفع الصورة» للأبد */
+  const _ac=new AbortController(); const _at=setTimeout(()=>_ac.abort(),90000);
+  let r;
+  try{ r=await fetch(SB_URL+'/storage/v1/object/'+bucket+'/'+name,{
     method:'POST',
     headers:{'apikey':SB_KEY,'Authorization':'Bearer '+tok,'Content-Type':'image/jpeg','x-upsert':'true'},
-    body:blob
-  });
+    body:blob, signal:_ac.signal
+  }) }catch(e){ clearTimeout(_at); throw new Error(e&&e.name==='AbortError'?'النت ضعيف — ما انرفعت الصورة، جرّب مرة ثانية':'ماكو نت — ما انرفعت الصورة'); }
+  clearTimeout(_at);
   if(!r.ok){
     let m=await r.text();
     try{ m=JSON.parse(m).message||m }catch(e){}
@@ -7168,6 +7174,7 @@ function boot(){
     if(signingUp) return;                 // التسجيل يكمّل بنفسه
     window.__step=u?'user':'login';
     if(!u){ uid=null; me=null; bootClear(); busy(false); document.getElementById('auth').classList.add('on'); try{ suRestore() }catch(_){}
+      try{ if(sessionStorage.getItem('lw_sess_exp')){ sessionStorage.removeItem('lw_sess_exp'); setTimeout(()=>showErr('انتهت جلستك — سجّل دخول مرة ثانية'),200) } }catch(_){}
       if(_staffPollTimer){ clearInterval(_staffPollTimer); _staffPollTimer=null }
       return }
     uid=u.uid;
@@ -7206,7 +7213,7 @@ function boot(){
           db.collection('settings').doc('app').get().catch(()=>null),
           loadStaff().catch(e=>console.warn('staff',e&&e.message))
         ]);
-        if(c && c.exists) SET={...SET,...c.data()} }catch(e){}
+        if(c && c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
       try{ loadBanners() }catch(e){}
       try{ if(me && me.role==='customer') setTimeout(wcShow,700) }catch(e){}
       // ترقيع الحسابات القديمة الناقصة حقول — عبر دالة محمية (الأعمدة مقفولة على التعديل المباشر)
@@ -7246,7 +7253,7 @@ async function bootRefresh(){
     const fresh={uid,...d.data()};
     if(fresh.role!==(_bootRole||me.role) || !betaOk(fresh.phone, fresh.role)){ bootClear(); location.reload(); return }
     me={...me,...fresh};
-    try{ const c=await db.collection('settings').doc('app').get(); if(c && c.exists) SET={...SET,...c.data()} }catch(e){}
+    try{ const c=await db.collection('settings').doc('app').get(); if(c && c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
     if(me.role==='customer'){ try{ await loadStaff() }catch(e){} if(me.staff){ bootSave(); location.reload(); return } }
     bootSave(); _bootTry=0; conn(true);
     try{
@@ -7268,16 +7275,17 @@ let staffShopDoc=null;
 let _staffPollTimer=null, _staffChkAt=0;
 
 async function loadStaff(){
-  me.staff=null;
-  if(!me || me.role!=='customer') return;
+  if(!me) return;
+  if(me.role!=='customer'){ me.staff=null; return }
+  /* v445: ما نصفّر «الموظف» قبل ما يرجع الرد — قبل: انقطاع نت لحظة = يطلع من وضع الموظف ويوكف رنين الطلبات */
   try{
     const rows=await sbGet('shop_staff?select=*&profile_id=eq.'+uid+'&is_active=is.true&limit=1');
     if(rows && rows.length){
       me.staff=rows[0];
       const sh=await sbGet('shops?select=id,name,type&id=eq.'+rows[0].shop_id+'&limit=1');
       if(sh && sh.length) staffShopDoc=sh[0];
-    } else {
-      staffShopDoc=null;
+    } else if(Array.isArray(rows)) {
+      me.staff=null; staffShopDoc=null;
     }
   }catch(e){ console.warn('staff',e.message) }
 }
@@ -7327,14 +7335,20 @@ function enterStaff(){
   me.shopId=me.staff.shop_id;
   document.getElementById('cApp').classList.remove('on');
   document.getElementById('sApp').classList.add('on');
+  if(me.role==='customer') cOrders=myOrders;   /* v445: نحفظ طلباته الشخصية */
+  myOrders=_stfShopOrders||[];
+  try{ window.__sbPolicy=STAFF_POLICY }catch(e){}   /* v445: الموظف يوصله الطلب الجديد فوراً مثل صاحب المحل (قبل لحد 84 ثانية) */
   applyStaffUI();
-  askPermSilent(); listenStoreOrders(); loadMyShop();
+  askPermSilent();
+  if(!window.__stfListening){ window.__stfListening=1; listenStoreOrders(); loadMyShop() }   /* v445: ما نكرر المراقبين كل مرة يدخل */
+  else { try{ renderStore() }catch(e){} }
 }
 
 /* يرجّعه للوحة الزبون */
 function backToCustomer(){
   document.getElementById('sApp').classList.remove('on');
   document.getElementById('cApp').classList.add('on');
+  try{ if(me && me.staff){ _stfShopOrders=myOrders; myOrders=cOrders||[]; _custOrdSig=null; window.__sbPolicy=CUST_POLICY; renderOrders() } }catch(e){}   /* v445 */
   renderAccount();
 }
 
@@ -7342,13 +7356,12 @@ function backToCustomer(){
 function applyStaffUI(){
   const st=me.staff; if(!st) return;
   const nav=document.getElementById('sNav'); if(!nav) return;
-  const btns=nav.querySelectorAll('button');
-  /* 0=الرئيسية 1=الطلبات 2=قائمتي 3=التصنيفات 4=الموظفين 5=متجري */
-  if(btns[1]) btns[1].style.display = st.can_orders     ? '' : 'none';
-  if(btns[2]) btns[2].style.display = st.can_products   ? '' : 'none';
-  if(btns[3]) btns[3].style.display = st.can_categories ? '' : 'none';
-  if(btns[4]) btns[4].style.display = 'none';   /* الموظفين لصاحب المحل بس */
-  if(btns[5]) btns[5].style.display = 'none';   /* إعدادات المتجر لصاحب المحل بس */
+  /* v445: نلگى الأزرار بالاسم — قبل كانت بالرقم والترتيب تغيّر (الموظف يدخل على «المالية» بدل الطلبات) */
+  const B=n=>nav.querySelector(`button[onclick*="stab('${n}'"]`);
+  const show=(n,v)=>{ const b=B(n); if(b) b.style.display=v?'':'none' };
+  show('finance', !!st.can_reports); show('menu', !!st.can_products); show('cats', !!st.can_categories);
+  show('staff', false);   /* الموظفين لصاحب المحل بس */
+  show('set', false);     /* إعدادات المتجر لصاحب المحل بس */
   /* نوع النشاط يخص صاحب المحل بس */
   const tp=document.querySelector('#sApp .typepanel'); if(tp) tp.style.display='none';
   /* التقارير والأرباح */
@@ -7365,8 +7378,8 @@ function applyStaffUI(){
     top.parentNode.insertBefore(b,top);
   }
   /* أول تبويب مسموح */
-  const first = st.can_orders ? 1 : (st.can_products ? 2 : (st.can_categories ? 3 : 0));
-  if(btns[first]) btns[first].click();
+  if(st.can_orders){ try{ stab('orders',null) }catch(e){} }
+  else { const b=B(st.can_products?'menu':(st.can_categories?'cats':'dash')); if(b) b.click() }
 }
 
 /* ═══════════════════════════════════════════════
@@ -7492,6 +7505,8 @@ async function stfFind(){
     }
     if(u.id===uid){ toast('هذا حسابك أنت'); return }
     if(shopStaff.some(s=>s.profile_id===u.id)){ toast('هذا الشخص موظف عندك أصلاً'); return }
+    /* v445: الموظف لازم حسابه «عميل» — قبل: ينضاف سائق أو صاحب محل وما يشتغل وياه أبد */
+    if(u.role && u.role!=='customer'){ toast(u.role==='driver'?'هذا الرقم حساب سائق — الموظف لازم يسجّل كـ «عميل»':(u.role==='store'?'هذا الرقم حساب محل — الموظف لازم يسجّل كـ «عميل»':'هذا الحساب ما ينفع موظف')); return }
     stfFoundUser=u;
     const _ph=u.photo_url||u.photo||'';
     document.getElementById('stfFAv').innerHTML = _ph
@@ -8051,6 +8066,8 @@ async function prodFormPick(inp){
 }
 
 function prodFormClose(){
+  /* v445: نفرّغ الإضافات والأحجام المشتركة ويا فورم «قائمتي» — قبل: تنتقل لمنتج ثاني أو تنمسح */
+  try{ if(typeof editingProdId!=='undefined' && editingProdId!==null) editProduct(editingProdId); else cancelEditProduct() }catch(e){}
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_catprods');
   if(pg) pg.classList.add('on');
@@ -8613,8 +8630,17 @@ function stopDriverTracking(){
 }
 
 /* ═══ توحيد صيغة رقم الهاتف — أي صيغة يكتبها المستخدم تنقلب لصيغة وحدة ═══ */
+/* v445: الأرقام العربية (٠١٢…) والفارسية تتحول لإنگليزية — قبل كانت تنمسح فيطلع «رقم غلط» */
+/* v445: صور الزبون (اشتريلي) تنعرض بس إذا من مخزننا — وما تنكتب كـHTML خام */
+function _safeImg(u){ u=String(u||''); return (u.indexOf(SB_URL+'/storage/v1/object/')===0 || /^data:image\//.test(u)) ? u : '' }
+/* v445: البحث بالرقم يلگى أي صيغة (07… / 964… / 7…) */
+function _phMatch(ph,q){ const a=phoneCore(ph), b=phoneCore(q); return b.length>=4 && a.includes(b) }
+function _enDigits(v){ return String(v==null?'':v).replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776)) }
+document.addEventListener('input',function(e){ const t=e.target; if(!t||!(t.tagName==='INPUT'||t.tagName==='TEXTAREA')||t.type==='password') return;
+  const v=t.value; if(!/[٠-٩۰-۹]/.test(v)) return; let a=null,b=null; try{ a=t.selectionStart; b=t.selectionEnd }catch(_){}
+  t.value=_enDigits(v); try{ if(a!=null) t.setSelectionRange(a,b) }catch(_){} },true);
 function phoneCore(v){
-  let d=String(v||'').replace(/[^0-9]/g,'');
+  let d=_enDigits(v).replace(/[^0-9]/g,'');
   d=d.replace(/^00964/,'').replace(/^964/,'');   /* مفتاح العراق */
   d=d.replace(/^0+/,'');                          /* الصفر الأول */
   return d;
@@ -8623,7 +8649,8 @@ const PH    = v => { const c=phoneCore(v); return c ? '0'+c : '' };   /* للع�
 const EMAIL = p => '964'+phoneCore(p) + '@yummak-wasel.app';
 /* الحسابات القديمة انسجّلت بصيغ مختلفة — نجرّبهن كلهن عند الدخول */
 const EMAIL_ALTS = p => { const c=phoneCore(p);
-  const list=['964'+c, '0'+c, c].map(x=>x+'@yummak-wasel.app');
+  /* v445: طبقة الدخول تحوّل كل الصيغ لنفس الإيميل (964…@wasel.app) — فنجرب وحدة بس بدل 3 (قبل: كلمة مرور غلط = 3 طلبات وانتظار أطول) */
+  const list=['964'+c].map(x=>x+'@yummak-wasel.app');
   let saved=null; try{ saved=localStorage.getItem('lw_em_'+c) }catch(e){}
   if(saved) return [saved, ...list.filter(x=>x!==saved)];
   return list;
@@ -9189,8 +9216,8 @@ function rsNext(){
 }
 async function rsConfirm(){
   const code=(document.getElementById('rsCode').value||'').replace(/\D/g,'');
-  const p1=document.getElementById('rsPass').value;
-  const p2=document.getElementById('rsPass2').value;
+  const p1=document.getElementById('rsPass').value.trim();   /* v445: نفس الدخول (يشيل الفراغات) — قبل: فراغ بالآخر = ما يگدر يدخل أبد */
+  const p2=document.getElementById('rsPass2').value.trim();
   if(p1.length<8) return rsErr('كلمة المرور لازم 8 خانات على الأقل');   /* v442: السيرفر يطلب 8 — قبل كان التطبيق يقبل 6 والسيرفر يرفضها */
   if(p1!==p2) return rsErr('كلمتا المرور مو متطابقات');
   const b=document.getElementById('rsBtn'); b.disabled=true; b.textContent='... جاري الحفظ';
@@ -9200,7 +9227,7 @@ async function rsConfirm(){
     rsClose();
     document.getElementById('aPass').value=p1;
     toast('انحدّثت كلمة المرور — تكدر تدخل هسه');
-  }catch(e){ rsErr(e.message) }
+  }catch(e){ rsErr(e.message); if(/الرمز|صلاحية|رمز مفقود|انستخدم/.test(String(e.message||''))){ rsStep=1; try{ rsPaint() }catch(_){} } }   /* v445: رمز غلط ← يرجع لخانة الرمز */
   b.disabled=false; b.textContent='حفظ كلمة المرور';
 }
 
@@ -9267,7 +9294,7 @@ async function ordGate(){
   if(ordersOpen()) return true;
   await ordTesterLoad();
   if(ordersOpen()) return true;
-  try{ const c=await db.collection('settings').doc('app').get(); if(c&&c.exists) SET={...SET,...c.data()} }catch(e){}
+  try{ const c=await db.collection('settings').doc('app').get(); if(c&&c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
   try{ paintOrdSoon() }catch(e){}
   if(ordersOpen()) return true;
   showOrdersSoon(); return false;
@@ -9308,6 +9335,13 @@ function showSoon(){
 /* v345: قبل ما نصرف رمز واتساب بالتسجيل — إذا الرقم مسجّل وكلمة المرور صحيحة:
    نفس النوع ← ندخّله مباشرة · نوع ثاني ← نگله يبدّل التبويب. غير هيج (رقم جديد أو كلمة مرور غلط) ← الرمز مثل قبل.
    ما نگول «الرقم مسجّل» لأي واحد — بس للي يعرف كلمة المرور (حتى الغرباء ما يعرفون منو مسجّل). */
+/* v445: رسالة أوضح لمن رقمه مسجّل بنوع ثاني */
+function _roleMsg(R,want){
+  const r={store:'متجر',driver:'سائق',customer:'عميل'}[R]||'دور ثاني';
+  if(R==='customer' && want==='driver') return 'رقمك مسجّل كـ عميل — ادخل من «عميل»، وبعدين من «حسابي» اضغط «اشتغل ويانا سائق» 🛵';
+  if(R==='customer' && want==='store') return 'رقمك مسجّل كـ عميل — حتى تفتح متجر بنفس الرقم تواصل ويا الدعم ونحوّله إلك';
+  return 'هذا الرقم مسجّل كـ '+r+' — بدّل التبويب وسجّل دخول';
+}
 async function __preSignupCheck(core,pass){
   let cred=null, usedEmail='';
   signingUp=true;
@@ -9322,13 +9356,12 @@ async function __preSignupCheck(core,pass){
     const R=d.data().role||'';
     if(R!=='admin' && R!==role){
       await auth.signOut(); signingUp=false; busy(false);
-      const r={store:'متجر',driver:'سائق',customer:'عميل'}[R]||'دور ثاني';
-      showErr('هذا الرقم مسجّل كـ '+r+' — بدّل التبويب وسجّل دخول');
+      showErr(_roleMsg(R,role));
       return 'done';
     }
     uid=cred.user.uid; me={uid,...d.data()};
     try{ const c=await db.collection('settings').doc('app').get();
-      if(c.exists) SET={...SET,...c.data()} }catch(e){}
+      if(c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
     saveEmailAlt(core,usedEmail);
     signingUp=false; busy(false);
     document.getElementById('auth').classList.remove('on');
@@ -9422,7 +9455,7 @@ async function doAuth(){
             }
             uid=cred.user.uid; me={uid,...ex.data()};
             try{ const c=await db.collection('settings').doc('app').get();
-              if(c.exists) SET={...SET,...c.data()} }catch(e){}
+              if(c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
             saveEmailAlt(core,email);
             signingUp=false; busy(false);
             document.getElementById('auth').classList.remove('on');
@@ -9503,12 +9536,11 @@ async function doAuth(){
     const R=d.data().role||'';
     if(R!=='admin' && R!==role){
       signingUp=false; busy(false); await auth.signOut();
-      const r={store:'متجر',driver:'سائق',customer:'عميل'}[R]||'دور ثاني';
-      return showErr('هذا الرقم مسجّل كـ '+r+' — بدّل التبويب');
+      return showErr(_roleMsg(R,role));
     }
     uid=cred.user.uid; me={uid,...d.data()};
     try{ const c=await db.collection('settings').doc('app').get();
-      if(c.exists) SET={...SET,...c.data()} }catch(e){}
+      if(c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
     signingUp=false; busy(false);
     document.getElementById('auth').classList.remove('on');
     enter();
@@ -9522,12 +9554,18 @@ async function doAuth(){
       'auth/wrong-password':'كلمة المرور غلط',
       'auth/user-not-found':'ما لكينا حساب بهذا الرقم — سوّي إنشاء حساب',
       'auth/weak-password':'كلمة المرور ضعيفة — 8 خانات أو أكثر',
-      'auth/pwned-password':'كلمة المرور هاي مشهورة وسهلة التخمين — اختار وحدة أصعب (خلّط أرقام وحروف)',
+      'auth/pwned-password':'كلمة المرور هاي مشهورة وسهلة التخمين — اختار وحدة ما يعرفها أحد، مثلاً: حروف + أرقام مثل anah47k92',
       'auth/network-request-failed':'ما بيه اتصال بالإنترنت',
       'auth/too-many-requests':'محاولات كثيرة — انتظر شوية',
-      'auth/operation-not-allowed':'لازم تفعّل Email/Password من فايربيس'
+      'auth/operation-not-allowed':'لازم تفعّل Email/Password من فايربيس',
+      'auth/user-disabled':'حسابك موقوف — تواصل ويا الدعم'
     }[e.code];
-    showErr(m||('خطأ: '+e.message));
+    /* v445: بعد محاولتين غلط بالدخول نذكّره بـ«نسيت كلمة المرور» (السجلات: ناس حاولوا 10 مرات وتركوا) */
+    let _hint='';
+    if(e.code==='auth/invalid-credential' && mode==='login'){ window.__badLogin=(window.__badLogin||0)+1;
+      if(window.__badLogin>=2){ _hint=' — نسيت كلمة المرور؟ اضغط «نسيت كلمة المرور» تحت ويوصلك رمز بالواتساب';
+        try{ const f=document.querySelector('#auth .forgot'); if(f){ f.classList.add('flash'); setTimeout(()=>f.classList.remove('flash'),2600) } }catch(_){} } }
+    showErr((m||('خطأ: '+e.message))+_hint);
   }
 }
 
@@ -9535,7 +9573,10 @@ function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
   /* v444: الدخول اليدوي (بعد «دخول») ما كان يحمّل بيانات الموظف — فبطاقة «أنت موظف في…» ما تطلع إلا إذا سكّر التطبيق وفتحه.
      هسه نحمّلها فوراً للزبون (الموظف حسابه زبون) */
-  if(me.role==='customer'){ try{ loadStaff().then(()=>{ try{ renderStaffCard() }catch(e){} try{ staffWatch() }catch(e){} }).catch(()=>{}) }catch(e){} try{ startStaffPoll() }catch(e){} }
+  if(me.role==='customer'){ try{ loadStaff().then(()=>{ try{ renderStaffCard() }catch(e){} try{ staffWatch() }catch(e){} }).catch(()=>{}) }catch(e){} try{ startStaffPoll() }catch(e){}
+    try{ if(!window.__bnLoaded){ window.__bnLoaded=1; loadBanners() } }catch(e){} }   /* v445: البنرات كانت تنزل بس لمن يسكّر ويفتح */
+  try{ if(me.role==='driver' && typeof _dwOpen==='function' && _dwOpen()){ dwStep=8; dwPaint() } }catch(e){}   /* v445: بعد رمز الواتساب */
+  try{ suClear() }catch(e){}   /* v445: مسودة التسجيل ما تبقى لشخص ثاني على نفس التلفون */
   window.__sbPolicy = (me.role==='customer') ? CUST_POLICY : ((me.role==='driver' || me.role==='store') ? STAFF_POLICY : null);
   setTimeout(()=>{ try{ termsCheck() }catch(e){} },2500);
   /* v324: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
@@ -9580,7 +9621,12 @@ function enter(){
 function logout(){ openLogout() }
 function openLogout(){ const sh=document.getElementById('logoutSheet'); if(sh) sh.classList.add('on') }
 function closeLogout(){ const sh=document.getElementById('logoutSheet'); if(sh) sh.classList.remove('on') }
-function confirmLogout(){ closeLogout(); unsubscribeTopics(); auth.signOut().then(()=>location.reload()) }
+async function confirmLogout(){ try{ closeLogout() }catch(e){} try{ unsubscribeTopics() }catch(e){}
+  /* v445: نفصل إشعارات هذا التلفون عن الحساب (قبل: يبقى يوصله إشعارات الحساب القديم) + نمسح بيانات المستخدم المحفوظة بالتلفون */
+  try{ if(myFcmToken) await Promise.race([sbDel('push_tokens?token=eq.'+encodeURIComponent(myFcmToken)), new Promise(r=>setTimeout(r,2500))]) }catch(e){}
+  try{ bootClear() }catch(e){} try{ suClear() }catch(e){}
+  try{ ['lw_favs','lw_recent','wl_km_today_v1','lw_spdecl'].forEach(k=>localStorage.removeItem(k)) }catch(e){}
+  auth.signOut().then(()=>location.reload()) }
 
 /* ══════ LISTENERS ══════ */
 /* ═══════════════════════════════════════════════════════
@@ -9735,7 +9781,10 @@ function checkRatePrompt(){
   if(document.getElementById('rateSheet').classList.contains('on'))return;
   const now=Date.now();
   const sk=rSkipLoad();
-  const list=(myOrders||[]).filter(x=>x.status==='delivered'&&x.shopId
+  if(_inStaffPanel()) return;   /* v445 */
+  const _dayAgo=Date.now()-36*3600*1000;
+  const list=(myOrders||[]).filter(x=>x.status==='delivered'&&x.shopId&&x.customerUid===uid   /* v445: بس طلباته هو */
+        &&Number(x.deliveredAt||x.createdAt||0)>_dayAgo   /* v445: ما نسأل عن طلبات قديمة */
         &&!rateSkipped.includes(x.id)&&!sk[x.id])
       .sort((a,b)=>Number(a.deliveredAt||a.createdAt||0)-Number(b.deliveredAt||b.createdAt||0));
   const o1=list.find(x=>!x.rated);
@@ -9891,11 +9940,13 @@ async function submitRate(){
 }
 setInterval(()=>{ try{ checkRatePrompt() }catch(e){} }, 45000);
 
-let _custOrdSig=null;
+let _custOrdSig=null, _stfShopOrders=null;
+/* v445: الموظف عنده قائمتين — طلباته الشخصية وطلبات المحل. قبل كانن بنفس المتغيّر فتتخربط وحدة بالثانية */
+function _inStaffPanel(){ const a=document.getElementById('sApp'); return !!(me && me.staff && a && a.classList.contains('on')) }
 function listenCustomerOrders(){
   db.collection('orders').where('customerUid','==',uid).where('createdAt','>=',sinceMs(DAYS_USER)).orderBy('createdAt','desc').limit(300).onSnapshot(s=>{
     const arr=s.docs.map(d=>({...d.data(), id:d.id})).sort((a,b)=>b.createdAt-a.createdAt);
-    if(me.role==='customer') myOrders=arr; else cOrders=arr;
+    if(me.role==='customer' && !_inStaffPanel()) myOrders=arr; else cOrders=arr;
     /* v324: إذا الزبون استخدم عرض جديد، شارته تختفي من الكروت */
     try{ const _uo=arr.filter(x=>x.offer_id&&x.status!=='rejected'&&x.status!=='cancelled').map(x=>x.offer_id).sort().join(',');
       if(_uo!==window._usedOffSig){ const _prev=window._usedOffSig; window._usedOffSig=_uo; if(me.role==='customer'&&!(_prev===undefined&&_uo==='')&&(shops||[]).length){ renderShops(); try{ renderHomeOffers() }catch(e){} } } }catch(e){}
@@ -9922,7 +9973,9 @@ function listenStoreOrders(){
     : db.collection('orders').where('shopOwnerUid','==',uid);
   base.where('createdAt','>=',sinceMs(DAYS_SHOP))
       .orderBy('createdAt','desc').limit(500).onSnapshot(s=>{
-    myOrders=s.docs.map(d=>({...d.data(), id:d.id})).sort((a,b)=>b.createdAt-a.createdAt);
+    const _arr=s.docs.map(d=>({...d.data(), id:d.id})).sort((a,b)=>b.createdAt-a.createdAt);
+    if(me && me.staff){ _stfShopOrders=_arr; if(!_inStaffPanel()) return }   /* v445: الموظف بحساب الزبون — ما نخربط طلباته */
+    myOrders=_arr;
     const pend=myOrders.filter(o=>o.status==='pending');
     if(!firstLoad){ pend.forEach(o=>{ if(!seenPending.has(o.id)){seenPending.add(o.id);alarm('store',o)} }) }
     else{ pend.forEach(o=>seenPending.add(o.id)); firstLoad=false; nofOpenPending() }
@@ -10042,6 +10095,7 @@ function dofActive(){ return (myOrders||[]).some(o=>['assigned','ontheway','arri
 function drvBusy(){ return !!(me && me.role==='driver' && dofActive()) }
 function dofShow(o,sp){
   if(!o||!o.id||!me||me.role!=='driver'||me.duty===false) return;
+  if(!drvCanTake()) return;   /* v445: سائق ينتظر الموافقة / موقوف ما يطلعله عرض (حتى لو وصله إشعار) */
   if(drvBusy()) return;
   if(dofCur) return;
   dofCur={o, sp:!!sp, t0:Date.now()};
@@ -10116,6 +10170,7 @@ function dofClose(skip){
   if(dofCur && skip) dofSkip[dofCur.o.id]=Date.now();
   dofCur=null; clearInterval(dofTimer); clearInterval(dofRingT);
   try{ if(__au){ __au.pause(); __au.currentTime=0 } }catch(e){}
+  try{ stopAlarm() }catch(e){}   /* v445: قبل: الطنين والشريط يبقون بعد الرفض/أخذه سائق ثاني */
   dofLast=Date.now(); dofRender();
 }
 async function dofAccept(){
@@ -10146,7 +10201,12 @@ setInterval(()=>{
   try{
     if(!drvCanTake()||dofCur||dofActive()) return;
     if(Date.now()-dofLast<55000) return;
-    const cand=(availOrders||[]).map(o=>[o,false]).concat((specialAvailOrders||[]).map(o=>[o,true]))
+    if(navigator.onLine===false) return;   /* v445: بدون نت ما نرن على قائمة قديمة */
+    /* v445: الطلبات اللي رفضها (اشتريلي / «أقرب طلب») ما ترجع ترن كل دقيقة */
+    const _decl=(()=>{ try{ return spDeclGet() }catch(e){ return [] } })();
+    const _fresh=o=>{ const t=_anyTs(o.createdAt)||_anyTs(o.created_at); return !t || Date.now()-t<12*3600*1000 };
+    const cand=(availOrders||[]).filter(o=>!(typeof _amSkip!=='undefined'&&_amSkip.has(o.id))).map(o=>[o,false])
+      .concat((specialAvailOrders||[]).filter(o=>!_decl.includes(o.id)&&_fresh(o)).map(o=>[o,true]))
       .filter(([o])=>!dofSkip[o.id]||Date.now()-dofSkip[o.id]>55000)
       .sort((a,b)=>Number(a[0].createdAt||0)-Number(b[0].createdAt||0));
     if(cand.length) dofShow(cand[0][0],cand[0][1]);
@@ -10259,11 +10319,14 @@ function staffWatch(){
         if(_stfFirst){
           _stfFirst=false;
           /* طلبات معلّقة من قبل ما يفتح — نطلّعها هم (إذا عمرها أقل من ساعة) */
-          pend.forEach(o=>{ if(!seenPending.has(o.id)){ seenPending.add(o.id);
-            if(!inStore && Date.now()-Number(o.createdAt||0) < 3600000) alarm('store',o) } });
+          /* v445: داخل لوحة المحل ما نأشّر الطلب «انشاف» — قبل: هالمراقب يسبق مراقب اللوحة فالموظف ما يطلعله «طلب جديد» ولا يرن */
+          if(me && me.staff && me.staff.can_orders!==true) return;
+          pend.forEach(o=>{ if(!inStore && !seenPending.has(o.id)){ seenPending.add(o.id);
+            if(Date.now()-Number(o.createdAt||0) < 3600000) alarm('store',o) } });
           return;
         }
-        pend.forEach(o=>{ if(!seenPending.has(o.id)){ seenPending.add(o.id); if(!inStore) alarm('store',o) } });
+        if(me && me.staff && me.staff.can_orders!==true) return;   /* v445: موظف بدون صلاحية الطلبات ما يرن عليه */
+        pend.forEach(o=>{ if(!inStore && !seenPending.has(o.id)){ seenPending.add(o.id); alarm('store',o) } });
         try{ if(!inStore && nofQ.length){ const n0=nofQ.length; nofQ=nofQ.filter(q=>pend.some(p=>p.id===q.id)); if(nofQ.length!==n0) nofRender() } }catch(e){}
       },()=>{});
   }catch(e){ _stfWatchUn=null }
@@ -10295,10 +10358,18 @@ function alarm(who,o){
     }
   }
   if(navigator.vibrate)navigator.vibrate([300,120,300,120,300]);
-  if('Notification' in window&&Notification.permission==='granted'){
-    new Notification(__clean(who==='store'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> طلب جديد':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> طلب جاهز للتوصيل'),
-      {body:o.customer+' · '+o.total.toLocaleString()+' د.ع',icon:'icon-192.png',tag:o.id});
-  }
+  /* v445: «new Notification» ينرفض على كروم أندرويد (يرمي خطأ) — كان يوقف كل الباقي: السائق ما يطلعله العرض، والمحل ما تتحدث قائمته.
+     هسه نستخدم إشعار الـService Worker، وأي خطأ ما يأثر على شي */
+  try{
+    if('Notification' in window&&Notification.permission==='granted'&&document.hidden){
+      const _t=__clean(who==='store'?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> طلب جديد':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> طلب جاهز للتوصيل');
+      const _b=((who==='store'?(o.customer||'زبون'):(o.shopName||o.marketName||'طلب'))+' · '+Number(o.total||0).toLocaleString()+' د.ع');
+      const _opt={body:_b,icon:'icon-192.png',tag:String(o.id||''),renotify:true};
+      if(navigator.serviceWorker&&navigator.serviceWorker.getRegistration){
+        navigator.serviceWorker.getRegistration().then(r=>{ if(r&&r.showNotification) return r.showNotification(_t,_opt); try{ new Notification(_t,_opt) }catch(_){} }).catch(()=>{});
+      }else{ try{ new Notification(_t,_opt) }catch(_){} }
+    }
+  }catch(e){}
 }
 function stopAlarm(){clearInterval(alarmTimer); window.__storeRinging=0;
   try{ if(__au){ __au.pause(); __au.currentTime=0 } }catch(e){}
@@ -10667,7 +10738,12 @@ async function dwSubmit(){
       loc:dwData.loc||null, payout:'cash'
     };
     await doAuth();
-    dwStep=8; dwPaint();
+    /* v445: قبل كان يگول «انرسل طلبك» حتى لو الحساب ما انفتح (رمز الواتساب، رقم مسجّل، كلمة مرور ضعيفة…) */
+    if(me && me.role==='driver'){ dwStep=8; dwPaint(); return }
+    const os=document.getElementById('otpSheet');
+    if(os && os.classList.contains('on')){ nx.textContent='… بانتظار رمز الواتساب'; return }   /* لمن يكمل الرمز، enter() يطلّع صفحة النجاح */
+    const er=document.getElementById('authErr'); const m=(er && er.classList.contains('on') && er.textContent) || 'ما انرسل الطلب — تأكد من المعلومات وجرّب مرة ثانية';
+    toast(m); nx.disabled=false; nx.textContent='إرسال الطلب ›';
   }catch(e){
     toast(errMsg(e));
     nx.disabled=false; nx.textContent='إرسال الطلب ›';
@@ -11105,7 +11181,7 @@ function renderShops(){
   if(SEC_LBL[cat]){ list=list.filter(s=>inSec(s,cat)) }
   else if(cat==='gifts'){ list=list.filter(s=>s.type==='gifts'||/هدايا|هديه|هدية|ورد|زهور|تغليف/.test(s.name||'')) }
   else if(cat!=='all'){ list=list.filter(s=>s.type===cat) }
-  if(q)list=list.filter(s=>s.name.includes(q));
+  if(q){ const _q=_normAr(q); list=list.filter(s=>_normAr(s.name).includes(_q)) }   /* v445: «الامير» يلگى «الأمير» */
   else list=shopsRotated(list);   /* v433 */
   if(!list.length){box.innerHTML='<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></div><p>ما لكينا نتيجة</p><div class="sub2">جرّب اسم ثاني أو غيّر التصنيف</div></div>';return}
   box.innerHTML=list.map(shopCardHTML).join('');
@@ -12192,7 +12268,7 @@ function renderCart(){
     ${cart.map((c,i)=>`<div class="citem">
       ${c.img?`<img class="pimg" src="${c.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
       <div class="ci"> <div class="cn">${esc(c.name)}</div>
-        ${c.desc?`<div class="cd">${c.desc}</div>`:''}
+        ${c.desc?`<div class="cd">${esc(c.desc)}</div>`:''}
         <div class="cp">${c.kg?'≈ ':''}${(c.price*c.qty).toLocaleString()} د.ع</div>${c.kg?`<div class="kgl">⚖️ تقريباً ${kgTxt(Number(c.w||0)*c.qty)} كغم — السعر النهائي حسب الوزن</div>`:''} </div> <div class="stepper"> <button onclick="cartQty(${i},1)">+</button> <span>${c.qty}</span> <button onclick="cartQty(${i},-1)">−</button> </div></div>`).join('')}
     ${upsellHTML()}
     <div class="seclbl">ملاحظات للمحل</div> <textarea class="notes" id="ck_note" placeholder="مثال: بدون بصل، الجرس خربان دگ تلفون..."
@@ -12366,6 +12442,7 @@ async function submitSpecialOrder(){
     document.getElementById('p_orders').classList.add('on');
     document.querySelectorAll('#cNav button').forEach(b=>b.classList.remove('on'));
     document.querySelectorAll('#cNav button')[2].classList.add('on');
+    try{ ordView='all'; ordKind='all'; renderOrders() }catch(_){}   /* v445 */
   }catch(e){
     toast(errMsg(e));
   }finally{
@@ -12436,7 +12513,7 @@ function spDrvOpen(id){
     <div class="spds-sec">القائمة <em>${its.length} مواد</em></div>
     <div class="spds-list2">${its.map(x=>`<div><i></i><span>${esc(x)}</span></div>`).join('')||'<div><span>—</span></div>'}</div>
     ${(o.itemDesc||o.note)?`<div class="spds-note">${o.itemDesc?'<b>وصف:</b> '+esc(o.itemDesc)+'<br>':''}${o.note?'<b>ملاحظة:</b> '+esc(o.note):''}</div>`:''}
-    ${ph.length?`<div class="spds-ph">${ph.map(u=>`<img src="${u}" onclick="viewPhoto('${u}')" alt="">`).join('')}</div>`:''}
+    ${ph.length?`<div class="spds-ph">${ph.filter(_safeImg).map(u=>`<img src="${esc(u)}" onclick="viewPhoto(this.src)" alt="">`).join('')}</div>`:''}
     <div class="spds-to">
       <div><b>الزبون</b><span>${esc(o.addr||'—')}</span></div>
       <button onclick="openSpecialMap('${o.id}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg></button>
@@ -12519,6 +12596,8 @@ async function spMiss(id,k,btn){
 async function takeSpecialOrder(id){
   if(!me||me.role!=='driver')return;
   if(me.duty===false)return toast('فعّل حالة الاستلام أولاً');
+  if(me.approved!==true) return toast('حسابك بعده قيد المراجعة — تگدر تشتغل بعد موافقة الإدارة');   /* v445 */
+  if(me.blocked===true) return toast('حسابك موقوف — تواصل ويّا الإدارة');
   if(drvBusy()){ toast('عندك طلب شغّال — كمّله أول وبعدين تطلعلك طلبات جديدة'); return false }
   try{
     await rpc('claim_special',{p_order:id});
@@ -12557,7 +12636,8 @@ async function specialPurchased(id){
     try{ const _o=(mySpecialOrders||[]).find(x=>x.id===id); if(_o){ _o.status='purchased'; _o.purchasedAt=Date.now() } setTimeout(()=>{ try{ const _ts=document.getElementById('tripSheet'); if(!(_ts&&_ts.classList.contains('on'))) openSpTrip(id) }catch(e){} },150) }catch(e){}
     try{ const o=(mySpecialOrders||[]).find(x=>x.id===id); if(o&&o.customerUid) pushTo(o.customerUid,'السائق بالطريق إليك',((me&&me.name)||'السائق')+' اشترى أغراضك وطالع لعندك',{type:'ontheway'}) }catch(e){}
     toast('انحدّثت الحالة — اشتريت الطلب');
-  }catch(e){toast('ما گدرنا نحدّث الحالة')}
+    return true;
+  }catch(e){toast('ما گدرنا نحدّث الحالة — تأكد من النت وجرّب مرة ثانية'); return false}
 }
 async function specialArrived(id){
   if(!me||me.role!=='driver')return;
@@ -12566,14 +12646,16 @@ async function specialArrived(id){
     const o=(mySpecialOrders||[]).find(x=>x.id===id);
     if(o&&o.customerUid) pushTo(o.customerUid,'السائق وصل',((me&&me.name)||'السائق')+' عند بابك',{type:'arrived'});
     toast('سجّلنا وصولك — سلّم الطلب واستلم المبلغ');
-  }catch(e){toast('ما گدرنا نحدّث الحالة')}
+    return true;
+  }catch(e){toast('ما گدرنا نحدّث الحالة — تأكد من النت وجرّب مرة ثانية'); return false}
 }
 async function specialDelivered(id){
   if(!me||me.role!=='driver')return;
   try{
     await db.collection('specialOrders').doc(id).update({status:'delivered',deliveredAt:Date.now()});
     toast('تم تسليم الطلب');
-  }catch(e){toast('ما گدرنا نحدّث الحالة')}
+    return true;
+  }catch(e){toast('ما گدرنا نحدّث الحالة — تأكد من النت وجرّب مرة ثانية'); return false}
 }
 
 /* ═══════ صفحة تفاصيل الطلب ═══════ */
@@ -12695,7 +12777,7 @@ function renderCheckout(){
 }
 
 /* ══════ مراجعة الطلب — عدّاد ١٠ ثواني ══════ */
-let __revTimer=null, __revLeft=10, __revBusy=false;
+let __revTimer=null, __revLeft=10, __revBusy=false, __ordSending=false;   /* v445: __ordSending = الطلب فعلاً دا ينرسل */
 async function checkout(){
   if(!cart.length)return;
   if(!(await ordGate())) return;
@@ -12705,10 +12787,11 @@ async function checkout(){
   }
   if((cartLead()>0||schedOn) && !schedTs()) return toast('اختار يوم وساعة الحجز');
   const shNow=shops.find(x=>x.id===cart[0].shopId);
-  if(shNow && !isOpenNow(shNow) && !schedTs()) return toast('المحل سكّر —'+nextOpenTxt(shNow)+' — تكدر تحجز لوقت ثاني');
+  if(shNow && !isOpenNow(shNow) && !schedTs()) return toast('المحل سكّر —'+nextOpenTxt(shNow)+(typeof SCHED_ON!=='undefined'&&SCHED_ON?' — تكدر تحجز لوقت ثاني':''));
   openReview();
 }
 function openReview(){
+  if(__ordSending) return toast('طلبك دا ينرسل — لحظة');   /* v445: قبل: يگدر يرجع ويرسل مرة ثانية = طلبين */
   /* v328: تذكرة الطلب — نفس فكرة الوصل اللي يطبعه المطعم. شريط برتقالي يخلص فوگ التذكرة = وقت الإرسال */
   const sh=shops.find(x=>x.id===cart[0].shopId)||{};
   const sub=cart.reduce((a,c)=>a+c.price*c.qty,0);
@@ -12730,7 +12813,7 @@ function openReview(){
       <div class="rvt-cut"></div>
       <div class="rvt-info">
         <div class="rvt-city">${I('<path d="M3 21h18"/><path d="M5 21V8l5-3v16"/><path d="M10 21V4l9 4v13"/><path d="M13 10h2M13 14h2M7 12h1M7 16h1"/>')}<span>المدينة</span><b>${esc((me.loc&&(me.loc.zone||(me.loc.lat&&zoneName(me.loc.lat,me.loc.lng))))||'عانة')}</b></div>
-        <div class="rvt-city rvt-addr" onclick="openMap('delivery')">${I('<path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/>')}<span>يوصل إلى</span><b>${esc(me.addr||'حدد عنوانك')}</b><i>تغيير</i></div>
+        <div class="rvt-city rvt-addr" onclick="cancelReview();openMap('delivery')">${I('<path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/>')}<span>يوصل إلى</span><b>${esc(me.addr||'حدد عنوانك')}</b><i>تغيير</i></div>
         <div class="rvt-city">${I('<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/>')}<span>الدفع</span><b>نقداً عند الاستلام</b></div>
       </div>
       <div class="rvt-tot"><span>المجموع</span><b>${N(B.tot)}<small>د.ع</small></b></div>
@@ -12758,6 +12841,7 @@ function paintRev(){
   if(tx) tx.textContent = n>=3?('ينرسل للمطعم بعد '+n+' ثواني'):(n===2?'ينرسل للمطعم بعد ثانيتين':(n===1?'ينرسل للمطعم بعد ثانية':'دا ينرسل هسه…'));
 }
 function cancelReview(){
+  if(__ordSending) return toast('طلبك دا ينرسل — لحظة');
   clearInterval(__revTimer);
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('p_cart').classList.add('on');
@@ -12814,8 +12898,20 @@ async function submitOrder(){
     scheduled_for: schedTs()?schedTs().toISOString():null};
   /* v324: عمود scheduled_for ينضاف بس مع ملف الحجز — بدونه ما نرسله (كان يفشّل الطلب) */
   if(!o.scheduled_for) delete o.scheduled_for;
+  if(__ordSending) return; __ordSending=true;
   try{
-    const _ref=await db.collection('orders').add(o);
+    let _ref=null;
+    try{ _ref=await db.collection('orders').add(o) }
+    catch(e1){
+      /* v445: النت ضعيف وانتهت المهلة — يمكن الطلب وصل للسيرفر. نتأكد قبل ما نگول «ما انرسل» (حتى ما يرسل مرتين) */
+      if(!/المهلة|اتصال|network|fetch/i.test(String(e1&&e1.message||e1))) throw e1;
+      toast('النت ضعيف — نتأكد إذا انرسل طلبك…');
+      let hit=null;
+      try{ const q=await db.collection('orders').where('customerUid','==',uid).where('createdAt','>=',o.createdAt-5000).get();
+        hit=(q&&q.docs||[]).map(d=>({...d.data(),id:d.id})).find(x=>x.shopId===o.shopId&&Number(x.total)===Number(o.total)) }catch(_){}
+      if(!hit) throw e1;
+      _ref={id:hit.id};
+    }
     /* نضيف الطلب لقائمة الزبون فوراً بدون ما ننتظر وصول المستمع (onSnapshot) */
     try{
       if(_ref&&_ref.id&&!(myOrders||[]).some(x=>x.id===_ref.id)) myOrders=[{...o,id:_ref.id},...(myOrders||[])];
@@ -12833,12 +12929,13 @@ async function submitOrder(){
     document.getElementById('p_orders').classList.add('on');
     document.querySelectorAll('#cNav button').forEach(b=>b.classList.remove('on'));
     document.querySelectorAll('#cNav button')[2].classList.add('on');
-    _custOrdSig=null; ordKind='all'; try{ renderOrders() }catch(e){}
+    _custOrdSig=null; ordKind='all'; try{ ordView='all' }catch(_){} try{ renderOrders() }catch(e){}   /* v445: ordView — حتى ما يطلع على «السابقة» ويظن الطلب ما انرسل */
     setTimeout(()=>{ try{ renderOrders() }catch(e){} },700);
     buzz([20,60,20,60,30]); toast('انرسل طلبك للمحل');
     try{ window.__trk&&__trk('order') }catch(e){}
     setTimeout(npAsk, 900);
-  }catch(e){toast(errMsg(e)); __revBusy=false;
+    __ordSending=false;
+  }catch(e){toast(errMsg(e)); __revBusy=false; __ordSending=false;
     /* v324: صنف خلص — نجيب المحلات من القاعدة مباشرة حتى السلة تشيله وحدها */
     if(/خلص — شيله من السلة/.test(String(e&&e.message||e))) setTimeout(async()=>{ try{
       const c=await db.collection('shops').where('approved','==',true).get();
@@ -12881,7 +12978,9 @@ function etaRange(o){
     const r=_acc+Number(o.prep_min)*60000, g=d=>d.toLocaleTimeString('ar-IQ',{hour:'2-digit',minute:'2-digit'});
     return g(new Date(r+8*60000))+' — '+g(new Date(r+18*60000));
   }
-  const base=Number(o.createdAt||Date.now());
+  /* v445: ما نعرض وقت فات — إذا الطلب بعده ينتظر نحسب من هسه */
+  const _c=Number(o.createdAt||Date.now()), _done=['delivered','cancelled','rejected'].includes(o.status);
+  const base=_done?_c:Math.max(_c, Date.now()-5*60000);
   const er=shopEtaRange({loc:o.shopLoc}, o.loc);
   const a=new Date(base+er[0]*60000);
   const b=new Date(base+er[1]*60000);
@@ -12984,7 +13083,7 @@ function renderTrack(){
     <div class="av">${o.driverPhoto?`<img src="${o.driverPhoto}" alt="" onerror="this.style.display='none'">`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg>'}</div>
     <div class="nm"><b>${esc(o.driverName)}</b><span>مندوب التوصيل</span></div>
     <span class="rt">${o.drvRating?Number(o.drvRating).toFixed(1):'جديد'} <svg class="wic" viewBox="0 0 24 24"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg></span>
-    ${(!done&&o.driverPhone)?`<a class="cl" href="tel:${o.driverPhone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
+    ${(!done&&o.driverPhone)?`<a class="cl" href="tel:${esc(o.driverPhone)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
   </div>`:''}
   <div class="trk-card">
     <div class="sh">
@@ -13190,7 +13289,7 @@ function spOpenForm(){
   if(c)c.style.display='none';
   if(f)f.style.display='block';
 }
-function reorder(oid){
+async function reorder(oid){
   const list = me.role==='customer' ? myOrders : cOrders;
   const o=list.find(x=>x.id===oid); if(!o) return toast('ما لكينا الطلب');
   const sh=shops.find(x=>x.id===o.shopId);
@@ -13200,7 +13299,7 @@ function reorder(oid){
   const items=[]; let missing=0;
   (o.items||[]).forEach(i=>{
     const p=avail.find(x=>String(x.id)===String(i.pid) || x.name===i.name);
-    if(!p){ missing++; return }
+    if(!p || p.avail===false){ missing++; return }   /* v445: المنتج اللي نفذ ما ينضاف */
     const zs=pSizes(p);
     if(zs.length){
       const z=zs.find(x=>x.n===i.size); if(!z){ missing++; return }
@@ -13215,6 +13314,10 @@ function reorder(oid){
     }
   });
   if(!items.length) return toast('منتجات هذا الطلب ما عادت متوفرة');
+  items.forEach(it=>{ it.shopName=sh.name; const pp=avail.find(x=>x.id===it.pid); if(pp&&pp.img) it.img=pp.img });   /* v445: اسم المحل والصورة */
+  /* v445: إذا السلة بيها طلب من محل ثاني نسأله قبل ما نمسحها */
+  if(cart.length && cart.some(c=>c.shopId!==sh.id)){
+    const ok=await askConfirm('سلّتك بيها أغراض من محل ثاني. تمسحها وتحط هذا الطلب؟',{title:'اعادة الطلب',ok:'إي، بدّلها'}); if(!ok) return }
   cart=items; mergeCart(); curShop=sh; renderCart();
   toast(missing?('انضافت للسلة —'+missing+'منتج مو متوفر'):'انضاف الطلب للسلة');
   const btns=document.querySelectorAll('#cNav button');
@@ -13305,7 +13408,7 @@ function renderSpTrack(box,id){
   ${(o.driverName&&!gn)?`<div class="trk-drv">
     <div class="av">${o.driverPhoto?`<img src="${o.driverPhoto}" alt="" onerror="this.style.display='none'">`:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.6-4 3.6-6 7.5-6s6.9 2 7.5 6"/></svg>'}</div>
     <div class="nm"><b>${esc(o.driverName)}</b><span>يتسوّق ويوصّل طلبك</span></div>
-    ${(!done&&o.driverPhone)?`<a class="cl" href="tel:${o.driverPhone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
+    ${(!done&&o.driverPhone)?`<a class="cl" href="tel:${esc(o.driverPhone)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
   </div>`:''}
   ${_spMapOn(o)?`<button class="trkmap" onclick="openTrackMap('${o.id}',true)"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> فتح الخريطة بكامل الشاشة</button>`:''}
   <div class="trk-card">
@@ -13458,7 +13561,7 @@ function renderCustomerSpecialOrders(mode){
         ${_act?`${(sidx>=0&&o.driverName)?`<div class="mk-drv">
           <div class="av">${o.driverPhoto?`<img src="${o.driverPhoto}" alt="" onerror="this.style.display='none'">`:SPI[0]}</div>
           <div class="nm"><b>${esc(o.driverName)}</b><span>سائقك</span></div>
-          ${o.driverPhone?`<a class="cl" href="tel:${o.driverPhone}" aria-label="اتصال"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
+          ${o.driverPhone?`<a class="cl" href="tel:${esc(o.driverPhone)}" aria-label="اتصال"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
         </div>`:''}
         <div class="mk-say"><span class="mk-emo">${sidx<0?'🔍':['🤝','🛒','🛵','📍'][sidx]}</span>${sidx<0?'نبحث لك عن سائق يشتري طلبك':SSAY[sidx].replace('{n}',(o.driverName?String(o.driverName).trim().split(/\s+/)[0]:'السائق'))}</div>
         ${sidx<0?`<button type="button" class="mk-cancel" onclick="spCancel('${o.id}',this)">إلغاء الطلب</button>`:`<div class="mk-eta"><span>يوصلك</span><b>${etaRange(o)}</b></div>`}`:`<div class="mk-hint ${st.c}"><span class="mk-emo2">${st.c==='bad'?'❌':'✅'}</span><div><b>${ft[0]}</b><span>${ft[1]}</span></div></div>`}
@@ -13680,6 +13783,8 @@ function openAddrs(){
   loadAddrs().then(renderAddrs);
 }
 function closeAddrs(){
+  /* v445: إذا جا من «إتمام الطلب» يرجع لها (قبل: يوديه لحسابي ويضيّع الطلب) */
+  if(window._addrFromCk){ window._addrFromCk=false; try{ goCheckout(); return }catch(e){} }
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('p_more').classList.add('on');
 }
@@ -13756,6 +13861,7 @@ async function useAddr(id){
     await applyAddr(a);
     await loadAddrs(); renderAddrs();
     toast('صار عنوانك الحالي');
+    if(window._addrFromCk){ setTimeout(()=>{ try{ closeAddrs() }catch(e){} },350) }   /* v445 */
   }catch(e){ toast(errMsg(e)) }
 }
 
@@ -13771,12 +13877,13 @@ async function delAddr(id){
 /* نطبّق العنوان على الحساب حتى يشتغل الطلب مثل ما هو */
 async function applyAddr(a){
   me.loc = a.loc; me.addr = addrText(a) || a.label || '';
+  myFare=null; try{ loadFare() }catch(e){}   /* v445: العنوان تغيّر = الأجرة تتحدث (قبل: تبقى أجرة العنوان القديم) */
   try{ await db.collection('users').doc(uid).update({addr:me.addr, loc:me.loc}) }
   catch(e){ __silent(e,'saveAddr'); toast('ما انحفظ العنوان — '+String(e.message||e)) }
   try{ renderAccount(); renderCart() }catch(e){}
 }
 
-function editAddr(){ openAddrs() }
+function editAddr(){ try{ const ck=document.getElementById('p_checkout'); window._addrFromCk=!!(ck&&ck.classList.contains('on')) }catch(e){} openAddrs() }
 const FAQ=[   /* v429: مطابقة للتطبيق (الأجرة من fare_zone، رسوم الخدمة من fix_order، أقل طلب من minOrderVal) */
 ['شكد أجرة التوصيل؟','داخل مدينة عانة <b>١,٠٠٠ دينار</b>. خارج عانة من <b>١,٢٥٠ لـ ٣,٠٠٠</b> حسب بعدك عن المدينة. تشوف الأجرة بالسلة قبل ما ترسل الطلب.'],
 ['أكو رسوم غير التوصيل؟','رسوم خدمة صغيرة حسب سعر الطلب، تشوفها بالسلة قبل ما ترسل الطلب.'],
@@ -13816,6 +13923,10 @@ function loadMyShop(){
 }
 function stab(p,el){
   if(p==='orders' && me && me.staff && me.staff.can_orders!==true) return toast('ما عندك صلاحية إدارة الطلبات');
+  /* v445: باقي الصلاحيات تنفحص هم (قبل: بس الطلبات) */
+  if(me && me.staff){ const need={menu:'can_products',cats:'can_categories',finance:'can_reports'}[p];
+    if(need && me.staff[need]!==true) return toast('ما عندك صلاحية لهذا القسم');
+    if(p==='staff'||p==='set') return toast('هذا القسم لصاحب المحل بس') }
   if(p!=='orddet') _odId=null;
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('q_'+p).classList.add('on');
@@ -14150,11 +14261,11 @@ function renderStore(){
   if(ordFil==='new')        list=list.filter(o=>o.status==='pending');
   else if(ordFil==='active')list=list.filter(o=>['accepted','ready','assigned','ontheway','arrived'].includes(o.status)&&!schedFuture(o));
   else if(ordFil==='sched') list=list.filter(schedFuture).sort((a,b)=>new Date(a.scheduled_for)-new Date(b.scheduled_for));
-  else if(ordFil==='done')  list=list.filter(o=>['delivered','rejected'].includes(o.status));
+  else if(ordFil==='done')  list=list.filter(o=>['delivered','rejected','cancelled'].includes(o.status));   /* v445: الملغية هم */
   }
   if(q) list=list.filter(o=>String(o.order_no||'').includes(q) || String(o.shop_no||'')===q
                           || String(o.customer||'').toLowerCase().includes(q)
-                          || String(o.phone||'').includes(q));
+                          || String(o.phone||'').includes(q) || _phMatch(o.phone,q));
 
   /* الجديدة أولاً، وبعدين الأحدث */
   const _rank=o=>o.status==='pending'?0:(['accepted','ready','assigned','ontheway','arrived'].includes(o.status)?1:2);
@@ -14240,7 +14351,7 @@ function _ordBadge(st){
   const M={pending:['جديد','st-b-new'], accepted:['قيد التحضير','st-b-prep'],
            ready:['بانتظار التوصيل','st-b-wait'], assigned:['مع المندوب','st-b-wait'],
            ontheway:['بالطريق','st-b-wait'], arrived:['المندوب وصل','st-b-wait'],
-           delivered:['منتهية','st-b-done'], rejected:['مرفوض','st-b-off']};
+           delivered:['منتهية','st-b-done'], rejected:['مرفوض','st-b-off'], cancelled:['ملغي','st-b-off']};
   const x=M[st]||['—','st-b-off'];
   return `<span class="ordc-st ${x[1]}">${x[0]}</span>`;
 }
@@ -14521,13 +14632,13 @@ async function odtSet(st){
 
 function ocard(o,act){ return schedBanner(o)+extBanner(o)+_ocard0(o,act) }
 function _ocard0(o,act){
-  return `<div class="oc ${OCCLS(o.status)}"> <div class="oh"><span class="oid">#${ONO(o)}</span><span class="st st-${o.status}">${LBL[o.status]}</span></div> <div class="ccard"> <div class="cav">${(o.customer||'؟').charAt(0)}</div> <div class="cinf"><div class="clbl">رقم الزبون</div> <div class="cnm">${esc(o.customer)}</div> <div class="cph">${o.phone}</div></div> <a class="callb" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a> </div> <div class="od"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr)}</div>
+  return `<div class="oc ${OCCLS(o.status)}"> <div class="oh"><span class="oid">#${ONO(o)}</span><span class="st st-${o.status}">${LBL[o.status]}</span></div> <div class="ccard"> <div class="cav">${(o.customer||'؟').charAt(0)}</div> <div class="cinf"><div class="clbl">رقم الزبون</div> <div class="cnm">${esc(o.customer)}</div> <div class="cph">${o.phone}</div></div> <a class="callb" href="tel:${esc(o.phone)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a> </div> <div class="od"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr)}</div>
     ${o.loc&&o.loc.lat?`<a class="navbtn g" style="display:inline-flex;margin:6px 0" onclick="openViewMap(${JSON.stringify(o.loc).replace(/"/g,'&quot;')},'موقع الزبون',${JSON.stringify(o.addr||'').replace(/"/g,'&quot;')});return false" href="#"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg> موقع الزبون على الخريطة</a>`:''}
     ${o.note?`<div class="od" style="color:var(--o2);font-weight:700"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10.5-10.5a2.1 2.1 0 0 0-3-3L5 17z"/><path d="M14.5 6.5l3 3"/></svg> ${esc(o.note)}</div>`:''}
     ${o.items.map(i=>`<div class="itemline">• ${esc(i.name)} × ${i.qty}${i.kg?(itWeighed(i)?' · ⚖️ '+kgTxt(i.aw)+' كغم':' · ⚖️ بالوزن'):''} — ${itLine(i).toLocaleString()} د.ع</div>`).join('')}
     ${o.driverName?`<div class="drvcard">
       ${o.driverPhoto?`<img class="avat sm" src="${o.driverPhoto}">`:'<div class="avat sm" style="display:flex;align-items:center;justify-content:center;background:#fff"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></div>'}
-      <div class="di"><b>${esc(o.driverName)}</b><span>${o.driverPhone||'—'}</span></div></div>`:''}
+      <div class="di"><b>${esc(o.driverName)}</b><span>${esc(o.driverPhone||'—')}</span></div></div>`:''}
     <div class="op">${o.sub.toLocaleString()} د.ع <span style="font-size:11px;color:var(--mut);font-weight:600">(+ توصيل ${Number(o.deliveryFee||SET.deliveryFee).toLocaleString()} + رسوم خدمة)</span></div>
     ${act?`<div class="btns">
       ${o.status==='pending'?`<button class="btn" onclick="setStatus('${o.id}','accepted')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> قبول</button><button class="btn d" onclick="setStatus('${o.id}','rejected')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg> رفض</button>`:''}
@@ -14805,6 +14916,8 @@ function paintShopType(){
   const a=document.getElementById('tc_restaurant'), b=document.getElementById('tc_store');
   if(a)a.classList.toggle('on',t==='restaurant');
   if(b)b.classList.toggle('on',t==='store');
+  /* v445: إذا الإدارة حددت قسم المحل، صاحب المحل ما يغيّر النوع (حتى ما يتعارضون) */
+  try{ const tp=document.querySelector('#sApp .typepanel'); if(tp && !(me&&me.staff)) tp.style.display=(myShopDoc&&myShopDoc.section)?'none':'' }catch(e){}
   paintCallDrv();
 }
 
@@ -14960,7 +15073,15 @@ async function addProduct(){
     name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, byKg:_kg.on?true:undefined, w:_kg.on?_kg.w:undefined, was:_wc.was||undefined, lead:(pfLead>0?pfLead:undefined), sizeLabel:(_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined, avail:editingProdAvail
   };
   try{
+    const _oldCat = editingProdId!==null ? String((((myShopDoc&&myShopDoc.products)||[]).find(x=>x.id===editingProdId)||{}).cat||'').trim() : '';   /* v445 */
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
+    /* v445: إذا غيّر قسم المنتج، نشيل ربطه بالقسم القديم — قبل: يبقى يطلع بالقسمين عند الزبون */
+    if(_oldCat && _oldCat!==ct){
+      try{ if(!Array.isArray(myCats) || !myCats.length) await loadShopCats();
+        const oc=(myCats||[]).find(c=>String(c.name||'').trim()===_oldCat);
+        if(oc) await sbDel('product_categories?product_id=eq.'+encodeURIComponent(String(item.id))+'&category_id=eq.'+encodeURIComponent(oc.id));
+      }catch(e){ console.warn('catUnlink',e.message) }
+    }
     /* لو القسم يلي كتبه صاحب المحل جديد (مو موجود بقائمة التصنيفات
        أصلاً)، نسجّله هناك تلقائياً حتى يظهر فوراً بتبويبات الزبون
        وبصفحة "التصنيفات" — بلا ما يحتاج يضيفه مرتين. */
@@ -15053,8 +15174,11 @@ async function toggleProdAvail(id){
   }catch(e){ toast('ما گدرنا نغيّر الحالة:'+e.message) }
 }
 async function toggleOpen(){
-  const v=!myShopDoc.open; await db.collection('shops').doc(me.shopId).update({open:v});
-  toast(v?'محلك صار مفتوح':'محلك صار مغلق');
+  const v=!myShopDoc.open;
+  /* v445: إذا ما انحفظ نگله — قبل: يضغط وما يصير شي بدون أي رسالة */
+  try{ await db.collection('shops').doc(me.shopId).update({open:v}); myShopDoc.open=v; try{ renderStore() }catch(_){}
+    toast(v?'محلك صار مفتوح':'محلك صار مغلق') }
+  catch(e){ toast('ما انحفظ — تأكد من النت وجرّب مرة ثانية') }
 }
 
 /* ══════ DRIVER ══════ */
@@ -15166,9 +15290,12 @@ async function toggleDuty(){
   /* v327: الحساب اللي بعده ما انعتمد أو موقوف ما يصير متاح (السيرفر هم يرفض) */
   if(me.duty===false && me.approved!==true) return toast('حسابك بعده قيد المراجعة — تگدر تشتغل بعد موافقة الإدارة');
   if(me.duty===false && me.blocked===true) return toast('حسابك موقوف — تواصل ويّا الإدارة');
+  const _prev=me.duty;
   me.duty=!(me.duty!==false);
-  if(me.duty) await _wtStart(); else await _wtStop();
-  await db.collection('users').doc(uid).update({duty:me.duty});
+  /* v445: إذا الحفظ فشل نرجّع المفتاح ونگله — قبل: يبين «متاح» وهو بالسيرفر غير متاح (أو العكس) */
+  try{ await db.collection('users').doc(uid).update({duty:me.duty}) }
+  catch(e){ me.duty=_prev; renderDriverAccount(); renderDriver(); return toast('ما انحفظ — تأكد من النت وجرّب مرة ثانية') }
+  try{ if(me.duty) await _wtStart(); else await _wtStop() }catch(e){}
   renderDriverAccount(); renderDriver();
   toast(me.duty?'صرت متاح — راح توصلك الطلبات':'صرت غير متاح');
 }
@@ -15500,7 +15627,7 @@ function _renderDriverBody(){
           ${_logo(r)}
           <div class="sl-tx"><b>${esc(r.nm)}</b><span>${r.n} ${r.n===1?'طلب':'طلبات'}</span></div>
           <div class="sl-amt">${r.amt.toLocaleString()}<small>د.ع</small></div>
-          <button class="sl-bt" onclick="${r.kind==='com'?'drvSentCom()':`drvSentCash(${r.shopId?`'${r.shopId}'`:'null'},'${String(r.nm).replace(/'/g,"\\'")}')`}">سلّمت</button>
+          <button class="sl-bt" onclick="${r.kind==='com'?'drvSentCom()':`drvSentCash(${r.shopId?`'${esc(r.shopId)}'`:'null'},decodeURIComponent('${encodeURIComponent(String(r.nm||'')).replace(/'/g,'%27')}'))`}">سلّمت</button>
         </div>`).join('')}
     </div>`:`
     <div class="sl-card done">
@@ -15761,11 +15888,11 @@ function _renderDriverBody(){
           <div class="spx2-list">${_its.map((x,k)=>{ const ms=_mis.includes(k);
             return `<div class="row${ms?' miss':''}"><button type="button" class="it${(!ms&&(_chk[k]||bought))?' got':''}" ${(bought||ms)?'disabled':''} onclick="spChk('${o.id}',${k},this)"><i></i><span>${esc(x)}</span>${ms?'<em>ما متوفر</em>':''}</button>${bought?'':`<button type="button" class="mx${ms?' on':''}" onclick="spMiss('${o.id}',${k},this)" aria-label="ما متوفر">${ms?'↺':'❌'}</button>`}</div>`}).join('')||'<div class="it">—</div>'}</div>
           ${(o.itemDesc||o.note)?`<div class="spx2-note">${o.itemDesc?esc(o.itemDesc):''}${o.itemDesc&&o.note?' · ':''}${o.note?esc(o.note):''}</div>`:''}
-          ${_ph.length?`<div class="spx2-ph">${_ph.map(u=>`<img src="${u}" onclick="viewPhoto('${u}')" alt="">`).join('')}</div>`:''}
+          ${_ph.length?`<div class="spx2-ph">${_ph.filter(_safeImg).map(u=>`<img src="${esc(u)}" onclick="viewPhoto(this.src)" alt="">`).join('')}</div>`:''}
           <div class="spx2-cus">
             <div class="t"><b>${esc(o.custName||o.customerName||'الزبون')}</b><span>${esc(o.addr||'—')}</span></div>
             ${o.loc&&o.loc.lat?`<a class="b mp" href="#" onclick="openViewMap(${JSON.stringify(o.loc).replace(/"/g,'&quot;')},'موقع الزبون',${JSON.stringify(o.addr||'').replace(/"/g,'&quot;')});return false"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg></a>`:''}
-            ${o.phone?`<a class="b wa" href="https://wa.me/${wa}" target="_blank"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3.5 20.5 5 16.6a8 8 0 1 1 3 3z"/><path d="M8.8 9.4c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8-3.9-9.5-7.5h1.6l.9 2z"/></svg></a><a class="b ph" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
+            ${o.phone?`<a class="b wa" href="https://wa.me/${wa}" target="_blank"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3.5 20.5 5 16.6a8 8 0 1 1 3 3z"/><path d="M8.8 9.4c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8-3.9-9.5-7.5h1.6l.9 2z"/></svg></a><a class="b ph" href="tel:${esc(o.phone)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:''}
           </div>
           ${drvMoneyBox(o)}
           <div class="spx2-ft">${next}</div>
@@ -15914,7 +16041,8 @@ async function goOnTheWay(id){
     toast('استلمت الطلب — بالطريق للزبون');
     const ts=document.getElementById('tripSheet');
     if(ts && !ts.classList.contains('on')) openTrip(id);
-  }catch(e){ toast(e.message) }
+    return true;
+  }catch(e){ toast(errMsg(e)); return false }
 }
 
 async function arrived(id){
@@ -15924,7 +16052,8 @@ async function arrived(id){
     let _pz=false; try{ _pz=await podOn() }catch(_){}
     if(o) pushTo(o.customerUid,'السائق وصل',((me&&me.name)||'السائق')+' عند بابك'+((_pz&&POD_MODE!=='photo')?' — جهّز رمز الاستلام':''),{type:'arrived'});
     toast('سجّلنا وصولك — سلّم الطلب واستلم المبلغ');
-  }catch(e){ toast(e.message) }
+    return true;
+  }catch(e){ toast(errMsg(e)); return false }
 }
 
 async function deliver(id,noAsk){
@@ -16330,7 +16459,7 @@ function _tripPaint(){
    2) بالطريق (purchased/arrived): الخريطة تكبر وتحت كارت صغير */
 function spPhotosHTML(o){
   const ph=((Array.isArray(o.itemPhotos)&&o.itemPhotos.length)?o.itemPhotos:(o.itemPhoto?[o.itemPhoto]:[])).filter(Boolean);
-  return ph.length?`<div class="sps-ph"><div class="h"><svg class="spi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg> صور من الزبون</div><div>${ph.map(u=>`<img src="${u}" onclick="viewPhoto('${u}')" alt="">`).join('')}</div></div>`:'';
+  return ph.length?`<div class="sps-ph"><div class="h"><svg class="spi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l2-2.5h6L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg> صور من الزبون</div><div>${ph.filter(_safeImg).map(u=>`<img src="${esc(u)}" onclick="viewPhoto(this.src)" alt="">`).join('')}</div></div>`:'';
 }
 function _spTripPaint(card,o){
   const st=o.status, shop=(st==='assigned');
@@ -16341,7 +16470,7 @@ function _spTripPaint(card,o){
   const n= st==='assigned'?1:(st==='purchased'?2:3);
   const STP=['قبلت','يتسوّق','بالطريق','سلّمت'];
   const steps=`<div class="sps-st">${STP.map((t,i)=>`<span class="${i<n?'on':''}${i===n?' nx':''}">${i<n?'✓ ':''}${t}</span>`).join('')}</div>`;
-  const call=o.phone?`<a class="tp-call" href="tel:${o.phone}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:'';
+  const call=o.phone?`<a class="tp-call" href="tel:${esc(o.phone)}"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>`:'';
   if(shop){
     const done=its.filter((x,k)=>chk[k]||mis.includes(k)).length;
     const got=its.filter((x,k)=>chk[k]&&!mis.includes(k)).length;
@@ -16352,7 +16481,7 @@ function _spTripPaint(card,o){
     const _stp=['قبلت','يتسوّق','بالطريق','سلّمت'].map((t,i)=>`<div class="${i<1?'on':(i===1?'cur':'')}"><i>${i<1?'✓':i+1}</i><span>${t}</span></div>`).join('');
     card.innerHTML=`<div class="spx-hd">
         <div class="spx-r"><div class="t"><b>${esc(o.marketName||'السوق')}</b><small>اشتريلي · للزبون ${cn}</small></div>
-          ${o.phone?`<a class="spx-b" href="tel:${o.phone}" aria-label="اتصل بالزبون">${_CL}</a>`:''}<button class="spx-b" onclick="closeTrip()" aria-label="سكّر">${_X}</button></div>
+          ${o.phone?`<a class="spx-b" href="tel:${esc(o.phone)}" aria-label="اتصل بالزبون">${_CL}</a>`:''}<button class="spx-b" onclick="closeTrip()" aria-label="سكّر">${_X}</button></div>
         <div class="spx-steps">${_stp}</div>
       </div>
       <div class="spx-chips"><div><b>${its.length}</b><span>بالقائمة</span></div><div class="ok"><b>${got}</b><span>لكيتها</span></div><div class="no"><b>${mis.length}</b><span>ما متوفر</span></div></div>
@@ -16376,7 +16505,7 @@ function _spTripPaint(card,o){
   /* v324: نفس شكل المطعم — محطّات: السوق ✓ ← الزبون */
   const _ic=(d)=>`<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
   const _chk='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 12.5l4 4 8-9"/></svg>';
-  const _call=o.phone?`<a class="tb-b" href="tel:${o.phone}" aria-label="اتصال">${_ic('<path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/>')}</a>`:'';
+  const _call=o.phone?`<a class="tb-b" href="tel:${esc(o.phone)}" aria-label="اتصال">${_ic('<path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/>')}</a>`:'';
   const _nav=o.loc&&o.loc.lat?`<a class="tb-b" target="_blank" href="${navUrl(o.loc)}" aria-label="ملاحة">${_ic('<path d="M3.5 11 20.5 3.5 13 20.5l-2-7.5z"/>')}</a>`:'';
   card.innerHTML=`<div class="tp-grip"></div>
     <div class="tb-stops">
@@ -16389,15 +16518,16 @@ function _spTripPaint(card,o){
 async function tripAct(k){
   const id=_tpId; if(!id) return;
   const o=_tpOrder();
-  if(k==='sp_bought'){ await specialPurchased(id); if(o) o.status='purchased'; _tpEtaAt=0; _tripPaint(); setTimeout(()=>{ try{_tpMap&&_tpMap.invalidateSize()}catch(e){} try{_tpTick()}catch(e){} },300); return }
-  if(k==='sp_arr'){ await specialArrived(id); if(o) o.status='arrived'; _tripPaint(); return }
-  if(k==='sp_done'){ await specialDelivered(id); if(o) o.status='delivered'; closeTrip(); try{renderDriver()}catch(e){} return }
+  /* v445: الشاشة تتقدّم بس إذا السيرفر قبل — قبل: نت ضعيف = الشاشة تگول «انسلّم» والطلب بعده عالق */
+  if(k==='sp_bought'){ if(!(await specialPurchased(id))) return; if(o) o.status='purchased'; _tpEtaAt=0; _tripPaint(); setTimeout(()=>{ try{_tpMap&&_tpMap.invalidateSize()}catch(e){} try{_tpTick()}catch(e){} },300); return }
+  if(k==='sp_arr'){ if(!(await specialArrived(id))) return; if(o) o.status='arrived'; _tripPaint(); return }
+  if(k==='sp_done'){ if(!(await specialDelivered(id))){ try{ _tripPaint() }catch(e){} return } if(o) o.status='delivered'; closeTrip(); try{renderDriver()}catch(e){} return }
   if(k==='go'){
-    await goOnTheWay(id);
+    if(!(await goOnTheWay(id))) return;
     if(o) o.status='ontheway';
     _tpEtaAt=0; _tripPaint(); _tpTick();
   }else if(k==='arrived'){
-    await arrived(id);
+    if(!(await arrived(id))) return;
     if(o) o.status='arrived';
     _tripPaint();
   }else{
@@ -16840,15 +16970,16 @@ async function confirmMap(){
       await db.collection('shops').doc(me.shopId).update({loc});
       toast('انحفظ موقع المحل');
     }else{
+      const _oldLoc=me.loc, _farMove=!!(_oldLoc&&_oldLoc.lat&&me.addr&&(Math.abs(_oldLoc.lat-loc.lat)+Math.abs(_oldLoc.lng-loc.lng))>0.003);   /* ~300م */
       me.loc=loc;                       // ينثبّت بالتطبيق فوراً
       myFare=null; loadFare();
       closeMap();
       try{ renderCheckout() }catch(e){}
       renderAccount(); renderHomeLoc(); renderCart();
-      toast('انثبّت موقعك —'+loc.zone);
+      toast(_farMove?'انثبّت موقعك — تأكد إن العنوان المكتوب يناسب المكان الجديد':'انثبّت موقعك —'+loc.zone);   /* v445 */
       // نحاول نحفظه بالحساب، وإذا فشل الطلب يبقى يشتغل
-      try{ await db.collection('users').doc(uid).update({loc}) }
-      catch(e){ console.warn('loc save',e.message) }
+      try{ await db.collection('users').doc(uid).update({loc}); try{ bootSave() }catch(_){} }
+      catch(e){ console.warn('loc save',e.message); toast('الموقع انثبّت لهذا الطلب، بس ما انحفظ بحسابك — تأكد من النت') }   /* v445: قبل بصمت */
       return;
     }
     closeMap();
@@ -17111,11 +17242,14 @@ function listenMyTicket(){
 }
 function chatBox(boxId,msgs,sendFn){
   const el=document.getElementById(boxId); if(!el)return;
+  /* v445: نحفظ اللي كاتبه قبل ما نعيد الرسم (قبل: أي رسالة توصل تمسح الكتابة) */
+  let _keep='', _foc=false; try{ const oi=document.getElementById(boxId+'_i'); if(oi){ _keep=oi.value; _foc=document.activeElement===oi } }catch(e){}
   const list=(msgs||[]).map(m=>`<div class="msg ${m.from==='user'?'me':''}"> <div class="bub">${esc(m.text)}<span class="tm">${m.at?new Date(m.at).toLocaleString('ar-IQ'):''}</span></div></div>`).join('')
     || '<div class="empty" style="padding:26px"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg></div><p>اكتب رسالتك وراح ترد عليك الإدارة</p></div>';
   el.innerHTML=`<div class="chat"><div class="msgs" id="${boxId}_m">${list}</div> <div class="cin"><input id="${boxId}_i" placeholder="اكتب رسالتك للإدارة..."
       onkeydown="if(event.key==='Enter')${sendFn}('${boxId}')"> <button onclick="${sendFn}('${boxId}')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 12h13M13 6.5l5.5 5.5L13 17.5"/></svg></button></div></div>`;
   const m=document.getElementById(boxId+'_m'); if(m)m.scrollTop=m.scrollHeight;
+  try{ if(_keep){ const ni=document.getElementById(boxId+'_i'); if(ni){ ni.value=_keep; if(_foc) ni.focus() } } }catch(e){}
 }
 function renderMyChat(){
   const id = me.role==='driver' ? 'myChatD' : 'myChat';
@@ -17167,12 +17301,14 @@ async function openTicket(id){
 async function adminReply(boxId){
   const i=document.getElementById(boxId+'_i'); if(!i||!i.value.trim()||!openTkt)return;
   const msg={from:'admin',text:i.value.trim().slice(0,600),at:Date.now()};
-  i.value='';
+  const _txt=i.value; i.value=''; window._tktDraft='';
   try{
     await db.collection('tickets').doc(openTkt.id).update({
       messages:__arrayUnion(msg),
       lastAt:Date.now(),newForUser:true,newForAdmin:false});
-  }catch(e){ toast('ما انرسلت:'+e.message) }
+    /* v445: نبلّغ صاحب الرسالة (قبل: إذا تطبيقه مسكّر ما يدري انرد عليه) */
+    try{ pushTo(openTkt.id,'💬 رد الدعم',msg.text.slice(0,120),{type:'support'}) }catch(_){}
+  }catch(e){ i.value=_txt; toast('ما انرسلت:'+e.message) }   /* v445: الرسالة ترجع للخانة إذا فشلت */
 }
 
 /* ══════════ بوابة السائق ══════════ */
@@ -17896,9 +18032,11 @@ async function doSetlOk(){
   const id=_ssId; if(!id) return;
   const x=(allSetls||[]).find(y=>y.id===id); if(!x) return;
   try{
+    /* v445: نعلّم الطلبات مستلمة أول — وإذا فشلت ما نحسم التسديد (قبل: ينحسم والطلبات تبقى «ما مسدّدة» بدون ما تنتبه) */
+    const bad=await markOrdersPaid(x.order_ids);
+    if(bad && bad.length && x.kind!=='market') return toast('ما انحسمت — '+bad.length+' طلب ما انعلّم مستلَم. جرّب مرة ثانية');
     await sbPatch('settlements?id=eq.'+id,
       {status:'confirmed', confirmed_at:new Date().toISOString(), confirmed_by:uid});
-    await markOrdersPaid(x.order_ids);
     if(x.driver_id) pushTo(x.driver_id,'الإدارة أكّدت تسديدك',
       'انحسم مبلغ '+Number(x.amount||0).toLocaleString()+' د.ع',{type:'cash_ok'});
     allSetls=allSetls.filter(y=>y.id!==id);
@@ -17979,7 +18117,7 @@ function renderDrAcc(){
     const b=_bal(d.id);
     if(draFil==='due' && b.rem<=0) return false;
     if(draFil==='ok'  && b.rem>0)  return false;
-    if(q && !String(d.name||'').toLowerCase().includes(q) && !String(d.phone||'').includes(q)) return false;
+    if(q && !String(d.name||'').toLowerCase().includes(q) && !String(d.phone||'').includes(q) && !_phMatch(d.phone,q)) return false;
     return true;
   }).sort((x,y)=>_bal(y.id).rem-_bal(x.id).rem);
 
@@ -18106,9 +18244,11 @@ async function adminSetl(id){
     {title:'حسم التسديد', ok:'إي وصل', icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="6.5" width="18" height="12" rx="2.2"/><path d="M3 10.5h18"/><circle cx="16.5" cy="14.5" r="1.1" fill="currentColor" stroke="none"/></svg>'});
   if(!yes) return;
   try{
+    /* v445: نعلّم الطلبات مستلمة أول — وإذا فشلت ما نحسم التسديد (قبل: ينحسم والطلبات تبقى «ما مسدّدة» بدون ما تنتبه) */
+    const bad=await markOrdersPaid(x.order_ids);
+    if(bad && bad.length && x.kind!=='market') return toast('ما انحسمت — '+bad.length+' طلب ما انعلّم مستلَم. جرّب مرة ثانية');
     await sbPatch('settlements?id=eq.'+id,
       {status:'confirmed', confirmed_at:new Date().toISOString(), confirmed_by:uid});
-    await markOrdersPaid(x.order_ids);
     if(x.driver_id) pushTo(x.driver_id,'الإدارة أكّدت تسديدك',
       'انحسم مبلغ '+Number(x.amount||0).toLocaleString()+' د.ع',{type:'cash_ok'});
     toast('انحسمت');
@@ -18400,7 +18540,7 @@ function renderReviews(){
     box.innerHTML='<div class="empty" style="padding:22px"><p>ماكو تقييمات بعد</p></div>';
     return;
   }
-  const stars=n=>'\u2605'.repeat(n)+'\u2606'.repeat(5-n);
+  const stars=n=>{ n=Math.max(0,Math.min(5,Math.round(Number(n)||0))); return '\u2605'.repeat(n)+'\u2606'.repeat(5-n) };   /* v445 */
   box.innerHTML=list.map(o=>{
     const n=Number(isDrv?o.drvRating:o.rating)||0;
     const note=(isDrv?o.drvNote:o.rateNote)||'';
@@ -18408,11 +18548,11 @@ function renderReviews(){
     const dt=new Date(Number(o.ratedAt||o.createdAt||0)).toLocaleDateString('ar-IQ');
     return `<div class="rvc">
       <div class="rvc-h">
-        <b>${who}</b>
+        <b>${esc(who)}</b>
         <span class="rvc-st ${n>=4?'g':(n>=3?'a':'r')}">${stars(n)}</span>
       </div>
       <div class="rvc-m">${esc(o.customer||'زبون')} \u00b7 ${dt}</div>
-      ${note?`<div class="rvc-n">${note}</div>`:'<div class="rvc-n empty2">بلا ملاحظة</div>'}
+      ${note?`<div class="rvc-n">${esc(note)}</div>`:'<div class="rvc-n empty2">بلا ملاحظة</div>'}
     </div>`;
   }).join('');
 }
@@ -18910,7 +19050,11 @@ function ahPeople(){
 async function adminCancel(id,sp,cu){
   const yes=await askConfirm('تلغي هذا الطلب؟<div style="margin-top:6px;font-size:12.5px">الطلب ما ينمسح، بس يصير "ملغي" ويوصل إشعار للزبون.</div>',{title:'إلغاء الطلب',ok:'إي، الغيه',danger:true});
   if(!yes) return;
-  try{ const ok=await rpc('admin_cancel_order',{p_id:String(id), p_special:!!sp});
+  try{
+    /* v445: الدالة بالسيرفر تاخذ p_order و p_reason (قبل كان يرسل p_id فيفشل دايماً). اشتريلي: نغيّر حالته مباشرة */
+    let ok;
+    if(sp){ await db.collection('specialOrders').doc(String(id)).update({status:'cancelled'}); ok='cancelled' }
+    else ok=await rpc('admin_cancel_order',{p_order:String(id), p_reason:'طلب واكف'});
     if(!ok) return toast('الطلب ما ينلغي (يمكن وصل أو انلغى قبل)');
     const L=sp?allSpecial:allOrders; const o=(L||[]).find(x=>String(x.id)===String(id)); if(o) o.status='cancelled';
     if(cu) try{ pushTo(cu,'انلغى طلبك','نعتذر، طلبك انلغى من الإدارة. تكدر تطلب من جديد.',{type:'order_cancel'}) }catch(e){}
@@ -18932,6 +19076,7 @@ function stuckOrders(){
   const ts=o=>_anyTs(o.created_at)||_anyTs(o.createdAt)||0;
   (allOrders||[]).forEach(o=>{
     const age=now-ts(o); if(!ts(o)) return;
+    if(o.scheduled_for && Date.parse(o.scheduled_for)>now-30*M) return;   /* v445: الحجز لوقت جاي مو «واكف» */
     let why='';
     if(o.status==='pending' && age>10*M) why='المطعم ما قبل الطلب';
     else if(o.status==='ready' && !o.driverUid && age>10*M) why='جاهز وما استلمه سائق';
@@ -19662,7 +19807,7 @@ function renderPeople2(fromQ){
     <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="pSrch" placeholder="ابحث بالاسم أو الرقم…" value="${esc(pQ)}" oninput="pQ=this.value;renderPeople2(1)"></div>`
     + (pFil!=='customer'?`<button type="button" class="tm-view pb-btn" onclick="openPushAdmin('${pFil==='store'?'store':'driver'}')">🔔 منو مفعّل الإشعارات ومنو لا ›</button>`:'');
   if(pFil!=='customer') pushStLoad();
-  const q=pQ.trim().toLowerCase(), m=x=>!q||String(x.name||'').toLowerCase().includes(q)||String(x.phone||'').includes(q);
+  const q=pQ.trim().toLowerCase(), m=x=>!q||String(x.name||'').toLowerCase().includes(q)||String(x.phone||'').includes(q)||_phMatch(x.phone,q);
   const row=o=>`<div class="pr2 ${o.cls||''}">
       ${_av(o.img,o.name)}
       <div class="t" ${o.open?`onclick="${o.open}"`:''}><b>${esc(o.name||'—')} <em class="pill ${o.tag[1]}">${o.tag[0]}</em>${o.isNew?'<em class="pill p4new">جديد</em>':''}</b><span>${o.sub}</span>${o.jd?`<span class="jd">🗓️ ${o.jd}</span>`:''}${o.warn?`<span class="w">${o.warn}</span>`:''}${o.extra||''}</div>
@@ -19715,7 +19860,7 @@ async function delShop(id){
 }
 function aoCard(o){
   return `<div class="oc ${OCCLS(o.status)} aotap" onclick="aoOpen('${o.id}')"> <div class="oh"><span class="oid">#${ONO(o)} · ${esc(o.shopName||'')}</span><span class="st st-${o.status}">${LBL[o.status]||o.status}</span></div> <div class="od"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg> ${esc(o.customer||'زبون')} · <span dir="ltr">${esc(o.phone||'—')}</span></div> <div class="od"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr)}</div>
-    ${o.driverName?`<div class="od" style="color:var(--bl);font-weight:700"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> ${esc(o.driverName)} — ${o.driverPhone||'—'}${o.commission?` · عمولة ${o.commission.toLocaleString()} ${o.commissionPaid?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg>'}`:''}</div>`:''}
+    ${o.driverName?`<div class="od" style="color:var(--bl);font-weight:700"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg> ${esc(o.driverName)} — ${esc(o.driverPhone||'—')}${o.commission?` · عمولة ${o.commission.toLocaleString()} ${o.commissionPaid?'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg>':'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg>'}`:''}</div>`:''}
     <div class="op">${(o.total||0).toLocaleString()} د.ع</div></div>`;
 }
 /* ═══ v436: «قائمتي» — أقسام + بحث فوق المنتجات، حتى صاحب المطعم يلگى المنتج بسرعة ═══ */
@@ -19835,7 +19980,7 @@ function aoSpMatch(o,q){
   if(o.deleted_at || !_aoInPer(o)) return false;
   q=(q===undefined?aoQ:q).trim().replace(/^#/,''); if(!q) return true;
   return String(o.order_no||'')===q || String(o.createdAt||'').slice(-6)===q ||
-    [o.customer,o.marketName,o.driverName,o.phone,o.addr,o.itemsText].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()));
+    [o.customer,o.marketName,o.driverName,o.phone,o.addr,o.itemsText].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase())) || _phMatch(o.phone,q);
 }
 function aoSpCard(o){
   const items=String(o.itemsText||'').split(/\n+|<br\s*\/?>/i).map(x=>x.trim()).filter(Boolean);
@@ -19859,7 +20004,7 @@ function aoMatch(o,fil,q){
   if(!_aoInPer(o)) return false;
   if(!q) return true;
   return String(ONO(o))===q || String(o.order_no||'')===q ||
-    [o.customer,o.shopName,o.driverName,o.phone,o.addr].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()));
+    [o.customer,o.shopName,o.driverName,o.phone,o.addr].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase())) || _phMatch(o.phone,q) || _phMatch(o.driverPhone,q);
 }
 function renderAOrders(){
   const ctl=document.getElementById('aoCtl'), box=document.getElementById('aOrders'); if(!box) return;
@@ -19885,8 +20030,9 @@ function renderAOrders(){
     box.innerHTML=SL.map(o=>aoSpCard(o)).join('') || '<div class="pg-empty">ما بيه طلبات اشتريلي</div>';
     return;
   }
-  const list=L.filter(o=>aoMatch(o)).slice(0,60);
-  box.innerHTML=(list.map(o=>aoCard(o)).join('') || '<div class="pg-empty">ما بيه طلبات</div>')+note;
+  const _all=L.filter(o=>aoMatch(o)), list=_all.slice(0,window._aoLim||60);
+  const more=_all.length>list.length?`<button type="button" class="aomore" onclick="window._aoLim=(window._aoLim||60)+60;renderAOrders()">عرض ${Math.min(60,_all.length-list.length)} طلب بعد (${_all.length-list.length} باقي)</button>`:'';   /* v445: قبل يوكف عند 60 بدون ما يگول */
+  box.innerHTML=(list.map(o=>aoCard(o)).join('') || '<div class="pg-empty">ما بيه طلبات</div>')+more+note;
 }
 function aoClose(){ const sh=document.getElementById('aoSheet'); if(sh) sh.classList.remove('on') }
 function aoOpen(id){
@@ -20154,7 +20300,12 @@ async function setShopSec(id,v,btn){
   }
 }
 async function okShop(id,v){
-  try{ await rpc('admin_set_shop_approved',{p_shop:id, p_approved:v, p_open:null}); toast(v?'انعتمد المحل':'انوقف المحل') }
+  const sh=(allShops||[]).find(x=>x.id===id)||{};
+  /* v445: الإيقاف يحتاج تأكيد (قبل: ضغطة وحدة توقف المحل عن الزبائن) */
+  if(!v){ const yes=await askConfirm('توقف «'+esc(sh.name||'هذا المحل')+'»؟ يختفي عن الزبائن لحد ما ترجع تشغّله.',{title:'إيقاف المحل',ok:'إي، أوقفه',danger:true}); if(!yes) return }
+  try{ await rpc('admin_set_shop_approved',{p_shop:id, p_approved:v, p_open:null}); toast(v?'انعتمد المحل':'انوقف المحل')
+    /* v445: نبلّغ صاحب المحل (قبل: ما يدري انقبل) */
+    try{ const own=sh.ownerUid||sh.owner_id; if(own) pushTo(own, v?'✅ انقبل محلك':'⏸️ محلك متوقف', v?'مبروك! محلك صار يطلع للزبائن — ضيف منتجاتك وشغّل «المتجر مفتوح»':'محلك متوقف مؤقتاً — تواصل ويا الإدارة', {type:'join'}) }catch(_){} }
   catch(e){ toast('خطأ:'+errMsg(e)) }
 }
 async function rmShop(id){
@@ -20165,7 +20316,8 @@ async function rmShop(id){
   catch(e){ toast('خطأ:'+errMsg(e)) }
 }
 async function okUser(u,v){
-  try{ await rpc('admin_set_driver_status',{p_driver:u, p_approved:v, p_blocked:false}); toast('انعتمد') }
+  try{ await rpc('admin_set_driver_status',{p_driver:u, p_approved:v, p_blocked:false}); toast('انعتمد')
+    if(v) try{ pushTo(u,'✅ انقبل طلبك','مبروك! صرت سائق بواصل ليمَك — فعّل «متاح الآن» حتى توصلك الطلبات',{type:'join'}) }catch(_){} }   /* v445 */
   catch(e){ toast('خطأ:'+errMsg(e)) }
 }
 async function blockUser(u,v){
@@ -20183,7 +20335,7 @@ async function delMyAccount(){
     {title:'حذف الحساب', ok:'نعم، احذف حسابي', danger:true,
      icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7M6 7l1 12.5A2 2 0 0 0 9 21.5h6a2 2 0 0 0 2-2L18 7"/></svg>'});
   if(!yes)return;
-  try{ await rpc('self_deactivate_profile',{}); toast('انحذف حسابك'); setTimeout(logout,900) }
+  try{ await rpc('self_deactivate_profile',{}); toast('انحذف حسابك'); setTimeout(confirmLogout,900) }
   catch(e){ toast('خطأ:'+errMsg(e)) }
 }
 async function delMyShopAccount(){
@@ -20191,7 +20343,7 @@ async function delMyShopAccount(){
     {title:'حذف حساب المتجر', ok:'نعم، احذف حساب متجري', danger:true,
      icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4.5A1.5 1.5 0 0 1 10.5 3h3A1.5 1.5 0 0 1 15 4.5V7M6 7l1 12.5A2 2 0 0 0 9 21.5h6a2 2 0 0 0 2-2L18 7"/></svg>'});
   if(!yes)return;
-  try{ await rpc('self_deactivate_shop',{}); toast('انحذف حساب متجرك'); setTimeout(logout,900) }
+  try{ await rpc('self_deactivate_shop',{}); toast('انحذف حساب متجرك'); setTimeout(confirmLogout,900) }
   catch(e){ toast('خطأ:'+errMsg(e)) }
 }
 async function drvSentCom(){
@@ -20458,6 +20610,12 @@ function cfgTierRead(p1){
   return [{upto:a,pct:p1},{upto:b,pct:p2},{upto:null,pct:p3}];
 }
 async function saveCfg(){
+  /* v445: إذا الإعدادات ما نزلت من السيرفر (نت ضعيف)، الخانات بيها أرقام افتراضية — الحفظ كان يكتبها فوق الإعدادات الحقيقية (العمولات تنطفي!) */
+  if(!window.__setLoaded){
+    try{ const c=await db.collection('settings').doc('app').get(); if(c && c.exists){ SET={...SET,...c.data()}; window.__setLoaded=1 } }catch(e){}
+    if(window.__setLoaded){ toast('نزلت الإعدادات الحقيقية — راح نحدّث الصفحة، راجعها وبعدين احفظ'); setTimeout(()=>{ try{ location.reload() }catch(_){} },1600); return }
+    return toast('ما نزلت الإعدادات من السيرفر — تأكد من النت قبل الحفظ');
+  }
   const v={deliveryFee:parseInt(cfgFee.value)||1250,
            specialFee:parseInt(cfgSpecial.value)||2000,
            commissionPerOrder:parseInt(cfgCom.value)||0,
@@ -20962,7 +21120,7 @@ function holdBox(o){
       <div class="hold-tx"><b>تنتظر الإدارة تحل المشكلة</b><span>${esc(o.hold_reason||'الزبون ما استلم')}</span></div>
       <b class="hold-tm" data-hold-tm>${holdFmt(el)}</b></div>
     <div class="hold-msg">الطلب يضل عندك. الإدارة راح تتصل بالزبون. إذا استلم، اضغط «تم إكمال الطلب».</div>
-    <div class="hold-acts">${o.phone?`<a class="ub ub-s" href="tel:${o.phone}">${HOLD_PH} اتصل بالزبون</a>`:''}<button class="ub ub-d hold-end" onclick="rfEndWait('${o.id}')">رجّع الطلب للمحل</button></div>
+    <div class="hold-acts">${o.phone?`<a class="ub ub-s" href="tel:${esc(o.phone)}">${HOLD_PH} اتصل بالزبون</a>`:''}<button class="ub ub-d hold-end" onclick="rfEndWait('${o.id}')">رجّع الطلب للمحل</button></div>
     <div class="hold-wait">إذا الإدارة ما ردّت، تكدر ترجّعه للمحل بعد <b data-hold-left>${holdFmt(HOLD_MAX-el)}</b></div>
   </div>`;
 }
@@ -21014,8 +21172,8 @@ function holdAdmPaint(){
   el.innerHTML=`<div class="ha-h">⏳ طلبات معلّقة — السائق ينتظر <i>${L.length}</i></div>`+L.map(o=>{ const at=holdMs(o); return `<div class="ha-c${Date.now()-at>=HOLD_MAX?' late':''}" data-hold-at="${at}">
     <div class="ha-top"><b>طلب #${esc(String(holdNo(o)))} · ${esc(o.shopName||'')}</b><b class="hold-tm" data-hold-tm>${holdFmt(Date.now()-at)}</b></div>
     <div class="ha-r">${esc(o.hold_reason||'الزبون ما استلم')}</div>
-    <div class="ha-p"><span>الزبون</span><b>${esc(o.customer||'—')}</b>${o.phone?`<a href="tel:${o.phone}" aria-label="اتصل">${HOLD_PH}</a>`:''}</div>
-    <div class="ha-p"><span>السائق</span><b>${esc(o.driverName||'—')}</b>${o.driverPhone?`<a href="tel:${o.driverPhone}" aria-label="اتصل">${HOLD_PH}</a>`:''}</div>
+    <div class="ha-p"><span>الزبون</span><b>${esc(o.customer||'—')}</b>${o.phone?`<a href="tel:${esc(o.phone)}" aria-label="اتصل">${HOLD_PH}</a>`:''}</div>
+    <div class="ha-p"><span>السائق</span><b>${esc(o.driverName||'—')}</b>${o.driverPhone?`<a href="tel:${esc(o.driverPhone)}" aria-label="اتصل">${HOLD_PH}</a>`:''}</div>
     <div class="ha-acts"><button class="ub ub-p" onclick="holdDeliver('${o.id}')">يكمّل التوصيل</button><button class="ub ub-d" onclick="holdCancel('${o.id}')">ينلغي</button></div>
   </div>` }).join('');
 }
@@ -21217,7 +21375,7 @@ async function podPicked(inp){
   let er=document.getElementById('podErr'); if(er) er.textContent='… جاري رفع الصورة';
   let ref='';
   try{ ref=await uploadImage(f,'pod',{private:true,size:900,quality:0.6}) }
-  catch(e){ _podBusy(false); er=document.getElementById('podErr'); if(er) er.textContent='ما انرفعت الصورة — جرّب مرة ثانية'; return }
+  catch(e){ _podBusy(false); er=document.getElementById('podErr'); if(er) er.textContent=(/نت|اتصال/.test(errMsg(e))?errMsg(e):'ما انرفعت الصورة — جرّب مرة ثانية'); return }
   er=document.getElementById('podErr'); if(er) er.textContent='';
   await _podSend({p_photo:ref});
 }
@@ -26089,6 +26247,8 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 #stMenuCtl .chip b{margin-inline-start:4px;opacity:.75}
 #stMenuCtl .chip.smoff:not(.on){color:#D92D20;border-color:#F6C9C4;background:#FFF5F4}
 .pfm .phead{align-items:center}
+#auth .forgot.flash{animation:fgFlash .6s ease-in-out 4;color:#F97402}
+@keyframes fgFlash{50%{transform:scale(1.08)}}
 #vmAddr:empty{display:none}
 .pfm-del{display:block;width:100%;margin-top:10px;border:0;background:none;color:#D92D20;font:inherit;font-size:13.5px;font-weight:800;padding:10px;cursor:pointer}
 #stMenu .smgh{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:900;color:#5B5470;margin:14px 2px 2px}
@@ -26155,6 +26315,7 @@ html[data-theme=dark] .pfm-jump{background:#2a2246;border-color:#3a3160;color:#c
 .aoper{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#F4F0FF;border:1px solid #E4DCFB;color:#4b2fa8;border-radius:14px;padding:9px 12px;margin:0 0 10px;font-size:12.5px;font-weight:800}
 .aoper button{border:0;background:#fff;color:#4b2fa8;border-radius:10px;padding:5px 10px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
 .aonote{font-size:11.5px;color:var(--mut);text-align:center;margin:6px 0 12px}
+.aomore{display:block;width:100%;margin:6px 0 12px;border:1px dashed #D9D2F0;background:#FAF8FE;color:#4b2fa8;border-radius:12px;padding:11px;font:inherit;font-size:13px;font-weight:800;cursor:pointer}
 html[data-theme=dark] .aoper{background:#2a2246;border-color:#3a3160;color:#cfc2ff}
 html[data-theme=dark] .aoper button{background:#1c1730;color:#cfc2ff}
 /* v347: تحكم الطلبات بلوحة الإدارة */
@@ -26423,7 +26584,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v444', seen={}, n=0, q=[], t=null;
+  var VER='v445', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26675,7 +26836,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v444', t0=Date.now();
+  var VER='v445', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
