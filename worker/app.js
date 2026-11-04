@@ -223,6 +223,9 @@ export default {
     const url = new URL(req.url);
     if (url.pathname === '/_bg') return bgRemove(req, env, url);
     if (url.pathname === '/_nudge') return nudge(req, env);
+    /* v447: صفحات الفحص مسدودة — تشتغل بس إذا بالرابط مفتاح سرّي (DIAG_KEY بإعدادات Cloudflare). بدونه: 404 */
+    if ((url.pathname === '/_pushstats' || url.pathname === '/_pushtest') &&
+        !(env.DIAG_KEY && url.searchParams.get('k') === env.DIAG_KEY)) return new Response('Not found', { status: 404 });
     if (url.pathname === '/_pushstats') return pushStats(env);
     if (url.pathname === '/_pushtest') return url.searchParams.get('u') ? pushTestUser(env, url.searchParams.get('u'), url.searchParams.get('send') === '1',
                                                 { p: url.searchParams.get('p') || '', noch: url.searchParams.get('ch') === '0' })

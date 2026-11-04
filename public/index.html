@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v446</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v447</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7173,7 +7173,7 @@ function boot(){
   auth.onAuthStateChanged(async u=>{
     if(signingUp) return;                 // التسجيل يكمّل بنفسه
     window.__step=u?'user':'login';
-    if(!u){ uid=null; me=null; bootClear(); busy(false); document.getElementById('auth').classList.add('on'); try{ suRestore() }catch(_){}
+    if(!u){ uid=null; me=null; bootClear(); busy(false); document.getElementById('auth').classList.add('on'); try{ suRestore() }catch(_){} try{ dwResume() }catch(_){}
       try{ if(sessionStorage.getItem('lw_sess_exp')){ sessionStorage.removeItem('lw_sess_exp'); setTimeout(()=>showErr('انتهت جلستك — سجّل دخول مرة ثانية'),200) } }catch(_){}
       if(_staffPollTimer){ clearInterval(_staffPollTimer); _staffPollTimer=null }
       return }
@@ -9576,6 +9576,7 @@ function enter(){
   if(me.role==='customer'){ try{ loadStaff().then(()=>{ try{ renderStaffCard() }catch(e){} try{ staffWatch() }catch(e){} }).catch(()=>{}) }catch(e){} try{ startStaffPoll() }catch(e){}
     try{ if(!window.__bnLoaded){ window.__bnLoaded=1; loadBanners() } }catch(e){} }   /* v445: البنرات كانت تنزل بس لمن يسكّر ويفتح */
   try{ if(me.role==='driver' && typeof _dwOpen==='function' && _dwOpen()){ dwStep=8; dwPaint() } }catch(e){}   /* v445: بعد رمز الواتساب */
+  try{ dwOnEnter() }catch(e){}   /* v447: مسودة تسجيل السائق */
   try{ suClear() }catch(e){}   /* v445: مسودة التسجيل ما تبقى لشخص ثاني على نفس التلفون */
   window.__sbPolicy = (me.role==='customer') ? CUST_POLICY : ((me.role==='driver' || me.role==='store') ? STAFF_POLICY : null);
   setTimeout(()=>{ try{ termsCheck() }catch(e){} },2500);
@@ -10525,12 +10526,58 @@ function renderCats(){
 }
 /* ══════════ معالج تسجيل السائق — ٨ خطوات ══════════ */
 let dwStep=1, dwData={veh:'دراجة', payout:'cash'};
-function dwOpen(){ dwStep=1; dwPaint(); document.getElementById('drvWiz').classList.add('on') }
-function dwClose(){ document.getElementById('drvWiz').classList.remove('on') }
+/* ═══ v447: مسودة تسجيل السائق — إذا الصفحة تحدّثت بالنص (رجع من الواتساب، أو الكاميرا سكّرت التطبيق بالتلفونات الضعيفة)
+   يرجع لنفس الخطوة وكل اللي كتبه موجود. كلمة المرور ما تنحفظ أبداً. صور المستمسكات (قبل ما يصير الحساب) تبقى بالتلفون بس (IndexedDB).
+   تنمسح: بعد ما ينرسل الطلب، أو لمن أي حساب يدخل، أو بعد 12 ساعة ═══ */
+const DW_KEY='lw_dw_draft', DW_DTTL=12*3600*1000;
+function _dwIDB(){ return new Promise((res,rej)=>{ try{ const r=indexedDB.open('lw_dw',1);
+  r.onupgradeneeded=()=>{ try{ r.result.createObjectStore('f') }catch(e){} }; r.onsuccess=()=>res(r.result); r.onerror=()=>rej(r.error) }catch(e){ rej(e) } }) }
+async function _dwFilePut(k,f){ try{ const d=await _dwIDB(); await new Promise((res,rej)=>{ const tx=d.transaction('f','readwrite'); tx.objectStore('f').put(f,k); tx.oncomplete=res; tx.onerror=()=>rej(tx.error) }); d.close() }catch(e){} }
+async function _dwFileGet(k){ try{ const d=await _dwIDB(); const v=await new Promise((res,rej)=>{ const q=d.transaction('f','readonly').objectStore('f').get(k); q.onsuccess=()=>res(q.result||null); q.onerror=()=>rej(q.error) }); d.close(); return v }catch(e){ return null } }
+async function _dwFilesClear(){ try{ const d=await _dwIDB(); await new Promise(res=>{ const tx=d.transaction('f','readwrite'); tx.objectStore('f').clear(); tx.oncomplete=res; tx.onerror=res }); d.close() }catch(e){} }
+function dwDraftGet(){ try{ const x=JSON.parse(localStorage.getItem(DW_KEY)||'null'); if(!x) return null;
+  if(Date.now()-Number(x.t||0)>DW_DTTL){ dwDraftClear(); return null } return x }catch(e){ return null } }
+function dwDraftClear(){ try{ localStorage.removeItem(DW_KEY) }catch(e){} _dwFilesClear() }
+function dwSave(){
+  try{
+    if(dwStep>=8) return dwDraftClear();          /* انرسل الطلب */
+    if(dwStep<=1) return;                         /* بعده ما بدا */
+    const d={}; for(const k in dwData){ if(k!=='pass') d[k]=dwData[k] }
+    localStorage.setItem(DW_KEY, JSON.stringify({t:Date.now(), step:dwStep, open:_dwOpen(), up:!!dwData.up, uid:dwData.up?uid:null, d}));
+  }catch(e){}
+}
+async function dwRestore(up){
+  const x=dwDraftGet(); if(!x || !!x.up!==!!up || (up && x.uid!==uid)) return false;
+  dwData=Object.assign({veh:'دراجة', payout:'cash'}, x.d||{}); if(up) dwData.up=true;
+  dwStep=Math.min(7, Math.max(1, Number(x.step)||1));
+  window.__dwFiles=window.__dwFiles||{};
+  for(const k of DW_PRIV){
+    if(String(dwData[k]||'').indexOf('pending:')!==0) continue;
+    const f=window.__dwFiles[k] || await _dwFileGet(k);
+    if(f) window.__dwFiles[k]=f; else delete dwData[k];   /* الصورة ضاعت — يرجع يصوّرها بس هي */
+  }
+  return true;
+}
+async function dwResume(){   /* الصفحة تحدّثت والسائق كان بنص التسجيل — نرجّعه لنفس المكان */
+  const x=dwDraftGet(); if(!x || !x.open || _dwOpen()) return;
+  if(x.up){ if(!(me && me.role==='customer' && uid && x.uid===uid)) return }
+  else if(uid) return;
+  if(!(await dwRestore(!!x.up))) return;
+  document.getElementById('drvWiz').classList.add('on'); dwPaint();
+  toast('رجّعناك لنفس مكانك بالتسجيل ✓');
+}
+function dwOnEnter(){
+  const x=dwDraftGet(); if(!x) return;
+  if(me && me.role==='driver'){ dwDraftClear(); return }              /* صار سائق — خلص */
+  if(!x.up){ if(!_dwOpen()) dwDraftClear(); return }                    /* مسودة شخص ثاني على نفس التلفون */
+  if(x.uid===uid && me && me.role==='customer') setTimeout(()=>{ try{ dwResume() }catch(e){} },600);
+}
+async function dwOpen(){ if(!(await dwRestore(false))){ if(dwData.up) dwData={veh:'دراجة', payout:'cash'}; dwStep=1 } dwPaint(); document.getElementById('drvWiz').classList.add('on'); dwSave() }
+function dwClose(){ document.getElementById('drvWiz').classList.remove('on'); dwSave() }
 function dwBack(){ if(dwStep<=1) return dwClose(); dwStep--; if(dwStep===5) dwStep=4; dwPaint() }
-function dwSet(k,v){ dwData[k]=v; dwValid() }
+function dwSet(k,v){ dwData[k]=v; dwValid(); dwSave() }
 function dwPick(k,v,el){
-  dwData[k]=v;
+  dwData[k]=v; dwSave();
   const box=el.parentElement;
   box.querySelectorAll('.dw-opt').forEach(b=>b.classList.remove('on'));
   el.classList.add('on');
@@ -10547,7 +10594,7 @@ async function dwShot(inp,key,boxId){
   if(isDoc && !(auth.currentUser&&auth.currentUser.uid)){
     window.__dwFiles[key]=f; dwData[key]='pending:'+key;
     if(box) box.innerHTML='<span class="dw-ok2">✓ جاهزة</span>';
-    inp.value=''; dwValid(); return;
+    inp.value=''; dwValid(); _dwFilePut(key,f); dwSave(); return;   /* v447: تبقى بالتلفون لو الصفحة تحدّثت */
   }
   if(box) box.innerHTML='<span class="dw-up">… جاري الرفع</span>';
   else toast('… جاري رفع الصورة');   /* v324: الصورة الشخصية ما إلها مربع — نبيّن إنها دا ترفع */
@@ -10562,7 +10609,7 @@ async function dwShot(inp,key,boxId){
     toast('ما انرفعت الصورة: '+e.message);
     if(box) box.innerHTML='<span class="dw-up">اضغط للرفع</span>';
   }
-  inp.value=''; dwValid();
+  inp.value=''; dwValid(); dwSave();
 }
 function dwField(id,label,type,val,ph){
   const Q=String.fromCharCode(39);
@@ -10684,7 +10731,7 @@ function dwPaint(){
   b.innerHTML=h;
   b.scrollTop=0;
   if(dwStep===2){ try{ const _d=new Date(); _d.setFullYear(_d.getFullYear()-18); const _i=document.getElementById('dob'); if(_i) _i.max=_d.toISOString().slice(0,10) }catch(e){} }
-  dwValid();
+  dwValid(); dwSave();
 }
 /* v324: عمر السائق لازم 18 سنة أو أكثر */
 function dwAge(v){ const t=Date.parse(v||''); if(isNaN(t)) return -1; const b=new Date(t), n=new Date();
@@ -10722,6 +10769,9 @@ async function dwNextStep(){
 }
 async function dwSubmit(){
   if(dwData.up) return dwUpgradeSubmit();   /* v385: زبون يصير سائق */
+  /* v447: كلمة المرور ما تنحفظ بالمسودة — إذا رجع بعد ما الصفحة تحدّثت، يكتبها مرة ثانية بس */
+  if((dwData.pass||'').length<8){ dwStep=2; dwPaint(); toast('اكتب كلمة المرور مرة ثانية');
+    setTimeout(()=>{ try{ const p=document.getElementById('pass'); p.scrollIntoView({block:'center'}); p.focus() }catch(e){} },150); return }
   const nx=document.getElementById('dwNext');
   nx.disabled=true; nx.textContent='… جاري الإرسال';
   try{
@@ -10758,8 +10808,10 @@ async function dwUpgradeOpen(){
   if(act.length) return toast('عندك طلب شغّال — قدّم بعد ما يوصل طلبك');
   const ok=await askConfirm('حسابك يتحول لحساب <b>سائق</b> وينتظر موافقة الإدارة.<div style="margin-top:8px;font-size:13px">من حساب السائق تگدر تطلب لنفسك عادي. وإذا ما انقبلت أو غيّرت رأيك، ترجع زبون بضغطة.</div>',{title:'🛵 اشتغل ويانا سائق',ok:'إي، قدّم'});
   if(!ok) return;
-  dwData={veh:'دراجة', payout:'cash', up:true, name:me.name||'', phone:me.phone||'', addr:me.addr||'', photo:me.photo||''};
-  dwStep=1; dwPaint(); document.getElementById('drvWiz').classList.add('on');
+  if(!(await dwRestore(true))){   /* v447: إذا بدا قبل وما كمّل — يكمّل من نفس المكان */
+    dwData={veh:'دراجة', payout:'cash', up:true, name:me.name||'', phone:me.phone||'', addr:me.addr||'', photo:me.photo||''};
+    dwStep=1 }
+  dwPaint(); document.getElementById('drvWiz').classList.add('on'); dwSave();
 }
 async function dwUpgradeSubmit(){
   const nx=document.getElementById('dwNext');
@@ -19688,7 +19740,7 @@ function renderAdmin(){
     || '<div class="empty" style="padding:22px"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><p>ما بيه طلبات</p></div>';
 
   // انضمام
-  const pendShops=allShops.filter(x=>x.approved!==true);
+  const pendShops=allShops.filter(x=>x.approved!==true&&!x.rejected_at&&!x.suspended_at&&!x.deleted_at);
   const pendDrv=allUsers.filter(u=>u.role==='driver'&&u.approved!==true);
   const n=pendShops.length+pendDrv.length;
   const jb=document.getElementById('joinCnt'); jb.style.display=n?'flex':'none'; jb.textContent=n;
@@ -19746,7 +19798,8 @@ let joinFil='';   /* v366: طلبات الانضمام قسمين — السوا
 function renderJoin2(){
   const box=document.getElementById('aPending'); if(!box) return;
   /* v352: المرفوضين ما يبينون بطلبات الانضمام — ينحطّون بقائمة «المرفوضين» تحت */
-  const ps=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&!x.rejected_at), pd=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&!u.rejected_at);
+  /* v447: المحل الموقوف (suspended_at) مو طلب انضمام — يبين بـ«المشتركين» مكتوب عليه «موقوف» */
+  const ps=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&!x.rejected_at&&!x.suspended_at), pd=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&!u.rejected_at);
   const rjS=(allShops||[]).filter(x=>_notDeleted(x)&&x.approved!==true&&x.rejected_at), rjD=(allUsers||[]).filter(u=>_notDeleted(u)&&u.role==='driver'&&u.approved!==true&&u.rejected_at);
   try{ bnPendLoad() }catch(e){}   /* v384: بنرات تنتظر موافقتك */
   const _nb=(_bnPend||[]).length;
@@ -26592,7 +26645,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v446', seen={}, n=0, q=[], t=null;
+  var VER='v447', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26844,7 +26897,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v446', t0=Date.now();
+  var VER='v447', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
