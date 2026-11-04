@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v445</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v446</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -15548,6 +15548,8 @@ function _renderDriverBody(){
   const owedMap = {};
   owedList.forEach(o=>{
     const isSp = !!o.marketName;
+    /* v446: اشتريلي — السائق يدفع للسوق بإيده وقت الشراء (عبد أكّد) — فما عليه دين للسوق. عمولة التطبيق تبقى محسوبة تحت */
+    if(isSp && !o.shopName) return;
     const nm = isSp ? (o.marketName+' (سوق)') : (o.shopName||'محل غير معروف');
     /* نفصل المُسلّم عن غير المُسلّم — قبل كان طلب واحد مُسلّم
        يأشّر كل طلبات نفس المحل كأنها مُسلّمة */
@@ -21344,6 +21346,8 @@ function podPaint(err){
     ${lk?'':`<button class="odt-btn ret go pod-go" id="podGoBt" onclick="podGo()">تأكيد التسليم</button>`}
     <button class="${lk?'odt-btn ret go pod-go':'pod-alt'}" id="podAltBt" onclick="document.getElementById('podFile').click()">📷 ${lk?'صوّر الطلب وسلّمه':'الزبون ما عنده الرمز؟ صوّر الطلب عند الباب (بدون أشخاص)'}</button>
     <input type="file" accept="image/*" capture="environment" id="podFile" style="display:none" onchange="podPicked(this)">
+    <button type="button" class="pod-gal" onclick="document.getElementById('podGal').click()">الكاميرا ما تشتغل؟ اختار صورة صوّرتها هسه</button>
+    <input type="file" accept="image/*" id="podGal" style="display:none" onchange="podPicked(this,true)">
    </div></div>`;
 }
 function _podBusy(on){ if(_pdx) _pdx.busy=!!on; ['podGoBt','podAltBt'].forEach(k=>{ const b=document.getElementById(k); if(b) b.disabled=!!on }) }
@@ -21367,10 +21371,13 @@ async function podGo(){
   if(v.length!==4){ const er=document.getElementById('podErr'); if(er) er.textContent='اكتب الرمز — 4 أرقام'; return }
   _podBusy(true); await _podSend({p_code:v});
 }
-async function podPicked(inp){
+async function podPicked(inp,gal){
   const f=inp.files&&inp.files[0]; inp.value='';
   if(!f||!_pdx||_pdx.busy) return;
   if(!/^image\//.test(f.type||'')) return toast('اختر صورة');
+  /* v446: إذا الكاميرا ما تشتغل يختار من الاستوديو — بس صورة متصوّرة خلال آخر 10 دقايق (حتى ما يحط صورة قديمة) */
+  if(gal){ const age=Date.now()-Number(f.lastModified||0);
+    if(!f.lastModified || age>10*60000 || age<-5*60000){ const er=document.getElementById('podErr'); if(er) er.textContent='هاي الصورة قديمة — صوّر الطلب هسه بكاميرة التلفون وبعدين اختارها'; return } }
   _podBusy(true);
   let er=document.getElementById('podErr'); if(er) er.textContent='… جاري رفع الصورة';
   let ref='';
@@ -26247,6 +26254,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 #stMenuCtl .chip b{margin-inline-start:4px;opacity:.75}
 #stMenuCtl .chip.smoff:not(.on){color:#D92D20;border-color:#F6C9C4;background:#FFF5F4}
 .pfm .phead{align-items:center}
+.pod-gal{display:block;width:100%;margin-top:10px;border:0;background:none;color:#6b6580;font:inherit;font-size:12.5px;font-weight:700;text-decoration:underline;cursor:pointer;padding:6px}
 #auth .forgot.flash{animation:fgFlash .6s ease-in-out 4;color:#F97402}
 @keyframes fgFlash{50%{transform:scale(1.08)}}
 #vmAddr:empty{display:none}
@@ -26584,7 +26592,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v445', seen={}, n=0, q=[], t=null;
+  var VER='v446', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26836,7 +26844,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v445', t0=Date.now();
+  var VER='v446', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
