@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v437';
+const VER = 'leemak-v438';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 200;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -85,8 +85,10 @@ self.addEventListener('activate', e => {
     const has = await (await caches.open(VER)).match('/index.html');
     const ks = await caches.keys();
     /* v352: إذا النسخة الجديدة ما محفوظة بعد، نخلي القديمة احتياط */
+    const upd = ks.some(k => k !== VER && k.indexOf('leemak-v') === 0);   /* v438: كان أكو إصدار قبله = هذا تحديث */
     await Promise.all(ks.filter(k => k !== VER && k !== IMGC && k !== LIBC && (has || k.indexOf('leemak-v') !== 0)).map(k => caches.delete(k)));
     await self.clients.claim();
+    if(upd && has) await notifyUpdate();
   })());
 });
 
@@ -96,11 +98,17 @@ async function notifyUpdate(){
 }
 
 /* يخزّن النسخة الجديدة، وإذا تغيّرت عن المخزنة يبلّغ الصفحة */
+/* v438: صفحة التطبيق ما بيها etag ولا content-length — فنقارن رقم الإصدار (appVer) من داخل الصفحة نفسها.
+   قبل: المقارنة تفشل دايماً وشريط «فيه تحديث جديد» ما يطلع أبد */
+async function verOf(r){
+  try{ const t = await r.clone().text(); const m = t.match(/id="appVer">(v\d+)</); return m ? m[1] : null }catch(e){ return null }
+}
 async function store(c, key, res, notify){
   try{
     const old = notify ? await c.match(key) : null;
-    const a = old && (old.headers.get('etag') || old.headers.get('content-length'));
-    const b = res.headers.get('etag') || res.headers.get('content-length');
+    let a = old && (old.headers.get('etag') || old.headers.get('content-length'));
+    let b = res.headers.get('etag') || res.headers.get('content-length');
+    if(old && (!a || !b)){ a = await verOf(old); b = await verOf(res) }
     await c.put(key, res.clone());
     if(old && a && b && a !== b) notifyUpdate();
   }catch(e){}
