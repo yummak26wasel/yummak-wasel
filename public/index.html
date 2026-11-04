@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v439</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v440</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -8336,7 +8336,7 @@ async function openViewMap(loc, title, addr){
       _vmMap.setView([loc.lat,loc.lng],17);
     }
     if(_vmMarker) _vmMap.removeLayer(_vmMarker);
-    _vmMarker=L.marker([loc.lat,loc.lng]).addTo(_vmMap);
+    _vmMarker=L.marker([loc.lat,loc.lng],{icon:_HOME_ICON()}).addTo(_vmMap);
     setTimeout(()=>{ try{ _vmMap.invalidateSize() }catch(e){} },250);
     if(ld) ld.classList.add('gone');
   }catch(e){
@@ -16603,9 +16603,8 @@ function loadMapLibre(){
 var MAP_TAREKY=true;    /* v423: خريطة «طريق» بكل الشاشات (طلب عبد). إذا ما اشتغلت لأي سبب ترجع OSM وحدها. false = OSM */
 /* v348: تجربة خريطة OpenFreeMap «Liberty» (شكل قريب من Google، مجانية وبلا مفتاح).
    تنفتح بس بالرابط ?map=new وتبقى لهذا التلفون — و ?map=old يرجّع القديمة. الباقين ما يتغير عليهم شي. */
-var MAP_NEW=(function(){ try{ const q=new URLSearchParams(location.search).get('map');
-  if(q==='new') localStorage.setItem('wl_map','new'); if(q==='old') localStorage.removeItem('wl_map');
-  return localStorage.getItem('wl_map')==='new' }catch(e){ return false } })();
+/* v440: التجربة خلصت — «طريق» صارت للكل. نمسح أي اختيار قديم محفوظ بالتلفون (كان يخلي بعض التلفونات على OpenFreeMap) */
+var MAP_NEW=(function(){ try{ localStorage.removeItem('wl_map') }catch(e){} try{ return new URLSearchParams(location.search).get('map')==='new' }catch(e){ return false } })();
 const OFM_STYLE='https://tiles.openfreemap.org/styles/liberty';
 async function tarekyTiles(map){
   if(!MAP_TAREKY && !MAP_NEW){ try{ tiles().addTo(map) }catch(_){} return; }
@@ -16824,8 +16823,8 @@ function preview(elId,loc,key){
   const el=document.getElementById(elId); if(!el||!loc||!loc.lat)return;
   const ph='<div class="prevmap" style="display:flex;align-items:center;justify-content:center;gap:8px;font-weight:800;color:var(--g);background:linear-gradient(135deg,#eef7f1,#f7faf8);border:1px solid var(--bd);border-radius:12px;min-height:72px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> '+(loc.zone||'موقع التوصيل')+' <span style="font-size:11px;color:var(--mut)">اضغط لفتح الخريطة</span></div>';
   el.innerHTML=ph;
-  /* الضغط يفتح الخريطة داخل التطبيق (مو قوقل) */
-  el.onclick=()=>{ try{ openViewMap(loc, loc.zone||'الموقع', '') }catch(e){} };
+  /* v440: الضغط على خريطتك الصغيرة يفتح «تعديل الموقع» (مثل التطبيقات العالمية) — قبل كان يفتح شاشة «افتح الملاحة بخرائط جوجل» وهي للسائق مو إلك */
+  el.onclick=()=>{ try{ openMap(key==='sh'?'shop':'delivery', false) }catch(e){} };
   /* v324: صورة خريطة جاهزة من «طريق» (أخف من خريطة كاملة)، وإذا ما نزلت نرجع للطريقة القديمة */
   if(MAP_TAREKY) try{
     const w=Math.min(640, Math.max(240, Math.round(el.clientWidth||340)));
@@ -26053,6 +26052,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 #stMenuCtl .chip b{margin-inline-start:4px;opacity:.75}
 #stMenuCtl .chip.smoff:not(.on){color:#D92D20;border-color:#F6C9C4;background:#FFF5F4}
 .pfm .phead{align-items:center}
+#vmAddr:empty{display:none}
 .pfm-del{display:block;width:100%;margin-top:10px;border:0;background:none;color:#D92D20;font:inherit;font-size:13.5px;font-weight:800;padding:10px;cursor:pointer}
 #stMenu .smgh{display:flex;align-items:center;gap:6px;font-size:13px;font-weight:900;color:#5B5470;margin:14px 2px 2px}
 #stMenu .smgh:first-child{margin-top:2px}
@@ -26386,7 +26386,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v439', seen={}, n=0, q=[], t=null;
+  var VER='v440', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26638,7 +26638,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v439', t0=Date.now();
+  var VER='v440', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
