@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v440</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v441</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -16606,6 +16606,36 @@ var MAP_TAREKY=true;    /* v423: خريطة «طريق» بكل الشاشات (
 /* v440: التجربة خلصت — «طريق» صارت للكل. نمسح أي اختيار قديم محفوظ بالتلفون (كان يخلي بعض التلفونات على OpenFreeMap) */
 var MAP_NEW=(function(){ try{ localStorage.removeItem('wl_map') }catch(e){} try{ return new URLSearchParams(location.search).get('map')==='new' }catch(e){ return false } })();
 const OFM_STYLE='https://tiles.openfreemap.org/styles/liberty';
+/* v441: ستايل «طريق» الفاتح ما يرسم المعالم (مستشفى، جامع، مدرسة…) مع إنها موجودة بالخريطة نفسها —
+   نضيفها إحنا: نقطة ملوّنة + الاسم بالعربي. المهمة تطلع من زوم 14، والباقي (محلات…) من زوم 16. وأسماء الأحياء من زوم 12 */
+function _tkPoi(gl){
+  try{
+    if(!gl || !gl.getSource('openmaptiles') || gl.getLayer('lw-poi-a')) return;
+    const NM=['coalesce',['get','name:ar'],['get','name'],''];
+    const KEY=['hospital','pharmacy','place_of_worship','school','college','university','police','town_hall','fuel','bank','post','stadium'];
+    const CLR=['match',['get','class'],
+      'hospital','#E5484D', 'pharmacy','#DB2777', 'place_of_worship','#15803D',
+      ['school','college','university','library'],'#2563EB',
+      ['bank','atm'],'#7C3AED', 'fuel','#EA580C',
+      ['police','town_hall','post'],'#475569',
+      ['shop','grocery','supermarket','bakery','convenience','clothing_store','cafe','restaurant','fast_food'],'#D96500',
+      '#6b6580'];
+    const add=(id,minz,filt)=>{
+      try{ gl.addLayer({id:id+'-dot',type:'circle',source:'openmaptiles','source-layer':'poi',minzoom:minz,filter:filt,
+        paint:{'circle-radius':['interpolate',['linear'],['zoom'],14,3.5,18,6],'circle-color':CLR,'circle-stroke-color':'#ffffff','circle-stroke-width':1.5}}) }catch(e){}
+      try{ gl.addLayer({id:id,type:'symbol',source:'openmaptiles','source-layer':'poi',minzoom:minz,filter:filt,
+        layout:{'text-field':NM,'text-font':['Noto Sans Regular','Noto Sans Arabic Regular'],'text-size':['interpolate',['linear'],['zoom'],14,10.5,18,13],
+          'text-anchor':'top','text-offset':[0,0.55],'text-max-width':9},
+        paint:{'text-color':CLR,'text-halo-color':'#ffffff','text-halo-width':1.4}}) }catch(e){}
+    };
+    add('lw-poi-a',14,['all',['has','name'],['match',['get','class'],KEY,true,false]]);
+    add('lw-poi-b',16,['all',['has','name'],['match',['get','class'],KEY,false,true]]);
+    try{ gl.addLayer({id:'lw-place-s',type:'symbol',source:'openmaptiles','source-layer':'place',minzoom:12,
+      filter:['match',['get','class'],['village','suburb','neighbourhood','quarter','hamlet'],true,false],
+      layout:{'text-field':NM,'text-font':['Noto Sans Bold','Noto Sans Arabic Bold'],'text-size':['interpolate',['linear'],['zoom'],12,11,16,14],'text-max-width':8},
+      paint:{'text-color':'#6b6580','text-halo-color':'#f9f8f5','text-halo-width':1.4}}) }catch(e){}
+  }catch(e){ try{ __silent(e,'tkPoi') }catch(_){} }
+}
 async function tarekyTiles(map){
   if(!MAP_TAREKY && !MAP_NEW){ try{ tiles().addTo(map) }catch(_){} return; }
   let done=false;
@@ -16618,7 +16648,7 @@ async function tarekyTiles(map){
     const gl=lyr.getMaplibreMap&&lyr.getMaplibreMap();
     const tmr=setTimeout(()=>{ if(!done){ try{ map.removeLayer(lyr) }catch(_){} fallback('style timeout') } },9000);
     if(gl){
-      gl.once('load',()=>{ if(!done){ done=true; clearTimeout(tmr) } });
+      gl.once('load',()=>{ if(!done){ done=true; clearTimeout(tmr) } if(!MAP_NEW) _tkPoi(gl) });
       gl.on('error',ev=>{ const st=ev&&ev.error&&ev.error.status; if(!done && (st===401||st===403||st===429||!gl.isStyleLoaded())){ clearTimeout(tmr); try{ map.removeLayer(lyr) }catch(_){} fallback('style error '+(st||'')) } });
     }
     try{ L.control.attribution({prefix:false,position:'bottomleft'}).addAttribution(MAP_NEW?'© OpenFreeMap © OpenMapTiles © OpenStreetMap':'© OpenMapTiles © OpenStreetMap').addTo(map) }catch(_){}
@@ -26386,7 +26416,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v440', seen={}, n=0, q=[], t=null;
+  var VER='v441', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26638,7 +26668,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v440', t0=Date.now();
+  var VER='v441', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
