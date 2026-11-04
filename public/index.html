@@ -19708,29 +19708,35 @@ function _smGroups(ps){
 }
 function smSet(k){ smCat=(smCat===k?'':k); renderStMenu() }
 /* v439: صف مضغوط مثل تطبيقات المطاعم العالمية — تضغط على المنتج يفتح التعديل، والمفتاح متوفر/نفذ على الجنب، والحذف داخل التعديل */
-/* v439: − / + جنب السعر — كل ضغطة 250 د.ع، ويحفظ لوحده بعد ما يوكف ثانية */
-const SM_STEP=250; let _smPend={}, _smT={};
-function smPriceOf(p){ return _smPend[p.id]!=null ? _smPend[p.id] : Number(p.price||0) }
-function smStep(id,dir){
+/* v439: تغيير السعر السريع — مثل التطبيقات العالمية: تضغط على السعر وتكتب الجديد (بدون ما تفتح التعديل كله) */
+let _pqId=null;
+function pqClose(){ const sh=document.getElementById('pqSheet'); if(sh) sh.classList.remove('on'); _pqId=null }
+function pqOpen(id){
   const p=(myShopDoc&&myShopDoc.products||[]).find(x=>x.id===id); if(!p) return;
-  const cur=smPriceOf(p), np=Math.round((cur+dir*SM_STEP)/SM_STEP)*SM_STEP;
-  if(np<SM_STEP) return toast('أقل سعر 250 د.ع');
-  const w=pWas(p); if(w && np>=w) return toast('هذا المنتج عليه خصم — غيّر سعره من التعديل');
-  _smPend[id]=np;
-  const el=document.getElementById('smP_'+id); if(el){ el.textContent=np.toLocaleString()+' د.ع'+(pKgW(p)?' / كغم':''); el.classList.add('pend') }
-  clearTimeout(_smT[id]); _smT[id]=setTimeout(()=>smSave(id),1100);
+  let sh=document.getElementById('pqSheet');
+  if(!sh){ sh=document.createElement('div'); sh.id='pqSheet'; sh.onclick=e=>{ if(e.target===sh) pqClose() };
+    sh.innerHTML='<div class="pqbox"><b id="pqTtl"></b><small id="pqNow"></small><div class="iw"><input type="number" id="pqIn" inputmode="numeric" placeholder="السعر الجديد" onkeydown="if(event.key===\'Enter\'){event.preventDefault();pqSave()}"><span class="unit" id="pqUnit">د.ع</span></div><div class="pqacts"><button type="button" class="big-btn o" id="pqOk" onclick="pqSave()">حفظ السعر</button><button type="button" class="big-btn pqno" onclick="pqClose()">إلغاء</button></div></div>';
+    document.body.appendChild(sh) }
+  _pqId=id;
+  document.getElementById('pqTtl').textContent='سعر «'+(p.name||'')+'»';
+  document.getElementById('pqNow').textContent='السعر هسه: '+pPriceLbl(p);
+  document.getElementById('pqUnit').textContent=pKgW(p)?'د.ع / كغم':'د.ع';
+  const inp=document.getElementById('pqIn'); inp.value='';
+  sh.classList.add('on'); setTimeout(()=>{ try{ inp.focus() }catch(e){} },60);
 }
-async function smSave(id){
-  const np=_smPend[id]; const p=(myShopDoc&&myShopDoc.products||[]).find(x=>x.id===id);
-  if(np==null||!p){ delete _smPend[id]; return }
-  if(np===Number(p.price||0)){ delete _smPend[id]; renderStMenu(); return }
+async function pqSave(){
+  const id=_pqId, p=(myShopDoc&&myShopDoc.products||[]).find(x=>x.id===id); if(!p) return pqClose();
+  const np=parseInt(String(document.getElementById('pqIn').value||'').replace(/[^0-9]/g,''))||0;
+  if(np<=0) return toast('اكتب السعر الجديد');
+  if(np===Number(p.price||0)) return pqClose();
+  const w=pWas(p); if(w && np>=w) return toast('هذا المنتج عليه خصم (السعر القديم '+w.toLocaleString()+') — السعر لازم يكون أقل منه، أو غيّره من التعديل');
+  const b=document.getElementById('pqOk'); if(b){ b.disabled=true; b.textContent='يحفظ…' }
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:{...p, price:np}});
-    p.price=np; delete _smPend[id];
-    try{ if(editingProdId===id && typeof pp!=='undefined') pp.value=np }catch(e){}
-    toast('انحفظ السعر: '+np.toLocaleString()+' د.ع ✓');
-  }catch(e){ delete _smPend[id]; toast('ما انحفظ السعر: '+errMsg(e)) }
-  renderStMenu();
+    p.price=np; try{ if(editingProdId===id && typeof pp!=='undefined') pp.value=np }catch(e){}
+    pqClose(); renderStMenu(); toast('انحفظ السعر: '+np.toLocaleString()+' د.ع ✓');
+  }catch(e){ toast('ما انحفظ السعر: '+errMsg(e)) }
+  if(b){ b.disabled=false; b.textContent='حفظ السعر' }
 }
 async function delEditingProd(){ const id=editingProdId; if(id===null||id===undefined) return; if(await delProduct(id)) cancelEditProduct() }
 const SM_ICO='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg>';
@@ -19741,7 +19747,7 @@ function smRow(p){
     <div class="smr-img">${p.img?`<img loading="lazy" decoding="async" src="${esc(p.img)}" alt="">`:SM_ICO}</div>
     <div class="smr-tx"><b>${esc(p.name)}</b>
       ${sz.length?`<div class="smr-pr">${pPriceLbl(p)}${w?` <s>${w.toLocaleString()}</s>`:''}</div>`
-        :`<div class="smr-pr smstep" onclick="event.stopPropagation()"><button type="button" onclick="smStep(${p.id},-1)" aria-label="نقّص السعر">−</button><span id="smP_${p.id}"${_smPend[p.id]!=null?' class="pend"':''}>${smPriceOf(p).toLocaleString()} د.ع${pKgW(p)?' / كغم':''}</span><button type="button" onclick="smStep(${p.id},1)" aria-label="زيّد السعر">+</button>${w?`<s>${w.toLocaleString()}</s>`:''}</div>`}
+        :`<div class="smr-pr"><button type="button" class="smpbtn" onclick="event.stopPropagation();pqOpen(${p.id})" aria-label="غيّر السعر">${pPriceLbl(p)} <i>✎</i></button>${w?` <s>${w.toLocaleString()}</s>`:''}</div>`}
       ${meta?`<div class="smr-mt">${meta}</div>`:''}</div>
     <div class="smr-side" onclick="event.stopPropagation()">
       <button type="button" class="smsw${on?' on':''}" onclick="toggleProdAvail(${p.id})" aria-label="${on?'متوفر':'نفذ'}"><i></i></button>
@@ -26060,12 +26066,20 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 .smr-tx b{display:block;font-size:14.5px;font-weight:800;color:#1B1533;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .smr-pr{font-size:13.5px;font-weight:900;color:var(--o);margin-top:3px}
 .smr-pr s{color:#A49CB6;font-weight:700;font-size:12px;margin-inline-start:4px}
-.smstep{display:flex;align-items:center;gap:8px;margin-top:5px}
-.smstep button{width:30px;height:30px;border-radius:10px;border:1.5px solid #E4DCFB;background:#F7F4FF;color:var(--g);font:inherit;font-size:19px;font-weight:900;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;flex:none;-webkit-tap-highlight-color:transparent}
-.smstep button:active{transform:scale(.9);background:#EDE6FF}
-.smstep span{min-width:70px;text-align:center;font-variant-numeric:tabular-nums;transition:color .15s}
-.smstep span.pend{color:var(--g)}
-html[data-theme=dark] .smstep button{background:#2a2246;border-color:#3a3160;color:#cfc2ff}
+.smpbtn{border:0;background:none;padding:2px 0;font:inherit;font-size:13.5px;font-weight:900;color:var(--o);cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.smpbtn i{font-style:normal;font-size:11px;color:var(--g);background:#F4F0FF;border-radius:7px;padding:2px 6px}
+#pqSheet{position:fixed;inset:0;z-index:9600;background:rgba(20,10,40,.45);display:none;align-items:flex-end;justify-content:center}
+#pqSheet.on{display:flex}
+#pqSheet .pqbox{width:100%;max-width:520px;background:#fff;border-radius:22px 22px 0 0;padding:18px 16px calc(16px + env(safe-area-inset-bottom,0px))}
+#pqSheet .pqbox>b{display:block;font-size:16px;font-weight:900;color:#1B1533}
+#pqSheet .pqbox>small{display:block;font-size:12.5px;color:#8A82A0;font-weight:700;margin:4px 0 12px}
+#pqSheet .iw input{font-size:18px;font-weight:900;padding:13px 14px}
+#pqSheet .pqacts{display:flex;gap:8px;margin-top:14px}
+#pqSheet .pqacts .big-btn{margin:0}
+#pqSheet .pqacts .pqno{flex:0 0 34%;background:#EFECF7;color:#5B5470}
+html[data-theme=dark] #pqSheet .pqbox{background:#1c1730}
+html[data-theme=dark] #pqSheet .pqbox>b{color:#fff}
+html[data-theme=dark] .smpbtn i{background:#2a2246;color:#cfc2ff}
 .smr-mt{font-size:11.5px;color:#8A82A0;font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .smr-side{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none;min-width:54px}
 .smr-side span{font-size:10.5px;font-weight:800}
