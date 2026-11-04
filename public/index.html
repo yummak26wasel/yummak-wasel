@@ -6246,7 +6246,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v434</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v435</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -18058,6 +18058,7 @@ async function adminSetl(id){
 
 function atab(p,el){
   if(p!=='fin') window._finFrom=false;
+  if(p==='orders'){ if(!window._aoKeep) aoPer=''; window._aoKeep=false }   /* v435: فترة الرئيسية تبقى بس إذا جاي من كارت الطلبات */
   document.querySelectorAll('#aApp .page').forEach(x=>x.classList.remove('on'));
   document.getElementById('a_'+p).classList.add('on');
   document.querySelectorAll('#aNav button').forEach(b=>b.classList.remove('on'));
@@ -18799,11 +18800,12 @@ async function sbSend(path, method, body){
    وهي تستخدم نفس طرق حساب السائق والمطعم — ما يتغيّر أي حساب */
 let ahPer='day', ahData=null, ahErr='', ahAt=0, ahBusy=false;
 setInterval(()=>{ try{ const pg=document.getElementById('a_over'); if(pg&&pg.classList.contains('on')&&me&&me.role==='admin') ahLoad(true) }catch(e){} },60000);
-function _ahRange(){
+function _ahRange(p){
+  p=p||ahPer;
   const n=new Date(), f=new Date(n);
-  if(ahPer==='day'){ f.setHours(0,0,0,0) }
-  else if(ahPer==='week'){ f.setDate(f.getDate()-6); f.setHours(0,0,0,0) }
-  else if(ahPer==='month'){ f.setDate(1); f.setHours(0,0,0,0) }
+  if(p==='day'){ f.setHours(0,0,0,0) }
+  else if(p==='week'){ f.setDate(f.getDate()-6); f.setHours(0,0,0,0) }
+  else if(p==='month'){ f.setDate(1); f.setHours(0,0,0,0) }
   else { f.setMonth(0,1); f.setHours(0,0,0,0) }
   const t=new Date(n.getTime()+86400000);
   return [f.toISOString(), t.toISOString()];
@@ -18823,6 +18825,12 @@ function ahSetPer(p){ ahPer=p; ahData=null; renderAdminHome(); ahLoad(true) }
 function ahGoPeople(f){
   try{ pFil=f; pQ=''; const q=document.getElementById('pSrch'); if(q) q.value=''; }catch(e){}
   atab('people',document.querySelectorAll('#aNav button')[2]);
+  try{ window.scrollTo(0,0) }catch(e){}
+}
+/* v435: تضغط على «الطلبات اليوم» ← يوديك لقائمة الطلبات بنفس الفترة (اليوم/الأسبوع/…) */
+function ahGoOrders(f){
+  try{ aoFil=f||'all'; aoPer=ahPer; aoQ=''; window._aoKeep=true; const q=document.getElementById('aoSrch'); if(q) q.value=''; }catch(e){}
+  atab('orders',document.querySelectorAll('#aNav button')[3]);
   try{ window.scrollTo(0,0) }catch(e){}
 }
 function ahPeople(){
@@ -18921,8 +18929,8 @@ function renderAdminHome(){
   <div class="h2-card">
     <div class="h2-ttl">الطلبات ${PER[ahPer]}</div>
     <div class="h2-g2">
-      <div class="h2-st"><i class="ic o"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></i><b>${v(d.orders)}</b><span>طلبات المطاعم</span><p><u class="g">✓ ${ld?'…':_n(d.orders_done)} وصلت</u>${Number(d.orders_cancel)?` <u class="r">✕ ${_n(d.orders_cancel)} انلغت</u>`:''}</p></div>
-      <div class="h2-st"><i class="ic b"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg></i><b>${v(d.special)}</b><span>طلبات اشتريلي</span><p><u class="g">✓ ${ld?'…':_n(d.special_done)} وصلت</u></p></div>
+      <div class="h2-st h2-tap" onclick="ahGoOrders('all')"><i class="ic o"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8h12l-1 12H7z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></i><b>${v(d.orders)}</b><span>طلبات المطاعم <em class="h2-go">›</em></span><p><u class="g" onclick="event.stopPropagation();ahGoOrders('done')">✓ ${ld?'…':_n(d.orders_done)} وصلت</u>${Number(d.orders_cancel)?` <u class="r" onclick="event.stopPropagation();ahGoOrders('cancel')">✕ ${_n(d.orders_cancel)} انلغت</u>`:''}</p></div>
+      <div class="h2-st h2-tap" onclick="ahGoOrders('sp')"><i class="ic b"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg></i><b>${v(d.special)}</b><span>طلبات اشتريلي <em class="h2-go">›</em></span><p><u class="g">✓ ${ld?'…':_n(d.special_done)} وصلت</u></p></div>
     </div>
     <div class="h2-ttl" style="margin-top:14px">المسجّلين</div>
     <div class="h2-g3">
@@ -19651,13 +19659,41 @@ function aoCard(o){
     <div class="op">${(o.total||0).toLocaleString()} د.ع</div></div>`;
 }
 /* ═══ v347: تحكم الطلبات بلوحة الإدارة — فلترة · بحث · تفاصيل · إلغاء · سحب من السائق ═══ */
-let aoFil='all', aoQ='';
+let aoFil='all', aoQ='', aoPer='';   /* v435: aoPer = فترة جاية من الرئيسية (day/week/month/year) */
+function _aoInPer(o){
+  if(!aoPer) return true;
+  const r=_ahRange(aoPer), t=_anyTs(o.created_at)||_anyTs(o.createdAt);
+  return !!t && t>=Date.parse(r[0]) && t<Date.parse(r[1]);
+}
+function aoPerClear(){ aoPer=''; renderAOrders() }
+const AO_PERL={day:'اليوم',week:'آخر 7 أيام',month:'هذا الشهر',year:'هذي السنة'};
+const AO_SPST={ready:'بانتظار سائق',assigned:'السائق يتسوّق',purchased:'بالطريق',arrived:'السائق وصل',delivered:'وصل',cancelled:'ملغي',rejected:'ملغي'};
+function aoSpMatch(o,q){
+  if(o.deleted_at || !_aoInPer(o)) return false;
+  q=(q===undefined?aoQ:q).trim().replace(/^#/,''); if(!q) return true;
+  return String(o.order_no||'')===q || String(o.createdAt||'').slice(-6)===q ||
+    [o.customer,o.marketName,o.driverName,o.phone,o.addr,o.itemsText].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()));
+}
+function aoSpCard(o){
+  const items=String(o.itemsText||'').split(/\n+|<br\s*\/?>/i).map(x=>x.trim()).filter(Boolean);
+  const t=_anyTs(o.createdAt), st=o.status||'ready';
+  const cls={ready:'ready',assigned:'assigned',purchased:'ontheway',arrived:'arrived',delivered:'delivered'}[st]||'rejected';
+  const tel=(ph,lbl)=>ph?` <a href="tel:${esc(ph)}" onclick="event.stopPropagation()" aria-label="${lbl}" style="text-decoration:none">📞</a>`:'';
+  return `<div class="oc ${OCCLS(cls)}"> <div class="oh"><span class="oid">اشتريلي #${esc(o.order_no||String(o.createdAt||'').slice(-6))} · ${esc(o.marketName||'السوق')}</span><span class="st st-${cls}">${AO_SPST[st]||esc(st)}</span></div>
+    <div class="od">👤 ${esc(o.customer||'زبون')} · <span dir="ltr">${esc(o.phone||'—')}</span>${tel(o.phone,'اتصل بالزبون')}</div>
+    ${o.addr?`<div class="od">📍 ${esc(o.addr)}</div>`:''}
+    ${items.length?`<div class="od">🛒 ${items.slice(0,4).map(x=>esc(x)).join('، ')}${items.length>4?` +${items.length-4}`:''}</div>`:''}
+    ${o.driverName?`<div class="od" style="color:var(--bl);font-weight:700">🛵 ${esc(o.driverName)} — <span dir="ltr">${esc(o.driverPhone||'—')}</span>${tel(o.driverPhone,'اتصل بالسائق')}</div>`:''}
+    <div class="od" style="color:var(--mut)">${t?new Date(t).toLocaleString('ar-IQ',{day:'numeric',month:'short',hour:'numeric',minute:'2-digit'}):''}</div>
+    <div class="op">${(Number(o.deliveryFee||0)+Number(o.serviceFee||0)).toLocaleString()} د.ع <small style="font-weight:700;color:var(--mut)">توصيل</small></div></div>`;
+}
 const AO_ACTIVE=['pending','accepted','confirmed','ready','assigned','ontheway','arrived'];
 function aoMatch(o,fil,q){
   fil=fil||aoFil; q=(q===undefined?aoQ:q).trim().replace(/^#/,'');
   if(fil==='active' && AO_ACTIVE.indexOf(o.status)<0) return false;
   if(fil==='done' && o.status!=='delivered') return false;
   if(fil==='cancel' && ['cancelled','rejected'].indexOf(o.status)<0) return false;
+  if(!_aoInPer(o)) return false;
   if(!q) return true;
   return String(ONO(o))===q || String(o.order_no||'')===q ||
     [o.customer,o.shopName,o.driverName,o.phone,o.addr].some(v=>String(v||'').toLowerCase().includes(q.toLowerCase()));
@@ -19670,10 +19706,24 @@ function renderAOrders(){
       ctl.innerHTML='<div class="chips" id="aoChips"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="aoSrch" placeholder="ابحث برقم الطلب أو الاسم أو الرقم…" oninput="aoQ=this.value;renderAOrders()"></div>' }
     const C=[['all','الكل'],['active','شغّالة'],['done','وصلت'],['cancel','ملغية']];
     const ch=document.getElementById('aoChips');
-    if(ch) ch.innerHTML=C.map(([k,l])=>`<div class="chip ${aoFil===k?'on':''}" onclick="aoFil='${k}';renderAOrders()">${l} <b>${L.filter(o=>aoMatch(o,k,'')).length}</b></div>`).join('');
+    const spN=(allSpecial||[]).filter(o=>aoSpMatch(o,'')).length;
+    if(ch) ch.innerHTML=C.map(([k,l])=>`<div class="chip ${aoFil===k?'on':''}" onclick="aoFil='${k}';renderAOrders()">${l} <b>${L.filter(o=>aoMatch(o,k,'')).length}</b></div>`).join('')
+      + `<div class="chip ${aoFil==='sp'?'on':''}" onclick="aoFil='sp';renderAOrders()">اشتريلي <b>${spN}</b></div>`;
+    try{ const on=ch&&ch.querySelector('.chip.on'); if(on){ const L0=on.offsetLeft, W=ch.clientWidth; if(L0<ch.scrollLeft||L0+on.offsetWidth>ch.scrollLeft+W) ch.scrollLeft=L0-12 } }catch(e){}
+    let pb=document.getElementById('aoPerBar');
+    if(!pb){ pb=document.createElement('div'); pb.id='aoPerBar'; ctl.insertBefore(pb,ctl.firstChild) }
+    pb.innerHTML=aoPer?`<div class="aoper"><span>📅 طلبات ${AO_PERL[aoPer]||''} بس</span><button type="button" onclick="aoPerClear()">كل الأيام ✕</button></div>`:'';
+  }
+  /* آخر 300 طلب بس محمّلة — إذا الفترة أطول ننبّه */
+  const capped=aoPer && aoPer!=='day' && L.length>=300 && (()=>{ const r=_ahRange(aoPer), last=L[L.length-1]; const t=_anyTs(last&&(last.created_at||last.createdAt)); return t && t>Date.parse(r[0]) })();
+  const note=capped?'<div class="aonote">يطلع آخر 300 طلب بس</div>':'';
+  if(aoFil==='sp'){
+    const SL=(allSpecial||[]).filter(o=>aoSpMatch(o)).sort((a,b)=>_anyTs(b.createdAt)-_anyTs(a.createdAt)).slice(0,60);
+    box.innerHTML=SL.map(o=>aoSpCard(o)).join('') || '<div class="pg-empty">ما بيه طلبات اشتريلي</div>';
+    return;
   }
   const list=L.filter(o=>aoMatch(o)).slice(0,60);
-  box.innerHTML=list.map(o=>aoCard(o)).join('') || '<div class="pg-empty">ما بيه طلبات</div>';
+  box.innerHTML=(list.map(o=>aoCard(o)).join('') || '<div class="pg-empty">ما بيه طلبات</div>')+note;
 }
 function aoClose(){ const sh=document.getElementById('aoSheet'); if(sh) sh.classList.remove('on') }
 function aoOpen(id){
@@ -25870,6 +25920,13 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 .pr2 .pill.p4new{background:#FFF1E6;color:#C2410C;border:1px solid #FDBA74;margin-inline-start:4px}
 .h2-tap{cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .12s}
 .h2-tap:active{transform:scale(.96)}
+.h2-go{font-style:normal;font-weight:900;color:#9a93ad;margin-inline-start:2px}
+.h2-st u[onclick]{cursor:pointer}
+.aoper{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#F4F0FF;border:1px solid #E4DCFB;color:#4b2fa8;border-radius:14px;padding:9px 12px;margin:0 0 10px;font-size:12.5px;font-weight:800}
+.aoper button{border:0;background:#fff;color:#4b2fa8;border-radius:10px;padding:5px 10px;font:inherit;font-size:12px;font-weight:800;cursor:pointer}
+.aonote{font-size:11.5px;color:var(--mut);text-align:center;margin:6px 0 12px}
+html[data-theme=dark] .aoper{background:#2a2246;border-color:#3a3160;color:#cfc2ff}
+html[data-theme=dark] .aoper button{background:#1c1730;color:#cfc2ff}
 /* v347: تحكم الطلبات بلوحة الإدارة */
 .aotap{cursor:pointer;-webkit-tap-highlight-color:transparent}.aotap:active{transform:scale(.985)}
 #aoChips .chip b{font-size:11px;opacity:.75;margin-inline-start:3px}
@@ -26136,7 +26193,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v434', seen={}, n=0, q=[], t=null;
+  var VER='v435', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -26388,7 +26445,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v434', t0=Date.now();
+  var VER='v435', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
