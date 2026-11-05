@@ -523,6 +523,7 @@ body .pgtop button .wic,body .pgtop button svg{color:#fff!important;stroke:#fff!
 .tgd.v2 .tgd-h b{flex:1;color:#fff;font-size:17px;white-space:normal;line-height:1.4}
 .tgd.v2 .tgd-h i{background:#FF8A2B;min-width:30px;height:30px}
 .tgd.v2 .tgd-quote{border:0;background:#F7F5FC;border-inline-start:4px solid #FF8A2B}
+.tgd-cards.ic{width:auto;height:auto;border-radius:0;background:none;color:inherit;display:grid;place-items:normal}   /* v462: كان .ic العام يصغّر الكروت لـ 38px */
 .tgd-cards.ic div{text-align:center;padding:12px 8px 10px;border-radius:14px}
 .tgd-cards.ic div:last-child:nth-child(odd){grid-column:1/-1}
 .tgd-cards.ic i{display:block;font-style:normal;font-size:24px;line-height:1.2;margin-bottom:4px}
@@ -6294,7 +6295,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v461</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v462</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -14085,7 +14086,7 @@ const FAQ=[   /* v429: مطابقة للتطبيق (الأجرة من fare_zone�
 ['أكدر ألغي طلبي؟','إي، <b>ببلاش قبل ما يقبله المحل</b>، من زر «إلغاء الطلب» بشاشة تتبع الطلب. بعد ما يقبله المحل ما ينلغي.'],
 ['صارت مشكلة بطلبي، شسوي؟','بشاشة تتبع الطلب اضغط «عندي مشكلة بالطلب» (خلال ٣ أيام من الطلب)، والإدارة تتواصل وياك. أو راسلنا بالواتساب.'],
 ['شلون أستخدم كود خصم؟','بالسلة اضغط على الخصم واكتب الكود. كل كود ينستخدم مرة وحدة لكل زبون.'],
-['شلون أشتغل سائق؟','من «حسابي» اضغط «اشتغل ويانا سائق». لازم عمرك ١٨ سنة أو أكثر، وترفع مستمسكاتك، وتدفع تأمينات ١٥,٠٠٠ دينار ترجعلك.'],
+['شلون أشتغل سائق؟','من «حسابي» اضغط «اشتغل ويانا سائق». لازم عمرك ١٨ سنة أو أكثر، وترفع مستمسكاتك، وتدفع تأمينات ٣٥,٠٠٠ دينار ترجعلك، وتنجح باختبار التدريب.'],
 ['شلون أسجّل محلي؟','من شاشة الدخول اختار «إنشاء حساب» ثم «متجر»، وكمّل المعلومات. الإدارة تراجع محلك وتفعّله.']];
 const WA_NUM='9647842700161';
 /* ينقل لتبويب الدعم ثم يفتح القسم المطلوب */
@@ -21904,7 +21905,7 @@ function leadPaint(){
 
 /* ═══ v324: دليل الشراكة — المطاعم والسواق (الموافقة تنحفظ بالتاريخ ورقم النسخة) ═══ */
 const TERMS_V=4;        /* كل المحلات — نسخة 4 (v334: دليل واحد للكل، العمولة بالشرائح) */
-const DRV_TERMS_V=1;    /* السواق — نسخة 1 */
+const DRV_TERMS_V=2;    /* السواق — نسخة 2 (v462: الشفتات، النقاط، الإجازة، التأمينات 35,000، التلف على السائق) */
 const TG_OK_TXT='لقد اطلعت على كل الشروط وأوافق عليها';
 const TG_SUPPORT='<bdi dir="ltr">+9647842700161</bdi>';
 const TG_ACC=`<div class="tgd-acc"><span>حساب التطبيق للتحويل (ماستر كارد)</span><b dir="ltr">2630422448</b><small dir="ltr">ABD AL JABBAR F .A</small></div>`;
@@ -22104,47 +22105,63 @@ function restTermsHTML(){ return shopGuideHTML() }
 function shopTermsHTML(t){ return shopGuideHTML() }
 
 /* ─── دليل السواق ─── */
-const DRV_TERMS_HTML=`<div class="tgd">
+const DRV_TERMS_HTML=`<div class="tgd v2">
 <div class="tgd-hero"><small>واصل <em>ليمَك</em></small><h1>دليل الشراكة مع <em>السواق</em></h1><p>كل شي تحتاج تعرفه حتى تشتغل ويانا</p></div>
 <div class="tgd-stats">
-  <div><b><bdi dir="ltr">0%</bdi></b><span>عمولة على السائق حالياً</span></div>
-  <div><b><bdi dir="ltr">100%</bdi></b><span>أجرة التوصيل والبقشيش إلك</span></div>
-  <div><b>15 يوم</b><span>الحساب ويه التطبيق</span></div>
-  <div><b>15,000</b><span>تأمينات وترجعلك</span></div>
+  <div><i>💰</i><b><bdi dir="ltr">0%</bdi></b><span>عمولة على السائق حالياً</span></div>
+  <div><i>🛵</i><b><bdi dir="ltr">100%</bdi></b><span>أجرة التوصيل والبقشيش إلك</span></div>
+  <div><i>🕘</i><b>3 شفتات</b><span>صباحي، مسائي، كامل</span></div>
+  <div><i>🔒</i><b>35,000</b><span>تأمينات وترجعلك (د.ع)</span></div>
 </div>
+<div class="tgd-intro"><em>📋</em><div><b>شغلنا بانضباط:</b> كل سائق يبدي الشهر بـ <b>100 نقطة</b>، وكل مخالفة تنقص منها.<br>والسائق الملتزم <b>ياخذ أولوية بالطلبات والشفتات</b>.</div></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>01</i><b>من نحن</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>👋</em><b>من نحن</b><i>01</i></div>
 <p class="tgd-quote">واصل ليمَك تطبيق توصيل محلي لمدينة عانة ومنطقة الريحانة، يربط الزبون بالمطاعم والمحلات، والسائق يوصل الطلب لباب البيت خلال ربع ساعة تقريباً.</p></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>02</i><b>شنو نقدّملك</b></div>
-<div class="tgd-cards">
-  <div><b>طلبات يومية</b><span>من مطاعم ومحلات عانة والريحانة.</span></div>
-  <div><b>أجرتك كاملة</b><span>أجرة التوصيل كلها إلك، بدون أي عمولة حالياً.</span></div>
-  <div><b>كل شي بالتطبيق</b><span>تفاصيل الطلب، والعنوان، والمبلغ اللي تاخذه.</span></div>
-  <div><b>حساب واضح</b><span>كشف بكل طلباتك وفلوسك كل 15 يوم.</span></div>
-  <div><b>تقييمات الزبائن</b><span>السائق الملتزم ياخذ أولوية بالطلبات.</span></div>
-  <div><b>دعم مباشر</b><span>واتساب الدعم ${TG_SUPPORT}</span></div>
+<div class="tgd-sec"><div class="tgd-h"><em>🎁</em><b>شنو نقدّملك</b><i>02</i></div>
+<div class="tgd-cards ic">
+  <div><i>📦</i><b>طلبات يومية</b><span>من مطاعم ومحلات عانة والريحانة.</span></div>
+  <div><i>💵</i><b>أجرتك كاملة</b><span>أجرة التوصيل كلها إلك، بدون عمولة حالياً.</span></div>
+  <div><i>📱</i><b>كل شي بالتطبيق</b><span>الطلب، والعنوان، والمبلغ، وشفتك، وإجازتك.</span></div>
+  <div><i>🧾</i><b>حساب واضح</b><span>كشف بكل طلباتك وفلوسك كل 15 يوم.</span></div>
+  <div><i>🎓</i><b>تدريب كامل</b><span>6 دروس فيديو قصيرة تعلمك الشغل.</span></div>
+  <div><i>💬</i><b>دعم مباشر</b><span>واتساب الدعم ${TG_SUPPORT}</span></div>
 </div></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>03</i><b>الأجرة والعمولة</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>📝</em><b>التسجيل والتدريب</b><i>03</i></div>
+<div class="tgd-steps">
+  <div><i>1</i><span><b>تسجّل بأربع أوراق:</b> البطاقة الموحدة، وبطاقة السكن، وصورة شخصية واضحة (تطلع للزبون)، وصورة وسيلة النقل.</span></div>
+  <div><i>2</i><span><b>تدفع التأمينات 35,000 د.ع</b> مرة وحدة.</span></div>
+  <div><i>3</i><span><b>تشوف دروس التدريب</b> (6 فيديوهات) وتنجح بالاختبار: <b>27 جواب صح من 30</b> على الأقل.</span></div>
+  <div><i>4</i><span><b>الإدارة تفعّل حسابك</b>، وتبدي <b>فترة تجربة أسبوعين</b>.</span></div>
+</div>
 <ul class="tgd-ck">
-  <li><b>أجرة التوصيل كاملة للسائق</b>، والتطبيق ما ياخذ منها شي.</li>
-  <li>أجرة كل طلب <b>يحددها التطبيق</b>، وتظهرلك <b>قبل ما تقبل الطلب</b>.</li>
-  <li><b>البقشيش (الإكرامية)</b> من الزبون <b>كله للسائق</b>.</li>
-  <li><b>مكافآت:</b> للسواق الملتزمين وأصحاب الطلبات الأكثر، وتفاصيلها تتحدد لاحقاً.</li>
-  <li>إذا التطبيق قرر يغيّر هالشي بالمستقبل، <b>يبلّغ السائق قبل 30 يوم</b>.</li>
+  <li><b>عمرك 18 سنة أو أكثر.</b> وما تحتاج إجازة سوق، وماكو يونيفورم.</li>
+  <li><b>الحقيبة من عندك</b>، ولازم تبقى نظيفة ومسدودة.</li>
+  <li class="no"><b>الحساب شخصي:</b> ممنوع تعطي حسابك أو رمزك لأي أحد يشتغل بيه.</li>
+</ul></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>💰</em><b>الأجرة والتأمينات</b><i>04</i></div>
+<table class="tgd-ex"><tr><th>الأجرة</th><th>المبلغ (د.ع)</th></tr>
+<tr><td>توصيل داخل عانة</td><td>1,000</td></tr>
+<tr><td>توصيل برة عانة</td><td><bdi dir="ltr">1,250 – 3,000</bdi></td></tr>
+<tr><td>البقشيش من الزبون</td><td>كله إلك</td></tr></table>
+<ul class="tgd-ck">
+  <li><b>أجرة التوصيل كاملة للسائق</b>، والتطبيق ما ياخذ منها شي، وتظهرلك <b>قبل ما تقبل الطلب</b>.</li>
+  <li><b>ماكو عمولة حالياً.</b> ممكن بالمستقبل يصير <b>اشتراك شهري قليل وثابت</b> مقابل استخدام التطبيق، وتتبلّغ بيه <b>قبل 7 أيام</b>، والأجرة تبقى كلها إلك.</li>
+  <li><b>مكافآت</b> للسواق الملتزمين، وتفاصيلها تنعلن لاحقاً.</li>
 </ul>
-<div class="tgd-box"><h5>التأمينات: 15,000 د.ع</h5>
-  <p>السائق يدفع <b>15,000 دينار تأمينات</b> عند التسجيل، <b>ضمان للفلوس اللي يستلمها للتطبيق</b> من الزبائن (رسوم الخدمة).</p>
+<div class="tgd-box"><h5>التأمينات: 35,000 د.ع</h5>
+  <p>تدفعها <b>مرة وحدة</b> وكت التسجيل، <b>ضمان للفلوس اللي تستلمها للتطبيق</b> من الزبائن (رسوم الخدمة).</p>
   <ul class="tgd-ck">
-    <li>إذا ما سلّم رسوم الخدمة بموعدها، <b>تنخصم من التأمينات</b>، ويوقف استلام الطلبات لحد ما يكمّل التأمينات من جديد.</li>
-    <li>لما يبطّل الشغل ويه التطبيق، <b>يرجعله المبلغ كامل</b> بعد ما تنصفّى كل المستحقات اللي عليه.</li>
+    <li>إذا ما سلّمت رسوم الخدمة بموعدها، <b>تنخصم من التأمينات</b>، وما تستلم طلبات لحد ما تكمّل التأمينات من جديد.</li>
+    <li>لما تبطّل الشغل ويه التطبيق، <b>ترجعلك</b> بعد ما ينخصم منها أي شي باقي عليك.</li>
   </ul></div></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>04</i><b>رحلة الفلوس بكل طلب</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>💵</em><b>رحلة الفلوس بكل طلب</b><i>05</i></div>
 <div class="tgd-steps">
-  <div><i>1</i><span>الزبون يدفعلك <b>كاش</b> المبلغ اللي بالتطبيق.</span></div>
-  <div><i>2</i><span>تسلّم المطعم <b>سعر الوجبة</b> المكتوب بالتطبيق، <b>وقت ما تستلم الطلب</b> أو <b>بعد ما توصله</b>، حسب الاتفاق ويه المطعم.</span></div>
+  <div><i>1</i><span>الزبون يدفعلك <b>كاش</b> المبلغ اللي بالتطبيق. <b>تعدّه قدامه</b> وترجّعله الباقي بالضبط.</span></div>
+  <div><i>2</i><span>تسلّم المطعم <b>سعر الطلب</b> المكتوب بالتطبيق، <b>وكت ما تستلمه</b> أو <b>بعد ما توصله</b>، حسب الاتفاق ويه المحل.</span></div>
   <div><i>3</i><span>تاخذ <b>أجرة التوصيل</b> إلك كاملة.</span></div>
   <div><i>4</i><span>تسلّم <b>رسوم الخدمة</b> للتطبيق كل <b>15 يوم</b>.</span></div>
 </div>
@@ -22153,7 +22170,7 @@ const DRV_TERMS_HTML=`<div class="tgd">
   <li>إذا بالطلب <b>خصم</b>، تاخذ من الزبون وتسلّم المطعم المبالغ المكتوبة بالتطبيق، و<b>أجرتك ما تنقص</b>.</li>
 </ul></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>05</i><b>الحساب ويه التطبيق</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>🧾</em><b>الحساب ويه التطبيق</b><i>06</i></div>
 <p>كل <b>15 يوم</b> يطلعلك كشف بالتطبيق، بيه كل طلباتك ورسوم الخدمة اللي استلمتها من الزبائن. والدفع للتطبيق <b>عن طريق ماستر كارد فقط</b>.</p>
 ${TG_ACC}
 <div class="tgd-cap">مثال: حساب سائق لمدة 15 يوم</div>
@@ -22163,48 +22180,123 @@ ${TG_ACC}
 <tr><td><b>السائق يدفع للتطبيق:</b> رسوم الخدمة اللي استلمها من الزبائن</td><td>60,000</td></tr>
 <tr><td><b>التطبيق يدفع للسائق:</b> طلب الزبون ما استلمه، وكان السائق دافع سعره للمطعم</td><td>8,000</td></tr>
 <tr class="r"><td><b>النتيجة:</b> السائق مطلوب 60,000 والتطبيق مطلوب 8,000، فالسائق يدفع الفرق</td><td>52,000</td></tr></table>
+<div class="tgd-box m">⏰ <b>تأخرت بالدفع؟</b> عندك <b>مهلة يومين</b>، وبعدها <b>يتوقف حسابك</b> لحد ما تسلّم.</div>
 <ul class="tgd-ck"><li><b>الاعتراض على الكشف:</b> إذا عندك أي ملاحظة، بلّغ خلال <b>3 أيام</b> من استلامه، وبعدها يعتبر موافق عليه.</li></ul></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>06</i><b>الالتزامات</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>🕘</em><b>الشفتات</b><i>07</i></div>
+<table class="tgd-ex"><tr><th>الشفت</th><th>الوكت</th></tr>
+<tr><td><b>صباحي</b></td><td>9 الصبح – 5 العصر</td></tr>
+<tr><td><b>مسائي</b></td><td>5 العصر – 1 بالليل</td></tr>
+<tr><td><b>كامل</b></td><td>9 الصبح – 1 بالليل</td></tr></table>
+<div class="tgd-box p">⭐ <b>الشفت الكامل:</b> إله <b>أولوية بالطلبات</b>، واستراحته <b>ساعتين أو 3</b> إنت تختار وكتها.</div>
+<ul class="tgd-ck">
+  <li>تضغط <b>«بدء الشفت»</b> بوكته، من <b>أي مكان داخل عانة</b>، وتصوّر نفسك بالتطبيق (صورتك إنت بس).</li>
+  <li class="no">إذا تأخرت <b>أكثر من 20 دقيقة</b> عن بداية الشفت: <b>مخالفة، ناقص 5 نقاط</b>.</li>
+  <li>تبقى <b>متاح لحد نهاية الشفت</b>. إذا طفّيت التطبيق أو طلعت قبل الوكت: <b>ناقص 5 نقاط</b>.</li>
+</ul></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>☕</em><b>الاستراحة وأوقات الضغط</b><i>08</i></div>
+<table class="tgd-ex"><tr><th>أوقات الضغط</th><th>الوكت</th></tr>
+<tr><td>الغدا</td><td><bdi dir="ltr">11:30 – 2:30</bdi></td></tr>
+<tr><td>العشا</td><td><bdi dir="ltr">5 – 10</bdi></td></tr></table>
+<ul class="tgd-ck">
+  <li>تحجز استراحتك من التطبيق <b>قبل ساعة</b>، واللي يحجز أول ياخذها.</li>
+  <li><b>بوكت الضغط</b> يرتاح <b>سائق واحد بس</b> بنفس الوكت، و<b>بالوكت الخفيف</b> يرتاحون <b>اثنين</b>، والباقي يشتغلون.</li>
+</ul></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>🌴</em><b>الإجازة والغياب</b><i>09</i></div>
+<ul class="tgd-ck">
+  <li><b>5 أيام إجازة بالشهر</b>، تطلبها من التطبيق <b>قبل 24 ساعة</b>.</li>
+  <li><b>طارئ أو مرض؟</b> بلّغ <b>قبل ساعة</b> من الشفت، وما تنقص نقاطك. وإذا ما عندك <b>ورقة طبيب</b>، اليوم ينحسب من إجازتك.</li>
+  <li><b>تبديل الشفت</b> ويه سائق ثاني مسموح، بس <b>بموافقة الإدارة</b>.</li>
+  <li class="no"><b>الغياب بدون تبليغ:</b> ناقص 15 نقطة، و<b>3 مرات بالشهر = إيقاف أسبوع</b>.</li>
+</ul></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>🛵</em><b>شغلك بكل طلب</b><i>10</i></div>
+<div class="tgd-steps">
+  <div><i>1</i><span>وصلك طلب؟ <b>اقبله خلال دقيقة</b>.</span></div>
+  <div><i>2</i><span>روح للمطعم <b>فوراً</b>، واضغط <b>«وصلت للمطعم»</b>. المطعم يحضّر الطلب من <b>15 لـ 25 دقيقة</b>.</span></div>
+  <div><i>3</i><span><b>افحص الطلب</b> ويه التطبيق (العدد، والمشروبات، والصوصات)، واضغط <b>«استلمت الطلب»</b>. إذا ناقص شي، <b>لا تطلع</b>: المطعم يكمّله أو بلّغ الدعم.</span></div>
+  <div><i>4</i><span>قبل ما توصل بـ <b>دقيقتين</b>، <b>اتصل بالزبون</b> وتأكد من العنوان.</span></div>
+  <div><i>5</i><span><b>صوّر الطلب</b> وكت التسليم، واضغط <b>«تم التوصيل»</b>.</span></div>
+</div>
+<ul class="tgd-ck">
+  <li>الزبون ما يرد؟ اتصل <b>أكثر من مرة</b> وبلّغ الدعم، و<b>لا ترجّع الطلب إلا بموافقة الدعم</b>. طلب الصيدلية يرجع للصيدلية.</li>
+  <li><b>خصوصية الزبون:</b> رقمه للطلب بس، وما تحتفظ بيه ولا تحچي عن طلبه.</li>
+  <li>بالطريق تسوق <b>بأمان</b> وتلتزم بقواعد المرور، وما توگف بنص الطريق.</li>
+</ul>
+<div class="tgd-cap">شلون تنقل كل نوع غرض</div>
+<div class="tgd-cards ic">
+  <div><i>🥤</i><b>المشروب والعصير</b><span>واگف، والغطا مسدود، وبعيد عن الأكل.</span></div>
+  <div><i>🥞</i><b>الكريب والحلويات</b><span>مستوي، وما فوكه شي.</span></div>
+  <div><i>🔥</i><b>الأكل الحار</b><span>بالحقيبة ومسدودة، وتوصّله مباشرة.</span></div>
+  <div><i>🍦</i><b>البارد والآيس كريم</b><span>منفصل عن الحار، وتوصّله أول شي.</span></div>
+  <div><i>🛒</i><b>مواد المسواك</b><span>الثقيل جوة والخفيف فوك، والمنظفات بعيدة عن الأكل.</span></div>
+  <div><i>🥚</i><b>البيض والزجاج</b><span>على جنب، وما فوكه شي ثقيل.</span></div>
+  <div><i>💄</i><b>الكوزمتك والصيدلية</b><span>ملفوف بكيس مسدود، مثل ما طلع من المحل.</span></div>
+</div></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>⭐</em><b>الأداء والنقاط</b><i>11</i></div>
+<p class="tgd-tn">لازم تبقى بهالحدود:</p>
+<div class="tgd-cards ic">
+  <div><i>✅</i><b><bdi dir="ltr">80%</bdi> أو أكثر</b><span>نسبة القبول (الطلبات اللي تقبلها)</span></div>
+  <div><i>📦</i><b><bdi dir="ltr">90%</bdi> أو أكثر</b><span>نسبة الإكمال (توصّل اللي قبلته)</span></div>
+  <div><i>⭐</i><b>4.5 أو أكثر</b><span>تقييمك من الزبائن (من 5 نجوم)</span></div>
+</div>
+<div class="tgd-cap">كل شهر تبدي بـ 100 نقطة</div>
+<table class="tgd-ex"><tr><th>المخالفة</th><th>النقاط</th></tr>
+<tr><td>تأخير أكثر من 20 دقيقة عن بداية الشفت</td><td>ناقص 5</td></tr>
+<tr><td>تطفية التطبيق أو الطلعة قبل نهاية الشفت</td><td>ناقص 5</td></tr>
+<tr><td>إلغاء طلب بعد ما قبلته</td><td>ناقص 10</td></tr>
+<tr><td>شكوى زبون</td><td>ناقص 15</td></tr>
+<tr><td>غياب بدون تبليغ</td><td>ناقص 15</td></tr></table>
+<table class="tgd-ex"><tr><th>إذا نزلت نقاطك</th><th>شنو يصير</th></tr>
+<tr><td>تحت 70</td><td>إنذار</td></tr>
+<tr><td>تحت 50</td><td>إيقاف يومين</td></tr>
+<tr class="r"><td>تحت 30</td><td>فصل</td></tr></table>
+<div class="tgd-box m">🚫 <b>التطبيق يوقف حسابك وحده إذا:</b><ol><li>نسبة الإكمال صارت <b>أقل من <bdi dir="ltr">90%</bdi></b>.</li><li>تقييمك صار <b>أقل من 4.5</b>.</li><li>تأخرت بفلوس التطبيق <b>أكثر من يومين</b>.</li></ol></div>
+<div class="tgd-cap">المستويات</div>
+<div class="tgd-cards ic">
+  <div><i>🥇</i><b>ذهبي</b><span>أولوية بالشفتات والطلبات.</span></div>
+  <div><i>🥈</i><b>فضي</b><span>عادي.</span></div>
+  <div><i>🥉</i><b>برونزي</b><span>ياخذ الشفتات الباقية.</span></div>
+</div>
+<div class="tgd-box s">التزم أكثر <b>ترتفع لمستوى أعلى</b> وتاخذ طلبات أكثر، والمكافآت تنعلن لاحقاً.</div></div>
+
+<div class="tgd-sec"><div class="tgd-h"><em>🤝</em><b>الالتزامات</b><i>12</i></div>
 <div class="tgd-col o"><h4>التزامات السائق</h4><ol>
-  <li><b>الأوراق المطلوبة:</b> البطاقة الموحدة، وبطاقة السكن، وصورة شخصية واضحة (تطلع للزبون بالتطبيق)، وصورة وسيلة النقل.</li>
   <li><b>عنده وسيلة نقل صالحة</b> وموبايل بيه إنترنت.</li>
-  <li><b>الحساب شخصي:</b> ممنوع يخلي شخص ثاني يوصل بحسابه.</li>
-  <li><b>يقبل الطلب أو يرفضه بسرعة</b>، حتى ما يتأخر الزبون.</li>
-  <li><b>يتأكد من الطلب</b> ويطابق رقمه قبل ما يستلمه من المطعم.</li>
-  <li><b>يحافظ على الطلب</b> مسكّر ونظيف بصندوق التوصيل.</li>
+  <li><b>يلتزم بشفته</b> ويبقى متاح لحد نهايته.</li>
+  <li><b>يحافظ على الطلب</b> مسكّر ونظيف بالحقيبة، وينقل كل غرض بطريقته.</li>
   <li><b>يوصل بسرعة</b>، خلال ربع ساعة تقريباً من الاستلام.</li>
-  <li><b>يحدّث حالة الطلب</b> بالتطبيق: استلمت، ووصلت.</li>
+  <li><b>يحدّث حالة الطلب</b> بالتطبيق: وصلت للمطعم، واستلمت، وتم التوصيل.</li>
   <li><b>يسلّم المطعم فلوسه كاملة</b>، ويسلّم رسوم الخدمة للتطبيق بموعدها.</li>
-  <li><b>إثبات التسليم:</b> يضغط «تم التسليم» عند باب الزبون، وإذا الزبون طلب يخلي الطلب بالباب، <b>يصوّره</b>.</li>
-  <li>إذا الزبون ما رد أو رفض، <b>يضغط «الزبون ما استلم»</b> ويبلّغ الدعم.</li>
-  <li><b>خصوصية الزبون:</b> ما يحتفظ برقم الزبون، ولا يتصل بيه بعد التوصيل لأي سبب شخصي.</li>
   <li><b>يتعامل باحترام</b> ويه الزبون والمطعم.</li>
-  <li><b>يلتزم بقواعد المرور</b> والسلامة.</li>
   <li><b>مسؤولية الحوادث:</b> السائق مسؤول عن نفسه ووسيلة نقله، والتطبيق مو مسؤول عن أي حادث يصير أثناء التوصيل.</li>
 </ol></div>
 <div class="tgd-col"><h4>التزامات التطبيق</h4><ol>
-  <li><b>يوصّل طلبات</b> للسائق بشكل مستمر.</li>
+  <li><b>يوصّل طلبات</b> للسائق بشكل مستمر، والأولوية للملتزمين.</li>
   <li><b>يبيّن تفاصيل كل طلب:</b> العنوان، والمبلغ، وأجرة التوصيل.</li>
   <li><b>أجرة التوصيل كاملة للسائق</b>، بدون عمولة حالياً.</li>
   <li><b>كشف حساب واضح</b> كل 15 يوم.</li>
   <li><b>يحمي بيانات السائق</b> وما يشاركها ويه أي جهة.</li>
   <li><b>يوفّر دعم</b> لأي مشكلة بالطلبات أو بالتطبيق.</li>
-</ol></div>
-<div class="tgd-box s"><b>الأولوية للسواق الملتزمين:</b> السائق اللي يوصل بسرعة، ويقبل الطلبات بوقتها، وتقييمه عالي، <b>ياخذ أولوية بالطلبات</b>.<br><b>لازم تقبل <bdi dir="ltr">80%</bdi> من الطلبات</b> اللي توصلك على الأقل، وإذا نزلت تحتها تقل أولويتك.</div></div>
+</ol></div></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>07</i><b>المشاكل والإلغاء</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>⚠️</em><b>المشاكل والإلغاء</b><i>13</i></div>
 <table><tr><th>المشكلة</th><th>منو يتحمل</th></tr>
 <tr><td>تلف الطلب بسبب السائق</td><td><b>السائق كاملة:</b> الخسارة كلها عليه</td></tr>
 <tr><td>تأخير الطلب بسبب السائق</td><td>السائق، وتنسجل عليه ملاحظة</td></tr>
 <tr><td>تأخير الطلب بسبب المطعم</td><td>المطعم، والسائق ما يتحاسب</td></tr>
 <tr><td>الزبون ما رد أو رفض يستلم الطلب</td><td>التطبيق، وإذا السائق دافع للمطعم المبلغ يرجعله بالحساب</td></tr>
-<tr><td>السائق أخذ من الزبون أكثر من المبلغ</td><td>السائق يرجّع الفرق للزبون، وتنسجل عليه ملاحظة</td></tr></table>
-<div class="tgd-box s">إذا تكررت الشكاوى على السائق <b>3 مرات بالشهر</b> ينطيه التطبيق إنذار، وإذا استمرت يتوقف مؤقتاً لحد ما تنحل.</div></div>
+<tr><td>السائق أخذ من الزبون أكثر من المبلغ</td><td>السائق يرجّع الفرق للزبون، وتنسجل عليه ملاحظة</td></tr>
+<tr><td>السائق ألغى طلب بعد ما قبله</td><td>ناقص 10 نقاط</td></tr>
+<tr><td>شكوى من زبون على السائق</td><td>ناقص 15 نقطة</td></tr></table></div>
 
-<div class="tgd-sec"><div class="tgd-h"><i>08</i><b>إنهاء الاتفاق والموافقة</b></div>
+<div class="tgd-sec"><div class="tgd-h"><em>📜</em><b>إنهاء الاتفاق والموافقة</b><i>14</i></div>
 <ul class="tgd-plain">
-  <li>كل طرف يكدر ينهي الاتفاق بإشعار مكتوب قبل <b>7 أيام</b>، وتنصفّى كل المستحقات قبل الإنهاء، و<b>ترجع للسائق التأمينات (15,000 د.ع)</b>.</li>
+  <li>كل طرف يكدر ينهي الاتفاق بإشعار مكتوب قبل <b>7 أيام</b>، وتنصفّى كل المستحقات قبل الإنهاء، و<b>ترجع للسائق التأمينات (35,000 د.ع)</b> بعد ما ينخصم منها أي شي باقي عليه.</li>
+  <li>إذا نقاط السائق نزلت <b>تحت 30</b>، التطبيق يكدر يفصله.</li>
   <li>وإذا التطبيق راد يغيّر أي شرط بهذا الدليل، <b>يبلّغ السائق قبل 30 يوم</b>.</li>
   ${TG_FORCE}
   <li><b>الموافقة على الشروط:</b> السائق يوافق على هذا الدليل من التطبيق، لما يضغط «${TG_OK_TXT}» عند إنشاء حسابه.</li>
@@ -22311,8 +22403,8 @@ async function openTermsAdmin(tab){
       return `<div class="tm-row"><div><b>${esc((D?r.name:r.shop_name)||(D?'سائق':'محل'))}${(!D&&r.type&&TT[r.type])?` <em class="tm-ty">${TT[r.type]}</em>`:''}</b><small>${v?('نسخة '+v+' · '+dt):'ما وافق بعد'}</small></div><i class="${cur?'ok':(v?'old':'no')}">${cur?'وافق':(v?'نسخة قديمة':'لا')}</i></div>` }).join('')||`<div class="tm-empty">ماكو ${D?'سواق':'مطاعم'}</div>`);
 }
 
-/* ═══ v324: تأمينات السائق (15,000 د.ع) — السائق يبلّغ «دفعت»، والإدارة تأكّد «استلمتها» وتفعّل حسابه ═══ */
-const DEP_AMT=15000;
+/* ═══ v324: تأمينات السائق (v462: 35,000 د.ع) — السائق يبلّغ «دفعت»، والإدارة تأكّد «استلمتها» وتفعّل حسابه ═══ */
+const DEP_AMT=35000;
 let _depMine=null, _depMineAt=0, _depMineBusy=false, depMap=null, _depAt=0;
 async function depMineLoad(){
   if(_depMineBusy) return; _depMineBusy=true;
@@ -26947,7 +27039,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v461', seen={}, n=0, q=[], t=null;
+  var VER='v462', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27199,7 +27291,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v461', t0=Date.now();
+  var VER='v462', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
