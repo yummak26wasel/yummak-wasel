@@ -22,9 +22,10 @@ button:focus-visible,a:focus-visible{outline:3px solid var(--orange);outline-off
 .hidden{display:none!important}
 
 /* header */
-.top{background:linear-gradient(160deg,var(--purple),var(--violet));color:#fff;padding:calc(env(safe-area-inset-top) + 22px) 22px 30px;border-radius:0 0 34px 34px}
+.top{position:relative;background:linear-gradient(160deg,var(--purple),var(--violet));color:#fff;padding:calc(env(safe-area-inset-top) + 22px) 22px 30px;border-radius:0 0 34px 34px}
 .brand{font-weight:800;font-size:21px}
 .brand .w{color:#fff}
+.backapp{position:absolute;left:18px;top:calc(env(safe-area-inset-top) + 18px);color:#fff;text-decoration:none;font-size:14px;font-weight:700;background:rgba(255,255,255,.16);padding:7px 14px;border-radius:18px}
 .top h1{font-size:28px;font-weight:800;line-height:1.35;margin-top:14px}
 .top p{color:#E6DAFF;font-size:16px;margin-top:6px}
 .meter{margin-top:18px;height:10px;border-radius:5px;background:rgba(255,255,255,.22);position:relative}
@@ -188,7 +189,7 @@ function fail(m){
 function home(){
   const done = DATA.lessons.filter(l => lessonDone(l.n)).length;
   const nextN = (DATA.lessons.find(l => !lessonDone(l.n)) || {}).n || 7;
-  let html = `<div class="top"><div class="brand"><span class="o">واصل</span> <span class="w">ليمَك</span></div>
+  let html = `<div class="top"><a class="backapp" href="/">رجوع للتطبيق</a><div class="brand"><span class="o">واصل</span> <span class="w">ليمَك</span></div>
     <h1>${me.name ? 'أهلاً ' + esc(me.name.split(' ')[0]) : 'تدريب السواق'}</h1>
     <p>${done < 6 ? `خلصت ${done} من 6 دروس. كمّلها بالترتيب، وبعدها الاختبار.` : 'خلصت كل الدروس. هسه دور الاختبار.'}</p>
     <div class="meter"><i style="width:${Math.round(done / 6 * 100)}%"></i></div></div><main>`;
