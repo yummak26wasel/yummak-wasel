@@ -121,7 +121,8 @@ video{max-width:100%;max-height:100%;width:auto;height:100%;aspect-ratio:9/16;ba
 table{width:100%;border-collapse:collapse;margin-top:18px;background:#fff;border-radius:18px;overflow:hidden;font-size:15px}
 th,td{padding:12px 10px;text-align:right;border-bottom:1px solid var(--line)}
 th{background:#EFE7FF;color:var(--purple);font-weight:800}
-td.y{color:var(--purple);font-weight:800}td.n{color:var(--muted)}
+td .y{color:var(--purple);font-weight:800}td .n{color:var(--muted)}td .bad{color:#B3131B;font-weight:800}td .go2{color:#fff;background:var(--orange);font-weight:800;padding:3px 10px;border-radius:12px;white-space:nowrap}
+td .mini{font-size:12.5px;color:var(--muted);margin-top:2px;line-height:1.5}
 
 .toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 24px);transform:translate(-50%,140%);opacity:0;visibility:hidden;background:var(--ink);color:#fff;padding:13px 22px;border-radius:24px;font-weight:700;z-index:40;transition:transform .3s;max-width:90%;text-align:center}
 .toast.on{transform:translate(-50%,0);opacity:1;visibility:visible}
@@ -192,6 +193,13 @@ function signedOut(){
   app.innerHTML = `<div class="msg"><div class="brand"><span class="o">واصل</span> <span style="color:var(--purple)">ليمَك</span></div>
     <div class="big">لازم تدخل بحسابك أول</div><p>افتح التطبيق وادخل بحساب السائق مالتك، وبعدها ارجع لهالصفحة.</p>
     <a class="btn" href="/">افتح التطبيق</a></div>`;
+}
+/* v456: التدريب بعد التسجيل — اللي ما مسجّل سائق يسجّل أول، وبعدها يطلعله التدريب */
+function joinFirst(hasAccount){
+  app.innerHTML = `<div class="msg"><div class="brand"><span class="o">واصل</span> <span style="color:var(--purple)">ليمَك</span></div>
+    <div class="big">سجّل كسائق أول</div>
+    <p>${hasAccount ? 'قدّم كسائق من نفس حسابك، وبعد ما ترسل طلبك يطلعلك التدريب.' : 'سوّي حساب سائق بالتطبيق، وبعد ما ترسل طلبك يطلعلك التدريب.'}</p>
+    <a class="btn" href="/?join=driver">سجّل كسائق</a>${hasAccount ? '' : '<a class="btn ghost" href="/">عندي حساب، أدخل</a>'}</div>`;
 }
 function fail(m){
   app.innerHTML = `<div class="msg"><div class="big">ما گدرنا نفتح التدريب</div><p>${esc(m || 'النت ضعيف أو مقطوع.')}</p>
@@ -371,13 +379,21 @@ function quiz(){
 async function admin(){
   app.innerHTML = '<div class="msg"><div class="spin"></div></div>';
   let r; try { r = await api('admin'); } catch (e) { fail(e.status === 403 ? 'هذي الصفحة للمؤسس بس.' : ''); return; }
-  app.innerHTML = `<div class="top"><div class="brand"><span class="o">واصل</span> <span class="w">ليمَك</span></div><h1>نتائج تدريب السواق</h1>
-    <p>${r.rows.length} سائق بدأوا التدريب، و${r.rows.filter(x => x.passed).length} نجحوا.</p></div><main>
-    ${r.rows.length ? `<table><thead><tr><th>السائق</th><th>أسئلة الدروس</th><th>المحاولات</th><th>أحسن نتيجة</th><th>نجح؟</th></tr></thead><tbody>
-    ${r.rows.map(x => `<tr><td>${esc(x.guest ? 'ما سجّل بعد' : (x.name || '—'))}<div style="color:var(--muted);font-size:13px;direction:ltr;text-align:right">${esc(x.phone || '')}</div></td>
-      <td>${x.checks} من ${r.total_checks}</td><td>${x.attempts}</td><td>${x.best == null ? '—' : x.best + ' من ' + r.total_final}</td>
-      <td class="${x.passed ? 'y' : 'n'}">${x.passed ? 'نجح' : 'بعد'}</td></tr>`).join('')}</tbody></table>`
-    : '<div class="note">محد بدأ التدريب بعد. أول ما سائق يفتح الصفحة ويجاوب، يطلع هنا.</div>'}</main>`;
+  const ready = r.rows.filter(x => x.passed && x.approved === false).length;
+  const passed = r.rows.filter(x => x.passed).length;
+  const trainCell = x => x.passed ? `<span class="y">نجح</span><div class="mini">${x.best} من ${r.total_final}${x.attempts > 1 ? '، بعد ' + x.attempts + ' محاولات' : ''}</div>`
+    : x.attempts ? `<span class="bad">رسب</span><div class="mini">أحسن نتيجة ${x.best} من ${r.total_final}، ${x.attempts === 1 ? 'محاولة وحدة' : x.attempts + ' محاولات'}</div>`
+    : x.started ? `<span>بالدروس</span><div class="mini">جاوب ${x.checks} من ${r.total_checks} سؤال</div>`
+    : '<span class="n">ما بدأ</span>';
+  const accCell = x => x.blocked ? '<span class="bad">موقوف</span>' : x.approved === true ? '<span class="y">مفعّل</span>'
+    : x.approved === false ? (x.passed ? '<span class="go2">جاهز تفعّله</span>' : '<span class="n">بالانتظار</span>') : '<span class="n">—</span>';
+  app.innerHTML = `<div class="top"><a class="backapp" href="/">رجوع للتطبيق</a><div class="brand"><span class="o">واصل</span> <span class="w">ليمَك</span></div><h1>نتائج تدريب السواق</h1>
+    <p>${r.rows.length} سائق مسجّل، نجح منهم ${passed}.${ready ? ` جاهزين تفعّلهم: ${ready}.` : ''}</p></div><main>
+    ${r.rows.length ? `<table><thead><tr><th>السائق</th><th>التدريب</th><th>الحساب</th></tr></thead><tbody>
+    ${r.rows.map(x => `<tr><td><b>${esc(x.name || '—')}</b><div class="mini" style="direction:ltr;text-align:right">${esc(x.phone || '')}</div></td>
+      <td>${trainCell(x)}</td><td>${accCell(x)}</td></tr>`).join('')}</tbody></table>
+      <div class="note" style="margin-top:16px">تفعيل الحساب من لوحتك بالتطبيق، مثل العادة. فعّل بس اللي مكتوب يمّه «نجح».</div>`
+    : '<div class="note">ماكو سواق مسجّلين بعد.</div>'}</main>`;
 }
 
 async function refresh(){
@@ -390,15 +406,15 @@ async function boot(){
   try {
     sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
     const { data } = await sb.auth.getSession();
-    if (data && data.session){ token = data.session.access_token; uid = data.session.user.id; }
-    else if (new URLSearchParams(location.search).has('admin')){ signedOut(); return; }
-    else { guest = true; uid = 'g:' + gidGet(true); }
+    if (!data || !data.session){ new URLSearchParams(location.search).has('admin') ? signedOut() : joinFirst(false); return; }
+    token = data.session.access_token; uid = data.session.user.id;
   } catch (e) { fail(); return; }
   loadWatched();
   if (!guest){ const g = gidGet(false); if (g){ try { const gw = JSON.parse(localStorage.getItem('tr_watched_v1:g:' + g) || '{}'); watched = Object.assign({}, gw, watched); saveWatched(); } catch (e) {} } }
   if (new URLSearchParams(location.search).has('admin')){ admin(); return; }
   try { await refresh(); } catch (e) { if (e.message !== 'signin') fail(); return; }
-  if (!guest && me.role === 'store'){
+  if (me.role === 'customer'){ joinFirst(true); return; }
+  if (me.role === 'store'){
     app.innerHTML = `<div class="msg"><div class="big">هذي الصفحة للسواق بس</div><p>حسابك حساب محل، مو حساب سائق.</p><a class="btn" href="/">رجوع للتطبيق</a></div>`;
     return;
   }

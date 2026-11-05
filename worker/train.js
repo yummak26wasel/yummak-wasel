@@ -155,20 +155,41 @@ export async function train(req, env, path) {
       } catch (e) { isAdmin = false; }
     }
     if (!isAdmin) return J({ error: 'forbidden' }, 403);
-    const rows = []; let cursor;
+    /* تدريب كل واحد (من KV) */
+    const tr = new Map(); let cursor;
     do {
       const L = await env.PUSH.list({ prefix: 'tr:', cursor });
       for (const k of L.keys) {
-        const raw = await env.PUSH.get(k.name);
-        let s = null; try { s = JSON.parse(raw); } catch (e) {}
-        if (!s) continue;
-        const v = view(s);
-        rows.push({ guest: k.name.indexOf('tr:g:') === 0, name: s.name || '', phone: s.phone || '', checks: v.checks.length, attempts: v.attempts, best: v.best, passed: v.passed, at: s.at || 0 });
+        if (k.name.indexOf('tr:g:') === 0) continue;   /* زائر قديم ما سجّل */
+        let s = null; try { s = JSON.parse(await env.PUSH.get(k.name)); } catch (e) {}
+        if (s) tr.set(k.name.slice(3), s);
       }
       cursor = L.list_complete ? undefined : L.cursor;
     } while (cursor);
-    rows.sort((a, c) => c.at - a.at);
-    return J({ ok: true, total_checks: Object.keys(CHECK).length, total_final: Object.keys(FINAL).length, rows });
+    /* v456: كل السواق المسجّلين (حتى اللي بعده ما بدأ التدريب) — نقرا بتوكن المؤسس نفسه */
+    let drivers = null;
+    try {
+      const r = await fetch(SB_URL + '/rest/v1/profiles?select=id,name,phone,is_approved,is_blocked,created_at&role=eq.driver&deleted_at=is.null&order=created_at.desc&limit=500',
+                            { headers: sbH(u.tok) });
+      if (r.ok) drivers = await r.json();
+    } catch (e) {}
+    const rows = [];
+    const add = (id, p, s) => {
+      const v = s ? view(s) : { checks: [], attempts: 0, best: null, passed: false };
+      rows.push({ name: (p && p.name) || (s && s.name) || '', phone: (p && p.phone) || (s && s.phone) || '',
+                  approved: p ? p.is_approved === true : null, blocked: p ? p.is_blocked === true : false,
+                  started: !!s && (v.checks.length > 0 || v.attempts > 0), checks: v.checks.length, attempts: v.attempts,
+                  best: v.best, passed: v.passed, at: (s && s.at) || Date.parse((p && p.created_at) || '') || 0 });
+    };
+    if (Array.isArray(drivers)) {
+      const seen = new Set();
+      for (const p of drivers) { seen.add(p.id); add(p.id, p, tr.get(p.id)); }
+      for (const [id, s] of tr) if (!seen.has(id) && s.role === 'driver') add(id, null, s);
+    } else for (const [id, s] of tr) add(id, null, s);
+    /* الأول: نجح وبعده ما مفعّل (جاهز تفعّله)، بعدين اللي بالانتظار، وآخر شي المفعّلين */
+    const rank = x => (x.passed && x.approved === false) ? 0 : (x.approved === false ? 1 : 2);
+    rows.sort((a, c) => rank(a) - rank(c) || c.at - a.at);
+    return J({ ok: true, total_checks: Object.keys(CHECK).length, total_final: Object.keys(FINAL).length, pass_min: Math.ceil(Object.keys(FINAL).length * PASS), rows });
   }
 
   return J({ error: 'not found' }, 404);
