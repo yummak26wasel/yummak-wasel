@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v459';
+const VER = 'leemak-v460';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 200;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -223,6 +223,7 @@ self.addEventListener('fetch', e => {
       return new Response(has ? '1' : '0', { status: has ? 200 : 202, headers: { 'Cache-Control': 'no-store' } }) })());
     return;
   }
+  if(/^\/train(ing)?(\.html?|\/|$)/.test(p)) return;              /* v460: صفحة تدريب السواق وفيديوهاتها — من النت مباشرة (Cloudflare يحوّل training.html ← /training، والكاش كان يرجّع التطبيق) */
   const isShell = req.mode === 'navigate' && (p === '/' || p === '/index.html' || !/\.[a-z0-9]+$/i.test(p));
   if(isShell){ e.respondWith(shell(e)); return }
   if(p === '/firebase-messaging-sw.js') return;                  /* سيرفس ووركر الإشعارات لحاله */
