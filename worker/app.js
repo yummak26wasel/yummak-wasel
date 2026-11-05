@@ -8,6 +8,7 @@
    وما نحتاج نعدّل إعدادات CORS بكل سيرفر.
    الملفات (index.html، الصور...) تنخدم مثل قبل بالضبط بدون ما يشتغل هذا الكود.
    ═══════════════════════════════════════════════════ */
+import { train } from './train.js';
 const OLD_ORIGIN = 'https://leemak-app.dhifvmy.workers.dev';   /* السيرفرات تعرف هذا العنوان */
 const MAP = { '/_otp': 'OTP', '/_api': 'API', '/_db': 'DB' };
 
@@ -223,6 +224,7 @@ export default {
     const url = new URL(req.url);
     if (url.pathname === '/_bg') return bgRemove(req, env, url);
     if (url.pathname === '/_nudge') return nudge(req, env);
+    if (url.pathname.startsWith('/_train/')) return train(req, env, url.pathname.slice(7));   /* v454: تدريب السواق */
     /* v447: صفحات الفحص مسدودة — تشتغل بس إذا بالرابط مفتاح سرّي (DIAG_KEY بإعدادات Cloudflare). بدونه: 404 */
     if ((url.pathname === '/_pushstats' || url.pathname === '/_pushtest') &&
         !(env.DIAG_KEY && url.searchParams.get('k') === env.DIAG_KEY)) return new Response('Not found', { status: 404 });
