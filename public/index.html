@@ -6295,7 +6295,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v462</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v463</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -16310,7 +16310,7 @@ async function deliver(id,noAsk){
     icon:'<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M9.4 12.6l1.9 1.9 3.6-3.9"/></svg>'});
   if(!yes)return false;
   try{ await rpc('complete_order',{p_order:id}) }
-  catch(e){ if(/رمز الزبون/.test(String((e&&e.message)||''))){ _podOn=true; return deliver(id,true) } toast(e.message); return false }
+  catch(e){ if(!POD_OFF && /رمز الزبون/.test(String((e&&e.message)||''))){ _podOn=true; return deliver(id,true) } toast(e.message); return false }
   }else{
     const r=await podAsk(id);
     if(!r) return false;
@@ -21667,8 +21667,10 @@ async function custCancelSched(id,btn){
 function _isMissing(e){ return /PGRST202|Could not find the function|schema cache/i.test(String((e&&e.message)||e||'')) }
 /* v425: إثبات التسليم بالصورة بس (مثل التطبيقات العالمية) — 'code' يرجّع الرمز */
 const POD_MODE='photo';
+const POD_OFF=true;   /* v463: المؤسس لغى تصوير الطلب — السائق يأكد التسليم بس (السيرفر صار يقبل بدون صورة) */
 let _podOn=null;
 async function podOn(){
+  if(POD_OFF) return false;
   if(_podOn!==null) return _podOn;
   try{ _podOn=(await rpc('pod_ready',{}))===true }catch(e){ if(_isMissing(e)) _podOn=false; else return false }
   return _podOn;
@@ -22190,7 +22192,7 @@ ${TG_ACC}
 <tr><td><b>كامل</b></td><td>9 الصبح – 1 بالليل</td></tr></table>
 <div class="tgd-box p">⭐ <b>الشفت الكامل:</b> إله <b>أولوية بالطلبات</b>، واستراحته <b>ساعتين أو 3</b> إنت تختار وكتها.</div>
 <ul class="tgd-ck">
-  <li>تضغط <b>«بدء الشفت»</b> بوكته، من <b>أي مكان داخل عانة</b>، وتصوّر نفسك بالتطبيق (صورتك إنت بس).</li>
+  <li>تضغط <b>«بدء الشفت»</b> بوكته، من <b>أي مكان داخل عانة</b>.</li>
   <li class="no">إذا تأخرت <b>أكثر من 20 دقيقة</b> عن بداية الشفت: <b>مخالفة، ناقص 5 نقاط</b>.</li>
   <li>تبقى <b>متاح لحد نهاية الشفت</b>. إذا طفّيت التطبيق أو طلعت قبل الوكت: <b>ناقص 5 نقاط</b>.</li>
 </ul></div>
@@ -22206,7 +22208,7 @@ ${TG_ACC}
 
 <div class="tgd-sec"><div class="tgd-h"><em>🌴</em><b>الإجازة والغياب</b><i>09</i></div>
 <ul class="tgd-ck">
-  <li><b>5 أيام إجازة بالشهر</b>، تطلبها من التطبيق <b>قبل 24 ساعة</b>.</li>
+  <li><b>7 أيام إجازة بالشهر</b>، تطلبها من التطبيق <b>قبل 24 ساعة</b>.</li>
   <li><b>طارئ أو مرض؟</b> بلّغ <b>قبل ساعة</b> من الشفت، وما تنقص نقاطك. وإذا ما عندك <b>ورقة طبيب</b>، اليوم ينحسب من إجازتك.</li>
   <li><b>تبديل الشفت</b> ويه سائق ثاني مسموح، بس <b>بموافقة الإدارة</b>.</li>
   <li class="no"><b>الغياب بدون تبليغ:</b> ناقص 15 نقطة، و<b>3 مرات بالشهر = إيقاف أسبوع</b>.</li>
@@ -22218,7 +22220,7 @@ ${TG_ACC}
   <div><i>2</i><span>روح للمطعم <b>فوراً</b>، واضغط <b>«وصلت للمطعم»</b>. المطعم يحضّر الطلب من <b>15 لـ 25 دقيقة</b>.</span></div>
   <div><i>3</i><span><b>افحص الطلب</b> ويه التطبيق (العدد، والمشروبات، والصوصات)، واضغط <b>«استلمت الطلب»</b>. إذا ناقص شي، <b>لا تطلع</b>: المطعم يكمّله أو بلّغ الدعم.</span></div>
   <div><i>4</i><span>قبل ما توصل بـ <b>دقيقتين</b>، <b>اتصل بالزبون</b> وتأكد من العنوان.</span></div>
-  <div><i>5</i><span><b>صوّر الطلب</b> وكت التسليم، واضغط <b>«تم التوصيل»</b>.</span></div>
+  <div><i>5</i><span><b>سلّم الطلب بإيد الزبون</b>، واضغط <b>«تم التوصيل»</b>.</span></div>
 </div>
 <ul class="tgd-ck">
   <li>الزبون ما يرد؟ اتصل <b>أكثر من مرة</b> وبلّغ الدعم، و<b>لا ترجّع الطلب إلا بموافقة الدعم</b>. طلب الصيدلية يرجع للصيدلية.</li>
@@ -27039,7 +27041,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v462', seen={}, n=0, q=[], t=null;
+  var VER='v463', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27291,7 +27293,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v462', t0=Date.now();
+  var VER='v463', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
