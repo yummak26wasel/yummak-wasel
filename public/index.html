@@ -3222,6 +3222,8 @@ html[data-theme=dark] .cst-in{background:#1a1528;border-color:#3a3354}
 #dmapSheet .dm-r.dm-lm{width:auto;padding:0 12px;font-size:13.5px;white-space:nowrap;flex:none}
 #dmapSheet .dm-top>div{min-width:0}
 html[data-theme=dark] .lm-row>i,html[data-theme=dark] .lm-row button{background:#262036}html[data-theme=dark] .lm-ks button{background:#1f1a30;color:#e9e4f5}html[data-theme=dark] .lm-in{background:#1f1a30;color:#fff}
+.pw-hint{display:flex;flex-wrap:wrap;gap:6px 12px;margin:6px 4px 2px;font-size:12px;font-weight:700;color:#9a93ad}
+.pw-hint span.ok{color:#15803D}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6267,7 +6269,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v450</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v451</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6750,9 +6752,9 @@ body,.screen{background:#fff;color:var(--txt)}
     <div id="rsS2" style="display:none">
       <div class="svcbody" style="text-align:center">
         <p>اكتب كلمة المرور الجديدة</p>
-        <p style="font-size:12px;color:#8A82A0;margin-top:4px">8 خانات أو أكثر، وابتعد عن الكلمات السهلة مثل 12345678 أو اسمك ويا سنة ميلادك</p>
+        <p style="font-size:12px;color:#8A82A0;margin-top:4px">8 خانات أو أكثر، بيها حرف إنگليزي كبير وحرف صغير ورقم — مثال: Anah47k9</p>
       </div>
-      <input id="rsPass" type="password" placeholder="كلمة المرور الجديدة (8 خانات أو أكثر)"
+      <input id="rsPass" type="password" placeholder="كلمة المرور الجديدة — مثل Anah47k9"
         style="width:100%;margin-top:12px;padding:15px;border:1.5px solid #EDE9F6;border-radius:16px;
         font-size:15px;font-weight:700;font-family:'Cairo',sans-serif;outline:none;text-align:right">
       <input id="rsPass2" type="password" placeholder="أعد كتابتها"
@@ -7109,7 +7111,7 @@ async function otpConfirm(){
     otpOkPhone=otpCore;
     otpClose();
     { const pw=document.getElementById('aPass');
-      if(pw && String(pw.value||'').trim().length<8){ toast('انتأكد رقمك ✓ — اكتب كلمة مرور (8 خانات أو أكثر) واضغط «إنشاء الحساب»'); try{ pw.focus() }catch(_){} return } }
+      if(pw && !pwOk(String(pw.value||'').trim())){ toast('انتأكد رقمك ✓ — اكتب كلمة مرور (8 خانات، حرف كبير وصغير ورقم) واضغط «إنشاء الحساب»'); try{ pw.focus(); pwHint(pw,true) }catch(_){} return } }
     toast('انتأكد رقمك — نكمّل الحساب');
     doAuth();
   }catch(e){ otpErr(e.message) }
@@ -9113,7 +9115,7 @@ function setMode(m,el){
   const act=el||bs[m==='login'?0:1]; if(act)act.classList.add('on');
   document.getElementById('signupOnly').style.display=m==='signup'?'block':'none';
   { const ar=document.querySelector('#auth .authrow'); if(ar) ar.style.display=m==='signup'?'none':''; }   /* v378: «تذكرني / نسيت كلمة المرور» للدخول بس */
-  { const pw=document.getElementById('aPass'); if(pw){ pw.placeholder=m==='signup'?'8 خانات أو أكثر':'كلمة المرور'; pw.autocomplete=m==='signup'?'new-password':'current-password' } }   /* v443: الحسابات الجديدة 8 */
+  { const pw=document.getElementById('aPass'); if(pw){ pw.placeholder=m==='signup'?'مثل Anah47k9 — حرف كبير وصغير ورقم':'كلمة المرور'; pwHint(pw, m==='signup' && !!pw.value); pw.autocomplete=m==='signup'?'new-password':'current-password' } }   /* v443: الحسابات الجديدة 8 */
   const bt=document.getElementById('authBtnTxt');
   if(bt)bt.textContent=m==='signup'?'إنشاء الحساب':'دخول';
   document.getElementById('authHint').innerHTML=m==='signup'
@@ -9241,7 +9243,7 @@ async function rsConfirm(){
   const code=(document.getElementById('rsCode').value||'').replace(/\D/g,'');
   const p1=document.getElementById('rsPass').value.trim();   /* v445: نفس الدخول (يشيل الفراغات) — قبل: فراغ بالآخر = ما يگدر يدخل أبد */
   const p2=document.getElementById('rsPass2').value.trim();
-  if(p1.length<8) return rsErr('كلمة المرور لازم 8 خانات على الأقل');   /* v442: السيرفر يطلب 8 — قبل كان التطبيق يقبل 6 والسيرفر يرفضها */
+  if(!pwOk(p1)) return rsErr(pwNeedMsg(p1));   /* v451 */   /* v442: السيرفر يطلب 8 — قبل كان التطبيق يقبل 6 والسيرفر يرفضها */
   if(p1!==p2) return rsErr('كلمتا المرور مو متطابقات');
   const b=document.getElementById('rsBtn'); b.disabled=true; b.textContent='... جاري الحفظ';
   rsErr('');
@@ -9368,7 +9370,27 @@ function _roleMsg(R,want){
 /* v450: نفحص كلمة المرور قبل ما ندز رمز الواتساب — بنفس قائمة السيرفر (كلمات مرور مسرّبة ومشهورة، Have I Been Pwned).
    قبل: الزبون يستلم الرمز ويكتبه، وبعدين السيرفر يرفض كلمة المرور، فيظن إن حسابه انفتح ويحاول يدخل وما يگدر.
    ما يطلع من التلفون غير أول 5 حروف من «بصمة» كلمة المرور — مو كلمة المرور نفسها. إذا الفحص ما اشتغل نكمّل عادي */
-const PW_WEAK_MSG='كلمة المرور هاي سهلة ومشهورة والنظام يرفضها — اكتب وحدة ثانية تخلط حروف وأرقام، مثل: anah47k92';
+const PW_WEAK_MSG='كلمة المرور هاي سهلة ومشهورة والنظام يرفضها — اكتب وحدة ثانية، مثل: Anah47k9';
+/* v451: كلمة المرور الجديدة لازم (طلب عبد): 8 خانات + حرف إنگليزي كبير + حرف صغير + رقم. الحسابات القديمة تدخل عادي */
+function pwRule(p){ p=String(p||''); return {len:p.length>=8, up:/[A-Z]/.test(p), low:/[a-z]/.test(p), dig:/[0-9]/.test(p)} }
+function pwOk(p){ const r=pwRule(p); return r.len&&r.up&&r.low&&r.dig }
+function pwNeedMsg(p){ const r=pwRule(p), m=[];
+  if(!r.len) m.push('8 خانات أو أكثر'); if(!r.up) m.push('حرف إنگليزي كبير (A-Z)'); if(!r.low) m.push('حرف صغير (a-z)'); if(!r.dig) m.push('رقم');
+  return 'كلمة المرور ناقصها: '+m.join('، ')+' — مثال: Anah47k9' }
+function pwHint(inp,show){
+  try{
+    if(!inp) return;
+    const host=inp.closest('.ibox')||inp; let h=host.nextElementSibling;
+    if(!h || !h.classList || !h.classList.contains('pw-hint')){ h=document.createElement('div'); h.className='pw-hint'; host.after(h) }
+    if(show===false){ h.style.display='none'; return }
+    const r=pwRule(inp.value), it=(ok,t)=>'<span class="'+(ok?'ok':'')+'">'+(ok?'✓':'•')+' '+t+'</span>';
+    h.innerHTML=it(r.len,'8 خانات')+it(r.up,'حرف كبير A-Z')+it(r.low,'حرف صغير a-z')+it(r.dig,'رقم');
+    h.style.display='';
+  }catch(e){}
+}
+document.addEventListener('input',e=>{ const t=e.target; if(!t||!t.id) return;
+  if(t.id==='aPass') pwHint(t, typeof mode!=='undefined' && mode==='signup');
+  else if(t.id==='rsPass' || (t.id==='pass' && !(typeof dwData!=='undefined' && dwData.up))) pwHint(t) });
 async function pwWeak(pass){
   const p=String(pass||'');
   if(/^(.)\1+$/.test(p) || /^(0?123456789|1234567890|987654321|12345678|87654321|qwertyui|password)$/i.test(p)) return true;
@@ -9419,7 +9441,7 @@ async function doAuth(){
   const pass=document.getElementById('aPass').value.trim();
   if(core.length<9||core.length>11)return showErr('اكتب رقم هاتف صحيح — مثال: 07XXXXXXXXX');
   /* v443: الحسابات الجديدة لازم 8 خانات — الدخول للحسابات القديمة يبقى مثل ما هو */
-  if(mode==='signup' && pass.length<8) return showErr('كلمة المرور لازم 8 خانات أو أكثر — مثال: anah2026x');
+  if(mode==='signup' && !pwOk(pass)) return showErr(pwNeedMsg(pass));   /* v451 */
   if(pass.length<6)return showErr('كلمة المرور لازم ٦ خانات على الأقل');
   if(mode==='signup' && !betaOk(core, role)) return showSoon();
   busy(true);
@@ -9593,8 +9615,8 @@ async function doAuth(){
       'auth/invalid-credential':'الرقم أو كلمة المرور غلط',
       'auth/wrong-password':'كلمة المرور غلط',
       'auth/user-not-found':'ما لكينا حساب بهذا الرقم — سوّي إنشاء حساب',
-      'auth/weak-password':'كلمة المرور ضعيفة — 8 خانات أو أكثر',
-      'auth/pwned-password':'❌ حسابك ما انفتح بعد — كلمة المرور هاي سهلة ومشهورة. اكتب وحدة ثانية تخلط حروف وأرقام (مثل anah47k92) واضغط «إنشاء الحساب» مرة ثانية. ما تحتاج رمز جديد.',
+      'auth/weak-password':'كلمة المرور ضعيفة — 8 خانات، بيها حرف كبير وحرف صغير ورقم (مثل Anah47k9)',
+      'auth/pwned-password':'❌ حسابك ما انفتح بعد — كلمة المرور هاي سهلة ومشهورة. اكتب وحدة ثانية تخلط حروف وأرقام (مثل Anah47k9) واضغط «إنشاء الحساب» مرة ثانية. ما تحتاج رمز جديد.',
       'auth/network-request-failed':'ما بيه اتصال بالإنترنت',
       'auth/too-many-requests':'محاولات كثيرة — انتظر شوية',
       'auth/operation-not-allowed':'لازم تفعّل Email/Password من فايربيس',
@@ -10716,7 +10738,7 @@ function dwPaint(){
        '<div class="dw-note">صورة واضحة لوجهك — الزبون راح يشوفها</div>'+
        dwField('name','الاسم الكامل','text',dwData.name,'أحمد محمد علي')+
        (dwData.up?'':dwField('phone','رقم الهاتف','tel',dwData.phone,'07XX XXX XXXX')+
-       dwField('pass','كلمة المرور','password',dwData.pass,'8 خانات أو أكثر'))+
+       dwField('pass','كلمة المرور — حرف كبير وصغير ورقم','password',dwData.pass,'مثل Anah47k9'))+
        dwField('dob','تاريخ الميلاد — لازم 18 سنة أو أكثر','date',dwData.dob,'')+'<div class="dw-age" id="dwAgeMsg"></div>'+
        dwField('addr','العنوان / المنطقة','text',dwData.addr,'عانة — حي الكرامة');
     nx.textContent='التالي ›';
@@ -10782,7 +10804,7 @@ function dwValid(){
   if(dwStep===2){
     ok = !!(dwData.photo && (dwData.name||'').trim() &&
             (dwData.up || (phoneCore(dwData.phone||'').length>=9 &&
-            (dwData.pass||'').length>=8)) && (dwData.addr||'').trim() && dwAge(dwData.dob)>=18);
+            pwOk(dwData.pass))) && (dwData.addr||'').trim() && dwAge(dwData.dob)>=18);
     const _am=document.getElementById('dwAgeMsg');
     if(_am){ const _a=dwAge(dwData.dob); _am.textContent = (dwData.dob && _a>=0 && _a<18) ? 'لازم يكون عمرك 18 سنة أو أكثر حتى تشتغل سائق' : '' }
   }
@@ -10810,7 +10832,7 @@ async function dwNextStep(){
 async function dwSubmit(){
   if(dwData.up) return dwUpgradeSubmit();   /* v385: زبون يصير سائق */
   /* v447: كلمة المرور ما تنحفظ بالمسودة — إذا رجع بعد ما الصفحة تحدّثت، يكتبها مرة ثانية بس */
-  if((dwData.pass||'').length<8){ dwStep=2; dwPaint(); toast('اكتب كلمة المرور مرة ثانية');
+  if(!pwOk(dwData.pass)){ dwStep=2; dwPaint(); toast('اكتب كلمة المرور مرة ثانية');
     setTimeout(()=>{ try{ const p=document.getElementById('pass'); p.scrollIntoView({block:'center'}); p.focus() }catch(e){} },150); return }
   const nx=document.getElementById('dwNext');
   nx.disabled=true; nx.textContent='… جاري الإرسال';
@@ -26833,7 +26855,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v450', seen={}, n=0, q=[], t=null;
+  var VER='v451', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27085,7 +27107,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v450', t0=Date.now();
+  var VER='v451', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
