@@ -1,5 +1,5 @@
 /* ═══════════════════════════════════════════════════
-   v454: تدريب السواق — التصحيح هنا بالسيرفر، والأجوبة الصح ما توصل للتلفون أبد.
+   v454/v455: تدريب السواق — التصحيح هنا بالسيرفر، والأجوبة الصح ما توصل للتلفون أبد.
      POST /_train/state   حالة السائق (شنو خلص من أسئلة وسط الفيديو، ونتائجه)
      POST /_train/check   سؤال وسط الفيديو {id, answer} ← {ok}
      POST /_train/submit  الاختبار الأخير {answers: {رقم السؤال: نص الجواب}} ← النتيجة
@@ -35,22 +35,48 @@ const FINAL = {
 const J = (o, s) => new Response(JSON.stringify(o), { status: s || 200, headers: { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' } });
 const sbH = tok => ({ apikey: SB_PUB, Authorization: 'Bearer ' + tok, 'Content-Type': 'application/json' });
 
+const GID_RE = /^[a-f0-9]{32}$/;
+
+/* v455: منو الشخص؟ حساب (توكن Supabase) — أو زائر ما سجّل بعد (رمز عشوائي محفوظ بتلفونه بـ X-Train-Guest).
+   الزائر يتدرب قبل ما يسوي حساب، ولما يسجّل نتيجته تنتقل لحسابه (claim) */
 async function who(req) {
+  const g = String(req.headers.get('X-Train-Guest') || '').toLowerCase();
+  const gid = GID_RE.test(g) ? g : '';
   const a = req.headers.get('Authorization') || '';
   const tok = a.startsWith('Bearer ') ? a.slice(7).trim() : '';
-  if (!tok || tok.length > 4000) return null;
-  try {
-    const r = await fetch(SB_URL + '/auth/v1/user', { headers: sbH(tok) });
-    if (!r.ok) return null;
-    const u = await r.json();
-    if (!u || !u.id) return null;
-    let p = {};
+  if (tok && tok.length < 4000 && tok !== 'null') {
     try {
-      const pr = await fetch(SB_URL + '/rest/v1/profiles?select=role,name,phone&id=eq.' + encodeURIComponent(u.id), { headers: sbH(tok) });
-      if (pr.ok) p = (await pr.json())[0] || {};
+      const r = await fetch(SB_URL + '/auth/v1/user', { headers: sbH(tok) });
+      if (r.ok) {
+        const u = await r.json();
+        if (u && u.id) {
+          let p = {};
+          try {
+            const pr = await fetch(SB_URL + '/rest/v1/profiles?select=role,name,phone&id=eq.' + encodeURIComponent(u.id), { headers: sbH(tok) });
+            if (pr.ok) p = (await pr.json())[0] || {};
+          } catch (e) {}
+          return { id: u.id, tok, gid, role: p.role || '', name: p.name || '', phone: p.phone || '' };
+        }
+      }
     } catch (e) {}
-    return { id: u.id, tok, role: p.role || '', name: p.name || '', phone: p.phone || '' };
-  } catch (e) { return null; }
+  }
+  if (gid) return { id: 'g:' + gid, tok: '', gid: '', guest: true, role: 'guest', name: '', phone: '' };
+  return null;
+}
+
+/* الزائر صار عنده حساب: ننقل تدريبه لحسابه ونمسح سجل الزائر */
+async function claim(env, u) {
+  if (!u.gid || u.guest) return;
+  const raw = await env.PUSH.get('tr:g:' + u.gid);
+  if (!raw) return;
+  let g = null; try { g = JSON.parse(raw); } catch (e) {}
+  if (g) {
+    const s = await load(env, u.id);
+    s.checks = Object.assign({}, g.checks || {}, s.checks || {});
+    s.results = (g.results || []).concat(s.results || []).sort((a, b) => a.at - b.at).slice(-20);
+    await save(env, u, s);
+  }
+  await env.PUSH.delete('tr:g:' + u.gid);
 }
 
 async function load(env, id) {
@@ -81,10 +107,11 @@ export async function train(req, env, path) {
   if (!u) return J({ error: 'signin' }, 401);
   let b = {};
   try { b = await req.json(); } catch (e) {}
+  try { await claim(env, u); } catch (e) {}
 
   if (path === '/state') {
     const s = await load(env, u.id);
-    return J(Object.assign({ ok: true, role: u.role, name: u.name }, view(s)));
+    return J(Object.assign({ ok: true, role: u.role, name: u.name, guest: !!u.guest }, view(s)));
   }
 
   if (path === '/check') {
@@ -120,7 +147,7 @@ export async function train(req, env, path) {
   }
 
   if (path === '/admin') {
-    let isAdmin = u.role === 'admin';
+    let isAdmin = !u.guest && u.role === 'admin';
     if (isAdmin) {
       try {
         const r = await fetch(SB_URL + '/rest/v1/rpc/sec_admin', { method: 'POST', headers: sbH(u.tok), body: '{}' });
@@ -136,7 +163,7 @@ export async function train(req, env, path) {
         let s = null; try { s = JSON.parse(raw); } catch (e) {}
         if (!s) continue;
         const v = view(s);
-        rows.push({ name: s.name || '', phone: s.phone || '', checks: v.checks.length, attempts: v.attempts, best: v.best, passed: v.passed, at: s.at || 0 });
+        rows.push({ guest: k.name.indexOf('tr:g:') === 0, name: s.name || '', phone: s.phone || '', checks: v.checks.length, attempts: v.attempts, best: v.best, passed: v.passed, at: s.at || 0 });
       }
       cursor = L.list_complete ? undefined : L.cursor;
     } while (cursor);

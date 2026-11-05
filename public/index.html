@@ -6275,7 +6275,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v454</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v455</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -10710,6 +10710,30 @@ const DW_TTL=[
   ['مراجعة البيانات','تأكد من صحة المعلومات قبل الإرسال'],
   ['تم إرسال طلبك','']
 ];
+/* ═══ v455: تدريب السواق قبل التسجيل — أول خطوة بالتسجيل: لازم ينجح بالتدريب (training.html) حتى يكمّل.
+   اللي ما عنده حساب يتدرب كزائر برمز بتلفونه (tr_gid)، ولما يسوي الحساب نتيجته تنتقل لحسابه ═══ */
+function _trGid(){ try{ const g=localStorage.getItem('tr_gid')||''; return /^[a-f0-9]{32}$/.test(g)?g:'' }catch(e){ return '' } }
+let _dwTr={ok:null,n:0,busy:false,at:0};
+function dwTrainRefresh(force){
+  if(_dwTr.busy || (!force && Date.now()-_dwTr.at<15000 && _dwTr.ok!==null)) return;
+  const g=_trGid(), tk=(uid && window.__waselToken && window.__waselToken()) || '';
+  if(!g && !tk){ _dwTr.ok=false; _dwTr.n=0; setTimeout(()=>{ if(dwStep===1 && _dwOpen()) dwPaint() },0); return }
+  _dwTr.busy=true;
+  const h={'Content-Type':'application/json'}; if(tk) h['Authorization']='Bearer '+tk; if(g) h['X-Train-Guest']=g;
+  fetch('/_train/state',{method:'POST',headers:h,body:'{}'}).then(r=>r.ok?r.json():null).then(j=>{
+    _dwTr.at=Date.now();
+    if(j){ _dwTr.ok=!!j.passed; _dwTr.n=(j.checks||[]).length }
+    else if(_dwTr.ok===null) _dwTr.ok=false;
+  }).catch(()=>{ if(_dwTr.ok===null) _dwTr.ok=false }).finally(()=>{ _dwTr.busy=false; setTimeout(()=>{ if(dwStep===1 && _dwOpen()) dwPaint() },0) });
+}
+function dwTrainCard(){
+  const ok=_dwTr.ok===true, wait=_dwTr.ok===null;
+  const ic='<span style="flex:0 0 auto;width:46px;height:46px;border-radius:50%;background:'+(ok?'#3F0A92':'#F97402')+';display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+(ok?'<path d="M5 12.5l4.5 4.5L19 7.5"/>':'<path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/>')+'</svg></span>';
+  const t = wait ? 'نتأكد من التدريب…' : ok ? 'نجحت بتدريب السواق' : 'قبل ما تسجّل: تدريب السواق';
+  const d = wait ? '' : ok ? 'هسه تگدر تكمّل التسجيل' : (_dwTr.n ? 'كمّل التدريب — جاوبت '+_dwTr.n+' من 12 سؤال بالدروس' : '6 دروس قصيرة واختبار، ولازم تنجح حتى تكمّل التسجيل');
+  return '<div style="display:flex;align-items:center;gap:14px;margin:18px 0 4px;padding:16px;border-radius:20px;text-align:right;background:'+(ok?'#EFE7FF':'#FFF1E4')+';border:2px solid '+(ok?'#5917BC':'#F97402')+'">'+ic+
+         '<span style="flex:1;min-width:0"><b style="display:block;font-size:16px;font-weight:800;color:#3F0A92">'+t+'</b>'+(d?'<span style="display:block;font-size:13.5px;color:#6A5A88;line-height:1.6;margin-top:2px">'+d+'</span>':'')+'</span></div>';
+}
 function dwPaint(){
   const b=document.getElementById('dwBody');
   const bar=document.getElementById('dwBar');
@@ -10733,8 +10757,9 @@ function dwPaint(){
        '<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="6.5" width="18" height="14" rx="2.2"/><path d="M8.5 6.5V5a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v1.5"/></svg>فرص عمل مرنة</div>'+
        '<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><path d="M4 14h2.6v5H5.6A1.6 1.6 0 0 1 4 17.4z"/><path d="M20 14h-2.6v5h1A1.6 1.6 0 0 0 20 17.4z"/></svg>دعم مستمر</div>'+
        '<div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg>كن جزء من عائلة واصل ليمَك</div>'+
-       '</div></div>';
-    nx.textContent='ابدأ التسجيل ›';
+       '</div></div>'+dwTrainCard();
+    nx.textContent = _dwTr.ok===true ? 'ابدأ التسجيل ›' : (_dwTr.ok===null ? '…' : (_dwTr.n ? 'كمّل التدريب ›' : 'ابدأ التدريب ›'));
+    if(_dwTr.ok===null || Date.now()-_dwTr.at>15000) dwTrainRefresh();
   }
   else if(dwStep===2){
     h+='<div class="dw-avat" onclick="document.getElementById(\'f_photo\').click()">'+
@@ -10830,6 +10855,9 @@ function dwLoc(){
   }, ()=>toast('ما گدرنا نحدد موقعك — افتح الموقع بالإعدادات'), {enableHighAccuracy:true,timeout:12000});
 }
 async function dwNextStep(){
+  if(dwStep===1 && _dwTr.ok!==true){   /* v455: التدريب أول */
+    if(_dwTr.ok===null){ dwTrainRefresh(true); return }
+    try{ dwSave() }catch(e){} location.href='/training.html'; return }
   if(dwStep===7) return dwSubmit();
   if(dwStep===8){ dwClose(); if(dwData.up){ try{ location.reload() }catch(e){} } return }
   dwStep++; if(dwStep===5) dwStep=6;   /* v324: نتخطى خطوة الموقع */
@@ -10870,6 +10898,18 @@ async function dwSubmit(){
 
 /* ═══ v385: الزبون يقدّم يصير سائق من نفس حسابه (نفس الرقم) — الحساب يتحول «سائق» وينتظر موافقة الإدارة.
    السائق يگدر يطلب لنفسه («اطلب لنفسك»)، وإذا ما انقبل أو غيّر رأيه يرجع زبون بضغطة ═══ */
+/* v455: رجع من صفحة التدريب بعد ما نجح (/?join=driver) — نفتحله التسجيل كسائق مباشرة */
+(function(){
+  try{ if(new URLSearchParams(location.search).get('join')!=='driver') return; history.replaceState(null,'',location.pathname) }catch(e){ return }
+  let n=0; (function go(){
+    n++;
+    try{
+      if(typeof uid!=='undefined' && uid && typeof me!=='undefined' && me){ if(me.role==='customer') dwUpgradeOpen(); return }
+      if(n>=6 && document.getElementById('drvWiz')){ _dwTr.ok=null; dwOpen(); return }
+    }catch(e){}
+    if(n<20) setTimeout(go,500);
+  })();
+})();
 async function dwUpgradeOpen(){
   if(!me||!uid) return;
   const act=(myOrders||[]).filter(o=>o&&o.customerUid===uid&&!['delivered','cancelled','canceled','rejected'].includes(o.status));
@@ -15534,7 +15574,8 @@ function drvTrainCheck(){
   _trBusy=true; _trAt=Date.now();
   const tk=(window.__waselToken && window.__waselToken()) || '';
   if(!tk){ _trBusy=false; return }
-  fetch('/_train/state',{method:'POST',headers:{'Authorization':'Bearer '+tk,'Content-Type':'application/json'},body:'{}'})
+  const _h={'Authorization':'Bearer '+tk,'Content-Type':'application/json'}; const _g=_trGid(); if(_g) _h['X-Train-Guest']=_g;
+  fetch('/_train/state',{method:'POST',headers:_h,body:'{}'})
     .then(r=>r.ok?r.json():null).then(j=>{
       if(!j) return;
       if(j.passed){ try{ localStorage.setItem('tr_passed:'+uid,'1') }catch(e){} el.style.display='none'; return }
@@ -26883,7 +26924,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v454', seen={}, n=0, q=[], t=null;
+  var VER='v455', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27135,7 +27176,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v454', t0=Date.now();
+  var VER='v455', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

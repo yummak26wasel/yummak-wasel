@@ -147,7 +147,17 @@ const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { c
 const fmt = t => { t = Math.max(0, Math.floor(t)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
 let toastT; function toast(m){ const t = $('#toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 2600); }
 
-let sb = null, token = null, me = { role: '', name: '' }, checks = new Set(), info = {}, uid = '';
+let sb = null, token = null, me = { role: '', name: '' }, checks = new Set(), info = {}, uid = '', guest = false;
+/* v455: اللي ما عنده حساب يتدرب كزائر برمز عشوائي محفوظ بتلفونه، ولما يسجّل تنتقل نتيجته لحسابه */
+function gidGet(make){
+  let g = ''; try { g = localStorage.getItem('tr_gid') || ''; } catch (e) {}
+  if (!/^[a-f0-9]{32}$/.test(g) && make){
+    const a = new Uint8Array(16); crypto.getRandomValues(a); g = [...a].map(x => x.toString(16).padStart(2, '0')).join('');
+    try { localStorage.setItem('tr_gid', g); } catch (e) {}
+  }
+  return /^[a-f0-9]{32}$/.test(g) ? g : '';
+}
+const isTrainee = () => guest || me.role === 'customer';
 const WKEY = () => 'tr_watched_v1:' + uid;
 let watched = {};
 function loadWatched(){ try { watched = JSON.parse(localStorage.getItem(WKEY())) || {}; } catch (e) { watched = {}; } }
@@ -156,8 +166,11 @@ function saveWatched(){ try { localStorage.setItem(WKEY(), JSON.stringify(watche
 async function api(path, body){
   for (let i = 0; i < 2; i++){
     try {
-      if (sb){ const { data } = await sb.auth.getSession(); if (data && data.session) token = data.session.access_token; }
-      const r = await fetch('/_train/' + path, { method: 'POST', headers: { 'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify(body || {}) });
+      if (sb && !guest){ const { data } = await sb.auth.getSession(); if (data && data.session) token = data.session.access_token; }
+      const h = { 'Content-Type': 'application/json' }, g = gidGet(guest);
+      if (token && !guest) h['Authorization'] = 'Bearer ' + token;
+      if (g) h['X-Train-Guest'] = g;
+      const r = await fetch('/_train/' + path, { method: 'POST', headers: h, body: JSON.stringify(body || {}) });
       const j = await r.json().catch(() => ({}));
       if (r.status === 401) { signedOut(); throw new Error('signin'); }
       if (!r.ok) { const e = new Error(j.error || ('http ' + r.status)); e.status = r.status; throw e; }
@@ -190,10 +203,11 @@ function home(){
   const done = DATA.lessons.filter(l => lessonDone(l.n)).length;
   const nextN = (DATA.lessons.find(l => !lessonDone(l.n)) || {}).n || 7;
   let html = `<div class="top"><a class="backapp" href="/">رجوع للتطبيق</a><div class="brand"><span class="o">واصل</span> <span class="w">ليمَك</span></div>
-    <h1>${me.name ? 'أهلاً ' + esc(me.name.split(' ')[0]) : 'تدريب السواق'}</h1>
-    <p>${done < 6 ? `خلصت ${done} من 6 دروس. كمّلها بالترتيب، وبعدها الاختبار.` : 'خلصت كل الدروس. هسه دور الاختبار.'}</p>
+    <h1>${me.name && !guest ? 'أهلاً ' + esc(me.name.split(' ')[0]) : 'تدريب السواق'}</h1>
+    <p>${isTrainee() && done === 0 ? 'قبل ما تسجّل كسائق، خلص الدروس الستة وانجح بالاختبار.' : (done < 6 ? `خلصت ${done} من 6 دروس. كمّلها بالترتيب، وبعدها الاختبار.` : 'خلصت كل الدروس. هسه دور الاختبار.')}</p>
     <div class="meter"><i style="width:${Math.round(done / 6 * 100)}%"></i></div></div><main>`;
-  if (info.passed) html += `<div class="note ok">نجحت بالاختبار، وأحسن نتيجة إلك ${info.best} من ${DATA.final.length}. الإدارة راح تراجع حسابك وتفعّله.</div>`;
+  if (info.passed && isTrainee()) html += `<div class="note ok">نجحت بالاختبار. هسه كمّل تسجيلك كسائق.<br><a class="btn" style="margin-top:12px" href="/?join=driver">كمّل التسجيل</a></div>`;
+  else if (info.passed) html += `<div class="note ok">نجحت بالاختبار، وأحسن نتيجة إلك ${info.best} من ${DATA.final.length}. الإدارة راح تراجع حسابك وتفعّله.</div>`;
   else if (info.last && !info.last.passed) html += `<div class="note bad">آخر مرة جبت ${info.last.score} من ${info.last.total}، والنجاح من ${DATA.pass_min}. عيد الدروس المفتوحة وبعدها جرّب مرة ثانية.</div>`;
   html += `<div class="route" id="route"><div class="road-done" id="roadDone"></div><div class="moto" id="moto">${MOTO}</div>`;
   for (const l of DATA.lessons){
@@ -343,7 +357,8 @@ function quiz(){
     const titles = r.wrong_lessons.map(n => (DATA.lessons.find(l => l.n === n) || {}).title).filter(Boolean);
     app.innerHTML = r.passed
       ? `<div class="msg"><div class="score">${r.score}<small> / ${r.total}</small></div><div class="big">نجحت بالاختبار</div>
-         <p>شغل زين. الإدارة راح تراجع حسابك وتفعّله، وبعدها تبدي تستلم طلبات.</p><button class="btn" id="hm">رجوع للدروس</button></div>`
+         ${isTrainee() ? '<p>شغل زين. هسه كمّل تسجيلك كسائق، والإدارة تراجع طلبك وتفعّل حسابك.</p><a class="btn" href="/?join=driver">كمّل التسجيل</a><button class="btn ghost" id="hm">رجوع للدروس</button>'
+                       : '<p>شغل زين. الإدارة راح تراجع حسابك وتفعّله، وبعدها تبدي تستلم طلبات.</p><button class="btn" id="hm">رجوع للدروس</button>'}</div>`
       : `<div class="msg"><div class="score">${r.score}<small> / ${r.total}</small></div><div class="big">ما نجحت هالمرة</div>
          <p>النجاح من ${DATA.pass_min}. عيد هذي الدروس وبعدها جرّب الاختبار مرة ثانية:</p>
          <div class="redo">${titles.map(t => `<div>${esc(t)}</div>`).join('')}</div><button class="btn" id="hm">رجوع للدروس</button></div>`;
@@ -359,7 +374,7 @@ async function admin(){
   app.innerHTML = `<div class="top"><div class="brand"><span class="o">واصل</span> <span class="w">ليمَك</span></div><h1>نتائج تدريب السواق</h1>
     <p>${r.rows.length} سائق بدأوا التدريب، و${r.rows.filter(x => x.passed).length} نجحوا.</p></div><main>
     ${r.rows.length ? `<table><thead><tr><th>السائق</th><th>أسئلة الدروس</th><th>المحاولات</th><th>أحسن نتيجة</th><th>نجح؟</th></tr></thead><tbody>
-    ${r.rows.map(x => `<tr><td>${esc(x.name || '—')}<div style="color:var(--muted);font-size:13px;direction:ltr;text-align:right">${esc(x.phone || '')}</div></td>
+    ${r.rows.map(x => `<tr><td>${esc(x.guest ? 'ما سجّل بعد' : (x.name || '—'))}<div style="color:var(--muted);font-size:13px;direction:ltr;text-align:right">${esc(x.phone || '')}</div></td>
       <td>${x.checks} من ${r.total_checks}</td><td>${x.attempts}</td><td>${x.best == null ? '—' : x.best + ' من ' + r.total_final}</td>
       <td class="${x.passed ? 'y' : 'n'}">${x.passed ? 'نجح' : 'بعد'}</td></tr>`).join('')}</tbody></table>`
     : '<div class="note">محد بدأ التدريب بعد. أول ما سائق يفتح الصفحة ويجاوب، يطلع هنا.</div>'}</main>`;
@@ -375,14 +390,16 @@ async function boot(){
   try {
     sb = window.supabase.createClient(SB_URL, SB_KEY, { auth: { persistSession: true, autoRefreshToken: true } });
     const { data } = await sb.auth.getSession();
-    if (!data || !data.session){ signedOut(); return; }
-    token = data.session.access_token; uid = data.session.user.id;
+    if (data && data.session){ token = data.session.access_token; uid = data.session.user.id; }
+    else if (new URLSearchParams(location.search).has('admin')){ signedOut(); return; }
+    else { guest = true; uid = 'g:' + gidGet(true); }
   } catch (e) { fail(); return; }
   loadWatched();
+  if (!guest){ const g = gidGet(false); if (g){ try { const gw = JSON.parse(localStorage.getItem('tr_watched_v1:g:' + g) || '{}'); watched = Object.assign({}, gw, watched); saveWatched(); } catch (e) {} } }
   if (new URLSearchParams(location.search).has('admin')){ admin(); return; }
   try { await refresh(); } catch (e) { if (e.message !== 'signin') fail(); return; }
-  if (me.role !== 'driver' && me.role !== 'admin'){
-    app.innerHTML = `<div class="msg"><div class="big">هذي الصفحة للسواق بس</div><p>حسابك مو حساب سائق.</p><a class="btn" href="/">رجوع للتطبيق</a></div>`;
+  if (!guest && me.role === 'store'){
+    app.innerHTML = `<div class="msg"><div class="big">هذي الصفحة للسواق بس</div><p>حسابك حساب محل، مو حساب سائق.</p><a class="btn" href="/">رجوع للتطبيق</a></div>`;
     return;
   }
   home();
