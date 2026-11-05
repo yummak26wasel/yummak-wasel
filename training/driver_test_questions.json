@@ -9,7 +9,7 @@
         "lesson": 1,
         "video": "01-tatbeeq-alsaiq.mp4",
         "pause_at_sec": 13.5,
-        "rewind_to_sec": 3.4,
+        "rewind_to_sec": 6.9,
         "question": "شكد التأمينات؟",
         "options": [
           "35,000 د.ع",
@@ -23,7 +23,7 @@
         "lesson": 1,
         "video": "01-tatbeeq-alsaiq.mp4",
         "pause_at_sec": 49.5,
-        "rewind_to_sec": 42.3,
+        "rewind_to_sec": 42.9,
         "question": "خلال شكد لازم تقبل الطلب؟",
         "options": [
           "3 دقايق",
@@ -37,7 +37,7 @@
         "lesson": 2,
         "video": "02-alistilam-min-almataam.mp4",
         "pause_at_sec": 17.0,
-        "rewind_to_sec": 3.4,
+        "rewind_to_sec": 10.4,
         "question": "شنو تضغط أول ما توصل للمطعم؟",
         "options": [
           "«تم التوصيل»",
@@ -65,7 +65,7 @@
         "lesson": 3,
         "video": "03-altawseel-walkash.mp4",
         "pause_at_sec": 28.5,
-        "rewind_to_sec": 18.5,
+        "rewind_to_sec": 22.3,
         "question": "شلون تستلم الكاش؟",
         "options": [
           "تعدّه بعدين",
@@ -79,7 +79,7 @@
         "lesson": 3,
         "video": "03-altawseel-walkash.mp4",
         "pause_at_sec": 65.2,
-        "rewind_to_sec": 57.4,
+        "rewind_to_sec": 58.0,
         "question": "رسوم الخدمة تسلّمها كل شكد؟",
         "options": [
           "كل 15 يوم",
@@ -121,7 +121,7 @@
         "lesson": 5,
         "video": "05-alshiftat.mp4",
         "pause_at_sec": 21.2,
-        "rewind_to_sec": 11.0,
+        "rewind_to_sec": 17.6,
         "question": "التأخير بكم دقيقة يصير مخالفة؟",
         "options": [
           "أكثر من 10",
@@ -135,7 +135,7 @@
         "lesson": 5,
         "video": "05-alshiftat.mp4",
         "pause_at_sec": 39.2,
-        "rewind_to_sec": 28.5,
+        "rewind_to_sec": 35.4,
         "question": "بوكت الضغط كم سائق يرتاح بنفس الوكت؟",
         "options": [
           "اثنين",
@@ -149,7 +149,7 @@
         "lesson": 6,
         "video": "06-alniqat.mp4",
         "pause_at_sec": 17.7,
-        "rewind_to_sec": 3.4,
+        "rewind_to_sec": 4.0,
         "question": "كل شهر تبدي بكم نقطة؟",
         "options": [
           "100",
@@ -163,7 +163,7 @@
         "lesson": 6,
         "video": "06-alniqat.mp4",
         "pause_at_sec": 27.9,
-        "rewind_to_sec": 18.3,
+        "rewind_to_sec": 21.8,
         "question": "تحت 50 نقطة شنو يصير؟",
         "options": [
           "إيقاف يومين",
