@@ -6108,6 +6108,25 @@ body,.screen{background:#fff;color:var(--txt)}
 <body>
 <div id="offBar"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 3l18 18"/><path d="M5 12.5a11 11 0 0 1 4-2.6M2 8.8a16 16 0 0 1 5-3.2M22 8.8a16 16 0 0 0-9.5-3.6M19 12.5a11 11 0 0 0-2.6-1.9"/><path d="M8.6 16a6 6 0 0 1 6.8 0"/><path d="M12 20v.1"/></svg> ما مكو انترنت — التطبيق يشتغل بالمحفوظ</div>
 
+<!-- v457: شاشة تدريب كاملة للسائق اللي بعده ما نجح بالتدريب -->
+<div id="drvTrainFull" role="dialog" aria-modal="true" aria-labelledby="dtfH" style="display:none;position:fixed;inset:0;z-index:99980;background:linear-gradient(175deg,#FBFAFE,#F1EAFB);overflow:auto;-webkit-overflow-scrolling:touch">
+  <div style="min-height:100%;display:flex;flex-direction:column;max-width:520px;margin:0 auto;padding:calc(env(safe-area-inset-top,0px) + 26px) 22px calc(env(safe-area-inset-bottom,0px) + 24px)">
+    <div style="text-align:center;font-weight:800;font-size:20px"><span style="color:#F97402">واصل</span> <span style="color:#3F0A92">ليمَك</span></div>
+    <img src="drv-hero.png" alt="" style="display:block;width:62%;max-width:230px;margin:18px auto 6px">
+    <h2 id="dtfH" style="text-align:center;font-size:27px;font-weight:800;color:#3F0A92;line-height:1.35;margin:6px 0 0">تدريب السواق</h2>
+    <p id="dtfP" style="text-align:center;font-size:15.5px;color:#5B4C78;line-height:1.8;margin:8px auto 0;max-width:340px"></p>
+    <div style="margin:22px 0 0;display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;gap:12px;align-items:center;background:#fff;border-radius:18px;padding:13px 15px;font-weight:700;font-size:15px;color:#24123F"><span style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#F97402;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">1</span>6 دروس فيديو قصيرة، كل درس دقيقة تقريباً</div>
+      <div style="display:flex;gap:12px;align-items:center;background:#fff;border-radius:18px;padding:13px 15px;font-weight:700;font-size:15px;color:#24123F"><span style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#F97402;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">2</span>الفيديو يوگف ويسألك، فانتبه</div>
+      <div style="display:flex;gap:12px;align-items:center;background:#fff;border-radius:18px;padding:13px 15px;font-weight:700;font-size:15px;color:#24123F"><span style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#F97402;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800">3</span>اختبار أخير 30 سؤال، والنجاح من 27</div>
+    </div>
+    <div id="dtfProg" style="display:none;margin-top:16px;text-align:center;font-weight:800;font-size:15px;color:#3F0A92"></div>
+    <div style="flex:1;min-height:22px"></div>
+    <a id="dtfGo" href="/training.html" style="display:block;text-align:center;background:#F97402;color:#fff;font-weight:800;font-size:18px;padding:16px;border-radius:30px;text-decoration:none;box-shadow:0 10px 24px rgba(249,116,2,.32)">ابدأ التدريب</a>
+    <button id="dtfLater" type="button" onclick="drvTrainLater()" style="display:none;margin:12px auto 0;background:none;border:0;color:#6A5A88;font:inherit;font-weight:700;font-size:15px;padding:10px 18px">بعدين</button>
+    <button type="button" onclick="drvTrainOut()" style="margin:6px auto 0;background:none;border:0;color:#9A8DB3;font:inherit;font-size:13.5px;padding:8px 14px">تسجيل خروج</button>
+  </div>
+</div>
 <div id="drvWiz">
   <div class="dw-top">
     <button class="dw-back" onclick="dwBack()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
@@ -6275,7 +6294,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v456</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v457</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -15536,14 +15555,40 @@ function paintDutyCard(doneTodayCount, earnToday){
 }
 
 /* هيدر السائق: صورته واسمه (واللوغو إذا ماكو صورة) */
-/* v454: زر «تدريب السواق» بأول شاشة السائق — يطلع للسائق اللي بعده ما نجح بالاختبار، ويختفي وحده بعد ما ينجح.
+/* v454: بطاقة «تدريب السواق» بأول شاشة السائق — v457: وشاشة تدريب كاملة فوك واجهة السائق لحد ما ينجح.
+   السائق اللي بالانتظار (ما مفعّل) ما يگدر يسكّرها. المفعّل يگدر يدوس «بعدين» وترجع تطلعله أول ما يفتح التطبيق مرة ثانية.
    الحالة من السيرفر (/_train/state)، مرة كل 3 دقايق كحد أقصى، وبعد النجاح ما نسأل بعد */
-let _trAt=0, _trBusy=false;
+let _trAt=0, _trBusy=false, _trLast=null;
+function drvTrainLater(){ try{ sessionStorage.setItem('tr_later','1') }catch(e){} _trPaint() }
+function drvTrainOut(){ if(!confirm('تطلع من حسابك؟')) return; try{ document.getElementById('drvTrainFull').style.display='none'; document.body.style.overflow='' }catch(e){} try{ confirmLogout() }catch(e){} }
+function _trPaint(){
+  const card=document.getElementById('drvTrain'), full=document.getElementById('drvTrainFull');
+  const j=_trLast, app=document.getElementById('dApp');
+  const isDrv = !!(me && me.role==='driver'), onDrv = !!(app && app.classList.contains('on'));
+  const need = isDrv && j && !j.passed;
+  if(card) card.style.display = need ? 'flex' : 'none';
+  if(!full) return;
+  let later=false; try{ later=sessionStorage.getItem('tr_later')==='1' }catch(e){}
+  const pending = me && me.approved!==true;
+  const show = need && onDrv && (pending || !later);
+  full.style.display = show ? 'block' : 'none';
+  try{ document.body.style.overflow = show ? 'hidden' : '' }catch(e){}
+  if(!show) return;
+  const n=(j.checks||[]).length;
+  const p=document.getElementById('dtfP'), pr=document.getElementById('dtfProg'), go=document.getElementById('dtfGo'), lt=document.getElementById('dtfLater');
+  if(p) p.textContent = pending ? 'قبل ما نفعّل حسابك، لازم تخلص التدريب وتنجح بالاختبار.' : 'كل السواق لازم يخلصون التدريب وينجحون بالاختبار حتى يكمّلون شغلهم.';
+  if(j.last && !j.last.passed){ pr.style.display='block'; pr.textContent='آخر مرة جبت '+j.last.score+' من '+j.last.total+'، والنجاح من 27. عيد الدروس وجرّب مرة ثانية.'; pr.style.color='#B3131B' }
+  else if(n){ pr.style.display='block'; pr.textContent='جاوبت '+n+' من 12 سؤال بالدروس'; pr.style.color='#3F0A92' }
+  else pr.style.display='none';
+  if(go) go.textContent = n || (j.attempts>0) ? 'كمّل التدريب' : 'ابدأ التدريب';
+  if(lt) lt.style.display = pending ? 'none' : 'block';
+}
 function drvTrainCheck(){
   const el=document.getElementById('drvTrain'); if(!el) return;
-  if(!me || me.role!=='driver'){ el.style.display='none'; return }
+  if(!me || me.role!=='driver'){ _trLast=null; _trPaint(); return }
   let done=false; try{ done=localStorage.getItem('tr_passed:'+uid)==='1' }catch(e){}
-  if(done){ el.style.display='none'; return }
+  if(done){ _trLast={passed:true}; _trPaint(); return }
+  _trPaint();
   if(_trBusy || Date.now()-_trAt < 180000) return;
   _trBusy=true; _trAt=Date.now();
   const tk=(window.__waselToken && window.__waselToken()) || '';
@@ -15552,11 +15597,12 @@ function drvTrainCheck(){
   fetch('/_train/state',{method:'POST',headers:_h,body:'{}'})
     .then(r=>r.ok?r.json():null).then(j=>{
       if(!j) return;
-      if(j.passed){ try{ localStorage.setItem('tr_passed:'+uid,'1') }catch(e){} el.style.display='none'; return }
+      _trLast=j;
+      if(j.passed){ try{ localStorage.setItem('tr_passed:'+uid,'1') }catch(e){} }
       const n=(j.checks||[]).length, t=document.getElementById('drvTrainS');
       if(t) t.textContent = n ? ('كمّل التدريب — جاوبت '+n+' من 12 سؤال بالدروس')
                               : (me.approved===true ? '6 دروس قصيرة واختبار، لازم كل السواق ينجحون بيه' : 'خطوتك الجاية: خلص التدريب وانجح بالاختبار حتى نفعّل حسابك');
-      el.style.display='flex';
+      _trPaint();
     }).catch(()=>{}).finally(()=>{ _trBusy=false });
 }
 function renderDrvHead(){
@@ -26899,7 +26945,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v456', seen={}, n=0, q=[], t=null;
+  var VER='v457', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27151,7 +27197,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v456', t0=Date.now();
+  var VER='v457', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
