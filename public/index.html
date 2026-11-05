@@ -6295,7 +6295,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v463</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v464</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -22297,7 +22297,7 @@ ${TG_ACC}
 
 <div class="tgd-sec"><div class="tgd-h"><em>📜</em><b>إنهاء الاتفاق والموافقة</b><i>14</i></div>
 <ul class="tgd-plain">
-  <li>كل طرف يكدر ينهي الاتفاق بإشعار مكتوب قبل <b>7 أيام</b>، وتنصفّى كل المستحقات قبل الإنهاء، و<b>ترجع للسائق التأمينات (35,000 د.ع)</b> بعد ما ينخصم منها أي شي باقي عليه.</li>
+  <li>كل طرف يكدر ينهي الاتفاق بإشعار مكتوب قبل <b>7 أيام</b>، وتنصفّى كل المستحقات قبل الإنهاء، و<b>ترجع للسائق التأمينات اللي دفعها</b> بعد ما ينخصم منها أي شي باقي عليه.</li>
   <li>إذا نقاط السائق نزلت <b>تحت 30</b>، التطبيق يكدر يفصله.</li>
   <li>وإذا التطبيق راد يغيّر أي شرط بهذا الدليل، <b>يبلّغ السائق قبل 30 يوم</b>.</li>
   ${TG_FORCE}
@@ -22407,6 +22407,8 @@ async function openTermsAdmin(tab){
 
 /* ═══ v324: تأمينات السائق (v462: 35,000 د.ع) — السائق يبلّغ «دفعت»، والإدارة تأكّد «استلمتها» وتفعّل حسابه ═══ */
 const DEP_AMT=35000;
+/* v464: كل سائق مبلغه محفوظ بالسيرفر (amount). اللي بلّغوا/دفعوا قبل v462 يبقون على 15,000 — قرار المؤسس */
+function depAmt(d){ const a=Number(d&&d.amount); return a>0?a:DEP_AMT }
 let _depMine=null, _depMineAt=0, _depMineBusy=false, depMap=null, _depAt=0;
 async function depMineLoad(){
   if(_depMineBusy) return; _depMineBusy=true;
@@ -22450,15 +22452,16 @@ function depNote(id){
   if(!depMap){ setTimeout(()=>depLoad(),0); return '' }
   if(depMap.__err) return '';
   const d=depMap[id]||{status:'none'};
-  if(d.status==='paid') return `<div class="dep-adm ok"><span>التأمينات مدفوعة ✓${d.paid_at?' · '+_rxD(d.paid_at):''}</span></div>`;
-  if(d.status==='refunded') return `<div class="dep-adm"><span>التأمينات رجعت للسائق${d.refunded_at?' · '+_rxD(d.refunded_at):''}</span></div>`;
+  const _A=depAmt(d).toLocaleString('en-US')+' د.ع';
+  if(d.status==='paid') return `<div class="dep-adm ok"><span>التأمينات مدفوعة ✓ ${_A}${d.paid_at?' · '+_rxD(d.paid_at):''}</span></div>`;
+  if(d.status==='refunded') return `<div class="dep-adm"><span>التأمينات (${_A}) رجعت للسائق${d.refunded_at?' · '+_rxD(d.refunded_at):''}</span></div>`;
   const rep=d.status==='reported';
-  return `<div class="dep-adm ${rep?'wt':'no'}"><span>${rep?'التأمينات: السائق يگول دفع ⏳':'التأمينات: بعده ما دفع'}</span><button onclick="depSet('${id}','paid')">استلمتها ✓</button>${rep?`<button class="x" onclick="depSet('${id}','none')">ما وصلت</button>`:''}</div>`;
+  return `<div class="dep-adm ${rep?'wt':'no'}"><span>${rep?'التأمينات '+_A+': السائق يگول دفع ⏳':'التأمينات: بعده ما دفع'}</span><button onclick="depSet('${id}','paid')">استلمتها ✓</button>${rep?`<button class="x" onclick="depSet('${id}','none')">ما وصلت</button>`:''}</div>`;
 }
 async function depSet(id,st){
   const u=(allUsers||[]).find(x=>(x.uid||x.id)===id)||{};
   const msg = st==='paid'
-    ? 'تأكيد إن التأمينات <b>'+DEP_AMT.toLocaleString('en-US')+' د.ع</b> وصلت من <b>'+esc(u.name||'السائق')+'</b>؟'
+    ? 'تأكيد إن التأمينات <b>'+depAmt(depMap&&depMap[id]).toLocaleString('en-US')+' د.ع</b> وصلت من <b>'+esc(u.name||'السائق')+'</b>؟'
     : 'التأمينات ما وصلت من <b>'+esc(u.name||'السائق')+'</b>؟<div style="margin-top:6px;font-size:12.5px">يرجعله زر «دفعت التأمينات».</div>';
   if(!await askConfirm(msg,{title:'التأمينات',ok:st==='paid'?'إي، وصلت':'إي، ما وصلت',danger:st!=='paid'})) return;
   try{
@@ -27041,7 +27044,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v463', seen={}, n=0, q=[], t=null;
+  var VER='v464', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27293,7 +27296,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v463', t0=Date.now();
+  var VER='v464', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
