@@ -6363,7 +6363,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v469</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v470</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -20763,7 +20763,7 @@ function shMineAct(sid){
     <div class="lm-h"><b>${esc(d.name)} — ${shDayLbl(m.day)}</b><span>${shRange(d)} · ${shStLbl(m)}</span></div>
     ${out?`<div class="sh-note">🔁 طلبت تبديل ويه <b>${esc(out.to||'')}</b> — ${out.status==='peer'?'ينتظر موافقته':'ينتظر موافقة الإدارة'}<button type="button" onclick="shSwapCancel('${out.id}')">إلغاء</button></div>`:''}
     ${st-now>=3600e3 && !out?`<button type="button" class="sh-opt" onclick="shSwapStart('${sid}')">🔁 بدّل ويه سائق ثاني<span>هو يوافق، وبعدين الإدارة</span></button>`:''}
-    ${st-now>=3600e3?`<button type="button" class="sh-opt" onclick="shEmerg('${sid}')">🤒 طارئ / مرض — ما أگدر أجي<span>بدون خصم نقاط · اليوم ينحسب من إجازتك</span></button>`:'<div class="sh-rules">باقي أقل من ساعة على الشفت — للطوارئ اتصل بالإدارة على واتساب الدعم.</div>'}
+    ${st-now>=3600e3?`<button type="button" class="sh-opt" onclick="shEmerg('${sid}')">🤒 طارئ / مرض — ما أگدر أجي<span>بدون خصم نقاط · وما ينحسب من إجازتك</span></button>`:'<div class="sh-rules">باقي أقل من ساعة على الشفت — للطوارئ اتصل بالإدارة على واتساب الدعم.</div>'}
     ${!shBreakOf(sid)?`<button type="button" class="sh-opt" onclick="_shClose('shActSheet');shBreak('${sid}')">☕ احجز استراحة<span>${m.shift==='full'?'ساعتين أو 3':'ساعة'}</span></button>`:''}
     ${st-now>=24*3600e3?`<button type="button" class="sh-opt del" onclick="_shClose('shActSheet');shCancel('${sid}')">🗑 إلغاء الحجز<span>مسموح قبل 24 ساعة</span></button>`:''}
     <button type="button" class="rs-later" onclick="_shClose('shActSheet')">سكّر</button></div>`;
@@ -20792,7 +20792,7 @@ function shEmerg(sid){
   const m=shMine(sid); if(!m) return;
   const sh=_lmSheet('shActSheet');
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>🤒 طارئ / مرض</b><span>${esc(shDef(m.shift).name)} ${shDayLbl(m.day)} — الإدارة توصلها رسالة فوراً</span></div>
-    <div class="sh-rules">ما تنخصم نقاطك، بس اليوم ينحسب من إجازتك (5 بالشهر).</div>
+    <div class="sh-rules">ما تنخصم نقاطك، وما ينحسب من إجازتك.</div>
     <input id="shEmNote" class="lm-in" maxlength="200" placeholder="شنو صار؟ (اختياري)">
     <button type="button" class="lm-add" onclick="shEmergSend('${sid}',this)">✓ بلّغ الإدارة</button>
     <button type="button" class="rs-later" onclick="_shClose('shActSheet')">إلغاء</button></div>`;
@@ -20817,7 +20817,7 @@ async function shLeaves(){
     ${left>0?`<div class="lm-h"><b>اختار اليوم</b></div><div class="sh-lvd">${days.map(d=>`<button type="button" class="${taken.has(d)?'dis':''}" ${taken.has(d)?'disabled':''} onclick="_shLvPick('${d}',this)">${shDayLbl(d,t)}</button>`).join('')}</div>
       <input id="shLvNote" class="lm-in" maxlength="200" placeholder="السبب (اختياري)">
       <button type="button" class="lm-add" id="shLvBt" onclick="shLeaveSend(this)" disabled>اطلب الإجازة</button>`:'<div class="lm-empty">خلصت إجازاتك هذا الشهر</div>'}
-    ${L2.length?'<div class="lm-h" style="margin-top:6px"><b>طلباتك</b></div>'+L2.map(l=>`<div class="lm-row"><i>${l.kind==='emergency'?'🤒':'🏖️'}</i><div><b>${shDayLbl(l.day,t)}${l.kind==='emergency'?' — طارئ':''}</b><span>${l.kind==='emergency'?'تنحسب من الإجازة':stl[l.status]||l.status}</span></div>${l.kind==='leave'&&(l.status==='pending'||l.status==='approved')&&l.day>t?`<button type="button" class="del" onclick="shLeaveCancel('${l.id}')">🗑</button>`:''}</div>`).join(''):''}
+    ${L2.length?'<div class="lm-h" style="margin-top:6px"><b>طلباتك</b></div>'+L2.map(l=>`<div class="lm-row"><i>${l.kind==='emergency'?'🤒':'🏖️'}</i><div><b>${shDayLbl(l.day,t)}${l.kind==='emergency'?' — طارئ':''}</b><span>${l.kind==='emergency'?'ما تنحسب من الإجازة':stl[l.status]||l.status}</span></div>${l.kind==='leave'&&(l.status==='pending'||l.status==='approved')&&l.day>t?`<button type="button" class="del" onclick="shLeaveCancel('${l.id}')">🗑</button>`:''}</div>`).join(''):''}
     <button type="button" class="rs-later" onclick="_shClose('shLvSheet')">سكّر</button></div>`;
   _shLvDay=null; requestAnimationFrame(()=>sh.classList.add('on'));
 }
@@ -20886,7 +20886,7 @@ function shAdmReqs(){
     <button type="button" class="ok" onclick="shAdmLeave('${l.id}',true)">✓</button><button type="button" class="no" onclick="shAdmLeave('${l.id}',false)">✕</button></div>`));
   sw.forEach(w=>items.push(`<div class="sa-rq"><i>🔁</i><div><b>${esc(w.from||'')} ↔ ${esc(w.to||'')}</b><span>${shDayLbl(w.day,_saData.today)}: ${esc(w.to||'')} ياخذ ${esc(shDef(w.shift,_saData).name)}${w.other?' و'+esc(w.from||'')+' ياخذ '+esc(shDef(w.other,_saData).name):''} · ${esc(w.to||'')} وافق</span></div>
     <button type="button" class="ok" onclick="shAdmSwap('${w.id}',true)">✓</button><button type="button" class="no" onclick="shAdmSwap('${w.id}',false)">✕</button></div>`));
-  lv.filter(l=>l.kind==='emergency').forEach(l=>items.push(`<div class="sa-rq"><i>🤒</i><div><b>${esc(l.name||'سائق')} — طارئ ${shDayLbl(l.day,_saData.today)}</b><span>${l.note?esc(l.note)+' · ':''}ينحسب من إجازته</span></div></div>`));
+  lv.filter(l=>l.kind==='emergency').forEach(l=>items.push(`<div class="sa-rq"><i>🤒</i><div><b>${esc(l.name||'سائق')} — طارئ ${shDayLbl(l.day,_saData.today)}</b><span>${l.note?esc(l.note)+' · ':''}بلّغ قبل الشفت · بدون خصم</span></div></div>`));
   lv.filter(l=>l.kind==='leave'&&l.status==='approved').forEach(l=>items.push(`<div class="sa-rq"><i>🏖️</i><div><b>${esc(l.name||'سائق')} — بإجازة ${shDayLbl(l.day,_saData.today)}</b><span>مقبولة</span></div></div>`));
   ab.forEach(a=>items.push(`<div class="sa-rq bad"><i>🚫</i><div><b>${esc(a.name||'سائق')} غاب ${a.n} مرات هذا الشهر</b><span>${a.blocked&&a.until?'موقوف لحد '+new Date(a.until).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'}):'الدليل يگول إيقاف أسبوع'}</span></div>
     ${a.blocked?'':`<button type="button" class="no" onclick="shAdmSuspend('${a.id}')">⛔ إيقاف أسبوع</button>`}</div>`));
@@ -22701,7 +22701,7 @@ ${TG_ACC}
 <div class="tgd-sec"><div class="tgd-h"><em>🌴</em><b>الإجازة والغياب</b><i>09</i></div>
 <ul class="tgd-ck">
   <li><b>5 أيام إجازة بالشهر</b>، تطلبها من التطبيق <b>قبل 24 ساعة</b>.</li>
-  <li><b>طارئ أو مرض؟</b> بلّغ <b>قبل ساعة</b> من الشفت، وما تنقص نقاطك، بس اليوم ينحسب من إجازتك.</li>
+  <li><b>طارئ أو مرض؟</b> بلّغ <b>قبل ساعة</b> من الشفت، وما تنقص نقاطك، وما ينحسب من إجازتك.</li>
   <li><b>تبديل الشفت</b> ويه سائق ثاني مسموح، بس <b>بموافقة الإدارة</b>.</li>
   <li class="no"><b>الغياب بدون تبليغ:</b> ناقص 15 نقطة، و<b>3 مرات بالشهر = إيقاف أسبوع</b>.</li>
 </ul></div>
@@ -27536,7 +27536,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v469', seen={}, n=0, q=[], t=null;
+  var VER='v470', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27788,7 +27788,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v469', t0=Date.now();
+  var VER='v470', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
