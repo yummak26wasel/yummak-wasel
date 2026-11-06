@@ -3273,6 +3273,29 @@ html[data-theme=dark] .lm-row>i,html[data-theme=dark] .lm-row button{background:
 .sa-q{display:flex;gap:8px;margin-bottom:10px}.sa-q button{flex:1;height:40px;border:0;border-radius:12px;background:#FDECEC;color:#B91C1C;font:800 12.5px Cairo,Tahoma,sans-serif}
 html[data-theme=dark] .sh-card,html[data-theme=dark] .sa-c,html[data-theme=dark] .sa-top,html[data-theme=dark] .sa-days,html[data-theme=dark] .shc{background:#1f1a30;border-color:#2e2742}
 html[data-theme=dark] .sh-st b,html[data-theme=dark] .shc b{color:#efeaf9}html[data-theme=dark] #shAdmSheet{background:#15121f}html[data-theme=dark] .sh-rules{background:#1f1a30}
+.sh-swp{background:#FFF7E6;border:1px solid #F7D9A0;border-radius:14px;padding:10px;margin-bottom:10px;font-size:13px;line-height:1.7}
+.sh-swp>div{display:flex;gap:8px;margin-top:8px}.sh-swp button{flex:1;height:38px;border:0;border-radius:10px;background:#16A34A;color:#fff;font:800 13.5px Cairo,Tahoma,sans-serif}.sh-swp button.no{background:#F3F0F8;color:#6b6580}
+.sh-note{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#F7F5FB;border-radius:12px;padding:8px 10px;margin-top:10px;font-size:13px;font-weight:700;color:#3d3554}
+.sh-note button{border:0;background:none;color:#DC2626;font:800 12.5px Cairo,Tahoma,sans-serif;flex:none}
+.sh-sec{width:100%;height:42px;border:1.5px solid #E2DCEE;border-radius:14px;background:#fff;color:#4B2BB0;font:800 14px Cairo,Tahoma,sans-serif;margin-top:10px}
+.sh-acts{display:flex;gap:8px;margin-top:10px}.sh-acts button{flex:1;height:38px;border:1.5px solid #E2DCEE;border-radius:12px;background:#fff;color:#4B2BB0;font:800 12.5px Cairo,Tahoma,sans-serif}
+.shc i{font-style:normal;font-size:11px;color:var(--g);font-weight:800}
+.sh-opt{width:100%;border:1.5px solid #E2DCEE;background:#fff;border-radius:14px;padding:12px;margin-bottom:8px;text-align:right;display:flex;flex-direction:column;gap:2px;font:900 14.5px Cairo,Tahoma,sans-serif;color:#1F1640}
+.sh-opt span{font-size:12px;font-weight:700;color:#6b6580}.sh-opt.del{border-color:#F1C4C4;color:#B91C1C}
+.sh-slots{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.sh-slots button{height:46px;border:1.5px solid #E2DCEE;border-radius:12px;background:#fff;font:800 14px Cairo,Tahoma,sans-serif;color:#3d3554;display:flex;align-items:center;justify-content:center;gap:8px}
+.sh-slots button.dis{opacity:.45}.sh-slots i{font-style:normal;font-size:11.5px;color:#B91C1C}
+.sa-q2{display:flex;gap:8px;margin-bottom:10px}.sa-q2 button{flex:1;height:40px;border:1.5px solid #E2DCEE;border-radius:12px;background:#fff;font:800 13.5px Cairo,Tahoma,sans-serif}.sa-q2 button.on{border-color:var(--g);background:#F1EBFC;color:var(--g)}
+.sh-lvd{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}.sh-lvd button{height:36px;border:1.5px solid #E2DCEE;border-radius:18px;background:#fff;padding:0 11px;font:800 12.5px Cairo,Tahoma,sans-serif}
+.sh-lvd button.on{background:var(--g);border-color:var(--g);color:#fff}.sh-lvd button.dis{opacity:.4}
+.lm-row button.del{background:#FDECEC}
+.sa-req{border-color:#F7D9A0;background:#FFFCF5}.sa-req .sa-ch{flex-direction:row;align-items:center;justify-content:space-between}.sa-req .sa-ch span{background:#F59E0B;color:#fff;border-radius:11px;min-width:22px;height:22px;display:grid;place-items:center;font-weight:900;padding:0 6px}
+html[data-theme=dark] .sa-req{background:#2a2316;border-color:#5a4520}html[data-theme=dark] .sh-swp{background:#2a2316;border-color:#5a4520;color:#f3ead6}html[data-theme=dark] .sh-note{background:#1f1a30;color:#e9e4f5}
+html[data-theme=dark] .sh-sec,html[data-theme=dark] .sh-acts button,html[data-theme=dark] .sh-opt,html[data-theme=dark] .sh-slots button,html[data-theme=dark] .sa-q2 button,html[data-theme=dark] .sh-lvd button{background:#1f1a30;border-color:#3a3150;color:#e9e4f5}
+.sa-rq{display:flex;align-items:center;gap:8px;padding:8px 0;border-top:1px solid #F1EEF6}.sa-rq>i{font-style:normal;font-size:18px;flex:none}
+.sa-rq>div{flex:1;min-width:0;display:flex;flex-direction:column}.sa-rq b{font-size:13.5px;font-weight:800}.sa-rq span{font-size:12px;color:#6b6580}
+.sa-rq button{height:36px;min-width:36px;border:0;border-radius:10px;background:#F3F0F8;font:800 12.5px Cairo,Tahoma,sans-serif;padding:0 9px;flex:none}
+.sa-rq button.ok{background:#DCFCE7;color:#15803D}.sa-rq button.no{background:#FDECEC;color:#B91C1C}.sa-rq.bad b{color:#B91C1C}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6340,7 +6363,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v467</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v468</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -20545,7 +20568,7 @@ async function openShopsMap(focusId){
    السائق يحجز شفتاته للـ 7 أيام الجاية، ويضغط «بدء الشفت» من داخل عانة. اللي بشفته توصله الطلبات أول (الكامل قبل الكل)،
    واللي مو بشفته يوصله الطلب إذا ماكو أحد بشفته فاضي أو بعد 3 دقايق (عبد: «إذا ماكو غيره»).
    النقاط: كل شهر 100 · تأخير أكثر من 20 دقيقة −5 · طلع قبل الوقت −5 · غياب بدون تبليغ −15. السيرفر هو اللي يحسب */
-let shData=null, shAt=0, _shBusy=false, _shTimer=null;
+let shData=null, shX=null, shAt=0, _shBusy=false, _shTimer=null;
 const SH_DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
 function shTime(m){ m=((Number(m)%1440)+1440)%1440; const h=Math.floor(m/60), mm=m%60, h12=(h%12)||12;
   const p = (h>=5&&h<12) ? 'الصبح' : (h>=12&&h<14) ? 'الظهر' : (h>=14&&h<18) ? 'العصر' : 'بالليل';
@@ -20567,7 +20590,7 @@ function shStLbl(m){ return m.status==='started'?'شغّال هسه':m.status===
 async function shLoad(force){
   if(!me || me.role!=='driver') return;
   if(!force && shData && Date.now()-shAt<60000) return;
-  try{ shData=await rpc('shift_week',{}); shAt=Date.now() }catch(e){ return }
+  try{ const r=await Promise.all([rpc('shift_week',{}), rpc('shift_extras',{}).catch(()=>null)]); shData=r[0]; if(r[1]) shX=r[1]; shAt=Date.now() }catch(e){ return }
   try{ shRender() }catch(e){}
   try{ if(typeof window.__shWeekPaint==='function') window.__shWeekPaint() }catch(e){}
 }
@@ -20578,10 +20601,20 @@ function shRender(){
   if(Date.now()-shAt>60000) shLoad();
   const now=Date.now(), pts=Number(shData.points==null?100:shData.points), cur=shStarted(), nx=shNext();
   let main='';
+  const sin=(shX&&shX.swaps_in)||[];
+  const swp=sin.length?(()=>{ const w=sin[0]; return `<div class="sh-swp">🔁 <b>${esc(w.from||'سائق')}</b> يريد يبدّل وياك ${shDayLbl(w.day)}:<br>إنت تاخذ شفته <b>${esc(shDef(w.shift).name)}</b>${w.mine?' وهو ياخذ شفتك <b>'+esc(shDef(w.mine).name)+'</b>':''}
+      <div><button type="button" onclick="shSwapAns('${w.id}',true)">موافق</button><button type="button" class="no" onclick="shSwapAns('${w.id}',false)">لا</button></div></div>` })():'';
   if(cur){
-    const d=shDef(cur.shift), left=(new Date(cur.ends_at).getTime()-now)/60000;
-    main=`<div class="sh-st"><span class="sh-dot on"></span><div><b>بشفتك هسه — ${esc(d.name)}</b><span>ينتهي ${shTime(d.end)} · باقي ${shDur(left)}</span></div></div>
-      <button type="button" class="sh-end" onclick="shEnd()">إنهاء الشفت</button>`;
+    const d=shDef(cur.shift), left=(new Date(cur.ends_at).getTime()-now)/60000, br=shBreakOf(cur.id);
+    const inBr=br && now>=new Date(br.starts_at).getTime() && now<new Date(br.ends_at).getTime();
+    if(inBr){
+      main=`<div class="sh-st"><span class="sh-dot w"></span><div><b>☕ بالاستراحة</b><span>ترجع ${shClock(br.ends_at)} · بعدها الطلبات ترجع توصلك</span></div></div>`;
+    }else{
+      main=`<div class="sh-st"><span class="sh-dot on"></span><div><b>بشفتك هسه — ${esc(d.name)}</b><span>ينتهي ${shTime(d.end)} · باقي ${shDur(left)}</span></div></div>`+
+        (br?`<div class="sh-note">☕ استراحتك ${shClock(br.starts_at)} – ${shClock(br.ends_at)}<button type="button" onclick="shBreakCancel('${br.id}')">إلغاء</button></div>`
+           :`<button type="button" class="sh-sec" onclick="shBreak('${cur.id}')">☕ احجز استراحتك</button>`)+
+        `<button type="button" class="sh-end" onclick="shEnd()">إنهاء الشفت</button>`;
+    }
   }else if(nx){
     const d=shDef(nx.shift), mins=(new Date(nx.starts_at).getTime()-now)/60000;
     if(mins<=15){
@@ -20589,13 +20622,17 @@ function shRender(){
       main=`<div class="sh-st"><span class="sh-dot w"></span><div><b>شفت ${esc(d.name)} ${late?'بدا':'يبدي بعد '+shDur(mins)}</b><span>${shRange(d)}${late?` · <em class="${late>20?'bad':''}">متأخر ${shDur(late)}${late>20?' — ناقص 5 نقاط':''}</em>`:''}</span></div></div>
         <button type="button" class="sh-go" onclick="shStart(this)">▶ بدء الشفت</button>`;
     }else{
-      main=`<div class="sh-st"><span class="sh-dot n"></span><div><b>شفتك الجاي: ${shDayLbl(nx.day)} — ${esc(d.name)}</b><span>${shRange(d)} · تبديه من هنا بوقته</span></div></div>`;
+      const br=shBreakOf(nx.id);
+      main=`<div class="sh-st"><span class="sh-dot n"></span><div><b>شفتك الجاي: ${shDayLbl(nx.day)} — ${esc(d.name)}</b><span>${shRange(d)} · تبديه من هنا بوقته</span></div></div>
+        ${br?`<div class="sh-note">☕ استراحتك ${shClock(br.starts_at)} – ${shClock(br.ends_at)}<button type="button" onclick="shBreakCancel('${br.id}')">إلغاء</button></div>`:''}
+        <div class="sh-acts">${br?'':`<button type="button" onclick="shBreak('${nx.id}')">☕ استراحة</button>`}<button type="button" onclick="shMineAct('${nx.id}')">🔁 تبديل / 🤒 طارئ</button></div>`;
     }
   }else{
     main=`<div class="sh-st"><span class="sh-dot n"></span><div><b>ما عندك شفت محجوز</b><span>احجز شفتاتك — اللي بشفته توصله الطلبات أول</span></div></div>`;
   }
-  box.innerHTML=`<div class="sh-card">${main}<div class="sh-row"><button type="button" onclick="shWeek()">🗓️ شفتاتي</button>
-    <button type="button" class="sh-pts ${pts<70?'low':''}" onclick="shPoints()">⭐ نقاطك ${pts}</button></div></div>`;
+  box.innerHTML=`<div class="sh-card">${swp}${main}<div class="sh-row"><button type="button" onclick="shWeek()">🗓️ شفتاتي</button>
+    <button type="button" onclick="shLeaves()">🏖️ إجازاتي</button>
+    <button type="button" class="sh-pts ${pts<70?'low':''}" onclick="shPoints()">⭐ ${pts}</button></div></div>`;
   if(!_shTimer) _shTimer=setInterval(()=>{ try{ if(document.getElementById('shiftBox')) shRender(); else { clearInterval(_shTimer); _shTimer=null } }catch(e){} },30000);
 }
 function shStart(btn){
@@ -20635,20 +20672,19 @@ async function shWeek(){
       const chips=defs.map(d=>{
         const taken=Number((x.taken||{})[d.id]||0), left=Math.max(0,Number(d.cap||0)-taken), started=now>=shStartTs(x.day,d.start);
         if(mine && mine.shift===d.id){
-          const canCancel = mine.status==='booked' && (new Date(mine.starts_at).getTime()-now)>=24*3600e3;
-          return `<div class="shc mine"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span>${canCancel?`<button type="button" onclick="shCancel('${mine.id}')">إلغاء</button>`:''}</div>`;
+          if(mine.status!=='booked') return `<div class="shc mine"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span></div>`;
+          return `<button type="button" class="shc mine" onclick="shMineAct('${mine.id}')"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span><i>خيارات ›</i></button>`;
         }
         const dis=!!mine || started || left<=0;
         return `<button type="button" class="shc${dis?' dis':''}" ${dis?'disabled':''} onclick="shBook('${x.day}','${d.id}')"><b>${esc(d.name)}</b><span>${started?'بدا':left<=0?'ممتلئ':'باقي '+left}</span></button>`;
       }).join('');
-      const lock = mine && mine.status==='booked' && (new Date(mine.starts_at).getTime()-now)<24*3600e3;
-      return `<div class="shd"><div class="shd-h"><b>${shDayLbl(x.day)}</b>${lock?'<span>الإلغاء من الإدارة بس (أقل من 24 ساعة)</span>':''}</div><div class="shd-c">${chips}</div></div>`;
+      return `<div class="shd"><div class="shd-h"><b>${shDayLbl(x.day)}</b></div><div class="shd-c">${chips}</div></div>`;
     }).join('');
     sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
       <div class="lm-h"><b>🗓️ شفتاتي</b><span>احجز للـ 7 أيام الجاية · شفت واحد باليوم</span></div>
       <div class="sh-leg">${defs.map(d=>`<span><b>${esc(d.name)}</b> ${shRange(d)}</span>`).join('')}</div>
       ${rows||'<div class="lm-empty">ماكو شفتات متاحة هسه</div>'}
-      <div class="sh-rules">• تبدي الشفت من زر «بدء الشفت» وإنت داخل عانة · التأخير أكثر من 20 دقيقة: ناقص 5 نقاط<br>• الطلوع قبل نهاية الشفت: ناقص 5 · الغياب بدون تبليغ: ناقص 15<br>• الإلغاء من هنا قبل 24 ساعة على الأقل</div>
+      <div class="sh-rules">• تبدي الشفت من زر «بدء الشفت» وإنت داخل عانة · التأخير أكثر من 20 دقيقة: ناقص 5 نقاط<br>• الطلوع قبل نهاية الشفت: ناقص 5 · الغياب بدون تبليغ: ناقص 15<br>• اضغط على شفتك للإلغاء (قبل 24 ساعة) أو التبديل أو «طارئ / مرض» (قبل ساعة)</div>
       <button type="button" class="rs-later" onclick="document.getElementById('shWeekSheet').classList.remove('on')">سكّر</button></div>`;
   };
   window.__shWeekPaint=()=>{ if(sh.classList.contains('on')) paint() };
@@ -20680,8 +20716,125 @@ async function shPoints(){
   requestAnimationFrame(()=>sh.classList.add('on'));
 }
 
+/* ── v468: المرحلة 2 — الاستراحة، الإجازة، الطارئ، التبديل ── */
+function shClock(iso){ return shTime(Math.round(new Date(iso).getTime()/60000+180)) }
+function shBreakOf(sid){ return ((shX&&shX.breaks)||[]).find(b=>b.shift_id===sid) }
+function shMine(sid){ return shMineList().find(m=>m.id===sid) }
+function _shClose(id){ try{ document.getElementById(id).classList.remove('on') }catch(e){} }
+function shPeakIn(a,b){ /* a,b = ms */ const pk=((shX&&shX.peaks)||[{a:690,b:870},{a:1020,b:1320}]);
+  for(let k=-1;k<=1;k++){ const d0=new Date(new Date(a+3*3600e3).toISOString().slice(0,10)+'T00:00:00+03:00').getTime()+k*864e5;
+    for(const p of pk){ const x=d0+p.a*60000, y=d0+p.b*60000; if(a<y && b>x) return true } } return false }
+let _shBrDur=0;
+function shBreak(sid,dur){
+  const m=shMine(sid); if(!m) return;
+  const full=m.shift==='full'; _shBrDur=dur||(full?120:60);
+  const st=new Date(m.starts_at).getTime(), en=new Date(m.ends_at).getTime(), now=Date.now();
+  let t0=Math.max(st, now+60*60000); t0=Math.ceil(t0/(30*60000))*(30*60000);
+  const taken=((shX&&shX.taken)||[]).map(x=>[new Date(x.a).getTime(), new Date(x.b).getTime()]);
+  const slots=[]; for(let t=t0; t+_shBrDur*60000<=en; t+=30*60000){
+    const e=t+_shBrDur*60000, pk=shPeakIn(t,e), over=taken.filter(x=>x[0]<e && x[1]>t);
+    const full2 = over.length>=2 || (pk && over.some(x=>shPeakIn(Math.max(x[0],t),Math.min(x[1],e))));
+    slots.push({t,e,pk,full2});
+  }
+  const sh=_lmSheet('shBrSheet');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="lm-h"><b>☕ احجز استراحتك</b><span>${esc(shDef(m.shift).name)} ${shDayLbl(m.day)} · تنحجز قبل ساعة على الأقل · اللي يحجز أول ياخذها</span></div>
+    ${full?`<div class="sa-q2"><button type="button" class="${_shBrDur===120?'on':''}" onclick="shBreak('${sid}',120)">ساعتين</button><button type="button" class="${_shBrDur===180?'on':''}" onclick="shBreak('${sid}',180)">3 ساعات</button></div>`:'<div class="sh-rules">استراحة هذا الشفت ساعة.</div>'}
+    <div class="sh-rules">🔥 = وقت ضغط (الغدا 11:30–2:30 · العشا 5–10): سائق واحد بس يرتاح. بالوقت الخفيف: اثنين.</div>
+    <div class="sh-slots">${slots.length?slots.map(x=>`<button type="button" class="${x.full2?'dis':''}" ${x.full2?'disabled':''} onclick="shBreakBook('${sid}',${x.t})">${x.pk?'🔥 ':''}${shClock(new Date(x.t).toISOString())} – ${shClock(new Date(x.e).toISOString())}${x.full2?'<i>محجوز</i>':''}</button>`).join('')
+      :'<div class="lm-empty">ماكو وقت متاح — الاستراحة تنحجز قبل ساعة وداخل وقت الشفت</div>'}</div>
+    <button type="button" class="rs-later" onclick="_shClose('shBrSheet')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function shBreakBook(sid,t){
+  try{ await rpc('driver_break_book',{p_shift:sid, p_start:new Date(t).toISOString(), p_minutes:_shBrDur}); _shClose('shBrSheet'); toast('انحجزت استراحتك ✓'); await shLoad(true) }
+  catch(e){ toast(errMsg(e)); shLoad(true) }
+}
+async function shBreakCancel(id){
+  const ok=await askConfirm('تلغي استراحتك؟',{title:'الاستراحة',ok:'إي، ألغيها'}); if(!ok) return;
+  try{ await rpc('driver_break_cancel',{p_id:id}); toast('انلغت ✓'); await shLoad(true) }catch(e){ toast(errMsg(e)) }
+}
+function shMineAct(sid){
+  const m=shMine(sid); if(!m) return;
+  const now=Date.now(), st=new Date(m.starts_at).getTime(), d=shDef(m.shift);
+  const out=((shX&&shX.swaps_out)||[]).find(w=>w.day===m.day && w.status!=='rejected');
+  const sh=_lmSheet('shActSheet');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="lm-h"><b>${esc(d.name)} — ${shDayLbl(m.day)}</b><span>${shRange(d)} · ${shStLbl(m)}</span></div>
+    ${out?`<div class="sh-note">🔁 طلبت تبديل ويه <b>${esc(out.to||'')}</b> — ${out.status==='peer'?'ينتظر موافقته':'ينتظر موافقة الإدارة'}<button type="button" onclick="shSwapCancel('${out.id}')">إلغاء</button></div>`:''}
+    ${st-now>=3600e3 && !out?`<button type="button" class="sh-opt" onclick="shSwapStart('${sid}')">🔁 بدّل ويه سائق ثاني<span>هو يوافق، وبعدين الإدارة</span></button>`:''}
+    ${st-now>=3600e3?`<button type="button" class="sh-opt" onclick="shEmerg('${sid}')">🤒 طارئ / مرض — ما أگدر أجي<span>بدون خصم نقاط · بدون ورقة طبيب ينحسب من إجازتك</span></button>`:'<div class="sh-rules">باقي أقل من ساعة على الشفت — للطوارئ اتصل بالإدارة على واتساب الدعم.</div>'}
+    ${!shBreakOf(sid)?`<button type="button" class="sh-opt" onclick="_shClose('shActSheet');shBreak('${sid}')">☕ احجز استراحة<span>${m.shift==='full'?'ساعتين أو 3':'ساعة'}</span></button>`:''}
+    ${st-now>=24*3600e3?`<button type="button" class="sh-opt del" onclick="_shClose('shActSheet');shCancel('${sid}')">🗑 إلغاء الحجز<span>مسموح قبل 24 ساعة</span></button>`:''}
+    <button type="button" class="rs-later" onclick="_shClose('shActSheet')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function shSwapStart(sid){
+  let L2=[]; try{ L2=await rpc('driver_swap_candidates',{p_shift:sid}) }catch(e){ return toast(errMsg(e)) }
+  const sh=_lmSheet('shActSheet');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>🔁 تبدّل ويه منو؟</b><span>إذا عنده شفت بنفس اليوم، تتبادلون. إذا ما عنده، ياخذ شفتك.</span></div>
+    ${(L2||[]).length?L2.map(x=>`<div class="lm-row" onclick="shSwapSend('${sid}','${x.id}')"><i>🛵</i><div><b>${esc(x.name||'سائق')}</b><span>${x.has?'عنده '+esc(x.has)+' — تتبادلون':'ما عنده شفت هذا اليوم'}</span></div><button type="button">›</button></div>`).join('')
+      :'<div class="lm-empty">ماكو سواق متاحين للتبديل</div>'}
+    <button type="button" class="rs-later" onclick="_shClose('shActSheet')">سكّر</button></div>`;
+}
+async function shSwapSend(sid,to){
+  try{ await rpc('driver_swap_request',{p_shift:sid,p_to:to}); _shClose('shActSheet'); toast('انرسل ✓ — ينتظر موافقته وبعدين الإدارة'); await shLoad(true) }
+  catch(e){ toast(errMsg(e)) }
+}
+async function shSwapAns(id,ok){
+  if(!ok){ const c=await askConfirm('ترفض التبديل؟',{title:'تبديل الشفت',ok:'إي، أرفض',danger:true}); if(!c) return }
+  try{ await rpc('driver_swap_answer',{p_id:id,p_ok:!!ok}); toast(ok?'وافقت ✓ — هسه ينتظر موافقة الإدارة':'رفضت'); await shLoad(true) }catch(e){ toast(errMsg(e)) }
+}
+async function shSwapCancel(id){
+  try{ await rpc('driver_swap_cancel',{p_id:id}); _shClose('shActSheet'); toast('انلغى طلب التبديل'); await shLoad(true) }catch(e){ toast(errMsg(e)) }
+}
+function shEmerg(sid){
+  const m=shMine(sid); if(!m) return;
+  const sh=_lmSheet('shActSheet');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>🤒 طارئ / مرض</b><span>${esc(shDef(m.shift).name)} ${shDayLbl(m.day)} — الإدارة توصلها رسالة فوراً</span></div>
+    <div class="sh-rules">ما تنخصم نقاطك. إذا ما عندك ورقة طبيب، اليوم ينحسب من إجازتك (5 بالشهر). دز الورقة لواتساب الدعم.</div>
+    <input id="shEmNote" class="lm-in" maxlength="200" placeholder="شنو صار؟ (اختياري)">
+    <button type="button" class="lm-add" onclick="shEmergSend('${sid}',this)">✓ بلّغ الإدارة</button>
+    <button type="button" class="rs-later" onclick="_shClose('shActSheet')">إلغاء</button></div>`;
+}
+async function shEmergSend(sid,bt){
+  if(bt){ bt.disabled=true; bt.textContent='… نرسل' }
+  try{ await rpc('driver_emergency',{p_shift:sid, p_note:((document.getElementById('shEmNote')||{}).value||'').trim()}); _shClose('shActSheet'); toast('وصل للإدارة ✓ — سلامتك'); await shLoad(true) }
+  catch(e){ toast(errMsg(e)); if(bt){ bt.disabled=false; bt.textContent='✓ بلّغ الإدارة' } }
+}
+let _shLvDay=null;
+async function shLeaves(){
+  await shLoad(true);
+  const X=shX||{}, used=Number(X.leave_used||0), left=Math.max(0,5-used), L2=X.leaves||[];
+  const t=(shData&&shData.today)||new Date(Date.now()+3*3600e3).toISOString().slice(0,10), base=new Date(t+'T12:00:00');
+  const days=[]; for(let i=2;i<=16;i++){ const d=new Date(base.getTime()+i*864e5); days.push(d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')) }
+  const taken=new Set(L2.filter(l=>l.status==='pending'||l.status==='approved').map(l=>l.day));
+  const stl={pending:'ينتظر موافقة الإدارة',approved:'مقبولة ✓',rejected:'ما انقبلت',cancelled:'ملغية'};
+  const sh=_lmSheet('shLvSheet');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="sh-big ${left<=1?'low':''}"><b>${left}</b><span>باقيلك من 5 أيام إجازة هذا الشهر</span></div>
+    <div class="sh-rules">تطلبها قبل 24 ساعة على الأقل، والإدارة توافق. إذا انقبلت وعندك شفت بذاك اليوم، ينلغي بدون خصم.</div>
+    ${left>0?`<div class="lm-h"><b>اختار اليوم</b></div><div class="sh-lvd">${days.map(d=>`<button type="button" class="${taken.has(d)?'dis':''}" ${taken.has(d)?'disabled':''} onclick="_shLvPick('${d}',this)">${shDayLbl(d,t)}</button>`).join('')}</div>
+      <input id="shLvNote" class="lm-in" maxlength="200" placeholder="السبب (اختياري)">
+      <button type="button" class="lm-add" id="shLvBt" onclick="shLeaveSend(this)" disabled>اطلب الإجازة</button>`:'<div class="lm-empty">خلصت إجازاتك هذا الشهر</div>'}
+    ${L2.length?'<div class="lm-h" style="margin-top:6px"><b>طلباتك</b></div>'+L2.map(l=>`<div class="lm-row"><i>${l.kind==='emergency'?'🤒':'🏖️'}</i><div><b>${shDayLbl(l.day,t)}${l.kind==='emergency'?' — طارئ':''}</b><span>${l.kind==='emergency'?(l.doctor?'عنده ورقة طبيب — ما تنحسب':'تنحسب من الإجازة'):stl[l.status]||l.status}</span></div>${l.kind==='leave'&&(l.status==='pending'||l.status==='approved')&&l.day>t?`<button type="button" class="del" onclick="shLeaveCancel('${l.id}')">🗑</button>`:''}</div>`).join(''):''}
+    <button type="button" class="rs-later" onclick="_shClose('shLvSheet')">سكّر</button></div>`;
+  _shLvDay=null; requestAnimationFrame(()=>sh.classList.add('on'));
+}
+function _shLvPick(d,el){ _shLvDay=d; try{ el.parentElement.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===el)); document.getElementById('shLvBt').disabled=false }catch(e){} }
+async function shLeaveSend(bt){
+  if(!_shLvDay) return toast('اختار اليوم');
+  if(bt){ bt.disabled=true; bt.textContent='… نرسل' }
+  try{ await rpc('driver_leave_request',{p_day:_shLvDay, p_note:((document.getElementById('shLvNote')||{}).value||'').trim()}); toast('انرسل للإدارة ✓'); await shLeaves() }
+  catch(e){ toast(errMsg(e)); if(bt){ bt.disabled=false; bt.textContent='اطلب الإجازة' } }
+}
+async function shLeaveCancel(id){
+  const ok=await askConfirm('تلغي طلب الإجازة؟',{title:'الإجازة',ok:'إي',danger:true}); if(!ok) return;
+  try{ await rpc('driver_leave_cancel',{p_id:id}); toast('انلغى ✓'); await shLeaves() }catch(e){ toast(errMsg(e)) }
+}
+
 /* ── الإدارة: جدول الشفتات + الأوقات + النقاط ── */
-let _saDay=null, _saData=null;
+let _saDay=null, _saData=null, _saX=null;
 function _saSheet(){
   let s=document.getElementById('shAdmSheet');
   if(!s){ s=document.createElement('div'); s.id='shAdmSheet'; document.body.appendChild(s) }
@@ -20692,7 +20845,7 @@ async function shAdmOpen(day){
   const s=_saSheet(); s.classList.add('on');
   if(!s.innerHTML) s.innerHTML='<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ شفتات السواق</b></div><div class="sa-body"><div class="lm-empty">… نحمّل</div></div>';
   const bgToday=new Date(Date.now()+3*3600e3).toISOString().slice(0,10);   /* بغداد UTC+3 */
-  try{ _saData=await rpc('admin_shift_day',{p_day:day||bgToday}) }catch(e){ return toast(errMsg(e)) }
+  try{ const r=await Promise.all([rpc('admin_shift_day',{p_day:day||bgToday}), rpc('admin_shift_extras',{p_day:day||bgToday}).catch(()=>null)]); _saData=r[0]; _saX=r[1] }catch(e){ return toast(errMsg(e)) }
   _saDay=_saData.day; shAdmPaint();
 }
 function shAdmClose(){ const s=document.getElementById('shAdmSheet'); if(s) s.classList.remove('on') }
@@ -20711,6 +20864,7 @@ function shAdmPaint(){
       else if(r.status==='done'){ st='خلص'+(r.early_min>10?' · طلع قبل الوقت بـ '+shDur(r.early_min):''); cls=r.early_min>10?'warn':'' }
       else if(r.status==='absent'){ st='غياب'; cls='bad' }
       else { const late=(now-new Date(r.starts_at).getTime())/60000; st=late>0?'ما بدا — متأخر '+shDur(late):'محجوز'+(r.by_admin?' (إنت)':''); cls=late>20?'bad':late>0?'warn':'' }
+      const brk=((_saX&&_saX.breaks)||[]).find(b=>b.shift_id===r.id); if(brk) st+=' · ☕ '+shClock(brk.starts_at)+'–'+shClock(brk.ends_at);
       const canRm = r.status==='booked' || r.status==='absent';
       return `<div class="sa-r"><div class="sa-av">${esc((r.name||'?').trim().charAt(0))}</div><div class="sa-n"><b>${esc(r.name||'سائق')}</b><span class="${cls}">${st}</span></div>
         ${r.phone?`<a class="sa-b" href="tel:${esc(r.phone)}" aria-label="اتصال">📞</a>`:''}${canRm?`<button type="button" class="sa-b del" onclick="shAdmRemove('${r.id}')" aria-label="شيل">🗑</button>`:''}</div>`;
@@ -20722,8 +20876,38 @@ function shAdmPaint(){
   s.innerHTML=`<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ الشفتات</b>
       <button class="sa-t" onclick="shAdmTimes()">⚙️ الأوقات</button><button class="sa-t" onclick="shAdmPoints()">⭐ النقاط</button></div>
     <div class="sa-days">${chips.join('')}</div>
-    <div class="sa-body">${(D.defs||[]).map(card).join('')}
+    <div class="sa-body">${shAdmReqs()}${(D.defs||[]).map(card).join('')}
       <div class="sh-rules">الطلبات توصل أول للي بشفتهم (الكامل قبل الكل). اللي مو بشفته يوصله الطلب إذا ماكو أحد بشفته فاضي، أو بعد 3 دقايق.</div></div>`;
+}
+function shAdmReqs(){
+  const X=_saX; if(!X) return '';
+  const lv=(X.leaves||[]), sw=(X.swaps||[]), ab=(X.absent3||[]), items=[];
+  lv.filter(l=>l.status==='pending').forEach(l=>items.push(`<div class="sa-rq"><i>🏖️</i><div><b>${esc(l.name||'سائق')} — إجازة ${shDayLbl(l.day,_saData.today)}</b><span>استخدم ${l.used}/5 هذا الشهر${l.note?' · '+esc(l.note):''}</span></div>
+    <button type="button" class="ok" onclick="shAdmLeave('${l.id}',true)">✓</button><button type="button" class="no" onclick="shAdmLeave('${l.id}',false)">✕</button></div>`));
+  sw.forEach(w=>items.push(`<div class="sa-rq"><i>🔁</i><div><b>${esc(w.from||'')} ↔ ${esc(w.to||'')}</b><span>${shDayLbl(w.day,_saData.today)}: ${esc(w.to||'')} ياخذ ${esc(shDef(w.shift,_saData).name)}${w.other?' و'+esc(w.from||'')+' ياخذ '+esc(shDef(w.other,_saData).name):''} · ${esc(w.to||'')} وافق</span></div>
+    <button type="button" class="ok" onclick="shAdmSwap('${w.id}',true)">✓</button><button type="button" class="no" onclick="shAdmSwap('${w.id}',false)">✕</button></div>`));
+  lv.filter(l=>l.kind==='emergency').forEach(l=>items.push(`<div class="sa-rq"><i>🤒</i><div><b>${esc(l.name||'سائق')} — طارئ ${shDayLbl(l.day,_saData.today)}</b><span>${l.note?esc(l.note)+' · ':''}${l.doctor?'عنده ورقة طبيب':'ينحسب من إجازته'}</span></div>
+    <button type="button" class="${l.doctor?'ok':''}" onclick="shAdmDoc('${l.id}',${!l.doctor})">${l.doctor?'📄 ✓':'📄 ورقة طبيب'}</button></div>`));
+  lv.filter(l=>l.kind==='leave'&&l.status==='approved').forEach(l=>items.push(`<div class="sa-rq"><i>🏖️</i><div><b>${esc(l.name||'سائق')} — بإجازة ${shDayLbl(l.day,_saData.today)}</b><span>مقبولة</span></div></div>`));
+  ab.forEach(a=>items.push(`<div class="sa-rq bad"><i>🚫</i><div><b>${esc(a.name||'سائق')} غاب ${a.n} مرات هذا الشهر</b><span>${a.blocked&&a.until?'موقوف لحد '+new Date(a.until).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'}):'الدليل يگول إيقاف أسبوع'}</span></div>
+    ${a.blocked?'':`<button type="button" class="no" onclick="shAdmSuspend('${a.id}')">⛔ إيقاف أسبوع</button>`}</div>`));
+  return items.length?`<div class="sa-c sa-req"><div class="sa-ch"><b>📥 الطلبات والتنبيهات</b><span>${items.length}</span></div>${items.join('')}</div>`:'';
+}
+async function shAdmLeave(id,ok){
+  const c=await askConfirm(ok?'توافق على الإجازة؟ إذا عنده شفت بذاك اليوم ينلغي بدون خصم.':'ترفض الإجازة؟',{title:'الإجازة',ok:'إي',danger:!ok}); if(!c) return;
+  try{ await rpc('admin_leave_decide',{p_id:id,p_ok:!!ok}); toast('تم ✓'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
+}
+async function shAdmSwap(id,ok){
+  const c=await askConfirm(ok?'توافق على التبديل؟':'ترفض التبديل؟',{title:'تبديل الشفت',ok:'إي',danger:!ok}); if(!c) return;
+  try{ await rpc('admin_swap_decide',{p_id:id,p_ok:!!ok}); toast('تم ✓'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
+}
+async function shAdmDoc(id,on){
+  try{ await rpc('admin_leave_doctor',{p_id:id,p_on:!!on}); toast(on?'انسجّلت ورقة الطبيب — ما ينحسب من إجازته':'انشالت'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
+}
+async function shAdmSuspend(id){
+  const nm=(((_saX&&_saX.absent3)||[]).find(x=>x.id===id)||{}).name||'السائق';
+  const c=await askConfirm('توقف <b>'+esc(nm)+'</b> أسبوع؟<br>شفتاته بهالأسبوع تنلغي، ويرجع وحده بعد 7 أيام.',{title:'إيقاف',ok:'إي، أوقفه',danger:true}); if(!c) return;
+  try{ await rpc('admin_driver_suspend',{p_driver:id,p_days:7}); toast('انوقف أسبوع'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
 }
 async function shAdmPick(shift){
   const D=_saData; if(!D) return;
@@ -27356,7 +27540,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v467', seen={}, n=0, q=[], t=null;
+  var VER='v468', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27608,7 +27792,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v467', t0=Date.now();
+  var VER='v468', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
