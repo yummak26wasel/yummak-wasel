@@ -3228,6 +3228,51 @@ html[data-theme=dark] .cst-in{background:#1a1528;border-color:#3a3354}
 html[data-theme=dark] .lm-row>i,html[data-theme=dark] .lm-row button{background:#262036}html[data-theme=dark] .lm-ks button{background:#1f1a30;color:#e9e4f5}html[data-theme=dark] .lm-in{background:#1f1a30;color:#fff}
 .pw-hint{display:flex;flex-wrap:wrap;gap:6px 12px;margin:6px 4px 2px;font-size:12px;font-weight:700;color:#9a93ad}
 .pw-hint span.ok{color:#15803D}
+/* v467: الشفتات */
+.sh-card{background:#fff;border:1px solid #ECE8F4;border-radius:20px;padding:12px;margin:0 0 12px;box-shadow:0 4px 14px rgba(91,43,201,.07)}
+.sh-st{display:flex;align-items:center;gap:10px}.sh-st>div{display:flex;flex-direction:column;min-width:0;flex:1}
+.sh-st b{font-size:14.5px;font-weight:900;color:#1F1640}.sh-st span{font-size:12.5px;color:#6b6580;font-weight:700}
+.sh-st em{font-style:normal;color:#C2410C}.sh-st em.bad{color:#DC2626}
+.sh-dot{width:12px;height:12px;border-radius:50%;background:#C9C3D8;flex:none}.sh-dot.on{background:#16A34A;box-shadow:0 0 0 5px rgba(22,163,74,.15)}.sh-dot.w{background:#F59E0B;box-shadow:0 0 0 5px rgba(245,158,11,.15)}
+.sh-go{width:100%;height:50px;border:0;border-radius:14px;background:#16A34A;color:#fff;font:900 16px Cairo,Tahoma,sans-serif;margin-top:10px;box-shadow:0 6px 16px rgba(22,163,74,.3)}
+.sh-go:disabled{opacity:.7}
+.sh-end{width:100%;height:44px;border:1.6px solid #F1C4C4;border-radius:14px;background:#fff;color:#DC2626;font:800 14px Cairo,Tahoma,sans-serif;margin-top:10px}
+.sh-row{display:flex;gap:8px;margin-top:10px}.sh-row button{flex:1;height:40px;border:0;border-radius:12px;background:#F3F0F8;color:#4B2BB0;font:800 13.5px Cairo,Tahoma,sans-serif}
+.sh-row .sh-pts.low{background:#FDECEC;color:#B91C1C}
+.sh-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:#6b6580;margin:0 2px 12px}.sh-leg b{color:#3d3554}
+.shd{margin-bottom:12px}.shd-h{display:flex;align-items:baseline;gap:8px;margin:0 2px 6px}.shd-h b{font-size:14px;font-weight:900}.shd-h span{font-size:11.5px;color:#B45309}
+.shd-c{display:flex;gap:8px}
+.shc{flex:1;min-width:0;border:1.5px solid #E2DCEE;background:#fff;border-radius:14px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:2px;font-family:Cairo,Tahoma,sans-serif}
+.shc b{font-size:13.5px;font-weight:900;color:#3d3554}.shc span{font-size:11.5px;color:#15803D;font-weight:700}
+.shc.dis{opacity:.45}.shc.dis span{color:#6b6580}
+.shc.mine{border-color:var(--g);background:#F1EBFC}.shc.mine span{color:var(--g)}.shc.mine button{border:0;background:none;color:#DC2626;font:800 12px Cairo,Tahoma,sans-serif;padding:2px 0 0}
+.sh-rules{font-size:12px;line-height:1.8;color:#6b6580;background:#F7F5FB;border-radius:12px;padding:10px 12px;margin:6px 0 12px}
+.sh-big{text-align:center;margin:6px 0 10px}.sh-big b{display:block;font-size:46px;font-weight:900;color:#15803D;line-height:1.1}.sh-big.low b{color:#DC2626}.sh-big span{font-size:13px;color:#6b6580}
+.sh-d{font-style:normal;font-weight:900;font-size:15px;color:#15803D}.sh-d.neg{color:#DC2626}
+#shAdmSheet{position:fixed;inset:0;z-index:9400;background:#F7F5FB;display:none;flex-direction:column}#shAdmSheet.on{display:flex}
+.sa-top{display:flex;align-items:center;gap:8px;padding:calc(env(safe-area-inset-top,0px) + 10px) 12px 10px;background:#fff;border-bottom:1px solid #ECE8F4}
+.sa-top>b{flex:1;font-size:16px;font-weight:900}.sa-x{width:38px;height:38px;border:0;border-radius:12px;background:#F3F0F8;font-size:16px}
+.sa-t{height:36px;border:0;border-radius:18px;background:#F1EBFC;color:var(--g);font:800 12.5px Cairo,Tahoma,sans-serif;padding:0 11px;white-space:nowrap}
+.sa-days{display:flex;gap:6px;overflow-x:auto;padding:10px 12px;background:#fff;scrollbar-width:none}.sa-days::-webkit-scrollbar{display:none}
+.sa-days button{flex:none;height:34px;border:1.5px solid #E2DCEE;background:#fff;border-radius:17px;padding:0 12px;font:800 12.5px Cairo,Tahoma,sans-serif;color:#3d3554}
+.sa-days button.on{background:var(--g);border-color:var(--g);color:#fff}
+.sa-body{flex:1;overflow-y:auto;padding:12px 12px calc(env(safe-area-inset-bottom,0px) + 20px)}
+.sa-c{background:#fff;border:1px solid #ECE8F4;border-radius:18px;padding:12px;margin-bottom:12px}.sa-c.off{opacity:.6}
+.sa-ch{display:flex;flex-direction:column;margin-bottom:6px}.sa-ch b{font-size:15px;font-weight:900}.sa-ch span{font-size:12.5px;color:#6b6580}
+.sa-r{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #F1EEF6}
+.sa-av{width:34px;height:34px;border-radius:50%;background:#F1EBFC;color:var(--g);display:flex;align-items:center;justify-content:center;font-weight:900;flex:none}
+.sa-n{flex:1;min-width:0;display:flex;flex-direction:column}.sa-n b{font-size:14px;font-weight:800;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sa-n span{font-size:12px;color:#6b6580}.sa-n span.ok{color:#15803D}.sa-n span.warn{color:#C2410C}.sa-n span.bad{color:#DC2626;font-weight:800}
+.sa-b{width:36px;height:36px;border:0;border-radius:10px;background:#F3F0F8;display:flex;align-items:center;justify-content:center;text-decoration:none;font-size:15px;flex:none}.sa-b.del{background:#FDECEC}
+.sa-empty{font-size:12.5px;color:#9a93ad;padding:6px 0}
+.sa-add{width:100%;height:40px;border:1.5px dashed #CFC6E6;border-radius:12px;background:none;color:var(--g);font:800 13.5px Cairo,Tahoma,sans-serif;margin-top:8px}
+.sa-def{border:1px solid #ECE8F4;border-radius:14px;padding:10px;margin-bottom:10px}.sa-dh{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.sa-dh b{font-size:15px;font-weight:900}.sa-dh label{font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px}
+.sa-dr{display:flex;gap:8px;margin-bottom:10px}.sa-dr label{flex:1;display:flex;flex-direction:column;gap:3px;font-size:12px;color:#6b6580;font-weight:700;min-width:0}
+.sa-dr input{height:42px;border:1.5px solid #E2DCEE;border-radius:12px;padding:0 8px;font:700 14px Cairo,Tahoma,sans-serif;width:100%;box-sizing:border-box;background:#fff}
+.sa-q{display:flex;gap:8px;margin-bottom:10px}.sa-q button{flex:1;height:40px;border:0;border-radius:12px;background:#FDECEC;color:#B91C1C;font:800 12.5px Cairo,Tahoma,sans-serif}
+html[data-theme=dark] .sh-card,html[data-theme=dark] .sa-c,html[data-theme=dark] .sa-top,html[data-theme=dark] .sa-days,html[data-theme=dark] .shc{background:#1f1a30;border-color:#2e2742}
+html[data-theme=dark] .sh-st b,html[data-theme=dark] .shc b{color:#efeaf9}html[data-theme=dark] #shAdmSheet{background:#15121f}html[data-theme=dark] .sh-rules{background:#1f1a30}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6295,7 +6340,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v466</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v467</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -6456,6 +6501,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="dPushBan"></div>
       <div id="dDue"></div>
       <div id="dutyBox"></div>
+      <div id="shiftBox"></div>
       <div id="dvStats"></div>
       <div id="availMapBox" style="display:none;margin:0 0 14px;position:relative">
         <div id="availMap" style="height:clamp(320px,52vh,520px);border-radius:24px;overflow:hidden;border:2px solid #fff;box-shadow:0 8px 24px rgba(91,43,201,.18)"></div>
@@ -15479,6 +15525,8 @@ function fmtWorked(sec){
 }
 
 async function toggleDuty(){
+  /* v454: بنص الشفت، الإطفاء = إنهاء الشفت (بتأكيد، وينخصم إذا قبل الوقت) */
+  try{ if(me.duty!==false && typeof shStarted==='function' && shStarted()) return shEnd() }catch(e){}
   /* v327: الحساب اللي بعده ما انعتمد أو موقوف ما يصير متاح (السيرفر هم يرفض) */
   if(me.duty===false && me.approved!==true) return toast('حسابك بعده قيد المراجعة — تگدر تشتغل بعد موافقة الإدارة');
   if(me.duty===false && me.blocked===true) return toast('حسابك موقوف — تواصل ويّا الإدارة');
@@ -15543,6 +15591,7 @@ function paintDutyCard(doneTodayCount, earnToday){
       </button>
     </div>`;
   startDriverClock();
+  try{ shRender() }catch(e){}   /* v467: الشفتات */
 
   const sb=document.getElementById('dvStats');
   if(!sb) return;
@@ -19501,6 +19550,7 @@ function renderAdminHome(){
       <div class="h2-tap" onclick="ahGoPeople('store')"><i class="ic o"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></i><b>${pv(P.shops)}</b><span>محل</span><u>${(ld&&P.srv)?'':_n(P.shops_open)+' مفتوح'}</u></div>
     </div>
     <button type="button" class="h2-mapbtn" onclick="openDrvMap()"><i>🗺️</i><b>خريطة السواق المباشرة</b><span>${_n(P.drivers_on||0)} شغّال ›</span></button>
+    <button type="button" class="h2-mapbtn" onclick="shAdmOpen()"><i>🗓️</i><b>شفتات السواق</b><span>الجدول والنقاط ›</span></button>
   </div>
 
   ${(()=>{ const st=stuckOrders(); if(!st.list.length&&!st.old) return '';
@@ -20491,6 +20541,268 @@ async function openShopsMap(focusId){
   if(focusId && sMarks[focusId]){ sMap.setView(sMarks[focusId].getLatLng(),17); setTimeout(()=>{ try{ sMarks[focusId].openPopup() }catch(e){} },300) }
   else if(pts.length){ try{ sMap.fitBounds(L.latLngBounds(pts).pad(0.2),{maxZoom:16}) }catch(e){} }
 }
+/* ═══ v454: نظام الشفتات — حسب «دليل السواق» نسخة 2 ═══
+   السائق يحجز شفتاته للـ 7 أيام الجاية، ويضغط «بدء الشفت» من داخل عانة. اللي بشفته توصله الطلبات أول (الكامل قبل الكل)،
+   واللي مو بشفته يوصله الطلب إذا ماكو أحد بشفته فاضي أو بعد 3 دقايق (عبد: «إذا ماكو غيره»).
+   النقاط: كل شهر 100 · تأخير أكثر من 20 دقيقة −5 · طلع قبل الوقت −5 · غياب بدون تبليغ −15. السيرفر هو اللي يحسب */
+let shData=null, shAt=0, _shBusy=false, _shTimer=null;
+const SH_DAYS=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+function shTime(m){ m=((Number(m)%1440)+1440)%1440; const h=Math.floor(m/60), mm=m%60, h12=(h%12)||12;
+  const p = (h>=5&&h<12) ? 'الصبح' : (h>=12&&h<14) ? 'الظهر' : (h>=14&&h<18) ? 'العصر' : 'بالليل';
+  return h12+(mm?':'+String(mm).padStart(2,'0'):'')+' '+p }
+function shRange(d){ return shTime(d.start)+' – '+shTime(d.end) }
+function shDur(m){ m=Math.max(0,Math.round(m)); const h=Math.floor(m/60); return h ? h+'س'+(m%60?' و'+(m%60)+'د':'') : m+'د' }
+function shDef(id,src){ return (((src||shData)&&(src||shData).defs)||[]).find(d=>d.id===id)||{id:id,name:id,start:0,end:0,cap:0} }
+function shStartTs(day,min){ return new Date(day+'T00:00:00+03:00').getTime()+Number(min||0)*60000 }   /* بغداد UTC+3 طول السنة */
+function shDayLbl(day,today){
+  today=today||(shData&&shData.today); if(day===today) return 'اليوم';
+  const d=new Date(day+'T12:00:00'), td=new Date(today+'T12:00:00'), diff=Math.round((d-td)/864e5);
+  if(diff===1) return 'باچر'; if(diff===-1) return 'البارحة';
+  return SH_DAYS[d.getDay()]+' '+d.getDate()+'/'+(d.getMonth()+1) }
+function shMineList(){ return ((shData&&shData.days)||[]).map(x=>x.mine?Object.assign({day:x.day},x.mine):null).filter(Boolean) }
+function shStarted(){ return shMineList().find(m=>m.status==='started' && new Date(m.ends_at).getTime()>Date.now()) }
+function shNext(){ const now=Date.now(); return shMineList().filter(m=>m.status==='booked' && new Date(m.ends_at).getTime()>now)
+  .sort((a,b)=>new Date(a.starts_at)-new Date(b.starts_at))[0] }
+function shStLbl(m){ return m.status==='started'?'شغّال هسه':m.status==='done'?'خلص':m.status==='absent'?'غياب':(m.by_admin?'حجزته الإدارة':'محجوز ✓') }
+async function shLoad(force){
+  if(!me || me.role!=='driver') return;
+  if(!force && shData && Date.now()-shAt<60000) return;
+  try{ shData=await rpc('shift_week',{}); shAt=Date.now() }catch(e){ return }
+  try{ shRender() }catch(e){}
+  try{ if(typeof window.__shWeekPaint==='function') window.__shWeekPaint() }catch(e){}
+}
+function shRender(){
+  const box=document.getElementById('shiftBox'); if(!box) return;
+  if(!me || me.role!=='driver' || me.approved!==true || me.blocked===true){ box.innerHTML=''; return }
+  if(!shData){ box.innerHTML=''; shLoad(); return }
+  if(Date.now()-shAt>60000) shLoad();
+  const now=Date.now(), pts=Number(shData.points==null?100:shData.points), cur=shStarted(), nx=shNext();
+  let main='';
+  if(cur){
+    const d=shDef(cur.shift), left=(new Date(cur.ends_at).getTime()-now)/60000;
+    main=`<div class="sh-st"><span class="sh-dot on"></span><div><b>بشفتك هسه — ${esc(d.name)}</b><span>ينتهي ${shTime(d.end)} · باقي ${shDur(left)}</span></div></div>
+      <button type="button" class="sh-end" onclick="shEnd()">إنهاء الشفت</button>`;
+  }else if(nx){
+    const d=shDef(nx.shift), mins=(new Date(nx.starts_at).getTime()-now)/60000;
+    if(mins<=15){
+      const late=Math.max(0,Math.round(-mins));
+      main=`<div class="sh-st"><span class="sh-dot w"></span><div><b>شفت ${esc(d.name)} ${late?'بدا':'يبدي بعد '+shDur(mins)}</b><span>${shRange(d)}${late?` · <em class="${late>20?'bad':''}">متأخر ${shDur(late)}${late>20?' — ناقص 5 نقاط':''}</em>`:''}</span></div></div>
+        <button type="button" class="sh-go" onclick="shStart(this)">▶ بدء الشفت</button>`;
+    }else{
+      main=`<div class="sh-st"><span class="sh-dot n"></span><div><b>شفتك الجاي: ${shDayLbl(nx.day)} — ${esc(d.name)}</b><span>${shRange(d)} · تبديه من هنا بوقته</span></div></div>`;
+    }
+  }else{
+    main=`<div class="sh-st"><span class="sh-dot n"></span><div><b>ما عندك شفت محجوز</b><span>احجز شفتاتك — اللي بشفته توصله الطلبات أول</span></div></div>`;
+  }
+  box.innerHTML=`<div class="sh-card">${main}<div class="sh-row"><button type="button" onclick="shWeek()">🗓️ شفتاتي</button>
+    <button type="button" class="sh-pts ${pts<70?'low':''}" onclick="shPoints()">⭐ نقاطك ${pts}</button></div></div>`;
+  if(!_shTimer) _shTimer=setInterval(()=>{ try{ if(document.getElementById('shiftBox')) shRender(); else { clearInterval(_shTimer); _shTimer=null } }catch(e){} },30000);
+}
+function shStart(btn){
+  if(_shBusy) return; _shBusy=true;
+  if(btn){ btn.disabled=true; btn.textContent='… نتأكد من موقعك' }
+  getPosSmart(async p=>{
+    try{
+      const r=await rpc('driver_shift_start',{p_lat:p.coords.latitude, p_lng:p.coords.longitude});
+      me.duty=true; try{ await _wtStart() }catch(e){}
+      toast(r&&r.penalty ? 'بديت الشفت ✓ — متأخر '+r.late_min+' دقيقة: ناقص 5 نقاط' : 'بديت الشفت ✓ — هسه الطلبات توصلك أول');
+      _shBusy=false; await shLoad(true); try{ renderDriverAccount() }catch(e){} renderDriver();
+    }catch(e){ toast(errMsg(e)) }
+    finally{ _shBusy=false; shRender() }
+  }, ()=>{ _shBusy=false; toast('ما وصلنا موقعك — شغّل الموقع (GPS) وجرّب'); shRender() });
+}
+async function shEnd(){
+  const cur=shStarted(); if(!cur) return;
+  const left=(new Date(cur.ends_at).getTime()-Date.now())/60000;
+  const ok=await askConfirm(left>10 ? 'باقي <b>'+shDur(left)+'</b> على نهاية شفتك.<br>إذا تطلع هسه <b>تنخصم 5 نقاط</b>.' : 'تنهي شفتك هسه؟',
+    {title:'إنهاء الشفت', ok:'إي، أنهيه', danger:left>10});
+  if(!ok) return;
+  try{
+    const r=await rpc('driver_shift_end',{});
+    me.duty=false; try{ await _wtStop() }catch(e){}
+    toast(r&&r.penalty ? 'خلص شفتك — ناقص 5 نقاط لأنك طلعت قبل الوقت' : 'خلص شفتك ✓ — يعطيك العافية');
+    await shLoad(true); try{ renderDriverAccount() }catch(e){} renderDriver();
+  }catch(e){ toast(errMsg(e)) }
+}
+async function shWeek(){
+  const sh=_lmSheet('shWeekSheet');
+  const paint=()=>{
+    if(!shData){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; return }
+    const defs=(shData.defs||[]).filter(d=>d.active), now=Date.now();
+    const days=(shData.days||[]).filter(x=>x.day>=shData.today);
+    const rows=days.map(x=>{
+      const mine=x.mine;
+      const chips=defs.map(d=>{
+        const taken=Number((x.taken||{})[d.id]||0), left=Math.max(0,Number(d.cap||0)-taken), started=now>=shStartTs(x.day,d.start);
+        if(mine && mine.shift===d.id){
+          const canCancel = mine.status==='booked' && (new Date(mine.starts_at).getTime()-now)>=24*3600e3;
+          return `<div class="shc mine"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span>${canCancel?`<button type="button" onclick="shCancel('${mine.id}')">إلغاء</button>`:''}</div>`;
+        }
+        const dis=!!mine || started || left<=0;
+        return `<button type="button" class="shc${dis?' dis':''}" ${dis?'disabled':''} onclick="shBook('${x.day}','${d.id}')"><b>${esc(d.name)}</b><span>${started?'بدا':left<=0?'ممتلئ':'باقي '+left}</span></button>`;
+      }).join('');
+      const lock = mine && mine.status==='booked' && (new Date(mine.starts_at).getTime()-now)<24*3600e3;
+      return `<div class="shd"><div class="shd-h"><b>${shDayLbl(x.day)}</b>${lock?'<span>الإلغاء من الإدارة بس (أقل من 24 ساعة)</span>':''}</div><div class="shd-c">${chips}</div></div>`;
+    }).join('');
+    sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+      <div class="lm-h"><b>🗓️ شفتاتي</b><span>احجز للـ 7 أيام الجاية · شفت واحد باليوم</span></div>
+      <div class="sh-leg">${defs.map(d=>`<span><b>${esc(d.name)}</b> ${shRange(d)}</span>`).join('')}</div>
+      ${rows||'<div class="lm-empty">ماكو شفتات متاحة هسه</div>'}
+      <div class="sh-rules">• تبدي الشفت من زر «بدء الشفت» وإنت داخل عانة · التأخير أكثر من 20 دقيقة: ناقص 5 نقاط<br>• الطلوع قبل نهاية الشفت: ناقص 5 · الغياب بدون تبليغ: ناقص 15<br>• الإلغاء من هنا قبل 24 ساعة على الأقل</div>
+      <button type="button" class="rs-later" onclick="document.getElementById('shWeekSheet').classList.remove('on')">سكّر</button></div>`;
+  };
+  window.__shWeekPaint=()=>{ if(sh.classList.contains('on')) paint() };
+  paint(); requestAnimationFrame(()=>sh.classList.add('on'));
+  shLoad(true);
+}
+async function shBook(day,id){
+  const d=shDef(id);
+  const ok=await askConfirm('تحجز شفت <b>'+esc(d.name)+'</b> يوم <b>'+shDayLbl(day)+'</b>؟<br>'+shRange(d),{title:'حجز شفت',ok:'إي، احجز'});
+  if(!ok) return;
+  try{ await rpc('driver_shift_book',{p_day:day, p_shift:id}); toast('انحجز ✓'); await shLoad(true) }
+  catch(e){ toast(errMsg(e)); shLoad(true) }
+}
+async function shCancel(bid){
+  const ok=await askConfirm('تلغي هذا الشفت؟',{title:'إلغاء الحجز',ok:'إي، ألغيه',danger:true});
+  if(!ok) return;
+  try{ await rpc('driver_shift_cancel',{p_id:bid}); toast('انلغى ✓'); await shLoad(true) }
+  catch(e){ toast(errMsg(e)); shLoad(true) }
+}
+async function shPoints(){
+  await shLoad(true);
+  const sh=_lmSheet('shPtsSheet'), pts=Number((shData&&shData.points)==null?100:shData.points), log=(shData&&shData.log)||[];
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="sh-big ${pts<70?'low':''}"><b>${pts}</b><span>نقاطك هذا الشهر — كل شهر تبدي 100</span></div>
+    <div class="sh-rules">تحت 70: إنذار · تحت 50: إيقاف يومين · تحت 30: فصل</div>
+    ${log.length?log.map(x=>`<div class="lm-row"><i>${Number(x.d)<0?'➖':'➕'}</i><div><b>${esc(x.r)}</b><span>${new Date(x.at).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'})}</span></div><em class="sh-d ${Number(x.d)<0?'neg':''}">${Number(x.d)>0?'+':''}${Number(x.d)}</em></div>`).join('')
+      :'<div class="lm-empty">ما انخصم منك شي هذا الشهر 👏</div>'}
+    <button type="button" class="rs-later" onclick="document.getElementById('shPtsSheet').classList.remove('on')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+
+/* ── الإدارة: جدول الشفتات + الأوقات + النقاط ── */
+let _saDay=null, _saData=null;
+function _saSheet(){
+  let s=document.getElementById('shAdmSheet');
+  if(!s){ s=document.createElement('div'); s.id='shAdmSheet'; document.body.appendChild(s) }
+  return s;
+}
+async function shAdmOpen(day){
+  if(!me || me.role!=='admin') return;
+  const s=_saSheet(); s.classList.add('on');
+  if(!s.innerHTML) s.innerHTML='<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ شفتات السواق</b></div><div class="sa-body"><div class="lm-empty">… نحمّل</div></div>';
+  const bgToday=new Date(Date.now()+3*3600e3).toISOString().slice(0,10);   /* بغداد UTC+3 */
+  try{ _saData=await rpc('admin_shift_day',{p_day:day||bgToday}) }catch(e){ return toast(errMsg(e)) }
+  _saDay=_saData.day; shAdmPaint();
+}
+function shAdmClose(){ const s=document.getElementById('shAdmSheet'); if(s) s.classList.remove('on') }
+function shAdmPaint(){
+  const s=_saSheet(), D=_saData; if(!D) return;
+  const today=D.today, base=new Date(today+'T12:00:00');
+  const chips=[]; for(let i=-1;i<=7;i++){ const d=new Date(base.getTime()+i*864e5), k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+    chips.push(`<button type="button" class="${k===D.day?'on':''}" onclick="shAdmOpen('${k}')">${shDayLbl(k,today)}</button>`) }
+  const now=Date.now();
+  const card=(d)=>{
+    const rows=(D.rows||[]).filter(r=>r.shift===d.id);
+    if(!d.active && !rows.length) return '';
+    const list=rows.map(r=>{
+      let st='', cls='';
+      if(r.status==='started'){ st='بدا '+shTime(Math.round(new Date(r.started_at).getTime()/60000+180))+(r.late_min>0?' · متأخر '+shDur(r.late_min):''); cls=r.late_min>20?'warn':'ok' }
+      else if(r.status==='done'){ st='خلص'+(r.early_min>10?' · طلع قبل الوقت بـ '+shDur(r.early_min):''); cls=r.early_min>10?'warn':'' }
+      else if(r.status==='absent'){ st='غياب'; cls='bad' }
+      else { const late=(now-new Date(r.starts_at).getTime())/60000; st=late>0?'ما بدا — متأخر '+shDur(late):'محجوز'+(r.by_admin?' (إنت)':''); cls=late>20?'bad':late>0?'warn':'' }
+      const canRm = r.status==='booked' || r.status==='absent';
+      return `<div class="sa-r"><div class="sa-av">${esc((r.name||'?').trim().charAt(0))}</div><div class="sa-n"><b>${esc(r.name||'سائق')}</b><span class="${cls}">${st}</span></div>
+        ${r.phone?`<a class="sa-b" href="tel:${esc(r.phone)}" aria-label="اتصال">📞</a>`:''}${canRm?`<button type="button" class="sa-b del" onclick="shAdmRemove('${r.id}')" aria-label="شيل">🗑</button>`:''}</div>`;
+    }).join('');
+    return `<div class="sa-c ${d.active?'':'off'}"><div class="sa-ch"><b>${esc(d.name)}</b><span>${shRange(d)} · ${rows.length}/${d.cap}${d.active?'':' · مطفي'}</span></div>
+      ${list||'<div class="sa-empty">ماكو أحد بهذا الشفت</div>'}
+      <button type="button" class="sa-add" onclick="shAdmPick('${d.id}')">➕ أضف سائق</button></div>`;
+  };
+  s.innerHTML=`<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ الشفتات</b>
+      <button class="sa-t" onclick="shAdmTimes()">⚙️ الأوقات</button><button class="sa-t" onclick="shAdmPoints()">⭐ النقاط</button></div>
+    <div class="sa-days">${chips.join('')}</div>
+    <div class="sa-body">${(D.defs||[]).map(card).join('')}
+      <div class="sh-rules">الطلبات توصل أول للي بشفتهم (الكامل قبل الكل). اللي مو بشفته يوصله الطلب إذا ماكو أحد بشفته فاضي، أو بعد 3 دقايق.</div></div>`;
+}
+async function shAdmPick(shift){
+  const D=_saData; if(!D) return;
+  const booked=new Set((D.rows||[]).map(r=>r.driver));
+  const L2=(D.drivers||[]).filter(x=>!booked.has(x.id));
+  const sh=_lmSheet('saPick');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>أضف سائق — ${esc(shDef(shift,D).name)}</b><span>${shDayLbl(D.day,D.today)} · ${shRange(shDef(shift,D))}</span></div>
+    ${L2.length?L2.map(x=>`<div class="lm-row" onclick="shAdmAssign('${x.id}','${shift}')"><i>🛵</i><div><b>${esc(x.name||'سائق')}</b><span>نقاطه ${x.points}</span></div><button type="button">➕</button></div>`).join('')
+      :'<div class="lm-empty">كل السواق المعتمدين عندهم شفت بهذا اليوم</div>'}
+    <button type="button" class="rs-later" onclick="document.getElementById('saPick').classList.remove('on')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function shAdmAssign(driver,shift){
+  try{ await rpc('admin_shift_assign',{p_driver:driver,p_day:_saDay,p_shift:shift}); document.getElementById('saPick').classList.remove('on'); toast('انضاف ✓'); shAdmOpen(_saDay) }
+  catch(e){ toast(errMsg(e)) }
+}
+async function shAdmRemove(id){
+  const rr=((_saData&&_saData.rows)||[]).find(x=>x.id===id)||{}, name=esc(rr.name||'السائق'), absent=rr.status==='absent';
+  const ok=await askConfirm(absent?'تشيل غياب «'+name+'»؟ ترجعله الـ 15 نقطة.':'تشيل «'+name+'» من هذا الشفت؟',{title:absent?'سامح الغياب':'شيل من الشفت',ok:'إي',danger:!absent});
+  if(!ok) return;
+  try{ await rpc('admin_shift_remove',{p_id:id}); toast('تم ✓'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
+}
+function _hm(m){ m=((Number(m)%1440)+1440)%1440; return String(Math.floor(m/60)).padStart(2,'0')+':'+String(m%60).padStart(2,'0') }
+function shAdmTimes(){
+  const D=_saData; if(!D) return;
+  const sh=_lmSheet('saTimes');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>⚙️ أوقات الشفتات</b><span>وكم سائق بكل شفت</span></div>
+    ${(D.defs||[]).map(d=>`<div class="sa-def" data-id="${d.id}"><div class="sa-dh"><b>${esc(d.name)}</b><label><input type="checkbox" class="d-on" ${d.active?'checked':''}> شغّال</label></div>
+      <div class="sa-dr"><label>من<input type="time" class="d-s" value="${_hm(d.start)}"></label><label>إلى<input type="time" class="d-e" value="${_hm(d.end)}"></label>
+      <label>سواق<input type="number" class="d-c" min="0" max="50" value="${d.cap}"></label></div></div>`).join('')}
+    <button type="button" class="lm-add" onclick="shAdmTimesSave(this)">✓ احفظ</button>
+    <button type="button" class="rs-later" onclick="document.getElementById('saTimes').classList.remove('on')">إلغاء</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function shAdmTimesSave(bt){
+  const toM=v=>{ const p=String(v||'').split(':'); return Number(p[0])*60+Number(p[1]||0) };
+  const arr=[...document.querySelectorAll('#saTimes .sa-def')].map(el=>{
+    const s=toM(el.querySelector('.d-s').value); let e=toM(el.querySelector('.d-e').value); if(e<=s) e+=1440;   /* ينتهي بعد نص الليل */
+    return {id:el.dataset.id, start:s, end:e, cap:Math.max(0,Math.min(50,Number(el.querySelector('.d-c').value)||0)), active:el.querySelector('.d-on').checked};
+  });
+  if(arr.some(x=>!isFinite(x.start)||!isFinite(x.end))) return toast('اكتب الوقت صح');
+  if(bt){ bt.disabled=true; bt.textContent='… نحفظ' }
+  try{ await rpc('admin_shift_defs_save',{p:arr}); document.getElementById('saTimes').classList.remove('on'); toast('انحفظت ✓ — الحجوزات الجديدة تمشي على الأوقات الجديدة'); shAdmOpen(_saDay) }
+  catch(e){ toast(errMsg(e)); if(bt){ bt.disabled=false; bt.textContent='✓ احفظ' } }
+}
+function shAdmPoints(){
+  const D=_saData; if(!D) return;
+  const L2=(D.drivers||[]).slice().sort((a,b)=>a.points-b.points);
+  const sh=_lmSheet('saPts');
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>⭐ نقاط السواق — هذا الشهر</b><span>كل شهر يبدون بـ 100 · تحت 70 إنذار · تحت 50 إيقاف يومين · تحت 30 فصل</span></div>
+    ${L2.map(x=>`<div class="lm-row" onclick="shAdmDrv('${x.id}')"><i>🛵</i><div><b>${esc(x.name||'سائق')}</b><span>${x.points<30?'تحت 30 — فصل':x.points<50?'تحت 50 — إيقاف يومين':x.points<70?'تحت 70 — إنذار':'تمام'}</span></div><em class="sh-d ${x.points<70?'neg':''}">${x.points}</em></div>`).join('')||'<div class="lm-empty">ماكو سواق معتمدين</div>'}
+    <button type="button" class="rs-later" onclick="document.getElementById('saPts').classList.remove('on')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function shAdmDrv(id){
+  const name=(((_saData&&_saData.drivers)||[]).find(x=>x.id===id)||{}).name||'السائق';
+  let r=null; try{ r=await rpc('admin_points_log',{p_driver:id}) }catch(e){ return toast(errMsg(e)) }
+  const sh=_lmSheet('saDrv'), log=(r&&r.log)||[];
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="sh-big ${r.points<70?'low':''}"><b>${r.points}</b><span>نقاط ${esc(name)} هذا الشهر</span></div>
+    <div class="sa-q"><button type="button" onclick="shAdmAdj('${id}',-15,'شكوى زبون')">شكوى زبون −15</button><button type="button" onclick="shAdmAdj('${id}',-10,'إلغاء طلب بعد ما قبله')">إلغاء طلب −10</button></div>
+    <div class="sa-dr"><label>نقاط<input type="number" id="saAdjN" placeholder="-5 أو 5"></label><label style="flex:2">السبب<input id="saAdjR" maxlength="200" placeholder="مثال: تأخير بالتوصيل"></label></div>
+    <button type="button" class="lm-add" onclick="shAdmAdj('${id}')">✓ سجّل</button>
+    ${log.map(x=>`<div class="lm-row"><i>${Number(x.d)<0?'➖':'➕'}</i><div><b>${esc(x.r)}</b><span>${new Date(x.at).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'})}</span></div><em class="sh-d ${Number(x.d)<0?'neg':''}">${Number(x.d)>0?'+':''}${Number(x.d)}</em></div>`).join('')||'<div class="lm-empty">ماكو شي هذا الشهر</div>'}
+    <button type="button" class="rs-later" onclick="document.getElementById('saDrv').classList.remove('on')">سكّر</button></div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function shAdmAdj(id,n,reason){
+  if(n==null){ n=Number((document.getElementById('saAdjN')||{}).value); reason=((document.getElementById('saAdjR')||{}).value||'').trim() }
+  if(!n || !isFinite(n)) return toast('اكتب عدد النقاط');
+  if(!reason || reason.length<2) return toast('اكتب السبب');
+  const ok=await askConfirm((n<0?'تخصم ':'تضيف ')+'<b>'+Math.abs(n)+'</b> نقطة؟<br>السبب: '+esc(reason),{title:'النقاط',ok:'إي',danger:n<0});
+  if(!ok) return;
+  try{ await rpc('admin_points_adjust',{p_driver:id,p_delta:n,p_reason:reason}); toast('انسجّل ✓');
+    shAdmDrv(id);
+    try{ _saData=await rpc('admin_shift_day',{p_day:_saDay}) }catch(e){} }
+  catch(e){ toast(errMsg(e)) }
+}
+
 /* ═══ v348: خريطة السواق المباشرة بلوحة الإدارة ═══ */
 let dMap=null, dMarks={}, dMapTimer=null, dMapData=[], dShopLayer=null;
 function _agoTxt(t){ if(!t) return 'ما وصل موقع'; const m=Math.max(0,Math.round((Date.now()-t)/60000));
@@ -27044,7 +27356,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v466', seen={}, n=0, q=[], t=null;
+  var VER='v467', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27296,7 +27608,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v466', t0=Date.now();
+  var VER='v467', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
