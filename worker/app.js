@@ -21,12 +21,55 @@ const EXPO_SEND = 'https://exp.host/--/api/v2/push/send';
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 const jres = (o, s) => new Response(JSON.stringify(o), { status: s || 200, headers: { 'Content-Type': 'application/json' } });
 
+/* ═══ v473: «طلب ينتظر سايق» — طلب جاهز صار له دقيقة ونص وماكو سايق أخذه ← يرن تلفون كل السواق الفاضين.
+   القاعدة (driver_wave_due كل 20 ثانية) تدز أرقام الطلبات. ما نثق بغير الرقم: order_wave_check يرجّع منو نرنله،
+   ومرة وحدة بس بكل طلب، وبس إذا الطلب بعده ينتظر. */
+async function driverWave(ids, env) {
+  const msgs = []; let checked = 0, sent = 0;
+  for (const id of ids) {
+    let info = null;
+    try {
+      const r = await fetch(SB_URL + '/rest/v1/rpc/order_wave_check', {
+        method: 'POST',
+        headers: { apikey: SB_PUB, Authorization: 'Bearer ' + SB_PUB, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_order: id })
+      });
+      if (r.ok) info = await r.json();
+    } catch (e) {}
+    if (!info || !Array.isArray(info.users) || !info.users.length) continue;
+    checked++;
+    const typ = info.kind === 's' ? 'special' : 'ready';
+    const body = (String(info.shop || '') + ' ← ' + String(info.addr || '')).slice(0, 160);
+    const users = info.users.map(String).filter(x => UUID_RE.test(x)).slice(0, 50);
+    for (const u of users) {
+      const L = await env.PUSH.list({ prefix: 'u:' + u + ':' });
+      for (const k of L.keys) {
+        const t = await env.PUSH.get(k.name);
+        if (!t) continue;
+        const m = { to: t, title: '🛵 طلب ينتظر سايق', body, priority: 'high', sound: 'default', interruptionLevel: 'time-sensitive',
+                    data: { url: '/?dof=' + encodeURIComponent(id), tag: 'ready', type: typ, order_id: id, shop: String(info.shop || ''), addr: String(info.addr || '') } };
+        msgs.push(m);
+      }
+    }
+  }
+  for (let i = 0; i < msgs.length; i += 100) {
+    try {
+      const r = await fetch(EXPO_SEND, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                                         body: JSON.stringify(msgs.slice(i, i + 100)) });
+      const j = await r.json().catch(() => null);
+      ((j && j.data) || []).forEach(t => { if (t && t.status === 'ok') sent++; });
+    } catch (e) {}
+  }
+  return jres({ ok: true, kind: 'drv', orders: ids.length, checked, devices: msgs.length, sent });
+}
+
 async function nudge(req, env) {
   if (req.method !== 'POST') return jres({ error: 'POST only' }, 405);
   if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
   let b = {};
   try { b = await req.json(); } catch (e) {}
   const ids = (Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => UUID_RE.test(x)).slice(0, 20);
+  if (b.kind === 'drv') return driverWave(ids, env);
   /* إذا اكو أكثر من طلب لنفس المحل بنفس اللحظة: إشعار واحد «عندك 3 طلبات» بدل 3 إشعارات ورا بعض */
   const byTok = new Map(); let checked = 0, sent = 0;
   for (const id of ids) {
