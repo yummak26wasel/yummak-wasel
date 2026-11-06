@@ -3296,6 +3296,15 @@ html[data-theme=dark] .sh-sec,html[data-theme=dark] .sh-acts button,html[data-th
 .sa-rq>div{flex:1;min-width:0;display:flex;flex-direction:column}.sa-rq b{font-size:13.5px;font-weight:800}.sa-rq span{font-size:12px;color:#6b6580}
 .sa-rq button{height:36px;min-width:36px;border:0;border-radius:10px;background:#F3F0F8;font:800 12.5px Cairo,Tahoma,sans-serif;padding:0 9px;flex:none}
 .sa-rq button.ok{background:#DCFCE7;color:#15803D}.sa-rq button.no{background:#FDECEC;color:#B91C1C}.sa-rq.bad b{color:#B91C1C}
+.dkp{border:1.5px solid #E2DCEE;border-radius:16px;padding:12px;margin-bottom:12px;background:#fff}
+.dkp.lv-gold{border-color:#F2C94C;background:linear-gradient(180deg,#FFF9E6,#fff)}.dkp.lv-bronze{border-color:#E8C4A6;background:linear-gradient(180deg,#FFF3EA,#fff)}
+.dkp-h{display:flex;align-items:center;gap:10px;margin-bottom:10px}.dkp-h em{font-style:normal;font-size:34px;line-height:1}.dkp-h b{display:block;font-size:16px;font-weight:900}.dkp-h span{font-size:12.5px;color:#6b6580}
+.dkp-g{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.dkp-g>div{background:#F7F5FB;border-radius:12px;padding:8px 4px;text-align:center}
+.dkp-g b{display:block;font-size:18px;font-weight:900;color:#1F1640}.dkp-g span{font-size:11px;color:#6b6580;font-weight:700}
+.dkp-goal{margin-top:10px;display:flex;flex-direction:column;gap:3px;font-size:12.5px;color:#3d3554}.dkp-goal b{font-weight:900;margin-bottom:2px}
+.dkp-goal i{font-style:normal;font-weight:900;margin-left:4px}.dkp-goal i.y{color:#16A34A}.dkp-goal i.n{color:#DC2626}
+.sa-n b small{font-size:13px}
+html[data-theme=dark] .dkp{background:#1f1a30;border-color:#3a3150}html[data-theme=dark] .dkp-g>div{background:#262036}html[data-theme=dark] .dkp-g b{color:#fff}html[data-theme=dark] .dkp-goal{color:#e9e4f5}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6363,7 +6372,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v471</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v472</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -20525,6 +20534,10 @@ async function aoRelease(id){
   try{
     await rpc('admin_release_order',{p_order:o.id});
     const no='#'+ONO(o), old=o.driverUid;
+    if(old){ setTimeout(async()=>{ try{
+      const f=await askConfirm('الغلط من <b>'+esc(o.driverName||'السائق')+'</b>؟<div style="margin-top:8px;font-size:12.5px">إذا إي: ناقص 10 نقاط، وتنحسب عليه بنسبة الإكمال.</div>',{title:'الغلط من منو؟',ok:'إي، منه (−10)',no:'لا، مو منه'});
+      if(f){ await rpc('admin_mark_drop',{p_order:o.id, p_driver:old}); toast('انسجّلت عليه ✓') }
+    }catch(e){ toast(errMsg(e)) } },350) }
     if(old) pushTo(old,'↩️ انسحب منك طلب '+no,'الإدارة رجّعت الطلب لباقي السواق',{type:'status', order_id:String(o.id)});
     pushDrivers('🛵 طلب جاهز للتوصيل', String(o.shopName||'')+' ← '+String(o.addr||''), {type:'ready', order_id:String(o.id), shop:String(o.shopName||''), addr:String(o.addr||''), total:String(Number(o.deliveryFee||SET.deliveryFee||0))});
     if(o.customerUid) pushTo(o.customerUid,'🛵 نبدّل السائق','طلبك '+no+' راح يستلمه سائق ثاني',{type:'status', order_id:String(o.id)});
@@ -20632,7 +20645,7 @@ function shRender(){
   }
   box.innerHTML=`<div class="sh-card">${swp}${main}<div class="sh-row"><button type="button" onclick="shWeek()">🗓️ شفتاتي</button>
     <button type="button" onclick="shLeaves()">🏖️ إجازاتي</button>
-    <button type="button" class="sh-pts ${pts<70?'low':''}" onclick="shPoints()">⭐ ${pts}</button></div></div>`;
+    <button type="button" class="sh-pts ${pts<70?'low':''}" onclick="shPoints()">${shLv(shX&&shX.kpi&&shX.kpi.level).e} ${pts}</button></div></div>`;
   if(!_shTimer) _shTimer=setInterval(()=>{ try{ if(document.getElementById('shiftBox')) shRender(); else { clearInterval(_shTimer); _shTimer=null } }catch(e){} },30000);
 }
 function shStart(btn){
@@ -20667,21 +20680,23 @@ async function shWeek(){
     if(!shData){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; return }
     const defs=(shData.defs||[]).filter(d=>d.active), now=Date.now();
     const days=(shData.days||[]).filter(x=>x.day>=shData.today);
+    const bd=Number((shX&&shX.kpi&&shX.kpi.book_days)||7), lv=shLv(shX&&shX.kpi&&shX.kpi.level);
+    const dayIdx=d=>Math.round((new Date(d+'T12:00:00')-new Date(shData.today+'T12:00:00'))/864e5);
     const rows=days.map(x=>{
-      const mine=x.mine;
+      const mine=x.mine, far=dayIdx(x.day)>bd;
       const chips=defs.map(d=>{
         const taken=Number((x.taken||{})[d.id]||0), left=Math.max(0,Number(d.cap||0)-taken), started=now>=shStartTs(x.day,d.start);
         if(mine && mine.shift===d.id){
           if(mine.status!=='booked') return `<div class="shc mine"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span></div>`;
           return `<button type="button" class="shc mine" onclick="shMineAct('${mine.id}')"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span><i>خيارات ›</i></button>`;
         }
-        const dis=!!mine || started || left<=0;
-        return `<button type="button" class="shc${dis?' dis':''}" ${dis?'disabled':''} onclick="shBook('${x.day}','${d.id}')"><b>${esc(d.name)}</b><span>${started?'بدا':left<=0?'ممتلئ':'باقي '+left}</span></button>`;
+        const dis=!!mine || started || left<=0 || far;
+        return `<button type="button" class="shc${dis?' dis':''}" ${dis?'disabled':''} onclick="shBook('${x.day}','${d.id}')"><b>${esc(d.name)}</b><span>${started?'بدا':left<=0?'ممتلئ':far?((n=>n===1?'تنفتح باچر':n===2?'تنفتح بعد يومين':'تنفتح بعد '+n+' أيام')(dayIdx(x.day)-bd)):'باقي '+left}</span></button>`;
       }).join('');
       return `<div class="shd"><div class="shd-h"><b>${shDayLbl(x.day)}</b></div><div class="shd-c">${chips}</div></div>`;
     }).join('');
     sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
-      <div class="lm-h"><b>🗓️ شفتاتي</b><span>احجز للـ 7 أيام الجاية · شفت واحد باليوم</span></div>
+      <div class="lm-h"><b>🗓️ شفتاتي</b><span>${lv.e} مستواك ${lv.n}: تحجز للـ ${bd} أيام الجاية · شفت واحد باليوم</span></div>
       <div class="sh-leg">${defs.map(d=>`<span><b>${esc(d.name)}</b> ${shRange(d)}</span>`).join('')}</div>
       ${rows||'<div class="lm-empty">ماكو شفتات متاحة هسه</div>'}
       <div class="sh-rules">• تبدي الشفت من زر «بدء الشفت» وإنت داخل عانة · التأخير أكثر من 20 دقيقة: ناقص 5 نقاط<br>• الطلوع قبل نهاية الشفت: ناقص 5 · الغياب بدون تبليغ: ناقص 15<br>• اضغط على شفتك للإلغاء (قبل 24 ساعة) أو التبديل أو «طارئ / مرض» (قبل ساعة)</div>
@@ -20708,6 +20723,7 @@ async function shPoints(){
   await shLoad(true);
   const sh=_lmSheet('shPtsSheet'), pts=Number((shData&&shData.points)==null?100:shData.points), log=(shData&&shData.log)||[];
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    ${shKpiBox(shX&&shX.kpi, true)}
     <div class="sh-big ${pts<70?'low':''}"><b>${pts}</b><span>نقاطك هذا الشهر — كل شهر تبدي 100</span></div>
     <div class="sh-rules">تحت 70: إنذار · تحت 50: إيقاف يومين · تحت 30: فصل</div>
     ${log.length?log.map(x=>`<div class="lm-row"><i>${Number(x.d)<0?'➖':'➕'}</i><div><b>${esc(x.r)}</b><span>${new Date(x.at).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'})}</span></div><em class="sh-d ${Number(x.d)<0?'neg':''}">${Number(x.d)>0?'+':''}${Number(x.d)}</em></div>`).join('')
@@ -20716,7 +20732,24 @@ async function shPoints(){
   requestAnimationFrame(()=>sh.classList.add('on'));
 }
 
+/* ── v472: المرحلة 3 — الأداء والمستويات ── */
+function shKpiBox(k, mine){
+  if(!k) return '';
+  const lv=shLv(k.level), dl=Number(k.deliv||0), dr=Number(k.drops||0), rc=Number(k.rcnt||0), ra=k.rate==null?null:Number(k.rate), cp=k.comp==null?null:Number(k.comp), pts=Number(k.points||0);
+  const ok=(b)=>b?'<i class="y">✓</i>':'<i class="n">✗</i>';
+  const goal = k.level==='gold' ? '' : `<div class="dkp-goal"><b>حتى ${mine?'تصير':'يصير'} 🥇 ذهبي:</b>
+      <span>${ok(pts>=90)} 90 نقطة أو أكثر</span><span>${ok(rc>=5&&ra>=4.8)} تقييم 4.8 أو أكثر</span>
+      <span>${ok(cp==null||cp>=95)} ${mine?'تكمّل':'يكمّل'} 95% من الطلبات</span><span>${ok(dl>=10)} 10 توصيلات بآخر 30 يوم (${dl})</span></div>`;
+  const W=mine?{book:'تحجز شفتاتك',ord:'الطلبات توصلك قبل غيرك',comp:'تكمّل طلباتك'}:{book:'يحجز شفتاته',ord:'الطلبات توصله قبل غيره',comp:'يكمّل طلباته'};
+  return `<div class="dkp lv-${esc(k.level||'silver')}"><div class="dkp-h"><em>${lv.e}</em><div><b>${mine?'مستواك':'المستوى'}: ${lv.n}</b><span>${W.book} قبل ${Number(k.book_days||5)} أيام${k.level==='gold'?' · '+W.ord:''}</span></div></div>
+    <div class="dkp-g"><div><b>${cp==null?'—':cp+'%'}</b><span>${W.comp}${dr?' · انسحب '+dr:''}</span></div>
+      <div><b>${ra==null||!rc?'—':ra.toFixed(1)}</b><span>التقييم${rc?' ('+rc+')':''}</span></div>
+      <div><b>${dl}</b><span>توصيلات · 30 يوم</span></div></div>${goal}</div>`;
+}
+
 /* ── v468: المرحلة 2 — الاستراحة، الإجازة، الطارئ، التبديل ── */
+const SH_LV={gold:{e:'🥇',n:'ذهبي'},silver:{e:'🥈',n:'فضي'},bronze:{e:'🥉',n:'برونزي'}};
+function shLv(k){ return SH_LV[k]||SH_LV.silver }
 function shClock(iso){ return shTime(Math.round(new Date(iso).getTime()/60000+180)) }
 function shBreakOf(sid){ return ((shX&&shX.breaks)||[]).find(b=>b.shift_id===sid) }
 function shMine(sid){ return shMineList().find(m=>m.id===sid) }
@@ -20866,7 +20899,7 @@ function shAdmPaint(){
       else { const late=(now-new Date(r.starts_at).getTime())/60000; st=late>0?'ما بدا — متأخر '+shDur(late):'محجوز'+(r.by_admin?' (إنت)':''); cls=late>20?'bad':late>0?'warn':'' }
       const brk=((_saX&&_saX.breaks)||[]).find(b=>b.shift_id===r.id); if(brk) st+=' · ☕ '+shClock(brk.starts_at)+'–'+shClock(brk.ends_at);
       const canRm = r.status==='booked' || r.status==='absent';
-      return `<div class="sa-r"><div class="sa-av">${esc((r.name||'?').trim().charAt(0))}</div><div class="sa-n"><b>${esc(r.name||'سائق')}</b><span class="${cls}">${st}</span></div>
+      return `<div class="sa-r"><div class="sa-av">${esc((r.name||'?').trim().charAt(0))}</div><div class="sa-n"><b>${esc(r.name||'سائق')} <small>${shLvOf(r.driver)}</small></b><span class="${cls}">${st}</span></div>
         ${r.phone?`<a class="sa-b" href="tel:${esc(r.phone)}" aria-label="اتصال">📞</a>`:''}${canRm?`<button type="button" class="sa-b del" onclick="shAdmRemove('${r.id}')" aria-label="شيل">🗑</button>`:''}</div>`;
     }).join('');
     return `<div class="sa-c ${d.active?'':'off'}"><div class="sa-ch"><b>${esc(d.name)}</b><span>${shRange(d)} · ${rows.length}/${d.cap}${d.active?'':' · مطفي'}</span></div>
@@ -20890,6 +20923,12 @@ function shAdmReqs(){
   lv.filter(l=>l.kind==='leave'&&l.status==='approved').forEach(l=>items.push(`<div class="sa-rq"><i>🏖️</i><div><b>${esc(l.name||'سائق')} — بإجازة ${shDayLbl(l.day,_saData.today)}</b><span>مقبولة</span></div></div>`));
   ab.forEach(a=>items.push(`<div class="sa-rq bad"><i>🚫</i><div><b>${esc(a.name||'سائق')} غاب ${a.n} مرات هذا الشهر</b><span>${a.blocked&&a.until?'موقوف لحد '+new Date(a.until).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'}):'الدليل يگول إيقاف أسبوع'}</span></div>
     ${a.blocked?'':`<button type="button" class="no" onclick="shAdmSuspend('${a.id}')">⛔ إيقاف أسبوع</button>`}</div>`));
+  (X.kpi_bad||[]).forEach(a=>{ const k=a.k||{}, why=[], p=Number(k.points||0);
+    if(p<30) why.push('نقاطه '+p+' (تحت 30 — الدليل يگول فصل)');
+    if(Number(k.rcnt||0)>=10 && Number(k.rate)<4.5) why.push('تقييمه '+Number(k.rate).toFixed(1)+' من آخر '+k.rcnt);
+    if(Number(k.deliv||0)+Number(k.drops||0)>=10 && Number(k.comp)<90) why.push('يكمّل '+k.comp+'% بس من طلباته');
+    items.push(`<div class="sa-rq bad"><i>${shLv(k.level).e}</i><div><b>${esc(a.name||'سائق')}</b><span>${why.join(' · ')}${a.blocked&&a.until?' · موقوف لحد '+new Date(a.until).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'}):''}</span></div>
+      ${a.blocked?'':`<button type="button" class="no" onclick="shAdmSuspend('${a.id}')">⛔ أسبوع</button>`}${p<30?`<button type="button" class="no" onclick="shAdmDismiss('${a.id}')">🚫 فصل</button>`:''}</div>`) });
   em.forEach(a=>items.push(`<div class="sa-rq bad"><i>🤒</i><div><b>${esc(a.name||'سائق')} بلّغ طارئ ${a.n} مرات هذا الشهر</b><span>${a.blocked&&a.until?'موقوف لحد '+new Date(a.until).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'}):'القرار إلك'}</span></div>
     ${a.blocked?'':`<button type="button" class="no" onclick="shAdmSuspend('${a.id}')">⛔ إيقاف أسبوع</button>`}</div>`));
   return items.length?`<div class="sa-c sa-req"><div class="sa-ch"><b>📥 الطلبات والتنبيهات</b><span>${items.length}</span></div>${items.join('')}</div>`:'';
@@ -20903,17 +20942,23 @@ async function shAdmSwap(id,ok){
   try{ await rpc('admin_swap_decide',{p_id:id,p_ok:!!ok}); toast('تم ✓'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
 }
 async function shAdmSuspend(id){
-  const nm=((((_saX&&_saX.absent3)||[]).concat((_saX&&_saX.emerg3)||[])).find(x=>x.id===id)||{}).name||'السائق';
+  const nm=((((_saX&&_saX.absent3)||[]).concat((_saX&&_saX.emerg3)||[],(_saX&&_saX.kpi_bad)||[])).find(x=>x.id===id)||{}).name||'السائق';
   const c=await askConfirm('توقف <b>'+esc(nm)+'</b> أسبوع؟<br>شفتاته بهالأسبوع تنلغي، ويرجع وحده بعد 7 أيام.',{title:'إيقاف',ok:'إي، أوقفه',danger:true}); if(!c) return;
   try{ await rpc('admin_driver_suspend',{p_driver:id,p_days:7}); toast('انوقف أسبوع'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
 }
+async function shAdmDismiss(id){
+  const nm=((((_saX&&_saX.kpi_bad)||[]).find(x=>x.id===id))||{}).name||'السائق';
+  const c=await askConfirm('تفصل <b>'+esc(nm)+'</b>؟<br>حسابه ينسدّ وشفتاته كلها تنلغي. تگدر ترجّعه بعدين من قائمة المستخدمين.',{title:'فصل سائق',ok:'إي، افصله',danger:true}); if(!c) return;
+  try{ await rpc('admin_driver_dismiss',{p_driver:id}); toast('انفصل'); shAdmOpen(_saDay) }catch(e){ toast(errMsg(e)) }
+}
+function shLvOf(id){ return shLv(((_saX&&_saX.levels)||{})[id]).e }
 async function shAdmPick(shift){
   const D=_saData; if(!D) return;
   const booked=new Set((D.rows||[]).map(r=>r.driver));
   const L2=(D.drivers||[]).filter(x=>!booked.has(x.id));
   const sh=_lmSheet('saPick');
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>أضف سائق — ${esc(shDef(shift,D).name)}</b><span>${shDayLbl(D.day,D.today)} · ${shRange(shDef(shift,D))}</span></div>
-    ${L2.length?L2.map(x=>`<div class="lm-row" onclick="shAdmAssign('${x.id}','${shift}')"><i>🛵</i><div><b>${esc(x.name||'سائق')}</b><span>نقاطه ${x.points}</span></div><button type="button">➕</button></div>`).join('')
+    ${L2.length?L2.map(x=>`<div class="lm-row" onclick="shAdmAssign('${x.id}','${shift}')"><i>${shLvOf(x.id)}</i><div><b>${esc(x.name||'سائق')}</b><span>نقاطه ${x.points}</span></div><button type="button">➕</button></div>`).join('')
       :'<div class="lm-empty">كل السواق المعتمدين عندهم شفت بهذا اليوم</div>'}
     <button type="button" class="rs-later" onclick="document.getElementById('saPick').classList.remove('on')">سكّر</button></div>`;
   requestAnimationFrame(()=>sh.classList.add('on'));
@@ -20956,7 +21001,7 @@ function shAdmPoints(){
   const L2=(D.drivers||[]).slice().sort((a,b)=>a.points-b.points);
   const sh=_lmSheet('saPts');
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div><div class="lm-h"><b>⭐ نقاط السواق — هذا الشهر</b><span>كل شهر يبدون بـ 100 · تحت 70 إنذار · تحت 50 إيقاف يومين · تحت 30 فصل</span></div>
-    ${L2.map(x=>`<div class="lm-row" onclick="shAdmDrv('${x.id}')"><i>🛵</i><div><b>${esc(x.name||'سائق')}</b><span>${x.points<30?'تحت 30 — فصل':x.points<50?'تحت 50 — إيقاف يومين':x.points<70?'تحت 70 — إنذار':'تمام'}</span></div><em class="sh-d ${x.points<70?'neg':''}">${x.points}</em></div>`).join('')||'<div class="lm-empty">ماكو سواق معتمدين</div>'}
+    ${L2.map(x=>`<div class="lm-row" onclick="shAdmDrv('${x.id}')"><i>${shLvOf(x.id)}</i><div><b>${esc(x.name||'سائق')}</b><span>${x.points<30?'تحت 30 — فصل':x.points<50?'تحت 50 — إيقاف يومين':x.points<70?'تحت 70 — إنذار':'تمام'}</span></div><em class="sh-d ${x.points<70?'neg':''}">${x.points}</em></div>`).join('')||'<div class="lm-empty">ماكو سواق معتمدين</div>'}
     <button type="button" class="rs-later" onclick="document.getElementById('saPts').classList.remove('on')">سكّر</button></div>`;
   requestAnimationFrame(()=>sh.classList.add('on'));
 }
@@ -20965,6 +21010,7 @@ async function shAdmDrv(id){
   let r=null; try{ r=await rpc('admin_points_log',{p_driver:id}) }catch(e){ return toast(errMsg(e)) }
   const sh=_lmSheet('saDrv'), log=(r&&r.log)||[];
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    ${shKpiBox(r.kpi,false)}
     <div class="sh-big ${r.points<70?'low':''}"><b>${r.points}</b><span>نقاط ${esc(name)} هذا الشهر</span></div>
     <div class="sa-q"><button type="button" onclick="shAdmAdj('${id}',-15,'شكوى زبون')">شكوى زبون −15</button><button type="button" onclick="shAdmAdj('${id}',-10,'إلغاء طلب بعد ما قبله')">إلغاء طلب −10</button></div>
     <div class="sa-dr"><label>نقاط<input type="number" id="saAdjN" placeholder="-5 أو 5"></label><label style="flex:2">السبب<input id="saAdjR" maxlength="200" placeholder="مثال: تأخير بالتوصيل"></label></div>
@@ -22750,12 +22796,12 @@ ${TG_ACC}
 <tr><td>تحت 70</td><td>إنذار</td></tr>
 <tr><td>تحت 50</td><td>إيقاف يومين</td></tr>
 <tr class="r"><td>تحت 30</td><td>فصل</td></tr></table>
-<div class="tgd-box m">🚫 <b>التطبيق يوقف حسابك وحده إذا:</b><ol><li>نسبة الإكمال صارت <b>أقل من <bdi dir="ltr">90%</bdi></b>.</li><li>تقييمك صار <b>أقل من 4.5</b>.</li><li>تأخرت بفلوس التطبيق <b>أكثر من يومين</b>.</li></ol></div>
+<div class="tgd-box m">🚫 <b>حسابك ممكن يتوقف إذا:</b><ol><li>نسبة الإكمال صارت <b>أقل من <bdi dir="ltr">90%</bdi></b>.</li><li>تقييمك صار <b>أقل من 4.5</b>.</li><li>تأخرت بفلوس التطبيق <b>أكثر من يومين</b>.</li></ol></div>
 <div class="tgd-cap">المستويات</div>
 <div class="tgd-cards ic">
-  <div><i>🥇</i><b>ذهبي</b><span>أولوية بالشفتات والطلبات.</span></div>
-  <div><i>🥈</i><b>فضي</b><span>عادي.</span></div>
-  <div><i>🥉</i><b>برونزي</b><span>ياخذ الشفتات الباقية.</span></div>
+  <div><i>🥇</i><b>ذهبي</b><span>90 نقطة، وتقييم 4.8، وتكمّل 95%، و10 توصيلات بالشهر. تحجز شفتك قبل 7 أيام، والطلب يوصلك قبل غيرك.</span></div>
+  <div><i>🥈</i><b>فضي</b><span>70 نقطة وتقييم 4.5. تحجز قبل 5 أيام.</span></div>
+  <div><i>🥉</i><b>برونزي</b><span>أقل من هيچ. تحجز قبل 3 أيام بس.</span></div>
 </div>
 <div class="tgd-box s">التزم أكثر <b>ترتفع لمستوى أعلى</b> وتاخذ طلبات أكثر، والمكافآت تنعلن لاحقاً.</div></div>
 
@@ -27538,7 +27584,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v471', seen={}, n=0, q=[], t=null;
+  var VER='v472', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27790,7 +27836,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v471', t0=Date.now();
+  var VER='v472', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
