@@ -3343,6 +3343,7 @@ html[data-theme=dark] .dkp{background:#1f1a30;border-color:#3a3150}html[data-the
 .dvb-sec .sa-q button.pos{background:#DCFCE7;color:#15803D}
 .dvb-btn{width:100%;height:44px;border-radius:12px;border:0;font:900 14.5px Cairo,Tahoma,sans-serif}.dvb-btn.bad{background:#fff;border:1.5px solid #F1C4C4;color:#B91C1C}.dvb-btn.ok{background:#16A34A;color:#fff}
 html[data-theme=dark] .dvb-r,html[data-theme=dark] .dvb-tools button,html[data-theme=dark] .dvb-chips button{background:#1f1a30;border-color:#3a3150;color:#e9e4f5}
+html[data-theme=dark] .dvb-sec,html[data-theme=dark] .sa-rq{border-top-color:#3a3150}html[data-theme=dark] .dvb-h button,html[data-theme=dark] .dvb-av{background:#2a2340;color:#c4b5fd}html[data-theme=dark] .dvb-av>i{border-color:#1f1a30}html[data-theme=dark] .dvb-act a{background:#2a2340;color:#c4b5fd}html[data-theme=dark] .dvb-act a+a{background:#14532d;color:#bbf7d0}html[data-theme=dark] .dvb-o{background:#3b1d1d;color:#fca5a5}
 html[data-theme=dark] .dvb-tools b{color:#fff}html[data-theme=dark] .dvb-sum div,html[data-theme=dark] .dvb-money div{background:#262036}html[data-theme=dark] .dvb-sr span{color:#e9e4f5}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
@@ -6411,7 +6412,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v475</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v476</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -20921,6 +20922,7 @@ async function shAdmOpen(day){
   if(!s.innerHTML) s.innerHTML='<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ شفتات السواق</b></div><div class="sa-body"><div class="lm-empty">… نحمّل</div></div>';
   const bgToday=new Date(Date.now()+3*3600e3).toISOString().slice(0,10);   /* بغداد UTC+3 */
   try{ const r=await Promise.all([rpc('admin_shift_day',{p_day:day||bgToday}), rpc('admin_shift_extras',{p_day:day||bgToday}).catch(()=>null)]); _saData=r[0]; _saX=r[1] }catch(e){ return toast(errMsg(e)) }
+  if(!_saData){ s.classList.remove('on'); return toast('ما وصلت بيانات الشفتات — جرّب مرة ثانية') }
   _saDay=_saData.day; shAdmPaint();
 }
 function shAdmClose(){ const s=document.getElementById('shAdmSheet'); if(s) s.classList.remove('on') }
@@ -27739,7 +27741,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v475', seen={}, n=0, q=[], t=null;
+  var VER='v476', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -27991,7 +27993,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v475', t0=Date.now();
+  var VER='v476', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
