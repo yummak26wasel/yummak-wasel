@@ -63,6 +63,41 @@ async function driverWave(ids, env) {
   return jres({ ok: true, kind: 'drv', orders: ids.length, checked, devices: msgs.length, sent });
 }
 
+/* ═══ v479: رسائل السيرفر للسواق والمحلات (إيقاف، نقاط، مستوى، جدول الأسبوع انفتح...) ← تلفونه يرن.
+   القاعدة (notif_dispatch_due كل 20 ثانية) تدز أرقام الرسائل. notif_push_check يرجّع المحتوى مرة وحدة بس. */
+async function notePush(ids, env) {
+  const msgs = []; let checked = 0, sent = 0;
+  for (const id of ids) {
+    let info = null;
+    try {
+      const r = await fetch(SB_URL + '/rest/v1/rpc/notif_push_check', {
+        method: 'POST',
+        headers: { apikey: SB_PUB, Authorization: 'Bearer ' + SB_PUB, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ p_id: id })
+      });
+      if (r.ok) info = await r.json();
+    } catch (e) {}
+    if (!info || !UUID_RE.test(String(info.to || ''))) continue;
+    checked++;
+    const L = await env.PUSH.list({ prefix: 'u:' + info.to + ':' });
+    for (const k of L.keys) {
+      const t = await env.PUSH.get(k.name);
+      if (!t) continue;
+      msgs.push({ to: t, title: String(info.title || 'واصل ليمَك').slice(0, 80), body: String(info.body || '').slice(0, 180),
+                  priority: 'high', sound: 'default', data: { url: '/', tag: 'note', type: String(info.type || 'note'), nid: id } });
+    }
+  }
+  for (let i = 0; i < msgs.length; i += 100) {
+    try {
+      const r = await fetch(EXPO_SEND, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+                                         body: JSON.stringify(msgs.slice(i, i + 100)) });
+      const j = await r.json().catch(() => null);
+      ((j && j.data) || []).forEach(t => { if (t && t.status === 'ok') sent++; });
+    } catch (e) {}
+  }
+  return jres({ ok: true, kind: 'note', notes: ids.length, checked, devices: msgs.length, sent });
+}
+
 async function nudge(req, env) {
   if (req.method !== 'POST') return jres({ error: 'POST only' }, 405);
   if (!env.PUSH) return jres({ error: 'kv not bound' }, 500);
@@ -70,6 +105,7 @@ async function nudge(req, env) {
   try { b = await req.json(); } catch (e) {}
   const ids = (Array.isArray(b.ids) ? b.ids : []).map(String).filter(x => UUID_RE.test(x)).slice(0, 20);
   if (b.kind === 'drv') return driverWave(ids, env);
+  if (b.kind === 'note') return notePush(ids, env);
   /* إذا اكو أكثر من طلب لنفس المحل بنفس اللحظة: إشعار واحد «عندك 3 طلبات» بدل 3 إشعارات ورا بعض */
   const byTok = new Map(); let checked = 0, sent = 0;
   for (const id of ids) {
