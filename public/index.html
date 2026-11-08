@@ -3411,6 +3411,53 @@ html[data-theme=dark] .wk2-d,html[data-theme=dark] .wk2-c,html[data-theme=dark] 
 html[data-theme=dark] .wk2-c.mine{background:#2a2340;border-color:#8B5CF6}html[data-theme=dark] .wk2-bar{background:#3a3150}html[data-theme=dark] .wk2-b.mine{background:#2a2340;color:#c4b5fd;border-color:#4a3f6b}
 html[data-theme=dark] .wk2-d.on{background:#6D4AE0;border-color:#6D4AE0}
 html[data-theme=dark] .wk2-ic.am{background:#3a2f12}html[data-theme=dark] .wk2-ic.pm{background:#28264d}html[data-theme=dark] .wk2-ic.fu{background:#123326}
+/* v482 — شاشة شفتات الإدارة بشكل جديد */
+#shAdmSheet .sa-top{border-bottom:0;padding-bottom:6px}
+#shAdmSheet .sa-top>b{font-size:18px}
+#shAdmSheet .sa-t{height:34px;border-radius:12px;background:#F3F0F8;color:#4B2BB0;font-size:12.5px;padding:0 10px}
+.sa2-days{display:flex;gap:7px;overflow-x:auto;padding:4px 12px 12px;background:#fff;scrollbar-width:none;border-bottom:1px solid #ECE8F4;box-shadow:0 4px 10px rgba(31,22,64,.03)}.sa2-days::-webkit-scrollbar{display:none}
+.sa2-days button{flex:none;width:54px;height:62px;border-radius:15px;border:1.5px solid #ECE8F4;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font-family:Cairo,Tahoma,sans-serif;padding:0}
+.sa2-days button small{font-size:10px;font-weight:800;color:#8a83a3;white-space:nowrap}.sa2-days button b{font-size:19px;font-weight:900;color:#1F1640;line-height:1.15}
+.sa2-days button.td{border-color:#CDBDF5}
+.sa2-days button.on{background:#4B2BB0;border-color:#4B2BB0;box-shadow:0 6px 14px rgba(75,43,176,.28)}.sa2-days button.on small{color:rgba(255,255,255,.8)}.sa2-days button.on b{color:#fff}
+.sa2-hero{background:linear-gradient(135deg,#5B35D5 0%,#3F1FA8 100%);border-radius:20px;padding:15px 16px;color:#fff;margin-bottom:12px;box-shadow:0 8px 22px rgba(75,43,176,.22)}
+.sa2-hero>span{font-size:12.5px;font-weight:800;opacity:.85}
+.sa2-hero>b{display:block;font-size:21px;font-weight:900;margin:2px 0 0}
+.sa2-hero>b small{font-size:13px;font-weight:800;opacity:.85}
+.sa2-pb{height:6px;border-radius:6px;background:rgba(255,255,255,.22);margin:10px 0 12px;overflow:hidden}.sa2-pb u{display:block;height:100%;border-radius:6px;background:#FFD166}
+.sa2-st{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.sa2-st div{background:rgba(255,255,255,.13);border-radius:13px;padding:7px 4px;text-align:center}
+.sa2-st b{display:block;font-size:18px;font-weight:900;line-height:1.2}.sa2-st span{font-size:11px;font-weight:800;opacity:.9}
+.sa2-st div.hot{background:rgba(255,120,120,.28)}
+#shAdmSheet .sa2-c{border:1.5px solid #ECE8F4;border-radius:20px;padding:14px;box-shadow:0 2px 10px rgba(31,22,64,.04)}
+.sa2-h{display:flex;align-items:center;gap:11px}
+.sa2-ic{width:44px;height:44px;flex:none;border-radius:14px;display:grid;place-items:center;font-size:21px}.sa2-ic.am{background:#FFF4D6}.sa2-ic.pm{background:#E8E7FF}.sa2-ic.fu{background:#DCFCE7}
+.sa2-m{flex:1;min-width:0;display:flex;flex-direction:column}.sa2-m b{font-size:16px;font-weight:900;color:#1F1640}.sa2-m span{font-size:12px;font-weight:700;color:#6b6580}
+.sa2-m b em{font-style:normal;font-size:11px;font-weight:900;color:#9a93ad;background:#F3F0F8;border-radius:8px;padding:1px 7px;margin-inline-start:4px}
+.sa2-cnt{flex:none;min-width:46px;height:30px;border-radius:15px;display:grid;place-items:center;font-size:13.5px;font-weight:900;padding:0 9px;direction:ltr}
+.sa2-cnt.z{background:#FDECEC;color:#DC2626}.sa2-cnt.p{background:#FFF4E0;color:#C2410C}.sa2-cnt.f{background:#DCFCE7;color:#15803D}
+.sa2-bar{height:5px;border-radius:5px;background:#F1EEF6;overflow:hidden;margin:11px 0 4px}.sa2-bar u{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#8B5CF6,#4B2BB0)}
+#shAdmSheet .sa2-c .sa-r{border-top:0;background:#FAF9FD;border-radius:14px;padding:8px 10px;margin-top:8px}
+#shAdmSheet .sa2-c .sa-av{position:relative;width:38px;height:38px;font-size:15px}
+.sa-av>u{position:absolute;bottom:0;left:0;width:11px;height:11px;border-radius:50%;border:2px solid #FAF9FD;background:#B9B2CC}
+.sa-av>u.ok{background:#16A34A}.sa-av>u.warn{background:#F59E0B}.sa-av>u.bad{background:#DC2626}
+#shAdmSheet .sa2-c .sa-b{width:36px;height:36px;border-radius:12px;background:#fff;border:1.5px solid #ECE8F4}
+#shAdmSheet .sa2-c .sa-b.del{background:#FFF5F5;border-color:#FAD4D4}
+.sa2-e{display:flex;align-items:center;gap:8px;background:#FAF9FD;border-radius:14px;padding:12px;margin-top:8px;font-size:12.5px;font-weight:800;color:#9a93ad}
+.sa2-e i{font-style:normal;font-size:18px}
+#shAdmSheet .sa2-c .sa-add{border:0;background:#F1EBFC;color:#4B2BB0;height:42px;border-radius:13px;margin-top:10px;font-size:13.5px}
+#shAdmSheet .sa2-c.off{opacity:.55}
+#shAdmSheet .sa-req{border-radius:20px;padding:14px}
+#shAdmSheet .wk2-x{margin:2px 2px 8px}
+html[data-theme=dark] .sa2-days{background:#1f1a30;border-color:#2e2742}
+html[data-theme=dark] .sa2-days button{background:#1f1a30;border-color:#3a3150}html[data-theme=dark] .sa2-days button b{color:#fff}html[data-theme=dark] .sa2-days button.on{background:#6D4AE0;border-color:#6D4AE0}html[data-theme=dark] .sa2-days button.td{border-color:#6D4AE0}
+html[data-theme=dark] #shAdmSheet .sa2-c{background:#1f1a30;border-color:#3a3150}html[data-theme=dark] .sa2-m b{color:#fff}html[data-theme=dark] .sa2-m b em{background:#2a2340}
+html[data-theme=dark] #shAdmSheet .sa2-c .sa-r,html[data-theme=dark] .sa2-e{background:#262036}html[data-theme=dark] .sa-av>u{border-color:#262036}
+html[data-theme=dark] #shAdmSheet .sa2-c .sa-b{background:#2a2340;border-color:#3a3150}html[data-theme=dark] #shAdmSheet .sa2-c .sa-b.del{background:#3b1d1d;border-color:#5a2a2a}
+html[data-theme=dark] #shAdmSheet .sa2-c .sa-add,html[data-theme=dark] #shAdmSheet .sa-t{background:#2a2340;color:#c4b5fd}html[data-theme=dark] .sa2-bar{background:#3a3150}
+html[data-theme=dark] .sa2-ic.am{background:#3a2f12}html[data-theme=dark] .sa2-ic.pm{background:#28264d}html[data-theme=dark] .sa2-ic.fu{background:#123326}
+html[data-theme=dark] #shAdmSheet .sa-x{background:#2a2340;color:#fff}html[data-theme=dark] #shAdmSheet .sa2-c .sa-av{background:#2a2340;color:#c4b5fd}html[data-theme=dark] #shAdmSheet .sa-rq button.ok{background:#123326;color:#86efac}html[data-theme=dark] #shAdmSheet .sa-rq button.no{background:#3b1d1d;color:#fca5a5}
+html[data-theme=dark] .sa2-cnt.z{background:#3b1d1d;color:#fca5a5}html[data-theme=dark] .sa2-cnt.p{background:#3a2a12;color:#fdba74}html[data-theme=dark] .sa2-cnt.f{background:#123326;color:#86efac}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6478,7 +6525,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v481</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v482</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -21066,32 +21113,57 @@ function shAdmClose(){ const s=document.getElementById('shAdmSheet'); if(s) s.cl
 function shAdmPaint(){
   const s=_saSheet(), D=_saData; if(!D) return;
   const today=D.today, base=new Date(today+'T12:00:00');
+  const WD=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const ICON={am:['☀️','am'],pm:['🌙','pm'],full:['⚡','fu']};
+  const rel=k=>{ const l=shDayLbl(k,today); return (l==='اليوم'||l==='باچر'||l==='البارحة')?l:'' };
   const chips=[]; for(let i=-1;i<=7;i++){ const d=new Date(base.getTime()+i*864e5), k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    chips.push(`<button type="button" class="${k===D.day?'on':''}" onclick="shAdmOpen('${k}')">${shDayLbl(k,today)}</button>`) }
+    chips.push(`<button type="button" class="${k===D.day?'on':''}${k===today?' td':''}" onclick="shAdmOpen('${k}')"><small>${rel(k)||WD[d.getDay()]}</small><b>${d.getDate()}</b></button>`) }
   const now=Date.now();
+  const stOf=r=>{
+    let st='', cls='';
+    if(r.status==='started'){ st='بدا '+shTime(Math.round(new Date(r.started_at).getTime()/60000+180))+(r.late_min>0?' · متأخر '+shDur(r.late_min):''); cls=r.late_min>20?'warn':'ok' }
+    else if(r.status==='done'){ st='خلص'+(r.early_min>10?' · طلع قبل الوقت بـ '+shDur(r.early_min):''); cls=r.early_min>10?'warn':'' }
+    else if(r.status==='absent'){ st='غياب'; cls='bad' }
+    else { const late=(now-new Date(r.starts_at).getTime())/60000; st=late>0?'ما بدا — متأخر '+shDur(late):'محجوز'+(r.by_admin?' (إنت)':''); cls=late>20?'bad':late>0?'warn':'' }
+    return {st,cls};
+  };
+  /* ملخّص اليوم */
+  const act=(D.defs||[]).filter(d=>d.active), rowsAll=(D.rows||[]);
+  const cap=act.reduce((a,d)=>a+Number(d.cap||0),0), booked=rowsAll.filter(r=>act.some(d=>d.id===r.shift)).length;
+  let nOn=0, nLate=0, nAbs=0; rowsAll.forEach(r=>{ const x=stOf(r); if(r.status==='started') nOn++; if(r.status==='absent') nAbs++; else if(x.cls==='warn'||x.cls==='bad') nLate++ });
+  const dd=new Date(D.day+'T12:00:00'), rl=rel(D.day);
+  const hero=`<div class="sa2-hero"><span>${rl?rl+' · ':''}${WD[dd.getDay()]} ${dd.getDate()}/${dd.getMonth()+1}</span>
+    <b>${booked} <small>من ${cap} أماكن محجوزة</small></b>
+    <div class="sa2-pb"><u style="width:${cap?Math.min(100,Math.round(booked/cap*100)):0}%"></u></div>
+    <div class="sa2-st"><div><b>${nOn}</b><span>🟢 بدوا</span></div><div class="${nLate?'hot':''}"><b>${nLate}</b><span>⏰ متأخرين</span></div><div class="${nAbs?'hot':''}"><b>${nAbs}</b><span>🚫 غياب</span></div></div></div>`;
   const card=(d)=>{
-    const rows=(D.rows||[]).filter(r=>r.shift===d.id);
+    const rows=rowsAll.filter(r=>r.shift===d.id);
     if(!d.active && !rows.length) return '';
+    const ic=ICON[d.id]||['🕘','am'], hrs=Math.round((d.end-d.start)/60), c=Number(d.cap||0), n=rows.length;
     const list=rows.map(r=>{
-      let st='', cls='';
-      if(r.status==='started'){ st='بدا '+shTime(Math.round(new Date(r.started_at).getTime()/60000+180))+(r.late_min>0?' · متأخر '+shDur(r.late_min):''); cls=r.late_min>20?'warn':'ok' }
-      else if(r.status==='done'){ st='خلص'+(r.early_min>10?' · طلع قبل الوقت بـ '+shDur(r.early_min):''); cls=r.early_min>10?'warn':'' }
-      else if(r.status==='absent'){ st='غياب'; cls='bad' }
-      else { const late=(now-new Date(r.starts_at).getTime())/60000; st=late>0?'ما بدا — متأخر '+shDur(late):'محجوز'+(r.by_admin?' (إنت)':''); cls=late>20?'bad':late>0?'warn':'' }
+      let {st,cls}=stOf(r);
       const brk=((_saX&&_saX.breaks)||[]).find(b=>b.shift_id===r.id); if(brk) st+=' · ☕ '+shClock(brk.starts_at)+'–'+shClock(brk.ends_at);
       const canRm = r.status==='booked' || r.status==='absent';
-      return `<div class="sa-r"><div class="sa-av">${esc((r.name||'?').trim().charAt(0))}</div><div class="sa-n"><b>${esc(r.name||'سائق')} <small>${shLvOf(r.driver)}</small></b><span class="${cls}">${st}</span></div>
+      return `<div class="sa-r"><div class="sa-av">${esc((r.name||'?').trim().charAt(0))}<u class="${cls}"></u></div><div class="sa-n"><b>${esc(r.name||'سائق')} <small>${shLvOf(r.driver)}</small></b><span class="${cls}">${st}</span></div>
         ${r.phone?`<a class="sa-b" href="tel:${esc(r.phone)}" aria-label="اتصال">📞</a>`:''}${canRm?`<button type="button" class="sa-b del" onclick="shAdmRemove('${r.id}')" aria-label="شيل">🗑</button>`:''}</div>`;
     }).join('');
-    return `<div class="sa-c ${d.active?'':'off'}"><div class="sa-ch"><b>${esc(d.name)}</b><span>${shRange(d)} · ${rows.length}/${d.cap}${d.active?'':' · مطفي'}</span></div>
-      ${list||'<div class="sa-empty">ماكو أحد بهذا الشفت</div>'}
-      <button type="button" class="sa-add" onclick="shAdmPick('${d.id}')">➕ أضف سائق</button></div>`;
+    return `<div class="sa-c sa2-c ${d.active?'':'off'}">
+      <div class="sa2-h"><div class="sa2-ic ${ic[1]}">${ic[0]}</div>
+        <div class="sa2-m"><b>${esc(d.name)}${d.active?'':' <em>مطفي</em>'}</b><span>${shRange(d)} · ${hrs} ساعات</span></div>
+        <div class="sa2-cnt ${n>=c&&c?'f':n?'p':'z'}">${n}/${c}</div></div>
+      <div class="sa2-bar"><u style="width:${c?Math.min(100,Math.round(n/c*100)):0}%"></u></div>
+      ${list||'<div class="sa2-e"><i>😴</i>ماكو أحد محجوز بعد</div>'}
+      <button type="button" class="sa-add" onclick="shAdmPick('${d.id}')">＋ أضف سائق</button></div>`;
   };
-  s.innerHTML=`<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ الشفتات</b>
+  const sc=s.querySelector('.sa-body'), keep=sc?sc.scrollTop:0, sameDay=s.dataset.day===D.day;
+  s.innerHTML=`<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>الشفتات</b>
       <button class="sa-t" onclick="shAdmTimes()">⚙️ الأوقات</button><button class="sa-t" onclick="shAdmPoints()">⭐ النقاط</button></div>
-    <div class="sa-days">${chips.join('')}</div>
-    <div class="sa-body">${shAdmReqs()}${(D.defs||[]).map(card).join('')}
-      <div class="sh-rules">الطلبات توصل أول للي بشفتهم (الكامل قبل الكل). اللي مو بشفته يوصله الطلب إذا ماكو أحد بشفته فاضي، أو بعد دقيقة ونص — وإذا محد أخذه يرن تلفون كل السواق الفاضين.</div></div>`;
+    <div class="sa-days sa2-days">${chips.join('')}</div>
+    <div class="sa-body">${hero}${shAdmReqs()}${(D.defs||[]).map(card).join('')}
+      <details class="wk2-x"><summary>ℹ️ شلون توصل الطلبات؟</summary><div>الطلبات توصل أول للي بشفتهم (الكامل قبل الكل). اللي مو بشفته يوصله الطلب إذا ماكو أحد بشفته فاضي، أو بعد دقيقة ونص — وإذا محد أخذه يرن تلفون كل السواق الفاضين.</div></details></div>`;
+  s.dataset.day=D.day;
+  if(sameDay){ const nb=s.querySelector('.sa-body'); if(nb) nb.scrollTop=keep }
+  const on=s.querySelector('.sa2-days button.on'); if(on) try{ on.scrollIntoView({inline:'center',block:'nearest'}) }catch(e){}
 }
 function shAdmReqs(){
   const X=_saX; if(!X) return '';
@@ -27878,7 +27950,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v481', seen={}, n=0, q=[], t=null;
+  var VER='v482', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28130,7 +28202,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v481', t0=Date.now();
+  var VER='v482', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
