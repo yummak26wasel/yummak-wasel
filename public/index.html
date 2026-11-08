@@ -3355,6 +3355,27 @@ html[data-theme=dark] .sh-ask{background:#262036;border-color:#3a3150}html[data-
 .sh-wk{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin:14px 0 4px;padding:8px 10px;border-radius:12px;background:#F1EBFC}
 .sh-wk b{font-size:14.5px;font-weight:900;color:#4B2BB0;white-space:nowrap;flex:none}.sh-wk span{font-size:11.5px;font-weight:800;color:#6b6580;text-align:left}.sh-wk.lock{background:#F7F5FB}.sh-wk.lock b{color:#6b6580}
 html[data-theme=dark] .sh-wk{background:#262036}html[data-theme=dark] .sh-wk b{color:#c4b5fd}
+.wkh{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}.wkh b{display:block;font-size:19px;font-weight:900;color:#1F1640}.wkh span{font-size:12.5px;color:#6b6580;font-weight:700}
+.wkh i{font-style:normal;flex:none;font-size:12.5px;font-weight:900;background:#F1EBFC;color:#4B2BB0;border-radius:20px;padding:5px 10px}
+.wkt{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:#F3F0F8;border-radius:14px;padding:4px;margin-bottom:10px}
+.wkt button{height:40px;border:0;border-radius:11px;background:none;font:900 14px Cairo,Tahoma,sans-serif;color:#6b6580;position:relative}
+.wkt button.on{background:#fff;color:#4B2BB0;box-shadow:0 1px 4px rgba(31,22,64,.12)}.wkt u{position:absolute;top:9px;left:14px;width:8px;height:8px;border-radius:50%;background:#F59E0B}
+.wkl{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}.wkl div{background:#FBFAFE;border:1px solid #EEEAF5;border-radius:12px;padding:6px 4px;text-align:center;display:flex;flex-direction:column}
+.wkl b{font-size:13px;font-weight:900;color:#1F1640}.wkl span{font-size:11px;color:#6b6580;font-weight:700;line-height:1.4}
+.wkr{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #F1EEF6}.wkr:last-child{border-bottom:0}
+.wkd{width:62px;flex:none;display:flex;flex-direction:column}.wkd b{font-size:14px;font-weight:900;color:#1F1640}.wkd span{font-size:11.5px;color:#9a93ad;font-weight:700}
+.wkp{flex:1;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.wkc{height:48px;border:1.5px solid #E2DCEE;border-radius:12px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;font-family:Cairo,Tahoma,sans-serif;padding:0}
+.wkc b{font-size:13.5px;font-weight:900;color:#1F1640;line-height:1.3}.wkc i{font-style:normal;font-size:10.5px;font-weight:800;color:#15803D}
+.wkc.dis{background:#FAF9FC;border-color:#F0EDF5}.wkc.dis b{color:#c9c3d8}.wkc.dis i{color:#c9c3d8}
+.wkm{flex:1;height:48px;border:1.5px solid var(--g);border-radius:12px;background:#F1EBFC;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:Cairo,Tahoma,sans-serif}
+.wkm b{font-size:14px;font-weight:900;color:#4B2BB0}.wkm span{font-size:11px;font-weight:800;color:#6b6580}
+.wklock{text-align:center;padding:22px 12px;background:#FBFAFE;border:1.5px dashed #E2DCEE;border-radius:16px;display:flex;flex-direction:column;gap:4px;margin:4px 0 8px}
+.wklock em{font-style:normal;font-size:30px}.wklock b{font-size:14px;font-weight:800;color:#6b6580}.wklock strong{font-size:20px;font-weight:900;color:#4B2BB0}.wklock span{font-size:12px;color:#9a93ad;font-weight:700;line-height:1.6}
+.wkx{margin:12px 0 4px;font-size:12.5px;color:#6b6580}.wkx summary{cursor:pointer;font-weight:900;color:#4B2BB0;padding:6px 0;list-style:none}.wkx summary::-webkit-details-marker{display:none}.wkx div{line-height:1.9;font-weight:700;padding:4px 2px}
+html[data-theme=dark] .wkh b,html[data-theme=dark] .wkd b,html[data-theme=dark] .wkc b,html[data-theme=dark] .wkl b{color:#fff}html[data-theme=dark] .wkt{background:#262036}html[data-theme=dark] .wkt button.on{background:#3a3150;color:#fff}
+html[data-theme=dark] .wkl div,html[data-theme=dark] .wkc,html[data-theme=dark] .wklock{background:#1f1a30;border-color:#3a3150}html[data-theme=dark] .wkm{background:#2a2340}html[data-theme=dark] .wkr{border-bottom-color:#3a3150}
+html[data-theme=dark] .wkc.dis{background:#1a1628}html[data-theme=dark] .wkh i{background:#2a2340;color:#c4b5fd}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6422,7 +6443,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v479</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v480</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -20748,39 +20769,50 @@ async function shWeek(){
   const sh=_lmSheet('shWeekSheet');
   const paint=()=>{
     if(!shData){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; return }
-    const defs=(shData.defs||[]).filter(d=>d.active), now=Date.now();
-    const days=(shData.days||[]).filter(x=>x.day>=shData.today);
+    const defs=(shData.defs||[]).filter(d=>d.active), now=Date.now(), T=shData.today;
     const B=(shX&&shX.book)||null, lv=shLv((B&&B.level)||(shX&&shX.kpi&&shX.kpi.level));
-    const nws=B?B.next_ws:'9999-12-31', nOpen=!B || B.open || Date.now()>=new Date(B.open_at).getTime();
-    const wkLbl=d=>String(Number(String(d).slice(8,10)))+'/'+String(Number(String(d).slice(5,7)));
-    const nEnd=B?new Date(new Date(nws+'T12:00:00').getTime()+6*864e5).toISOString().slice(0,10):nws;
-    let sep1=false, sep2=false;
-    const rows=days.map(x=>{
-      const mine=x.mine, nxt=x.day>=nws, far=nxt && !nOpen;
-      let head='';
-      if(!nxt && !sep1){ sep1=true; head=`<div class="sh-wk"><b>هالأسبوع</b><span>لحد الجمعة</span></div>` }
-      if(nxt && !sep2){ sep2=true; head=`<div class="sh-wk ${far?'lock':''}"><b>الأسبوع الجاي</b><span>${wkLbl(nws)} – ${wkLbl(nEnd)}${far?' · 🔒 ينفتح إلك '+esc(B.label):' · ✓ مفتوح إلك'}</span></div>` }
-      const chips=defs.map(d=>{
-        const taken=Number((x.taken||{})[d.id]||0), left=Math.max(0,Number(d.cap||0)-taken), started=now>=shStartTs(x.day,d.start);
-        if(mine && mine.shift===d.id){
-          if(mine.status!=='booked') return `<div class="shc mine"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span></div>`;
-          return `<button type="button" class="shc mine" onclick="shMineAct('${mine.id}')"><b>${esc(d.name)}</b><span>${shStLbl(mine)}</span><i>خيارات ›</i></button>`;
-        }
-        const dis=!!mine || started || left<=0 || far;
-        return `<button type="button" class="shc${dis?' dis':''}" ${dis?'disabled':''} onclick="shBook('${x.day}','${d.id}')"><b>${esc(d.name)}</b><span>${started?'بدا':left<=0?'ممتلئ':far?'🔒':'باقي '+left}</span></button>`;
-      }).join('');
-      return head+`<div class="shd"><div class="shd-h"><b>${shDayLbl(x.day)}</b></div><div class="shd-c">${chips}</div></div>`;
-    }).join('');
+    const nws=B?B.next_ws:'9999-12-31', nOpen=!B || B.open || now>=new Date(B.open_at).getTime();
+    const dm=d=>String(Number(String(d).slice(8,10)))+'/'+String(Number(String(d).slice(5,7)));
+    const WD=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+    const tmr=new Date(new Date(T+'T12:00:00').getTime()+864e5).toISOString().slice(0,10);
+    const dname=d=>d===T?'اليوم':d===tmr?'باچر':WD[new Date(d+'T12:00:00').getDay()];
+    const all=(shData.days||[]).filter(x=>x.day>=T);
+    const thisW=all.filter(x=>x.day<nws), nextW=all.filter(x=>x.day>=nws);
+    const nextMine=nextW.some(x=>x.mine&&x.mine.status!=='cancelled');
+    if(!window._shWkTab) window._shWkTab = window.__shAskMode==='next' ? 'next' : 'this';
+    const tab=window._shWkTab;
+    const row=x=>{
+      const m=x.mine;
+      const dcol=`<div class="wkd"><b>${dname(x.day)}</b><span>${dm(x.day)}</span></div>`;
+      if(m){ const d=shDef(m.shift);
+        const act=m.status==='booked'?` onclick="shMineAct('${m.id}')"`:'';
+        return `<div class="wkr mine">${dcol}<button type="button" class="wkm"${act}><b>✓ ${esc(d.name)}</b><span>${String(shStLbl(m)).replace(/\s*✓/g,'')}${m.status==='booked'?' · اضغط للخيارات ›':''}</span></button></div>` }
+      const pills=defs.map(d=>{
+        const left=Math.max(0,Number(d.cap||0)-Number((x.taken||{})[d.id]||0)), started=now>=shStartTs(x.day,d.start);
+        const dis=started||left<=0;
+        return `<button type="button" class="wkc${dis?' dis':''}" ${dis?'disabled':''} onclick="shBook('${x.day}','${d.id}')"><b>${esc(d.name)}</b><i>${started?'بدا':left<=0?'ممتلئ':'باقي '+left}</i></button>` }).join('');
+      return `<div class="wkr">${dcol}<div class="wkp">${pills}</div></div>` };
+    let body;
+    if(tab==='next' && !nOpen){
+      body=`<div class="wklock"><em>🔒</em><b>جدول الأسبوع الجاي ينفتح إلك</b><strong>${esc(B.label)}</strong>
+        <span>${dm(nws)} – ${dm(new Date(new Date(nws+'T12:00:00').getTime()+6*864e5).toISOString().slice(0,10))} · اللي مستواه أعلى يحجز قبل · يرن تلفونك لما يجي دورك</span></div>`;
+    }else{
+      const L=tab==='next'?nextW:thisW;
+      body=L.length?L.map(row).join(''):'<div class="lm-empty">ماكو أيام باقية بهالأسبوع</div>';
+    }
+    const head = window.__shAskMode==='next' ? ['📅 الأسبوع الجاي انفتح','اختار شفتاتك للأسبوع كله قبل لا تمتلي']
+               : window.__shAskMode ? ['👋 اختار شفتك','اللي بشفته توصله الطلبات أول'] : ['🗓️ شفتاتي','شفت واحد باليوم'];
     sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
-      ${window.__shAskMode==='next'?'<div class="sh-ask"><b>📅 جدول الأسبوع الجاي انفتح إلك</b><span>اختار شفتاتك للأسبوع كله هسه، قبل لا تمتلي.</span></div>':window.__shAskMode?'<div class="sh-ask"><b>👋 اختار شفتك لهالأسبوع</b><span>ما عندك شفت محجوز. اللي بشفته توصله الطلبات أول.</span></div>':''}
-      <div class="lm-h"><b>🗓️ شفتاتي</b><span>${lv.e} مستواك ${lv.n}: ${B?(nOpen?'جدول الأسبوع الجاي مفتوح إلك':'حجز الأسبوع الجاي ينفتح إلك '+esc(B.label)):''} · شفت واحد باليوم</span></div>
-      <div class="sh-leg">${defs.map(d=>`<span><b>${esc(d.name)}</b> ${shRange(d)}</span>`).join('')}</div>
-      ${rows||'<div class="lm-empty">ماكو شفتات متاحة هسه</div>'}
-      <div class="sh-rules">• تبدي الشفت من زر «بدء الشفت» وإنت داخل عانة · التأخير أكثر من 20 دقيقة: ناقص 5 نقاط<br>• الطلوع قبل نهاية الشفت: ناقص 5 · الغياب بدون تبليغ: ناقص 15<br>• اضغط على شفتك للإلغاء (قبل 24 ساعة) أو التبديل أو «طارئ / مرض» (قبل ساعة)</div>
+      <div class="wkh"><div><b>${head[0]}</b><span>${head[1]}</span></div><i title="مستواك">${lv.e} ${lv.n}</i></div>
+      <div class="wkt"><button type="button" class="${tab==='this'?'on':''}" onclick="window._shWkTab='this';window.__shWeekPaint()">هالأسبوع</button>
+        <button type="button" class="${tab==='next'?'on':''}" onclick="window._shWkTab='next';window.__shWeekPaint()">الأسبوع الجاي ${!nOpen?'🔒':nextMine?'':'<u></u>'}</button></div>
+      <div class="wkl">${defs.map(d=>`<div><b>${esc(d.name)}</b><span>${shTime(d.start)}</span><span>لحد ${shTime(d.end)}</span></div>`).join('')}</div>
+      <div class="wkb">${body}</div>
+      <details class="wkx"><summary>ℹ️ القواعد</summary><div>• تبدي الشفت من زر «بدء الشفت» وإنت داخل عانة<br>• التأخير أكثر من 20 دقيقة: ناقص 5 · الطلوع قبل النهاية: ناقص 5 · الغياب بدون تبليغ: ناقص 15<br>• اضغط على شفتك المحجوز للإلغاء (قبل 24 ساعة) أو التبديل أو «طارئ / مرض» (قبل ساعة)<br>• جدول الأسبوع الجاي: الذهبي الخميس 6 المغرب · الفضي الجمعة 10 الصبح · البرونزي الجمعة 4 العصر</div></details>
       <button type="button" class="rs-later" onclick="document.getElementById('shWeekSheet').classList.remove('on')">سكّر</button></div>`;
   };
   window.__shWeekPaint=()=>{ if(sh.classList.contains('on')) paint() };
-  paint(); requestAnimationFrame(()=>sh.classList.add('on'));
+  window._shWkTab=null; paint(); requestAnimationFrame(()=>sh.classList.add('on'));
   shLoad(true);
 }
 async function shBook(day,id){
@@ -27797,7 +27829,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v479', seen={}, n=0, q=[], t=null;
+  var VER='v480', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28049,7 +28081,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v479', t0=Date.now();
+  var VER='v480', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
