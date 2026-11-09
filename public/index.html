@@ -3711,6 +3711,19 @@ html[data-theme=dark] #dvbSheet .dvb-susp button{background:#3a2216;color:#fdba7
 .io-s{height:44px;border-radius:12px;border:1.5px solid #ECE8F4;background:#fff;display:flex;align-items:center;justify-content:center;font:900 13.5px Cairo,Tahoma,sans-serif;color:#3d3554;text-decoration:none}
 a.io-s{background:#ECFDF3;border-color:#BBF7D0;color:#15803D}
 #chatSheet .och{border:0;padding:0;margin:4px 0 0}#chatSheet .och-l{max-height:46vh;min-height:90px}
+/* v494 — صورة البديل + ملخص التغييرات */
+.pc-im{display:flex;align-items:center;justify-content:center;gap:12px;margin:6px 0 10px}
+.pc-im>div{display:flex;flex-direction:column;align-items:center;gap:3px}.pc-im img,.pc-im i{width:76px;height:76px;border-radius:16px;object-fit:cover;background:#fff;border:1.5px solid #FED7AA;display:grid;place-items:center;font-style:normal;font-size:26px}
+.pc-im .old img,.pc-im .old i{opacity:.45;filter:grayscale(1)}.pc-im .new img,.pc-im .new i{border-color:#16A34A;box-shadow:0 4px 12px rgba(22,163,74,.2)}
+.pc-im span{font-size:11px;font-weight:900;color:#9a93ad}.pc-im .new span{color:#15803D}.pc-im>b{font-size:20px;color:#C2410C}
+.chg{background:#fff;border:1.5px solid #ECE8F4;border-radius:18px;padding:12px;margin:10px 0}
+.chg-h{font-size:14px;font-weight:900;color:#1F1640;margin-bottom:6px}
+.chg-r{display:flex;align-items:center;gap:8px;padding:7px 0;border-top:1px solid #F1EEF6}.chg-r>i{font-style:normal;font-size:15px}
+.chg-r>span{flex:1;min-width:0;display:flex;flex-direction:column}.chg-r b{font-size:13px;font-weight:900;color:#1F1640}.chg-r em{font-style:normal;font-size:11.5px;color:#8a83a3;font-weight:700}
+.chg-r>u{text-decoration:none;font-size:12.5px;font-weight:900;direction:rtl;white-space:nowrap}.chg-r.rm>u{color:#15803D}.chg-r.sb>u{color:#6b6580}
+.chg-t{display:flex;justify-content:space-between;align-items:center;background:#F6F4FA;border-radius:12px;padding:8px 10px;margin-top:6px;font-size:12.5px;font-weight:900;color:#3d3554}
+.chg-n{font-size:12px;font-weight:800;color:#6b6580;margin-top:6px;text-align:center}.chg-n b{color:#4B2BB0}
+.chg-mini{font-size:12px;font-weight:900;color:#9A3412;background:#FFF7ED;border-radius:10px;padding:5px 9px;margin:4px 0}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6778,7 +6791,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v493</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v494</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -13807,7 +13820,7 @@ function renderTrack(){
     <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.1"/></svg></div>
     <div class="tx">عندي مشكلة بالطلب</div><span class="arw">\u2039</span>
   </div>`:''}
-  ${propCardsHTML(o)}${_isMarket((shops||[]).find(s=>s.id===o.shopId))?chatRowHTML(o,'cust'):''}
+  ${propCardsHTML(o)}${changesHTML(o)}${_isMarket((shops||[]).find(s=>s.id===o.shopId))?chatRowHTML(o,'cust'):''}
   <div class="trk-row" onclick="trkToggleDet()">
     <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3.5h12v17l-2.7-1.8-2.8 1.8-2.8-1.8L6 20.5z"/><path d="M9.5 8.5h5M9.5 12.5h5"/></svg></div>
     <div class="tx">تفاصيل الطلب <span style="color:var(--mut);font-weight:700">(${cnt})</span></div>
@@ -13948,6 +13961,7 @@ const TRKI=[
         <span class="opill"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> ${esc(o.addr||'—')}</span> </div>
       <div class="ordbill" onclick="this.nextElementSibling.classList.toggle('on')"> <b>${o.total.toLocaleString()} د.ع <i>›</i></b> <span>الفاتورة <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></span> </div>
       <div class="orditems">
+        ${(o.items||[]).some(i=>i&&(i.gone||i.sub_from))?'<div class="chg-mini">📝 تغيّرت مواد بطلبك — المبلغ صار '+Number(o.total||0).toLocaleString()+' د.ع</div>':''}
         ${(o.items||[]).map(i=>`<div class="oitem"><span>${itNmHTML(i)} × ${i.qty}${itWeighed(i)?' · ⚖️ '+kgTxt(i.aw)+' كغم':''}</span><b>${i.gone?`<s class="itg-n">${itGoneAmt(i).toLocaleString()}</s>`:`${i.kg&&!itWeighed(i)?'≈ ':''}${itLine(i).toLocaleString()}`}</b></div>`).join('')}
         <div class="oitem sep"><span>سعر المنتجات</span><b>${Number(o.sub||0).toLocaleString()}</b></div>
         ${o.serviceFee?`<div class="oitem"><span>رسوم الخدمة</span><b>${Number(o.serviceFee).toLocaleString()}</b></div>`:''}
@@ -15437,6 +15451,16 @@ async function chatSend(oid,me2){
     setTimeout(()=>{ const i2=document.getElementById('och_'+oid); if(i2){ i2.value=''; i2.disabled=false; i2.focus() } },60);
   }catch(e){ toast(errMsg(e)); if(inp) inp.disabled=false }
 }
+function _itImg(o,i){ try{ const sh=(shops||[]).find(s=>s.id===o.shopId); const p=((sh&&sh.products)||[]).find(x=>String(x.id)===String(i.pid)); if(!p) return i.img||''; const z=pSizes(p).find(z=>z.n===i.size); return (z&&z.img)||p.img||i.img||'' }catch(e){ return i.img||'' } }
+/* الزبون: ملخص «شنو تغيّر بطلبك» */
+function changesHTML(o){
+  const its=(o.items||[]).filter(i=>i&&(i.gone||i.sub_from)); if(!its.length) return '';
+  let net=0;
+  const rows=its.map(i=>{ if(i.gone){ const a=itGoneAmt(i); net-=a; return `<div class="chg-r rm"><i>❌</i><span><b>${esc(i.name||'')}</b><em>خلصت وانشالت</em></span><u>− ${a.toLocaleString()}</u></div>` }
+    const q=Math.max(1,Number(i.qty||1)), d=Number(i.price||0)*q-Number(i.sub_from.price||0)*q; net+=d;
+    return `<div class="chg-r sb"><i>🔁</i><span><b>${esc(i.sub_from.name||'')} ← ${esc(i.name||'')}</b><em>${i.prop&&i.prop.status==='ok'?'وافقت على البديل':i.prop&&i.prop.status==='auto_ok'?'انبدلت حسب اختيارك':'انبدلت'}</em></span><u>${d===0?'نفس السعر':(d>0?'+ ':'− ')+Math.abs(d).toLocaleString()}</u></div>` }).join('');
+  return `<div class="chg"><div class="chg-h">📝 تغييرات بطلبك</div>${rows}<div class="chg-t"><span>${net<0?'نقص من حسابك':net>0?'زاد على حسابك':'المبلغ ما تغيّر'}</span><b>${net===0?'':Math.abs(net).toLocaleString()+' د.ع'}</b></div><div class="chg-n">تدفع بس المبلغ الجديد: <b>${Number(o.total||0).toLocaleString()} د.ع</b></div></div>`;
+}
 /* الزبون: كارت الموافقة */
 function propCardsHTML(o){
   const its=(o.items||[]); const P=its.map((i,ix)=>({i,ix})).filter(x=>x.i&&x.i.prop&&x.i.prop.status==='pending');
@@ -15444,6 +15468,7 @@ function propCardsHTML(o){
   return P.map(({i,ix})=>{ const pr=i.prop, q=Math.max(1,Number(i.qty||1)), d=Number(pr.price||0)*q-itLine(i), pref=SUBL[i.sub]?i.sub:'call';
     return `<div class="pc"><div class="pc-h">🛒 المحل يسألك <b data-exp="${esc(pr.exp)}">${_mmss(pr.exp)}</b></div>
       <div class="pc-t">«${esc(i.name||'')}» خلص بالمحل</div>
+      ${(()=>{ const oi=_itImg(o,i), ni=pr.img||''; return (oi||ni)?`<div class="pc-im"><div class="old">${oi?`<img src="${esc(oi)}" alt="">`:'<i>📦</i>'}<span>خلص</span></div><b>←</b><div class="new">${ni?`<img src="${esc(ni)}" alt="">`:'<i>📦</i>'}<span>البديل</span></div></div>`:'' })()}
       <div class="pc-s"><span>يقترحون:</span><b>${esc(pr.name||'')}</b><em>${Number(pr.price||0).toLocaleString()} د.ع${q>1?' × '+q:''} · ${d===0?'نفس السعر':(d>0?'<u class="up">أغلى بـ ':'<u class="dn">أرخص بـ ')+Math.abs(d).toLocaleString()+'</u>'}</em></div>
       ${pr.msg?`<div class="pc-m">«${esc(pr.msg)}»</div>`:''}
       <div class="pc-b"><button type="button" class="ok" onclick="propAnswer('${o.id}',${ix},true)">✅ موافق</button><button type="button" class="no" onclick="propAnswer('${o.id}',${ix},false)">❌ شيلها</button></div>
@@ -28679,7 +28704,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v493', seen={}, n=0, q=[], t=null;
+  var VER='v494', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28931,7 +28956,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v493', t0=Date.now();
+  var VER='v494', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
