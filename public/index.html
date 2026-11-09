@@ -3518,6 +3518,19 @@ html[data-theme=dark] .dvb-hint,html[data-theme=dark] .dvb-info div{background:#
 html[data-theme=dark] .dvb-st button,html[data-theme=dark] .dvb-no{background:#2a2340;color:#c4b5fd}
 html[data-theme=dark] .dvb-susp button{background:#3b1d1d;color:#fca5a5;border-color:#5a2a2a}html[data-theme=dark] .dvb-btn.bad{background:#2a1a1f;color:#fca5a5;border-color:#5a2a2a}html[data-theme=dark] .dvb-btn.ok{background:#123326;color:#86efac;border-color:#1f5a3a}
 html[data-theme=dark] .dvb-note{background:#2a2316;border-color:#5a4520;color:#f3ead6}html[data-theme=dark] .dvb-docs button{background:#262036;border-color:#3a3150;color:#e9e4f5}
+/* v485 — صفحة السايق بتبويبات */
+.dvb-tabs{position:sticky;top:-10px;z-index:3;display:grid;grid-template-columns:repeat(5,1fr);gap:3px;background:#F3F0F8;border-radius:14px;padding:4px;margin:12px 0 10px;box-shadow:0 0 0 6px #fff}
+.dvb-tabs button{height:36px;border:0;border-radius:11px;background:none;font:900 12.5px Cairo,Tahoma,sans-serif;color:#7a7392;position:relative;padding:0}
+.dvb-tabs button.on{background:#fff;color:#4B2BB0;box-shadow:0 1px 4px rgba(31,22,64,.12)}
+.dvb-tabs u{position:absolute;top:6px;left:6px;width:7px;height:7px;border-radius:50%;background:#F59E0B}
+.dvb-off{display:none!important}
+.dvb-tip{margin:-2px 0 8px;font-size:11.5px;line-height:1.7;color:#a39cb8;font-weight:700}
+.dvb-qs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:6px}
+.dvb-qs div{background:#FAF9FD;border:1px solid #F1EEF6;border-radius:13px;padding:8px 2px;text-align:center;display:flex;flex-direction:column;min-width:0}
+.dvb-qs b{font-size:15px;font-weight:900;color:#1F1640;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dvb-qs span{font-size:10.5px;font-weight:800;color:#8a83a3}
+.dvb-pf .dvb-tip{margin-top:8px}
+html[data-theme=dark] .dvb-tabs{background:#262036;box-shadow:0 0 0 6px #1f1a30}html[data-theme=dark] .dvb-tabs button.on{background:#3a3150;color:#fff}
+html[data-theme=dark] .dvb-qs div{background:#262036;border-color:#3a3150}html[data-theme=dark] .dvb-qs b{color:#fff}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6585,7 +6598,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v484</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v485</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -21454,42 +21467,50 @@ async function dvbOpen(id){
   const ph=String(D.phone||''); window._dvbD=D;
   const DOCS=[['idCard','🪪','البطاقة الموحدة'],['resCard','🏠','بطاقة السكن'],['vehDoc','📋','استمارة المركبة'],['license','🚦','رخصة القيادة']].filter(([k])=>D.docs&&D.docs[k]);
   const age=D.dob?dwAge(D.dob):-1;
+  if(window._dvbTabFor!==id){ window._dvbTab='main'; window._dvbTabFor=id }
+  const T=window._dvbTab||'main', k=D.kpi||{}, lv=shLv(k.level||x.level);
+  const pend=(D.leaves||[]).some(l=>l.status==='pending');
+  const tip=t=>`<p class="dvb-tip">${t}</p>`;
+  const sec=(tab,title,right,tp,body)=>`<div class="dvb-sec" data-t="${tab}"><div class="dvb-st"><b>${title}</b>${right||''}</div>${tp?tip(tp):''}${body}</div>`;
+  const TABS=[['main','عام',''],['perf','الأداء',''],['shift','الشفتات',pend?'<u></u>':''],['money','الفلوس',rem>0?'<u></u>':''],['file','الملف','']];
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
     <div class="dvb-ph"><div class="dvb-av big">${D.photo?`<img src="${esc(D.photo)}" alt="">`:esc((D.name||'؟').trim().charAt(0))}<i class="d-${S.c}"></i></div>
       <div><b>${esc(D.name||'سائق')}</b><span class="t-${S.c}">${S.e} ${S.t}</span><span>${esc(dvbDetail(x))}</span>
         <small>${esc(D.vehicle||'')}${D.plate?' · '+esc(D.plate):''} · وياك من ${dvbDate(D.joined)}</small></div></div>
     ${ph?`<div class="dvb-act"><a href="tel:${esc(ph)}">📞 اتصال</a><a href="https://wa.me/${dvbWa(ph)}" target="_blank" rel="noopener">💬 واتساب</a></div>`:''}
-    ${shKpiBox(D.kpi,false)}
-    <div class="dvb-hint">المستوى يتحدد من نقاطه وتقييمه وكم طلب كمّل. 🥇 ذهبي يحجز أسبوع كامل ويشوف الطلبات قبل غيره · 🥈 فضي يحجز 5 أيام · 🥉 برونزي 3 أيام.</div>
-    <div class="dvb-sec"><div class="dvb-st"><b>📝 ملاحظتك الخاصة</b><button type="button" onclick="dvbNoteEdit()">${D.note?'تعديل':'＋ اكتب'}</button></div>
-      <div class="dvb-hint">تكتب أي شي عن السايق حتى تتذكره. هو ما يشوفها أبداً. مثلاً: «ممتاز بالليل، يتأخر الصبح».</div>
-      <div id="dvbNoteBox">${D.note?`<div class="dvb-note">${esc(D.note)}<small>آخر تعديل ${dvbDate(D.note_at)}</small></div>`:'<div class="dvb-none">ما كتبت شي بعد</div>'}</div></div>
-    <div class="dvb-sec"><div class="dvb-st"><b>🗓️ الشفتات</b><button type="button" onclick="_shClose('dvbSheet');shAdmOpen()">الجدول ›</button></div>
-      <div class="dvb-hint">شفتاته الجاية، وآخر أسبوع: منو حضر، منو تأخر، منو غاب.</div>
-      ${up.length?up.map(shRow).join(''):'<div class="dvb-none">ما عنده شفتات جاية</div>'}
-      ${past.length?'<div class="dvb-sub">آخر أسبوع</div>'+past.map(shRow).join(''):''}</div>
-    ${(D.leaves||[]).length?`<div class="dvb-sec"><div class="dvb-st"><b>🏖️ الإجازات</b></div><div class="dvb-hint">إله 5 إجازات بالشهر. الطوارئ (مرض أو ظرف) ما تنحسب منها.</div>${D.leaves.map(l=>`<div class="dvb-sr"><b>${shDayLbl(l.day,today)}</b><span>${l.kind==='emergency'?'🤒 طارئ':'🏖️ إجازة'}${l.note?' · '+esc(l.note):''}</span><em>${l.status==='pending'?'تنتظر موافقتك':'مقبولة'}</em></div>`).join('')}</div>`:''}
-    <div class="dvb-sec"><div class="dvb-st"><b>⭐ النقاط: ${D.points}</b><span>هذا الشهر</span></div>
-      <div class="dvb-hint">كل شهر يبدي بـ 100 نقطة. تنقص بالتأخير والغياب والشكاوي، وتزيد بالمكافأة. تحت 70 يوصله تحذير، وتحت 50 ينوقف يومين وحده.</div>
-      <div id="dvbPtsBox"><div class="sa-q"><button type="button" onclick="dvbAdj('${id}',-15,'شكوى زبون')">شكوى زبون −15</button><button type="button" onclick="dvbAdj('${id}',-5,'تأخير بالتوصيل')">تأخير −5</button><button type="button" class="pos" onclick="dvbAdj('${id}',5,'مكافأة')">مكافأة +5</button></div>
-        <button type="button" class="dvb-cus" onclick="dvbPtsForm()">✏️ رقم ثاني وسبب تكتبه إنت</button></div>
-      ${(D.log||[]).slice(0,6).map(l=>`<div class="dvb-sr"><b class="${Number(l.d)<0?'neg':'pos'}">${Number(l.d)>0?'+':''}${l.d}</b><span>${esc(l.r)}</span><em>${dvbDate(l.at)}</em></div>`).join('')||'<div class="dvb-none">ما انخصم منه شي هذا الشهر 👏</div>'}</div>
-    <div class="dvb-sec"><div class="dvb-st"><b>💰 الفلوس</b><button type="button" onclick="_shClose('dvbSheet');window._dvbFrom=true;openDrOne('${id}')">دفعاته ›</button></div>
-      <div class="dvb-hint">شكد عليه للتطبيق من الطلبات، شكد دفع، وشكد باقي بذمته.</div>
-      <div class="dvb-money"><div><span>المطلوب</span><b>${due.toLocaleString()}</b></div><div class="g"><span>اندفع</span><b>${paid.toLocaleString()}</b></div><div class="${rem>0?'r':'g'}"><span>الباقي</span><b>${rem.toLocaleString()}</b></div></div></div>
-    <div class="dvb-sec"><div class="dvb-st"><b>📄 الوثائق</b>${age>=0?`<span>العمر ${age} سنة</span>`:''}</div>
-      <div class="dvb-hint">الوثائق اللي دزّها وقت التسجيل. تضغط عليها تنفتح وتتأكد منها.</div>
-      ${DOCS.length||(D.docs&&D.docs.vehImg)?`<div class="dvb-docs">${DOCS.map(([k,e,t])=>`<button type="button" onclick="viewDoc('${esc(D.docs[k])}')"><i>${e}</i>${t}</button>`).join('')}${D.docs&&D.docs.vehImg?`<button type="button" onclick="viewPhoto('${esc(D.docs.vehImg)}')"><i>${D.vehicle==='سيارة'?'🚗':'🛵'}</i>صورة المركبة</button>`:''}</div>`:'<div class="dvb-none">ما دزّ وثائق وقت التسجيل</div>'}</div>
-    <div class="dvb-sec"><div class="dvb-st"><b>✏️ معلوماته</b><button type="button" onclick="dvbInfoEdit()">تعديل</button></div>
-      <div class="dvb-hint">إذا بدّل رقمه أو مركبته، صلّحها هنا. الرقم الجديد يطلع للزبون والمحل. رقم الدخول للتطبيق يبقى نفسه.</div>
-      <div id="dvbInfoBox"><div class="dvb-info"><div><span>الاسم</span><b>${esc(D.name||'—')}</b></div><div><span>الرقم</span><b dir="ltr">${esc(ph||'—')}</b></div>
-        <div><span>المركبة</span><b>${esc(String(D.vehicle||'—').replace(/^🛵\s*/,''))}</b></div><div><span>رقم اللوحة</span><b>${esc(D.plate||'—')}</b></div></div></div></div>
-    <div class="dvb-sec"><div class="dvb-st"><b>⚙️ التحكم</b></div>
-      <div class="dvb-hint">الإيقاف: ما يگدر ياخذ طلبات بهالمدة وشفتاته تنلغي، ويرجع وحده بعدها. الفصل: ينسد حسابه لحد ما إنت ترجّعه.</div>
-      ${D.blocked?`<button type="button" class="dvb-btn ok" onclick="dvbUnblock('${id}')">✅ رجّعه يشتغل</button>`
+    <div class="dvb-tabs">${TABS.map(([t,n,dot])=>`<button type="button" data-k="${t}" class="${t===T?'on':''}" onclick="dvbTab('${t}')">${n}${dot}</button>`).join('')}</div>
+    <div class="dvb-qs" data-t="main"><div><b>${lv.e} ${lv.n}</b><span>المستوى</span></div><div><b>${D.points}</b><span>النقاط</span></div>
+      <div><b>${k.rate==null||!k.rcnt?'—':Number(k.rate).toFixed(1)}</b><span>التقييم</span></div><div><b>${Number(D.week_deliv||0)}</b><span>طلب · 7 أيام</span></div></div>
+    ${sec('main','📝 ملاحظتك الخاصة',`<button type="button" onclick="dvbNoteEdit()">${D.note?'تعديل':'＋ اكتب'}</button>`,'تكتبها إنت حتى تتذكر — السايق ما يشوفها.',
+      `<div id="dvbNoteBox">${D.note?`<div class="dvb-note">${esc(D.note)}<small>آخر تعديل ${dvbDate(D.note_at)}</small></div>`:'<div class="dvb-none">ما كتبت شي بعد</div>'}</div>`)}
+    ${sec('main','⚙️ التحكم','','الإيقاف يرجع وحده بعد المدة · الفصل يبقى لحد ما ترجّعه.',
+      D.blocked?`<button type="button" class="dvb-btn ok" onclick="dvbUnblock('${id}')">✅ رجّعه يشتغل</button>`
         :`<div class="dvb-susp"><span>⛔ إيقاف:</span><button type="button" onclick="dvbSusp('${id}',1)">يوم</button><button type="button" onclick="dvbSusp('${id}',2)">يومين</button><button type="button" onclick="dvbSusp('${id}',7)">أسبوع</button></div>
-          <button type="button" class="dvb-btn bad" onclick="dvbDismiss('${id}')">🚫 فصل</button>`}</div>
+          <button type="button" class="dvb-btn bad" onclick="dvbDismiss('${id}')">🚫 فصل</button>`)}
+    <div data-t="perf" class="dvb-pf">${shKpiBox(D.kpi,false)}${tip('المستوى يتحدد من النقاط والتقييم وكم طلب كمّل. الأعلى يحجز أيام أكثر.')}</div>
+    ${sec('perf','⭐ النقاط: '+D.points,'<span>هذا الشهر</span>','تبدي 100 كل شهر · تحت 70 تحذير · تحت 50 إيقاف يومين وحده.',
+      `<div id="dvbPtsBox"><div class="sa-q"><button type="button" onclick="dvbAdj('${id}',-15,'شكوى زبون')">شكوى زبون −15</button><button type="button" onclick="dvbAdj('${id}',-5,'تأخير بالتوصيل')">تأخير −5</button><button type="button" class="pos" onclick="dvbAdj('${id}',5,'مكافأة')">مكافأة +5</button></div>
+        <button type="button" class="dvb-cus" onclick="dvbPtsForm()">✏️ رقم ثاني وسبب تكتبه إنت</button></div>
+      ${(D.log||[]).slice(0,8).map(l=>`<div class="dvb-sr"><b class="${Number(l.d)<0?'neg':'pos'}">${Number(l.d)>0?'+':''}${l.d}</b><span>${esc(l.r)}</span><em>${dvbDate(l.at)}</em></div>`).join('')||'<div class="dvb-none">ما انخصم منه شي هذا الشهر 👏</div>'}`)}
+    ${sec('shift','🗓️ الشفتات',`<button type="button" onclick="_shClose('dvbSheet');shAdmOpen()">الجدول ›</button>`,'الجاية، وآخر أسبوع: حضر، تأخر، غاب.',
+      (up.length?up.map(shRow).join(''):'<div class="dvb-none">ما عنده شفتات جاية</div>')+(past.length?'<div class="dvb-sub">آخر أسبوع</div>'+past.map(shRow).join(''):''))}
+    ${sec('shift','🏖️ الإجازات','','5 بالشهر · الطوارئ ما تنحسب منها.',
+      (D.leaves||[]).length?D.leaves.map(l=>`<div class="dvb-sr"><b>${shDayLbl(l.day,today)}</b><span>${l.kind==='emergency'?'🤒 طارئ':'🏖️ إجازة'}${l.note?' · '+esc(l.note):''}</span><em>${l.status==='pending'?'تنتظر موافقتك':'مقبولة'}</em></div>`).join(''):'<div class="dvb-none">ما عنده إجازات</div>')}
+    ${sec('money','💰 الفلوس',`<button type="button" onclick="_shClose('dvbSheet');window._dvbFrom=true;openDrOne('${id}')">دفعاته ›</button>`,'شكد عليه للتطبيق، شكد دفع، وشكد باقي.',
+      `<div class="dvb-money"><div><span>المطلوب</span><b>${due.toLocaleString()}</b></div><div class="g"><span>اندفع</span><b>${paid.toLocaleString()}</b></div><div class="${rem>0?'r':'g'}"><span>الباقي</span><b>${rem.toLocaleString()}</b></div></div>`)}
+    ${sec('file','✏️ معلوماته','<button type="button" onclick="dvbInfoEdit()">تعديل</button>','إذا بدّل رقمه أو مركبته صلّحها هنا · رقم الدخول ما يتغيّر.',
+      `<div id="dvbInfoBox"><div class="dvb-info"><div><span>الاسم</span><b>${esc(D.name||'—')}</b></div><div><span>الرقم</span><b dir="ltr">${esc(ph||'—')}</b></div>
+        <div><span>المركبة</span><b>${esc(String(D.vehicle||'—').replace(/^🛵\s*/,''))}</b></div><div><span>رقم اللوحة</span><b>${esc(D.plate||'—')}</b></div></div></div>`)}
+    ${sec('file','📄 الوثائق',age>=0?`<span>العمر ${age} سنة</span>`:'','اللي دزّها وقت التسجيل · اضغط عليها تنفتح.',
+      DOCS.length||(D.docs&&D.docs.vehImg)?`<div class="dvb-docs">${DOCS.map(([kk,e,t])=>`<button type="button" onclick="viewDoc('${esc(D.docs[kk])}')"><i>${e}</i>${t}</button>`).join('')}${D.docs&&D.docs.vehImg?`<button type="button" onclick="viewPhoto('${esc(D.docs.vehImg)}')"><i>${/سيارة/.test(D.vehicle||'')?'🚗':'🛵'}</i>صورة المركبة</button>`:''}</div>`:'<div class="dvb-none">ما دزّ وثائق وقت التسجيل</div>')}
     <button type="button" class="rs-later" onclick="_shClose('dvbSheet')">سكّر</button></div>`;
+  dvbTab(T,true);
+}
+function dvbTab(t,keep){
+  window._dvbTab=t; const sh=document.getElementById('dvbSheet'); if(!sh) return;
+  sh.querySelectorAll('.dvb-tabs button').forEach(b=>b.classList.toggle('on',b.dataset.k===t));
+  sh.querySelectorAll('[data-t]').forEach(e=>e.classList.toggle('dvb-off',e.dataset.t!==t));
+  if(!keep){ const sc=sh.querySelector('.spds-in'), tb=sh.querySelector('.dvb-tabs'); if(sc&&tb&&sc.scrollTop>tb.offsetTop-6) sc.scrollTop=tb.offsetTop-6 }
 }
 async function dvbAdj(id,n,reason){
   const ok=await askConfirm((n<0?'تخصم ':'تضيف ')+'<b>'+Math.abs(n)+'</b> نقطة؟<br>السبب: '+esc(reason),{title:'النقاط',ok:'إي',danger:n<0}); if(!ok) return;
@@ -28169,7 +28190,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v484', seen={}, n=0, q=[], t=null;
+  var VER='v485', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28421,7 +28442,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v484', t0=Date.now();
+  var VER='v485', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
