@@ -3787,6 +3787,7 @@ a.io-s{background:#ECFDF3;border-color:#BBF7D0;color:#15803D}
 .iw2-tm{font-size:12.5px;font-weight:900;color:#C2410C;background:#FFF7ED;border-radius:9px;padding:2px 7px;direction:ltr}
 .iw2>button{width:100%;margin-top:7px;height:30px;border:0;border-radius:9px;background:#F6F4FA;color:#6b6580;font:800 12px Cairo,Tahoma,sans-serif}
 .io-row.pd{font-size:11.5px}
+.szadd.szcl{background:#EDEAF3!important;color:#8a83a3!important;box-shadow:none!important;justify-content:center!important;font:900 14.5px Cairo,Tahoma,sans-serif}
 .jck{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.jck>span{font-size:12px;font-weight:900;border-radius:9px;padding:3px 9px}.jck>span.y{background:#ECFDF3;color:#15803D}.jck>span.n{background:#FEF2F2;color:#B91C1C}
 .jck-n{margin-top:7px;font-size:12px;font-weight:700;color:#8a5a00;background:#FFF7E6;border-radius:10px;padding:7px 10px;line-height:1.7}
 html[data-theme=dark] .jck>span.y{background:#123524}html[data-theme=dark] .jck>span.n{background:#3a1717}html[data-theme=dark] .jck-n{background:#3a2a10;color:#f5d38a}
@@ -6897,7 +6898,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v501</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v502</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -12492,6 +12493,7 @@ function prodPH(){
    : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M5.5 8h13l1 12.5h-15z"/><path d="M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8"/></svg>';
 }
 function prodCtl(p){
+  if(curShop && !isOpenNow(curShop)) return '';   /* v502: المحل مسكّر — ماكو زر إضافة (مثل التطبيقات العالمية) */
   if(pNA(p)) return `<span class="ost-b dis">${_isMarket(curShop)?'نفذ':'غير متوفر'}</span>`;
   if(pHasChoice(p)){
     const n=cart.filter(x=>x.pid===p.id&&x.shopId===curShop.id).reduce((a,x)=>a+x.qty,0);
@@ -12660,10 +12662,10 @@ function szSheetPaint(){
         :`<div class="szo szo-z${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()">${(x.img||p.img)&&z.some(y=>y.img)?`<img class="szo-im" src="${esc(x.img||p.img)}" alt="">`:''}<div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr">${N(x.p)} د.ع</em><i class="rd"></i></div>`).join('')}</div>`:''}
     ${ops.length?`<div class="szg"><div class="szgt">الإضافات <i class="opt">اختياري</i></div>
       ${ops.map((o,i)=>{const pr=parseInt(o.p)||0; return `<div class="szo${_szOpt.includes(i)?' on':''}" onclick="szTogOpt(${i})"><div><b>${esc(o.n)}</b><span>${pr?'<bdi dir="ltr">+'+N(pr)+'</bdi> د.ع':'مجاني'}</span></div><i class="ck"></i></div>`}).join('')}</div>`:''}
-    <div class="szbar">
+    ${(curShop && !isOpenNow(curShop)) ? `<div class="szbar"><button class="szadd szcl" type="button" disabled>المحل مسكّر — ${esc(String(nextOpenTxt(curShop)||'').replace(/<[^>]*>/g,' '))}</button></div>` : `<div class="szbar">
       <div class="szqty"><button class="pl" onclick="szQty(1)" aria-label="زيادة">+</button><span>${_szQ}</span><button onclick="szQty(-1)" aria-label="نقصان">−</button></div>
       <button class="szadd" onclick="szConfirm()"><span>إضافة</span><b>${pKgW(p)?'≈ ':''}${N(unit*_szQ)} د.ع</b></button>
-    </div>
+    </div>`}
   </div>`;
   el.classList.add('on');
   if(_st){ const nc=el.querySelector('.szcard'); if(nc) nc.scrollTop=_st }
@@ -13082,6 +13084,7 @@ function upsellGroups(){
   const out={dr:[],ot:[]};
   if(!cart.length) return out;
   const sh=(shops||[]).find(s=>s.id===cart[0].shopId); if(!sh) return out;
+  if(!isOpenNow(sh)) return out;   /* v502 */
   const inCart=new Set(cart.map(c=>String(c.pid)));
   const DR=/مشروب|عصير|عصائر|بارد|غازي|مياه|ماء|بيبسي|پيبسي|كولا|سفن|ميرندا|فانتا|لبن|شنينة|شاي|قهوة|كابتشينو|drink|juice|soda|pepsi|cola|7up|water/i;
   const SD=/مقبلات|جانبي|فرايز|فراي|بطاطا|بطاطس|صوص|سلطة|حلويات|حلى|اضافات|إضافات|side|fries|sauce|dessert/i;
@@ -28875,7 +28878,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v501', seen={}, n=0, q=[], t=null;
+  var VER='v502', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29127,7 +29130,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v501', t0=Date.now();
+  var VER='v502', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
