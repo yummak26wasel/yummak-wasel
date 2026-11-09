@@ -3672,6 +3672,33 @@ html[data-theme=dark] #dvbSheet .dvb-susp button{background:#3a2216;color:#fdba7
 .io-r span{flex:1;min-width:0;display:flex;flex-direction:column}.io-r b{font-size:13.5px;font-weight:900;color:#1F1640}.io-r em{font-style:normal;font-size:12px;font-weight:800;color:#6b6580}
 .io-r.over{opacity:.45}
 #ioSheet{z-index:9990}
+/* v492 — موافقة البديل + رسائل */
+.io-row.wait{background:#FFF7ED;border-radius:10px;padding:5px 8px;font-size:12px;font-weight:800;color:#9A3412;justify-content:space-between}
+.io-row.wait b{direction:ltr;display:inline-block;min-width:34px}
+.io-row.wait button{border-color:#FED7AA;background:#fff;color:#9A3412}
+.io-row.pd{font-size:12px;font-weight:900;color:#6b6580}.io-row.pd.ok,.io-row.pd.auto_ok{color:#15803D}.io-row.pd.no,.io-row.pd.auto_no{color:#B91C1C}.io-row.pd.expired{color:#C2410C}
+.io-b.ms{background:#fff;border-color:#ECE8F4;color:#3d3554}
+.io-r em u{text-decoration:none;font-weight:900}.io-r em u.up{color:#C2410C}.io-r em u.dn{color:#15803D}
+.och{background:#fff;border:1.5px solid #ECE8F4;border-radius:18px;padding:12px;margin:12px 0}
+.och-h{font-size:14px;font-weight:900;color:#1F1640;margin-bottom:8px}
+.och-l{display:flex;flex-direction:column;gap:6px;max-height:240px;overflow:auto}
+.och-m{max-width:82%;align-self:flex-end;background:#F3F0F8;border-radius:14px 14px 14px 4px;padding:7px 10px}
+.och-m.me{align-self:flex-start;background:#4B2BB0;color:#fff;border-radius:14px 14px 4px 14px}
+.och-m p{margin:0;font-size:13.5px;font-weight:700;line-height:1.6;word-break:break-word}.och-m span{display:block;font-size:10.5px;opacity:.7;margin-top:1px}
+.och-e{font-size:12px;color:#a39cb8;font-weight:700;text-align:center;padding:6px}
+.och-in{display:flex;gap:6px;margin-top:8px}.och-in input{flex:1;min-width:0;height:42px;border:1.5px solid #E2DCEE;border-radius:12px;padding:0 12px;font:700 14px Cairo,Tahoma,sans-serif;background:#fff;color:inherit}
+.och-in button{height:42px;padding:0 16px;border:0;border-radius:12px;background:#4B2BB0;color:#fff;font:900 13.5px Cairo,Tahoma,sans-serif}
+.pc{background:linear-gradient(135deg,#FFF7ED,#FFFBF5);border:2px solid #FDBA74;border-radius:20px;padding:14px;margin:10px 0;box-shadow:0 6px 18px rgba(234,88,12,.12)}
+.pc-h{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:900;color:#9A3412}.pc-h b{direction:ltr;background:#fff;border-radius:10px;padding:1px 9px;color:#C2410C}
+.pc-t{font-size:16px;font-weight:900;color:#1F1640;margin:6px 0}
+.pc-s{background:#fff;border-radius:14px;padding:9px 11px;display:flex;flex-direction:column;gap:1px}.pc-s span{font-size:11.5px;color:#8a83a3;font-weight:800}.pc-s b{font-size:15px;font-weight:900;color:#4B2BB0}.pc-s em{font-style:normal;font-size:12.5px;font-weight:800;color:#6b6580}
+.pc-m{font-size:13px;font-weight:800;color:#3d3554;margin-top:8px}
+.pc-b{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.pc-b button{height:46px;border-radius:14px;border:0;font:900 15px Cairo,Tahoma,sans-serif}.pc-b .ok{background:#16A34A;color:#fff}.pc-b .no{background:#fff;color:#B91C1C;border:1.5px solid #FECACA}
+.pc-n{font-size:11.5px;color:#9A3412;font-weight:700;margin-top:7px;text-align:center}
+.io-row.wait{flex-direction:column;align-items:flex-start;gap:3px;width:100%;box-sizing:border-box}.io-row.wait>b{font-size:12.5px;font-weight:900}.io-row.wait>span{font-size:11.5px;font-weight:700;color:#7a7392;line-height:1.5}.iw-a{display:flex;gap:6px;align-items:center}
+.io-row.wait i{font-style:normal;direction:ltr;background:#fff;border-radius:9px;padding:2px 8px;font-weight:900;color:#C2410C;font-size:13px}
+.pc-s em u{text-decoration:none;font-weight:900}.pc-s em u.up{color:#C2410C}.pc-s em u.dn{color:#15803D}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6739,7 +6766,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v491</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v492</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -13762,6 +13789,7 @@ function renderTrack(){
     <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.1"/></svg></div>
     <div class="tx">عندي مشكلة بالطلب</div><span class="arw">\u2039</span>
   </div>`:''}
+  ${propCardsHTML(o)}${_isMarket((shops||[]).find(s=>s.id===o.shopId))?chatHTML(o,'cust'):''}
   <div class="trk-row" onclick="trkToggleDet()">
     <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3.5h12v17l-2.7-1.8-2.8 1.8-2.8-1.8L6 20.5z"/><path d="M9.5 8.5h5M9.5 12.5h5"/></svg></div>
     <div class="tx">تفاصيل الطلب <span style="color:var(--mut);font-weight:700">(${cnt})</span></div>
@@ -15191,6 +15219,7 @@ function renderOrdDet(){
       </div>`;
     }).join('')}
 
+    ${_isMarket(myShopDoc)?chatHTML(o,'shop'):''}
     <div class="odt-sum">
       <div class="odt-sr"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/></svg><span>مجموع الأصناف</span><b>${sub.toLocaleString()} د.ع</b></div>
       <div class="odt-sr"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.6 7h11v9.5h-11z"/><path d="M13.6 10.5h4l2.8 3v3h-6.8z"/><circle cx="6.6" cy="18" r="1.7"/><circle cx="17" cy="18" r="1.7"/></svg><span>رسوم خدمة التوصيل</span><b>${dlv.toLocaleString()} د.ع</b></div>
@@ -15343,15 +15372,65 @@ function kgCollect(){
 }
 document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'||t.id==='pp')&&pfKg.on) kgPrev() });
 
+/* ═══ v492: اقتراح بديل (الزبون يوافق أو يرفض) + رسائل بين المحل والزبون ═══ */
+function _chatOf(o){ const c=o&&(o.shop_chat||o.shopChat); return Array.isArray(c)?c:[] }
+function _chatOpen(o){ return o && ['pending','accepted','ready'].includes(o.status) && !o.picked_at && !o.pickedAt }
+function _mmss(exp){ const ms=new Date(exp).getTime()-Date.now(); if(!(ms>0)) return 'هسه'; const s=Math.ceil(ms/1000); return Math.floor(s/60)+':'+String(s%60).padStart(2,'0') }
+setInterval(()=>{ try{ document.querySelectorAll('[data-exp]').forEach(e=>{ e.textContent=_mmss(e.dataset.exp) }) }catch(e){} },1000);
+const PROP_DONE={ok:'✅ الزبون وافق على البديل',no:'❌ الزبون رفض — انشالت',auto_ok:'⏱ ما جاوب — انبدلت حسب اختياره',auto_no:'⏱ ما جاوب — انشالت',expired:'⚠️ الزبون ما جاوب — اتصل بيه',cancel:''};
+function chatHTML(o,me2){
+  const L=_chatOf(o), open=_chatOpen(o); if(!L.length && !open) return '';
+  return `<div class="och"><div class="och-h">💬 رسائل ${me2==='shop'?'ويا الزبون':'ويا المحل'}</div>
+    <div class="och-l">${L.map(m=>`<div class="och-m ${m.f===me2?'me':''}"><p>${esc(m.t||'')}</p><span>${(()=>{ try{ return new Date(m.at).toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit'}) }catch(e){ return '' } })()}</span></div>`).join('')||`<div class="och-e">${me2==='shop'?'اكتب للزبون إذا تحتاج تسأله شي':'إذا تحتاج تگول للمحل شي اكتبه هنا'}</div>`}</div>
+    ${open?`<div class="och-in"><input id="och_${esc(String(o.id))}" maxlength="200" placeholder="اكتب رسالة…" onkeydown="if(event.key==='Enter')chatSend('${o.id}','${me2}')"><button type="button" onclick="chatSend('${o.id}','${me2}')">إرسال</button></div>`:''}</div>`;
+}
+async function chatSend(oid,me2){
+  const inp=document.getElementById('och_'+oid); const t=((inp||{}).value||'').trim(); if(!t) return;
+  if(inp){ inp.disabled=true }
+  try{
+    const r=await rpc('order_chat_send',{p_order:oid,p_text:t})||{};
+    const L=(me2==='shop'?(myOrders||[]):(myOrders||[])).find(x=>x.id===oid);
+    if(L){ const c=_chatOf(L).slice(); c.push({f:me2,t,at:new Date().toISOString()}); L.shop_chat=c }
+    const no=r.order_no?(' #'+r.order_no):'';
+    if(me2==='shop'){ if(r.customer) pushTo(r.customer,'💬 رسالة من المحل'+no, t, {type:'status', order_id:String(oid)}) }
+    else { const d={type:'status', order_id:String(oid)}; try{ if(r.owner) __sendPush({user_id:r.owner},'💬 رسالة من الزبون'+no,t,d); if(r.shop) __sendPush({shop_staff:r.shop},'💬 رسالة من الزبون'+no,t,d) }catch(e){} }
+    if(me2==='shop'){ try{ renderOrdDet() }catch(_){} } else { try{ renderTrack() }catch(_){} }
+    setTimeout(()=>{ const i2=document.getElementById('och_'+oid); if(i2) i2.focus() },50);
+  }catch(e){ toast(errMsg(e)); if(inp) inp.disabled=false }
+}
+/* الزبون: كارت الموافقة */
+function propCardsHTML(o){
+  const its=(o.items||[]); const P=its.map((i,ix)=>({i,ix})).filter(x=>x.i&&x.i.prop&&x.i.prop.status==='pending');
+  if(!P.length) return '';
+  return P.map(({i,ix})=>{ const pr=i.prop, q=Math.max(1,Number(i.qty||1)), d=Number(pr.price||0)*q-itLine(i), pref=SUBL[i.sub]?i.sub:'call';
+    return `<div class="pc"><div class="pc-h">🛒 المحل يسألك <b data-exp="${esc(pr.exp)}">${_mmss(pr.exp)}</b></div>
+      <div class="pc-t">«${esc(i.name||'')}» خلص بالمحل</div>
+      <div class="pc-s"><span>يقترحون:</span><b>${esc(pr.name||'')}</b><em>${Number(pr.price||0).toLocaleString()} د.ع${q>1?' × '+q:''} · ${d===0?'نفس السعر':(d>0?'<u class="up">أغلى بـ ':'<u class="dn">أرخص بـ ')+Math.abs(d).toLocaleString()+'</u>'}</em></div>
+      ${pr.msg?`<div class="pc-m">«${esc(pr.msg)}»</div>`:''}
+      <div class="pc-b"><button type="button" class="ok" onclick="propAnswer('${o.id}',${ix},true)">✅ موافق</button><button type="button" class="no" onclick="propAnswer('${o.id}',${ix},false)">❌ شيلها</button></div>
+      <div class="pc-n">إذا ما جاوبت: ${pref==='similar'?'يتبدّل (مثل ما اخترت بالسلة)':'ينشال من طلبك'}</div></div>` }).join('');
+}
+async function propAnswer(oid,ix,ok){
+  try{
+    const r=await rpc('cust_item_answer',{p_order:oid,p_idx:ix,p_accept:ok})||{};
+    const t=ok?'✅ الزبون وافق على البديل':'❌ الزبون رفض البديل', b=(r.name?'«'+r.name+'» ':'')+(ok?'← «'+(r.new_name||'')+'»':'انشال من الطلب')+(r.order_no?' · طلب #'+r.order_no:''), d={type:'status', order_id:String(oid)};
+    try{ if(r.owner) __sendPush({user_id:r.owner},t,b,d); if(r.shop) __sendPush({shop_staff:r.shop},t,b,d) }catch(e){}
+    const o=(myOrders||[]).find(x=>x.id===oid); if(o){ const i=(o.items||[])[ix]; if(i){ i.prop={...(i.prop||{}),status:ok?'ok':'no'}; if(ok){ i.sub_from={name:i.name,price:i.price}; i.name=r.new_name||i.name } else i.gone=true } if(r.total!=null) o.total=Number(r.total); if(r.items_total!=null) o.sub=Number(r.items_total) }
+    toast(ok?'تمام — انبدلت ✓':'انشالت من طلبك ✓'); try{ renderTrack() }catch(_){}
+  }catch(e){ toast(errMsg(e)) }
+}
 /* ═══ v491: مادة خلصت وقت التجهيز — تنشال أو تتبدّل حسب اختيار الزبون (سوبرماركت وكوزمتك) ═══ */
 function _ioCan(o){ return _isMarket(myShopDoc) && ['pending','accepted','ready'].includes(o.status) && !o.picked_at }
 function ioRowHTML(o,ix,i){
-  if(i.gone) return '<div class="io-row gone">✕ خلص وانشال من الطلب</div>';
-  if(i.sub_from) return `<div class="io-row sb">🔁 بدل «${esc(i.sub_from.name||'')}» (${Number(i.sub_from.price||0).toLocaleString()} د.ع)</div>`;
-  if(!_ioCan(o)) return '';
+  const pst=i.prop&&i.prop.status, pdone=pst&&PROP_DONE[pst]?`<div class="io-row pd ${pst}">${PROP_DONE[pst]}</div>`:'';
+  if(i.gone) return '<div class="io-row gone">✕ خلص وانشال من الطلب</div>'+pdone;
+  if(i.sub_from) return `<div class="io-row sb">🔁 بدل «${esc(i.sub_from.name||'')}» (${Number(i.sub_from.price||0).toLocaleString()} د.ع)</div>`+pdone;
+  if(pst==='pending') return `<div class="io-row wait"><b>⏳ ننتظر جواب الزبون</b><span>اقترحت: ${esc(i.prop.name||'')}</span><div class="iw-a"><i data-exp="${esc(i.prop.exp)}">${_mmss(i.prop.exp)}</i><button type="button" onclick="ioCancel(${ix})">إلغاء</button></div></div>`;
+  if(!_ioCan(o)) return pdone;
   const k=SUBL[i.sub]?i.sub:'call';
-  return `<div class="io-row"><span class="io-pf ${k}">إذا خلص: ${SUBL[k]}</span><button type="button" onclick="ioOpen(${ix})">خلص؟</button></div>`;
+  return pdone+`<div class="io-row"><span class="io-pf ${k}">إذا خلص: ${SUBL[k]}</span><button type="button" onclick="ioOpen(${ix})">خلص؟</button></div>`;
 }
+async function ioCancel(ix){ try{ await rpc('shop_item_prop_cancel',{p_order:_odId,p_idx:ix}); const o=(myOrders||[]).find(x=>x.id===_odId); if(o&&o.items[ix]&&o.items[ix].prop) o.items[ix].prop.status='cancel'; toast('انلغى الاقتراح'); try{ renderOrdDet() }catch(_){} }catch(e){ toast(errMsg(e)) } }
 let _io=null;
 function ioClose(){ const el=document.getElementById('ioSheet'); if(el) el.classList.remove('on'); _io=null }
 function _ioSheet(){ let el=document.getElementById('ioSheet'); if(!el){ el=document.createElement('div'); el.id='ioSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) ioClose() }); document.body.appendChild(el) } return el }
@@ -15364,15 +15443,17 @@ function ioOpen(ix){
   el.innerHTML=`<div class="wgcard"><button class="wgx" onclick="ioClose()" aria-label="سكّر">×</button>
     <h3>«${esc(i.name||'')}» خلص؟ <small>×${Number(i.qty||1)}</small></h3>
     <div class="io-pr ${k}">الزبون اختار: <b>${SUBL[k]}</b></div>
-    ${k==='call'&&ph?`<a class="io-call" href="tel:${esc(ph)}">📞 اتصل بالزبون واسأله</a>`:''}
+    ${ph?`<a class="io-call" href="tel:${esc(ph)}">📞 اتصل بالزبون</a>`:''}
     <label class="io-mk"><input type="checkbox" id="ioMk" checked> خلّي «${esc(i.name||'')}» «نفذ» بالقائمة</label>
     <button type="button" class="io-b rm" onclick="ioDo('remove')"><b>❌ شيلها من الطلب</b><span>المبلغ ينقص ${itLine(i).toLocaleString()} د.ع</span></button>
-    ${k!=='remove'&&!i.kg?`<button type="button" class="io-b sb" onclick="ioPick()"><b>🔁 بدّلها بمادة ثانية</b><span>تختار من قائمتك — لحد ربع أغلى من الأصلي</span></button>`:''}
+    ${!i.kg?`<button type="button" class="io-b sb" onclick="ioPick()"><b>🔁 اقترح بديل على الزبون</b><span>الزبون يوافق أو يرفض بالتطبيق — إذا ما جاوب 5 دقايق: ${k==='similar'?'يتبدّل':'ينشال'}</span></button>`:''}
+    <button type="button" class="io-b ms" onclick="ioClose();setTimeout(()=>{ const e=document.getElementById('och_${esc(String(o.id))}'); if(e){ e.scrollIntoView({block:'center'}); e.focus() } },200)"><b>💬 اكتب للزبون</b><span>رسالة قصيرة يشوفها بالتطبيق</span></button>
   </div>`;
   el.classList.add('on');
 }
 function ioPick(){
   const o=(myOrders||[]).find(x=>x&&_io&&x.id===_io.oid); if(!o) return; const i=(o.items||[])[_io.ix]; if(!i) return;
+  const _mkEl=document.getElementById('ioMk'); if(_mkEl) _io.mk=_mkEl.checked!==false;
   const q=Math.max(1,Number(i.qty||1)), cap=Math.ceil(itLine(i)*1.25), P=(myShopDoc&&myShopDoc.products)||[];
   const orig=P.find(p=>String(p.id)===String(i.pid)), cat=orig&&orig.cat;
   let rows=[];
@@ -15385,16 +15466,23 @@ function ioPick(){
   rows=rows.slice(0,40); _io.rows=rows;
   const el=_ioSheet();
   el.innerHTML=`<div class="wgcard"><button class="wgx" onclick="ioOpen(${_io.ix})" aria-label="رجوع">›</button>
-    <h3>بديل لـ «${esc(i.name||'')}»</h3><p class="wg-h">السعر الأصلي ${Number(i.price||0).toLocaleString()} د.ع للواحد — المواد اللي من نفس القسم فوگ</p>
+    <h3>بديل لـ «${esc(i.name||'')}»</h3><p class="wg-h">السعر الأصلي ${Number(i.price||0).toLocaleString()} د.ع للواحد — الزبون يوافق أو يرفض</p>
+    <input class="wg-in" id="ioMsg" maxlength="160" placeholder="رسالة ويا الاقتراح (اختياري) — مثال: عدنا بس الحجم الكبير" value="${esc(_io.msg||'')}" oninput="_io.msg=this.value">
     <input class="wg-in" id="ioQ" type="search" placeholder="ابحث بقائمتك…" value="${esc(_io.q||'')}" oninput="_io.q=this.value;ioPick();setTimeout(()=>{const e=document.getElementById('ioQ');if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length)}},0)">
-    <div class="io-l">${rows.map((r,k)=>{ const over=r.price*q>cap; return `<button type="button" class="io-r${over?' over':''}" ${over?'disabled':''} onclick="ioPickGo(${k})">${r.img?`<img src="${esc(r.img)}" alt="">`:'<i>📦</i>'}<span><b>${esc(r.name)}</b><em>${r.price.toLocaleString()} د.ع${over?' · أغلى هواية':''}</em></span></button>` }).join('')||'<div class="lm-empty">ماكو مواد مطابقة</div>'}</div>
+    <div class="io-l">${rows.map((r,k)=>{ const d=r.price*q-itLine(i); return `<button type="button" class="io-r" onclick="ioPickGo(${k})">${r.img?`<img src="${esc(r.img)}" alt="">`:'<i>📦</i>'}<span><b>${esc(r.name)}</b><em>${r.price.toLocaleString()} د.ع · ${d===0?'نفس السعر':(d>0?'<u class="up">أغلى بـ ':'<u class="dn">أرخص بـ ')+Math.abs(d).toLocaleString()+'</u>'}</em></span></button>` }).join('')||'<div class="lm-empty">ماكو مواد مطابقة</div>'}</div>
   </div>`;
 }
 async function ioPickGo(k){
-  const r=_io&&_io.rows&&_io.rows[k]; if(!r) return; const o=(myOrders||[]).find(x=>x.id===_io.oid); const i=o&&(o.items||[])[_io.ix]; if(!i) return;
-  const q=Math.max(1,Number(i.qty||1)), d=r.price*q-itLine(i);
-  const ok=await askConfirm('تبدّل <b>«'+esc(i.name||'')+'»</b> بـ <b>«'+esc(r.name)+'»</b>؟<div style="margin-top:8px;font-size:13px">'+(d===0?'نفس السعر':(d>0?'المبلغ يزيد ':'المبلغ ينقص ')+Math.abs(d).toLocaleString()+' د.ع')+' — الزبون يوصله إشعار.</div>',{title:'🔁 بديل',ok:'إي، بدّل'}); if(!ok) return;
-  ioDo('replace', r.pid, r.size);
+  const r=_io&&_io.rows&&_io.rows[k]; if(!r||_io.busy) return; const o=(myOrders||[]).find(x=>x.id===_io.oid); const i=o&&(o.items||[])[_io.ix]; if(!i) return;
+  const msg=((document.getElementById('ioMsg')||{}).value||_io.msg||'').trim(), mk=_io.mk!==false;
+  _io.busy=true;
+  try{
+    const res=await rpc('shop_item_propose',{p_order:o.id,p_idx:_io.ix,p_pid:r.pid,p_size:r.size||null,p_msg:msg||null,p_mark_out:mk})||{};
+    const cu=res.customer||o.customerUid;
+    if(cu) pushTo(cu,'🛒 المحل يسألك عن بديل','«'+(i.name||'')+'» خلص — يقترحون «'+(res.new_name||r.name)+'» بـ '+Number(res.price||r.price).toLocaleString()+' د.ع. وافق أو ارفض خلال 5 دقايق', {type:'status', order_id:String(o.id)});
+    i.prop={pid:r.pid,size:r.size||null,name:res.new_name||r.name,price:res.price||r.price,msg:msg||null,status:'pending',exp:res.exp||new Date(Date.now()+300000).toISOString()};
+    toast('انرسل الاقتراح ✓ — ننتظر الزبون'); ioClose(); try{ renderOrdDet() }catch(_){}
+  }catch(e){ toast(errMsg(e)); if(_io) _io.busy=false }
 }
 async function ioDo(act,pid,size){
   if(!_io||_io.busy) return; const o=(myOrders||[]).find(x=>x.id===_io.oid); const i=o&&(o.items||[])[_io.ix]; if(!i) return ioClose();
@@ -15494,6 +15582,7 @@ async function setStatus(id,st){
   }
   let _prep=null;
   if(st==='accepted'){ _prep=await prepPick(); if(!_prep) return false; }
+  if(st==='ready'){ const _op=(myOrders||[]).find(x=>x.id===id); if(((_op&&_op.items)||[]).some(i=>i&&i.prop&&i.prop.status==='pending')){ toast('أكو بديل ينتظر جواب الزبون — انتظر شوية أو اتصل بيه'); return false } }
   if(st==='ready'){   /* v381: أغراض بالوزن ما انوزنت */
     const _ow=(myOrders||[]).find(x=>x.id===id), _nw=((_ow&&_ow.items)||[]).filter(i=>i&&i.kg&&!itWeighed(i)).length;
     if(_nw){ const go=await askConfirm('بالطلب '+_nw+' صنف بالوزن ما كتبت وزنه.<div style="margin-top:6px;font-size:13px">إذا تكمّل، الزبون يدفع السعر التقريبي. الأفضل اكتب الوزن وصوّر الميزان أول.</div>',{title:'⚖️ الوزن',ok:'كمّل بالتقريبي'}); if(!go) return false; }
@@ -28553,7 +28642,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v491', seen={}, n=0, q=[], t=null;
+  var VER='v492', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28805,7 +28894,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v491', t0=Date.now();
+  var VER='v492', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
