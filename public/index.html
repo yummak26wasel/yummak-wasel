@@ -3458,6 +3458,47 @@ html[data-theme=dark] #shAdmSheet .sa2-c .sa-add,html[data-theme=dark] #shAdmShe
 html[data-theme=dark] .sa2-ic.am{background:#3a2f12}html[data-theme=dark] .sa2-ic.pm{background:#28264d}html[data-theme=dark] .sa2-ic.fu{background:#123326}
 html[data-theme=dark] #shAdmSheet .sa-x{background:#2a2340;color:#fff}html[data-theme=dark] #shAdmSheet .sa2-c .sa-av{background:#2a2340;color:#c4b5fd}html[data-theme=dark] #shAdmSheet .sa-rq button.ok{background:#123326;color:#86efac}html[data-theme=dark] #shAdmSheet .sa-rq button.no{background:#3b1d1d;color:#fca5a5}
 html[data-theme=dark] .sa2-cnt.z{background:#3b1d1d;color:#fca5a5}html[data-theme=dark] .sa2-cnt.p{background:#3a2a12;color:#fdba74}html[data-theme=dark] .sa2-cnt.f{background:#123326;color:#86efac}
+/* v483 — رسالة للسواق + ترتيب + إعطاء طلب */
+.dbc-h{display:flex;align-items:center;gap:12px;margin:4px 0 14px}.dbc-h>i{font-style:normal;width:48px;height:48px;border-radius:15px;background:#F1EBFC;display:grid;place-items:center;font-size:24px;flex:none}
+.dbc-h b{display:block;font-size:17px;font-weight:900;color:#1F1640}.dbc-h span{font-size:12px;color:#6b6580;font-weight:700}
+.dbc-q{display:flex;flex-direction:column;gap:6px;margin-bottom:10px}
+.dbc-q button{text-align:right;border:1.5px solid #ECE8F4;background:#FAF9FD;border-radius:12px;padding:9px 12px;font:800 13px Cairo,Tahoma,sans-serif;color:#3d3554}
+.dbc-t{width:100%;box-sizing:border-box;border:1.5px solid #E2DCEE;border-radius:14px;padding:10px 12px;font:700 14.5px Cairo,Tahoma,sans-serif;resize:none;background:#fff;color:inherit}
+.dbc-t:focus{outline:0;border-color:#8B5CF6}
+.dbc-f{display:flex;align-items:center;justify-content:space-between;margin:8px 0 14px}.dbc-f span{font-size:12px;color:#9a93ad;font-weight:800;direction:ltr}
+.dbc-go{height:44px;padding:0 22px;border:0;border-radius:13px;background:#4B2BB0;color:#fff;font:900 15px Cairo,Tahoma,sans-serif;box-shadow:0 4px 12px rgba(75,43,176,.28)}.dbc-go:disabled{opacity:.6}
+.dbc-st{font-size:13px;font-weight:900;color:#6b6580;margin:4px 2px 6px}
+.dbc-r{border-top:1px solid #F1EEF6;padding:9px 2px}.dbc-r p{margin:0;font-size:13.5px;font-weight:800;color:#1F1640;line-height:1.6}.dbc-r span{font-size:11.5px;color:#9a93ad;font-weight:700}
+.sh-bc{display:flex;align-items:flex-start;gap:10px;background:linear-gradient(135deg,#5B35D5,#3F1FA8);color:#fff;border-radius:18px;padding:12px;margin:0 0 10px;box-shadow:0 6px 16px rgba(75,43,176,.22)}
+.sh-bc>i{font-style:normal;font-size:22px;flex:none}.sh-bc>div{flex:1;min-width:0}.sh-bc b{display:block;font-size:11.5px;font-weight:800;opacity:.85}.sh-bc span{display:block;font-size:14.5px;font-weight:900;line-height:1.6;word-break:break-word}
+.sh-bc button{flex:none;width:30px;height:30px;border:0;border-radius:10px;background:rgba(255,255,255,.18);color:#fff;font-size:13px}
+.drk-pod{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;align-items:end;margin:4px 0 12px}
+.drk-pod button{border:1.5px solid #ECE8F4;background:#fff;border-radius:18px;padding:12px 4px 10px;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:Cairo,Tahoma,sans-serif;min-width:0}
+.drk-pod button.p1{order:2;padding-top:18px;border-color:#F5C542;background:linear-gradient(180deg,#FFF8E1,#fff);box-shadow:0 6px 16px rgba(245,197,66,.25)}.drk-pod button.p2{order:1}.drk-pod button.p3{order:3}
+html[dir=rtl] .drk-pod button.p2{order:1}html[dir=rtl] .drk-pod button.p3{order:3}
+.drk-pod i{font-style:normal;font-size:24px;line-height:1}.drk-pod b{font-size:13.5px;font-weight:900;color:#1F1640;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.drk-pod span{font-size:11.5px;font-weight:800;color:#6b6580}
+.drk-av{width:42px;height:42px;border-radius:50%;background:#F1EBFC;color:#4B2BB0;display:grid;place-items:center;font-weight:900;font-size:17px;flex:none}
+.drk-none{text-align:center;font-size:13px;font-weight:800;color:#9a93ad;background:#FAF9FD;border-radius:14px;padding:14px;margin-bottom:10px}
+.drk-r{width:100%;display:flex;align-items:center;gap:10px;border:0;border-top:1px solid #F1EEF6;background:none;padding:10px 2px;text-align:right;font-family:Cairo,Tahoma,sans-serif}
+.drk-r>u{text-decoration:none;width:26px;flex:none;text-align:center;font-size:15px;font-weight:900;color:#9a93ad}.drk-r .drk-av{width:38px;height:38px;font-size:15px}
+.drk-r>div:not(.drk-av){flex:1;min-width:0;display:flex;flex-direction:column}.drk-r b{font-size:14.5px;font-weight:900;color:#1F1640}.drk-r span{font-size:12px;font-weight:700;color:#6b6580}.drk-r span b{font-size:12.5px;color:#4B2BB0}
+.drk-lv{font-size:10.5px;font-weight:900;border-radius:8px;padding:1px 7px;vertical-align:middle;background:#F1EEF6;color:#6b6580}.drk-lv.gold{background:#FFF4D6;color:#A16207}.drk-lv.bronze{background:#FBEADF;color:#9A3412}
+html[data-theme=dark] .drk-lv{background:#2a2340;color:#c4b5fd}html[data-theme=dark] .drk-lv.gold{background:#3a2f12;color:#fcd34d}html[data-theme=dark] .drk-lv.bronze{background:#3a2216;color:#fdba74}
+.drk-r em{font-style:normal;font-size:11.5px;font-weight:800;color:#DC2626}.drk-r>i{font-style:normal;color:#c4bdd6;font-size:18px}
+#aoSheet .aobtn.asg{background:#4B2BB0;color:#fff;box-shadow:0 4px 12px rgba(75,43,176,.25)}#aoSheet .aobtn.asg+.aobtn.rel{margin-top:8px}
+.aoa-l{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.aoa-r{display:flex;align-items:center;gap:10px;border:1.5px solid #ECE8F4;background:#fff;border-radius:16px;padding:10px;text-align:right;font-family:Cairo,Tahoma,sans-serif;width:100%}
+.aoa-r.dis{opacity:.45}.aoa-r>div:not(.aoa-av){flex:1;min-width:0;display:flex;flex-direction:column}
+.aoa-r b{font-size:14.5px;font-weight:900;color:#1F1640}.aoa-r span{font-size:12px;font-weight:800}.aoa-r em{font-style:normal;font-size:11.5px;color:#8a83a3;font-weight:700}
+.aoa-r>u{text-decoration:none;flex:none;height:34px;padding:0 12px;border-radius:11px;background:#F1EBFC;color:#4B2BB0;font-size:13px;font-weight:900;display:grid;place-items:center}
+.aoa-av{position:relative;width:40px;height:40px;border-radius:50%;background:#F1EBFC;color:#4B2BB0;display:grid;place-items:center;font-weight:900;font-size:16px;flex:none}
+.aoa-av>i{position:absolute;bottom:0;left:0;width:11px;height:11px;border-radius:50%;border:2px solid #fff;background:#B9B2CC}
+.aoa-av>i.d-g,.aoa-av>i.d-g2{background:#16A34A}.aoa-av>i.d-b{background:#2563EB}.aoa-av>i.d-y{background:#F59E0B}.aoa-av>i.d-r{background:#DC2626}
+.aoa-n{font-size:11.5px;color:#9a93ad;font-weight:700;text-align:center;margin:12px 0 4px}
+html[data-theme=dark] .dbc-h b,html[data-theme=dark] .dbc-r p,html[data-theme=dark] .drk-pod b,html[data-theme=dark] .drk-r b,html[data-theme=dark] .aoa-r b{color:#fff}
+html[data-theme=dark] .dbc-h>i,html[data-theme=dark] .drk-av,html[data-theme=dark] .aoa-av,html[data-theme=dark] .aoa-r>u{background:#2a2340;color:#c4b5fd}
+html[data-theme=dark] .dbc-q button,html[data-theme=dark] .dbc-t,html[data-theme=dark] .drk-pod button,html[data-theme=dark] .aoa-r,html[data-theme=dark] .drk-none{background:#262036;border-color:#3a3150;color:#e9e4f5}
+html[data-theme=dark] .drk-pod button.p1{background:#3a2f12;border-color:#8a6d1a}html[data-theme=dark] .dbc-r,html[data-theme=dark] .drk-r{border-top-color:#3a3150}html[data-theme=dark] .aoa-av>i{border-color:#262036}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6525,7 +6566,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v482</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v483</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -20675,7 +20716,8 @@ function aoOpen(id){
       <div class="tt"><span>المجموع</span><b>${n(o.total)} د.ع</b></div>
     </div>
     ${o.cancel_reason?`<div class="aoreason">سبب الإلغاء: ${esc(o.cancel_reason==='timeout'?'المحل ما رد خلال نص ساعة':o.cancel_reason)}</div>`:''}
-    ${canRel?`<button class="aobtn rel" onclick="aoRelease('${o.id}')">↩️ سحب الطلب من السائق ورجّعه لكل السواق</button>`:''}
+    ${o.status==='ready' && !o.driverUid?`<button class="aobtn asg" onclick="aoAssign('${o.id}')">🎯 أعطيه لسائق معيّن</button>`:''}
+    ${canRel?`<button class="aobtn asg" onclick="aoAssign('${o.id}')">🔁 نقله لسائق ثاني</button><button class="aobtn rel" onclick="aoRelease('${o.id}')">↩️ سحب الطلب من السائق ورجّعه لكل السواق</button>`:''}
     ${o.status==='ontheway'||o.status==='arrived'?`<div class="aonote">السائق استلم الأكل من المحل — ما ينسحب منه. اتصل بيه إذا اكو مشكلة.</div>`:''}
     ${active?`<div class="aocan"><b>إلغاء الطلب</b>
       <div class="aochips">${R.map(r=>`<button type="button" onclick="document.getElementById('aoWhy').value='${r}'">${r}</button>`).join('')}</div>
@@ -20716,6 +20758,37 @@ async function aoRelease(id){
     o.status='ready'; o.driverUid=null; o.driverName=null; o.driverPhone=null;
     toast('انسحب الطلب ورجع لكل السواق ✓'); aoClose(); renderAdmin();
   }catch(e){ toast(/function|schema|Could not find/i.test(errMsg(e))?'شغّل admin_orders_ctl.sql أول':errMsg(e)) }
+}
+/* ═══ v483: الإدارة تعطي الطلب لسائق معيّن ═══ */
+async function aoAssign(id){
+  const o=(allOrders||[]).find(x=>String(x.id)===String(id)); if(!o) return;
+  const box=document.getElementById('aoBox'); if(!box) return;
+  box.innerHTML='<div class="lm-empty">… نجيب السواق</div>';
+  let L=[]; try{ L=await rpc('admin_drivers_board',{}); _dvb=L; _dvbAt=Date.now() }catch(e){ toast(errMsg(e)); return aoOpen(id) }
+  const ORD={shift:1,online:2,break:3,off:4,busy:5,blocked:6};
+  L=(L||[]).filter(x=>x.id!==o.driverUid).sort((a,b)=>(ORD[a.st]||9)-(ORD[b.st]||9) || String(a.name||'').localeCompare(String(b.name||''),'ar'));
+  const row=x=>{ const S=DVB_ST[x.st]||DVB_ST.off, dis=x.st==='busy'||x.st==='blocked';
+    const why=dvbDetail(x);
+    return `<button type="button" class="aoa-r ${dis?'dis':''}" ${dis?'disabled':''} onclick="aoAssignGo('${o.id}','${x.id}')">
+      <div class="aoa-av">${esc((x.name||'؟').trim().charAt(0))}<i class="d-${S.c}"></i></div>
+      <div><b>${esc(x.name||'سائق')} <small>${shLv(x.level).e}</small></b><span class="t-${S.c}">${S.e} ${S.t}</span><em>${esc(why)}${Number(x.today_deliv)>0?' · وصّل اليوم '+x.today_deliv:''}</em></div>${dis?'':'<u>اختار</u>'}</button>` };
+  box.innerHTML=`<div class="aoh"><div><b>${o.driverUid?'🔁 نقل':'🎯 مين ياخذ'} طلب #${esc(ONO(o))}؟</b><span>${esc(o.shopName||'')}${o.addr?' ← '+esc(o.addr):''}</span></div><button class="aox" onclick="aoOpen('${o.id}')" aria-label="رجوع">›</button></div>
+    ${o.driverUid?`<div class="aonote">هسه عند <b>${esc(o.driverName||'سائق')}</b> — يوصله إشعار إن الطلب انتقل.</div>`:''}
+    <div class="aoa-l">${L.map(row).join('')||'<div class="lm-empty">ماكو سواق</div>'}</div>
+    <div class="aoa-n">الفاضين بشفتهم فوگ. اللي عنده طلب أو موقوف ما ينختار.</div>`;
+}
+async function aoAssignGo(oid,did){
+  const o=(allOrders||[]).find(x=>String(x.id)===String(oid)); if(!o) return;
+  const x=(_dvb||[]).find(y=>y.id===did)||{};
+  const off=x.st==='off'||x.st==='break';
+  const ok=await askConfirm((o.driverUid?'تنقل':'تعطي')+' طلب <b>#'+esc(ONO(o))+'</b> لـ <b>'+esc(x.name||'السائق')+'</b>؟'+(off?'<div style="margin-top:8px;font-size:12.5px;color:#C2410C">⚠️ '+(x.st==='break'?'هو باستراحة هسه':'تطبيقه مطفي هسه')+' — اتصل بيه وتأكد.</div>':'')+'<div style="margin-top:8px;font-size:12.5px">يوصله إشعار ويطلعله الطلب مباشرة.</div>',{title:'🎯 إعطاء طلب',ok:'إي، أعطيه'}); if(!ok) return;
+  try{
+    const r=await rpc('admin_assign_order',{p_order:o.id,p_driver:did})||{};
+    const nm=r.name||x.name||'السائق', no='#'+ONO(o);
+    if(o.customerUid) pushTo(o.customerUid, r.moved?'🛵 تبدّل السائق':'السائق استلم طلبك', r.moved?(nm+' راح يوصّل طلبك '+no):(nm+' استلم طلبك'), {type:r.moved?'status':'assigned', order_id:String(o.id)});
+    o.status='assigned'; o.driverUid=did; o.driverName=nm; o.driverPhone=x.phone||o.driverPhone;
+    toast('صار عند '+nm+' ✓ — وصله إشعار'); aoClose(); renderAdmin(); try{ dvbLoad(true) }catch(e){}
+  }catch(e){ toast(errMsg(e)) }
 }
 /* ═══ v348: دبوس المحل (ثابت) — يستخدمه السائق والزبون ═══ */
 function _shopPinIcon(name,img,closed){
@@ -20780,6 +20853,9 @@ async function shLoad(force){
   try{ setTimeout(shAutoAsk,1500) }catch(e){}
   try{ if(typeof window.__shWeekPaint==='function') window.__shWeekPaint() }catch(e){}
 }
+function shBcHTML(){ const b=shX&&shX.bc; if(!b||!b.text) return ''; let x=false; try{ x=localStorage.getItem('bc_x_'+b.id)==='1' }catch(e){} if(x) return '';
+  return `<div class="sh-bc"><i>📣</i><div><b>رسالة من الإدارة · ${dvbAgo(b.at)}</b><span>${esc(b.text)}</span></div><button type="button" onclick="shBcX('${esc(String(b.id||''))}')" aria-label="سكّر">✕</button></div>` }
+function shBcX(id){ try{ localStorage.setItem('bc_x_'+id,'1') }catch(e){} shRender() }
 function shRender(){
   const box=document.getElementById('shiftBox'); if(!box) return;
   if(!me || me.role!=='driver' || me.approved!==true || me.blocked===true){ box.innerHTML=''; return }
@@ -20816,7 +20892,7 @@ function shRender(){
   }else{
     main=`<div class="sh-st"><span class="sh-dot n"></span><div><b>ما عندك شفت محجوز</b><span>احجز شفتاتك — اللي بشفته توصله الطلبات أول</span></div></div>`;
   }
-  box.innerHTML=`<div class="sh-card">${swp}${main}<div class="sh-row"><button type="button" onclick="shWeek()">🗓️ شفتاتي</button>
+  box.innerHTML=`${shBcHTML()}<div class="sh-card">${swp}${main}<div class="sh-row"><button type="button" onclick="shWeek()">🗓️ شفتاتي</button>
     <button type="button" onclick="shLeaves()">🏖️ إجازاتي</button>
     <button type="button" class="sh-pts ${pts<70?'low':''}" onclick="shPoints()">${shLv(shX&&shX.kpi&&shX.kpi.level).e} ${pts}</button></div></div>`;
   if(!_shTimer) _shTimer=setInterval(()=>{ try{ if(document.getElementById('shiftBox')) shRender(); else { clearInterval(_shTimer); _shTimer=null } }catch(e){} },30000);
@@ -21324,7 +21400,9 @@ function dvbPaint(){
       <button type="button" onclick="shAdmOpen()"><i>🗓️</i><b>الشفتات</b><span>الجدول والطلبات</span></button>
       <button type="button" onclick="openDrvMap()"><i>🗺️</i><b>الخريطة</b><span>وين السواق هسه</span></button>
       <button type="button" onclick="window._dvbFrom=true;openDrAcc()"><i>💰</i><b>الحسابات</b><span>${owedN?owedN+' عليهم فلوس':'الكل مسدّد'}</span></button>
-      <button type="button" onclick="atab('join',document.querySelectorAll('#aNav button')[1])"><i>📝</i><b>الانضمام</b><span>سواق جدد</span></button></div>
+      <button type="button" onclick="atab('join',document.querySelectorAll('#aNav button')[1])"><i>📝</i><b>الانضمام</b><span>سواق جدد</span></button>
+      <button type="button" onclick="dvbBcOpen()"><i>📣</i><b>رسالة</b><span>لكل السواق</span></button>
+      <button type="button" onclick="dvbRankOpen('week')"><i>🏆</i><b>الترتيب</b><span>أفضل السواق</span></button></div>
     <div class="dvb-chips">${chips.map(([k,t,n])=>`<button type="button" class="${_dvbFil===k?'on':''}" onclick="_dvbFil='${k}';dvbPaint()">${t} <i>${n}</i></button>`).join('')}</div>
     <input class="lm-in dvb-q" placeholder="🔍 دوّر بالاسم أو الرقم" value="${esc(_dvbQ)}" oninput="_dvbQ=this.value;dvbPaintList()">
     <div id="dvbList">${dvbRows(list)}</div>`;
@@ -21394,6 +21472,67 @@ async function dvbDismiss(id){
   const x=(_dvb||[]).find(y=>y.id===id)||{};
   const ok=await askConfirm('تفصل <b>'+esc(x.name||'السائق')+'</b>؟<br>حسابه ينسدّ وشفتاته كلها تنلغي. تگدر ترجّعه بعدين من هنا.',{title:'فصل سائق',ok:'إي، افصله',danger:true}); if(!ok) return;
   try{ await rpc('admin_driver_dismiss',{p_driver:id}); toast('انفصل'); dvbOpen(id); dvbLoad(true) }catch(e){ toast(errMsg(e)) }
+}
+/* ═══ v483: رسالة لكل السواق + ترتيب السواق ═══ */
+const DVB_BC_Q=['🚨 نحتاج سواق هسه — اللي فاضي يفتح التطبيق','🌧️ اليوم مطر — سوقوا على مهلكم وانتبهوا','📍 زحمة بالسوق — استخدموا الطريق الثاني','👏 شكراً على شغلكم اليوم'];
+let _dvbBc=null, _dvbBcT='all';
+async function dvbBcOpen(){
+  if(!me || me.role!=='admin') return;
+  const sh=_lmSheet('dvbBc');
+  if(!sh.classList.contains('on')){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; requestAnimationFrame(()=>sh.classList.add('on')) }
+  try{ _dvbBc=await rpc('admin_broadcasts',{}) }catch(e){ sh.classList.remove('on'); return toast(errMsg(e)) }
+  dvbBcPaint();
+}
+function dvbBcPaint(){
+  const sh=document.getElementById('dvbBc'), B=_dvbBc||{}; if(!sh) return;
+  const old=(document.getElementById('dbcTxt')||{}).value||'';
+  const R=B.recent||[];
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="dbc-h"><i>📣</i><div><b>رسالة لكل السواق</b><span>توصلهم إشعار بالتلفون، وتطلع بشاشتهم يوم كامل</span></div></div>
+    <div class="wk2-seg"><button type="button" class="${_dvbBcT==='all'?'on':''}" onclick="_dvbBcT='all';dvbBcPaint()">كل السواق (${B.all||0})</button>
+      <button type="button" class="${_dvbBcT==='active'?'on':''}" onclick="_dvbBcT='active';dvbBcPaint()">الشغّالين اليوم (${B.active||0})</button></div>
+    <div class="dbc-q">${DVB_BC_Q.map((q,i)=>`<button type="button" onclick="dvbBcQ(${i})">${esc(q)}</button>`).join('')}</div>
+    <textarea id="dbcTxt" class="dbc-t" maxlength="180" rows="3" placeholder="اكتب رسالتك هنا…" oninput="document.getElementById('dbcN').textContent=this.value.length+'/180'">${esc(old)}</textarea>
+    <div class="dbc-f"><span id="dbcN">${old.length}/180</span><button type="button" id="dbcGo" class="dbc-go" onclick="dvbBcSend()">إرسال ←</button></div>
+    ${R.length?`<div class="dbc-st">آخر الرسائل</div>${R.map(r=>`<div class="dbc-r"><p>${esc(r.text)}</p><span>${dvbAgo(r.at)} · ${r.target==='active'?'الشغّالين':'الكل'} · وصلت لـ ${Number(r.n||0)} سائق</span></div>`).join('')}`:''}
+    <button type="button" class="rs-later" onclick="_shClose('dvbBc')">سكّر</button></div>`;
+}
+function dvbBcQ(i){ const t=document.getElementById('dbcTxt'); if(!t) return; t.value=DVB_BC_Q[i]; t.dispatchEvent(new Event('input')); t.focus() }
+async function dvbBcSend(){
+  const t=((document.getElementById('dbcTxt')||{}).value||'').trim(), B=_dvbBc||{}, n=_dvbBcT==='active'?B.active:B.all;
+  if(t.length<3) return toast('اكتب الرسالة أول');
+  if(!n) return toast(_dvbBcT==='active'?'ماكو سائق شغّال اليوم — اختار «كل السواق»':'ماكو سواق يوصلهم');
+  const ok=await askConfirm('ترسل هالرسالة لـ <b>'+n+'</b> سائق؟<div style="margin-top:8px;padding:8px;border-radius:10px;background:#F3F0F8;font-size:13px">'+esc(t)+'</div>',{title:'📣 رسالة للسواق',ok:'إي، أرسل'}); if(!ok) return;
+  const bt=document.getElementById('dbcGo'); if(bt){ bt.disabled=true; bt.textContent='… نرسل' }
+  try{ const c=await rpc('admin_drivers_broadcast',{p_text:t,p_target:_dvbBcT}); toast('انرسلت لـ '+Number(c||0)+' سائق ✓'); const ta=document.getElementById('dbcTxt'); if(ta) ta.value=''; await dvbBcOpen() }
+  catch(e){ toast(errMsg(e)); if(bt){ bt.disabled=false; bt.textContent='إرسال ←' } }
+}
+let _dvbRk=null, _dvbRkP='week';
+async function dvbRankOpen(per){
+  if(!me || me.role!=='admin') return;
+  _dvbRkP=per||_dvbRkP||'week';
+  const sh=_lmSheet('dvbRank');
+  if(!sh.classList.contains('on')){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; requestAnimationFrame(()=>sh.classList.add('on')) }
+  try{ _dvbRk=await rpc('admin_drivers_rank',{p_period:_dvbRkP}) }catch(e){ sh.classList.remove('on'); return toast(errMsg(e)) }
+  dvbRankPaint();
+}
+function dvbRankPaint(){
+  const sh=document.getElementById('dvbRank'), R=_dvbRk||{}; if(!sh) return;
+  const L=(R.list||[]), any=L.some(x=>Number(x.deliv)>0), M=['🥇','🥈','🥉'];
+  const fd=R.from?new Date(R.from+'T12:00:00'):null;
+  const since=fd?('من '+SH_DAYS[fd.getDay()]+' '+fd.getDate()+'/'+(fd.getMonth()+1)):'';
+  const nT=n=>{ n=Number(n||0); return n===1?'طلب واحد':n===2?'طلبين':(n>=3&&n<=10)?n+' طلبات':n+' طلب' };
+  const stat=x=>{ const a=[`<b>${nT(x.deliv)}</b>`]; if(x.rate!=null) a.push('⭐ '+Number(x.rate).toFixed(1)); a.push(Number(x.points||0)+' نقطة'); return a.join(' · ') };
+  const warn=x=>{ const a=[]; if(Number(x.absent)>0) a.push('غاب '+x.absent); if(Number(x.drops)>0) a.push('ترك '+x.drops+' طلب'); if(x.blocked) a.push('موقوف'); return a.length?`<em>${a.join(' · ')}</em>`:'' };
+  const top=any?L.slice(0,3).filter(x=>Number(x.deliv)>0):[];
+  const pod=top.length?`<div class="drk-pod">${top.map((x,i)=>`<button type="button" class="p${i+1}" onclick="_shClose('dvbRank');dvbOpen('${x.id}')"><i>${M[i]}</i><div class="drk-av">${esc((x.name||'؟').trim().charAt(0))}</div><b>${esc(x.name||'سائق')}</b><span>${nT(x.deliv)}</span></button>`).join('')}</div>`:'';
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
+    <div class="dbc-h"><i>🏆</i><div><b>ترتيب السواق</b><span>${since} · بعدد التوصيلات</span></div></div>
+    <div class="wk2-seg"><button type="button" class="${_dvbRkP==='week'?'on':''}" onclick="dvbRankOpen('week')">هالأسبوع</button><button type="button" class="${_dvbRkP==='month'?'on':''}" onclick="dvbRankOpen('month')">هالشهر</button></div>
+    ${pod}${any?'':'<div class="drk-none">😴 بعد ماكو توصيلات '+(_dvbRkP==='week'?'هالأسبوع':'هالشهر')+'</div>'}
+    <div class="drk-l">${L.map((x,i)=>`<button type="button" class="drk-r" onclick="_shClose('dvbRank');dvbOpen('${x.id}')"><u>${any&&i<3&&Number(x.deliv)>0?M[i]:(i+1)}</u><div class="drk-av">${esc((x.name||'؟').trim().charAt(0))}</div>
+      <div><b>${esc(x.name||'سائق')} <small class="drk-lv ${esc(x.level||'silver')}">${shLv(x.level).n}</small></b><span>${stat(x)}</span>${warn(x)}</div><i>‹</i></button>`).join('')||'<div class="lm-empty">ماكو سواق</div>'}</div>
+    <button type="button" class="rs-later" onclick="_shClose('dvbRank')">سكّر</button></div>`;
 }
 (function(){ const f=()=>{ try{ const v=(document.getElementById('appVer')||{}).textContent||''; document.querySelectorAll('.appVerTxt').forEach(e=>e.textContent=v) }catch(e){} }; if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',f); else f() })();
 
@@ -27950,7 +28089,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v482', seen={}, n=0, q=[], t=null;
+  var VER='v483', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28202,7 +28341,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v482', t0=Date.now();
+  var VER='v483', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
