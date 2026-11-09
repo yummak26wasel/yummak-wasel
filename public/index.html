@@ -3786,6 +3786,23 @@ a.io-s{background:#ECFDF3;border-color:#BBF7D0;color:#15803D}
 .iw2-tm{font-size:12.5px;font-weight:900;color:#C2410C;background:#FFF7ED;border-radius:9px;padding:2px 7px;direction:ltr}
 .iw2>button{width:100%;margin-top:7px;height:30px;border:0;border-radius:9px;background:#F6F4FA;color:#6b6580;font:800 12px Cairo,Tahoma,sans-serif}
 .io-row.pd{font-size:11.5px}
+/* v498 — بطاقة البديل عند الزبون أصغر وأوضح */
+.pc3{padding:14px 14px 10px}
+.pc3-h{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:2px 0 10px}.pc3-h>b{font-size:15.5px;font-weight:900;color:#1F1640}
+.pc3-r{display:flex;align-items:center;gap:10px;border-radius:15px;padding:8px 10px}
+.pc3-r.old{background:#F8F7FB}.pc3-r.new{background:#F3FBF6;box-shadow:inset 0 0 0 1.5px #86EFAC}
+.pc3-im{width:46px;height:46px;border-radius:12px;background:#fff;display:grid;place-items:center;flex:none;overflow:hidden}.pc3-im img{width:88%;height:88%;object-fit:contain}.pc3-im>i{color:#c4bdd6}.pc3-im>i svg{width:22px;height:22px}
+.pc3-r.old .pc3-im img{filter:grayscale(1);opacity:.5}
+.pc3-r>span{flex:1;min-width:0;display:flex;flex-direction:column}.pc3-r>span b{font-size:13.5px;font-weight:900;color:#1F1640;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.pc3-r>span em{font-style:normal;font-size:11.5px;font-weight:800}
+.pc3-r.old>span b{color:#8a83a3}.pc3-r.old>span em{color:#B91C1C}.pc3-r.new>span em{color:#15803D}
+.pc3-r>s{font-size:12.5px;font-weight:800;color:#a39cb8;white-space:nowrap}
+.pc3-p{display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex:none}.pc3-p>b{font-size:14px;font-weight:900;color:#1F1640;white-space:nowrap}.pc3-p>u{text-decoration:none;font-size:11px;font-weight:900;direction:ltr}.pc3-p>u.up{color:#C2410C}.pc3-p>u.dn{color:#15803D}
+.pc3-ar{display:flex;justify-content:flex-start;padding-inline-start:23px;height:16px;align-items:center;color:#5B35D5;position:relative;z-index:1;margin:-3px 0}.pc3-ar svg{width:18px;height:18px;background:#fff;border-radius:50%;box-shadow:0 1px 4px rgba(0,0,0,.1);padding:2px}
+.pc3-msg{margin-top:9px;font-size:12.5px;font-weight:700;color:#4a4363;line-height:1.7}.pc3-msg b{font-weight:900;color:#8a83a3;font-size:11.5px}
+.pc3-b{display:grid;grid-template-columns:1.4fr 1fr;gap:8px;margin-top:12px}
+.pc3-b>.pc2-ok{margin:0;height:48px}.pc3-b>.pc2-no{margin:0;height:48px;background:#FEF2F2;border-radius:15px}
+.pc3 .pc2-n{margin-top:8px}
+.odt-btn.wait{background:#F1EEF6!important;color:#8a83a3!important;box-shadow:none!important}
 /* v497 — جهة المحل أبسط */
 .io4 .io4-h{display:flex;align-items:center;gap:12px;margin:2px 0 18px;padding-inline-end:44px}
 .io4-h>div:last-child{display:flex;flex-direction:column;min-width:0;gap:2px}.io4-h b{font-size:17px;font-weight:900;color:#1F1640;line-height:1.4}
@@ -6870,7 +6887,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v497</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v498</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -15215,6 +15232,8 @@ function _ordCard0(o){
   /* ── الإجراء: نفس منطق الحالات الموجود، بلا زيادة ── */
   const act = o.status==='pending'
       ? `<button class="ost-b go" onclick="event.stopPropagation();odtQuick('${o.id}','accepted')">${_CHK} قبول الطلب</button>`
+    : o.status==='accepted'&&(o.items||[]).some(i=>i&&i.prop&&i.prop.status==='pending')
+      ? `<span class="ost-b dis">ننتظر جواب الزبون</span>`
     : o.status==='accepted'
       ? `<button class="ost-b go" onclick="event.stopPropagation();odtQuick('${o.id}','ready')">${_CHK} جاهز — نادِ مندوب</button>`
     : o.status==='delivered'
@@ -15288,6 +15307,8 @@ function renderOrdDet(){
          <button class="odt-btn ok" onclick="odtSet('accepted')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.2 12.4l2.6 2.6 5-5.4"/></svg> قبول الطلب</button>
          <button class="odt-btn no" onclick="odtSet('rejected')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M15 9l-6 6M9 9l6 6"/></svg> رفض الطلب</button>
        </div>`
+    : o.status==='accepted'&&(o.items||[]).some(i=>i&&i.prop&&i.prop.status==='pending')
+    ? `<button class="odt-btn go wait" type="button" onclick="toast('أكو بديل ينتظر جواب الزبون — انتظر شوية أو اتصل بيه')">${_PCI2.clock.replace('<svg','<svg class="wic"')} ننتظر جواب الزبون على البديل</button>`
     : o.status==='accepted'
     ? `<button class="odt-btn go" onclick="odtSet('ready')"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/></svg> جاهز — نادِ مندوب</button>`
     : '';
@@ -15550,16 +15571,17 @@ function _pcTile(img,cls,badge,name,price,extra){ return `<div class="pc2-p ${cl
 function propCardsHTML(o){
   const its=(o.items||[]); const P=its.map((i,ix)=>({i,ix})).filter(x=>x.i&&x.i.prop&&x.i.prop.status==='pending');
   if(!P.length) return '';
+  const im=x=>`<div class="pc3-im">${x?`<img src="${esc(x)}" alt="">`:`<i>${_PCI.bag}</i>`}</div>`;
   return P.map(({i,ix})=>{ const pr=i.prop, q=Math.max(1,Number(i.qty||1)), d=Number(pr.price||0)*q-itLine(i), pref=SUBL[i.sub]?i.sub:'call';
-    const oldP=`<s>${itLine(i).toLocaleString()}</s>`, newP=`<em>${(Number(pr.price||0)*q).toLocaleString()} د.ع</em>`, dl=d===0?'':`<u class="${d>0?'up':'dn'}">${d>0?'+':'−'}${Math.abs(d).toLocaleString()}</u>`;
     const pct=Math.max(0,Math.min(100,(new Date(pr.exp).getTime()-Date.now())/3000));
-    return `<div class="pc2"><div class="pc2-bar"><i data-expbar="${esc(pr.exp)}" style="width:${pct}%"></i></div>
-      <div class="pc2-h"><div class="pc2-hi">${_PCI.swap}</div><div><b>المحل يحتاج موافقتك</b><span>«${esc(i.name||'')}» خلص${q>1?' (×'+q+')':''} — هذا البديل المقترح</span></div><div class="pc2-tm">${_PCI.clock}<b data-exp="${esc(pr.exp)}">${_mmss(pr.exp)}</b></div></div>
-      <div class="pc2-row">${_pcTile(_itImg(o,i),'old','نفذ',i.name,oldP)}<div class="pc2-ar">${_PCI.swap}</div>${_pcTile(pr.img,'new','البديل',pr.name,newP,dl)}</div>
-      ${pr.msg?`<div class="pc2-msg"><span>رسالة المحل</span>${esc(pr.msg)}</div>`:''}
-      <button type="button" class="pc2-ok" onclick="propAnswer('${o.id}',${ix},true)">وافق على البديل</button>
-      <button type="button" class="pc2-no" onclick="propAnswer('${o.id}',${ix},false)">لا، شيلها من الطلب</button>
-      <div class="pc2-n">إذا ما جاوبت: ${pref==='similar'?'يتبدّل وحده — مثل ما اخترت بالسلة':'تنشال من طلبك'}</div></div>` }).join('');
+    return `<div class="pc2 pc3"><div class="pc2-bar"><i data-expbar="${esc(pr.exp)}" style="width:${pct}%"></i></div>
+      <div class="pc3-h"><b>المحل يقترح بديل</b><div class="pc2-tm">${_PCI.clock}<b data-exp="${esc(pr.exp)}">${_mmss(pr.exp)}</b></div></div>
+      <div class="pc3-r old">${im(_itImg(o,i))}<span><b>${esc(i.name||'')}${q>1?' ×'+q:''}</b><em>خلص بالمحل</em></span><s>${itLine(i).toLocaleString()}</s></div>
+      <div class="pc3-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M6 13l6 6 6-6"/></svg></div>
+      <div class="pc3-r new">${im(pr.img)}<span><b>${esc(pr.name||'')}</b><em>البديل</em></span><div class="pc3-p"><b>${(Number(pr.price||0)*q).toLocaleString()} د.ع</b>${d===0?'':`<u class="${d>0?'up':'dn'}">${d>0?'+':'−'}${Math.abs(d).toLocaleString()}</u>`}</div></div>
+      ${pr.msg?`<div class="pc3-msg"><b>المحل:</b> ${esc(pr.msg)}</div>`:''}
+      <div class="pc3-b"><button type="button" class="pc2-ok" onclick="propAnswer('${o.id}',${ix},true)">وافق</button><button type="button" class="pc2-no" onclick="propAnswer('${o.id}',${ix},false)">لا، شيلها</button></div>
+      <div class="pc2-n">إذا ما جاوبت: ${pref==='similar'?'يتبدّل وحده':'تنشال من طلبك'}</div></div>` }).join('');
 }
 async function propAnswer(oid,ix,ok){
   try{
@@ -28794,7 +28816,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v497', seen={}, n=0, q=[], t=null;
+  var VER='v498', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29046,7 +29068,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v497', t0=Date.now();
+  var VER='v498', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
