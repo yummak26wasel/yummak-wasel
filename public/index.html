@@ -3699,6 +3699,18 @@ html[data-theme=dark] #dvbSheet .dvb-susp button{background:#3a2216;color:#fdba7
 .io-row.wait{flex-direction:column;align-items:flex-start;gap:3px;width:100%;box-sizing:border-box}.io-row.wait>b{font-size:12.5px;font-weight:900}.io-row.wait>span{font-size:11.5px;font-weight:700;color:#7a7392;line-height:1.5}.iw-a{display:flex;gap:6px;align-items:center}
 .io-row.wait i{font-style:normal;direction:ltr;background:#fff;border-radius:9px;padding:2px 8px;font-weight:900;color:#C2410C;font-size:13px}
 .pc-s em u{text-decoration:none;font-weight:900}.pc-s em u.up{color:#C2410C}.pc-s em u.dn{color:#15803D}
+/* v493 — ترتيب: سطر واحد لكل شي */
+.chr{width:100%;display:flex;align-items:center;gap:10px;background:#fff;border:1.5px solid #ECE8F4;border-radius:16px;padding:10px 12px;margin:10px 0;text-align:right;font-family:Cairo,Tahoma,sans-serif;position:relative}
+.chr>i{font-style:normal;width:36px;height:36px;border-radius:12px;background:#F1EBFC;display:grid;place-items:center;font-size:17px;flex:none}
+.chr>span{flex:1;min-width:0;display:flex;flex-direction:column}.chr b{font-size:14px;font-weight:900;color:#1F1640}
+.chr em{font-style:normal;font-size:12px;font-weight:700;color:#7a7392;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chr>s{text-decoration:none;color:#b3abc9;font-size:18px}.chr>u{width:9px;height:9px;border-radius:50%;background:#EF4444;flex:none}
+.chr.new{border-color:#C4B5FD;background:#FAF7FF}.chr.sub>i{background:#FFF4D6}
+.io-row .io-lnk{border:0;background:none;padding:2px 0;height:auto;border-radius:0;font:800 12px Cairo,Tahoma,sans-serif;color:#9a93ad;text-decoration:underline;text-underline-offset:3px}
+.io-2{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.io-s{height:44px;border-radius:12px;border:1.5px solid #ECE8F4;background:#fff;display:flex;align-items:center;justify-content:center;font:900 13.5px Cairo,Tahoma,sans-serif;color:#3d3554;text-decoration:none}
+a.io-s{background:#ECFDF3;border-color:#BBF7D0;color:#15803D}
+#chatSheet .och{border:0;padding:0;margin:4px 0 0}#chatSheet .och-l{max-height:46vh;min-height:90px}
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6766,7 +6778,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v492</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v493</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -12879,6 +12891,14 @@ const SUBL={similar:'🔁 بديل مشابه', remove:'❌ شيلها', call:'�
 function _subDef(){ try{ const v=localStorage.getItem('sub_def'); if(SUBL[v]) return v }catch(e){} return 'similar' }
 function _cartMk(){ try{ return cart.length && _isMarket((shops||[]).find(s=>s.id===cart[0].shopId)) }catch(e){ return false } }
 function cartSubAll(v){ if(!SUBL[v]) return; try{ localStorage.setItem('sub_def',v) }catch(e){} cart.forEach(c=>c.sub=v); renderCart() }
+function cartSubOpenAll(){
+  const cur=(cart[0]&&cart[0].sub)||_subDef();
+  let el=document.getElementById('subSheet'); if(!el){ el=document.createElement('div'); el.id='subSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
+  el.innerHTML=`<div class="wgcard"><button class="wgx" onclick="document.getElementById('subSheet').classList.remove('on')" aria-label="سكّر">×</button>
+    <h3>إذا مادة خلصت بالمحل</h3><p class="wg-h">المحل يسويها إذا ما لگى شي من طلبك</p>
+    ${Object.keys(SUBL).map(k=>`<button type="button" class="sub-o${k===cur?' on':''}" onclick="document.getElementById('subSheet').classList.remove('on');cartSubAll('${k}')"><b>${SUBL[k]}</b><span>${k==='similar'?'يقترحون بديل وإنت توافق — وإذا ما جاوبت يتبدّل':k==='remove'?'تنشال من الطلب وما تدفع سعرها':'المحل يتواصل ويّاك ويسألك'}</span></button>`).join('')}</div>`;
+  el.classList.add('on');
+}
 function cartSubOpen(i){
   const c=cart[i]; if(!c) return; const cur=c.sub||_subDef();
   let el=document.getElementById('subSheet'); if(!el){ el=document.createElement('div'); el.id='subSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
@@ -12915,12 +12935,10 @@ function renderCart(){
     ${cart.map((c,i)=>`<div class="citem">
       ${c.img?`<img class="pimg" src="${c.img}">`:'<div class="px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>'}
       <div class="ci"> <div class="cn">${esc(c.name)}</div>
-        ${c.desc?`<div class="cd">${esc(c.desc)}</div>`:''}${_cartMk()?`<button type="button" class="csub" onclick="cartSubOpen(${i})">إذا خلص: ${SUBS[c.sub||_subDef()]} ‹</button>`:''}
+        ${c.desc?`<div class="cd">${esc(c.desc)}</div>`:''}
         <div class="cp">${c.kg?'≈ ':''}${(c.price*c.qty).toLocaleString()} د.ع</div>${c.kg?`<div class="kgl">⚖️ تقريباً ${kgTxt(Number(c.w||0)*c.qty)} كغم — السعر النهائي حسب الوزن</div>`:''} </div> <div class="stepper"> <button onclick="cartQty(${i},1)">+</button> <span>${c.qty}</span> <button onclick="cartQty(${i},-1)">−</button> </div></div>`).join('')}
     ${upsellHTML()}
-    ${_cartMk()?(()=>{ const all=cart.every(c=>(c.sub||_subDef())===cart[0].sub||(!cart[0].sub&&(c.sub||_subDef())===_subDef())), v=all?(cart[0].sub||_subDef()):''; return `<div class="seclbl">إذا مادة خلصت بالمحل</div>
-      <div class="subp">${Object.keys(SUBL).map(k=>`<button type="button" class="${k===v?'on':''}" onclick="cartSubAll('${k}')">${SUBL[k]}</button>`).join('')}</div>
-      <div class="subp-n">${v?'ينطبق على كل المواد — وتگدر تغيّر لكل مادة من الزر اللي تحتها':'اخترت لكل مادة وحدها'}</div>` })():''}
+    ${_cartMk()?(()=>{ const v=(cart[0]&&cart[0].sub)||_subDef(); return `<button type="button" class="chr sub" onclick="cartSubOpenAll()"><i>🛒</i><span><b>إذا مادة خلصت بالمحل</b><em>${SUBL[v]||SUBL.similar}</em></span><s>‹</s></button>` })():''}
     <div class="seclbl">ملاحظات للمحل</div> <textarea class="notes" id="ck_note" placeholder="مثال: بدون بصل، الجرس خربان دگ تلفون..."
       oninput="orderNote=this.value">${orderNote||''}</textarea> ${cart.some(c=>c.kg)?KG_BILL_NOTE:''}<div class="bill">${billHTML(sub)}</div>
     ${hasLoc()?'':'<div class="locset no" style="margin-top:12px"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3.6 2.8 19.4h18.4z"/><path d="M12 9.5v4.2M12 16.6v.1"/></svg> <b>موقعك مو محدّد</b><br>ما تكدر تكمّل الطلب قبل ما تحدده على الخريطة.</div>'}
@@ -13789,7 +13807,7 @@ function renderTrack(){
     <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 4 2.8 19.5h18.4z"/><path d="M12 10v4.5M12 17v.1"/></svg></div>
     <div class="tx">عندي مشكلة بالطلب</div><span class="arw">\u2039</span>
   </div>`:''}
-  ${propCardsHTML(o)}${_isMarket((shops||[]).find(s=>s.id===o.shopId))?chatHTML(o,'cust'):''}
+  ${propCardsHTML(o)}${_isMarket((shops||[]).find(s=>s.id===o.shopId))?chatRowHTML(o,'cust'):''}
   <div class="trk-row" onclick="trkToggleDet()">
     <div class="ic"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3.5h12v17l-2.7-1.8-2.8 1.8-2.8-1.8L6 20.5z"/><path d="M9.5 8.5h5M9.5 12.5h5"/></svg></div>
     <div class="tx">تفاصيل الطلب <span style="color:var(--mut);font-weight:700">(${cnt})</span></div>
@@ -15219,7 +15237,7 @@ function renderOrdDet(){
       </div>`;
     }).join('')}
 
-    ${_isMarket(myShopDoc)?chatHTML(o,'shop'):''}
+    ${_isMarket(myShopDoc)?chatRowHTML(o,'shop'):''}
     <div class="odt-sum">
       <div class="odt-sr"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/></svg><span>مجموع الأصناف</span><b>${sub.toLocaleString()} د.ع</b></div>
       <div class="odt-sr"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2.6 7h11v9.5h-11z"/><path d="M13.6 10.5h4l2.8 3v3h-6.8z"/><circle cx="6.6" cy="18" r="1.7"/><circle cx="17" cy="18" r="1.7"/></svg><span>رسوم خدمة التوصيل</span><b>${dlv.toLocaleString()} د.ع</b></div>
@@ -15380,9 +15398,29 @@ setInterval(()=>{ try{ document.querySelectorAll('[data-exp]').forEach(e=>{ e.te
 const PROP_DONE={ok:'✅ الزبون وافق على البديل',no:'❌ الزبون رفض — انشالت',auto_ok:'⏱ ما جاوب — انبدلت حسب اختياره',auto_no:'⏱ ما جاوب — انشالت',expired:'⚠️ الزبون ما جاوب — اتصل بيه',cancel:''};
 function chatHTML(o,me2){
   const L=_chatOf(o), open=_chatOpen(o); if(!L.length && !open) return '';
-  return `<div class="och"><div class="och-h">💬 رسائل ${me2==='shop'?'ويا الزبون':'ويا المحل'}</div>
+  return `<div class="och">
     <div class="och-l">${L.map(m=>`<div class="och-m ${m.f===me2?'me':''}"><p>${esc(m.t||'')}</p><span>${(()=>{ try{ return new Date(m.at).toLocaleTimeString('ar-IQ',{hour:'numeric',minute:'2-digit'}) }catch(e){ return '' } })()}</span></div>`).join('')||`<div class="och-e">${me2==='shop'?'اكتب للزبون إذا تحتاج تسأله شي':'إذا تحتاج تگول للمحل شي اكتبه هنا'}</div>`}</div>
     ${open?`<div class="och-in"><input id="och_${esc(String(o.id))}" maxlength="200" placeholder="اكتب رسالة…" onkeydown="if(event.key==='Enter')chatSend('${o.id}','${me2}')"><button type="button" onclick="chatSend('${o.id}','${me2}')">إرسال</button></div>`:''}</div>`;
+}
+function chatRowHTML(o,me2){
+  const L=_chatOf(o), open=_chatOpen(o); if(!L.length && !open) return '';
+  try{ const sh=document.getElementById('chatSheet'); if(sh&&sh.classList.contains('on')&&sh.dataset.oid===String(o.id)) setTimeout(()=>chatPaint(o.id,me2),0) }catch(e){}
+  const last=L[L.length-1]; let seen=0; try{ seen=+localStorage.getItem('chs_'+o.id)||0 }catch(e){}
+  const unread=!!(last && last.f!==me2 && new Date(last.at).getTime()>seen);
+  return `<button type="button" class="chr${unread?' new':''}" onclick="chatOpen('${o.id}','${me2}')"><i>💬</i><span><b>${me2==='shop'?'رسائل ويا الزبون':'راسل المحل'}${L.length?' ('+L.length+')':''}</b>${last?`<em>${last.f===me2?'إنت: ':''}${esc(last.t)}</em>`:''}</span>${unread?'<u></u>':''}<s>‹</s></button>`;
+}
+function chatOpen(oid,me2){
+  let el=document.getElementById('chatSheet'); if(!el){ el=document.createElement('div'); el.id='chatSheet'; el.className='wgsh'; el.addEventListener('click',e=>{ if(e.target===el) el.classList.remove('on') }); document.body.appendChild(el) }
+  el.dataset.oid=String(oid); el.dataset.me=me2; chatPaint(oid,me2); el.classList.add('on');
+  setTimeout(()=>{ const i=document.getElementById('och_'+oid); if(i) i.focus() },250);
+}
+function chatPaint(oid,me2){
+  const el=document.getElementById('chatSheet'); if(!el) return; const o=(myOrders||[]).find(x=>String(x.id)===String(oid)); if(!o) return;
+  const keep=(document.getElementById('och_'+oid)||{}).value||'';
+  el.innerHTML=`<div class="wgcard"><button class="wgx" onclick="document.getElementById('chatSheet').classList.remove('on')" aria-label="سكّر">×</button><h3>💬 ${me2==='shop'?'الزبون':'المحل'}${o.order_no||o.orderNo?' · طلب #'+esc(String(o.order_no||o.orderNo)):''}</h3>${chatHTML(o,me2)}</div>`;
+  const inp=document.getElementById('och_'+oid); if(inp&&keep) inp.value=keep;
+  const l=el.querySelector('.och-l'); if(l) l.scrollTop=l.scrollHeight;
+  try{ localStorage.setItem('chs_'+oid, String(Date.now())) }catch(e){}
 }
 async function chatSend(oid,me2){
   const inp=document.getElementById('och_'+oid); const t=((inp||{}).value||'').trim(); if(!t) return;
@@ -15394,8 +15432,9 @@ async function chatSend(oid,me2){
     const no=r.order_no?(' #'+r.order_no):'';
     if(me2==='shop'){ if(r.customer) pushTo(r.customer,'💬 رسالة من المحل'+no, t, {type:'status', order_id:String(oid)}) }
     else { const d={type:'status', order_id:String(oid)}; try{ if(r.owner) __sendPush({user_id:r.owner},'💬 رسالة من الزبون'+no,t,d); if(r.shop) __sendPush({shop_staff:r.shop},'💬 رسالة من الزبون'+no,t,d) }catch(e){} }
+    try{ chatPaint(oid,me2) }catch(_){}
     if(me2==='shop'){ try{ renderOrdDet() }catch(_){} } else { try{ renderTrack() }catch(_){} }
-    setTimeout(()=>{ const i2=document.getElementById('och_'+oid); if(i2) i2.focus() },50);
+    setTimeout(()=>{ const i2=document.getElementById('och_'+oid); if(i2){ i2.value=''; i2.disabled=false; i2.focus() } },60);
   }catch(e){ toast(errMsg(e)); if(inp) inp.disabled=false }
 }
 /* الزبون: كارت الموافقة */
@@ -15428,7 +15467,7 @@ function ioRowHTML(o,ix,i){
   if(pst==='pending') return `<div class="io-row wait"><b>⏳ ننتظر جواب الزبون</b><span>اقترحت: ${esc(i.prop.name||'')}</span><div class="iw-a"><i data-exp="${esc(i.prop.exp)}">${_mmss(i.prop.exp)}</i><button type="button" onclick="ioCancel(${ix})">إلغاء</button></div></div>`;
   if(!_ioCan(o)) return pdone;
   const k=SUBL[i.sub]?i.sub:'call';
-  return pdone+`<div class="io-row"><span class="io-pf ${k}">إذا خلص: ${SUBL[k]}</span><button type="button" onclick="ioOpen(${ix})">خلص؟</button></div>`;
+  return pdone+`<div class="io-row"><button type="button" class="io-lnk" onclick="ioOpen(${ix})">خلصت؟</button></div>`;
 }
 async function ioCancel(ix){ try{ await rpc('shop_item_prop_cancel',{p_order:_odId,p_idx:ix}); const o=(myOrders||[]).find(x=>x.id===_odId); if(o&&o.items[ix]&&o.items[ix].prop) o.items[ix].prop.status='cancel'; toast('انلغى الاقتراح'); try{ renderOrdDet() }catch(_){} }catch(e){ toast(errMsg(e)) } }
 let _io=null;
@@ -15442,18 +15481,16 @@ function ioOpen(ix){
   const el=_ioSheet();
   el.innerHTML=`<div class="wgcard"><button class="wgx" onclick="ioClose()" aria-label="سكّر">×</button>
     <h3>«${esc(i.name||'')}» خلص؟ <small>×${Number(i.qty||1)}</small></h3>
-    <div class="io-pr ${k}">الزبون اختار: <b>${SUBL[k]}</b></div>
-    ${ph?`<a class="io-call" href="tel:${esc(ph)}">📞 اتصل بالزبون</a>`:''}
-    <label class="io-mk"><input type="checkbox" id="ioMk" checked> خلّي «${esc(i.name||'')}» «نفذ» بالقائمة</label>
+    <p class="wg-h">الزبون اختار: <b>${SUBL[k]}</b></p>
+    ${!i.kg?`<button type="button" class="io-b sb" onclick="ioPick()"><b>🔁 اقترح بديل</b><span>الزبون يوافق أو يرفض بالتطبيق</span></button>`:''}
     <button type="button" class="io-b rm" onclick="ioDo('remove')"><b>❌ شيلها من الطلب</b><span>المبلغ ينقص ${itLine(i).toLocaleString()} د.ع</span></button>
-    ${!i.kg?`<button type="button" class="io-b sb" onclick="ioPick()"><b>🔁 اقترح بديل على الزبون</b><span>الزبون يوافق أو يرفض بالتطبيق — إذا ما جاوب 5 دقايق: ${k==='similar'?'يتبدّل':'ينشال'}</span></button>`:''}
-    <button type="button" class="io-b ms" onclick="ioClose();setTimeout(()=>{ const e=document.getElementById('och_${esc(String(o.id))}'); if(e){ e.scrollIntoView({block:'center'}); e.focus() } },200)"><b>💬 اكتب للزبون</b><span>رسالة قصيرة يشوفها بالتطبيق</span></button>
+    <div class="io-2">${ph?`<a class="io-s" href="tel:${esc(ph)}">📞 اتصل</a>`:''}<button type="button" class="io-s" onclick="ioClose();chatOpen('${o.id}','shop')">💬 اكتب له</button></div>
   </div>`;
   el.classList.add('on');
 }
 function ioPick(){
   const o=(myOrders||[]).find(x=>x&&_io&&x.id===_io.oid); if(!o) return; const i=(o.items||[])[_io.ix]; if(!i) return;
-  const _mkEl=document.getElementById('ioMk'); if(_mkEl) _io.mk=_mkEl.checked!==false;
+  _io.mk=true;
   const q=Math.max(1,Number(i.qty||1)), cap=Math.ceil(itLine(i)*1.25), P=(myShopDoc&&myShopDoc.products)||[];
   const orig=P.find(p=>String(p.id)===String(i.pid)), cat=orig&&orig.cat;
   let rows=[];
@@ -15486,7 +15523,7 @@ async function ioPickGo(k){
 }
 async function ioDo(act,pid,size){
   if(!_io||_io.busy) return; const o=(myOrders||[]).find(x=>x.id===_io.oid); const i=o&&(o.items||[])[_io.ix]; if(!i) return ioClose();
-  const mk=(document.getElementById('ioMk')||{checked:true}).checked!==false;
+  const mk=true;
   if(act==='remove'){ const ok=await askConfirm('تشيل <b>«'+esc(i.name||'')+'»</b> من الطلب؟<div style="margin-top:8px;font-size:13px">المبلغ ينقص '+itLine(i).toLocaleString()+' د.ع — الزبون يوصله إشعار.</div>',{title:'❌ شيلها',ok:'إي، شيلها'}); if(!ok) return }
   _io.busy=true;
   try{
@@ -28642,7 +28679,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v492', seen={}, n=0, q=[], t=null;
+  var VER='v493', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -28894,7 +28931,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v492', t0=Date.now();
+  var VER='v493', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
