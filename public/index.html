@@ -3786,6 +3786,23 @@ a.io-s{background:#ECFDF3;border-color:#BBF7D0;color:#15803D}
 .iw2-tm{font-size:12.5px;font-weight:900;color:#C2410C;background:#FFF7ED;border-radius:9px;padding:2px 7px;direction:ltr}
 .iw2>button{width:100%;margin-top:7px;height:30px;border:0;border-radius:9px;background:#F6F4FA;color:#6b6580;font:800 12px Cairo,Tahoma,sans-serif}
 .io-row.pd{font-size:11.5px}
+/* v497 — جهة المحل أبسط */
+.io4 .io4-h{display:flex;align-items:center;gap:12px;margin:2px 0 18px;padding-inline-end:44px}
+.io4-h>div:last-child{display:flex;flex-direction:column;min-width:0;gap:2px}.io4-h b{font-size:17px;font-weight:900;color:#1F1640;line-height:1.4}
+.io4-h span{font-size:12.5px;font-weight:700;color:#7a7392}.io4-h u{text-decoration:none;font-weight:900}.io4-h u.similar{color:#5B35D5}.io4-h u.remove{color:#B91C1C}.io4-h u.call{color:#15803D}
+.io4-b{display:grid;grid-template-columns:1fr 1fr;gap:10px}.io4-b.one{grid-template-columns:1fr}
+.io4-b>button{height:58px;border:0;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:8px;font:900 16px Cairo,Tahoma,sans-serif}.io4-b svg{width:20px;height:20px}
+.io4-sub{background:#5B35D5;color:#fff;box-shadow:0 6px 16px rgba(75,43,176,.22)}.io4-rm{background:#FEF2F2;color:#B91C1C}
+.io4-ct{display:flex;justify-content:center;gap:28px;margin-top:16px;padding-top:12px;border-top:1px solid #F1EEF6}
+.io4-ct>a,.io4-ct>button{display:flex;align-items:center;gap:6px;border:0;background:none;padding:4px;font:800 13.5px Cairo,Tahoma,sans-serif;color:#6b6580;text-decoration:none}.io4-ct svg{width:17px;height:17px}
+.io4-go{width:30px;height:30px;border-radius:50%;background:#F1EBFC;color:#5B35D5;display:grid;place-items:center;flex:none}.io4-go svg{width:16px;height:16px}
+.odt-it:has(>.iw3){flex-wrap:wrap}
+.iw3{flex:1 0 100%;width:100%;min-width:0;display:flex;align-items:center;gap:8px;background:#F7F4FE;border-radius:12px;padding:8px 10px;margin-top:2px;box-sizing:border-box}
+.iw3>i{color:#5B35D5;display:grid;place-items:center;flex:none}.iw3>i svg{width:17px;height:17px}
+.iw3>span{flex:1;min-width:0;font-size:12.5px;font-weight:700;color:#4a4363;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.iw3>span b{font-weight:900;color:#1F1640}
+.iw3>u{text-decoration:none;font-size:12.5px;font-weight:900;color:#C2410C;direction:ltr}
+.iw3>button{border:0;background:none;font:800 12px Cairo,Tahoma,sans-serif;color:#8a83a3;padding:2px 4px;text-decoration:underline}
+
 #askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
   align-items:center;justify-content:center;padding:26px}
 #askSheet.on{display:flex;animation:svcFade .2s}
@@ -6853,7 +6870,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v496</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v497</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -15527,7 +15544,7 @@ function changesHTML(o){
     <div class="chg2-t"><span>المبلغ الجديد</span><div>${net!==0?`<s>${was.toLocaleString()}</s>`:''}<b>${Number(o.total||0).toLocaleString()} د.ع</b></div></div></div>`;
 }
 /* الزبون: كارت الموافقة */
-const _PCI2={phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20 15.5a2 2 0 0 1-2 2H8l-4 3.5v-15a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>',x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>'};
+const _PCI2={plus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',clock:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>',phone:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>',chat:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round"><path d="M20 15.5a2 2 0 0 1-2 2H8l-4 3.5v-15a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2z"/></svg>',x:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>'};
 const _PCI={"swap": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M20 7H5M9 3 5 7l4 4\"/><path d=\"M4 17h15M15 13l4 4-4 4\"/></svg>", "clock": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg>", "bag": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"><path d=\"M5.5 8h13l1 12.5h-15z\"/><path d=\"M8.8 8V6.4a3.2 3.2 0 0 1 6.4 0V8\"/></svg>", "note": "<svg viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"><path d=\"M6 3.5h12v17l-2.7-1.8-2.8 1.8-2.8-1.8L6 20.5z\"/><path d=\"M9.5 8.5h5M9.5 12.5h5\"/></svg>"};
 function _pcTile(img,cls,badge,name,price,extra){ return `<div class="pc2-p ${cls}"><div class="pc2-im">${img?`<img src="${esc(img)}" alt="">`:`<i>${_PCI.bag}</i>`}<span class="pc2-bd">${badge}</span></div><b>${esc(name||'')}</b><div class="pc2-pr">${price}${extra||''}</div></div>` }
 function propCardsHTML(o){
@@ -15557,18 +15574,16 @@ async function propAnswer(oid,ix,ok){
 function _ioCan(o){ return _isMarket(myShopDoc) && ['pending','accepted','ready'].includes(o.status) && !o.picked_at }
 function ioWaitHTML(ix,i){
   if(!(i.prop&&i.prop.status==='pending')) return '';
-  const pct=Math.max(0,Math.min(100,(new Date(i.prop.exp).getTime()-Date.now())/3000));
-  const ic=i.prop.img?`<img class="iw2-im" src="${esc(i.prop.img)}" alt="">`:`<div class="iw2-ic">${_PCI.swap}</div>`;
-  return `<div class="iw2"><div class="pc2-bar"><i data-expbar="${esc(i.prop.exp)}" style="width:${pct}%"></i></div><div class="iw2-r">${ic}<div class="iw2-t"><b>ننتظر موافقة الزبون</b><span>البديل: ${esc(i.prop.name||'')}${i.prop.price!=null?' · '+Number(i.prop.price).toLocaleString()+' د.ع':''}</span></div><b class="iw2-tm" data-exp="${esc(i.prop.exp)}">${_mmss(i.prop.exp)}</b></div><button type="button" onclick="ioCancel(${ix})">إلغاء الاقتراح</button></div>`;
+  return `<div class="iw3"><i>${_PCI2.clock}</i><span>ننتظر الزبون على <b>${esc(i.prop.name||'البديل')}</b></span><u data-exp="${esc(i.prop.exp)}">${_mmss(i.prop.exp)}</u><button type="button" onclick="ioCancel(${ix})">إلغاء</button></div>`;
 }
 function ioRowHTML(o,ix,i){
-  const pst=i.prop&&i.prop.status, pdone=pst&&PROP_DONE[pst]?`<div class="io-row pd ${pst}">${PROP_DONE[pst]}</div>`:'';
-  if(i.gone) return '<div class="io-row gone"><span class="chg2-c rm">نفذت · انشالت</span></div>'+pdone;
-  if(i.sub_from) return `<div class="io-row sb"><span class="chg2-c sb">بدل ${esc(i.sub_from.name||'')} · ${Number(i.sub_from.price||0).toLocaleString()}</span></div>`+pdone;
+  const pst=i.prop&&i.prop.status;
+  if(i.gone){ const why=pst==='no'?' · الزبون رفض البديل':pst==='auto_no'?' · الزبون ما جاوب':''; return `<div class="io-row"><span class="chg2-c rm">انشالت${why}</span></div>` }
+  if(i.sub_from){ const why=pst==='ok'?' · وافق الزبون':pst==='auto_ok'?' · حسب اختيار الزبون':''; return `<div class="io-row"><span class="chg2-c sb">بدل ${esc(i.sub_from.name||'')}${why}</span></div>` }
   if(pst==='pending') return '';
-  if(!_ioCan(o)) return pdone;
-  const k=SUBL[i.sub]?i.sub:'call';
-  return pdone+`<div class="io-row"><button type="button" class="io-lnk" onclick="ioOpen(${ix})">خلصت؟</button></div>`;
+  const ex=pst==='expired'?'<div class="io-row pd expired">الزبون ما جاوب — اتصل بيه</div>':'';
+  if(!_ioCan(o)) return ex;
+  return ex+`<div class="io-row"><button type="button" class="io-lnk" onclick="ioOpen(${ix})">خلصت؟</button></div>`;
 }
 async function ioCancel(ix){ try{ await rpc('shop_item_prop_cancel',{p_order:_odId,p_idx:ix}); const o=(myOrders||[]).find(x=>x.id===_odId); if(o&&o.items[ix]&&o.items[ix].prop) o.items[ix].prop.status='cancel'; toast('انلغى الاقتراح'); try{ renderOrdDet() }catch(_){} }catch(e){ toast(errMsg(e)) } }
 let _io=null;
@@ -15581,13 +15596,11 @@ function ioOpen(ix){
   const k=SUBL[i.sub]?i.sub:'call', ph=String(o.phone||o.custPhone||'').replace(/[^\d+]/g,'');
   const el=_ioSheet();
   const im=(()=>{ const pp=((myShopDoc&&myShopDoc.products)||[]).find(x=>String(x.id)===String(i.pid)); if(!pp) return ''; const z=pSizes(pp).find(z=>z.n===i.size); return (z&&z.img)||pp.img||'' })();
-  const KL={similar:'بديل مشابه',remove:'شيلها',call:'اتصل بيّ'};
-  el.innerHTML=`<div class="wgcard io3"><button class="wgx" onclick="ioClose()" aria-label="سكّر">×</button>
-    <div class="io3-h"><div class="io3-im">${im?`<img src="${esc(im)}" alt="">`:`<i>${_PCI.bag}</i>`}</div><div><span>مادة خلصت؟</span><b>${esc(i.name||'')}</b><em>${Number(i.qty||1)} × ${Number(i.price||0).toLocaleString()} د.ع</em></div></div>
-    <div class="io3-pref"><span>الزبون اختار إذا خلصت</span><b class="${k}">${KL[k]}</b></div>
-    ${!i.kg?`<button type="button" class="io3-main" onclick="ioPick()"><i>${_PCI.swap}</i><span><b>اقترح بديل</b><em>الزبون يوافق أو يرفض من التطبيق</em></span></button>`:''}
-    <button type="button" class="io3-rm" onclick="ioDo('remove')"><i>${_PCI2.x}</i><span><b>شيلها من الطلب</b><em>المبلغ ينقص ${itLine(i).toLocaleString()} د.ع</em></span></button>
-    <div class="io3-2">${ph?`<a href="tel:${esc(ph)}" class="call"><i>${_PCI2.phone}</i>اتصل بالزبون</a>`:''}<button type="button" onclick="ioClose();chatOpen('${o.id}','shop')"><i>${_PCI2.chat}</i>اكتب له</button></div>
+  const KL={similar:'بديل مشابه',remove:'تشيلها',call:'تتصل بيه'};
+  el.innerHTML=`<div class="wgcard io3 io4"><button class="wgx" onclick="ioClose()" aria-label="سكّر">×</button>
+    <div class="io4-h"><div class="io3-im">${im?`<img src="${esc(im)}" alt="">`:`<i>${_PCI.bag}</i>`}</div><div><b>${esc(i.name||'')}</b><span>الزبون يريد: <u class="${k}">${KL[k]}</u></span></div></div>
+    <div class="io4-b${i.kg?' one':''}">${!i.kg?`<button type="button" class="io4-sub" onclick="ioPick()">${_PCI.swap}بديل</button>`:''}<button type="button" class="io4-rm" onclick="ioDo('remove')">${_PCI2.x}شيلها</button></div>
+    <div class="io4-ct">${ph?`<a href="tel:${esc(ph)}">${_PCI2.phone}اتصل</a>`:''}<button type="button" onclick="ioClose();chatOpen('${o.id}','shop')">${_PCI2.chat}اكتب له</button></div>
   </div>`;
   el.classList.add('on');
 }
@@ -15606,10 +15619,9 @@ function ioPick(){
   rows=rows.slice(0,40); _io.rows=rows;
   const el=_ioSheet();
   el.innerHTML=`<div class="wgcard io3"><button class="wgx" onclick="ioOpen(${_io.ix})" aria-label="رجوع">›</button>
-    <div class="io3-t"><b>اختار البديل</b><span>بدل «${esc(i.name||'')}» · ${Number(i.price||0).toLocaleString()} د.ع</span></div>
+    <div class="io3-t"><b>اختار البديل</b></div>
     <label class="io3-s"><i>${_PCI2.search}</i><input id="ioQ" type="search" placeholder="ابحث بقائمتك" value="${esc(_io.q||'')}" oninput="_io.q=this.value;ioPick();setTimeout(()=>{const e=document.getElementById('ioQ');if(e){e.focus();e.setSelectionRange(e.value.length,e.value.length)}},0)"></label>
-    <textarea class="io3-msg" id="ioMsg" rows="1" maxlength="160" placeholder="رسالة للزبون (اختياري) — مثال: عدنا بس الحجم الكبير" oninput="_io.msg=this.value">${esc(_io.msg||'')}</textarea>
-    <div class="io-l">${rows.map((r,k)=>{ const d=r.price*q-itLine(i); return `<button type="button" class="io-r" onclick="ioPickGo(${k})"><div class="io3-pi">${r.img?`<img src="${esc(r.img)}" alt="">`:`<i>${_PCI.bag}</i>`}</div><span><b>${esc(r.name)}</b><em>${r.price.toLocaleString()} د.ع</em></span><u class="${d>0?'up':d<0?'dn':'eq'}">${d===0?'نفس السعر':(d>0?'+':'−')+Math.abs(d).toLocaleString()}</u></button>` }).join('')||'<div class="lm-empty">ماكو مواد مطابقة</div>'}</div>
+    <div class="io-l">${rows.map((r,k)=>`<button type="button" class="io-r" onclick="ioPickGo(${k})"><div class="io3-pi">${r.img?`<img src="${esc(r.img)}" alt="">`:`<i>${_PCI.bag}</i>`}</div><span><b>${esc(r.name)}</b><em>${r.price.toLocaleString()} د.ع</em></span><i class="io4-go">${_PCI2.plus}</i></button>`).join('')||'<div class="lm-empty">ماكو مواد مطابقة</div>'}</div>
   </div>`;
 }
 async function ioPickGo(k){
@@ -28782,7 +28794,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v496', seen={}, n=0, q=[], t=null;
+  var VER='v497', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29034,7 +29046,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v496', t0=Date.now();
+  var VER='v497', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
