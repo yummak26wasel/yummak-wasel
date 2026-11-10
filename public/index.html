@@ -3796,6 +3796,21 @@ html[data-theme=dark] .jck>span.y{background:#123524}html[data-theme=dark] .jck>
 .oa-t{font-size:13px;font-weight:900;color:#1F1640;margin:14px 2px 6px}
 .oa-r{display:flex;align-items:center;gap:10px;background:#F8F7FB;border-radius:14px;padding:10px 12px;margin-bottom:6px}.oa-r>div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start}
 .oa-r b{font-size:14.5px;font-weight:900;color:#1F1640}.oa-r span{font-size:11.5px;font-weight:700;color:#7a7392}.oa-r button{border:0;background:#fff;border-radius:10px;padding:6px 12px;font:800 12px Cairo,Tahoma,sans-serif;color:#B91C1C;flex:none}
+.tm-r{display:flex;align-items:center;gap:12px;width:100%;background:#F8F7FB;border:0;border-radius:16px;padding:11px 12px;margin-bottom:8px;font:inherit;text-align:right;cursor:pointer}.tm-r:active{transform:scale(.985)}
+.tm-r>i{font-style:normal;width:42px;height:42px;border-radius:50%;background:#4B2BB0;color:#fff;display:grid;place-items:center;font:900 17px Cairo,Tahoma,sans-serif;flex:none}
+.tm-r>div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:2px}.tm-r b{font-size:15px;font-weight:900;color:#1F1640}
+.tm-r span{font-size:12px;font-weight:700;color:#7a7392;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}.tm-r em{font-style:normal;color:#b5aec8;font-size:22px;line-height:1}
+.tm-empty{text-align:center;color:#8a83a0;font-weight:800;font-size:14px;padding:22px 0 14px}
+.tm-go{display:block;width:100%;margin-top:10px;height:50px}
+.tm-t{font-size:13.5px;font-weight:900;color:#1F1640;margin:2px 2px 8px}
+.tm-ps{display:flex;flex-direction:column;gap:8px}
+.tm-p{display:flex;align-items:center;gap:12px;width:100%;background:#fff;border:1.6px solid #ECE7F6;border-radius:16px;padding:10px 12px;font:inherit;text-align:right;cursor:pointer;transition:border-color .15s,background .15s}
+.tm-p>i{font-style:normal;width:40px;height:40px;border-radius:12px;background:#F3EEFD;display:grid;place-items:center;font-size:20px;flex:none}
+.tm-p>div{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px}.tm-p b{font-size:14.5px;font-weight:900;color:#1F1640}.tm-p span{font-size:11.5px;font-weight:700;color:#8a83a0}
+.tm-p em{width:24px;height:24px;border-radius:8px;border:2px solid #D9D2EA;flex:none;display:grid;place-items:center;box-sizing:border-box}
+.tm-p.on{border-color:#4B2BB0;background:#F7F4FE}.tm-p.on em{background:#4B2BB0;border-color:#4B2BB0}
+.tm-p.on em::after{content:'';width:10px;height:5px;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:translateY(-1px) rotate(-45deg)}
+.tm-rm{display:block;width:100%;margin-top:8px;height:46px;border:0;border-radius:13px;background:#FDF0F0;color:#B91C1C;font:900 14.5px Cairo,Tahoma,sans-serif}
 html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,html[data-theme=dark] .oa-t{color:#e9e4f5}html[data-theme=dark] .oa-r button{background:#1f1a30}
 /* v498 — بطاقة البديل عند الزبون أصغر وأوضح */
 .pc3{padding:14px 14px 10px}
@@ -6898,7 +6913,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v506</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v507</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -7124,7 +7139,7 @@ body,.screen{background:#fff;color:var(--txt)}
     <div class="page" id="d_set"> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg> حسابي</h3> <div id="ds_photo" style="text-align:center;margin-bottom:10px"></div> <div class="set-row"><span>الاسم</span><span class="v" id="ds_name">—</span></div> <div class="set-row"><span>الهاتف</span><span class="v" id="ds_phone">—</span></div> <div class="set-row"><span>المركبة</span><span class="v" id="ds_veh">—</span></div> <div class="set-row"><span>الإصدار</span><span class="v appVerTxt"></span></div>
 </div> <div class="panel" style="display:none"><!-- قديم: التسديد صار من «تسديد التطبيق» --><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a2 2 0 0 1 2 2v1"/><path d="M3 8.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg> حسابي مع الإدارة</h3> <div id="ds_debt"></div></div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 15.5h16M4.5 12h15"/><path d="M3.5 15.5c0 2 1.6 3.5 3.5 3.5h10c1.9 0 3.5-1.5 3.5-3.5"/><path d="M3.5 12C3.5 8.4 7.3 5.5 12 5.5s8.5 2.9 8.5 6.5"/></svg> اطلب لنفسك</h3> <div class="tgnote">تگدر تطلب أكل بنفس حسابك — ما تحتاج حساب ثاني.</div> <button class="big-btn" onclick="openShopping()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg> افتح المحلات واطلب</button> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg> مراسلة الإدارة</h3> <div id="myChatD"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> الإشعارات</h3> <div class="tgnote">فعّل الإشعارات حتى توصلك الطلبات الجديدة والهاتف مسكّر.</div> <div class="set-row"><span>صوت داخل التطبيق</span><div class="tg on" id="dSndTg" onclick="this.classList.toggle('on')"></div></div> <div class="set-row"><span>إشعار المتصفح</span><span class="v" id="dPermTxt">—</span></div> <div class="btns"><button class="btn" onclick="enablePush()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> تفعيل الإشعارات</button> <button class="btn gh" onclick="testAlarm()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 9.5h3.5L12 5.5v13L7.5 14.5H4z"/><path d="M15.5 9.6a3.4 3.4 0 0 1 0 4.8M18 7a7 7 0 0 1 0 10"/></svg> جرّب الصوت</button></div></div>  <div class="panel" style="margin-bottom:8px"><button class="big-btn out-btn" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button></div><div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div> </div> </div> <div class="nav" id="dNav"> <button class="on" onclick="dtab('avail',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>متاحة<span class="b" id="availCnt">0</span></button> <button onclick="dtab('mine',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M8.5 17.5h7l-3-8h-2"/><path d="M15.5 9.5h3l1 4"/></svg></span>طلباتي<span class="b" id="mineCnt">0</span></button> <button onclick="dtab('hist',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>السجل</button> <button onclick="dtab('set',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>حسابي</button> </div>
 </div> <!-- ═══ ADMIN ═══ -->
-<div class="screen" id="aApp"> <div class="top"><div class="l"><img class="mini" src="792707e8.png" alt=""><div> <h2>لوحة المؤسس</h2><p>واصل ليمَك — عانة</p></div></div> <button class="out" onclick="logout()">خروج</button></div> <div class="body"> <div class="page on" id="a_over">
+<div class="screen" id="aApp"> <div class="top"><div class="l"><img class="mini" src="792707e8.png" alt=""><div> <h2 id="aTitle">لوحة المؤسس</h2><p>واصل ليمَك — عانة</p></div></div> <button class="out" onclick="logout()">خروج</button></div> <div class="body"> <div class="page on" id="a_over">
  <div id="aPushBan"></div>
  <div id="aHome"></div>
  <div id="aHead"></div>
@@ -7249,13 +7264,13 @@ body,.screen{background:#fff;color:var(--txt)}
 
   <button class="wl-btn o block" id="pmoSend" onclick="pmoSend()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M21.5 2.5 2 10.2l7.6 2.9 2.9 7.6z"/><path d="M21.5 2.5 9.6 13.1"/></svg> إرسال الإشعار</button>
   <div class="pmo-cnt" id="pmoCnt"></div>
-</div> <div class="page" id="a_cfg"><!-- v351: صفحة الإعدادات مرتّبة بأقسام — نفس الحقول والأزرار بالضبط --><div class="cfg-acts"><button type="button" onclick="openOffers()"><i><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></i><b>العروض والخصومات</b></button><button type="button" onclick="atab('promo',null)"><i><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></i><b>إشعار ترويجي</b></button><button type="button" onclick="openSetLog()"><i><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4V12l3 1.8"/></svg></i><b>سجل التعديلات</b></button><button type="button" onclick="updAdmOpen()"><i>📲</i><b>تحديث المتجر</b></button><button type="button" onclick="otpAdmOpen()"><i>📵</i><b>رقم بلا واتساب</b></button></div><div id="setLog"></div><details class="cfg-g" id="cfgGO" open><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></i><div><b>استقبال الطلبات</b><span id="cfgSumO"></span></div></summary><div class="cfg-b"><div class="ord-cfg" id="cfgOrdBox" style="display:none"><div class="fld"><label>🚀 استقبال الطلبات</label><select id="cfgOrdOpen"><option value="0">مسكّرة — الزبون يسجّل ويتصفح بس</option><option value="1">مفتوحة — الكل يطلب</option></select><div class="fldhelp">لما تفتحها، الزبائن يگدرون يطلبون فوراً.</div></div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button></div></details><details class="cfg-g cfg-lock" id="cfgGP" ontoggle="cfgLockToggle(this)"><summary><i class="cg-ic">🔒</i><div><b>الأسعار والاتفاقيات</b><span>ثابتة حسب الاتفاق — أجور التوصيل، وعمولات السواق والمحلات</span></div></summary><div class="cfg-b"><div class="cfg-lknote">هذي حسب الاتفاق ويا السواق والمحلات. أي تغيير هنا يأثّر على حساباتهم — غيّرها بس إذا تغيّر الاتفاق.</div><div class="cfgsec">أجور التوصيل</div><div class="fld"><label>أجرة التوصيل للطلبات العادية (د.ع)</label><input type="number" id="cfgFee" inputmode="numeric"></div><div class="fld"><label>أجرة طلبات «اشترِيلي» (د.ع)</label><input type="number" id="cfgSpecial" inputmode="numeric"> <div class="fldhelp">تظهر تلقائياً للزبون بصفحة اشترِيلي.</div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button><details class="cfg-g" id="cfgGD"><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.6" r="3.6"/><path d="M4.5 20.5c.8-3.9 3.9-6 7.5-6s6.7 2.1 7.5 6"/></svg></i><div><b>السائقين</b><span id="cfgSumD"></span></div></summary><div class="cfg-b"><div class="cfgsec">عمولة السائق</div>
+</div> <div class="page" id="a_cfg"><!-- v351: صفحة الإعدادات مرتّبة بأقسام — نفس الحقول والأزرار بالضبط --><div class="cfg-acts"><button type="button" onclick="openOffers()"><i><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M20.5 13.4 13.4 20.5a2 2 0 0 1-2.8 0l-7.1-7.1a2 2 0 0 1-.6-1.4V4.5A1.5 1.5 0 0 1 4.4 3h7.5a2 2 0 0 1 1.4.6l7.2 7.2a2 2 0 0 1 0 2.6z"/><circle cx="7.8" cy="7.8" r="1.5"/></svg></i><b>العروض والخصومات</b></button><button type="button" onclick="atab('promo',null)"><i><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></i><b>إشعار ترويجي</b></button><button type="button" onclick="openSetLog()"><i><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.6"/><path d="M12 7.4V12l3 1.8"/></svg></i><b>سجل التعديلات</b></button><button type="button" onclick="updAdmOpen()"><i>📲</i><b>تحديث المتجر</b></button><button type="button" onclick="otpAdmOpen()"><i>📵</i><b>رقم بلا واتساب</b></button><button type="button" data-own="1" onclick="teamOpen()"><i>👥</i><b>الفريق</b></button></div><div id="setLog"></div><details class="cfg-g" id="cfgGO" open><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.6" cy="17.4" r="2.9"/><circle cx="18.4" cy="17.4" r="2.9"/><path d="M8.5 17.4h7l-3-8h-2M15.5 9.4h3l1 4"/></svg></i><div><b>استقبال الطلبات</b><span id="cfgSumO"></span></div></summary><div class="cfg-b"><div class="ord-cfg" id="cfgOrdBox" style="display:none"><div class="fld"><label>🚀 استقبال الطلبات</label><select id="cfgOrdOpen"><option value="0">مسكّرة — الزبون يسجّل ويتصفح بس</option><option value="1">مفتوحة — الكل يطلب</option></select><div class="fldhelp">لما تفتحها، الزبائن يگدرون يطلبون فوراً.</div></div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button></div></details><details class="cfg-g cfg-lock" id="cfgGP" ontoggle="cfgLockToggle(this)"><summary><i class="cg-ic">🔒</i><div><b>الأسعار والاتفاقيات</b><span>ثابتة حسب الاتفاق — أجور التوصيل، وعمولات السواق والمحلات</span></div></summary><div class="cfg-b"><div class="cfg-lknote">هذي حسب الاتفاق ويا السواق والمحلات. أي تغيير هنا يأثّر على حساباتهم — غيّرها بس إذا تغيّر الاتفاق.</div><div class="cfgsec">أجور التوصيل</div><div class="fld"><label>أجرة التوصيل للطلبات العادية (د.ع)</label><input type="number" id="cfgFee" inputmode="numeric"></div><div class="fld"><label>أجرة طلبات «اشترِيلي» (د.ع)</label><input type="number" id="cfgSpecial" inputmode="numeric"> <div class="fldhelp">تظهر تلقائياً للزبون بصفحة اشترِيلي.</div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button><details class="cfg-g" id="cfgGD"><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="7.6" r="3.6"/><path d="M4.5 20.5c.8-3.9 3.9-6 7.5-6s6.7 2.1 7.5 6"/></svg></i><div><b>السائقين</b><span id="cfgSumD"></span></div></summary><div class="cfg-b"><div class="cfgsec">عمولة السائق</div>
  <div class="fld"><label>مفعّلة؟</label><select id="cfgDrvOn"><option value="0">لا — مجاني حالياً</option><option value="1">نعم</option></select></div>
  <div class="fld"><label>النوع</label><select id="cfgDrvKind"><option value="fixed">مبلغ ثابت (د.ع)</option><option value="percent">نسبة من التوصيل (%)</option></select></div>
  <div class="fld"><label>القيمة</label><input type="number" id="cfgCom" inputmode="numeric"></div><div class="fld"><label>مهلة تسديد العمولة (أيام)</label><input type="number" id="cfgDays" inputmode="numeric"><div class="fldhelp">إذا السائق ما سدّد خلال المهلة، حسابه يتوقف تلقائياً عن أخذ الطلبات لين تسوّي تسوية.</div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button><div class="cfgsec">دورة تسديد السائقين <small>تنحفظ فوراً لما تختار</small></div><div class="tgnote" style="margin-bottom:10px">كل شكد السائق يسدّد رسوم التطبيق ورسوم السائق. تظهر تلقائياً بحسابات كل السائقين.</div> <div id="cycOpts" style="display:flex;gap:8px"></div> <div class="tgnote" id="cycNote" style="margin-top:10px"></div></div></details><details class="cfg-g" id="cfgGS"><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></i><div><b>المحلات</b><span id="cfgSumS"></span></div></summary><div class="cfg-b"><div class="cfgsec">عمولة المحلات</div>
  <div class="fld"><label>مفعّلة؟</label><select id="cfgShopOn"><option value="0">لا — غير محددة</option><option value="1">نعم</option></select></div>
  <div class="fld"><label>النوع</label><select id="cfgShopKind"><option value="percent">نسبة من المبيعات (%)</option><option value="fixed">مبلغ ثابت (د.ع)</option></select></div>
- <div class="fld"><label>النسبة (الشريحة الأولى) %</label><input type="number" id="cfgShopVal" inputmode="decimal" step="0.1" min="0" max="50"></div> <div id="cfgTierBox"><div class="fld"><label>بالشرائح؟</label><select id="cfgTierOn"><option value="1">نعم — العمولة تنزل كل ما كبر الطلب</option><option value="0">لا — نسبة وحدة لكل الطلبات</option></select></div><div class="cfgtr"><div class="fld"><label>الشريحة الأولى لحد (د.ع)</label><input type="number" id="cfgT1" inputmode="numeric" min="0" step="1000" placeholder="25000"></div><div class="fld"><label>الثانية لحد (د.ع)</label><input type="number" id="cfgT2" inputmode="numeric" min="0" step="1000" placeholder="50000"></div></div><div class="cfgtr"><div class="fld"><label>نسبة الثانية %</label><input type="number" id="cfgT2p" inputmode="decimal" step="0.1" min="0" max="50" placeholder="4.8"></div><div class="fld"><label>نسبة الباقي %</label><input type="number" id="cfgT3p" inputmode="decimal" step="0.1" min="0" max="50" placeholder="4.3"></div></div><div class="fldhelp" id="cfgTierEx"></div></div><div class="fld"><label>أجرة استدعاء دلفيري — طلب خارجي (د.ع)</label><input type="number" id="cfgExt" inputmode="numeric" min="0" placeholder="500"><div class="fldhelp">المطعم يدفعها بفاتورته على كل استدعاء، بدل العمولة.</div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button><div class="cfgsec">دورة تسديد المطاعم <small>تنحفظ فوراً لما تختار</small></div><div class="tgnote" style="margin-bottom:10px">كل شكد المطعم يسدّد عمولة التطبيق.</div> <div id="shopCycOpts" style="display:flex;gap:8px"></div> <div class="tgnote" id="shopCycNote" style="margin-top:10px"></div></div></details></div></details><details class="cfg-g" id="cfgGA"><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h3.5M14.5 13.5h3.5"/></svg></i><div><b>حسابي</b><span id="cfgSumA"></span></div></summary><div class="cfg-b"><div class="set-row"><span>الاسم</span><span class="v" id="ad_name">—</span></div> <div class="set-row"><span>الهاتف</span><span class="v" id="ad_phone">—</span></div> <div class="set-row"><span>الصلاحية</span><span class="v">مؤسس — صلاحية كاملة</span></div> <div class="set-row"><span>الإصدار</span><span class="v appVerTxt"></span></div></div></details></div> </div> <div class="nav" id="aNav"> <button class="on" onclick="atab('over',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>عام</button> <button onclick="atab('join',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>انضمام<span class="b" id="joinCnt">0</span></button> <button onclick="atab('people',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>المشتركين</button> <button onclick="atab('orders',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>الطلبات</button> <button data-t="drv" onclick="atab('drv',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="2.6"/><circle cx="18" cy="17" r="2.6"/><path d="M8.6 17h6.8M14 7h3l2.5 7.5M6 17l3-7h5l1 4"/></svg></span>السواق</button> <button onclick="atab('sup',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-11.6 7.1L3 20.5l1.9-6.3A8 8 0 1 1 21 11.5z"/></svg></span>الدعم<span class="b" id="supCnt">0</span></button> <button onclick="openFin(null,this)"><span class="ni"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle class="in" cx="12" cy="12" r="2.6"/><path class="in" d="M6 9.5v5M18 9.5v5"/></svg></span>المالية<span class="b" id="finCnt" style="display:none">0</span></button> <button onclick="atab('cfg',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span>إعدادات</button> </div>
+ <div class="fld"><label>النسبة (الشريحة الأولى) %</label><input type="number" id="cfgShopVal" inputmode="decimal" step="0.1" min="0" max="50"></div> <div id="cfgTierBox"><div class="fld"><label>بالشرائح؟</label><select id="cfgTierOn"><option value="1">نعم — العمولة تنزل كل ما كبر الطلب</option><option value="0">لا — نسبة وحدة لكل الطلبات</option></select></div><div class="cfgtr"><div class="fld"><label>الشريحة الأولى لحد (د.ع)</label><input type="number" id="cfgT1" inputmode="numeric" min="0" step="1000" placeholder="25000"></div><div class="fld"><label>الثانية لحد (د.ع)</label><input type="number" id="cfgT2" inputmode="numeric" min="0" step="1000" placeholder="50000"></div></div><div class="cfgtr"><div class="fld"><label>نسبة الثانية %</label><input type="number" id="cfgT2p" inputmode="decimal" step="0.1" min="0" max="50" placeholder="4.8"></div><div class="fld"><label>نسبة الباقي %</label><input type="number" id="cfgT3p" inputmode="decimal" step="0.1" min="0" max="50" placeholder="4.3"></div></div><div class="fldhelp" id="cfgTierEx"></div></div><div class="fld"><label>أجرة استدعاء دلفيري — طلب خارجي (د.ع)</label><input type="number" id="cfgExt" inputmode="numeric" min="0" placeholder="500"><div class="fldhelp">المطعم يدفعها بفاتورته على كل استدعاء، بدل العمولة.</div></div><button class="big-btn" onclick="saveCfg()">حفظ الإعدادات</button><div class="cfgsec">دورة تسديد المطاعم <small>تنحفظ فوراً لما تختار</small></div><div class="tgnote" style="margin-bottom:10px">كل شكد المطعم يسدّد عمولة التطبيق.</div> <div id="shopCycOpts" style="display:flex;gap:8px"></div> <div class="tgnote" id="shopCycNote" style="margin-top:10px"></div></div></details></div></details><details class="cfg-g" id="cfgGA"><summary><i class="cg-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><circle cx="9" cy="11" r="2.2"/><path d="M5.8 16.2c.6-1.6 1.8-2.4 3.2-2.4s2.6.8 3.2 2.4M14.5 10h3.5M14.5 13.5h3.5"/></svg></i><div><b>حسابي</b><span id="cfgSumA"></span></div></summary><div class="cfg-b"><div class="set-row"><span>الاسم</span><span class="v" id="ad_name">—</span></div> <div class="set-row"><span>الهاتف</span><span class="v" id="ad_phone">—</span></div> <div class="set-row"><span>الصلاحية</span><span class="v" id="ad_role">مؤسس — صلاحية كاملة</span></div> <div class="set-row"><span>الإصدار</span><span class="v appVerTxt"></span></div></div></details></div> </div> <div class="nav" id="aNav"> <button class="on" onclick="atab('over',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg></span>عام</button> <button onclick="atab('join',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M13 2 4 14h6l-1 8 9-12h-6l1-8z"/></svg></span>انضمام<span class="b" id="joinCnt">0</span></button> <button onclick="atab('people',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.6"/><path d="M4.5 20c.9-3.7 3.9-5.6 7.5-5.6s6.6 1.9 7.5 5.6"/></svg></span>المشتركين</button> <button onclick="atab('orders',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg></span>الطلبات</button> <button data-t="drv" onclick="atab('drv',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="6" cy="17" r="2.6"/><circle cx="18" cy="17" r="2.6"/><path d="M8.6 17h6.8M14 7h3l2.5 7.5M6 17l3-7h5l1 4"/></svg></span>السواق</button> <button onclick="atab('sup',this)"><span class="ni"><svg viewBox="0 0 24 24"><path d="M21 11.5a8 8 0 0 1-11.6 7.1L3 20.5l1.9-6.3A8 8 0 1 1 21 11.5z"/></svg></span>الدعم<span class="b" id="supCnt">0</span></button> <button onclick="openFin(null,this)"><span class="ni"><svg viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle class="in" cx="12" cy="12" r="2.6"/><path class="in" d="M6 9.5v5M18 9.5v5"/></svg></span>المالية<span class="b" id="finCnt" style="display:none">0</span></button> <button onclick="atab('cfg',this)"><span class="ni"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.6 1.6 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.6 1.6 0 0 0-1.8-.3 1.6 1.6 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.6 1.6 0 0 0 9 19.4a1.6 1.6 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.6 1.6 0 0 0 .3-1.8 1.6 1.6 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.6 1.6 0 0 0 4.6 9a1.6 1.6 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.6 1.6 0 0 0 1.8.3H9a1.6 1.6 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.6 1.6 0 0 0 1 1.5 1.6 1.6 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.6 1.6 0 0 0-.3 1.8V9a1.6 1.6 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.6 1.6 0 0 0-1.5 1z"/></svg></span>إعدادات</button> </div>
 </div> <div id="viewMapSheet" onclick="if(event.target===this)closeViewMap()"> <div class="msheet">
   <div class="mshead">
     <h4 id="vmTitle"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21.5s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10.3" r="2.6"/></svg> موقع الزبون</h4>
@@ -9546,13 +9561,13 @@ function npAskRole(){
   el.classList.add('on');
 }
 function pushBoot(){
-  if(!me||!['driver','store','admin'].includes(me.role)) return;
+  if(!me||!['driver','store','admin','staff'].includes(me.role)) return;
   pushUiAll();
   if(pushState()==='off' && !window.__npSess){ window.__npSess=1; npAskRole() }
   if(!window.__pbT){ window.__pbT=1; setTimeout(()=>{ try{ pushUiAll() }catch(e){} },16000) }
 }
 document.addEventListener('visibilitychange',()=>{
-  if(document.visibilityState!=='visible'||!me||!['driver','store','admin'].includes(me.role)) return;
+  if(document.visibilityState!=='visible'||!me||!['driver','store','admin','staff'].includes(me.role)) return;
   try{
     if('Notification' in window && Notification.permission==='granted' && !myFcmToken && fcm)
       initPush(true).then(r=>{ pushTriedMark(); refreshPushUI(); return r });
@@ -9652,13 +9667,13 @@ const ADMIN_UID_FALLBACK=['5ee9bca0-4d18-4b97-9b6e-73e001bdf208'];
 let _admIds=null, _admIdsAt=0;
 async function pushAdmins(title,body,data){
   try{
-    if(!uid || (me&&me.role==='admin')) return;
+    if(!uid || amOwner()) return;
     if(!_admIds || Date.now()-_admIdsAt>3600e3){
       let ids=[];
       try{ const r=await rpc('admin_push_ids',{}); ids=(Array.isArray(r)?r:[]).map(x=>(x&&typeof x==='object')?(x.admin_push_ids||x.id):x).filter(Boolean) }catch(e){}
       _admIds=ids.length?ids:ADMIN_UID_FALLBACK; _admIdsAt=Date.now();
     }
-    _admIds.slice(0,3).forEach(id=>{ try{ __sendPush({user_id:String(id)},title,body,Object.assign({type:'admin'},data||{})) }catch(e){} });
+    _admIds.filter(id=>String(id)!==String(uid)).slice(0,6).forEach(id=>{ try{ __sendPush({user_id:String(id)},title,body,Object.assign({type:'admin'},data||{})) }catch(e){} });
   }catch(e){}
 }
 /* v371: تذكير المحل بالطلب لحد ما يقبله (من تلفون الزبون — طول ما الزبون ينتظر) */
@@ -10052,7 +10067,7 @@ async function __preSignupCheck(core,pass){
     const d=await db.collection('users').doc(cred.user.uid).get();
     if(!d.exists){ await auth.signOut(); signingUp=false; return 'new' }   /* حساب ما اكتمل — يكمّل بالطريق العادي */
     const R=d.data().role||'';
-    if(R!=='admin' && R!==role){
+    if(R!=='admin' && R!=='staff' && R!==role){
       await auth.signOut(); signingUp=false; busy(false);
       showErr(_roleMsg(R,role));
       return 'done';
@@ -10147,7 +10162,7 @@ async function doAuth(){
           if(ex.exists){
             /* الحساب مكتمل أصلاً وكلمة المرور صحيحة — ندخّله مباشرة */
             const R2=ex.data().role||'';
-            if(R2!=='admin' && R2!==role){
+            if(R2!=='admin' && R2!=='staff' && R2!==role){
               signingUp=false; busy(false); await auth.signOut();
               const r2={store:'متجر',driver:'سائق',customer:'عميل'}[R2]||'دور ثاني';
               return showErr('هذا الرقم مسجّل كـ '+r2+' — بدّل التبويب وسجّل دخول');
@@ -10233,7 +10248,7 @@ async function doAuth(){
       return showErr('حسابك ما اكتمل — اضغط «سجّل الآن» بنفس الرقم وكلمة المرور حتى يكمّل');
     }
     const R=d.data().role||'';
-    if(R!=='admin' && R!==role){
+    if(R!=='admin' && R!=='staff' && R!==role){
       signingUp=false; busy(false); await auth.signOut();
       return showErr(_roleMsg(R,role));
     }
@@ -10268,6 +10283,11 @@ async function doAuth(){
   }
 }
 
+/* v507: فريق الإدارة — المؤسس كل شي، والموظف بس الي سمحله بيه */
+function amOwner(){ return !!(me && me.role==='admin') }
+function amTeam(){ return !!(me && (me.role==='admin' || me.role==='staff')) }
+function tCan(p){ if(!me) return false; if(me.role==='admin') return true; if(me.role!=='staff') return false;
+  const P=me.perms||[]; return String(p||'').split(',').some(x=>x==='any'?P.length>0:P.includes(x)) }
 function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
   /* v444: الدخول اليدوي (بعد «دخول») ما كان يحمّل بيانات الموظف — فبطاقة «أنت موظف في…» ما تطلع إلا إذا سكّر التطبيق وفتحه.
@@ -10280,12 +10300,13 @@ function enter(){
   window.__sbPolicy = (me.role==='customer') ? CUST_POLICY : ((me.role==='driver' || me.role==='store') ? STAFF_POLICY : null);
   setTimeout(()=>{ try{ termsCheck() }catch(e){} },2500);
   /* v324: أي طلب مطعم بلا رد 30 دقيقة ينلغي (احتياط إذا جدولة السيرفر مو شغّالة) */
-  if(me.role==='admin' || me.role==='store') try{ const _cs=()=>{ try{ rpc('cancel_stale_orders',{}).catch(()=>{}) }catch(e){} }; setTimeout(_cs,8000); if(!window.__csT) window.__csT=setInterval(_cs,5*60*1000) }catch(e){}
+  if(amTeam() || me.role==='store') try{ const _cs=()=>{ try{ rpc('cancel_stale_orders',{}).catch(()=>{}) }catch(e){} }; setTimeout(_cs,8000); if(!window.__csT) window.__csT=setInterval(_cs,5*60*1000) }catch(e){}
   document.getElementById('auth').classList.remove('on');
   subscribeTopics();
   setTimeout(()=>{ initPush(true).then(r=>{ pushTriedMark(); refreshPushUI(); return r }) },1500);
-  if(me.role==='admin'){
+  if(amTeam()){
     document.getElementById('aApp').classList.add('on');
+    try{ teamApply() }catch(e){ __silent(e,'teamApply') }
     ad_name.textContent=me.name; ad_phone.textContent=me.phone;
     cfgFee.value=SET.deliveryFee;
   try{
@@ -10300,7 +10321,9 @@ function enter(){
   }catch(e){} cfgCom.value=SET.commissionPerOrder; cfgDays.value=SET.graceDays;
     cfgSpecial.value=SET.specialFee||SET.deliveryFee;
     setTimeout(pushBoot,3000);
-    listenAdmin(); loadAdminData(); listenTickets(); try{ loadSettleCycle() }catch(e){} try{ cfgSums() }catch(e){} return;
+    listenAdmin(); loadAdminData(); listenTickets(); if(amOwner()){ try{ loadSettleCycle() }catch(e){} } try{ cfgSums() }catch(e){}
+    if(!amOwner()) teamLoadPerms();
+    return;
   }
   if(me.role==='customer'){
     document.getElementById('cApp').classList.add('on');
@@ -17947,7 +17970,7 @@ function lmPaintAll(){ __lmMaps.forEach(m=>{ try{ if(m && m._container && docume
 function _lmSheet(id){ let sh=document.getElementById(id); if(!sh){ sh=document.createElement('div'); sh.id=id; sh.className='spds lm-sh';
   sh.addEventListener('click',e=>{ if(e.target===sh) sh.classList.remove('on') }); document.body.appendChild(sh) } return sh }
 async function lmManage(){
-  if(!me || me.role!=='admin') return;
+  if(!tCan('orders')) return;
   const sh=_lmSheet('lmSheet');
   const paint=()=>{
     const L2=(lmData||[]).slice().sort((a,b)=>String(a.name).localeCompare(String(b.name),'ar'));
@@ -18646,7 +18669,7 @@ async function openStmt(kind, id, name){
   const lbl=kind==='shop'?'عمولة':'رسوم';
   const body=rows.map(r=>{
     const b=Number(r.bal||0), bal = b===0?'<b class="z">0 ✓ انصفر</b>':(b<0?`<b class="g">إله ${N(-b)}</b>`:`<b>${N(b)}</b>`);
-    if(r.t==='ret') return `<tr class="ret"><td>${dt(r.d1)}</td><td>إرجاع · طلب #${r.no}${(me&&me.role==='admin'&&r.rid)?` <button class="stm-x" onclick="retCancel('${r.rid}','${kind}','${id}','${esc(String(name||'').replace(/'/g,''))}')">إلغاء</button>`:''}</td><td class="c">− ${N(r.amt)}</td><td></td><td>${bal}</td></tr>`;
+    if(r.t==='ret') return `<tr class="ret"><td>${dt(r.d1)}</td><td>إرجاع · طلب #${r.no}${(tCan('money')&&r.rid)?` <button class="stm-x" onclick="retCancel('${r.rid}','${kind}','${id}','${esc(String(name||'').replace(/'/g,''))}')">إلغاء</button>`:''}</td><td class="c">− ${N(r.amt)}</td><td></td><td>${bal}</td></tr>`;
     return r.t==='pay'
       ? `<tr class="pay"><td>${dt(r.d1)}</td><td>تسديد${r.no!=null?' · وصل '+r.no:''}</td><td></td><td class="c">${N(r.amt)}</td><td>${bal}</td></tr>`
       : `<tr><td>${rng(r.d1,r.d2)}</td><td>${lbl} اليوم · ${r.n} ${Number(r.n)===1?'طلب':'طلبات'}${Number(r.nr)>0?' (منها '+r.nr+' مرفوض)':''}</td><td class="d">${N(r.amt)}</td><td></td><td>${bal}</td></tr>`;
@@ -20264,7 +20287,7 @@ async function sbSend(path, method, body){
    الأرقام كلها من دالة السيرفر admin_finance_summary (تقرا بس)،
    وهي تستخدم نفس طرق حساب السائق والمطعم — ما يتغيّر أي حساب */
 let ahPer='day', ahData=null, ahErr='', ahAt=0, ahBusy=false;
-setInterval(()=>{ try{ const pg=document.getElementById('a_over'); if(pg&&pg.classList.contains('on')&&me&&me.role==='admin') ahLoad(true) }catch(e){} },60000);
+setInterval(()=>{ try{ const pg=document.getElementById('a_over'); if(pg&&pg.classList.contains('on')&&tCan('money')) ahLoad(true) }catch(e){} },60000);
 function _ahRange(p){
   p=p||ahPer;
   const n=new Date(), f=new Date(n);
@@ -20276,7 +20299,7 @@ function _ahRange(p){
   return [f.toISOString(), t.toISOString()];
 }
 async function ahLoad(force){
-  if(ahBusy) return; if(!force && ahData && Date.now()-ahAt<60000) return;
+  if(ahBusy || !tCan('money')) return; if(!force && ahData && Date.now()-ahAt<60000) return;
   ahBusy=true;
   try{ const [a,b]=_ahRange(); ahData=await rpc('admin_finance_summary',{p_from:a,p_to:b}); ahErr=''; ahAt=Date.now() }
   catch(e){ ahErr=errMsg(e); }
@@ -21802,7 +21825,7 @@ function _saSheet(){
   return s;
 }
 async function shAdmOpen(day){
-  if(!me || me.role!=='admin') return;
+  if(!tCan('drivers')) return;
   const s=_saSheet(); s.classList.add('on');
   if(!s.innerHTML) s.innerHTML='<div class="sa-top"><button class="sa-x" onclick="shAdmClose()">✕</button><b>🗓️ شفتات السواق</b></div><div class="sa-body"><div class="lm-empty">… نحمّل</div></div>';
   const bgToday=new Date(Date.now()+3*3600e3).toISOString().slice(0,10);   /* بغداد UTC+3 */
@@ -22173,7 +22196,7 @@ async function dvbDismiss(id){
 const DVB_BC_Q=['🚨 نحتاج سواق هسه — اللي فاضي يفتح التطبيق','🌧️ اليوم مطر — سوقوا على مهلكم وانتبهوا','📍 زحمة بالسوق — استخدموا الطريق الثاني','👏 شكراً على شغلكم اليوم'];
 let _dvbBc=null, _dvbBcT='all';
 async function dvbBcOpen(){
-  if(!me || me.role!=='admin') return;
+  if(!tCan('drivers')) return;
   const sh=_lmSheet('dvbBc');
   if(!sh.classList.contains('on')){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; requestAnimationFrame(()=>sh.classList.add('on')) }
   try{ _dvbBc=await rpc('admin_broadcasts',{}) }catch(e){ sh.classList.remove('on'); return toast(errMsg(e)) }
@@ -22205,7 +22228,7 @@ async function dvbBcSend(){
 }
 let _dvbRk=null, _dvbRkP='week';
 async function dvbRankOpen(per){
-  if(!me || me.role!=='admin') return;
+  if(!tCan('drivers')) return;
   _dvbRkP=per||_dvbRkP||'week';
   const sh=_lmSheet('dvbRank');
   if(!sh.classList.contains('on')){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="lm-empty">… نحمّل</div></div>'; requestAnimationFrame(()=>sh.classList.add('on')) }
@@ -22279,7 +22302,7 @@ let _updA=null;
 /* v499: رقم ما عنده واتساب — الإدارة تسمحله يفتح حساب بدون رمز (24 ساعة) */
 function _oaLeft(u){ const h=Math.round((new Date(u).getTime()-Date.now())/3600000); return h>=1?'باقي '+h+' ساعة':'باقي أقل من ساعة' }
 async function otpAdmOpen(){
-  if(!me || me.role!=='admin') return;
+  if(!tCan('orders')) return;
   const sh=_lmSheet('otpSheet');
   let L=[]; try{ L=await rpc('admin_otp_allowed',{})||[] }catch(e){ return toast(errMsg(e)) }
   const row=x=>`<div class="oa-r"><div><b dir="ltr">${esc(x.phone)}</b><span>${x.registered?'✅ فتح حسابه':'⏳ بعده ما سجّل'} · ${_oaLeft(x.until)}</span></div>${x.registered?'':`<button type="button" onclick="otpAdmCancel('${esc(x.phone)}')">إلغاء</button>`}</div>`;
@@ -22303,6 +22326,106 @@ async function otpAdmGo(){
 async function otpAdmCancel(ph){
   const ok=await askConfirm('تلغي السماح للرقم <b dir="ltr">'+esc(ph)+'</b>؟<div style="margin-top:8px;font-size:13px">بعدها يحتاج رمز واتساب حتى يسجّل.</div>',{title:'إلغاء السماح',ok:'إي، ألغيه'}); if(!ok) return;
   try{ await rpc('admin_otp_allow_cancel',{p_phone:ph}); toast('انلغى ✓'); await otpAdmOpen() }catch(e){ toast(errMsg(e)) }
+}
+/* ═══ v507: فريق الإدارة ═══
+   المؤسس يضيف موظف برقمه ويختار شنو يسوي. الموظف يشوف بس الأقسام الي إله، والسيرفر يمنع الباقي */
+const TEAM_TAB={over:'money',join:'shops,drivers',people:'any',orders:'orders,money',drv:'drivers',sup:'orders',fin:'money',cfg:'*'};
+const TEAM_P=[['orders','📦','الطلبات والزبائن','الطلبات والدعم والمشاكل'],['shops','🏪','المحلات','الموافقة والمنيو والبنرات'],['drivers','🛵','السواق','الدوامات والنقاط والإيقاف'],['money','💰','الفلوس والحسابات','الحسابات والفواتير والتسديد']];
+function teamPermTxt(P){ return (P||[]).map(k=>{ const x=TEAM_P.find(t=>t[0]===k); return x?x[2]:'' }).filter(Boolean).join('، ') }
+function _tmKey(b){ const oc=b.getAttribute('onclick')||''; const m=oc.match(/atab\('(\w+)'/); return m?m[1]:(/openFin\(/.test(oc)?'fin':'') }
+function teamApply(force){
+  if(!amTeam()) return;
+  const ow=amOwner();
+  if(!ow && !Array.isArray(me.perms)){ try{ const c=JSON.parse(localStorage.getItem('lw_tperm')||'null'); if(c && c.uid===uid && Array.isArray(c.P)) me.perms=c.P }catch(e){} }
+  const t=document.getElementById('aTitle'); if(t) t.textContent=ow?'لوحة المؤسس':'لوحة الفريق';
+  const r=document.getElementById('ad_role'); if(r) r.textContent=ow?'مؤسس — صلاحية كاملة':('موظف — '+(teamPermTxt(me.perms)||'…'));
+  const nav=[...document.querySelectorAll('#aNav button')];
+  nav.forEach(b=>{ const need=TEAM_TAB[_tmKey(b)]; b.style.display=(ow || need==='*' || (need && tCan(need)))?'':'none' });
+  ['cfgGO','cfgGP','cfgGD','cfgGS'].forEach(id=>{ const e=document.getElementById(id); if(e) e.style.display=ow?'':'none' });
+  let vis=0;
+  document.querySelectorAll('#a_cfg .cfg-acts button').forEach(b=>{ const oc=b.getAttribute('onclick')||'';
+    const ok=ow || (/otpAdmOpen/.test(oc) && tCan('orders')); b.style.display=ok?'':'none'; if(ok) vis++ });
+  const box=document.querySelector('#a_cfg .cfg-acts'); if(box){ box.style.display=vis?'':'none'; box.style.gridTemplateColumns=(!ow&&vis===1)?'1fr':'' }
+  const sl=document.getElementById('setLog'); if(sl) sl.style.display=ow?'':'none';
+  if(ow) return;
+  try{ const ga=document.getElementById('cfgGA'); if(ga) ga.open=true }catch(e){}
+  const cur=nav.find(b=>b.classList.contains('on'));
+  if(force || !cur || cur.style.display==='none'){
+    const f=(tCan('orders')?['orders','drv','join','sup','over','fin','people','cfg']:['drv','join','over','fin','orders','sup','people','cfg']).map(k=>nav.find(b=>_tmKey(b)===k && b.style.display!=='none')).find(Boolean);
+    if(f && f!==cur) f.click();
+  }
+}
+async function teamLoadPerms(){
+  try{
+    const r=await rpc('my_staff_perms',{});
+    const P=(r && Array.isArray(r.perms))?r.perms:[];
+    const was=JSON.stringify(me.perms||null);
+    me.perms=P; try{ localStorage.setItem('lw_tperm', JSON.stringify({uid, P})) }catch(e){}
+    teamApply(was!==JSON.stringify(P)); try{ cfgSums() }catch(e){}
+    try{ renderAdmin() }catch(e){}
+    if(!P.length) toast('ما عندك صلاحيات هسه — كلّم المؤسس');
+  }catch(e){ __silent(e,'teamPerms') }
+}
+let _tmL=[], _tmEd=null, _tmSel=[];
+async function teamOpen(){
+  if(!amOwner()) return;
+  const sh=_lmSheet('teamSheet');
+  if(!sh.classList.contains('on')){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="tm-empty">لحظة…</div></div>'; requestAnimationFrame(()=>sh.classList.add('on')) }
+  try{ const r=await rpc('admin_staff_list',{}); _tmL=Array.isArray(r)?r:[] }catch(e){ _shClose('teamSheet'); return toast(errMsg(e)) }
+  _tmEd=null; teamPaint();
+}
+function teamPaint(){
+  const sh=document.getElementById('teamSheet'); if(!sh) return;
+  let body='';
+  if(_tmEd){
+    const isNew=_tmEd==='new', m=isNew?null:_tmL.find(x=>String(x.id)===String(_tmEd));
+    body=`<div class="dbc-h"><i>${isNew?'➕':'👤'}</i><div><b>${isNew?'ضيف موظف':esc((m&&m.name)||'')}</b><span>${isNew?'اكتب رقمه واختار شنو يسوي':`<bdi dir="ltr">${esc((m&&m.phone)||'')}</bdi>`}</span></div></div>
+      ${isNew?`<input id="tmPh" class="lm-in" dir="ltr" inputmode="tel" maxlength="16" placeholder="07XXXXXXXXX">`:''}
+      <div class="tm-t">شنو يكدر يسوي؟</div>
+      <div class="tm-ps">${TEAM_P.map(p=>`<button type="button" class="tm-p${_tmSel.includes(p[0])?' on':''}" data-k="${p[0]}" onclick="teamTog('${p[0]}')"><i>${p[1]}</i><div><b>${p[2]}</b><span>${p[3]}</span></div><em></em></button>`).join('')}</div>
+      ${isNew?`<div class="oa-n">لازم يكون عنده حساب زبون بنفس الرقم. بعد ما تضيفه، يسكّر التطبيق ويفتحه وتطلعله «لوحة الفريق».</div>`:''}
+      <button type="button" class="dbc-go tm-go" id="tmGo" onclick="teamSave()">${isNew?'ضيفه للفريق':'احفظ'}</button>
+      ${isNew?'':`<button type="button" class="tm-rm" onclick="teamRemove('${esc(String((m&&m.id)||''))}')">شيله من الفريق</button>`}
+      <button type="button" class="rs-later" onclick="teamBack()">رجوع</button>`;
+  }else{
+    body=`<div class="dbc-h"><i>👥</i><div><b>الفريق</b><span>ناس يساعدونك تدير التطبيق</span></div></div>
+      ${_tmL.length?_tmL.map(m=>`<button type="button" class="tm-r" onclick="teamEdit('${esc(String(m.id))}')"><i>${esc(String(m.name||'؟').trim().charAt(0)||'؟')}</i><div><b>${esc(m.name||'بدون اسم')}</b><span>${esc(teamPermTxt(m.perms))}</span></div><em>‹</em></button>`).join('')
+        :`<div class="tm-empty">بعدك ما ضفت أحد</div>`}
+      <button type="button" class="dbc-go tm-go" onclick="teamEdit('new')">+ ضيف موظف</button>
+      <div class="oa-n">تبقى إلك بس: إعدادات التطبيق والعمولات، حذف الحسابات والمحلات، تحديث المتجر، والفريق نفسه.</div>
+      <button type="button" class="rs-later" onclick="_shClose('teamSheet')">سكّر</button>`;
+  }
+  sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>${body}</div>`;
+}
+function teamEdit(id){
+  _tmEd=id; const m=id==='new'?null:_tmL.find(x=>String(x.id)===String(id));
+  _tmSel=m?[...(m.perms||[])]:['orders']; teamPaint();
+  if(id==='new') setTimeout(()=>{ try{ document.getElementById('tmPh').focus() }catch(e){} },200);
+}
+function teamBack(){ _tmEd=null; teamPaint() }
+function teamTog(k){
+  const i=_tmSel.indexOf(k); if(i>=0) _tmSel.splice(i,1); else _tmSel.push(k);
+  document.querySelectorAll('#teamSheet .tm-p').forEach(b=>b.classList.toggle('on', _tmSel.includes(b.dataset.k)));
+}
+async function teamSave(){
+  if(!amOwner()) return;
+  if(!_tmSel.length) return toast('اختار شي واحد على الأقل');
+  const isNew=_tmEd==='new', m=isNew?null:_tmL.find(x=>String(x.id)===String(_tmEd));
+  let ph=isNew?(((document.getElementById('tmPh')||{}).value)||''):((m&&m.phone)||'');
+  ph=String(ph).replace(/[٠-٩]/g,d=>'٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/\D/g,'');
+  if(isNew && !/^(00964|964)?0?7\d{9}$/.test(ph)) return toast('اكتب الرقم صح — مثل 07XXXXXXXXX');
+  const bt=document.getElementById('tmGo'); if(bt){ bt.disabled=true; bt.textContent='لحظة…' }
+  try{
+    const r=await rpc('admin_staff_save',{p_phone:ph, p_perms:_tmSel.slice()});
+    toast(isNew?('انضاف '+((r&&r.name)||'')+' للفريق ✓'):'انحفظ ✓');
+    await teamOpen();
+  }catch(e){ toast(errMsg(e)); if(bt){ bt.disabled=false; bt.textContent=isNew?'ضيفه للفريق':'احفظ' } }
+}
+async function teamRemove(id){
+  const m=_tmL.find(x=>String(x.id)===String(id)); if(!m) return;
+  const ok=await askConfirm('تشيل <b>'+esc(m.name||'')+'</b> من الفريق؟<div style="margin-top:8px;font-size:13px">يرجع حساب زبون عادي، وما تطلعله لوحة الفريق.</div>',{title:'شيله من الفريق',ok:'إي، شيله',danger:true});
+  if(!ok) return;
+  try{ await rpc('admin_staff_remove',{p_uid:id}); toast('انشال من الفريق ✓'); await teamOpen() }catch(e){ toast(errMsg(e)) }
 }
 async function updAdmOpen(){
   if(!me || me.role!=='admin') return;
@@ -22743,7 +22866,7 @@ function cfgSums(){
     let sc=15; try{ sc=cycOf(new Date()) }catch(_){}
     const tb=document.getElementById('cfgTierBox'), tiers=tb&&tb.style.display!=='none'&&v('cfgTierOn')==='1';
     put('cfgSumS',(v('cfgShopOn')==='1'?('عمولة '+f(v('cfgShopVal'))+(v('cfgShopKind')==='fixed'?' د.ع':'%')+(tiers?' بالشرائح':'')):'بدون عمولة')+' · التسديد '+(sc===15?'كل 15 يوم':'كل شهر')+' · استدعاء '+f(v('cfgExt')));
-    const nm=document.getElementById('ad_name'); put('cfgSumA',(nm&&nm.textContent&&nm.textContent!=='—')?nm.textContent+' · مؤسس':'مؤسس — صلاحية كاملة');
+    const nm=document.getElementById('ad_name'); { const _rl=amOwner()?'مؤسس':'موظف'; put('cfgSumA',(nm&&nm.textContent&&nm.textContent!=='—')?nm.textContent+' · '+_rl:(amOwner()?'مؤسس — صلاحية كاملة':'موظف بالفريق')) }
     const pg=document.getElementById('a_cfg');
     if(pg&&!pg._sums){ pg._sums=1; pg.addEventListener('input',cfgSums); pg.addEventListener('change',cfgSums) }
   }catch(e){}
@@ -23089,7 +23212,7 @@ function errMsg(e){
     const m = t.match(/"message"\s*:\s*"([^"]+)"/);
     if(m) t = m[1];
   }
-  const _adm = !!(me && me.role==='admin');
+  const _adm = amTeam();
   try{ console.warn('[errMsg]', t) }catch(_){}
   if(/hstore|does not exist|relation|column|syntax|function|schema/i.test(t)) return 'صار خلل بسيط — جرّب مرة ثانية';
   if(/permission|denied|policy|row-level/i.test(t))          return 'ما عندك صلاحية لهذا الإجراء';
@@ -23174,7 +23297,7 @@ async function rfConfirmGroup(key){
 const RF_REASONS=['الزبون ما يرد على التلفون','الزبون رفض الطلب','العنوان غلط أو ما موجود','الزبون طلب يغيّر الطلب','سبب ثاني'];
 function rfRole(){
   if(!me) return '';
-  if(me.role==='admin') return 'adm';
+  if(tCan('money')) return 'adm';
   if(me.role==='driver') return 'drv';
   if(me.role==='store' && !me.staff) return 'shop';
   if(me.role==='customer') return 'cus';
@@ -23372,7 +23495,7 @@ async function rfEndWait(id){
 /* الإدارة: صندوق «طلبات معلّقة» فوك الصفحة الرئيسية + تنبيه صوتي لما يجي طلب جديد */
 let _holdSeen=null;
 function holdAdmPaint(){
-  if(!me||me.role!=='admin') return;
+  if(!tCan('orders,money')) return;
   const L=(allOrders||[]).filter(holdOn).sort((a,b)=>holdMs(a)-holdMs(b));
   const ids=L.map(o=>o.id);
   if(_holdSeen && ids.some(x=>!_holdSeen.has(x))){ try{ beep() }catch(e){} try{ if(navigator.vibrate) navigator.vibrate([250,120,250]) }catch(e){} toast('⏳ طلب معلّق — السائق ينتظر قرارك') }
@@ -23686,7 +23809,7 @@ function issAgo(t){
   return 'قبل '+Math.round(h/24)+' يوم';
 }
 async function issAdmLoad(force){
-  if(!me||me.role!=='admin') return;
+  if(!tCan('orders')) return;
   try{ podPurgeOld() }catch(e){}
   if(!force && Date.now()-_issAt<30000) return;
   _issAt=Date.now();
@@ -23695,7 +23818,7 @@ async function issAdmLoad(force){
   issAdmPaint();
 }
 function issAdmPaint(){
-  if(!me||me.role!=='admin') return;
+  if(!tCan('orders')) return;
   const L=(_issL||[]).filter(i=>i&&i.status==='open');
   const ids=L.map(i=>String(i.id));
   if(_issSeen && ids.some(x=>!_issSeen.has(x))){ try{ beep() }catch(e){} toast('⚠️ زبون بلّغ عن مشكلة بطلب') }
@@ -28897,7 +29020,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v506', seen={}, n=0, q=[], t=null;
+  var VER='v507', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29150,7 +29273,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v506', t0=Date.now();
+  var VER='v507', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
