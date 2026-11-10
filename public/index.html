@@ -6898,7 +6898,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v502</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v503</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -8512,9 +8512,13 @@ function cpSubsPaint(){
 function cpSearch1(v){ _cpQ1=String(v||'').trim(); cpPaintList() }
 function cpSearch2(v){ _cpQ2=String(v||'').trim(); cpPaintList() }
 
+/* v503: صور القوائم — نسخة صغيرة (‎.t.webp ~11KB) بدل الكبيرة (~60KB)، والكبيرة بس بنافذة الصنف.
+   أي صورة جديدة تنرفع على /m/ لازم ترافقها نسختها الصغيرة. */
+function tImg(u){ u=String(u||''); return (/^https:\/\/leemak\.app\/m\/[\w\/.-]+\.webp$/.test(u) && !/\.t\.webp$/.test(u)) ? u.replace(/\.webp$/,'.t.webp') : u }
+document.addEventListener('error',e=>{ const t=e.target; if(t&&t.tagName==='IMG'&&/\.t\.webp$/.test(t.src)&&!t.dataset.tf){ t.dataset.tf='1'; t.src=t.src.replace(/\.t\.webp$/,'.webp') } },true);
 function _cpThumb(p){
   return p.img
-    ? `<img src="${p.img}" alt="" onerror="this.style.display='none'">`
+    ? `<img src="${tImg(p.img)}" alt="" onerror="this.style.display='none'">`
     : `<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/></svg>`;
 }
 
@@ -11736,11 +11740,11 @@ function pickDailyMealsSet(){
 
 function dmCardHTML(item){
   const p=item.product||{}, s=item.shop;
-  const img = p.img ? `<img loading="lazy" decoding="async" src="${p.img}" alt="">`
+  const img = p.img ? `<img loading="lazy" decoding="async" src="${tImg(p.img)}" alt="">`
     : `<div class="dm-ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>`;
   const r=shopRating(s);
   return `<div class="dm-card" onclick="openShop('${s.id}')">
-    <div class="dm-img${p.img?' bf':''}"${p.img?` style="--bg:url('${p.img}')"`:''}>${img}<span class="dm-rate"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${r?r.avg.toFixed(1):'جديد'}</span><button class="dm-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button></div>
+    <div class="dm-img${p.img?' bf':''}"${p.img?` style="--bg:url('${tImg(p.img)}')"`:''}>${img}<span class="dm-rate"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${r?r.avg.toFixed(1):'جديد'}</span><button class="dm-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button></div>
     <div class="dm-name">${esc(p.name||'')}</div>
     <div class="dm-shop">${esc(s.name)}</div>
     <div class="dm-meta"><span class="dm-price">${pPriceTxt(p)} <small>د.ع</small></span><button class="dm-add" onclick="event.stopPropagation();quickAdd('${s.id}','${p.id}')" aria-label="أضف للسلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
@@ -12192,7 +12196,7 @@ document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'
 /* v384: كرت منتج مثل تطبيقات الماركت العالمية — صورة كبيرة على خلفية فاتحة، زر + أبيض، السعر ثم الاسم ثم الحجم */
 function mkCardHTML(p){
   return `<div class="mkp${pNA(p)?' off':''}" onclick="openItem(${p.id})">
-    <div class="mkp-im">${p.img?`<img loading="lazy" decoding="async" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
+    <div class="mkp-im">${p.img?`<img loading="lazy" decoding="async" src="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
       ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
       <div class="mkp-add" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
     <div class="mkp-nm">${esc(p.name)}</div>
@@ -12203,7 +12207,7 @@ function mkCardHTML(p){
 function spCardHTML(p){
   if(_isMarket(curShop)) return mkCardHTML(p);
   return `<div class="spcard" onclick="openItem(${p.id})">
-          <div class="spcimg">${p.img?`<img loading="lazy" decoding="async" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
+          <div class="spcimg">${p.img?`<img loading="lazy" decoding="async" src="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
             <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
           <div class="spcnm">${esc(p.name)}</div>
           <div class="spcpr">${pPriceTxt(p)} د.ع</div>
@@ -12563,7 +12567,7 @@ function renderMenu(){
   box.innerHTML=ps.map(p=>`
     <div class="prod"${pNA(p)?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
-        ${p.img?`<img loading="lazy" decoding="async" class="pimg" src="${p.img}" alt="">`:`<div class="px">${prodPH()}</div>`}
+        ${p.img?`<img loading="lazy" decoding="async" class="pimg" src="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
         ${p.isNew?'<span class="pnew">جديد</span>':''}
         <div class="pctl" onclick="event.stopPropagation()">${prodCtl(p)}</div>
       </div>
@@ -12658,8 +12662,8 @@ function szSheetPaint(){
     ${(()=>{ const im=(z.length&&z[_szSel]&&z[_szSel].img)||p.img; return im?`<div class="szbig"><img src="${esc(im)}" alt=""></div>`:`<div class="szbig szph">${prodPH()}<span>${esc(p.name)}</span></div>` })()}
     <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${pKgW(p)?'≈ ':''}${N(z.length?Number(z[_szSel].p):base)} د.ع${pWas(p)?` <s class="szwas">${N(pWas(p))}</s> <em class="szoff">-${pOffPct(p)}%</em>`:''}</div>${kgInfoHTML(p)}${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
     ${z.length?`<div class="szg"><div class="szgt">${esc(p.sizeLabel||'الحجم')} <i>مطلوب</i></div>
-      ${z.map((x,i)=>x.out?`<div class="szo szo-z szo-out" onclick="toast('«${esc(x.n).replace(/'/g,'')}» خلص هسه')">${(x.img||p.img)&&z.some(y=>y.img)?`<img class="szo-im" src="${esc(x.img||p.img)}" alt="">`:''}<div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr szo-x">خلص</em><i class="rd"></i></div>`
-        :`<div class="szo szo-z${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()">${(x.img||p.img)&&z.some(y=>y.img)?`<img class="szo-im" src="${esc(x.img||p.img)}" alt="">`:''}<div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr">${N(x.p)} د.ع</em><i class="rd"></i></div>`).join('')}</div>`:''}
+      ${z.map((x,i)=>x.out?`<div class="szo szo-z szo-out" onclick="toast('«${esc(x.n).replace(/'/g,'')}» خلص هسه')">${(x.img||p.img)&&z.some(y=>y.img)?`<img class="szo-im" src="${esc(tImg(x.img||p.img))}" alt="">`:''}<div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr szo-x">خلص</em><i class="rd"></i></div>`
+        :`<div class="szo szo-z${i===_szSel?' on':''}" onclick="_szSel=${i};szSheetPaint()">${(x.img||p.img)&&z.some(y=>y.img)?`<img class="szo-im" src="${esc(tImg(x.img||p.img))}" alt="">`:''}<div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr">${N(x.p)} د.ع</em><i class="rd"></i></div>`).join('')}</div>`:''}
     ${ops.length?`<div class="szg"><div class="szgt">الإضافات <i class="opt">اختياري</i></div>
       ${ops.map((o,i)=>{const pr=parseInt(o.p)||0; return `<div class="szo${_szOpt.includes(i)?' on':''}" onclick="szTogOpt(${i})"><div><b>${esc(o.n)}</b><span>${pr?'<bdi dir="ltr">+'+N(pr)+'</bdi> د.ع':'مجاني'}</span></div><i class="ck"></i></div>`}).join('')}</div>`:''}
     ${(curShop && !isOpenNow(curShop)) ? `<div class="szbar"><button class="szadd szcl" type="button" disabled>المحل مسكّر — ${esc(String(nextOpenTxt(curShop)||'').replace(/<[^>]*>/g,' '))}</button></div>` : `<div class="szbar">
@@ -13099,7 +13103,7 @@ function upsellGroups(){
 function _upsWrap(list,off,k){ if(list.length<=k) return list.slice(); const r=[]; for(let i=0;i<k;i++) r.push(list[(off+i)%list.length]); return r }
 function upsCard(p){
   return '<div class="ups-it" data-pid="'+esc(String(p.id))+'" onclick="upsAdd(this.dataset.pid)">'
-    +'<div class="ups-im">'+(p.img?'<img src="'+esc(p.img)+'" alt="" loading="lazy" onerror="this.remove()">':'<div class="px">'+prodPH()+'</div>')
+    +'<div class="ups-im">'+(p.img?'<img src="'+esc(tImg(p.img))+'" alt="" loading="lazy" onerror="this.remove()">':'<div class="px">'+prodPH()+'</div>')
     +'<span class="ups-plus" aria-label="أضف">+</span></div>'
     +'<b>'+esc(p.name)+'</b><span>'+(pKgW(p)?'≈ ':'')+pBase(p).toLocaleString('en-US')+' د.ع</span></div>';
 }
@@ -16210,7 +16214,7 @@ function szqOpen(id){
   const sh=_lmSheet('szqSheet'); const sz=pSizes(p);
   sh.innerHTML=`<div class="spds-in"><div class="spds-grab"></div>
     <div class="szq-h"><b>${esc(p.name)}</b><span>اضغط الزر حتى تبدّل متوفر ↔ خلص</span></div>
-    ${sz.map(z=>`<div class="szq-r${z.out?' out':''}"><div class="szq-im">${(z.img||p.img)?`<img src="${esc(z.img||p.img)}" alt="">`:'📦'}</div>
+    ${sz.map(z=>`<div class="szq-r${z.out?' out':''}"><div class="szq-im">${(z.img||p.img)?`<img src="${esc(tImg(z.img||p.img))}" alt="">`:'📦'}</div>
       <div class="szq-tx"><b>${esc(z.n)}</b><span>${Number(z.p).toLocaleString()} د.ع${z.d?' · '+esc(z.d):''}</span></div>
       <em>${z.out?'خلص':'متوفر'}</em><button type="button" class="smsw${z.out?'':' on'}" data-n="${esc(z.n)}" onclick="toggleSizeOut(${p.id},this.dataset.n)"><i></i></button></div>`).join('')}
     <button type="button" class="rs-later" onclick="_shClose('szqSheet');editProduct(${p.id})">✎ تعديل المنتج كامل</button>
@@ -21184,7 +21188,7 @@ function smRow(p){
   const nOut=sz.filter(z=>z.out).length;
   const szc=sz.length?`<button type="button" class="smr-szs" onclick="event.stopPropagation();szqOpen(${p.id})">${esc(p.sizeLabel||'الخيارات')}: ${sz.length}${nOut?` · <em>${nOut} خلص</em>`:''} <u>‹</u></button>`:'';
   return `<div class="smr${on?'':' off'}" onclick="editProduct(${p.id})">
-    <div class="smr-img">${p.img?`<img loading="lazy" decoding="async" src="${esc(p.img)}" alt="">`:SM_ICO}</div>
+    <div class="smr-img">${p.img?`<img loading="lazy" decoding="async" src="${esc(tImg(p.img))}" alt="">`:SM_ICO}</div>
     <div class="smr-tx"><b>${esc(p.name)}</b>
       ${sz.length?`<div class="smr-pr">${pPriceLbl(p)}${w?` <s>${w.toLocaleString()}</s>`:''}</div>`
         :`<div class="smr-pr"><button type="button" class="smpbtn" onclick="event.stopPropagation();pqOpen(${p.id})" aria-label="غيّر السعر">${pPriceLbl(p)} <i>✎</i></button>${w?` <s>${w.toLocaleString()}</s>`:''}</div>`}
@@ -22427,7 +22431,7 @@ function openAdminShop(id){
   const byCat={}; ps.forEach(p=>{ const c=String(p.cat||'').trim()||'بدون قسم'; (byCat[c]=byCat[c]||[]).push(p) });
   const price=p=>{ const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.p):[]; if(sz.length){ const v=sz.map(z=>Number(z.p)||0); return Math.min(...v).toLocaleString()+(v.length>1?' – '+Math.max(...v).toLocaleString():'') } return Number(p.price||0).toLocaleString()+(pKgW(p)?' / كغم':'') };
   const menu=ps.length?Object.keys(byCat).map(c=>`<div class="as-cat">${esc(c)} <i>${byCat[c].length}</i></div>`+byCat[c].map(p=>`<div class="as-p${p.avail===false?' na':''}">
-      ${p.img?`<img src="${esc(p.img)}" alt="" loading="lazy">`:'<span class="as-ph">🍽️</span>'}
+      ${p.img?`<img src="${esc(tImg(p.img))}" alt="" loading="lazy">`:'<span class="as-ph">🍽️</span>'}
       <div><b>${esc(p.name||'منتج')}</b>${p.desc?`<span>${esc(String(p.desc).slice(0,80))}</span>`:''}${p.avail===false?'<em>غير متوفر</em>':''}</div>
       <strong>${price(p)} <small>د.ع</small></strong></div>`).join('')).join('')
     :'<div class="as-empty">ماكو ولا منتج — صاحب المحل بعده ما ضاف المنيو</div>';
@@ -28878,7 +28882,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v502', seen={}, n=0, q=[], t=null;
+  var VER='v503', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29130,7 +29134,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v502', t0=Date.now();
+  var VER='v503', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
