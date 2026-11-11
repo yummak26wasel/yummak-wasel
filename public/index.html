@@ -3893,6 +3893,13 @@ html[data-theme=dark] .jck>span.y{background:#123524}html[data-theme=dark] .jck>
 .tq2-more{border:0;background:none;color:#4B2BB0;font:900 13px Cairo,Tahoma,sans-serif;padding:6px 0;cursor:pointer}
 .tq2-x{border:0;background:none;color:#B91C1C;font:900 13px Cairo,Tahoma,sans-serif;cursor:pointer;flex:none}
 .tq2-link{display:block;width:100%;border:0;border-top:1px solid #F1EEF7;background:none;color:#4B2BB0;font:900 14px Cairo,Tahoma,sans-serif;padding:14px 2px;text-align:right;cursor:pointer}
+.tq2-li.go{width:100%;border:0;background:none;font:inherit;text-align:right;cursor:pointer;border-radius:10px}
+.tq2-li.go:active{background:#F6F4FA}.tq2-li em{font-style:normal;color:#C4BDD6;font-size:18px;line-height:1;flex:none;transition:transform .2s}.tq2-li em.up{transform:rotate(-90deg)}
+.tq2-li.go small{margin-inline-start:auto}
+button.tq2-sec{display:block;width:100%;border:0;border-top:1px solid #F1EEF7;background:none;font:inherit;text-align:right;cursor:pointer}
+.tq2-sec h4{display:flex;justify-content:space-between;align-items:center}.tq2-sec h4 em{font-style:normal;color:#C4BDD6;font-size:18px}
+.tq2-det{background:#F8F7FB;border-radius:12px;padding:8px 12px;margin:2px 0 8px}
+.tq2-det>div{display:flex;justify-content:space-between;gap:10px;padding:4px 0;font-size:13px}.tq2-det span{color:#8a83a0;font-weight:700}.tq2-det b{color:#1F1640;font-weight:800}
 html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,html[data-theme=dark] .oa-t{color:#e9e4f5}html[data-theme=dark] .oa-r button{background:#1f1a30}
 /* v498 — بطاقة البديل عند الزبون أصغر وأوضح */
 .pc3{padding:14px 14px 10px}
@@ -6995,7 +7002,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v511</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v512</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -22553,17 +22560,19 @@ function _tqSwapTxt(w){
 const _TQSW={pending:['ينتظر','wait'],approved:['انوافق','ok'],rejected:['انرفض','no'],cancelled:['انلغى','off']};
 
 /* ── المؤسس ── (v511: بسيط — قائمة الفريق ← صفحة الموظف ← تعديل) */
-let _tmB=null, _tmL=[], _tmEd=null, _tmSel=[], _tmSch={}, _tmV='list', _tmM=null, _tmAll='';
+let _tmB=null, _tmL=[], _tmEd=null, _tmSel=[], _tmSch={}, _tmV='list', _tmM=null, _tmAll='', _tmAtt=-1;
 async function teamOpen(keep){
   if(!amOwner()) return;
   const sh=_lmSheet('teamSheet');
   if(!sh.classList.contains('on')){ sh.innerHTML='<div class="spds-in"><div class="spds-grab"></div><div class="tq-empty">لحظة…</div></div>'; requestAnimationFrame(()=>sh.classList.add('on')) }
   try{ const r=await rpc('admin_team_board',{}); _tmB=r||{}; _tmL=Array.isArray(_tmB.members)?_tmB.members:[] }catch(e){ _shClose('teamSheet'); return toast(errMsg(e)) }
+  if(!keep && Date.now()-(window.__tmRet||0)<180000) keep=true;   /* رجع من طلب/محل فتحه من السجل */
+  window.__tmRet=0;
   if(!keep){ _tmV='list'; _tmM=null; _tmEd=null }
   if(_tmV==='member' && !_tmL.some(m=>String(m.id)===_tmM)) _tmV='list';
   teamPaint();
 }
-function teamView(v,id){ _tmV=v; if(id!=null) _tmM=String(id); _tmAll=''; _tmEd=null; teamPaint(); try{ document.querySelector('#teamSheet .spds-in').scrollTop=0 }catch(e){} }
+function teamView(v,id){ _tmV=v; if(id!=null) _tmM=String(id); _tmAll=''; _tmAtt=-1; _tmEd=null; teamPaint(); try{ document.querySelector('#teamSheet .spds-in').scrollTop=0 }catch(e){} }
 function teamPaint(){
   const sh=document.getElementById('teamSheet'); if(!sh) return;
   const body=_tmEd?_tqEditHTML():_tmV==='member'?_tqMemHTML():_tmV==='swaps'?_tqSwapsHTML():_tqListHTML();
@@ -22599,12 +22608,46 @@ function _tqMemHTML(){
   const nA=_tmAll==='acts'?acts.length:4, nT=_tmAll==='att'?att.length:3;
   return `<div class="tq2-top"><button type="button" class="tq2-back" onclick="teamView('list')" aria-label="رجوع">→</button><button type="button" class="tq2-edit" onclick="teamEdit('${esc(_tmM)}')">تعديل</button></div>
     <div class="tq2-me">${_tqAv(m,true)}<b>${esc(m.name||'')}</b><span class="tq-st ${s.c}">${esc(s.t)}</span></div>
-    <div class="tq2-sec"><h4>الدوام</h4>${_tqDaysHTML(m.sched)}</div>
-    <div class="tq2-sec"><h4>الصلاحيات</h4><p>${esc(teamPermTxt(m.perms))}</p></div>
-    <div class="tq2-sec"><h4>آخر شغل</h4>${acts.length?acts.slice(0,nA).map(a=>`<div class="tq2-li"><div><b>${esc(a.txt||'')}</b><span>${esc(a.ref||'')}</span></div><small>${_tqDay(a.at).split(' ')[0]} ${_tqClock(a.at)}</small></div>`).join('')
+    <button type="button" class="tq2-sec go" onclick="teamEdit('${esc(_tmM)}')"><h4>الدوام <em>‹</em></h4>${_tqDaysHTML(m.sched)}</button>
+    <button type="button" class="tq2-sec go" onclick="teamEdit('${esc(_tmM)}')"><h4>الصلاحيات <em>‹</em></h4><p>${esc(teamPermTxt(m.perms))}</p></button>
+    <div class="tq2-sec"><h4>آخر شغل</h4>${acts.length?acts.slice(0,nA).map(a=>{ const go=/^(order|shop|driver|ticket)$/.test(a.rk||'')&&a.rid;
+        return `<${go?'button type="button"':'div'} class="tq2-li${go?' go':''}"${go?` onclick="_tqGo('${esc(a.rk)}','${esc(String(a.rid))}')"`:''}><div><b>${esc(a.txt||'')}</b><span>${esc(a.ref||'')}</span></div><small>${_tqDay(a.at).split(' ')[0]} ${_tqClock(a.at)}</small>${go?'<em>‹</em>':''}</${go?'button':'div'}>` }).join('')
         +(acts.length>nA?`<button type="button" class="tq2-more" onclick="_tmAll='acts';teamPaint()">عرض الكل (${acts.length})</button>`:''):'<p class="tq2-mut">ما سوى شي بعد</p>'}</div>
-    <div class="tq2-sec"><h4>الحضور</h4>${att.length?att.slice(0,nT).map(a=>`<div class="tq2-li"><div><b>${_tqDay(a.in)}</b><span>${_tqClock(a.in)} ← ${a.out?_tqClock(a.out):'هسه'}</span></div><small class="${a.out?(a.auto?'late':''):'on'}">${a.out?(a.auto?'ما سجّل خروج':_tqDur(a.in,a.out)):'بالدوام'}</small></div>`).join('')
+    <div class="tq2-sec"><h4>الحضور</h4>${att.length?att.slice(0,nT).map((a,i)=>`<button type="button" class="tq2-li go" onclick="_tmAtt=_tmAtt===${i}?-1:${i};teamPaint()"><div><b>${_tqDay(a.in)}</b><span>${_tqClock(a.in)} ← ${a.out?_tqClock(a.out):'هسه'}</span></div><small class="${a.out?(a.auto?'late':''):'on'}">${a.out?(a.auto?'ما سجّل خروج':_tqDur(a.in,a.out)):'بالدوام'}</small><em class="${_tmAtt===i?'up':''}">‹</em></button>${_tmAtt===i?_tqAttDet(a,m):''}`).join('')
         +(att.length>nT?`<button type="button" class="tq2-more" onclick="_tmAll='att';teamPaint()">عرض الكل (${att.length})</button>`:''):'<p class="tq2-mut">ما سجّل حضور بعد</p>'}</div>`;
+}
+function _tqAttDet(a,m){
+  const din=new Date(a.in), sc=((m&&m.sched)||[]).find(x=>+x.d===din.getDay());
+  const L=[];
+  if(sc){
+    const st=new Date(din); const [fh,fm]=sc.f.split(':').map(Number); st.setHours(fh,fm,0,0);
+    if(st-din>12*36e5) st.setDate(st.getDate()-1);
+    const en=new Date(st); const [th,tm]=sc.t.split(':').map(Number); en.setHours(th,tm,0,0); if(en<=st) en.setDate(en.getDate()+1);
+    L.push(['دوامه المحدد',_tqSh(sc)]);
+    const late=Math.round((din-st)/6e4);
+    L.push(['وصل', late>5?`متأخر ${_tqDur(st,din)}`:(late<-5?`قبل وقته بـ ${_tqDur(din,st)}`:'على الوقت')]);
+    if(a.out && !a.auto){ const dout=new Date(a.out), early=Math.round((en-dout)/6e4); L.push(['طلع', early>5?`قبل وقته بـ ${_tqDur(dout,en)}`:(early<-5?`بعد وقته بـ ${_tqDur(en,dout)}`:'على الوقت')]) }
+  } else L.push(['دوامه المحدد','ما عنده دوام بهذا اليوم']);
+  if(a.out) L.push(['مدة الشغل', a.auto?'ما سجّل خروج — انسجّل 8 ساعات':_tqDur(a.in,a.out)]);
+  return `<div class="tq2-det">${L.map(([k,v])=>`<div><span>${k}</span><b>${esc(v)}</b></div>`).join('')}</div>`;
+}
+async function _tqGo(k,id){
+  if(!id) return;
+  window.__tmRet=Date.now();
+  if(k==='order'){
+    if(!(allOrders||[]).some(o=>String(o.id)===String(id))){
+      try{ const d=await db.collection('orders').doc(id).get(); if(d&&d.exists) allOrders.push({...d.data(),id:d.id}) }catch(e){ __silent(e,'tqOrd') }
+    }
+    if(!(allOrders||[]).some(o=>String(o.id)===String(id))){ window.__tmRet=0; return toast('ما لكيت الطلب') }
+    _shClose('teamSheet'); aoOpen(id); return;
+  }
+  if(k==='shop'){ if(!(allShops||[]).some(x=>String(x.id)===String(id))){ window.__tmRet=0; return toast('المحل مو موجود') } _shClose('teamSheet'); openAdminShop(id); return }
+  if(k==='driver'){ _shClose('teamSheet'); dvbOpen(id); return }
+  if(k==='ticket'){
+    _shClose('teamSheet');
+    const b=[...document.querySelectorAll('#aNav button')].find(x=>/atab\('sup'/.test(x.getAttribute('onclick')||'')); if(b) b.click();
+    setTimeout(()=>{ try{ openTicket(id) }catch(e){} },250); return;
+  }
 }
 function _tqSwapsHTML(){
   const L=((_tmB&&_tmB.swaps)||[]).filter(w=>w.st==='pending');
@@ -29357,7 +29400,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v511', seen={}, n=0, q=[], t=null;
+  var VER='v512', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29610,7 +29653,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v511', t0=Date.now();
+  var VER='v512', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
