@@ -2908,6 +2908,7 @@ html[data-theme=dark] .cst-in{background:#1a1528;border-color:#3a3354}
 .spcimg{position:relative;width:142px;height:112px;border-radius:16px;overflow:hidden;
   background:#F4F2F8;box-shadow:0 2px 10px rgba(0,0,0,.06)}
 .spcimg img{width:100%;height:100%;object-fit:cover}
+img[data-lz]{opacity:0;transition:opacity .25s ease}img[data-lz].lzok{opacity:1}
 .spcimg .px{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:#C9C2DA}
 .spcimg .px svg{width:34px;height:34px}
 .spcadd{position:absolute;bottom:6px;left:6px}
@@ -6915,7 +6916,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v508</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v509</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -12019,8 +12020,43 @@ function _imgDiag(sid){
       'origin='+location.origin+' sample='+(smp?smp.currentSrc||smp.src:'')+' sw='+(navigator.serviceWorker&&navigator.serviceWorker.controller?1:0)+' net='+(nav.effectiveType||'')+'/'+(nav.downlink||'')+' saveData='+(nav.saveData?1:0),'imgdiag');
   }catch(e){} },20000);
 }
+/* ═══ v509: صور المنيو تنزل بالترتيب — الي بالشاشة أول (4 سوه)، وبعدين الباقي بالخلفية (2 سوه)
+   بالنت الضعيف ما تتقاسم الصور الظاهرة السرعة ويه 30 صورة ما مبينة ═══ */
+const LZ={vq:[],bg:[],run:0,io:null,raf:0,t0:0,sid:'',cnt:0};
+function lzLoad(img){
+  if(!img || !img.dataset.lz || img.dataset.lzs) return;
+  img.dataset.lzs='1'; LZ.run++;
+  let fin=false; const done=()=>{ if(fin) return; fin=true; LZ.run--; img.classList.add('lzok'); lzMark(); lzPump() };
+  img.addEventListener('load',done);
+  img.addEventListener('error',()=>{ if(img.dataset.tf==='1' && !img.dataset.lze){ img.dataset.lze='1'; return } done() });
+  img.src=img.dataset.lz;
+}
+function lzMark(){
+  if(!LZ.t0) return;
+  if(++LZ.cnt<6) return;
+  const dt=Date.now()-LZ.t0, sid=LZ.sid; LZ.t0=0;
+  if(dt>4000) try{ const nc=navigator.connection||{}; window.__errPush&&window.__errPush('IMGSLOW '+Math.round(dt/100)/10+'s','shop='+sid+' net='+(nc.effectiveType||'?')+'/'+(nc.downlink||'?')+' origin='+location.host,'lz') }catch(e){}
+}
+function lzPump(){
+  while(LZ.run<4 && LZ.vq.length){ const i=LZ.vq.shift(); if(i.isConnected) lzLoad(i) }
+  while(LZ.run<2 && !LZ.vq.length && LZ.bg.length){ const i=LZ.bg.shift(); if(i.isConnected && !i.dataset.lzs) lzLoad(i) }
+}
+function lzScan(){
+  LZ.raf=0;
+  const L=[...document.querySelectorAll('img[data-lz]:not([data-lzs]):not([data-lzo])')];
+  if(!L.length) return;
+  if(!('IntersectionObserver' in window)){ L.forEach(i=>{ i.dataset.lzs='1'; i.src=i.dataset.lz }); return }
+  if(!LZ.io) LZ.io=new IntersectionObserver(es=>{
+    es.forEach(e=>{ if(e.isIntersecting){ LZ.io.unobserve(e.target); if(!e.target.dataset.lzs) LZ.vq.push(e.target) } });
+    lzPump();
+  },{rootMargin:'160px 120px'});
+  L.forEach(i=>{ i.dataset.lzo='1'; LZ.io.observe(i) });
+  clearTimeout(LZ.bt); LZ.bt=setTimeout(()=>{ LZ.bg=[...document.querySelectorAll('img[data-lz]:not([data-lzs])')]; lzPump() },1200);
+}
+try{ new MutationObserver(ms=>{ if(LZ.raf) return; for(const m of ms) for(const n of m.addedNodes){ if(n.nodeType===1 && (n.matches('img[data-lz]') || n.querySelector('img[data-lz]'))){ LZ.raf=requestAnimationFrame(lzScan); return } } }).observe(document.getElementById('cApp')||document.documentElement,{childList:true,subtree:true}) }catch(e){}
 function openShop(id){
   curShop=shops.find(s=>s.id===id); if(!curShop)return;
+  LZ.t0=Date.now(); LZ.sid=String(id).slice(0,8); LZ.cnt=0; LZ.vq=[]; LZ.bg=[];
   try{ window.__trk&&__trk('shop',curShop.id) }catch(e){}
   pushRecent(curShop.id);
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
@@ -12236,7 +12272,7 @@ document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'
 /* v384: كرت منتج مثل تطبيقات الماركت العالمية — صورة كبيرة على خلفية فاتحة، زر + أبيض، السعر ثم الاسم ثم الحجم */
 function mkCardHTML(p){
   return `<div class="mkp${pNA(p)?' off':''}" onclick="openItem(${p.id})">
-    <div class="mkp-im">${p.img?`<img loading="lazy" decoding="async" src="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
+    <div class="mkp-im">${p.img?`<img decoding="async" data-lz="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
       ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
       <div class="mkp-add" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
     <div class="mkp-nm">${esc(p.name)}</div>
@@ -12247,7 +12283,7 @@ function mkCardHTML(p){
 function spCardHTML(p){
   if(_isMarket(curShop)) return mkCardHTML(p);
   return `<div class="spcard" onclick="openItem(${p.id})">
-          <div class="spcimg">${p.img?`<img loading="lazy" decoding="async" src="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
+          <div class="spcimg">${p.img?`<img decoding="async" data-lz="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
             <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
           <div class="spcnm">${esc(p.name)}</div>
           <div class="spcpr">${pPriceTxt(p)} د.ع</div>
@@ -12607,7 +12643,7 @@ function renderMenu(){
   box.innerHTML=ps.map(p=>`
     <div class="prod"${pNA(p)?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
-        ${p.img?`<img loading="lazy" decoding="async" class="pimg" src="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
+        ${p.img?`<img decoding="async" class="pimg" data-lz="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
         ${p.isNew?'<span class="pnew">جديد</span>':''}
         <div class="pctl" onclick="event.stopPropagation()">${prodCtl(p)}</div>
       </div>
@@ -29066,7 +29102,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v508', seen={}, n=0, q=[], t=null;
+  var VER='v509', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29319,7 +29355,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v508', t0=Date.now();
+  var VER='v509', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
