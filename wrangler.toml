@@ -34,3 +34,9 @@ id = "84e62138385c4ab78fd59e8c0bd82951"
 # v387: شيل خلفية صور المنتجات (Cloudflare Images — segment=foreground) ← worker/app.js /_bg
 [images]
 binding = "IMAGES"
+
+# v515: قبل النشر — نسخ صغيرة لصور المنتجات المرفوعة على Supabase داخل التطبيق (public/m/sb/)
+# tools/sbimg.mjs — إذا فشل ما يوقّف النشر، والتطبيق يرجع للصور الأصلية
+[build]
+command = "node tools/sbimg.mjs"
+watch_dir = "tools"

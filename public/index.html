@@ -7002,7 +7002,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v514</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v515</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -8619,9 +8619,17 @@ function cpSearch2(v){ _cpQ2=String(v||'').trim(); cpPaintList() }
 /* v503: صور القوائم — نسخة صغيرة (‎.t.webp ~11KB) بدل الكبيرة (~60KB)، والكبيرة بس بنافذة الصنف.
    أي صورة جديدة تنرفع على /m/ لازم ترافقها نسختها الصغيرة. */
 /* v504: صورنا (/m/) تنجاب من نفس عنوان التطبيق — تطبيق التلفون يفتح من workers.dev، فالصور تنخزن بالتلفون ويه التطبيق */
-function oImg(u){ u=String(u||''); return u.replace(/^https:\/\/leemak\.app(\/m\/)/,'$1') }
+/* v515: صور المنتجات المرفوعة على Supabase — نسختها داخل التطبيق (/m/sb/…) تنصنع وقت النشر (tools/sbimg.mjs).
+   الكبيرة من supabase.co كانت تعلك ببعض الشبكات (صيدلية الخليل: 0 من 111 بعد 15 ثانية).
+   صورة انرفعت بعد آخر نشر ما إلها نسخة ← نرجع للأصل تلقائياً (المستمع تحت). */
+const SB_PIMG=(typeof SB_URL!=='undefined'?SB_URL:'https://obvxqyfmcmldruauhsgw.supabase.co')+'/storage/v1/object/public/images/';
+function sbLocal(u){ if(u.indexOf(SB_PIMG)!==0) return u; const r=u.slice(SB_PIMG.length); return (/^[\w.\/-]+\.(jpe?g|png|webp)$/i.test(r) && r.indexOf('..')<0) ? '/m/sb/'+r+'.webp' : u }
+function oImg(u){ u=String(u||''); return sbLocal(u.replace(/^https:\/\/leemak\.app(\/m\/)/,'$1')) }
 function tImg(u){ u=oImg(u); return (/^\/m\/[\w\/.-]+\.webp$/.test(u) && !/\.t\.webp$/.test(u)) ? u.replace(/\.webp$/,'.t.webp') : u }
-document.addEventListener('error',e=>{ const t=e.target; if(t&&t.tagName==='IMG'&&/\.t\.webp$/.test(t.src)&&!t.dataset.tf){ t.dataset.tf='1'; t.src=t.src.replace(/\.t\.webp$/,'.webp') } },true);
+document.addEventListener('error',e=>{ const t=e.target; if(!t||t.tagName!=='IMG') return;
+  const m=/\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(t.src||'');
+  if(m && !t.dataset.sbf){ t.dataset.sbf='1'; t.dataset.tf='1'; if(t.dataset.lz) t.dataset.lz=SB_PIMG+m[1]; t.src=SB_PIMG+m[1]; return }   /* v515: ما الها نسخة بعد ← الأصل */
+  if(/\.t\.webp$/.test(t.src)&&!t.dataset.tf){ t.dataset.tf='1'; t.src=t.src.replace(/\.t\.webp$/,'.webp') } },true);
 function _cpThumb(p){
   return p.img
     ? `<img src="${tImg(p.img)}" alt="" onerror="this.style.display='none'">`
@@ -29411,7 +29419,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v514', seen={}, n=0, q=[], t=null;
+  var VER='v515', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29664,7 +29672,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v514', t0=Date.now();
+  var VER='v515', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
