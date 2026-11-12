@@ -3584,35 +3584,35 @@ html[data-theme=dark] #dvbSheet .q-lv.lv-gold{background:#3a2f12}html[data-theme
 html[data-theme=dark] #dvbSheet .dvb-sr b.neg{background:#3b1d1d}html[data-theme=dark] #dvbSheet .dvb-sr b.pos{background:#123326}
 html[data-theme=dark] #dvbSheet .dvb-money div{background:#262036}html[data-theme=dark] #dvbSheet .dvb-money .g{background:#12291f}html[data-theme=dark] #dvbSheet .dvb-money .r{background:#2e1a1a}
 html[data-theme=dark] #dvbSheet .dvb-susp button{background:#3a2216;color:#fdba74;border-color:#5a3a20}html[data-theme=dark] #dvbSheet .dvb-info div{background:#262036}html[data-theme=dark] #dvbSheet .dvb-docs button{background:#262036;border-color:#3a3150}
-/* v487 — رسالة تحديث المتجر · v517: شكل نظيف بدون إيموجي — أيقونات خط بلون التطبيق */
-#updGate{position:fixed;inset:0;z-index:2147483000;display:none;direction:rtl;font-family:Cairo,Tahoma,sans-serif;background:#fff;overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* v487 — رسالة تحديث المتجر · v517: بدون إيموجي — أيقونات خط · v518: الشاشة كلها بنفسجي (عبد اختار الشكل ٢) */
+#updGate{position:fixed;inset:0;z-index:2147483000;display:none;direction:rtl;font-family:Cairo,Tahoma,sans-serif;background:linear-gradient(170deg,#5B35D5 0%,#4527B8 55%,#33178F 100%);overflow-y:auto;-webkit-overflow-scrolling:touch}
 #updGate.on{display:block}
-#updGate .ug-bg{position:absolute;inset:0 0 auto;height:420px;background:radial-gradient(120% 100% at 50% 0%,#EEE8FF 0%,#F7F5FD 52%,rgba(255,255,255,0) 100%);pointer-events:none}
+#updGate .ug-bg{position:absolute;inset:0 0 auto;height:420px;background:radial-gradient(90% 70% at 50% 0%,rgba(255,255,255,.13) 0%,rgba(255,255,255,0) 100%);pointer-events:none}
 #updGate .ug-card{position:relative;min-height:100%;max-width:440px;margin:0 auto;padding:calc(64px + env(safe-area-inset-top)) 24px calc(18px + env(safe-area-inset-bottom));display:flex;flex-direction:column;text-align:center;animation:ugIn .35s ease}
 @keyframes ugIn{from{transform:translateY(14px);opacity:0}to{transform:none;opacity:1}}
 #updGate .ug-hero{display:flex;flex-direction:column;align-items:center;gap:16px}
-#updGate .ug-ic{position:relative;width:96px;height:96px;border-radius:24px;background:#fff;box-shadow:0 1px 2px rgba(31,22,64,.06),0 14px 34px rgba(75,43,176,.16);display:grid;place-items:center}
+#updGate .ug-ic{position:relative;width:96px;height:96px;border-radius:24px;background:#fff;box-shadow:0 16px 40px rgba(10,0,40,.35);display:grid;place-items:center}
 #updGate .ug-ic img{width:80px;height:80px;border-radius:18px}
-#updGate .ug-ic i{position:absolute;bottom:-5px;left:-5px;width:30px;height:30px;border-radius:50%;background:#4B2BB0;border:3px solid #fff;display:grid;place-items:center}
+#updGate .ug-ic i{position:absolute;bottom:-5px;left:-5px;width:30px;height:30px;border-radius:50%;background:#22C55E;border:3px solid #4B2BB0;display:grid;place-items:center}
 #updGate svg{fill:none;stroke-linecap:round;stroke-linejoin:round}
 #updGate .ug-ic i svg{width:14px;height:14px;stroke:#fff;stroke-width:2.6}
-#updGate .ug-tag{font-size:12px;font-weight:800;color:#4B2BB0;background:#F1ECFF;border-radius:20px;padding:3px 12px}
-#updGate .ug-tag.f{color:#B42318;background:#FEF0EE}
-#updGate h2{margin:16px 0 8px;font-size:23px;font-weight:800;color:#1F1640;line-height:1.45}
-#updGate p{margin:0 auto 24px;max-width:330px;font-size:14.5px;line-height:1.9;color:#6B6580;font-weight:600}
-#updGate .ug-l{text-align:right;border:1px solid #EEEAF6;border-radius:18px;padding:4px 14px;background:#fff}
-#updGate .ug-r{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid #F2EFF8}
+#updGate .ug-tag{font-size:12px;font-weight:800;color:#fff;background:rgba(255,255,255,.14);border-radius:20px;padding:3px 12px}
+#updGate .ug-tag.f{color:#B42318;background:#FEE4E2}
+#updGate h2{margin:16px 0 8px;font-size:23px;font-weight:800;color:#fff;line-height:1.45}
+#updGate p{margin:0 auto 24px;max-width:330px;font-size:14.5px;line-height:1.9;color:rgba(255,255,255,.78);font-weight:600}
+#updGate .ug-l{text-align:right;border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:4px 14px;background:rgba(255,255,255,.07)}
+#updGate .ug-r{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1)}
 #updGate .ug-r:last-child{border-bottom:0}
-#updGate .ug-r i{flex:none;width:40px;height:40px;border-radius:12px;background:#F4F0FF;display:grid;place-items:center}
-#updGate .ug-r i svg{width:20px;height:20px;stroke:#4B2BB0;stroke-width:1.9}
-#updGate .ug-r b{display:block;font-size:14.5px;font-weight:800;color:#1F1640;line-height:1.5}
-#updGate .ug-r span{display:block;font-size:12.5px;font-weight:600;color:#8A84A0;line-height:1.6}
+#updGate .ug-r i{flex:none;width:40px;height:40px;border-radius:12px;background:rgba(255,255,255,.13);display:grid;place-items:center}
+#updGate .ug-r i svg{width:20px;height:20px;stroke:#fff;stroke-width:1.9}
+#updGate .ug-r b{display:block;font-size:14.5px;font-weight:800;color:#fff;line-height:1.5}
+#updGate .ug-r span{display:block;font-size:12.5px;font-weight:600;color:rgba(255,255,255,.66);line-height:1.6}
 #updGate .ug-act{margin-top:auto;padding-top:28px}
-#updGate .ug-go{width:100%;height:54px;border:0;border-radius:16px;background:#4B2BB0;color:#fff;font:800 16px Cairo,Tahoma,sans-serif;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 8px 22px rgba(75,43,176,.26);transition:transform .12s}
+#updGate .ug-go{width:100%;height:54px;border:0;border-radius:16px;background:#fff;color:#3F1FA8;font:800 16px Cairo,Tahoma,sans-serif;display:flex;align-items:center;justify-content:center;gap:9px;box-shadow:0 10px 26px rgba(10,0,40,.3);transition:transform .12s}
 #updGate .ug-go:active{transform:scale(.985)}
-#updGate .ug-go svg{width:19px;height:19px;stroke:#fff;stroke-width:2.2}
-#updGate .ug-later{width:100%;height:48px;border:0;background:none;color:#6B6580;font:700 14.5px Cairo,Tahoma,sans-serif;margin-top:4px}
-#updGate small{display:block;margin-top:8px;font-size:12px;color:#A39CB8;font-weight:600}
+#updGate .ug-go svg{width:19px;height:19px;stroke:#3F1FA8;stroke-width:2.2}
+#updGate .ug-later{width:100%;height:48px;border:0;background:none;color:rgba(255,255,255,.85);font:700 14.5px Cairo,Tahoma,sans-serif;margin-top:4px}
+#updGate small{display:block;margin-top:8px;font-size:12px;color:rgba(255,255,255,.55);font-weight:600}
 @media (max-height:720px){#updGate .ug-card{padding-top:calc(26px + env(safe-area-inset-top))}#updGate .ug-hero{gap:10px}#updGate .ug-ic{width:76px;height:76px;border-radius:20px}#updGate .ug-ic img{width:64px;height:64px;border-radius:15px}#updGate h2{margin:10px 0 4px;font-size:20px}#updGate p{margin-bottom:14px;font-size:13.5px;line-height:1.75}#updGate .ug-r{padding:8px 0}#updGate .ug-r i{width:34px;height:34px;border-radius:10px}#updGate .ug-act{padding-top:16px}#updGate .ug-go{height:50px}#updGate .ug-later{height:42px}}
 .ua-steps{margin:0 0 12px;padding:10px 30px 10px 12px;background:#F6F4FA;border-radius:14px;font-size:12.5px;font-weight:800;color:#3d3554;line-height:2}
 .ua-c{border:1.5px solid #ECE8F4;border-radius:18px;padding:12px;margin-bottom:10px;display:flex;flex-direction:column;gap:9px}
@@ -7013,7 +7013,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v517</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v518</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -29459,7 +29459,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v517', seen={}, n=0, q=[], t=null;
+  var VER='v518', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29712,7 +29712,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v517', t0=Date.now();
+  var VER='v518', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
