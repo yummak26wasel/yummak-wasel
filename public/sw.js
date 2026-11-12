@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v513';
+const VER = 'leemak-v514';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 600;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -160,18 +160,20 @@ async function swr(e, req){
 /* صور وخطوط: الكاش أول، وتحديث بالخلفية كل 6 ساعات كحد أقصى */
 async function img(e, req){
   const c = await caches.open(IMGC);
-  const cached = await c.match(req);
+  let cached = await c.match(req);
+  /* v514: إذا انحفظت صفحة بدل صورة (لحظة النشر) نرميها ونجيب الصورة من جديد */
+  if(cached && !/^image\//i.test(cached.headers.get('content-type') || '')){ try{ await c.delete(req) }catch(e){} cached = null }
   if(cached){
     const last = _checked.get(req.url) || 0;
     if(Date.now() - last > 6 * 3600 * 1000){
       _checked.set(req.url, Date.now());
-      e.waitUntil(fetch(req, { cache: 'no-cache' }).then(r => { if(r.ok) return c.put(req, r) }).catch(() => {}));
+      e.waitUntil(fetch(req, { cache: 'no-cache' }).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) return c.put(req, r) }).catch(() => {}));
     }
     return cached;
   }
   try{
     const r = await fetch(req);
-    if(r.ok) c.put(req, r.clone());
+    if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone());
     return r;
   }catch(err){ return Response.error() }
 }
