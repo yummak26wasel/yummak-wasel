@@ -298,24 +298,24 @@ async function bgRemove(req, env, url) {
   }
 }
 
-/* v520: صفحة التطبيق (index.html) كانت تنرجع بدون ETag، فكل فتحة تنزّلها كاملة (~620KB) حتى لو ما تغيّرت —
-   بالنت الضعيف هذا هو «يحتاج نت قوي». هسه نحط ETag برقم النسخة المنشورة، وإذا التلفون عنده نفس النسخة نرد 304 (بدون محتوى).
+/* v520: صفحة التطبيق (index.html) كانت تنرجع بدون أي علامة نسخة، فكل فتحة تنزّلها كاملة (~620KB) حتى لو ما تغيّرت —
+   بالنت الضعيف هذا هو «يحتاج نت قوي». هسه نحط Last-Modified بوقت النشر، وإذا التلفون عنده نفس النسخة نرد 304 (بدون محتوى).
+   (جربنا ETag أول — Cloudflare يشيله من صفحات HTML، أما Last-Modified يوصل.)
    أي خلل هنا ← نرجع الصفحة مثل قبل بالضبط. */
 async function serveDoc(req, env) {
   const res = await env.ASSETS.fetch(req);
   try {
-    const id = env.CF_VERSION_METADATA && env.CF_VERSION_METADATA.id;
-    if (!id || res.status !== 200) { const o = new Response(res.body, res); o.headers.set('x-leemak-doc', !id ? 'nometa' : 'st' + res.status); return o; }
-    const tag = 'W/"' + id + '"';
-    const inm = req.headers.get('If-None-Match') || '';
-    if (inm && inm.split(',').some(t => t.trim() === tag || t.trim() === tag.slice(2))) {
-      return new Response(null, { status: 304, headers: { 'ETag': tag, 'Cache-Control': res.headers.get('Cache-Control') || 'public, max-age=0, must-revalidate' } });
+    const meta = env.CF_VERSION_METADATA;
+    const ts = meta && meta.timestamp ? Date.parse(meta.timestamp) : NaN;
+    if (!(ts > 0) || res.status !== 200) return res;
+    const lm = new Date(Math.floor(ts / 1000) * 1000);
+    const lmStr = lm.toUTCString();
+    const ims = Date.parse(req.headers.get('If-Modified-Since') || '');
+    if (ims > 0 && ims === lm.getTime()) {   /* نفس النسخة بالضبط بس — حتى لو رجعنا نسخة قديمة توصل للكل */
+      return new Response(null, { status: 304, headers: { 'Last-Modified': lmStr, 'Cache-Control': res.headers.get('Cache-Control') || 'public, max-age=0, must-revalidate' } });
     }
     const out = new Response(res.body, res);
-    out.headers.set('ETag', tag);
-    out.headers.set('x-leemak-doc', 'tag');
-    out.headers.set('x-leemak-etag', tag);   /* فحص مؤقت: نشوف إذا Cloudflare يشيل ETag */
-    try { const ts = env.CF_VERSION_METADATA.timestamp; if (ts) out.headers.set('Last-Modified', new Date(ts).toUTCString()); } catch (e) {}
+    out.headers.set('Last-Modified', lmStr);
     return out;
   } catch (e) { return res; }
 }
