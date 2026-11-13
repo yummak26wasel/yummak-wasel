@@ -305,7 +305,7 @@ async function serveDoc(req, env) {
   const res = await env.ASSETS.fetch(req);
   try {
     const id = env.CF_VERSION_METADATA && env.CF_VERSION_METADATA.id;
-    if (!id || res.status !== 200) return res;
+    if (!id || res.status !== 200) { const o = new Response(res.body, res); o.headers.set('x-leemak-doc', !id ? 'nometa' : 'st' + res.status); return o; }
     const tag = 'W/"' + id + '"';
     const inm = req.headers.get('If-None-Match') || '';
     if (inm && inm.split(',').some(t => t.trim() === tag || t.trim() === tag.slice(2))) {
@@ -313,6 +313,7 @@ async function serveDoc(req, env) {
     }
     const out = new Response(res.body, res);
     out.headers.set('ETag', tag);
+    out.headers.set('x-leemak-doc', 'tag');
     return out;
   } catch (e) { return res; }
 }
