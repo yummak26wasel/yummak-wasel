@@ -314,6 +314,8 @@ async function serveDoc(req, env) {
     const out = new Response(res.body, res);
     out.headers.set('ETag', tag);
     out.headers.set('x-leemak-doc', 'tag');
+    out.headers.set('x-leemak-etag', tag);   /* فحص مؤقت: نشوف إذا Cloudflare يشيل ETag */
+    try { const ts = env.CF_VERSION_METADATA.timestamp; if (ts) out.headers.set('Last-Modified', new Date(ts).toUTCString()); } catch (e) {}
     return out;
   } catch (e) { return res; }
 }
