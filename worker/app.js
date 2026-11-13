@@ -298,9 +298,31 @@ async function bgRemove(req, env, url) {
   }
 }
 
+/* v520: صفحة التطبيق (index.html) كانت تنرجع بدون ETag، فكل فتحة تنزّلها كاملة (~620KB) حتى لو ما تغيّرت —
+   بالنت الضعيف هذا هو «يحتاج نت قوي». هسه نحط ETag برقم النسخة المنشورة، وإذا التلفون عنده نفس النسخة نرد 304 (بدون محتوى).
+   أي خلل هنا ← نرجع الصفحة مثل قبل بالضبط. */
+async function serveDoc(req, env) {
+  const res = await env.ASSETS.fetch(req);
+  try {
+    const id = env.CF_VERSION_METADATA && env.CF_VERSION_METADATA.id;
+    if (!id || res.status !== 200) return res;
+    const tag = 'W/"' + id + '"';
+    const inm = req.headers.get('If-None-Match') || '';
+    if (inm && inm.split(',').some(t => t.trim() === tag || t.trim() === tag.slice(2))) {
+      return new Response(null, { status: 304, headers: { 'ETag': tag, 'Cache-Control': res.headers.get('Cache-Control') || 'public, max-age=0, must-revalidate' } });
+    }
+    const out = new Response(res.body, res);
+    out.headers.set('ETag', tag);
+    return out;
+  } catch (e) { return res; }
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
+    if ((url.pathname === '/' || url.pathname === '/index.html') && (req.method === 'GET' || req.method === 'HEAD')) {
+      try { return await serveDoc(req, env); } catch (e) { return env.ASSETS.fetch(req); }
+    }
     if (url.pathname === '/_bg') return bgRemove(req, env, url);
     if (url.pathname === '/_nudge') return nudge(req, env);
     if (url.pathname.startsWith('/_train/')) return train(req, env, url.pathname.slice(7));   /* v454: تدريب السواق */
