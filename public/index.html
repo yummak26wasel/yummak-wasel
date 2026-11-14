@@ -7029,7 +7029,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v523</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v524</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -12147,11 +12147,16 @@ function _imgDiag(sid){
 const LZ={vq:[],bg:[],rt:[],run:0,io:null,raf:0,t0:0,sid:'',cnt:0,gen:0,slow:0};
 function lzLoad(img){
   if(!img || !img.dataset.lz || img.dataset.lzs) return;
+  /* v524: إذا صورة من /m/sb/ علكت قبل بهالجلسة، الباقي نجيبه من الأصل مباشرة (ما ننتظر 7 ثواني لكل دفعة) */
+  if(LZ.sbStuck && !img.dataset.sbf){ const m2=/\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(img.dataset.lz||''); if(m2){ img.dataset.sbf='1'; img.dataset.lz=SB_PIMG+m2[1] } }
   img.dataset.lzs='1'; LZ.run++; const g=LZ.gen;
   /* v514: إذا صورة علكت (النت ضعيف) ما نبقى ننتظرها للأبد — بعد 7 ثواني نفك مكانها وتكمل الباقي، وهي تكمل تنزل وحدها */
   let fin=false; const rel=()=>{ if(fin) return false; fin=true; clearTimeout(tm); if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.classList.add('lzok'); return true };
   const done=()=>{ if(rel()){ lzMark(); lzPump() } };
   const tm=setTimeout(()=>{ if(fin) return; LZ.slow++;
+    /* v524: نسخة /m/sb/ علكت 7 ثواني (اتصال عالك بعنوان التطبيق) ← نجيبها هسه من الأصل بـ Supabase بدل ما تنعاد بالأخير وتعلك مرة ثانية */
+    const mm=(!img.complete && !img.dataset.sbf) ? /\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(img.dataset.lz||'') : null;
+    if(mm){ fin=true; LZ.sbStuck=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.dataset.sbf='1'; img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lz=SB_PIMG+mm[1]; LZ.vq.unshift(img); lzPump(); return }
     if(!img.dataset.lzr && !img.complete){   /* أول مرة: نلغي الطلب العالك (يفك الخط) ونرجعها لآخر الدور (بعد كل الصور) تنعاد */
       img.dataset.lzr='1'; fin=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lzw='1'; LZ.rt.push(img); lzPump(); return }
     if(rel()) lzPump() },7000);
@@ -29488,7 +29493,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v523', seen={}, n=0, q=[], t=null;
+  var VER='v524', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29741,7 +29746,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v523', t0=Date.now();
+  var VER='v524', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

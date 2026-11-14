@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v523';
+const VER = 'leemak-v524';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 600;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -10,6 +10,9 @@ const FONT = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\//;
 const PRE_IMG = ['/081cb4e0.png', '/792707e8.png'];   /* الشعار — ينحفظ بالكاش الدائم */
 const SHELL = ['/supabase.js', '/sb-layer.js', '/auth-layer.js', '/manifest.json'];   /* v303: مكتبة Supabase صارت من موقعنا */
 const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
+/* v524: نسخ صور المنتجات داخل التطبيق (/m/sb/…) — إذا علكت، نجيب الأصل من هنا */
+const SB_PIMG = 'https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/';
+const MSB = /\/m\/sb\/(.+?)(?:\.t)?\.webp$/;
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
 const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|project-osrm\.org|fcm\.googleapis)/;
 const IMG = /\.(png|jpe?g|webp|gif|svg|ico|woff2?)$/i;
@@ -121,10 +124,12 @@ function timeout(ms){ return new Promise(r => setTimeout(() => r(null), ms)) }
 let _idxP = null;
 function fetchIndex(c){
   if(_idxP) return _idxP;
-  _idxP = fetch('/', { cache: 'no-cache' }).then(clean)
+  /* v524: مهلة 25 ثانية — قبل: إذا الطلب علك (اتصال عالك)، _idxP يبقى ينتظر والتطبيق ما يتحدث أبد (تلفون بقى على v518) */
+  const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 25000);
+  _idxP = fetch('/', { cache: 'no-cache', signal: ac.signal }).then(clean)
     .then(async r => { if(r.ok) await store(c, '/index.html', r, true); return r })
     .catch(() => null)
-    .then(r => { _idxP = null; return r });
+    .then(r => { clearTimeout(tm); _idxP = null; return r });
   return _idxP;
 }
 async function oldIndex(){
@@ -171,10 +176,15 @@ async function img(e, req){
     }
     return cached;
   }
+  const m = MSB.exec(new URL(req.url).pathname);
   try{
-    const r = await fetch(req);
-    if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone());
-    return r;
+    const net = fetch(req).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone()).catch(() => {}); return r });
+    if(!m) return await net;
+    /* v524: نسخة /m/sb/ علكت 6 ثواني (اتصال عالك بعنوان التطبيق) ← نجيب الأصل من Supabase بدل ما الصورة تبقى فارغة */
+    const r = await Promise.race([net.catch(() => null), timeout(6000)]);
+    if(r && r.ok) return r;
+    try{ const o = await fetch(SB_PIMG + m[1], { mode: 'cors', credentials: 'omit' }); if(o.ok) return o }catch(e2){}
+    return await net;
   }catch(err){ return Response.error() }
 }
 
