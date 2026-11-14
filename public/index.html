@@ -7027,7 +7027,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v519</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v521</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -21230,6 +21230,7 @@ function renderJoin2(){
         <button class="ok" onclick="${o.ok}"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> موافقة</button>
         <button class="no" onclick="${o.no}"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg> رفض</button>
         <a class="ic" href="tel:${esc(o.phone||'')}" aria-label="اتصال"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>
+        ${o.phone?`<a class="ic wa" href="https://wa.me/${dvbWa(o.phone)}" target="_blank" rel="noopener" aria-label="واتساب"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20.5 5.4 16.5a8.2 8.2 0 1 1 3.1 3.1z"/><path d="M8.9 9.5c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8.1-4-9.6-7.6h1.6l1 2z"/></svg></a>`:''}
         <button class="ic del" onclick="${o.del}" aria-label="حذف"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg></button>
       </div></div>`;
   const tp=t=>t==='restaurant'?'مطعم':t==='store'?'متجر':'خدمات';
@@ -21283,6 +21284,7 @@ function renderPeople2(fromQ){
       ${_av(o.img,o.name)}
       <div class="t" ${o.open?`onclick="${o.open}"`:''}><b>${esc(o.name||'—')} <em class="pill ${o.tag[1]}">${o.tag[0]}</em>${o.isNew?'<em class="pill p4new">جديد</em>':''}</b><span>${o.sub}</span>${o.jd?`<span class="jd">🗓️ ${o.jd}</span>`:''}${o.warn?`<span class="w">${o.warn}</span>`:''}${o.extra||''}</div>
       <div class="a">
+        ${o.phone?`<a class="ic wa" href="https://wa.me/${dvbWa(o.phone)}" target="_blank" rel="noopener" aria-label="واتساب"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20.5 5.4 16.5a8.2 8.2 0 1 1 3.1 3.1z"/><path d="M8.9 9.5c.6 2.6 3.2 5.2 5.8 5.8l1.2-1.4 2 .9v1.6c-3.6.5-8.1-4-9.6-7.6h1.6l1 2z"/></svg></a>`:''}
         <a class="ic" href="tel:${esc(o.phone||'')}" aria-label="اتصال"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6.2 3.8h3.1l1.6 4-2 1.4a12 12 0 0 0 5.9 5.9l1.4-2 4 1.6v3.1a1.9 1.9 0 0 1-2.1 1.9C10.9 19 5 13.1 4.3 5.9a1.9 1.9 0 0 1 1.9-2.1z"/></svg></a>
         ${o.tog}
         <button class="ic del" onclick="${o.del}" aria-label="حذف"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M9 7V4.5h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg></button>
@@ -22187,7 +22189,7 @@ const DVB_ST={busy:{t:'يوصّل طلب',c:'b',e:'🛵'},shift:{t:'بشفته �
 function dvbAgo(iso){ if(!iso) return 'ما فتح التطبيق بعد'; const m=Math.max(0,(Date.now()-new Date(iso).getTime())/60000);
   return m<2?'هسه':m<60?'قبل '+Math.round(m)+' د':m<1440?'قبل '+Math.round(m/60)+' س':m<2880?'قبل يوم':'قبل '+Math.round(m/1440)+' أيام' }
 function dvbDate(iso){ try{ return new Date(iso).toLocaleDateString('ar-IQ',{day:'numeric',month:'numeric'}) }catch(e){ return '' } }
-function dvbWa(ph){ let d=String(ph||'').replace(/\D/g,''); if(d.startsWith('00')) d=d.slice(2); if(d.startsWith('0')) d='964'+d.slice(1); return d }
+function dvbWa(ph){ let d=String(ph||'').replace(/\D/g,''); if(d.startsWith('00')) d=d.slice(2); if(d.startsWith('0')) d='964'+d.slice(1); else if(/^7\d{9}$/.test(d)) d='964'+d; return d }
 function dvbDetail(x){
   const st=x.st;
   if(st==='busy') return x.cur_order?('يوصّل طلب #'+x.cur_order):'يوصّل طلب خاص';
@@ -28925,7 +28927,8 @@ html[data-theme=dark] .ixm button{background:#2a2440;border-color:#3a3456;color:
 .secpk button.on{background:var(--g);border-color:var(--g);color:#fff}
 html[data-theme=dark] .secpk button{background:#2b2447;border-color:#3a3160;color:#cfc8e6}
 html[data-theme=dark] .secpk button.on{background:var(--g);border-color:var(--g);color:#fff}
-.pr2 .a{display:flex;gap:6px}.pr2 .a .ic{width:38px;height:38px;border-radius:12px}
+.pr2 .a{display:grid;grid-template-columns:repeat(2,38px);gap:6px}.pr2 .a .ic{width:38px;height:38px;border-radius:12px}
+.ic.wa{background:#E7F8EE;color:#128C4A}html[data-theme=dark] .ic.wa{background:#163826;color:#5BE08F}   /* v521: زر واتساب بكروت المشتركين والانضمام */
 html[data-theme=dark] .jc,html[data-theme=dark] .pr2,html[data-theme=dark] .pg-empty{background:#1c1730;border-color:#2e2846}
 html[data-theme=dark] .jc-h b,html[data-theme=dark] .pr2 .t b,html[data-theme=dark] .pg-h h2{color:#fff}
 html[data-theme=dark] .ic,html[data-theme=dark] .jc-a .no{background:#2a2440;color:#fff}html[data-theme=dark] .ic.del{background:#4a1f26;color:#ff8a8e}
@@ -29473,7 +29476,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v519', seen={}, n=0, q=[], t=null;
+  var VER='v521', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29726,7 +29729,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v519', t0=Date.now();
+  var VER='v521', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
