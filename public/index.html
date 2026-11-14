@@ -7029,7 +7029,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v525</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v526</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -18139,7 +18139,7 @@ function lmLoad(force){
 }
 function lmPaint(map){
   try{
-    if(!map || !window.L) return;
+    if(!map || !window.L || map._noLm) return;   /* v526: خريطة السواق بدون معالم (كانت هوسة) */
     if(!map._lmLayer){
       map._lmLayer=L.layerGroup().addTo(map);
       const z=()=>{ try{ const c=map.getContainer(), zz=map.getZoom(); c.classList.toggle('lm-off', zz<13); c.classList.toggle('lm-lbl', zz>=15) }catch(e){} };
@@ -22944,7 +22944,9 @@ async function openDrvMap(){
   sh.classList.add('on');
   try{ await loadLeaflet() }catch(e){ toast('ما گدرنا نحمّل الخريطة — شيك النت'); return }
   await new Promise(r=>setTimeout(r,80));
-  if(!dMap){ dMap=L.map('dmMap',{zoomControl:true,attributionControl:true}); tarekyTiles(dMap); dMap.setView(GEO.anah,14) }
+  if(!dMap){ dMap=L.map('dmMap',{zoomControl:true,attributionControl:true}); dMap._noLm=true; tarekyTiles(dMap); dMap.setView(GEO.anah,14)
+    /* v526: أسماء المحلات تطلع بس لما تقرّب (17+) */
+    const zl=()=>{ try{ dMap.getContainer().classList.toggle('dm-zl', dMap.getZoom()>=17) }catch(e){} }; dMap.on('zoomend',zl); zl() }
   setTimeout(()=>{ try{ dMap.invalidateSize(true) }catch(e){} },150);
   dmShops();
   await dmLoad(true);
@@ -22956,7 +22958,9 @@ async function dmLoad(fit){
   try{ rows=await rpc('admin_driver_map',{}) || [] }
   catch(e){ const sb=document.getElementById('dmSub'); if(sb) sb.textContent=/function|schema|Could not find/i.test(errMsg(e))?'شغّل driver_map.sql أول':'ما گدرنا نجيب المواقع'; return }
   dMapData=rows;
-  const shown=rows.filter(d=>d.lat&&d.lng&&(d.on_duty||d.job));
+  /* v526: موقع أقدم من ساعتين ما يطلع على الخريطة — يغلّط (مثلاً سائق موقعه من 8 أيام). يبقى بالقائمة */
+  const fresh=d=>{ const t=d.seen_at?Date.parse(d.seen_at):0; return t && Date.now()-t < 2*3600000 };
+  const shown=rows.filter(d=>d.lat&&d.lng&&(d.on_duty||d.job)&&(fresh(d)||d.job));
   const seen={};
   shown.forEach(d=>{
     const st=_dmState(d); seen[d.id]=1;
@@ -22964,10 +22968,10 @@ async function dmLoad(fit){
       html:`<div class="dm-p ${st.c}">${d.photo?`<img src="${esc(d.photo)}" alt="">`:`<b>${esc(String(d.name||'؟').charAt(0))}</b>`}</div><em>${esc(String(d.name||'').split(' ')[0])}</em>`});
     const pop=`<div class="dm-pop"><b>${esc(d.name||'سائق')}</b><span>${esc(st.l)}</span><small>آخر موقع: ${_agoTxt(st.t)}</small>${d.phone?`<a href="tel:${esc(d.phone)}">📞 اتصال</a>`:''}</div>`;
     if(dMarks[d.id]){ dMarks[d.id].setLatLng([d.lat,d.lng]); dMarks[d.id].setIcon(ic); dMarks[d.id].setPopupContent(pop) }
-    else dMarks[d.id]=L.marker([d.lat,d.lng],{icon:ic}).addTo(dMap).bindPopup(pop);
+    else dMarks[d.id]=L.marker([d.lat,d.lng],{icon:ic, zIndexOffset:1000}).addTo(dMap).bindPopup(pop);
   });
   Object.keys(dMarks).forEach(k=>{ if(!seen[k]){ dMap.removeLayer(dMarks[k]); delete dMarks[k] } });
-  const pts=shown.map(d=>[d.lat,d.lng]).concat(window.__dmShopPts||[]);
+  const pts=shown.length ? shown.map(d=>[d.lat,d.lng]) : (window.__dmShopPts||[]);
   if(fit && pts.length){ try{ dMap.fitBounds(L.latLngBounds(pts).pad(0.25),{maxZoom:16}) }catch(e){} }
   const nOn=rows.filter(d=>d.on_duty||d.job).length, nBusy=rows.filter(d=>d.job).length;
   const sb=document.getElementById('dmSub'); if(sb) sb.textContent=nOn+' شغّال · '+nBusy+' عنده طلب · يتحدث كل 15 ثانية';
@@ -22986,8 +22990,9 @@ function dmShops(){
   const withLoc=S.filter(x=>x.loc && x.loc.lat && x.loc.lng), noLoc=S.filter(x=>!(x.loc && x.loc.lat && x.loc.lng));
   withLoc.forEach(sh=>{
     let op=false; try{ op=isOpenNow(sh) }catch(e){}
-    const ic=L.divIcon({className:'dm-pin', iconSize:[40,52], iconAnchor:[20,46],
-      html:`<div class="dm-s ${op?'':'cl'}">${sh.img?`<img src="${esc(sh.img)}" alt="">`:'🏪'}</div><em>${esc(String(sh.name||'').slice(0,14))}</em>`});
+    /* v526: نقطة صغيرة بدل صورة كبيرة — الاسم يطلع لما تقرّب أو تدوس */
+    const ic=L.divIcon({className:'dm-pin dm-sp', iconSize:[16,16], iconAnchor:[8,8],
+      html:`<div class="dm-s2 ${op?'':'cl'}"></div><em>${esc(String(sh.name||'').slice(0,16))}</em>`});
     L.marker([sh.loc.lat, sh.loc.lng],{icon:ic, zIndexOffset:-500}).addTo(dShopLayer)
       .bindPopup(`<div class="dm-pop"><b>🏪 ${esc(sh.name||'محل')}</b><span>${op?'مفتوح هسه':'مسكّر هسه'}</span>${sh.phone?`<a href="tel:${esc(sh.phone)}">📞 اتصال</a>`:''}<button type="button" class="dm-fix" onclick="amFixShopLoc('${sh.id}')">📍 صحّح الموقع</button></div>`);
   });
@@ -29410,7 +29415,8 @@ html[data-theme=dark] .cfg-g>summary .cg-ic,html[data-theme=dark] .cfg-acts i{ba
 .dm-pop a{display:inline-block;margin-top:6px;background:#EEF9F1;color:#15803D;font-weight:800;border-radius:10px;padding:4px 10px;text-decoration:none}
 html[data-theme=dark] #dmapSheet{background:#15121f}html[data-theme=dark] #dmapSheet .dm-top,html[data-theme=dark] #dmapSheet .dm-row{background:#1f1a30}
 html[data-theme=dark] #dmapSheet .dm-top b,html[data-theme=dark] #dmapSheet .dm-row b{color:#fff}
-.dm-leg .shop{background:#fff;border:2px solid #F97402;border-radius:3px!important}
+.dm-leg .shop{background:#5B35D5;border:0;border-radius:3px!important}
+.dm-pin .dm-s2{width:14px;height:14px;border-radius:4px;background:#5B35D5;border:2px solid #fff;box-shadow:0 1px 4px rgba(0,0,0,.35);margin:1px}.dm-pin .dm-s2.cl{background:#C9C3D9}.dm-pin.dm-sp em{display:none;top:18px;font-size:10.5px}#dmMap.dm-zl .dm-pin.dm-sp em{display:block}   /* v526 */
 .dm-pin .dm-s{width:36px;height:36px;border-radius:11px;border:3px solid #F97402;background:#fff;box-shadow:0 3px 8px rgba(0,0,0,.25);overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:18px;margin:0 auto}
 .dm-pin .dm-s.cl{border-color:#9A93AD;filter:grayscale(.6)}.dm-pin .dm-s img{width:100%;height:100%;object-fit:cover}
 #dmapSheet .dm-note{background:#FFF6E8;color:#9A5B00;border-radius:12px;padding:9px 12px;font-size:12.5px;font-weight:700;margin-bottom:8px;line-height:1.7}
@@ -29507,7 +29513,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v525', seen={}, n=0, q=[], t=null;
+  var VER='v526', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29760,7 +29766,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v525', t0=Date.now();
+  var VER='v526', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
