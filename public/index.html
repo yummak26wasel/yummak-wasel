@@ -391,6 +391,7 @@ html[data-theme=dark] .rf-acc{background:#1f1a30;border-color:rgba(255,255,255,.
 .rf-sh .rf-d .t span{display:block;font-size:12px;color:#7A7390;margin:1px 0 4px}
 .rf-sh .rf-bt{color:#fff!important}
 .rf-rs{display:flex;flex-direction:column;gap:8px}
+.rf-pd{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:4px}.rf-pd button{border:1.5px solid #ECE8F4;background:#fff;border-radius:14px;padding:12px;font:inherit;font-size:14px;font-weight:800;color:#140d24;cursor:pointer}.rf-pd button.on{border-color:var(--g);background:#F1ECFB;color:var(--g)}html[data-theme=dark] .rf-pd button{background:#1c1730;border-color:#2e2846;color:#fff}   /* v523 */
 .rf-rs button{display:flex;align-items:center;gap:10px;border:1.5px solid #ECE8F4;background:#fff;border-radius:14px;padding:13px 12px;font:inherit;font-size:14px;font-weight:800;color:#140d24;text-align:right;cursor:pointer}
 .rf-rs button i{width:20px;height:20px;border-radius:50%;border:2px solid #CFC9DC;flex-shrink:0;box-sizing:border-box}
 .rf-rs button.on{border-color:#D92D20;background:#FFF5F4}
@@ -7028,7 +7029,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v522</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v523</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -17328,7 +17329,7 @@ const RPC_KICK={
   admin_cancel_stale:['orders','special_orders'], cancel_stale_orders:['orders','special_orders'],
   claim_order:['orders'], advance_order:['orders'], complete_order:['orders'], shop_set_status:['orders'], shop_set_prep:['orders'],
   shop_external_order:['orders'], shop_confirm_cash:['orders','special_orders'], customer_cancel_scheduled:['orders'],
-  rf_hold:['orders'], rf_report:['orders'], rf_decide:['orders'], rf_decide2:['orders'], driver_sent_cash:['orders'], driver_sent_com:['orders'],
+  rf_hold:['orders'], rf_hold2:['orders'], rf_report:['orders'], rf_decide:['orders'], rf_decide2:['orders'], driver_sent_cash:['orders'], driver_sent_com:['orders'],
   /* «اشتريلي» */
   claim_special:['special_orders'], customer_cancel_special:['special_orders'], driver_set_missing:['special_orders'],
   driver_sent_cash_special:['special_orders'], driver_sent_com_special:['special_orders']
@@ -23833,7 +23834,7 @@ function rfSheetPaint(){
     act = r.status==='pending' ? '<div class="rf-wait">الإدارة دا تراجع شنو صار</div>'
         : r.fault==='customer' ? '<div class="rf-warn">⚠️ انحسب عليك رفض. إذا تكرر، حسابك ينوقف.</div>' : '<div class="rf-okm">الغلط مو منك ✓</div>';
   }else if(r.status==='pending'){
-    act = role==='adm' ? `<label class="rf-pp"><input type="checkbox" id="rfPrepaid"><span><b>السائق دافع للمطعم من جيبه</b><small>علّمها إذا السائق دفع فلوس الأكل للمطعم قبل لا يوصّل — حتى ترجعله فلوسه</small></span></label>
+    act = role==='adm' ? `<label class="rf-pp"><input type="checkbox" id="rfPrepaid" ${r.driver_says_paid?'checked':''}><span><b>السائق دافع للمطعم من جيبه</b><small>${r.driver_says_paid===true?'السائق كال: إي دفعت — إذا تشك اسأل المطعم':r.driver_says_paid===false?'السائق كال: ما دفعت':'علّمها إذا السائق دفع فلوس الأكل للمطعم قبل لا يوصّل — حتى ترجعله فلوسه'}</small></span></label>
       <div class="rf-h">منو الغلطان؟</div>
       <div class="rf-opts">${[['customer','🧍','الزبون','التطبيق يعوّض المطعم والسائق'],['shop','🍔','المطعم','التطبيق يدفع أجرة السائق'],['driver','🛵','السائق','السائق يعوّض المطعم'],['none','⚖️','ماكو غلطان','التطبيق يدفع أجرة السائق']].map(([k,ic,t,d])=>`<button onclick="rfDecide('${r.id}','${k}')"><i>${ic}</i><span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div>
       <textarea id="rfNote" class="rf-ta" rows="2" placeholder="ملاحظة (اختياري) — شنو صار؟"></textarea>`
@@ -23857,9 +23858,9 @@ function rfSheetPaint(){
 }
 
 /* ── السائق: الزبون ما استلم + السبب ── */
-let _rfRepId=null, _rfReason='';
+let _rfRepId=null, _rfReason='', _rfPaid=null;   /* v523: دفعت فلوس الأكل للمطعم؟ */
 function rfReport(id){
-  _rfRepId=id; _rfReason='';
+  _rfRepId=id; _rfReason=''; _rfPaid=null;
   let s=document.getElementById('rfRep');
   if(!s){ s=document.createElement('div'); s.id='rfRep'; s.addEventListener('click',e=>{ if(e.target===s) s.classList.remove('on') }); document.body.appendChild(s) }
   rfRepPaint(); requestAnimationFrame(()=>s.classList.add('on'));
@@ -23871,8 +23872,10 @@ function rfRepPaint(){
     <div class="rf-shd"><div><b>الزبون ما استلم</b></div><button onclick="document.getElementById('rfRep').classList.remove('on')">×</button></div>
     <div class="rf-h">شنو صار؟</div>
     <div class="rf-rs">${RF_REASONS.map(t=>`<button class="${_rfReason===t?'on':''}" onclick="_rfReason=${JSON.stringify(t).replace(/"/g,'&quot;')};rfRepPaint()"><i></i>${t}</button>`).join('')}</div>
+    <div class="rf-h">دفعت فلوس الأكل للمطعم؟</div>
+    <div class="rf-pd"><button class="${_rfPaid===true?'on':''}" onclick="_rfPaid=true;rfRepPaint()">إي، دفعت</button><button class="${_rfPaid===false?'on':''}" onclick="_rfPaid=false;rfRepPaint()">لا</button></div>
     <div class="rf-hint">الطلب يضل عندك وتنتظر. الإدارة تتصل بالزبون وتحل المشكلة.</div>
-    <button class="rf-go" ${_rfReason?'':'disabled'} onclick="rfReportSend()">بلّغ الإدارة وانتظر</button></div>`;
+    <button class="rf-go" ${(_rfReason&&_rfPaid!==null)?'':'disabled'} onclick="rfReportSend()">بلّغ الإدارة وانتظر</button></div>`;
 }
 /* ═══ v324: الزبون ما استلم → الطلب يضل ينتظر لحد ما الإدارة تحل المشكلة (مثل التطبيقات العالمية) ═══ */
 const HOLD_MAX=10*60*1000; /* بعد 10 دقايق بلا رد من الإدارة، السائق يكدر يرجّع الطلب */
@@ -23897,12 +23900,12 @@ function holdBox(o){
   </div>`;
 }
 async function rfReportSend(){
-  const id=_rfRepId, why=_rfReason; if(!id||!why) return;
+  const id=_rfRepId, why=_rfReason, paid=_rfPaid; if(!id||!why||paid===null) return;
   const bt=document.querySelector('#rfRep .rf-go'); if(bt) bt.disabled=true;
   try{
-    const r=await rpc('rf_hold',{p_order:String(id), p_reason:why});
+    const r=await rpc('rf_hold2',{p_order:String(id), p_reason:why, p_paid:paid});
     const o=(myOrders||[]).find(x=>x.id===id), no=holdNo(o);
-    if(o){ o.hold_at=o.hold_at||new Date().toISOString(); o.hold_reason=o.hold_reason||why }
+    if(o){ o.hold_at=o.hold_at||new Date().toISOString(); o.hold_reason=o.hold_reason||why; o.hold_paid=paid }
     const adm=(r&&Array.isArray(r.admins))?r.admins:[];
     adm.slice(0,5).forEach(a=>{ try{ pushTo(a,'⏳ طلب معلّق — السائق ينتظر','#'+no+': '+why+' — اتصل بالزبون وحل المشكلة',{type:'hold',id:String(id)}) }catch(e){} });
     if(!adm.length){ try{ await rpc('notify_insert',{p_to:null,p_to_role:'admin',p_title:'⏳ طلب معلّق — السائق ينتظر',p_body:'#'+no+': '+why,p_data:{type:'hold'}}) }catch(e){} try{ pushAdmins('⏳ طلب معلّق — السائق ينتظر','#'+no+': '+why,{type:'hold'}) }catch(e){} }
@@ -23946,6 +23949,7 @@ function holdAdmPaint(){
     <div class="ha-r">${esc(o.hold_reason||'الزبون ما استلم')}</div>
     <div class="ha-p"><span>الزبون</span><b>${esc(o.customer||'—')}</b>${o.phone?`<a href="tel:${esc(o.phone)}" aria-label="اتصل">${HOLD_PH}</a>`:''}</div>
     <div class="ha-p"><span>السائق</span><b>${esc(o.driverName||'—')}</b>${o.driverPhone?`<a href="tel:${esc(o.driverPhone)}" aria-label="اتصل">${HOLD_PH}</a>`:''}</div>
+    ${o.hold_paid!=null?`<div class="ha-p"><span>دفع للمطعم؟</span><b>${o.hold_paid?'إي، دفع':'لا'}</b></div>`:''}
     <div class="ha-acts"><button class="ub ub-p" onclick="holdDeliver('${o.id}')">يكمّل التوصيل</button><button class="ub ub-d" onclick="holdCancel('${o.id}')">ينلغي</button></div>
   </div>` }).join('');
 }
@@ -29484,7 +29488,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v522', seen={}, n=0, q=[], t=null;
+  var VER='v523', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29737,7 +29741,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v522', t0=Date.now();
+  var VER='v523', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
