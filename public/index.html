@@ -7029,7 +7029,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v527</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v528</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -23029,10 +23029,13 @@ function openAdminShop(id){
   /* المنيو حسب الأقسام */
   const byCat={}; ps.forEach(p=>{ const c=String(p.cat||'').trim()||'بدون قسم'; (byCat[c]=byCat[c]||[]).push(p) });
   const price=p=>{ const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.p):[]; if(sz.length){ const v=sz.map(z=>Number(z.p)||0); return Math.min(...v).toLocaleString()+(v.length>1?' – '+Math.max(...v).toLocaleString():'') } return Number(p.price||0).toLocaleString()+(pKgW(p)?' / كغم':'') };
-  const menu=ps.length?Object.keys(byCat).map(c=>`<div class="as-cat">${esc(c)} <i>${byCat[c].length}</i></div>`+byCat[c].map(p=>`<div class="as-p${p.avail===false?' na':''}">
+  /* v528: الإدارة تدوس أي منتج وتشوف تفاصيله كاملة (الأحجام، الإضافات، الوصف) */
+  const _xn=p=>{ const a=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.n).length:0, b=Array.isArray(p.opts)?p.opts.filter(o=>o&&o.n).length:0;
+    return [a>1?a+' أحجام':'', b?b+(b===1?' إضافة':' إضافات'):''].filter(Boolean).join(' · ') };
+  const menu=ps.length?Object.keys(byCat).map(c=>`<div class="as-cat">${esc(c)} <i>${byCat[c].length}</i></div>`+byCat[c].map(p=>`<div class="as-p${p.avail===false?' na':''}" onclick="asProd('${esc(sh.id)}','${esc(String(p.id||''))}')">
       ${p.img?`<img src="${esc(tImg(p.img))}" alt="" loading="lazy">`:'<span class="as-ph">🍽️</span>'}
-      <div><b>${esc(p.name||'منتج')}</b>${p.desc?`<span>${esc(String(p.desc).slice(0,80))}</span>`:''}${p.avail===false?'<em>غير متوفر</em>':''}</div>
-      <strong>${price(p)} <small>د.ع</small></strong></div>`).join('')).join('')
+      <div><b>${esc(p.name||'منتج')}</b>${p.desc?`<span>${esc(String(p.desc).slice(0,80))}</span>`:''}${_xn(p)?`<i class="as-xn">${_xn(p)}</i>`:''}${p.avail===false?'<em>غير متوفر</em>':''}</div>
+      <strong>${price(p)} <small>د.ع</small></strong><span class="as-go">‹</span></div>`).join('')).join('')
     :'<div class="as-empty">ماكو ولا منتج — صاحب المحل بعده ما ضاف المنيو</div>';
   el.innerHTML=`<div class="asbox">
     <div class="as-top">${(sh.cover_url||sh.img)?`<img class="as-cv" src="${esc(sh.cover_url||sh.img)}" alt="">`:''}<button type="button" class="as-x" onclick="document.getElementById('asSheet').classList.remove('on')" aria-label="سد">✕</button></div>
@@ -23053,6 +23056,32 @@ function openAdminShop(id){
     <div class="as-mh">المنيو <i>${ps.length}</i></div>
     <div class="as-menu">${menu}</div>
   </div>`;
+  el.classList.add('on');
+}
+
+/* v528: تفاصيل منتج كاملة للإدارة — الصورة، الوصف، الأحجام وأسعارها، الإضافات */
+function asProd(shopId, pid){
+  const sh=(allShops||[]).find(x=>x.id===shopId); if(!sh) return;
+  const p=(Array.isArray(sh.products)?sh.products:[]).find(x=>x&&String(x.id)===String(pid)); if(!p) return toast('المنتج مو موجود');
+  let el=document.getElementById('apSheet');
+  if(!el){ el=document.createElement('div'); el.id='apSheet'; el.onclick=e=>{ if(e.target===el) el.classList.remove('on') }; document.body.appendChild(el) }
+  const N=v=>(Number(v)||0).toLocaleString();
+  const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&String(z.n||'').trim()):[];
+  const op=Array.isArray(p.opts)?p.opts.filter(o=>o&&String(o.n||'').trim()):[];
+  const kg=pKgW(p);
+  const th=u=>u?`<img src="${esc(tImg(u))}" alt="" loading="lazy">`:'<span class="ap-ph"></span>';
+  const row=(img,name,sub,price,out)=>`<div class="ap-r${out?' na':''}">${th(img)}<div><b>${esc(name)}</b>${sub?`<span>${sub}</span>`:''}</div><strong>${price}</strong></div>`;
+  el.innerHTML=`<div class="apbox">
+    <div class="ap-top">${p.img?`<img class="ap-img" src="${esc(oImg(p.img))}" alt="">`:'<div class="ap-noimg">🍽️</div>'}<button type="button" class="as-x" onclick="document.getElementById('apSheet').classList.remove('on')" aria-label="سد">✕</button></div>
+    <div class="ap-b">
+      <b class="ap-n">${esc(p.name||'منتج')}</b>
+      <div class="ap-tags">${p.cat?`<i>${esc(p.cat)}</i>`:''}${p.avail===false?'<i class="na">غير متوفر</i>':'<i class="ok">متوفر</i>'}${kg?`<i>بالكيلو · ${kg} كغم</i>`:''}</div>
+      ${p.desc?`<p class="ap-d">${esc(p.desc)}</p>`:'<p class="ap-d e">ماكو وصف</p>'}
+      ${sz.length?`<div class="ap-sec">${esc(p.sizeLabel||'الأحجام')} <i>${sz.length}</i></div>`
+        +sz.map((z,i)=>row(z.img, z.n, [i===0?'الافتراضي':'', z.d?esc(z.d):'', z.out===true?'خلص':''].filter(Boolean).join(' · '), N(z.p)+' د.ع', z.out===true)).join('')
+        :`<div class="ap-sec">السعر</div>${row('', 'السعر', kg?'لكل كيلو':'', N(p.price)+' د.ع', false)}`}
+      ${op.length?`<div class="ap-sec">الإضافات <i>${op.length}</i></div>`+op.map(o=>row(o.img, o.n, o.out===true?'خلص':'', (Number(o.p)>0?'+ '+N(o.p)+' د.ع':'ببلاش'), o.out===true)).join(''):''}
+    </div></div>`;
   el.classList.add('on');
 }
 
@@ -29344,6 +29373,8 @@ html[data-theme=dark] #asSheet .as-tl input{background:#1f1a30;color:#eee;border
 #asSheet .as-p span{display:block;font-size:12px;color:#8a849c;margin-top:2px;line-height:1.5}
 #asSheet .as-p em{display:inline-block;margin-top:3px;font-style:normal;font-size:11px;font-weight:800;color:#B42318;background:#FDECEC;border-radius:8px;padding:1px 7px}
 #asSheet .as-p.na{opacity:.6}
+#asSheet .as-p{cursor:pointer}#asSheet .as-p .as-go{color:#C4BCD6;font-size:20px;font-weight:700;margin-inline-start:2px}#asSheet .as-p i.as-xn{display:inline-block;margin-top:3px;font-style:normal;font-size:11px;font-weight:800;color:var(--g);background:#F1ECFB;border-radius:8px;padding:1px 7px;margin-inline-end:4px}
+#apSheet{position:fixed;inset:0;background:rgba(20,4,50,.55);z-index:9460;display:none;align-items:flex-end}#apSheet.on{display:flex}#apSheet .apbox{background:#fff;width:100%;max-width:560px;margin:0 auto;border-radius:24px 24px 0 0;max-height:88vh;overflow:auto;padding:0 0 calc(18px + env(safe-area-inset-bottom))}#apSheet .ap-top{position:relative}#apSheet .ap-img{display:block;width:100%;max-height:300px;object-fit:contain;background:#F8F6FC;border-radius:24px 24px 0 0}#apSheet .ap-noimg{height:110px;display:flex;align-items:center;justify-content:center;font-size:40px;background:#F3EEFD;border-radius:24px 24px 0 0}#apSheet .as-x{position:absolute;top:10px;left:10px;width:36px;height:36px;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#3b2f57;font-size:15px;box-shadow:0 2px 8px rgba(0,0,0,.15)}#apSheet .ap-b{padding:14px 16px 0}#apSheet .ap-n{display:block;font-size:19px;font-weight:800;color:#140d24}#apSheet .ap-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}#apSheet .ap-tags i{font-style:normal;font-size:12px;font-weight:800;color:#5B5470;background:#F3F0F8;border-radius:9px;padding:3px 9px}#apSheet .ap-tags i.ok{color:#15803D;background:#E8F7EE}#apSheet .ap-tags i.na{color:#B42318;background:#FDECEC}#apSheet .ap-d{margin:10px 0 0;font-size:13.5px;line-height:1.7;color:#3b3450;white-space:pre-line}#apSheet .ap-d.e{color:#A8A2B8}#apSheet .ap-sec{margin:16px 0 6px;font-size:14px;font-weight:800;color:var(--g)}#apSheet .ap-sec i{font-style:normal;font-size:12px;color:#8a849c;margin-inline-start:4px}#apSheet .ap-r{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #F3F0F8}#apSheet .ap-r.na{opacity:.55}#apSheet .ap-r img,#apSheet .ap-ph{width:40px;height:40px;border-radius:10px;object-fit:cover;flex:none;background:#F3EEFD}#apSheet .ap-r>div{flex:1;min-width:0}#apSheet .ap-r b{display:block;font-size:14px;color:#140d24}#apSheet .ap-r span{display:block;font-size:12px;color:#8a849c;margin-top:1px}#apSheet .ap-r strong{font-size:14px;color:#140d24;white-space:nowrap}   /* v528 */
 #asSheet .as-p strong{font-size:14px;color:#140d24;white-space:nowrap}#asSheet .as-p strong small{font-size:11px;color:#8a849c;font-weight:700}
 #asSheet .as-empty{background:#FFF6E8;color:#9A5B00;border-radius:12px;padding:12px;font-size:13px;font-weight:700;text-align:center;margin-top:6px}
 .pr2 .t[onclick]{cursor:pointer}
@@ -29513,7 +29544,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v527', seen={}, n=0, q=[], t=null;
+  var VER='v528', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29766,7 +29797,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v527', t0=Date.now();
+  var VER='v528', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
