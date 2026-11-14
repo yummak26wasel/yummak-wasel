@@ -379,6 +379,7 @@ html[data-theme=dark] .rf-acc{background:#1f1a30;border-color:rgba(255,255,255,.
 .rf-note b{display:block;font-size:11.5px;color:#B45309;margin-bottom:2px}
 .rf-h{font-size:14px;font-weight:900;color:#140d24;margin:4px 0 8px}
 .rf-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.rf-pp{display:flex;align-items:flex-start;gap:10px;background:#FFF7E6;border:1.5px solid #FBDDA4;border-radius:14px;padding:10px 12px;margin:2px 0 12px;cursor:pointer}.rf-pp input{width:20px;height:20px;margin:2px 0 0;accent-color:#5B35D5;flex:none}.rf-pp b{display:block;font-size:13.5px;color:#140d24}.rf-pp small{display:block;font-size:11.5px;color:#8a5a00;font-weight:600;margin-top:2px}html[data-theme=dark] .rf-pp{background:#2a2316;border-color:#5a4520}html[data-theme=dark] .rf-pp b{color:#fff}   /* v522 */
 .rf-opts button{display:flex;align-items:center;gap:8px;text-align:right;border:1.5px solid #ECE8F4;background:#fff;border-radius:14px;padding:10px;font:inherit;cursor:pointer}
 .rf-opts i{font-style:normal;font-size:20px}
 .rf-opts b{display:block;font-size:13.5px;font-weight:900;color:#140d24}
@@ -7027,7 +7028,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v521</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v522</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -17327,7 +17328,7 @@ const RPC_KICK={
   admin_cancel_stale:['orders','special_orders'], cancel_stale_orders:['orders','special_orders'],
   claim_order:['orders'], advance_order:['orders'], complete_order:['orders'], shop_set_status:['orders'], shop_set_prep:['orders'],
   shop_external_order:['orders'], shop_confirm_cash:['orders','special_orders'], customer_cancel_scheduled:['orders'],
-  rf_hold:['orders'], rf_report:['orders'], rf_decide:['orders'], driver_sent_cash:['orders'], driver_sent_com:['orders'],
+  rf_hold:['orders'], rf_report:['orders'], rf_decide:['orders'], rf_decide2:['orders'], driver_sent_cash:['orders'], driver_sent_com:['orders'],
   /* «اشتريلي» */
   claim_special:['special_orders'], customer_cancel_special:['special_orders'], driver_set_missing:['special_orders'],
   driver_sent_cash_special:['special_orders'], driver_sent_com_special:['special_orders']
@@ -23824,6 +23825,7 @@ function rfSheetPaint(){
        <div class="rf-kv"><span>السائق</span><b>${esc(r.driver_name||'—')}</b></div>
        <div class="rf-kv"><span>قيمة الأكل</span><b>${N(r.food)} د.ع</b></div>
        <div class="rf-kv"><span>أجرة التوصيل</span><b>${N(r.fee)} د.ع</b></div>
+       ${r.driver_prepaid?`<div class="rf-kv"><span>السائق دافع للمطعم</span><b>إي — ${N(r.food)} د.ع</b></div>`:''}
        ${r.reason?`<div class="rf-kv"><span>السبب</span><b>${esc(r.reason)}</b></div>`:''}`;
   const note = r.note?`<div class="rf-note"><b>ملاحظة الإدارة</b>${esc(r.note)}</div>`:'';
   let act='';
@@ -23831,8 +23833,9 @@ function rfSheetPaint(){
     act = r.status==='pending' ? '<div class="rf-wait">الإدارة دا تراجع شنو صار</div>'
         : r.fault==='customer' ? '<div class="rf-warn">⚠️ انحسب عليك رفض. إذا تكرر، حسابك ينوقف.</div>' : '<div class="rf-okm">الغلط مو منك ✓</div>';
   }else if(r.status==='pending'){
-    act = role==='adm' ? `<div class="rf-h">منو الغلطان؟</div>
-      <div class="rf-opts">${[['customer','🧍','الزبون','التطبيق يعوّض المطعم والسائق'],['shop','🍔','المطعم','المطعم يدفع أجرة السائق'],['driver','🛵','السائق','السائق يعوّض المطعم'],['none','⚖️','ماكو غلطان','ينلغي بس، ولا أحد يدفع']].map(([k,ic,t,d])=>`<button onclick="rfDecide('${r.id}','${k}')"><i>${ic}</i><span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div>
+    act = role==='adm' ? `<label class="rf-pp"><input type="checkbox" id="rfPrepaid"><span><b>السائق دافع للمطعم من جيبه</b><small>علّمها إذا السائق دفع فلوس الأكل للمطعم قبل لا يوصّل — حتى ترجعله فلوسه</small></span></label>
+      <div class="rf-h">منو الغلطان؟</div>
+      <div class="rf-opts">${[['customer','🧍','الزبون','التطبيق يعوّض المطعم والسائق'],['shop','🍔','المطعم','التطبيق يدفع أجرة السائق'],['driver','🛵','السائق','السائق يعوّض المطعم'],['none','⚖️','ماكو غلطان','التطبيق يدفع أجرة السائق']].map(([k,ic,t,d])=>`<button onclick="rfDecide('${r.id}','${k}')"><i>${ic}</i><span><b>${t}</b><small>${d}</small></span></button>`).join('')}</div>
       <textarea id="rfNote" class="rf-ta" rows="2" placeholder="ملاحظة (اختياري) — شنو صار؟"></textarea>`
       : '<div class="rf-wait">⏳ بانتظار قرار الإدارة</div>';
   }else{
@@ -23986,14 +23989,19 @@ async function rfDecide(id,f){
   const r=(_rfList||[]).find(x=>x.id===id); if(!r) return;
   const N=n=>Number(n||0).toLocaleString(), com=(r.com_now!=null?Number(r.com_now):(shopPct()>0?tierCom(r.food):0)), net=Number(r.food||0), _ct=com>0?` عمولته (<b>${N(com)}</b>) تنضاف على عمولة الشهر.`:'';
   const note=((document.getElementById('rfNote')||{}).value||'').trim();
-  const msg = f==='customer' ? `التطبيق يدفع للمطعم <b>${N(net)}</b> (سعره كامل) وللسائق <b>${N(r.fee)}</b> بنهاية الدورة.${_ct} وينحسب رفض على الزبون.`
-            : f==='shop' ? `المطعم يدفع للسائق <b>${N(r.fee)}</b> — بنهاية الدورة.`
-            : f==='driver' ? `السائق يدفع للمطعم <b>${N(net)}</b> (سعره كامل) بنهاية الدورة.${_ct}`
-            : 'الطلب ينلغي بس، ولا أحد يدفع شي.';
+  /* v522: أجرة السائق على التطبيق دايماً (إلا إذا هو الغلطان) · «دافع للمطعم» = فلوس الأكل ترجع للسائق */
+  const pp=!!((document.getElementById('rfPrepaid')||{}).checked);
+  const back=`والمطعم يرجّع للسائق <b>${N(net)}</b> اللي دفعها`;
+  const msg = f==='customer' ? (pp ? `التطبيق يرجّع للسائق <b>${N(net)}</b> اللي دفعها للمطعم، ويدفعله أجرته <b>${N(r.fee)}</b> بنهاية الدورة.${_ct} وينحسب رفض على الزبون.`
+                                   : `التطبيق يدفع للمطعم <b>${N(net)}</b> (سعره كامل) وللسائق <b>${N(r.fee)}</b> بنهاية الدورة.${_ct} وينحسب رفض على الزبون.`)
+            : f==='shop' ? `التطبيق يدفع للسائق أجرته <b>${N(r.fee)}</b>${pp?' '+back:''} — بنهاية الدورة.`
+            : f==='driver' ? (pp ? `المطعم أخذ فلوسه من السائق، فما أحد يدفع شي. والسائق ما ياخذ أجرة.${_ct}`
+                                 : `السائق يدفع للمطعم <b>${N(net)}</b> (سعره كامل) بنهاية الدورة.${_ct}`)
+            : `التطبيق يدفع للسائق أجرته <b>${N(r.fee)}</b>${pp?' '+back:''} — بنهاية الدورة.`;
   const yes=await askConfirm(msg,{title:'الغلطان: '+RF_FAULT[f], ok:'إي، أكّد'});
   if(!yes) return;
   try{
-    await rpc('rf_decide',{p_id:id,p_fault:f,p_pct:shopPct(),p_note:note||null});
+    await rpc('rf_decide2',{p_id:id,p_fault:f,p_pct:shopPct(),p_note:note||null,p_prepaid:pp});
     try{ if(r.driver_id) pushTo(r.driver_id,'انحسم طلب ما انسلّم','#'+rfNo(r)+' — '+RF_FAULT[f],{type:'refused'}) }catch(e){}
     try{ const sh=(shops||[]).find(x=>String(x.id)===String(r.shop_id)); const ow=sh&&(sh.ownerUid||sh.owner_id); if(ow) pushTo(ow,'انحسم طلب ما انسلّم','#'+rfNo(r)+' — '+RF_FAULT[f],{type:'refused'}) }catch(e){}
     toast('انحفظ القرار'); await rfLoad(true); rfPaint();
@@ -29476,7 +29484,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v521', seen={}, n=0, q=[], t=null;
+  var VER='v522', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29729,7 +29737,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v521', t0=Date.now();
+  var VER='v522', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
