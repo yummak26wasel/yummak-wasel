@@ -10503,16 +10503,72 @@ let shopsUnsub = null, shopsSyncedAt = 0;
 const _SHC_K='lw_shops_cache_v1';
 let _shcT=null;
 function shopsCacheSave(docs){   /* v353: آخر قائمة محلات (ويا المنيو) محفوظة بالتلفون — تبين فوراً المرة الجاية */
-  clearTimeout(_shcT); _shcT=setTimeout(()=>{ try{ if(!me||me.role!=='customer') return; const s=JSON.stringify({at:Date.now(), rows:docs}); if(s.length<1800000) localStorage.setItem(_SHC_K,s) }catch(e){} },1500);
+  clearTimeout(_shcT); _shcT=setTimeout(()=>{ try{ if(!me||me.role!=='customer') return;
+    const rows=docs.map(d=>{ if(!(d&&d.menu_n>0)) return d; const o=Object.assign({},d); o.products=d._teaser||[]; delete o._teaser; return o });   /* v531: المحل الكبير ينحفظ بالعيّنة بس — منيوه الكامل بمفتاح لحاله */
+    const s=JSON.stringify({at:Date.now(), rows}); if(s.length<1800000) localStorage.setItem(_SHC_K,s) }catch(e){} },1500);
+}
+/* ═══ v531: منيو المحل الكبير (سوبرماركت بيه آلاف المواد) ينجاب بس لما ينفتح المحل ═══
+   قائمة المحلات (/_api/feed) تجيب المحل الكبير بعيّنة 8 مواد + menu_n (عدد المواد) + menu_v (نسخة المنيو).
+   المنيو الكامل: /_api/menu — ينحفظ بالذاكرة وبالتلفون (lw_menu_<id>) ويتحدّث بس إذا تغيّرت نسخته.
+   المحلات الصغيرة: نفس قبل بالضبط (منيوها كامل بالقائمة). */
+const _LM={}, _LMP={}, _LMF={}, _LMK='lw_menu_';
+function _lmGet(id){   /* المنيو الكامل إذا عندنا (بالذاكرة أو محفوظ بالتلفون) */
+  if(_LM[id]) return _LM[id];
+  try{ const c=JSON.parse(localStorage.getItem(_LMK+id)||'null'); if(c && Array.isArray(c.list) && c.list.length){ _LM[id]=c; return c } }catch(e){}
+  return null;
+}
+function _lmSet(id,list){   /* نربط نفس المنيو بكل نسخ المحل (القائمة + المحل المفتوح) */
+  (shops||[]).forEach(s=>{ if(s && s.id===id) s.products=list });
+  if(curShop && curShop.id===id) curShop.products=list;
+}
+function _lmHave(sh){   /* true = منيو المحل جاهز (ومربوط بيه) */
+  if(!sh || !(sh.menu_n>0)) return true;
+  const c=_lmGet(sh.id); if(!c) return false;
+  if(sh.products!==c.list){ sh.products=c.list; _lmSet(sh.id,c.list) }
+  return true;
+}
+function _lmLoad(sh){
+  const id=sh && sh.id; if(!id) return Promise.resolve(false);
+  if(_LMP[id]) return _LMP[id];
+  const v=String(sh.menu_v||'');
+  return _LMP[id]=(async()=>{
+    let j=null;
+    if(_SAME_ORIGIN) try{ const r=await _fto(location.origin+'/_api/menu?id='+encodeURIComponent(id)+'&v='+encodeURIComponent(v),{method:'GET'},15000); if(r.ok) j=await r.json() }catch(e){}
+    if(!(j && Array.isArray(j.products))) try{ j=await sbGet('rpc/shop_menu?p_id='+encodeURIComponent(id)) }catch(e){ j=null }   /* احتياط: من القاعدة مباشرة */
+    if(!(j && Array.isArray(j.products) && j.products.length)){ _LMF[id]=Date.now(); return false }
+    const c={v:String(j.v||v), list:j.products}; _LM[id]=c; _lmSet(id,c.list);
+    try{ const s=JSON.stringify(c); if(s.length<1500000) localStorage.setItem(_LMK+id,s) }catch(e){ try{ localStorage.removeItem(_LMK+id) }catch(_){} }
+    return true;
+  })().finally(()=>{ delete _LMP[id] });
+}
+function _lmRefresh(sh){   /* عندنا نسخة قديمة — نجيب الجديدة بالخلفية ونرسم من جديد */
+  const id=sh && sh.id; if(!id || _LMP[id] || Date.now()-(_LMF[id]||0)<30000) return;
+  const c=_LM[id]; if(c && c.v===String(sh.menu_v||'')) return;
+  _lmLoad(sh).then(ok=>{ if(!ok) return;
+    try{ if(curShop && curShop.id===id && document.getElementById('p_shop').classList.contains('on')) renderMenu() }catch(e){}
+    try{ if(cart.length && cart[0].shopId===id) cartSync() }catch(e){} });
+}
+function _lmPrep(docs){   /* كل ما توصل قائمة المحلات: المحل الكبير ياخذ منيوه الكامل اللي عندنا (نفس المصفوفة — فما ينعاد رسمه بلا داعي) */
+  for(const d of (docs||[])){
+    if(!d || !(d.menu_n>0)) continue;
+    d._teaser=Array.isArray(d.products)?d.products:[];
+    const c=_LM[d.id]; if(!c) continue;
+    d.products=c.list;
+    if(c.v!==String(d.menu_v||'') && ((curShop && curShop.id===d.id) || (cart.length && cart[0].shopId===d.id))) setTimeout(()=>_lmRefresh(d),0);
+  }
 }
 function shopsCacheLoad(){ try{ const c=JSON.parse(localStorage.getItem(_SHC_K)||'null'); if(c && Array.isArray(c.rows) && c.rows.length && Date.now()-(c.at||0)<7*864e5) return c.rows }catch(e){} return null }
+function _shSig(s){ try{ const o=Object.assign({},s); delete o.products; delete o._teaser; return JSON.stringify(o) }catch(e){ return Math.random() } }
 function applyShops(docs){
+  try{ _lmPrep(docs) }catch(e){}   /* v531 */
   shops = docs; window.__shopsLoaded = true;
   try{ renderCats() }catch(e){}   /* v379: «قريباً» على الأقسام الفاضية */
   try{ if(me && me.role==='customer' && !docs.__cached) shopsCacheSave(docs) }catch(e){}
   renderShops();
   renderDailyMeals();
-  if(curShop){ const f=shops.find(x=>x.id===curShop.id); if(f){ curShop=f; renderMenu() } }
+  if(curShop){ const f=shops.find(x=>x.id===curShop.id); if(f){
+    const same=f.menu_n>0 && f.products===curShop.products && _shSig(f)===_shSig(curShop);   /* v531: المحل الكبير — إذا ما تغيّر شي ما نعيد رسم آلاف المواد كل دقيقة */
+    curShop=f; if(!same) renderMenu() } }
   try{ if(me && me.role==='customer') cartSync() }catch(e){}
 }
 
@@ -10541,7 +10597,16 @@ const CUST_POLICY={
             : (tbl==='notifications' ? 60000 : 0)
 };
 let _apiBadUntil=0;   /* v353: بعض شبكات الواي فاي تحجب عناوين workers.dev — إذا فشل، نروح للقاعدة مباشرة 10 دقايق بدون انتظار */
+let _feedBadUntil=0;
 async function fetchShopsFast(){
+  if(_SAME_ORIGIN && Date.now()>=_feedBadUntil) try{   /* v531: القائمة الخفيفة (المحل الكبير بدون منيوه الكامل) — إذا ما اشتغلت نرجع للطريق القديم */
+    const r=await _fto(location.origin+'/_api/feed',{method:'GET'},8000);
+    if(r.ok){
+      const rows=await r.json();
+      if(Array.isArray(rows) && rows.length) return rows.map(row=>({...(window.__sbIn?window.__sbIn('shops',row):row), id:row.id}));
+    }
+    _feedBadUntil=Date.now()+10*60000;
+  }catch(e){ _feedBadUntil=Date.now()+10*60000 }
   if(Date.now()>=_apiBadUntil) try{
     const r=await _fto(API_PUSH+'/shops',{method:'GET'},8000);   /* v324: إذا ما ردّ خلال 8 ثواني نجيبها من القاعدة */
     if(r.ok){
@@ -11770,7 +11835,7 @@ function requireLoc(){
 /* ═══ وجبات مختلفة كل ما يفتح العميل التطبيق — ترتيب المحلات يبقى ثابت ═══ */
 const __feat={};
 function pickFeatured(sh){
-  const ps=(sh.products||[]);
+  const ps=(sh.menu_n>0 && Array.isArray(sh._teaser) && sh._teaser.length) ? sh._teaser : (sh.products||[]);   /* v531: المحل الكبير — الكارت من العيّنة اللي بيها صور */
   if(ps.length<=4) return ps;
   const k=sh.id+'|'+ps.length;
   if(!__feat[k]){
@@ -12205,6 +12270,7 @@ function lzScan(){
 try{ new MutationObserver(ms=>{ if(LZ.raf) return; for(const m of ms) for(const n of m.addedNodes){ if(n.nodeType===1 && (n.matches('img[data-lz]') || n.querySelector('img[data-lz]'))){ LZ.raf=requestAnimationFrame(lzScan); return } } }).observe(document.getElementById('cApp')||document.documentElement,{childList:true,subtree:true}) }catch(e){}
 function openShop(id){
   curShop=shops.find(s=>s.id===id); if(!curShop)return;
+  if(curShop.menu_n>0 && _lmHave(curShop)) _lmRefresh(curShop);   /* v531: المنيو المحفوظ يبين فوراً، والجديد يجي بالخلفية إذا تغيّر */
   LZ.t0=Date.now(); LZ.sid=String(id).slice(0,8); LZ.cnt=0; LZ.vq=[]; LZ.bg=[]; LZ.rt=[]; LZ.gen++; LZ.run=0; LZ.slow=0;   /* v514: كل محل يبدي بعدّاد نظيف */
   try{ clearTimeout(LZ.wd); const _g=LZ.gen; LZ.wd=setTimeout(()=>{ if(_g!==LZ.gen) return; const L=[...document.querySelectorAll('#p_shop img[data-lz]')]; if(!L.length) return;
     const ok=L.filter(i=>i.complete&&i.naturalWidth>0).length; if(ok>=Math.min(6,L.length)) return; const nc=navigator.connection||{};
@@ -12759,6 +12825,17 @@ function renderMenu(){
   mkModeSync();
   try{ mkHeadSync() }catch(e){}
   renderMenuTabs();
+  if(curShop.menu_n>0 && !_lmHave(curShop)){   /* v531: المحل الكبير — منيوه الكامل بعده ما وصل */
+    const g=document.getElementById('shopCatGrid'), sid=curShop.id;
+    if(Date.now()-(_LMF[sid]||0)<4000){
+      if(g) g.innerHTML='';
+      box.innerHTML=`<div class="empty"><p>ما گدرنا نجيب منتجات المحل — تأكد من النت</p><button type="button" class="big-btn" style="max-width:220px;margin:12px auto 0" onclick="_LMF['${sid}']=0;renderMenu()">حاول مرة ثانية</button></div>`;
+      renderSpBar(); return;
+    }
+    if(g) g.innerHTML=''; box.innerHTML=_mkSkel(); renderSpBar();
+    _lmLoad(curShop).then(()=>{ if(curShop && curShop.id===sid && document.getElementById('p_shop').classList.contains('on')) renderMenu() });
+    return;
+  }
   if(_isMarket(curShop) && !_shopCatsReady && !String(shopQ||'').trim()){   /* v393: أول زيارة — هيكل رمادي لحد ما توصل الأقسام */
     const g=document.getElementById('shopCatGrid'); if(g) g.innerHTML='';
     box.innerHTML=_mkSkel(); renderSpBar(); return;
@@ -13232,6 +13309,10 @@ function cartSync(){
     if(!cart.length || !Array.isArray(shops) || !shops.length) return;
     const sh=shops.find(x=>x.id===cart[0].shopId);
     if(!sh){ cart=[]; renderCart(); toast('المحل اللي بسلتك ما متوفر هسه — انمسحت السلة'); return }
+    if(sh.menu_n>0){   /* v531: المحل الكبير — ما نلمس السلة لحد ما يوصل منيوه الكامل (العيّنة مو كل المواد) */
+      if(!_lmHave(sh)){ if(Date.now()-(_LMF[sh.id]||0)>=30000) _lmLoad(sh).then(ok=>{ if(ok) cartSync() }); return }
+      _lmRefresh(sh);
+    }
     let changed=false; const out=[];
     for(const c of cart){
       const p=(sh.products||[]).find(x=>String(x.id)===String(c.pid));
@@ -14367,6 +14448,7 @@ async function reorder(oid){
   const sh=shops.find(x=>x.id===o.shopId);
   if(!sh) return toast('المحل مو متوفر حالياً');
   if(typeof isOpenNow==='function' && !isOpenNow(sh)) return toast('المحل مسكّر الآن');
+  if(sh.menu_n>0 && !_lmHave(sh)){ toast('لحظة، نجيب منتجات المحل…'); if(!(await _lmLoad(sh))) return toast('ما گدرنا نجيب منتجات المحل — جرّب مرة ثانية') }   /* v531 */
   const avail=sh.products||[];
   const items=[]; let missing=0;
   (o.items||[]).forEach(i=>{
@@ -29568,7 +29650,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v530', seen={}, n=0, q=[], t=null;
+  var VER='v531', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29726,7 +29808,7 @@ function renderUsage(){
 async function openUsageAdmin(){
   var el=_stSheet('usgAdm');
   el.innerHTML='<div class="szcard tm-card"><button class="szx" onclick="document.getElementById(\'usgAdm\').classList.remove(\'on\')">×</button>'+
-    '<div class="tm-hd"><b>استهلاك السيرفر</b><span>Supabase المجاني</span></div><div class="tm-list">⏳ جاري التحميل…</div></div>';
+    '<div class="tm-hd"><b>استهلاك السيرفر</b><span>Supabase Pro</span></div><div class="tm-list">⏳ جاري التحميل…</div></div>';
   el.classList.add('on');
   await loadUsage(true);
   var box=el.querySelector('.tm-list'); if(!box) return;
@@ -29735,7 +29817,7 @@ async function openUsageAdmin(){
   box.innerHTML=_usg.map(function(x){ var p=Number(x.pct)||0;
       if(x.k==='otp') return '<div class="usg-li"><div><b>رصيد رسائل التحقق (OTPIQ)</b><small>ينبّهك تحت 15,000 · إذا خلص الزبائن الجدد ما يگدرون يسجّلون</small></div><b style="color:'+_usgCol(p)+'">'+N(x.used)+' د.ع</b></div>';
       return '<div class="usg-li"><div><b>'+esc(x.label||'')+'</b><small>'+N(x.used)+' من '+N(x.lim)+'</small></div><b style="color:'+_usgCol(p)+'">'+p+'%</b></div>' }).join('')+
-    '<div class="st-note">يوصلك إشعار إذا أي شي عدّى 70% و85% و95%.<br>الإنترنت المصروف (الحد 5 گيگا بالشهر) شوفه مرة بالشهر من Supabase ← Usage.</div>';
+    '<div class="st-note">يوصلك إشعار إذا أي شي عدّى 70% و85% و95%.<br>الإنترنت المصروف (الحد 250 گيگا بالشهر) شوفه مرة بالشهر من Supabase ← Usage.</div>';
 }
 /* v324: صفحة وحدة فيها 3 أقسام: التقارير، الاشتراكات، نسخ القوائم */
 function hubShow(t){
@@ -29821,7 +29903,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v530', t0=Date.now();
+  var VER='v531', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

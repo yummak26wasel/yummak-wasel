@@ -320,9 +320,58 @@ async function serveDoc(req, env) {
   } catch (e) { return res; }
 }
 
+/* ═══ v531: قائمة المحلات «الخفيفة» + منيو المحل الكبير لما ينفتح ═══
+   /_api/feed : نفس /_api/shops بالضبط، بس المحل اللي بيه أكثر من 300 مادة (سوبرماركت) يجي بعيّنة 8 مواد للكارت
+                + menu_n (عدد المواد) + menu_v (نسخة المنيو). الزبون يسحبها كل دقيقة — فلازم تبقى خفيفة.
+   /_api/menu?id=…&v=… : المنيو الكامل لمحل واحد ({v, products}) — ينجاب بس لما الزبون يفتح المحل.
+   الاثنين بالمفتاح العام (نفس صلاحيات أي زائر) ومخزّنين بالذاكرة 30 ثانية حتى ما كل تلفون يضرب القاعدة.
+   هذوله ينمسكون هنا قبل ممر /_api ← فما يوصلون لـ leemak-api. */
+const SBH = { apikey: SB_PUB, Authorization: 'Bearer ' + SB_PUB, 'Content-Type': 'application/json' };
+let _feed = { at: 0, body: '' }, _feedBusy = null;
+async function shopsFeed() {
+  const out = (h) => new Response(_feed.body, { headers: { 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=20', 'X-Cache': h } });
+  if (_feed.body && Date.now() - _feed.at < 30000) return out('HIT');
+  if (!_feedBusy) _feedBusy = (async () => {
+    const r = await fetch(SB_URL + '/rest/v1/rpc/shops_feed', { method: 'POST', headers: SBH, body: '{}' });
+    if (!r.ok) throw new Error('feed ' + r.status);
+    const t = await r.text();
+    if (t.charAt(0) !== '[' || t.length < 10) throw new Error('feed empty');
+    _feed = { at: Date.now(), body: t };
+  })().finally(() => { _feedBusy = null; });
+  try { await _feedBusy; } catch (e) { return _feed.body ? out('STALE') : jres({ error: 'upstream' }, 502); }
+  return out('MISS');
+}
+const _menu = new Map(), _menuBusy = new Map();
+async function shopMenu(url) {
+  const id = url.searchParams.get('id') || '';
+  if (!UUID_RE.test(id)) return jres({ error: 'bad id' }, 400);
+  const want = (url.searchParams.get('v') || '').slice(0, 20);
+  const out = (m, h) => new Response(m.body, { headers: { 'Content-Type': 'application/json', 'Cache-Control': want && m.v === want ? 'public, max-age=600' : 'no-store', 'X-Cache': h } });
+  const m0 = _menu.get(id);
+  if (m0 && ((want && m0.v === want) || Date.now() - m0.at < 30000)) return out(m0, 'HIT');
+  let p = _menuBusy.get(id);
+  if (!p) { p = (async () => {
+    const r = await fetch(SB_URL + '/rest/v1/rpc/shop_menu', { method: 'POST', headers: SBH, body: JSON.stringify({ p_id: id }) });
+    if (!r.ok) throw new Error('menu ' + r.status);
+    const t = await r.text();
+    const j = JSON.parse(t);
+    if (!j || !Array.isArray(j.products)) return null;
+    if (_menu.size > 40) _menu.clear();
+    const m = { at: Date.now(), v: String(j.v || ''), body: t };
+    _menu.set(id, m); return m;
+  })().finally(() => { _menuBusy.delete(id); }); _menuBusy.set(id, p); }
+  let m;
+  try { m = await p; } catch (e) { m = null; }
+  if (m) return out(m, 'MISS');
+  if (m0) return out(m0, 'STALE');
+  return jres({ error: 'not found' }, 404);
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
+    if (url.pathname === '/_api/feed' && req.method === 'GET') return shopsFeed();   /* v531 */
+    if (url.pathname === '/_api/menu' && req.method === 'GET') return shopMenu(url);   /* v531 */
     if ((url.pathname === '/' || url.pathname === '/index.html') && (req.method === 'GET' || req.method === 'HEAD')) {
       try { return await serveDoc(req, env); } catch (e) { return env.ASSETS.fetch(req); }
     }
