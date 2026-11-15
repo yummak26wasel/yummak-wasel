@@ -1,0 +1,10 @@
+# v529: حماية إضافية للمتصفح (ملفات التطبيق بس — ردود worker/app.js ما تتأثر)
+#  nosniff: المتصفح ما يخمّن نوع الملف (يمنع تشغيل ملف كأنه كود)
+#  X-Frame-Options: محد يكدر يفتح التطبيق داخل موقع ثاني (حيل الضغط المخفي)
+#  HSTS: التلفون يفتح الموقع بـ https دايماً
+#  Referrer-Policy: ما نكشف روابط التطبيق الكاملة للمواقع الثانية
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Strict-Transport-Security: max-age=31536000
+  Referrer-Policy: strict-origin-when-cross-origin

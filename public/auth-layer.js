@@ -19,12 +19,13 @@ async function _client(){
   if(_sb) return _sb;
 
   if(!window.supabase){
-    await new Promise((ok, no) => {
+    /* v529: من موقعنا أول (نفس النسخة 2.45.4)، وإذا فشل من النت بنسخة ثابتة — قبل: @2 بدون رقم = أي نسخة تنزل */
+    const load = src => new Promise((ok, no) => {
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
-      s.onload = ok; s.onerror = no;
+      s.src = src; s.onload = ok; s.onerror = no;
       document.head.appendChild(s);
     });
+    await load('/supabase.js').catch(() => load('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js'));
   }
 
   _sb = window.supabase.createClient(SB_URL, SB_KEY, {
