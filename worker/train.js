@@ -176,7 +176,7 @@ export async function train(req, env, path) {
     const rows = [];
     const add = (id, p, s) => {
       const v = s ? view(s) : { checks: [], attempts: 0, best: null, passed: false };
-      rows.push({ name: (p && p.name) || (s && s.name) || '', phone: (p && p.phone) || (s && s.phone) || '',
+      rows.push({ id, name: (p && p.name) || (s && s.name) || '', phone: (p && p.phone) || (s && s.phone) || '',   /* v530: id حتى لوحة الانضمام تطابق السائق */
                   approved: p ? p.is_approved === true : null, blocked: p ? p.is_blocked === true : false,
                   started: !!s && (v.checks.length > 0 || v.attempts > 0), checks: v.checks.length, attempts: v.attempts,
                   best: v.best, passed: v.passed, at: (s && s.at) || Date.parse((p && p.created_at) || '') || 0 });

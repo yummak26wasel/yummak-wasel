@@ -702,6 +702,7 @@ html[data-theme=dark] .usg-g>div{color:#c9c3dc}html[data-theme=dark] .usg-g i{ba
 .dep-box.ld{text-align:center;color:#8a84a0;border-style:solid;border-color:#ECE7F6;background:#fff}
 .dep-bt{width:100%;height:48px;border:0;border-radius:14px;background:#4A1FA8;color:#fff;font:inherit;font-size:15px;font-weight:800}
 .dep-bt:disabled{opacity:.5}
+.tr-adm{margin:8px 0 2px;padding:9px 12px;border-radius:12px;background:#F3F0F8;font-size:13px;font-weight:800;color:#3b3450}.tr-adm.ok{background:#E8F7EE;color:#15803D}.tr-adm.no{background:#FDECEC;color:#B42318}.tr-adm.wt{background:#FFF7E6;color:#8a5a00}   /* v530 */
 .dep-adm{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:8px 0 2px;padding:8px 10px;border-radius:12px;background:#F3F2F6;font-size:12.5px;font-weight:800;color:#5E5674}
 .dep-adm span{flex:1;min-width:140px}
 .dep-adm.ok{background:#EAF8EF;color:#0E7A53}
@@ -7029,7 +7030,7 @@ body,.screen{background:#fff;color:var(--txt)}
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 14.2A8.5 8.5 0 1 1 9.8 3.5a6.6 6.6 0 0 0 10.7 10.7z"/></svg></div><div class="mt">المظهر</div><div class="thm-seg" id="thmSeg"><button data-t="auto" onclick="setTheme('auto')">تلقائي</button><button data-t="light" onclick="setTheme('light')">نهاري</button><button data-t="dark" onclick="setTheme('dark')">ليلي</button></div></div>
           <div class="mrow" onclick="enablePush()"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg></div><div class="mt">إشعارات الطلبات<span class="msub" id="cPermTxt">—</span></div><div class="ma">‹</div></div>
           <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 3 2.6 15 0 18M12 3C9.4 6 9.4 18 12 21"/></svg></div><div class="mt">حالة الاتصال</div><div class="mv" id="s_conn"><span class="wdot" style="background:#16A34A"></span> متصل</div></div>
-          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v529</div></div>
+          <div class="mrow" style="cursor:default"><div class="mi"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></svg></div><div class="mt">الإصدار</div><div class="mv" id="appVer">v530</div></div>
         </div>
         <button class="big-btn out-btn" style="width:100%;margin-top:4px" onclick="logout()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 17l5-5-5-5M20 12H8"/><path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h6"/></svg> تسجيل الخروج</button>
         <div class="del-acc"><button type="button" onclick="delMyAccount()">حذف الحساب نهائياً</button></div>
@@ -21262,7 +21263,7 @@ function renderJoin2(){
   const htmlS = ps.map(sh=>card({jd:_jdTxt(sh,'قدّم'),name:sh.name,img:null,big:sh.img,phone:sh.phone,sub:(SEC_ONE[shopSec(sh)]||tp(sh.type))+' · <span dir="ltr">'+esc(sh.phone||'')+'</span>',tag:['محل جديد','wait'],chk:jcChk(sh),
       ok:`okShop('${sh.id}',true)`,no:`openReject('shop','${sh.id}')`,del:`delShop('${sh.id}')`,view:`openAdminShop('${sh.id}')`})).join('');
   const htmlD = pd.map(u=>card({jd:_jdTxt(u,'قدّم'),name:u.name,img:u.photo,phone:u.phone,sub:esc(u.vehicle||'سائق')+' · <span dir="ltr">'+esc(u.phone||'')+'</span>',tag:['سائق جديد','part'],
-      note:drvAgeHtml(u)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`})).join('');
+      note:drvAgeHtml(u)+trNote(u.uid||u.id)+depNote(u.uid||u.id)+'<br>تأكّد من الصورة والمستمسكات قبل الموافقة'+drvDocsRow(u),ok:`okDrvJoin('${u.uid||u.id}')`,no:`openReject('driver','${u.uid||u.id}')`,del:`delUser('${u.uid||u.id}')`})).join('');
   const html = joinFil==='banner' ? bnPendHTML() : (joinFil==='shop' ? htmlS : htmlD);
   const rjAll=rjS.map(x=>({k:'shop',id:x.id,n:x.name,r:x.reject_reason,f:x.reject_final,t:x.rejected_at})).concat(rjD.map(u=>({k:'driver',id:u.uid||u.id,n:u.name,r:u.reject_reason,f:u.reject_final,t:u.rejected_at})))
     .filter(x=>x.k===(joinFil==='shop'?'shop':'driver'))
@@ -24913,6 +24914,29 @@ async function depReport(btn){
     toast('انرسل — الإدارة تتأكد وتفعّل حسابك');
     try{ renderDriver() }catch(e){}
   }catch(e){ toast('ما انرسل — جرّب مرة ثانية'); if(btn) btn.disabled=false }
+}
+/* v530: نتيجة اختبار التدريب بكرت طلب الانضمام (من /_train/admin — نفس صفحة training.html?admin) */
+let trMap=null, _trAdmAt=0, _trMin=null, _trTot=null;
+async function trLoad(force){
+  if(!force && Date.now()-_trAdmAt<60000) return;
+  _trAdmAt=Date.now();
+  try{
+    const tk=(window.__waselToken&&window.__waselToken())||'';
+    const r=await fetch('/_train/admin',{method:'POST',headers:{'Authorization':'Bearer '+tk,'Content-Type':'application/json'},body:'{}'});
+    const j=r.ok?await r.json():null;
+    if(!j||!Array.isArray(j.rows)) throw 0;
+    trMap={}; j.rows.forEach(x=>{ if(x&&x.id) trMap[x.id]=x }); _trMin=j.pass_min; _trTot=j.total_final;
+  }catch(e){ trMap={__err:1} }
+  try{ renderJoin2() }catch(e){}
+}
+function trNote(id){
+  if(!trMap){ setTimeout(()=>trLoad(),0); return '<div class="tr-adm"><span>الاختبار: جاري التحميل…</span></div>' }
+  if(trMap.__err) return '<div class="tr-adm"><span>الاختبار: ما گدرنا نجيب النتيجة</span></div>';
+  const x=trMap[id], T=_trTot||30;
+  if(!x || !x.started) return '<div class="tr-adm no"><span>الاختبار: بعده ما بدأ التدريب</span></div>';
+  if(x.passed) return `<div class="tr-adm ok"><span>الاختبار: نجح ✓ — أعلى درجة ${x.best} من ${T}</span></div>`;
+  if(x.attempts>0) return `<div class="tr-adm no"><span>الاختبار: ما نجح — أعلى درجة ${x.best} من ${T} (النجاح من ${_trMin||27}) · ${x.attempts} ${x.attempts===1?'محاولة':'محاولات'}</span></div>`;
+  return `<div class="tr-adm wt"><span>الاختبار: بالتدريب — جاوب ${x.checks} من 12 سؤال، وبعده ما سوّى الاختبار</span></div>`;
 }
 /* لوحة المؤسس */
 async function depLoad(force){
@@ -29544,7 +29568,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v529', seen={}, n=0, q=[], t=null;
+  var VER='v530', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29797,7 +29821,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v529', t0=Date.now();
+  var VER='v530', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
