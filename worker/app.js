@@ -367,11 +367,28 @@ async function shopMenu(url) {
   return jres({ error: 'not found' }, 404);
 }
 
+/* v533: فحص «كلمة المرور مشهورة؟» قبل ما ندز رمز الواتساب. التلفون يحسب SHA-1 ويدز أول 5 حروف بس
+   (ما تطلع كلمة المرور ولا الهاش كامل)، وإحنا نجيب القائمة من pwnedpasswords — نفس الفحص اللي يسويه Supabase.
+   قبل: التلفون يطلبها مباشرة وأحياناً ما توصل بالعراق ← الرفض يصير بعد الرمز. */
+async function pwRange(url) {
+  const pre = url.pathname.slice('/_api/pw/'.length).toUpperCase();
+  if (!/^[0-9A-F]{5}$/.test(pre)) return jres({ error: 'bad prefix' }, 400);
+  const key = new Request('https://leemak.app/_api/pw/' + pre);
+  const c = caches.default;
+  try { const hit = await c.match(key); if (hit) return hit; } catch (e) {}
+  const r = await fetch('https://api.pwnedpasswords.com/range/' + pre, { headers: { 'Add-Padding': 'true', 'User-Agent': 'leemak-app' } });
+  if (!r.ok) return jres({ error: 'upstream' }, 502);
+  const res = new Response(await r.text(), { headers: { 'Content-Type': 'text/plain', 'Cache-Control': 'public, max-age=86400' } });
+  try { await c.put(key, res.clone()); } catch (e) {}
+  return res;
+}
+
 export default {
   async fetch(req, env) {
     const url = new URL(req.url);
     if (url.pathname === '/_api/feed' && req.method === 'GET') return shopsFeed();   /* v531 */
     if (url.pathname === '/_api/menu' && req.method === 'GET') return shopMenu(url);   /* v531 */
+    if (url.pathname.startsWith('/_api/pw/') && req.method === 'GET') return pwRange(url);   /* v533 */
     if ((url.pathname === '/' || url.pathname === '/index.html') && (req.method === 'GET' || req.method === 'HEAD')) {
       try { return await serveDoc(req, env); } catch (e) { return env.ASSETS.fetch(req); }
     }
