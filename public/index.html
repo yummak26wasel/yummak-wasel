@@ -7515,9 +7515,9 @@ body,.screen{background:#fff;color:var(--txt)}
     <div id="rsS2" style="display:none">
       <div class="svcbody" style="text-align:center">
         <p>اكتب كلمة المرور الجديدة</p>
-        <p style="font-size:12px;color:#8A82A0;margin-top:4px">8 خانات أو أكثر — حروف أو أرقام، أي شي تتذكره</p>
+        <p style="font-size:12px;color:#8A82A0;margin-top:4px">8 خانات أو أكثر، بيها حرف إنگليزي كبير وحرف صغير — مثال: Najma58t</p>
       </div>
-      <input id="rsPass" type="password" placeholder="كلمة المرور الجديدة — 8 خانات أو أكثر"
+      <input id="rsPass" type="password" placeholder="كلمة المرور الجديدة — مثل Najma58t"
         style="width:100%;margin-top:12px;padding:15px;border:1.5px solid #EDE9F6;border-radius:16px;
         font-size:15px;font-weight:700;font-family:'Cairo',sans-serif;outline:none;text-align:right">
       <input id="rsPass2" type="password" placeholder="أعد كتابتها"
@@ -7889,7 +7889,7 @@ async function otpConfirm(){
     otpOkPhone=otpCore;
     otpClose();
     { const pw=document.getElementById('aPass');
-      if(pw && !pwOk(String(pw.value||'').trim())){ toast('انتأكد رقمك ✓ — اكتب كلمة مرور (8 خانات أو أكثر) واضغط «إنشاء الحساب»'); try{ pw.focus(); pwHint(pw,true) }catch(_){} return } }
+      if(pw && !pwOk(String(pw.value||'').trim())){ toast('انتأكد رقمك ✓ — اكتب كلمة مرور (8 خانات، بيها حرف كبير وحرف صغير) واضغط «إنشاء الحساب»'); try{ pw.focus(); pwHint(pw,true) }catch(_){} return } }
     toast('انتأكد رقمك — نكمّل الحساب');
     doAuth();
   }catch(e){ otpErr(e.message) }
@@ -9921,7 +9921,7 @@ function setMode(m,el){
   const act=el||bs[m==='login'?0:1]; if(act)act.classList.add('on');
   document.getElementById('signupOnly').style.display=m==='signup'?'block':'none';
   { const ar=document.querySelector('#auth .authrow'); if(ar) ar.style.display=m==='signup'?'none':''; }   /* v378: «تذكرني / نسيت كلمة المرور» للدخول بس */
-  { const pw=document.getElementById('aPass'); if(pw){ pw.placeholder=m==='signup'?'كلمة المرور — 8 خانات أو أكثر':'كلمة المرور'; pwHint(pw, m==='signup' && !!pw.value); pw.autocomplete=m==='signup'?'new-password':'current-password' } }   /* v443: الحسابات الجديدة 8 */
+  { const pw=document.getElementById('aPass'); if(pw){ pw.placeholder=m==='signup'?'مثل Najma58t — حرف كبير وحرف صغير':'كلمة المرور'; pwHint(pw, m==='signup' && !!pw.value); pw.autocomplete=m==='signup'?'new-password':'current-password' } }   /* v443: الحسابات الجديدة 8 */
   const bt=document.getElementById('authBtnTxt');
   if(bt)bt.textContent=m==='signup'?'إنشاء الحساب':'دخول';
   document.getElementById('authHint').innerHTML=m==='signup'
@@ -10181,13 +10181,14 @@ function _roleMsg(R,want){
    قبل: الزبون يستلم الرمز ويكتبه، وبعدين السيرفر يرفض كلمة المرور، فيظن إن حسابه انفتح ويحاول يدخل وما يگدر.
    ما يطلع من التلفون غير أول 5 حروف من «بصمة» كلمة المرور — مو كلمة المرور نفسها. إذا الفحص ما اشتغل نكمّل عادي */
 const PW_WEAK_MSG='كلمة المرور هاي يستعملها هواية ناس بالعالم (مثل Ahmed123)، فالنظام يرفضها حتى لو بيها حروف وأرقام. اكتب وحدة خاصة بيك ما يعرفها أحد، مثلاً اسم شي تحبه + رقم + حرف: Najma58t';   /* v533: أوضح — قبل الزبون يگول «بيها حروف وأرقام، ليش ترفض؟» */
-/* v534 (طلب عبد): كلمة المرور الجديدة بس 8 خانات أو أكثر — أي حروف أو أرقام. قبل (v451): لازم حرف كبير وصغير ورقم.
-   8 مو أقل: سيرفر «نسيت كلمة المرور» (leemak-otp) يطلب 8. الحسابات القديمة تدخل عادي */
-function pwRule(p){ p=String(p||''); return {len:p.length>=8} }
-function pwOk(p){ return pwRule(p).len }
+/* v535 (طلب عبد): كلمة المرور الجديدة 8 خانات أو أكثر + حرف إنگليزي كبير + حرف صغير. الرقم مو شرط.
+   (v451: كبير+صغير+رقم · v534: 8 بس · هسه: كبير+صغير). 8 مو أقل: سيرفر «نسيت كلمة المرور» (leemak-otp) يطلب 8.
+   الحسابات القديمة تدخل عادي */
+function pwRule(p){ p=String(p||''); return {len:p.length>=8, up:/[A-Z]/.test(p), low:/[a-z]/.test(p)} }
+function pwOk(p){ const r=pwRule(p); return r.len&&r.up&&r.low }
 function pwNeedMsg(p){ const r=pwRule(p), m=[];
-  if(!r.len) m.push('8 خانات أو أكثر');
-  return 'كلمة المرور لازم تكون 8 خانات أو أكثر — حروف أو أرقام' }
+  if(!r.len) m.push('8 خانات أو أكثر'); if(!r.up) m.push('حرف إنگليزي كبير (A-Z)'); if(!r.low) m.push('حرف إنگليزي صغير (a-z)');
+  return 'كلمة المرور ناقصها: '+m.join('، ')+' — مثال: Najma58t' }
 function pwHint(inp,show){
   try{
     if(!inp) return;
@@ -10195,7 +10196,7 @@ function pwHint(inp,show){
     if(!h || !h.classList || !h.classList.contains('pw-hint')){ h=document.createElement('div'); h.className='pw-hint'; host.after(h) }
     if(show===false){ h.style.display='none'; return }
     const r=pwRule(inp.value), it=(ok,t)=>'<span class="'+(ok?'ok':'')+'">'+(ok?'✓':'•')+' '+t+'</span>';
-    h.innerHTML=it(r.len,'8 خانات أو أكثر');
+    h.innerHTML=it(r.len,'8 خانات')+it(r.up,'حرف كبير A-Z')+it(r.low,'حرف صغير a-z');
     h.style.display='';
   }catch(e){}
 }
@@ -10428,7 +10429,7 @@ async function doAuth(){
       'auth/invalid-credential':'الرقم أو كلمة المرور غلط',
       'auth/wrong-password':'كلمة المرور غلط',
       'auth/user-not-found':'ما لكينا حساب بهذا الرقم — سوّي إنشاء حساب',
-      'auth/weak-password':'كلمة المرور لازم تكون 8 خانات أو أكثر',
+      'auth/weak-password':'كلمة المرور لازم 8 خانات، بيها حرف كبير وحرف صغير (مثل Najma58t)',
       'auth/pwned-password':'❌ الحساب ما انفتح بعد: كلمة المرور هاي يستعملها هواية ناس، فالنظام رفضها حتى لو بيها حروف وأرقام. اكتب كلمة مرور ثانية خاصة بيك (مثل Najma58t) واضغط «إنشاء الحساب» مرة ثانية — ما تحتاج رمز جديد.',
       'auth/network-request-failed':'ما بيه اتصال بالإنترنت',
       'auth/too-many-requests':'محاولات كثيرة — انتظر شوية',
@@ -11628,7 +11629,7 @@ function dwPaint(){
        '<div class="dw-note">صورة واضحة لوجهك — الزبون راح يشوفها</div>'+
        dwField('name','الاسم الكامل','text',dwData.name,'أحمد محمد علي')+
        (dwData.up?'':dwField('phone','رقم الهاتف','tel',dwData.phone,'07XX XXX XXXX')+
-       dwField('pass','كلمة المرور — 8 خانات أو أكثر','password',dwData.pass,'8 خانات أو أكثر'))+
+       dwField('pass','كلمة المرور — حرف كبير وحرف صغير','password',dwData.pass,'مثل Najma58t'))+
        dwField('dob','تاريخ الميلاد — لازم 18 سنة أو أكثر','date',dwData.dob,'')+'<div class="dw-age" id="dwAgeMsg"></div>'+
        dwField('addr','العنوان / المنطقة','text',dwData.addr,'عانة — حي الكرامة');
     nx.textContent='التالي ›';
@@ -29673,7 +29674,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v534', seen={}, n=0, q=[], t=null;
+  var VER='v535', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29926,7 +29927,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v534', t0=Date.now();
+  var VER='v535', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
