@@ -10299,7 +10299,8 @@ async function doAuth(){
       /* ═══ تأكيد الرقم بالواتساب قبل فتح الحساب ═══ */
       if(otpOkPhone!==core){
         if((await __preSignupCheck(core,pass))==='done') return;
-        if(await pwWeak(pass)){ busy(false); try{ document.getElementById('aPass').focus() }catch(_){} return showErr(PW_WEAK_MSG) }   /* v450 */
+        /* v537: فحص «كلمة مرور مشهورة» انشال — عبد طفى «Prevent use of leaked passwords» بـSupabase (16/11). إذا ينشغل مرة ثانية، رجّع هالسطر:
+           if(await pwWeak(pass)){ busy(false); try{ document.getElementById('aPass').focus() }catch(_){} return showErr(PW_WEAK_MSG) } */
         /* v385: رقم سمحتله الإدارة يسجّل بدون رمز (otp_verified) */
         let _pre=false; try{ _pre=(await rpc('otp_preverified',{p_phone:'964'+core}))===true }catch(e){}
         if(_pre){ otpOkPhone=core } else { busy(false); return otpStart(core) } }
@@ -29674,7 +29675,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v536', seen={}, n=0, q=[], t=null;
+  var VER='v537', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29927,7 +29928,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v536', t0=Date.now();
+  var VER='v537', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
