@@ -11954,7 +11954,7 @@ function shopCardHTML(s){
     const actLbl = s.type==='restaurant' ? 'قائمة المطعم' : 'تسوق الآن';
     const hoursTxt = op
       ? ('يفتح لين '+(H.close?(typeof fmt12==='function'?fmt12(H.close):H.close):'—'))
-      : (typeof nextOpenTxt==='function'?nextOpenTxt(s):'مسكّر');
+      : (shopSoon(s) ? 'قريباً إن شاء الله' : (typeof nextOpenTxt==='function'?nextOpenTxt(s):'مسكّر'));   /* v538 */
     const _bo = shopBestOffer(s);
     const discPct = Number(s.discount||s.discountPercent||0) || _bo.pct;
     const discFix = discPct ? 0 : _bo.fix;
@@ -11967,7 +11967,7 @@ function shopCardHTML(s){
         <span class="shc-chip rate">${rate}</span>
         ${discPct?`<span class="shc-chip disc">خصم <bdi dir="ltr">${discPct}%</bdi></span>`:(discFix?`<span class="shc-chip disc">خصم ${discFix.toLocaleString()}</span>`:'')}
         <button class="shc-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button>
-        ${op?'':`<span class="shc-closed">${shopPaused(s)?'مشغول هسه':'مسكّر الآن'}</span>`}
+        ${op?'':`<span class="shc-closed">${shopSoon(s)?'قريباً':(shopPaused(s)?'مشغول هسه':'مسكّر الآن')}</span>`}
       </div>
       <div class="shc-body">
         <div class="shc-name">${esc(s.name)}</div>
@@ -12294,6 +12294,7 @@ function lzScan(){
 }
 try{ new MutationObserver(ms=>{ if(LZ.raf) return; for(const m of ms) for(const n of m.addedNodes){ if(n.nodeType===1 && (n.matches('img[data-lz]') || n.querySelector('img[data-lz]'))){ LZ.raf=requestAnimationFrame(lzScan); return } } }).observe(document.getElementById('cApp')||document.documentElement,{childList:true,subtree:true}) }catch(e){}
 function openShop(id){
+  { const _s=shops.find(s=>s.id===id); if(_s && shopSoon(_s) && !(me && me.role==='admin')){ toast((_s.name||'هذا المحل')+' — قريباً إن شاء الله'); return } }   /* v538 */
   curShop=shops.find(s=>s.id===id); if(!curShop)return;
   if(curShop.menu_n>0 && _lmHave(curShop)) _lmRefresh(curShop);   /* v531: المنيو المحفوظ يبين فوراً، والجديد يجي بالخلفية إذا تغيّر */
   LZ.t0=Date.now(); LZ.sid=String(id).slice(0,8); LZ.cnt=0; LZ.vq=[]; LZ.bg=[]; LZ.rt=[]; LZ.gen++; LZ.run=0; LZ.slow=0;   /* v514: كل محل يبدي بعدّاد نظيف */
@@ -16385,6 +16386,8 @@ function _cdFmt(ms){ ms=Math.abs(ms); const t=Math.floor(ms/1000); return Math.f
 function _ordMs(o){ return Number(o.createdAt||Date.parse(o.created_at||'')||Date.now()) }
 function _accMs(o){ const t=Date.parse(o.accepted_at||o.acceptedAt||''); return isNaN(t)?null:t }
 function shopPaused(sh){ const t=sh?Date.parse(sh.paused_until||''):NaN; return (!isNaN(t) && t>Date.now())?t:0 }
+/* v538: محل «قريباً» — يبين للزبون بكارته وعليه «قريباً»، بس ما ينفتح ولا ينطلب منه (الإدارة بس تگدر تفتحه). يتغيّر من عمود shops.soon */
+function shopSoon(sh){ return !!(sh && sh.soon===true) }
 function _cdText(k,end,now){
   const left=end-now, late=left<0;
   if(k==='acc')   return late?('متأخر '+_cdFmt(left)+' — الزبون ينتظر، اقبل أو ارفض'):('اقبل الطلب خلال '+_cdFmt(left));
@@ -18618,6 +18621,7 @@ function shopHours(sh){
 function isOpenNow(sh){
   if(!sh || sh.open===false) return false;
   if(shopPaused(sh)) return false;
+  if(shopSoon(sh)) return false;   /* v538 */
   const H=shopHours(sh), now=new Date();
   const d=now.getDay(), cur=now.getHours()*60+now.getMinutes();
   const o=toMin(H.open), c=toMin(H.close);
@@ -29675,7 +29679,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v537', seen={}, n=0, q=[], t=null;
+  var VER='v538', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29928,7 +29932,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v537', t0=Date.now();
+  var VER='v538', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
