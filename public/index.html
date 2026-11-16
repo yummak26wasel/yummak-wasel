@@ -7823,10 +7823,20 @@ function _fto(url,opt,ms){
     clearTimeout(t); throw (e&&e.name==='AbortError') ? new Error('الاتصال ضعيف — حاول مرة ثانية') : e });
 }
 let otpToken='', otpOkPhone='', otpCore='', otpWait=0;
+/* v532: رمز الواتساب أحياناً يوصل قبل رد السيرفر (أو الرد يضيع بالنت الضعيف). قبل: الزبون يكتب الرمز ويضغط «تأكيد»
+   والإرسال بعده ماشي ← «ما بيه رمز فعّال»، ويضغط «إعادة إرسال» فيضيع الرمز اللي بيده.
+   هسه: نحتفظ بكل رموز هالمحاولة (الأحدث بالآخر)، و«تأكيد» ينتظر الإرسال إذا بعده ماشي، ومهلة الإرسال صارت دقيقة. */
+let otpToks=[], otpSendP=null;
+function _tokPush(arr,t){ if(t && !arr.includes(t)){ arr.push(t); while(arr.length>4) arr.shift() } }
+async function _tryToks(toks,fn){   /* نجرب الأحدث أول؛ إذا «الرمز غير صحيح» نجرب اللي قبله (رمز من إرسال سابق) — 3 بالأكثر */
+  const L=toks.slice(-3).reverse(); let last=null;
+  for(const t of L){ try{ return await fn(t) }catch(e){ last=e; if(!/الرمز غير صحيح/.test(String(e&&e.message||''))) throw e } }
+  throw last||new Error('ما بيه رمز — اضغط «إعادة إرسال الرمز»');
+}
 
-async function otpApi(path,body){
+async function otpApi(path,body,ms){
   const r=await _fto(OTP_WORKER+path,{method:'POST',
-    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},25000);   /* v324: مهلة */
+    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},ms||25000);   /* v324: مهلة */
   const j=await r.json().catch(()=>({error:'رد غير مفهوم'}));
   if(!r.ok) throw new Error(j.error||'فشل الاتصال');
   return j;
@@ -7836,7 +7846,8 @@ function otpErr(t){const e=document.getElementById('otpErr');
 function otpClose(){document.getElementById('otpSheet').classList.remove('on')}
 
 async function otpStart(core){
-  otpCore=core; otpToken=''; otpErr('');
+  if(core!==otpCore){ otpToks=[]; otpToken='' }   /* v532: نفس الرقم — الرموز السابقة تبقى صالحة */
+  otpCore=core; otpErr('');
   const inp=document.getElementById('otpCode'); if(inp)inp.value='';
   document.getElementById('otpPhone').textContent='+964 '+core;
   document.getElementById('otpSheet').classList.add('on');
@@ -7845,12 +7856,13 @@ async function otpStart(core){
 async function otpSend(){
   const b=document.getElementById('otpAgain');
   if(b){b.disabled=true;b.textContent='... جاري الإرسال'}
-  try{
-    const j=await otpApi('/send',{phone:'964'+otpCore});
-    otpToken=j.token||''; try{ suSave() }catch(_){}
+  const p=(async()=>{ try{
+    const j=await otpApi('/send',{phone:'964'+otpCore},60000);   /* v532: دقيقة — الرمز يوصل حتى لو السيرفر تأخر بالرد */
+    if(j.token){ otpToken=j.token; _tokPush(otpToks,j.token) } try{ suSave() }catch(_){}
     toast('انرسل الرمز — شوف الواتساب');
     otpTick(60);
-  }catch(e){ otpErr(e.message); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} }
+  }catch(e){ otpErr(e.message); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} } })();
+  otpSendP=p; try{ await p }finally{ if(otpSendP===p) otpSendP=null }
 }
 function otpTick(s){
   const b=document.getElementById('otpAgain'); if(!b)return;
@@ -7866,11 +7878,14 @@ function otpResend(){ if(otpWait<=0) otpSend() }
 async function otpConfirm(){
   const code=(document.getElementById('otpCode').value||'').replace(/\D/g,'');
   if(code.length!==6) return otpErr('اكتب الرمز كامل — ٦ أرقام');
-  if(!otpToken) return otpErr('ما بيه رمز فعّال — اضغط إعادة إرسال');
-  const b=document.getElementById('otpBtn'); b.disabled=true; b.textContent='... جاري التحقق';
+  const b=document.getElementById('otpBtn');
+  if(otpSendP){ b.disabled=true; b.textContent='... لحظة، نستلم الرمز'; otpErr(''); try{ await otpSendP }catch(_){} }   /* v532 */
+  if(otpToken) _tokPush(otpToks,otpToken);
+  if(!otpToks.length){ b.disabled=false; b.textContent='تأكيد الرمز'; return otpErr('ما وصلنا رد السيرفر — اضغط «إعادة إرسال الرمز» وانتظر لحظة') }
+  b.disabled=true; b.textContent='... جاري التحقق';
   otpErr('');
   try{
-    await otpApi('/verify',{phone:'964'+otpCore,code,token:otpToken});
+    await _tryToks(otpToks, t=>otpApi('/verify',{phone:'964'+otpCore,code,token:t}));
     otpOkPhone=otpCore;
     otpClose();
     { const pw=document.getElementById('aPass');
@@ -9876,7 +9891,7 @@ function suRestore(){
     try{ termsSync() }catch(e){}
     /* كان ينتظر رمز الواتساب — نرجّع نافذة الرمز نفسها (الرمز صالح 10 دقايق) */
     if(d.otp && d.otp.tok && Date.now()-Number(d.otp.at||0) < 10*60*1000){
-      otpCore=d.otp.core; otpToken=d.otp.tok; otpErr('');
+      otpCore=d.otp.core; otpToken=d.otp.tok; otpToks=[d.otp.tok]; otpErr('');
       const inp=document.getElementById('otpCode'); if(inp) inp.value='';
       const ph=document.getElementById('otpPhone'); if(ph) ph.textContent='+964 '+otpCore;
       document.getElementById('otpSheet').classList.add('on');
@@ -9932,12 +9947,13 @@ function togglePass(btn){
 }
 /* نسيت كلمة المرور — حساباتنا برقم هاتف مو إيميل، فنحوّله للدعم */
 /* ═══ نسيان كلمة المرور — رمز واتساب ═══ */
-let rsToken='', rsCore='', rsWait=0, rsStep=1;
+let rsToken='', rsCore='', rsWait=0, rsStep=1, rsToks=[], rsSendP=null;   /* v532: نفس فكرة otpToks */
 
 function forgotPass(){
   const core=phoneCore(document.getElementById('aPhone').value);
   if(core.length<9||core.length>11) return showErr('اكتب رقم هاتفك أول, بعدين اضغط نسيت كلمة المرور');
-  rsCore=core; rsToken=''; rsStep=1; rsErr('');
+  if(core!==rsCore){ rsToks=[]; rsToken='' }   /* v532 */
+  rsCore=core; rsStep=1; rsErr('');
   document.getElementById('rsPhone').textContent='+964 '+core;
   document.getElementById('rsCode').value='';
   document.getElementById('rsPass').value='';
@@ -9995,9 +10011,9 @@ function rsPaint(){
   document.getElementById('rsS1').style.display = rsStep===1?'block':'none';
   document.getElementById('rsS2').style.display = rsStep===2?'block':'none';
 }
-async function rsApi(path,body){
+async function rsApi(path,body,ms){
   const r=await _fto(OTP_WORKER+path,{method:'POST',
-    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},25000);   /* v324: مهلة */
+    headers:{'Content-Type':'application/json'},body:JSON.stringify(body)},ms||25000);   /* v324: مهلة */
   const j=await r.json().catch(()=>({error:'رد غير مفهوم'}));
   if(!r.ok) throw new Error(j.error||'فشل الاتصال');
   return j;
@@ -10005,14 +10021,15 @@ async function rsApi(path,body){
 async function rsSend(){
   const b=document.getElementById('rsAgain');
   if(b){b.disabled=true;b.textContent='... جاري الإرسال'}
-  try{
-    const j=await rsApi('/reset/send',{phone:'964'+rsCore});
-    rsToken=j.token||'';
+  const p=(async()=>{ try{
+    const j=await rsApi('/reset/send',{phone:'964'+rsCore},60000);   /* v532: دقيقة */
     /* v450: الرقم ما عنده حساب — السيرفر ما يدز رمز. قبل: نگول «انرسل» والزبون ينتظر رمز ما يجي أبد */
-    if(!rsToken){ rsErr('هذا الرقم ما عنده حساب بعد — سكّر هاي واضغط «إنشاء حساب جديد»'); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} return }
+    if(!j.token){ rsErr('هذا الرقم ما عنده حساب بعد — سكّر هاي واضغط «إنشاء حساب جديد»'); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} return }
+    rsToken=j.token; _tokPush(rsToks,j.token);
     toast('انرسل الرمز — شوف الواتساب');
     rsTick(60);
-  }catch(e){ rsErr(e.message); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} }
+  }catch(e){ rsErr(e.message); if(b){b.disabled=false;b.textContent='إعادة إرسال الرمز'} } })();
+  rsSendP=p; try{ await p }finally{ if(rsSendP===p) rsSendP=null }
 }
 function rsTick(sec){
   const b=document.getElementById('rsAgain'); if(!b)return;
@@ -10024,10 +10041,12 @@ function rsTick(sec){
   b.disabled=true; b.textContent='إعادة الإرسال بعد '+sec+' ثانية';
 }
 function rsResend(){ if(rsWait<=0) rsSend() }
-function rsNext(){
+async function rsNext(){
   const code=(document.getElementById('rsCode').value||'').replace(/\D/g,'');
   if(code.length!==6) return rsErr('اكتب الرمز كامل — ٦ أرقام');
-  if(!rsToken) return rsErr('ما بيه رمز فعّال — اضغط إعادة إرسال');
+  if(rsSendP){ rsErr(''); toast('لحظة، نستلم الرمز…'); try{ await rsSendP }catch(_){} }   /* v532: الإرسال بعده ماشي — ننتظره */
+  if(rsToken) _tokPush(rsToks,rsToken);
+  if(!rsToks.length) return rsErr('ما وصلنا رد السيرفر — اضغط «إعادة إرسال الرمز» وانتظر لحظة');
   rsErr(''); rsStep=2; rsPaint();
 }
 async function rsConfirm(){
@@ -10039,7 +10058,7 @@ async function rsConfirm(){
   const b=document.getElementById('rsBtn'); b.disabled=true; b.textContent='... جاري الحفظ';
   rsErr('');
   try{
-    await rsApi('/reset/confirm',{phone:'964'+rsCore,code,token:rsToken,pass:p1});
+    await _tryToks(rsToks.length?rsToks:[rsToken], t=>rsApi('/reset/confirm',{phone:'964'+rsCore,code,token:t,pass:p1}));   /* v532 */
     rsClose();
     document.getElementById('aPass').value=p1;
     toast('انحدّثت كلمة المرور — تكدر تدخل هسه');
@@ -29650,7 +29669,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v531', seen={}, n=0, q=[], t=null;
+  var VER='v532', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29903,7 +29922,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v531', t0=Date.now();
+  var VER='v532', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
