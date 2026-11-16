@@ -23137,7 +23137,7 @@ function openAdminShop(id){
   const H=(typeof shopHours==='function')?shopHours(sh):{open:'',close:''}, f12=t=>{ try{ return fmt12(t) }catch(e){ return t } };
   const rate=(Number(sh.rCnt)>0)?(Number(sh.rSum)/Number(sh.rCnt)).toFixed(1)+' ⭐ ('+sh.rCnt+')':'ماكو تقييم';
   const hasLoc=!!(sh.loc&&sh.loc.lat);
-  const st=sh.approved?(op?['مفتوح هسه','ok']:['مسكّر هسه','open']):(sh.rejected_at?['مرفوض','late']:['موقوف — ينتظر التفعيل','late']);
+  const st=sh.approved?(shopSoon(sh)?['قريباً','open']:(op?['مفتوح هسه','ok']:['مسكّر هسه','open'])):(sh.rejected_at?['مرفوض','late']:['موقوف — ينتظر التفعيل','late']);   /* v539: «قريباً» بدل «مسكّر» */
   /* المنيو حسب الأقسام */
   const byCat={}; ps.forEach(p=>{ const c=String(p.cat||'').trim()||'بدون قسم'; (byCat[c]=byCat[c]||[]).push(p) });
   const price=p=>{ const sz=Array.isArray(p.sizes)?p.sizes.filter(z=>z&&z.p):[]; if(sz.length){ const v=sz.map(z=>Number(z.p)||0); return Math.min(...v).toLocaleString()+(v.length>1?' – '+Math.max(...v).toLocaleString():'') } return Number(p.price||0).toLocaleString()+(pKgW(p)?' / كغم':'') };
@@ -23160,6 +23160,7 @@ function openAdminShop(id){
       <div><span>التقييم</span><b>${rate}</b></div>
       <div><span>الطلبات</span><b>${ords.length} · انسلّم ${done}</b></div>
       <div><span>المنتجات</span><b>${ps.length}${ps.filter(p=>p.avail===false).length?' · '+ps.filter(p=>p.avail===false).length+' غير متوفر':''}</b></div>
+      <div class="w"><span>الموظفين</span><b id="asStaff">…</b></div>
       <div class="w"><span>الموقع</span><b>${hasLoc?'محدد ✓':'ما محدد'} <button type="button" class="as-lk" onclick="document.getElementById('asSheet').classList.remove('on');amFixShopLoc('${sh.id}')">📍 ${hasLoc?'صحّح':'حدد'} الموقع</button></b></div>
       ${sh.addr?`<div class="w"><span>العنوان</span><b>${esc(sh.addr)}</b></div>`:''}
       <div class="w"><span>القسم بالرئيسية (وين يطلع للزبون)</span>${secPickHTML(sh)}</div>
@@ -23169,6 +23170,12 @@ function openAdminShop(id){
     <div class="as-menu">${menu}</div>
   </div>`;
   el.classList.add('on');
+  /* v539: عدد موظفين المحل — يجي من shop_staff_list (نفس اللي تستخدمه لوحة المتجر) */
+  el.dataset.sid=sh.id;
+  (async()=>{ let t='—';
+    try{ const rows=await rpc('shop_staff_list',{p_shop:sh.id})||[]; const a=rows.filter(r=>r.is_active).length, off=rows.length-a;
+      t=rows.length?(a+' موظف'+(off?' · '+off+' موقوف':'')):'ماكو موظفين' }catch(e){}
+    const b=document.getElementById('asStaff'); if(b && el.dataset.sid===sh.id) b.textContent=t })();
 }
 
 /* v528: تفاصيل منتج كاملة للإدارة — الصورة، الوصف، الأحجام وأسعارها، الإضافات */
@@ -29679,7 +29686,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v538', seen={}, n=0, q=[], t=null;
+  var VER='v539', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29932,7 +29939,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v538', t0=Date.now();
+  var VER='v539', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
