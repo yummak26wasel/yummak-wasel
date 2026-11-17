@@ -13226,7 +13226,7 @@ async function loadDiscOwedShop(){
     <div class="dco-h"><span class="dco-ic">🏷️</span><div><b>تعويض الخصومات من التطبيق</b><span>خصومات تحمّلها التطبيق على طلباتك</span></div></div>
     <div class="dco-box">
       <div><span>تطلب من التطبيق</span><b>${rem.toLocaleString()} <small>د.ع</small></b></div>
-      <div><span>عدد الطلبات</span><b>${Number(rem>0?r.orders_count:0).toLocaleString()} <small>طلب</small></b></div>
+      <div><span>طلبات ما تسددت</span><b>${Number(rem>0?(r.unpaid_orders!=null?r.unpaid_orders:r.orders_count):0).toLocaleString()} <small>طلب</small></b></div>
     </div>
     ${Number(r.pending)>0?`<div class="dco-pend"><b>الإدارة تكول سلّمتك ${Number(r.pending).toLocaleString()} د.ع</b><button class="ub ub-g" onclick="confirmDiscShop()"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> تأكيد الاستلام</button></div>`:''}
     <div class="dco-ft">مجموع الخصومات ${Number(r.total||0).toLocaleString()} · استلمت ${Number(r.paid||0).toLocaleString()} د.ع</div>
@@ -13276,7 +13276,7 @@ async function loadCompDrv(){
     <div class="dco-h"><span class="dco-ic">🛵</span><div><b>تعويض التوصيل المجاني</b><span>أجرة طلبات بكوبون توصيل مجاني — التطبيق يدفعها إلك</span></div></div>
     <div class="dco-box">
       <div><span>تطلب من التطبيق</span><b>${rem.toLocaleString()} <small>د.ع</small></b></div>
-      <div><span>عدد الطلبات</span><b>${Number(rem>0?r.orders_count:0).toLocaleString()} <small>طلب</small></b></div>
+      <div><span>طلبات ما تسددت</span><b>${Number(rem>0?r.orders_count:0).toLocaleString()} <small>طلب</small></b></div>
     </div>
     ${Number(r.pending)>0?`<div class="dco-pend"><b>الإدارة تكول سلّمتك ${Number(r.pending).toLocaleString()} د.ع</b><button class="ub ub-g" onclick="confirmComp()"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> تأكيد الاستلام</button></div>`:''}
     <div class="dco-ft">المجموع ${Number(r.total||0).toLocaleString()} · استلمت ${Number(r.paid||0).toLocaleString()} د.ع</div>
@@ -29686,7 +29686,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v539', seen={}, n=0, q=[], t=null;
+  var VER='v540', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29939,7 +29939,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v539', t0=Date.now();
+  var VER='v540', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
