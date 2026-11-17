@@ -13218,16 +13218,21 @@ let _dscOwedOpen=false;
 async function loadDiscOwedShop(){
   const box=document.getElementById('stDiscOwed'); if(!box||!me||!me.shopId) return;
   if(me.staff && !me.staff.can_reports){ box.innerHTML=''; return }
-  let r=null;
-  try{ const x=await rpc('discount_owed_mine',{p_shop:me.shopId}); r=Array.isArray(x)?x[0]:x }catch(e){ r=null }
+  let r=null, q=null;
+  try{ const [x,y]=await Promise.all([rpc('discount_owed_mine',{p_shop:me.shopId}), rpc('disc_due',{p_shop:me.shopId}).catch(()=>null)]);
+       r=Array.isArray(x)?x[0]:x; q=Array.isArray(y)?y[0]:y }catch(e){ r=null }
   if(!r || (!Number(r.total) && !Number(r.paid))){ box.innerHTML=''; return }
   const rem=Number(r.remaining||0);
-  box.innerHTML=`<div class="dco ${rem>0?'':'zero'}">
+  /* v546: مثل العمولة — «مستحق هسه» = الفترات اللي خلصت بس (15 أو 30 يوم)، والفترة الماشية تنسدد بعد ما تخلص */
+  const dueNow=q?Number(q.due_now||0):rem, dueN=q?Number(q.due_orders||0):Number(r.unpaid_orders||0), cur=q?Number(q.cur_amount||0):0;
+  const _dd=d=>d?new Date(String(d).slice(0,10)+'T00:00:00').toLocaleDateString('ar-IQ',{day:'numeric',month:'long'}):'';
+  box.innerHTML=`<div class="dco ${(dueNow>0||cur>0||Number(r.pending)>0)?'':'zero'}">
     <div class="dco-h"><span class="dco-ic">🏷️</span><div><b>تعويض الخصومات من التطبيق</b><span>خصومات تحمّلها التطبيق على طلباتك</span></div></div>
     <div class="dco-box">
-      <div><span>تطلب من التطبيق</span><b>${rem.toLocaleString()} <small>د.ع</small></b></div>
-      <div><span>طلبات ما تسددت</span><b>${Number(rem>0?(r.unpaid_orders!=null?r.unpaid_orders:r.orders_count):0).toLocaleString()} <small>طلب</small></b></div>
+      <div><span>تطلب من التطبيق هسه${q&&q.cutoff?` <small>(لغاية ${_dd(q.cutoff)})</small>`:''}</span><b>${dueNow.toLocaleString()} <small>د.ع</small></b></div>
+      <div><span>طلبات ما تسددت</span><b>${dueN.toLocaleString()} <small>طلب</small></b></div>
     </div>
+    ${cur>0?`<div class="dco-cur">الفترة الماشية: <b>${cur.toLocaleString()} د.ع</b> — تنسدد بعد ${_dd(q.cur_end)}</div>`:''}
     ${Number(r.pending)>0?`<div class="dco-pend"><b>الإدارة تكول سلّمتك ${Number(r.pending).toLocaleString()} د.ع</b><button class="ub ub-g" onclick="confirmDiscShop()"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> تأكيد الاستلام</button></div>`:''}
     <div class="dco-ft">مجموع الخصومات ${Number(r.total||0).toLocaleString()} · استلمت ${Number(r.paid||0).toLocaleString()} د.ع</div>
     ${(Number(r.paid)>0||Number(r.pending)>0)?`<button class="dco-st" onclick="stmtList('disc',me.shopId,(myShopDoc&&myShopDoc.name)||'')">📄 الكشوفات — كل دفعة ويا طلباتها</button>`:''}
@@ -13276,15 +13281,19 @@ async function openDiscOwed(force){
   if(_dscOwedOpen && !force){ _dscOwedOpen=false; box.innerHTML=''; return }
   _dscOwedOpen=true;
   box.innerHTML='<div class="dco-list"><div class="dco-empty">جاري التحميل…</div></div>';
-  let rows=[];
-  try{ rows=await rpc('discount_owed_all',{})||[] }catch(e){ box.innerHTML='<div class="dco-list"><div class="dco-empty">تعذّر التحميل: '+esc(errMsg(e))+'</div></div>'; return }
-  const due=rows.reduce((a,x)=>a+Math.max(0,Number(x.remaining||0)),0);
+  let rows=[], dm={};
+  try{ const [a,b]=await Promise.all([rpc('discount_owed_all',{}), rpc('disc_due_all',{}).catch(()=>null)]); rows=a||[]; (b||[]).forEach(x=>{ dm[x.shop_id]=x }) }
+  catch(e){ box.innerHTML='<div class="dco-list"><div class="dco-empty">تعذّر التحميل: '+esc(errMsg(e))+'</div></div>'; return }
+  /* v546: «سدّدت» يسدد بس الفترات اللي خلصت (مثل العمولة) — الفترة الماشية تنسدد بعد ما تخلص */
+  const _hasDue=Object.keys(dm).length>0, _dd=d=>d?new Date(String(d).slice(0,10)+'T00:00:00').toLocaleDateString('ar-IQ',{day:'numeric',month:'long'}):'';
+  rows.forEach(x=>{ const d=dm[x.shop_id]; x._due=_hasDue?Number((d&&d.due_now)||0):Math.max(0,Number(x.remaining||0)); x._cur=d?Number(d.cur_amount||0):0; x._curEnd=d?d.cur_end:null });
+  const due=rows.reduce((a,x)=>a+x._due,0);
   box.innerHTML=`<div class="dco-list">
-    <div class="dco-sum"><span>مجموع اللي تطلبه المطاعم</span><b>${due.toLocaleString()} د.ع</b></div>
-    ${rows.length?rows.map(x=>{const rem=Number(x.remaining||0);return `<div class="dco-row">
+    <div class="dco-sum"><span>مجموع اللي تطلبه المطاعم هسه</span><b>${due.toLocaleString()} د.ع</b></div>
+    ${rows.length?rows.map(x=>{const rem=x._due;return `<div class="dco-row">
       <div class="t"><b>${esc(x.shop_name||'محل')}</b><span>${Number(x.orders_count||0)} طلب بخصم · المجموع ${Number(x.total||0).toLocaleString()} · مسدّد ${Number(x.paid||0).toLocaleString()}</span>${(Number(x.paid)>0||Number(x.pending)>0)?`<a class="dco-sl" onclick="stmtList('disc','${x.shop_id}','${esc(String(x.shop_name||'').replace(/'/g,''))}')">📄 الكشوفات</a>`:''}</div>
-      <div class="a"><b class="${rem>0?'':'z'}">${rem.toLocaleString()}</b><small>د.ع</small></div>
-      ${Number(x.pending)>0?'<span class="pend">⏳ بانتظار تأكيد المطعم</span>':(rem>0?`<button onclick="payDiscOwed('${x.shop_id}',${rem},'${esc(String(x.shop_name||'').replace(/'/g,''))}')">سدّدت</button>`:'<span class="ok">✓ خالص</span>')}
+      <div class="a"><b class="${rem>0?'':'z'}">${rem.toLocaleString()}</b><small>د.ع</small>${x._cur>0?`<i class="cur">+ ${x._cur.toLocaleString()} تنسدد بعد ${_dd(x._curEnd)}</i>`:''}</div>
+      ${Number(x.pending)>0?'<span class="pend">⏳ بانتظار تأكيد المطعم</span>':(rem>0?`<button onclick="payDiscOwed('${x.shop_id}',${rem},'${esc(String(x.shop_name||'').replace(/'/g,''))}')">سدّدت</button>`:(x._cur>0?'<span class="pend">⏳ الفترة ماشية</span>':'<span class="ok">✓ خالص</span>'))}
     </div>`}).join(''):'<div class="dco-empty">ماكو خصومات على التطبيق لحد هسه</div>'}
   </div>`;
 }
@@ -28995,6 +29004,8 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .rcp .ln tr:last-child td{border-bottom:0}
 .rcp .ln td:last-child,.rcp .ln th:last-child{text-align:left}
 .rcp .ln td small{display:block;font-size:10.5px;color:#C26A0A;font-weight:700}
+.dco-cur{margin-top:10px;background:#FFF7EC;color:#8A5300;border-radius:12px;padding:9px 12px;font-size:12.5px;font-weight:700}.dco-cur b{font-weight:900}
+.dco-row .a i.cur{display:block;font-style:normal;font-size:10.5px;color:#C26A0A;font-weight:700;margin-top:2px;white-space:nowrap}
 .dco-st{display:block;width:100%;margin-top:10px;background:#F4F0FD;color:#5B2BC9;border:0;border-radius:12px;padding:10px;font:inherit;font-weight:800;font-size:13px}
 .dco-sl{display:inline-block;margin-top:4px;color:#5B2BC9;font-weight:800;font-size:12px;cursor:pointer}
 .stm-h{padding:4px 4px 12px}.stm-h b{display:block;font-size:17px;font-weight:900;color:#22113F}.stm-h span{font-size:13px;color:#77708C;font-weight:700}
@@ -29784,7 +29795,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v545', seen={}, n=0, q=[], t=null;
+  var VER='v546', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30037,7 +30048,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v545', t0=Date.now();
+  var VER='v546', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
