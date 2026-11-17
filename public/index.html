@@ -3981,6 +3981,31 @@ html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,htm
 .ask-ok{background:var(--g);border:0;color:#fff;box-shadow:0 8px 20px rgba(91,43,201,.28)}
 .ask-ok.danger{background:#E8365D;box-shadow:0 8px 20px rgba(232,54,93,.28)}
 .ask-no:active,.ask-ok:active{transform:scale(.97)}
+/* v549: ورقة الزحمة */
+#busySheet{position:fixed;inset:0;z-index:10001;background:rgba(20,12,40,.55);display:none;align-items:flex-end;justify-content:center}
+#busySheet.on{display:flex;animation:svcFade .2s}
+.bsy-card{width:100%;max-width:480px;background:#fff;border-radius:28px 28px 0 0;padding:28px 22px calc(16px + env(safe-area-inset-bottom));text-align:center;animation:bsyUp .3s cubic-bezier(.2,.9,.3,1)}
+@keyframes bsyUp{from{transform:translateY(46px);opacity:.3}to{transform:none;opacity:1}}
+.bsy-art{width:96px;height:96px;margin:0 auto 16px;border-radius:50%;background:#FFF1E5;color:#FF7A00;display:grid;place-items:center;position:relative}
+.bsy-art::before,.bsy-art::after{content:'';position:absolute;inset:-6px;border-radius:50%;border:2px solid rgba(255,122,0,.22);animation:bsyPulse 2s ease-out infinite}
+.bsy-art::after{animation-delay:1s}
+@keyframes bsyPulse{from{transform:scale(.9);opacity:1}to{transform:scale(1.28);opacity:0}}
+.bsy-art svg{width:58px;height:58px}
+.bsy-card h3{margin:0;font-size:21px;font-weight:900;color:#22113F}
+.bsy-sub{margin:6px 0 18px;font-size:14px;color:#77708C;font-weight:600}
+.bsy-time{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#F4F0FD;border-radius:18px;padding:15px 16px;margin-bottom:18px}
+.bsy-time span{display:flex;align-items:center;gap:7px;font-size:13.5px;color:#5B2BC9;font-weight:700}
+.bsy-time span svg{width:19px;height:19px}
+.bsy-time b{font-size:20px;font-weight:900;color:#5B2BC9}
+.bsy-ok{display:block;width:100%;border:0;border-radius:16px;padding:15px;background:var(--g);color:#fff;font:inherit;font-weight:800;font-size:16px;box-shadow:0 10px 24px rgba(91,43,201,.28)}
+.bsy-no{display:block;width:100%;border:0;background:none;color:#77708C;font:inherit;font-weight:800;font-size:14.5px;padding:14px 0 4px}
+.bsy-ok:active{transform:scale(.98)}
+html[data-theme=dark] .bsy-card{background:#1b1528}
+html[data-theme=dark] .bsy-card h3{color:#fff}
+html[data-theme=dark] .bsy-sub,html[data-theme=dark] .bsy-no{color:#a9a2bd}
+html[data-theme=dark] .bsy-time{background:rgba(124,92,255,.16)}
+html[data-theme=dark] .bsy-time span,html[data-theme=dark] .bsy-time b{color:#CBB8FF}
+html[data-theme=dark] .bsy-art{background:rgba(255,122,0,.14)}
 
 .ord-loc{display:flex;align-items:center;gap:7px;font-size:13px;font-weight:700;
   color:var(--mut);margin:4px 2px 12px;padding-bottom:12px;border-bottom:1.5px solid var(--bd)}
@@ -13990,12 +14015,37 @@ async function busyGuard(){
   if(Array.isArray(r)) r=r[0]; if(r && r.busy_eta) r=r.busy_eta;
   if(!r || typeof r!=='object') return true;
   const eta=r.eta_min==null?null:Number(r.eta_min), drv=Number(r.drivers||0);
-  let msg='';
-  if(!drv) msg='هسه ماكو مندوبين على الدوام 🛵<br>طلبك ممكن يتأخر لحد ما يجي مندوب';
-  else if(eta>240) msg='زحمة كلش هسه 🛵<br>طلبك ممكن ياخذ<b>أكثر من 4 ساعات</b>';
-  else if(eta>=60) msg='زحمة هسه 🛵<br>طلبك يوصل بعد حوالي<b>'+_busyTxt(eta)+'</b>';
-  if(!msg) return true;
-  return await askConfirm(msg+'<div style="margin-top:8px;font-size:12.5px;color:#77708C">تگدر تطلب هسه وتنتظر، أو ترجع بعد شوية.</div>',{title:'قبل ما تطلب',ok:'إي، اطلب',no:'بعدين'});
+  if(!drv) return await busySheet('nodrv','ممكن يتأخر');
+  if(eta>240) return await busySheet('very','أكثر من 4 ساعات');
+  if(eta>=60) return await busySheet('busy',_busyTxt(eta));
+  return true;
+}
+/* ورقة الزحمة — تصميم خاص (دراجة + الوقت واضح + زر واحد بارز) */
+function busySheet(kind, timeTxt){
+  return new Promise(res=>{
+    let el=document.getElementById('busySheet');
+    if(!el){ el=document.createElement('div'); el.id='busySheet'; document.body.appendChild(el) }
+    const T={busy:['زحمة هسه','عدنا طلبات هواي بهالوقت'],
+             very:['زحمة كلش هسه','الطلبات هواي والمندوبين كلهم مشغولين'],
+             nodrv:['ماكو مندوبين هسه','أول ما يتوفر مندوب ينطلق طلبك']}[kind]||['زحمة هسه',''];
+    el.innerHTML=`<div class="bsy-card" role="dialog" aria-label="${T[0]}">
+      <div class="bsy-art"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M2 24h7M4 31h6M2 38h7" stroke-width="3" opacity=".55"/>
+        <rect x="14" y="17" width="17" height="14" rx="3"/>
+        <circle cx="21" cy="46" r="7"/><circle cx="51" cy="46" r="7"/>
+        <path d="M14 36h19l8-12h6"/><path d="M28 46h9l6-10"/><path d="M45 24l6 22"/><path d="M41 18h7"/></svg></div>
+      <h3>${T[0]}</h3>
+      <p class="bsy-sub">${T[1]}</p>
+      <div class="bsy-time"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>وقت التوصيل تقريباً</span><b>${timeTxt}</b></div>
+      <button type="button" class="bsy-ok">اطلب وأنتظر</button>
+      <button type="button" class="bsy-no">أرجع بعدين</button>
+    </div>`;
+    const done=v=>{ el.classList.remove('on'); res(v) };
+    el.onclick=e=>{ if(e.target===el) done(false) };
+    el.querySelector('.bsy-ok').onclick=()=>done(true);
+    el.querySelector('.bsy-no').onclick=()=>done(false);
+    el.classList.add('on');
+  });
 }
 /* ═══ v448: قبل ما ينرسل الطلب — إذا التلفون بعيد عن العنوان المحفوظ نسأله وين نوصّل (مثل طلبات وكريم).
    قريب = ينرسل عادي بدون أي سؤال. ما نطلب إذن موقع جديد بالمتصفح (بس إذا سامح من قبل)، وأي خلل بالـGPS = نكمّل عادي ═══ */
@@ -29858,7 +29908,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v549', seen={}, n=0, q=[], t=null;
+  var VER='v550', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30111,7 +30161,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v549', t0=Date.now();
+  var VER='v550', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
