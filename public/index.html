@@ -15426,10 +15426,27 @@ function renderStore(){
     </div>`;
   }
   else if(fin){
-    const _ic=invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]), _st=_ic.s;
-    const _st0=Number(myComm.amount||0)<=0 && _st!=='pend';   /* v544: ماكو عمولة بهالفترة = مو «مستحق» */
-    const _stTxt=_st0?'ما عليك شي':(_st==='paid'?'مسدد ✓':(_st==='pend'?'قيد المراجعة':(_st==='part'?'باقي '+_ic.rem.toLocaleString():'مستحق')));
-    const _stCls=_st0?'ok':(_st==='paid'?'ok':((_st==='pend'||_st==='part')?'pend':'due'));
+    /* v545: حالة السداد تمشي ويا الفلتر اللي فوگ (اليوم / 7 أيام / 30 يوم / شهر).
+       كل طلب ينحسب على فترة التسديد مالته (15 أو 30 يوم)، وشكد انسدّ من ذيج الفترة من دفتر السيرفر */
+    const _today=new Date(); _today.setHours(0,0,0,0);
+    const _pendK=new Set([...(myPrev||[]).filter(p=>p.c&&p.c.s==='pend').map(p=>p.per.from), ...((myInv&&myInv.status==='pending'&&myShopPer)?[myShopPer.from]:[])]);
+    let _owed=0,_later=0,_pendA=0,_dueAt=null;
+    doneP.filter(o=>!(ordFree(o,myShopDoc)||o.no_commission===true)).forEach(o=>{
+      const oc=ordComU(o)/10000; if(!(oc>0)) return;
+      const d=new Date(_anyTs(o.createdAt||o.deliveredAt)); if(isNaN(d)) return;
+      const per=shopPers(d).find(p=>d>=p.s && d<=new Date(p.e.getTime()+86399999)); if(!per) return;
+      const L=LED[_ledK(me.shopId,per)], r=(L&&Number(L.c)>0)?Math.min(1,Number(L.paid||0)/Number(L.c)):0, left=oc*(1-r);
+      if(_pendK.has(per.from)) _pendA+=left;
+      else if(per.e>=_today){ _later+=left; _dueAt=per.e }
+      else _owed+=left;
+    });
+    const _R=v=>Math.round(v||0);
+    let _stTxt,_stCls,_stSub;
+    if(_R(shopCom)<=0){ _stTxt='ما عليك شي'; _stCls='ok'; _stSub='ماكو عمولة بهالفترة' }
+    else if(_R(_owed)>0){ _stTxt='مستحق'; _stCls='due'; _stSub='المطلوب منك: '+_R(_owed).toLocaleString()+' د.ع' }
+    else if(_R(_pendA)>0){ _stTxt='قيد المراجعة'; _stCls='pend'; _stSub=_R(_pendA).toLocaleString()+' د.ع بانتظار تأكيد الإدارة' }
+    else if(_R(_later)>0){ _stTxt='تستحق '+(_dueAt?_dueAt.toLocaleDateString('ar-IQ',{day:'numeric',month:'long'}):''); _stCls='pend'; _stSub=_R(_later).toLocaleString()+' د.ع — تسددها بعد ما تخلص الفترة' }
+    else { _stTxt='مسدد ✓'; _stCls='ok'; _stSub='انسددت كاملة' }
     const _n=n=>Number(n||0).toLocaleString();
     fin.innerHTML=`${freeBanner(myShopDoc)}
     <div class="fsec"><i class="pu"></i><h3>المبيعات</h3></div>
@@ -15449,7 +15466,7 @@ function renderStore(){
     <div class="fsec"><i class="or"></i><h3>العمولة</h3></div>
     <div class="fst">
       <div class="fst-r"><div><b>عمولة التطبيق</b><small>${comSub}</small></div><span class="mn">− ${_n(shopCom)}</span></div>
-      <div class="fst-r"><div><b>حالة سداد عمولة الشهر</b><small>المبلغ المطلوب: ${_n(myComm.amount)} د.ع</small></div><span class="paytag ${_stCls}">${_stTxt}</span></div>
+      <div class="fst-r"><div><b>حالة سداد عمولة هذي الفترة</b><small>${_stSub}</small></div><span class="paytag ${_stCls}">${_stTxt}</span></div>
     </div>
 
     <div class="fsec"><i class="gn"></i><h3>الصافي</h3></div>
@@ -29767,7 +29784,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v544', seen={}, n=0, q=[], t=null;
+  var VER='v545', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30020,7 +30037,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v544', t0=Date.now();
+  var VER='v545', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
