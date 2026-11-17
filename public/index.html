@@ -13230,6 +13230,7 @@ async function loadDiscOwedShop(){
     </div>
     ${Number(r.pending)>0?`<div class="dco-pend"><b>الإدارة تكول سلّمتك ${Number(r.pending).toLocaleString()} د.ع</b><button class="ub ub-g" onclick="confirmDiscShop()"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> تأكيد الاستلام</button></div>`:''}
     <div class="dco-ft">مجموع الخصومات ${Number(r.total||0).toLocaleString()} · استلمت ${Number(r.paid||0).toLocaleString()} د.ع</div>
+    ${(Number(r.paid)>0||Number(r.pending)>0)?`<button class="dco-st" onclick="stmtList('disc',me.shopId,(myShopDoc&&myShopDoc.name)||'')">📄 الكشوفات — كل دفعة ويا طلباتها</button>`:''}
   </div>`;
 }
 async function confirmDiscShop(){
@@ -13237,6 +13238,38 @@ async function confirmDiscShop(){
   if(!yes) return;
   try{ await rpc('shop_confirm_discount',{p_shop:me.shopId}); toast('انأكد الاستلام'); loadDiscOwedShop() }
   catch(e){ toast(errMsg(e)) }
+}
+/* ═══ v541: كشف لكل دفعة تعويض — يا طلبات غطّت، ومن يا تاريخ ليا تاريخ (مثل التطبيقات العالمية) ═══ */
+const STMT_T={disc:'كشوفات تعويض الخصومات', comp:'كشوفات تعويض التوصيل المجاني'};
+async function stmtList(kind, party, name){
+  if(!party) return;
+  let sh=document.getElementById('stmtSheet');
+  if(!sh){ sh=document.createElement('div'); sh.id='stmtSheet'; sh.className='spds'; sh.addEventListener('click',e=>{ if(e.target===sh) sh.classList.remove('on') }); document.body.appendChild(sh) }
+  const head=`<div class="spds-grab"></div><div class="stm-h"><b>${STMT_T[kind]||'الكشوفات'}</b>${name?`<span>${esc(name)}</span>`:''}</div>`;
+  const close=`<button class="rs-later" onclick="document.getElementById('stmtSheet').classList.remove('on')">سكّر</button>`;
+  sh.innerHTML=`<div class="spds-in">${head}<div class="stm-empty">جاري التحميل…</div>${close}</div>`;
+  requestAnimationFrame(()=>sh.classList.add('on'));
+  let rows=[];
+  try{ rows=await rpc('payout_statements',{p_kind:kind,p_party:party})||[] }
+  catch(e){ sh.innerHTML=`<div class="spds-in">${head}<div class="stm-empty">تعذّر التحميل: ${esc(errMsg(e))}</div>${close}</div>`; return }
+  window._stmRows=rows; window._stmKind=kind; window._stmName=name||'';
+  sh.innerHTML=`<div class="spds-in">${head}
+    ${rows.length?rows.map((x,i)=>{ const ok=String(x.status)==='confirmed';
+      return `<button class="stm-row" onclick="stmtOpen(${i})">
+        <div class="t"><b>وصل رقم <bdi>${esc(String(x.receipt_no!=null?x.receipt_no:'—'))}</bdi></b>
+          <span><bdi>${_rxD(x.created_at)}</bdi> · ${Number(x.orders_count||0)} طلب${x.period_from?` · من <bdi>${_rxD(x.period_from)}</bdi> إلى <bdi>${_rxD(x.period_to)}</bdi>`:''}</span></div>
+        <div class="a"><b><bdi class="rn">${_n(x.amount)}</bdi> <small>د.ع</small></b><i class="${ok?'ok':'w'}">${ok?'مؤكَّد':'ينتظر التأكيد'}</i></div>
+      </button>` }).join(''):'<div class="stm-empty">ماكو دفعات لحد هسه</div>'}
+    ${close}</div>`;
+}
+async function stmtOpen(i){
+  const p=(window._stmRows||[])[i], kind=window._stmKind; if(!p) return;
+  let lines=[];
+  try{ lines=await rpc('payout_statement_orders',{p_kind:kind,p_payout:p.id})||[] }catch(e){ return toast(errMsg(e)) }
+  const ss=document.getElementById('stmtSheet'); if(ss) ss.classList.remove('on');
+  const x=finNorm({kind, at:_anyTs(p.confirmed_at)||_anyTs(p.created_at)||Date.now(),
+    r:{...p, who_name:window._stmName||(kind==='disc'?'مطعم':'سائق'), orders_count:lines.length, lines}});
+  if(x){ x._ld=1; finShowRec(x) }
 }
 async function openDiscOwed(force){
   const box=document.getElementById('aDiscOwed'); if(!box) return;
@@ -13249,7 +13282,7 @@ async function openDiscOwed(force){
   box.innerHTML=`<div class="dco-list">
     <div class="dco-sum"><span>مجموع اللي تطلبه المطاعم</span><b>${due.toLocaleString()} د.ع</b></div>
     ${rows.length?rows.map(x=>{const rem=Number(x.remaining||0);return `<div class="dco-row">
-      <div class="t"><b>${esc(x.shop_name||'محل')}</b><span>${Number(x.orders_count||0)} طلب بخصم · المجموع ${Number(x.total||0).toLocaleString()} · مسدّد ${Number(x.paid||0).toLocaleString()}</span></div>
+      <div class="t"><b>${esc(x.shop_name||'محل')}</b><span>${Number(x.orders_count||0)} طلب بخصم · المجموع ${Number(x.total||0).toLocaleString()} · مسدّد ${Number(x.paid||0).toLocaleString()}</span>${(Number(x.paid)>0||Number(x.pending)>0)?`<a class="dco-sl" onclick="stmtList('disc','${x.shop_id}','${esc(String(x.shop_name||'').replace(/'/g,''))}')">📄 الكشوفات</a>`:''}</div>
       <div class="a"><b class="${rem>0?'':'z'}">${rem.toLocaleString()}</b><small>د.ع</small></div>
       ${Number(x.pending)>0?'<span class="pend">⏳ بانتظار تأكيد المطعم</span>':(rem>0?`<button onclick="payDiscOwed('${x.shop_id}',${rem},'${esc(String(x.shop_name||'').replace(/'/g,''))}')">سدّدت</button>`:'<span class="ok">✓ خالص</span>')}
     </div>`}).join(''):'<div class="dco-empty">ماكو خصومات على التطبيق لحد هسه</div>'}
@@ -13280,6 +13313,7 @@ async function loadCompDrv(){
     </div>
     ${Number(r.pending)>0?`<div class="dco-pend"><b>الإدارة تكول سلّمتك ${Number(r.pending).toLocaleString()} د.ع</b><button class="ub ub-g" onclick="confirmComp()"><svg class="wic bi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> تأكيد الاستلام</button></div>`:''}
     <div class="dco-ft">المجموع ${Number(r.total||0).toLocaleString()} · استلمت ${Number(r.paid||0).toLocaleString()} د.ع</div>
+    ${(Number(r.paid)>0||Number(r.pending)>0)?`<button class="dco-st" onclick="stmtList('comp',uid,(me&&me.name)||'')">📄 الكشوفات — كل دفعة ويا طلباتها</button>`:''}
   </div>`;
 }
 async function confirmComp(){
@@ -13299,7 +13333,7 @@ async function openCompOwed(force){
   box.innerHTML=`<div class="dco-list">
     <div class="dco-sum"><span>مجموع اللي يطلبه السواق</span><b>${due.toLocaleString()} د.ع</b></div>
     ${rows.length?rows.map(x=>{const rem=Number(x.remaining||0);return `<div class="dco-row">
-      <div class="t"><b>${esc(x.driver_name||'سائق')}</b><span>${Number(x.orders_count||0)} طلب توصيل مجاني · المجموع ${Number(x.total||0).toLocaleString()} · مسدّد ${Number(x.paid||0).toLocaleString()}</span></div>
+      <div class="t"><b>${esc(x.driver_name||'سائق')}</b><span>${Number(x.orders_count||0)} طلب توصيل مجاني · المجموع ${Number(x.total||0).toLocaleString()} · مسدّد ${Number(x.paid||0).toLocaleString()}</span>${(Number(x.paid)>0||Number(x.pending)>0)?`<a class="dco-sl" onclick="stmtList('comp','${x.driver_id}','${esc(String(x.driver_name||'').replace(/'/g,''))}')">📄 الكشوفات</a>`:''}</div>
       <div class="a"><b class="${rem>0?'':'z'}">${rem.toLocaleString()}</b><small>د.ع</small></div>
       ${Number(x.pending)>0?'<span class="pend">⏳ بانتظار تأكيد السائق</span>':(rem>0?`<button onclick="payCompOwed('${x.driver_id}',${rem},'${esc(String(x.driver_name||'').replace(/'/g,''))}')">سدّدت</button>`:'<span class="ok">✓ خالص</span>')}
     </div>`}).join(''):'<div class="dco-empty">ماكو طلبات توصيل مجاني لحد هسه</div>'}
@@ -20987,6 +21021,10 @@ function finRecHTML(x){
       ${x.k==='shop'&&r.amount_reported!=null&&Number(r.amount_reported)!==Number(x.amt)?rcpRow('بلّغ المطعم', _rN(r.amount_reported)+' د.ع'):''}
       ${rcpRow('الحالة', ok?'مسدّد ومؤكَّد':(x.rej?'<i class="r">مرفوض'+(r.reject_reason?' — '+esc(r.reject_reason):'')+'</i>':'<i class="w">بانتظار التأكيد</i>'))}
     </div>
+    ${Array.isArray(r.lines)&&r.lines.length?`<div class="ln"><div class="lh">الطلبات اللي غطّاها هذا الوصل${r.period_from?` · من <bdi class="rn">${_rxD(r.period_from)}</bdi> إلى <bdi class="rn">${_rxD(r.period_to)}</bdi>`:''}</div>
+      <table><thead><tr><th>رقم الطلب</th><th>التاريخ</th>${x.k==='comp'?'<th>المطعم</th>':''}<th>المبلغ</th></tr></thead><tbody>
+      ${r.lines.map(l=>`<tr><td><bdi class="rn">#${esc(String(l.order_no||''))}</bdi></td><td><bdi class="rn">${_rxD(l.ordered_at)}</bdi></td>${x.k==='comp'?`<td>${esc(l.shop_name||'')}</td>`:''}<td>${_rN(l.amount)}${Number(l.amount)<Number(l.order_amount)?`<small>جزء من ${_rN(l.order_amount)}</small>`:''}</td></tr>`).join('')}
+      </tbody></table></div>`:''}
     <div class="tot"><span>المبلغ</span><b>${_rN(x.amt)} د.ع</b></div>
     <div class="wd">${tafqeet(x.amt)}</div>
     <div class="sig"><div>دفع<b><bdi>${c+payerN}</bdi></b></div>${ok?rcpSeal('','مسدّد',x.at):(x.rej?rcpSeal('r','مرفوض',x.at):rcpSeal('w','ينتظر',''))}<div>${x.rej?'رفض':'استلم وأكّد'}<b><bdi>${c+recvN}</bdi></b></div></div>
@@ -21061,6 +21099,16 @@ function drPayRec(id){
   if(x) finShowRec(x);
 }
 function finShowRec(x){
+  /* v541: وصل تعويض (خصومات أو توصيل مجاني) — نجيب طلباته حتى يصير كشف */
+  if(x && (x.k==='disc'||x.k==='comp') && x.raw && x.raw.id && !x.raw.lines && !x._ld){
+    x._ld=1;
+    rpc('payout_statement_orders',{p_kind:x.k,p_payout:x.raw.id}).then(L=>{
+      if(!Array.isArray(L)||!L.length) return;
+      const ts=L.map(l=>l.ordered_at).filter(Boolean).sort();
+      x.raw.lines=L; x.raw.orders_count=x.raw.orders_count||L.length; x.raw.period_from=ts[0]; x.raw.period_to=ts[ts.length-1];
+      if(window._finCur===x) finShowRec(x);
+    }).catch(()=>{});
+  }
   let sh=document.getElementById('finSheet');
   if(!sh){ sh=document.createElement('div'); sh.id='finSheet'; sh.className='spds'; sh.addEventListener('click',e=>{ if(e.target===sh) sh.classList.remove('on') }); document.body.appendChild(sh) }
   window._finCur=x;
@@ -28906,6 +28954,24 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .rcp .ph .n b{display:block;font-size:16px;color:#22113F;font-weight:900}
 .rcp .ph .n small{display:block;font-size:11.5px;color:#77708C;font-weight:600}
 .rcp .kv{padding-top:4px}
+/* v541: كشف الطلبات داخل الوصل */
+.rcp .ln{margin-top:12px;border:1px solid #ECE8F4;border-radius:12px;overflow:hidden}
+.rcp .ln .lh{background:#F7F5FC;padding:8px 12px;font-size:12px;font-weight:800;color:#5B2BC9}
+.rcp .ln table{width:100%;border-collapse:collapse;font-size:12.5px}
+.rcp .ln th{font-weight:700;color:#77708C;text-align:right;padding:6px 10px;border-bottom:1px solid #ECE8F4;font-size:11.5px}
+.rcp .ln td{padding:7px 10px;border-bottom:1px dashed #EEEAF5;color:#22113F;font-weight:600;vertical-align:top}
+.rcp .ln tr:last-child td{border-bottom:0}
+.rcp .ln td:last-child,.rcp .ln th:last-child{text-align:left}
+.rcp .ln td small{display:block;font-size:10.5px;color:#C26A0A;font-weight:700}
+.dco-st{display:block;width:100%;margin-top:10px;background:#F4F0FD;color:#5B2BC9;border:0;border-radius:12px;padding:10px;font:inherit;font-weight:800;font-size:13px}
+.dco-sl{display:inline-block;margin-top:4px;color:#5B2BC9;font-weight:800;font-size:12px;cursor:pointer}
+.stm-h{padding:4px 4px 12px}.stm-h b{display:block;font-size:17px;font-weight:900;color:#22113F}.stm-h span{font-size:13px;color:#77708C;font-weight:700}
+.stm-row{display:flex;width:100%;justify-content:space-between;align-items:center;gap:10px;text-align:right;background:#fff;border:1px solid #ECE8F4;border-radius:14px;padding:12px 14px;margin-bottom:8px;font:inherit;color:#22113F}
+.stm-row .t b{display:block;font-size:14px;font-weight:800}.stm-row .t span{display:block;font-size:12px;color:#77708C;font-weight:600;margin-top:3px;line-height:1.6}
+.stm-row .a{text-align:left;flex:none}.stm-row .a b{display:block;font-size:15px;font-weight:900}.stm-row .a small{font-size:11px;color:#77708C}
+.stm-row .a i{display:inline-block;margin-top:4px;font-style:normal;font-size:11px;font-weight:800;border-radius:8px;padding:2px 8px}
+.stm-row .a i.ok{background:#E8F7EF;color:#12804A}.stm-row .a i.w{background:#FFF4E5;color:#C26A0A}
+.stm-empty{text-align:center;color:#77708C;font-weight:700;padding:22px 0}
 .rcp .kv div{display:flex;justify-content:space-between;align-items:baseline;gap:14px;font-size:13.5px;padding:8px 0;border-bottom:1px dashed #E6E2EE}
 .rcp .kv span{color:#77708C;font-weight:600;flex:none}
 .rcp .kv b{font-weight:700;text-align:left;color:#22113F}
@@ -29686,7 +29752,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v540', seen={}, n=0, q=[], t=null;
+  var VER='v541', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -29939,7 +30005,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v540', t0=Date.now();
+  var VER='v541', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
