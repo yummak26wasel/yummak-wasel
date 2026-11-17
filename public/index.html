@@ -19117,7 +19117,12 @@ function renderMyComm(){
     ${myPrev.length?`<div class="prevm"><div class="h">⚠️ عليك عمولة من فترات سابقة</div>
       <span style="display:block;margin:-2px 0 4px">أي مبلغ تدفعه يسدّ أقدم فترة أول</span>
       ${myPrev.map((p,i)=>`<div class="r"><div><b>${p.per.label}</b><span>${p.inv&&p.inv.reject_reason&&p.c.s!=='pend'?'❌ انرفضت: '+esc(p.inv.reject_reason)+' · ':''}${p.c.s==='pend'?'بانتظار تأكيد الإدارة':(p.c.paid>0?'سدّدت '+p.c.paid.toLocaleString()+' من '+p.amt.toLocaleString():'العمولة '+p.amt.toLocaleString())}</span></div>
-        <em>${p.c.rem.toLocaleString()} د.ع</em>${p.c.s==='pend'?'':`<button onclick="openPayCom(${i})">سدّد</button>`}</div>`).join('')}</div>`:''}`;
+        <em>${p.c.rem.toLocaleString()} د.ع</em></div>`).join('')}
+      ${(()=>{ /* v542: الفترات السابقة تنجمع — مبلغ واحد وزر واحد، والدفعة تسدّ الأقدم أول */
+        const op=myPrev.filter(p=>p.c.s!=='pend'&&p.c.rem>0), tot=op.reduce((a,p)=>a+p.c.rem,0);
+        if(myPrev.some(p=>p.c.s==='pend')) return '<div class="r tot"><div><b>بانتظار تأكيد الإدارة</b><span>سدّد الباقي بعد ما تتأكد دفعتك</span></div></div>';
+        return tot>0?`<div class="r tot"><div><b>المجموع</b><span>${op.length>1?'كل الفترات اللي فوگ':'الفترة اللي فوگ'}</span></div><em>${tot.toLocaleString()} د.ع</em><button onclick="openPayCom('all')">سدّد</button></div>`:'';
+      })()}</div>`:''}`;
 }
 
 let _pcMethod='cash', _pcBank=null;
@@ -19152,12 +19157,19 @@ function pcCopy(){
 
 async function openPayCom(pi){
   if(me && me.staff) return toast('سداد عمولة التطبيق عند صاحب المحل');
-  const _pv=(typeof pi==='number')?myPrev[pi]:null;
+  let _pv=(typeof pi==='number')?myPrev[pi]:null, _icAll=null;
+  if(pi==='all'){
+    if(myPrev.some(p=>p.c.s==='pend')) return toast('عندك طلب سداد قيد المراجعة — انتظر تأكيد الإدارة');
+    const op=myPrev.filter(p=>p.c.rem>0); if(!op.length) return toast('ماكو عمولة سابقة عليك');
+    const old=op[op.length-1], nw=op[0];   /* myPrev من الأحدث للأقدم — الدفعة تنسجّل على الأقدم وتسدّ الأقدم أول */
+    _pv={...old, per:{...old.per, label: op.length>1 ? (old.per.short+' ← '+nw.per.short) : old.per.label}};
+    _icAll={s:'due', paid:0, rem:op.reduce((a,p)=>a+p.c.rem,0)};
+  }
   window._pcPer=_pv?_pv.key:null;
   const _inv=_pv?_pv.inv:myInv;
   if(_inv && _inv.status==='pending')
     return toast('عندك طلب سداد قيد المراجعة — انتظر تأكيد الإدارة');
-  const _ic=_pv?_pv.c:invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]);
+  const _ic=_icAll||(_pv?_pv.c:invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]));
   if(_ic.s==='paid' || _ic.rem<=0)
     return toast('عمولة هذا الشهر مسدّدة');
 
@@ -28954,6 +28966,7 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .rcp .ph .n b{display:block;font-size:16px;color:#22113F;font-weight:900}
 .rcp .ph .n small{display:block;font-size:11.5px;color:#77708C;font-weight:600}
 .rcp .kv{padding-top:4px}
+.prevm .r.tot{border-top:1.5px solid rgba(0,0,0,.08);margin-top:4px;padding-top:10px}.prevm .r.tot b{font-weight:900}
 /* v541: كشف الطلبات داخل الوصل */
 .rcp .ln{margin-top:12px;border:1px solid #ECE8F4;border-radius:12px;overflow:hidden}
 .rcp .ln .lh{background:#F7F5FC;padding:8px 12px;font-size:12px;font-weight:800;color:#5B2BC9}
@@ -29752,7 +29765,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v541', seen={}, n=0, q=[], t=null;
+  var VER='v542', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30005,7 +30018,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v541', t0=Date.now();
+  var VER='v542', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
