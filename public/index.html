@@ -15427,8 +15427,9 @@ function renderStore(){
   }
   else if(fin){
     const _ic=invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]), _st=_ic.s;
-    const _stTxt=_st==='paid'?'مسدد ✓':(_st==='pend'?'قيد المراجعة':(_st==='part'?'باقي '+_ic.rem.toLocaleString():'مستحق'));
-    const _stCls=_st==='paid'?'ok':((_st==='pend'||_st==='part')?'pend':'due');
+    const _st0=Number(myComm.amount||0)<=0 && _st!=='pend';   /* v544: ماكو عمولة بهالفترة = مو «مستحق» */
+    const _stTxt=_st0?'ما عليك شي':(_st==='paid'?'مسدد ✓':(_st==='pend'?'قيد المراجعة':(_st==='part'?'باقي '+_ic.rem.toLocaleString():'مستحق')));
+    const _stCls=_st0?'ok':(_st==='paid'?'ok':((_st==='pend'||_st==='part')?'pend':'due'));
     const _n=n=>Number(n||0).toLocaleString();
     fin.innerHTML=`${freeBanner(myShopDoc)}
     <div class="fsec"><i class="pu"></i><h3>المبيعات</h3></div>
@@ -19097,7 +19098,8 @@ function renderMyComm(){
   const ic=invCalc(myComm.amount, myInv, LED[_ledK(me.shopId,myShopPer)]), st=ic.s;
   const _cr=Number(LEDC[me.shopId]||0);
   const dd=(myShopPer?myShopPer.e:_dueDate(new Date())).toLocaleDateString('ar-IQ');
-  const tag = st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due']));
+  const z0 = Number(myComm.amount||0)<=0 && st!=='pend';   /* v544: ماكو عمولة بهالفترة */
+  const tag = z0?['ما عليك شي','paid']:(st==='paid'?['مسدد','paid']:(st==='pend'?['قيد المراجعة','pend']:(st==='part'?['باقي '+ic.rem.toLocaleString(),'pend']:['مستحق','due'])));
   box.innerHTML=`
     <div class="invhero">
       <div class="hd"><span>${myShopPer&&myShopPer.half?'عمولة هذي الفترة ('+myShopPer.short+')':'عمولة هذا الشهر'}</span><span class="ist ${tag[1]}" style="position:static">${tag[0]}</span></div>
@@ -19107,7 +19109,7 @@ function renderMyComm(){
       ${ic.paid>0&&st!=='paid'?`<div class="rg" style="margin-top:4px;font-weight:800">سدّدت ${ic.paid.toLocaleString()} · باقي عليك ${ic.rem.toLocaleString()} د.ع</div>`:''}
       ${_cr>0?`<div class="rg" style="margin-top:4px;font-weight:800;color:#0E8A5F">عندك رصيد ${_cr.toLocaleString()} د.ع — ينخصم من العمولة الجاية</div>`:''}
       ${myInv&&myInv.reject_reason&&st!=='pend'?`<div class="rjnote">❌ دفعتك الأخيرة (${Number(myInv.amount_paid||0).toLocaleString()} د.ع) انرفضت: ${esc(myInv.reject_reason)}<small>سدّد مرة ثانية، أو راسل الإدارة إذا تشوف إنه غلط.</small></div>`:''}
-      ${(st==='due'||st==='part')
+      ${z0 ? '<button class="act off" disabled>ما عليك عمولة بهالفترة</button>' : (st==='due'||st==='part')
         ? `<button class="act" onclick="openPayCom()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21.5 3.5 10.5 14.5M21.5 3.5l-7 17-3.5-6.5L4.5 10z"/></svg> إبلاغ عن السداد</button>`
         : (st==='pend'
            ? '<button class="act off" disabled>بانتظار تأكيد الإدارة</button>'
@@ -29765,7 +29767,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v543', seen={}, n=0, q=[], t=null;
+  var VER='v544', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30018,7 +30020,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v543', t0=Date.now();
+  var VER='v544', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
