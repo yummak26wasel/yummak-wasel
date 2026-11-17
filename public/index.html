@@ -15398,7 +15398,7 @@ function renderStore(){
   const _extG = _extOrd.reduce((a,o)=>a+Number(o.sub||0),0);
   /* v332: كل طلب ينحسب لوحده بالشرائح، والتقريب على المجموع (نفس السيرفر) */
   const shopCom = ordComSum(doneP.filter(o=>!(ordFree(o,myShopDoc)||o.no_commission===true)));
-  const comSub = tierLbl()+(_freeG>0?(' · بدون عمولة على '+_freeG.toLocaleString()+' (عروض أو أول 10 أيام)'):'')+(_extOrd.length?(' · '+_extOrd.length+' استدعاء دلفيري = '+_extFee.toLocaleString()):'');
+  const comSub = tierLbl()+(_freeG>0?(' · بدون عمولة على '+_freeG.toLocaleString()+' (عروض أو أيام بدون عمولة)'):'')+(_extOrd.length?(' · '+_extOrd.length+' استدعاء دلفيري = '+_extFee.toLocaleString()):'');
   const net = gross - shopCom - disc;
 
   try{
@@ -18119,7 +18119,12 @@ function inPeriod(ts){
 /* يقرا التاريخ بأي صيغة: رقم، نص أرقام، أو ISO */
 /* v324: أول 10 أيام للمطعم الجديد بدون عمولة (free_until من السيرفر) */
 function shopFreeTs(sh){ const v=sh&&(sh.free_until||sh.freeUntil); const t=v?new Date(v).getTime():0; return isNaN(t)?0:t }
-function ordFree(o,sh){ const f=shopFreeTs(sh); if(!f) return false; const t=_anyTs(o.createdAt||o.created_at); return !!t && t<f }
+function ordFree(o,sh){ const f=shopFreeTs(sh), t=_anyTs(o.createdAt||o.created_at); if(f && t && t<f) return true;
+  /* v548: أيام بدون عمولة اختارتها الإدارة — كل طلبات المطعم بذاك اليوم (توقيت بغداد) */
+  const L=_fdList(sh); if(!t || !L.length) return false;
+  const day=new Date(t+3*3600e3).toISOString().slice(0,10);
+  return L.some(x=>x && day>=String(x.from).slice(0,10) && day<=String(x.to).slice(0,10)) }
+function _fdList(sh){ try{ const a=sh&&(sh.free_days||sh.freeDays); return Array.isArray(a)?a:(typeof a==='string'?JSON.parse(a):[]) }catch(e){ return [] } }
 function freeBanner(sh){
   const f=shopFreeTs(sh), now=Date.now();
   /* v324: الـ 10 أيام تبدي من أول طلب */
@@ -23252,6 +23257,7 @@ function openAdminShop(id){
       <div class="w"><span>الموقع</span><b>${hasLoc?'محدد ✓':'ما محدد'} <button type="button" class="as-lk" onclick="document.getElementById('asSheet').classList.remove('on');amFixShopLoc('${sh.id}')">📍 ${hasLoc?'صحّح':'حدد'} الموقع</button></b></div>
       ${sh.addr?`<div class="w"><span>العنوان</span><b>${esc(sh.addr)}</b></div>`:''}
       <div class="w"><span>القسم بالرئيسية (وين يطلع للزبون)</span>${secPickHTML(sh)}</div>
+      <div class="w"><span>أيام بدون عمولة <small>(كل طلبات المحل بذيج الأيام)</small></span><div id="asFree">${freeDaysHTML(sh)}</div></div>
       <div class="w"><span>الوصف تحت اسم المحل</span><div class="as-tl"><input id="asTl" type="text" maxlength="40" value="${esc(sh.tagline||'')}" placeholder="مثال: طرشي · مخللات" enterkeyhint="done" onkeydown="if(event.key==='Enter'){event.preventDefault();saveShopTagline('${sh.id}')}"><button type="button" class="as-lk" onclick="saveShopTagline('${sh.id}')">حفظ</button></div><small>يطلع للزبون تحت اسم المحل. إذا تخليه فارغ، يطلع من أقسام المنتجات.</small></div>
     </div>
     <div class="as-mh">المنيو <i>${ps.length}</i></div>
@@ -23293,6 +23299,33 @@ function asProd(shopId, pid){
 }
 
 /* v360: الإدارة تكتب الوصف الي يطلع تحت اسم المحل */
+/* ═══ v548: أيام بدون عمولة لمطعم — كل طلباته بذيج الأيام عمولتها صفر (السيرفر يحسبها بـ shop_free) ═══ */
+function freeDaysHTML(sh){
+  const L=_fdList(sh), d=x=>new Date(String(x).slice(0,10)+'T00:00:00').toLocaleDateString('ar-IQ',{day:'numeric',month:'long'});
+  const today=new Date(Date.now()+3*3600e3).toISOString().slice(0,10);
+  return `${L.length?L.map(x=>`<div class="fd-r"><div><b>${String(x.from)===String(x.to)?d(x.from):d(x.from)+' – '+d(x.to)}</b>${x.note?`<span>${esc(x.note)}</span>`:''}</div><button type="button" onclick="freeDayDel('${sh.id}','${String(x.from).slice(0,10)}','${String(x.to).slice(0,10)}')">شيل</button></div>`).join(''):'<div class="fd-e">ماكو</div>'}
+    <div class="fd-add"><label>من<input type="date" id="fdFrom" value="${today}"></label><label>إلى<input type="date" id="fdTo" value="${today}"></label>
+      <input type="text" id="fdNote" maxlength="60" placeholder="السبب (اختياري) — مثلاً: عرض المطعم">
+      <button type="button" onclick="freeDayAdd('${sh.id}')">أضف</button></div>`;
+}
+function _fdSet(id,list){
+  [typeof allShops!=='undefined'?allShops:[], typeof shops!=='undefined'?shops:[]].forEach(a=>{ const s=(a||[]).find(x=>x.id===id); if(s) s.free_days=list });
+  const s=(allShops||[]).find(x=>x.id===id)||{id,free_days:list}, b=document.getElementById('asFree'); if(b) b.innerHTML=freeDaysHTML(s);
+}
+async function freeDayAdd(id){
+  const f=(document.getElementById('fdFrom')||{}).value, t=(document.getElementById('fdTo')||{}).value, n=((document.getElementById('fdNote')||{}).value||'').trim();
+  if(!f||!t) return toast('اختار التاريخ'); if(t<f) return toast('تاريخ «إلى» قبل «من»');
+  const sh=(allShops||[]).find(x=>x.id===id)||{}, dd=x=>new Date(x+'T00:00:00').toLocaleDateString('ar-IQ',{day:'numeric',month:'long'});
+  const yes=await askConfirm('كل طلبات <b>'+esc(sh.name||'المحل')+'</b> '+(f===t?'يوم <b>'+dd(f)+'</b>':'من <b>'+dd(f)+'</b> إلى <b>'+dd(t)+'</b>')+' تصير <b>بدون عمولة</b>؟<div style="margin-top:8px;font-size:12.5px;color:#77708C">إذا هاي الأيام انسددت عمولتها قبل، الفرق يصير رصيد للمطعم وينخصم من عمولته الجاية.</div>',{title:'أيام بدون عمولة',ok:'إي'});
+  if(!yes) return;
+  try{ const r=await rpc('admin_shop_free_day_add',{p_shop:id,p_from:f,p_to:t,p_note:n}); _fdSet(id,Array.isArray(r)?r:[]); toast('انحفظ — هاي الأيام بدون عمولة') }
+  catch(e){ toast(errMsg(e)) }
+}
+async function freeDayDel(id,f,t){
+  const yes=await askConfirm('ترجع العمولة على هاي الأيام؟',{title:'أيام بدون عمولة',ok:'إي، رجّعها'}); if(!yes) return;
+  try{ const r=await rpc('admin_shop_free_day_remove',{p_shop:id,p_from:f,p_to:t}); _fdSet(id,Array.isArray(r)?r:[]); toast('انشالت') }
+  catch(e){ toast(errMsg(e)) }
+}
 async function saveShopTagline(id){
   const sh=(allShops||[]).find(x=>x.id===id), i=document.getElementById('asTl'); if(!sh||!i) return;
   const v=i.value.replace(/\s+/g,' ').trim().slice(0,40);
@@ -29004,6 +29037,15 @@ html[data-theme=dark] .ah-kp div{border-color:#2e2845}
 .rcp .ln td small{display:block;font-size:10.5px;color:#C26A0A;font-weight:700}
 .dco-cur{margin-top:10px;background:#FFF7EC;color:#8A5300;border-radius:12px;padding:9px 12px;font-size:12.5px;font-weight:700}.dco-cur b{font-weight:900}
 .dco-row .a i.cur{display:block;font-style:normal;font-size:10.5px;color:#C26A0A;font-weight:700;margin-top:2px;white-space:nowrap}
+.fd-r{display:flex;justify-content:space-between;align-items:center;gap:8px;background:#F3FBF6;border:1px solid #CDEBD9;border-radius:10px;padding:7px 10px;margin:4px 0}
+.fd-r b{display:block;font-size:13px;color:#0E7A43}.fd-r span{display:block;font-size:11.5px;color:#5E5674;font-weight:600}
+.fd-r button{border:0;background:#fff;color:#B42318;border-radius:8px;padding:5px 10px;font:inherit;font-weight:800;font-size:12px}
+.fd-e{font-size:12.5px;color:#8a849c;font-weight:700;margin:2px 0 6px}
+.fd-add{display:flex;flex-wrap:wrap;gap:6px;align-items:flex-end;margin-top:6px}
+.fd-add label{display:flex;flex-direction:column;font-size:11px;color:#77708C;font-weight:700;gap:2px}
+.fd-add input{border:1px solid #E3DEEE;border-radius:10px;padding:7px 8px;font:inherit;font-size:13px;background:#fff}
+.fd-add input[type=text]{flex:1 1 100%}
+.fd-add button{border:0;background:#5B2BC9;color:#fff;border-radius:10px;padding:9px 16px;font:inherit;font-weight:800;font-size:13px}
 .dco-st{display:block;width:100%;margin-top:10px;background:#F4F0FD;color:#5B2BC9;border:0;border-radius:12px;padding:10px;font:inherit;font-weight:800;font-size:13px}
 .dco-sl{display:inline-block;margin-top:4px;color:#5B2BC9;font-weight:800;font-size:12px;cursor:pointer}
 .stm-h{padding:4px 4px 12px}.stm-h b{display:block;font-size:17px;font-weight:900;color:#22113F}.stm-h span{font-size:13px;color:#77708C;font-weight:700}
@@ -29793,7 +29835,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v547', seen={}, n=0, q=[], t=null;
+  var VER='v548', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30046,7 +30088,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v547', t0=Date.now();
+  var VER='v548', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
