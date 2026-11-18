@@ -15213,7 +15213,10 @@ function sup(t,el){
 
 /* ══════ STORE ══════ */
 function loadMyShop(){
-  db.collection('shops').doc(me.shopId).onSnapshot(d=>{myShopDoc={...d.data(), id:d.id};renderStore();try{loadMyComm()}catch(e){ __silent(e,'loadMyComm') }try{loadShopCats()}catch(e){ __silent(e,'loadShopCats') }});
+  db.collection('shops').doc(me.shopId).onSnapshot(d=>{myShopDoc={...d.data(), id:d.id};try{_availApplyPend()}catch(e){}renderStore();
+    /* v556: كل تعديل بالمنيو جان يجيب العمولة والأقسام من جديد (عشرات الطلبات بالثانية) — هسه مرة وحدة بعد ما يهدأ */
+    const _lm=()=>{ try{loadMyComm()}catch(e){ __silent(e,'loadMyComm') }try{loadShopCats()}catch(e){ __silent(e,'loadShopCats') } };
+    clearTimeout(window.__lmcT); if(!window.__lmcFirst){ window.__lmcFirst=1; _lm() } else window.__lmcT=setTimeout(_lm, 1200)});
 }
 function stab(p,el){
   try{ if(p!=='menu' && typeof _pfmBack==='function') _pfmBack() }catch(e){}   /* v555: إذا تبدّل القسم والمحرر مفتوح، يتسكّر */
@@ -16719,13 +16722,30 @@ async function toggleSizeOut(id,name){
   try{ await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:{...p, sizes}}); const z=sizes.find(x=>x.n===name); toast('«'+name+'» '+(z&&z.out?'خلص':'رجع متوفر')) }
   catch(e){ p.sizes=old; try{ renderStore() }catch(_){} try{ const q=document.getElementById('szqSheet'); if(q&&q.classList.contains('on')) szqOpen(id) }catch(_){} toast('ما انحفظ: '+e.message) }
 }
+/* v556: «متوفر/نفذ» يتبدّل فوراً بالشاشة — قبل: ينتظر السيرفر ثانية أو ثنتين، فيضغط مرة ثانية ويرجع يشتغل */
+const _availBusy=new Set(), _availPend=new Map();
+function _smPaintRow(id){
+  const p=(myShopDoc && myShopDoc.products||[]).find(x=>x.id===id);
+  const r=document.querySelector('.smr[data-pid="'+id+'"]'); if(!p||!r) return;
+  const t=document.createElement('div'); t.innerHTML=smRow(p); const n=t.firstElementChild; if(n) r.replaceWith(n);
+}
+function _availApplyPend(){
+  if(!_availPend.size || !myShopDoc) return;
+  const now=Date.now();
+  (myShopDoc.products||[]).forEach(x=>{ const pd=_availPend.get(x.id); if(!pd) return;
+    if((x.avail!==false)===pd.v || now-pd.t>15000) _availPend.delete(x.id);   /* السيرفر وصل لنفس الحالة */
+    else x.avail=pd.v });
+}
 async function toggleProdAvail(id){
   const p=(myShopDoc && myShopDoc.products||[]).find(x=>x.id===id);
-  if(!p) return;
-  const item={...p, avail: !(p.avail!==false)};
+  if(!p || _availBusy.has(id)) return;          /* ضغطة ثانية قبل ما يخلص الحفظ = ما تنحسب */
+  const was=p.avail!==false, item={...p, avail:!was};
+  _availBusy.add(id); _availPend.set(id,{v:!was,t:Date.now()});
+  p.avail=!was; _smPaintRow(id);
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
-  }catch(e){ toast('ما گدرنا نغيّر الحالة:'+e.message) }
+  }catch(e){ _availPend.delete(id); p.avail=was; _smPaintRow(id); toast('ما گدرنا نغيّر الحالة:'+e.message) }
+  finally{ _availBusy.delete(id) }
 }
 async function toggleOpen(){
   const v=!myShopDoc.open;
@@ -29940,7 +29960,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v555', seen={}, n=0, q=[], t=null;
+  var VER='v556', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30193,7 +30213,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v555', t0=Date.now();
+  var VER='v556', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
