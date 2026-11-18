@@ -3963,24 +3963,28 @@ html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,htm
 .iw3>u{text-decoration:none;font-size:12.5px;font-weight:900;color:#C2410C;direction:ltr}
 .iw3>button{border:0;background:none;font:800 12px Cairo,Tahoma,sans-serif;color:#8a83a3;padding:2px 4px;text-decoration:underline}
 
-#askSheet{position:fixed;inset:0;z-index:10000;background:rgba(20,12,40,.55);display:none;
-  align-items:center;justify-content:center;padding:26px}
+/* v552: نافذة التأكيد — ورقة طايرة تطلع من جوّه (اختيار عبد) */
+#askSheet{position:fixed;inset:0;z-index:10000;background:rgba(17,10,35,.42);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+  display:none;align-items:flex-end;justify-content:center;padding:0 10px calc(10px + env(safe-area-inset-bottom))}
 #askSheet.on{display:flex;animation:svcFade .2s}
-.askbox{position:relative;background:#fff;border-radius:26px;padding:28px 22px 22px;width:100%;max-width:360px;text-align:center;
-  box-shadow:0 20px 55px rgba(20,12,40,.32);animation:askPop .25s cubic-bezier(.22,1,.36,1)}
+.askbox{position:relative;background:#fff;border-radius:32px;padding:26px 20px 16px;width:100%;max-width:480px;text-align:center;
+  box-shadow:0 24px 60px rgba(20,12,40,.35);animation:askUp .4s cubic-bezier(.2,1.15,.3,1)}
 @keyframes askPop{from{transform:scale(.92);opacity:0}to{transform:scale(1);opacity:1}}
-.ask-ic{width:66px;height:66px;border-radius:50%;background:var(--g3);color:var(--g);margin:0 auto 16px;
-  display:flex;align-items:center;justify-content:center}
+@keyframes askUp{from{transform:translateY(110%)}to{transform:none}}
+.ask-ic{width:64px;height:64px;border-radius:22px;background:linear-gradient(145deg,#F3EEFF,#E3D7FF);color:var(--g);margin:0 auto 14px;
+  display:flex;align-items:center;justify-content:center;box-shadow:inset 0 0 0 1px rgba(91,43,201,.08)}
 .ask-ic .wic{width:30px;height:30px}
-.ask-ic.danger{background:#FDECEC;color:#E8365D}
-.askbox b{display:block;font-family:'Cairo',sans-serif;font-size:17px;font-weight:800;color:#1B1533;margin-bottom:8px}
-.askbox p{font-size:13.5px;font-weight:600;color:#5B5470;line-height:1.7;margin:0 0 22px}
-.ask-bts{display:flex;gap:10px}
-.ask-bts button{flex:1;border-radius:16px;padding:14px;font-family:'Cairo',sans-serif;font-size:13.5px;font-weight:800;cursor:pointer}
-.ask-no{background:#fff;border:1.6px solid var(--g);color:var(--g)}
-.ask-ok{background:var(--g);border:0;color:#fff;box-shadow:0 8px 20px rgba(91,43,201,.28)}
-.ask-ok.danger{background:#E8365D;box-shadow:0 8px 20px rgba(232,54,93,.28)}
+.ask-ic.danger{background:linear-gradient(145deg,#FFF0F3,#FFD9E1);color:#E8365D;box-shadow:inset 0 0 0 1px rgba(232,54,93,.10)}
+#askTtl{display:block;font-family:'Cairo',sans-serif;font-size:20px;font-weight:900;color:#1B1533;margin-bottom:6px}
+.askbox p b{font-weight:800;color:#1B1533}   /* الكلام المهم يبقى بنفس السطر */
+.askbox p{font-size:14.5px;font-weight:600;color:#6B6480;line-height:1.75;margin:0 6px 22px}
+.ask-bts{display:flex;flex-direction:column-reverse;gap:8px}
+.ask-bts button{width:100%;height:54px;padding:0;border-radius:18px;font-family:'Cairo',sans-serif;font-size:15.5px;font-weight:800;cursor:pointer}
+.ask-no{background:#F4F1FA;border:0;color:#3D3557}
+.ask-ok{background:var(--g);border:0;color:#fff;box-shadow:0 10px 24px rgba(91,43,201,.30)}
+.ask-ok.danger{background:#E8365D;box-shadow:0 10px 24px rgba(232,54,93,.28)}
 .ask-no:active,.ask-ok:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.askbox{animation:none}}
 /* v551: وقت التوصيل المتوقع بالسلة */
 .cketa{display:flex;align-items:center;gap:12px;background:#F4F0FD;border-radius:16px;padding:12px 14px;margin:12px 0 6px}
 .cketa .ic{flex:none;width:40px;height:40px;border-radius:12px;background:#fff;color:#5B2BC9;display:grid;place-items:center}
@@ -27924,10 +27928,11 @@ html[data-theme=dark] .addrc .at i{background:#2b2447}
 html[data-theme=dark] .addrc .ax{background:#3a2a1a;color:#ed8d8d}
 html[data-theme=dark] .lblrow button{border:1.5px solid #3a3354;background:#1f1a30;color:#ece8f7}
 html[data-theme=dark] .askbox{background:#1f1a30}
-html[data-theme=dark] .ask-ic.danger{background:#3a2a1a;color:#ed6382}
-html[data-theme=dark] .askbox b{color:#aca1d8}
-html[data-theme=dark] .askbox p{color:#ece8f7}
-html[data-theme=dark] .ask-no{background:#1f1a30}
+html[data-theme=dark] .ask-ic{background:rgba(124,92,255,.18);color:#CBB8FF;box-shadow:none}
+html[data-theme=dark] .ask-ic.danger{background:rgba(232,54,93,.16);color:#F2738F}
+html[data-theme=dark] #askTtl,html[data-theme=dark] .askbox p b{color:#fff}
+html[data-theme=dark] .askbox p{color:#CFC9DE}
+html[data-theme=dark] .ask-no{background:rgba(255,255,255,.07);color:#ECE8F7}
 html[data-theme=dark] .otab{border:1.5px solid #3a3354;background:#1f1a30}
 html[data-theme=dark] .wal{background:#1f1a30}
 html[data-theme=dark] .wal-ic{background:#2b2447}
@@ -29882,7 +29887,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v551', seen={}, n=0, q=[], t=null;
+  var VER='v552', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30135,7 +30140,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v551', t0=Date.now();
+  var VER='v552', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
