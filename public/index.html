@@ -2751,6 +2751,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .stf-op.del .ic{background:#FDEBEB;color:#C62828}
 .stf-op.del .tx{color:#C62828}
 /* بطاقة الموظف بصفحة حسابي */
+.staff-card+.staff-card{margin-top:10px}
 .staff-card{display:flex;align-items:center;gap:11px;background:linear-gradient(135deg,var(--g),#5B1BC4);
   color:#fff;border-radius:16px;padding:14px 15px;margin:4px 0 12px;cursor:pointer;
   box-shadow:0 6px 18px rgba(91,43,201,.24)}
@@ -8110,20 +8111,33 @@ async function bootRefresh(){
 let staffShopDoc=null;
 let _staffPollTimer=null, _staffChkAt=0;
 
+/* v554: الموظف يگدر يكون بأكثر من محل — بـ«حسابي» تطلع بطاقة لكل محل، واللي يختاره ينحفظ */
+const STF_PICK_KEY='wl_stf_shop';
+let _stfDocs={};
 async function loadStaff(){
   if(!me) return;
-  if(me.role!=='customer'){ me.staff=null; return }
+  if(me.role!=='customer'){ me.staff=null; me.staffAll=[]; return }
   /* v445: ما نصفّر «الموظف» قبل ما يرجع الرد — قبل: انقطاع نت لحظة = يطلع من وضع الموظف ويوكف رنين الطلبات */
   try{
-    const rows=await sbGet('shop_staff?select=*&profile_id=eq.'+uid+'&is_active=is.true&limit=1');
+    const rows=await sbGet('shop_staff?select=*&profile_id=eq.'+uid+'&is_active=is.true&order=created_at.asc');
     if(rows && rows.length){
-      me.staff=rows[0];
-      const sh=await sbGet('shops?select=id,name,type&id=eq.'+rows[0].shop_id+'&limit=1');
-      if(sh && sh.length) staffShopDoc=sh[0];
+      let pick=null; try{ pick=localStorage.getItem(STF_PICK_KEY) }catch(e){}
+      const row=rows.find(r=>r.shop_id===pick)||rows[0];
+      me.staff=row; me.staffAll=rows;
+      const sh=await sbGet('shops?select=id,name,type&id=in.('+rows.map(r=>r.shop_id).join(',')+')');
+      if(sh && sh.length){ const m={}; sh.forEach(x=>{ m[x.id]=x }); _stfDocs=m; if(m[row.shop_id]) staffShopDoc=m[row.shop_id] }
     } else if(Array.isArray(rows)) {
-      me.staff=null; staffShopDoc=null;
+      me.staff=null; me.staffAll=[]; staffShopDoc=null;
     }
   }catch(e){ console.warn('staff',e.message) }
+}
+
+/* v554: يختار المحل — إذا غير المحل الحالي نحفظ الاختيار ونعيد التحميل (حتى تبدأ لوحة المحل الجديد نظيفة) */
+function staffPick(sid){
+  if(!me || !me.staff) return;
+  if(sid===me.staff.shop_id) return enterStaff();
+  try{ localStorage.setItem(STF_PICK_KEY,sid); sessionStorage.setItem('wl_stf_enter','1') }catch(e){}
+  location.reload();
 }
 
 /* صلاحيات الموظف تتغيّر أحياناً وهو داخل بالتطبيق (صاحب المحل
@@ -8155,14 +8169,16 @@ function renderStaffCard(){
   if(!box) return;
   if(!me.staff || !staffShopDoc){ box.innerHTML=''; box.style.display='none'; return }
   box.style.display='block';
-  box.innerHTML=`<div class="staff-card" onclick="enterStaff()">
+  const all=(me.staffAll&&me.staffAll.length)?me.staffAll:[me.staff];   /* v554: بطاقة لكل محل */
+  box.innerHTML=all.map(r=>{ const d=_stfDocs[r.shop_id]||(r.shop_id===me.staff.shop_id?staffShopDoc:null)||{};
+    return `<div class="staff-card" onclick="staffPick('${esc(r.shop_id)}')">
     <div class="sc-ico"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 10v9.5h16V10"/><path d="M3 10 5 4.5h14L21 10z"/><path d="M9.5 19.5v-5h5v5"/></svg></div>
     <div class="sc-tx">
-      <b>أنت موظف في ${esc(staffShopDoc.name||'المتجر')}</b>
+      <b>أنت موظف في ${esc(d.name||'المتجر')}</b>
       <span>ادخل للوحة المتجر</span>
     </div>
     <div class="sc-ar">‹</div>
-  </div>`;
+  </div>` }).join('');
 }
 
 /* يبدّل من لوحة الزبون للوحة المتجر */
@@ -8410,7 +8426,7 @@ async function stfSave(){
     }
     stfClose();
     loadShopStaff();
-  }catch(e){ toast(editId?'ما گدرنا نحدّث':'ما گدرنا نضيف الموظف') }
+  }catch(e){ const m=errMsg(e); toast(/3 محلات/.test(m)?m:(editId?'ما گدرنا نحدّث':'ما گدرنا نضيف الموظف')) }   /* v554: حد المحلات يطلع بسببه */
   finally{ btn.disabled=false; btn.textContent='حفظ الموظف'; btn.removeAttribute('data-edit') }
 }
 
@@ -10477,7 +10493,8 @@ function enter(){
   if(!me||!me.role){ toast('حسابك ناقص — سجّل من جديد'); return }
   /* v444: الدخول اليدوي (بعد «دخول») ما كان يحمّل بيانات الموظف — فبطاقة «أنت موظف في…» ما تطلع إلا إذا سكّر التطبيق وفتحه.
      هسه نحمّلها فوراً للزبون (الموظف حسابه زبون) */
-  if(me.role==='customer'){ try{ loadStaff().then(()=>{ try{ renderStaffCard() }catch(e){} try{ staffWatch() }catch(e){} }).catch(()=>{}) }catch(e){} try{ startStaffPoll() }catch(e){}
+  if(me.role==='customer'){ try{ loadStaff().then(()=>{ try{ renderStaffCard() }catch(e){} try{ staffWatch() }catch(e){}
+      try{ if(sessionStorage.getItem('wl_stf_enter')){ sessionStorage.removeItem('wl_stf_enter'); if(me.staff) enterStaff() } }catch(e){} }).catch(()=>{}) }catch(e){} try{ startStaffPoll() }catch(e){}
     try{ if(!window.__bnLoaded){ window.__bnLoaded=1; loadBanners() } }catch(e){} }   /* v445: البنرات كانت تنزل بس لمن يسكّر ويفتح */
   try{ if(me.role==='driver' && typeof _dwOpen==='function' && _dwOpen()){ dwStep=8; dwPaint() } }catch(e){}   /* v445: بعد رمز الواتساب */
   try{ dwOnEnter() }catch(e){}   /* v447: مسودة تسجيل السائق */
@@ -29886,7 +29903,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v553', seen={}, n=0, q=[], t=null;
+  var VER='v554', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30139,7 +30156,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v553', t0=Date.now();
+  var VER='v554', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
