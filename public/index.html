@@ -24531,16 +24531,15 @@ async function podCodeLoad(id){
 /* الزبون: يلغي طلبه ببلاش قبل ما يقبله المحل */
 async function custCancelOrd(id,btn){
   const o=(myOrders||[]).find(x=>x.id===id);
-  const yes=await askConfirm('تلغي الطلب؟<br>ببلاش — لأن المحل بعده ما قبله.',{title:'إلغاء الطلب',ok:'إي، الغيه',danger:true});
-  if(!yes) return;
-  if(btn) btn.disabled=true;
+  /* v553: عبد — قبل ما يقبله المحل، ينلغي فوراً بدون نافذة تأكيد */
+  if(btn){ if(btn.disabled) return; btn.disabled=true; btn.textContent='لحظة…' }
   try{
     await rpc('customer_cancel_order',{p_order:String(id),p_reason:''});
     if(o){ o.status='cancelled'; o.cancel_reason='الزبون' }
     try{ if(o&&o.shopOwnerUid) pushTo(o.shopOwnerUid,'❌ انلغى طلب','الزبون لغى طلب #'+ONO(o)+' قبل ما تقبله',{type:'order_cancel',orderId:String(id)}) }catch(e){}
     toast('انلغى الطلب'); try{ renderOrders() }catch(e){}
   }catch(e){
-    if(btn) btn.disabled=false;
+    if(btn){ btn.disabled=false; btn.textContent='إلغاء الطلب — ببلاش قبل ما يقبله المحل' }
     toast(_isMissing(e)?'الإلغاء يشتغل بعد التحديث — تواصل ويّا الدعم':errMsg(e));
   }
 }
@@ -29887,7 +29886,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v552', seen={}, n=0, q=[], t=null;
+  var VER='v553', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30140,7 +30139,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v552', t0=Date.now();
+  var VER='v553', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
