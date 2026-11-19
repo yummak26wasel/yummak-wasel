@@ -12033,11 +12033,11 @@ function pickDailyMealsSet(){
 
 function dmCardHTML(item){
   const p=item.product||{}, s=item.shop;
-  const img = p.img ? `<img loading="lazy" decoding="async" src="${tImg(p.img)}" alt="">`
+  const img = p.img ? `<img loading="lazy" decoding="async" src="${tImg(pImgNow(p))}" alt="">`
     : `<div class="dm-ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 3v8.5a2.5 2.5 0 0 0 5 0V3M8.5 11.5V21"/><path d="M17 3c-1.6 1.4-2.4 3.4-2.4 5.6 0 1.6.8 2.6 2.4 2.9V21"/></svg></div>`;
   const r=shopRating(s);
   return `<div class="dm-card" onclick="openShop('${s.id}')">
-    <div class="dm-img${p.img?' bf':''}"${p.img?` style="--bg:url('${tImg(p.img)}')"`:''}>${img}<span class="dm-rate"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${r?r.avg.toFixed(1):'جديد'}</span><button class="dm-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button></div>
+    <div class="dm-img${p.img?' bf':''}"${p.img?` style="--bg:url('${tImg(pImgNow(p))}')"`:''}>${img}<span class="dm-rate"><svg class="wic" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m12 3.5 2.7 5.6 6 .9-4.4 4.2 1.1 6-5.4-2.9-5.4 2.9 1.1-6L3.3 10l6-.9z"/></svg> ${r?r.avg.toFixed(1):'جديد'}</span><button class="dm-heart${isFav(s.id)?' on':''}" onclick="event.stopPropagation();toggleFav('${s.id}');this.classList.toggle('on')" aria-label="مفضلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M12 20.3 4.7 13a4.6 4.6 0 0 1 6.5-6.5l.8.8.8-.8A4.6 4.6 0 0 1 19.3 13z"/></svg></button></div>
     <div class="dm-name">${esc(p.name||'')}</div>
     <div class="dm-shop">${esc(s.name)}</div>
     <div class="dm-meta"><span class="dm-price">${pPriceTxt(p)} <small>د.ع</small></span><button class="dm-add" onclick="event.stopPropagation();quickAdd('${s.id}','${p.id}')" aria-label="أضف للسلة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button></div>
@@ -12554,7 +12554,7 @@ document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'
 /* v384: كرت منتج مثل تطبيقات الماركت العالمية — صورة كبيرة على خلفية فاتحة، زر + أبيض، السعر ثم الاسم ثم الحجم */
 function mkCardHTML(p){
   return `<div class="mkp${pNA(p)?' off':''}" onclick="openItem(${p.id})">
-    <div class="mkp-im">${p.img?`<img decoding="async" data-lz="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
+    <div class="mkp-im">${p.img?`<img decoding="async" data-lz="${tImg(pImgNow(p))}" alt="">`:`<div class="px">${prodPH()}</div>`}
       ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
       <div class="mkp-add" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
     <div class="mkp-nm">${esc(p.name)}</div>
@@ -12565,7 +12565,7 @@ function mkCardHTML(p){
 function spCardHTML(p){
   if(_isMarket(curShop)) return mkCardHTML(p);
   return `<div class="spcard" onclick="openItem(${p.id})">
-          <div class="spcimg">${p.img?`<img decoding="async" data-lz="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
+          <div class="spcimg">${p.img?`<img decoding="async" data-lz="${tImg(pImgNow(p))}" alt="">`:`<div class="px">${prodPH()}</div>`}
             <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
           <div class="spcnm">${esc(p.name)}</div>
           <div class="spcpr">${pPriceTxt(p)} د.ع</div>
@@ -12936,7 +12936,7 @@ function renderMenu(){
   box.innerHTML=ps.map(p=>`
     <div class="prod"${pNA(p)?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
-        ${p.img?`<img decoding="async" class="pimg" data-lz="${tImg(p.img)}" alt="">`:`<div class="px">${prodPH()}</div>`}
+        ${p.img?`<img decoding="async" class="pimg" data-lz="${tImg(pImgNow(p))}" alt="">`:`<div class="px">${prodPH()}</div>`}
         ${p.isNew?'<span class="pnew">جديد</span>':''}
         <div class="pctl" onclick="event.stopPropagation()">${prodCtl(p)}</div>
       </div>
@@ -12996,6 +12996,9 @@ const KG_BILL_NOTE='<div class="kgbill">⚖️ <span>بسلتك أغراض <b>ب
 function pSizes(p){ if(pKgW(p)) return []; return (p&&Array.isArray(p.sizes)?p.sizes:[]).filter(z=>z&&String(z.n||'').trim()&&Number(z.p)>0) }
 function pOpts(p){ return (p&&Array.isArray(p.opts)?p.opts:[]).filter(o=>o&&String(o.n||'').trim()) }
 function pAllOut(p){ const z=pSizes(p); return z.length>0 && z.every(x=>x.out===true) }
+/* v557: إذا صورة المنتج هي صورة خيار (نكهة/نوع) خلص، الكرت يطلّع صورة أول خيار متوفر بداله */
+function pImgNow(p){ if(!p||!p.img) return p&&p.img; const z=pSizes(p); if(!z.length) return p.img;
+  const h=z.find(x=>x.img===p.img); if(h&&h.out){ const a=z.find(x=>!x.out&&x.img); if(a) return a.img } return p.img }
 function pNA(p){ return !p || p.avail===false || pAllOut(p) }
 function pHasChoice(p){ return pKgW(p)>0 || pSizes(p).length>0 || pOpts(p).length>0 }
 function cartKey(c){ return (c.size||'')+'|'+(Array.isArray(c.opts)?c.opts.join(','):'') }
@@ -13519,7 +13522,7 @@ function upsellGroups(){
 function _upsWrap(list,off,k){ if(list.length<=k) return list.slice(); const r=[]; for(let i=0;i<k;i++) r.push(list[(off+i)%list.length]); return r }
 function upsCard(p){
   return '<div class="ups-it" data-pid="'+esc(String(p.id))+'" onclick="upsAdd(this.dataset.pid)">'
-    +'<div class="ups-im">'+(p.img?'<img src="'+esc(tImg(p.img))+'" alt="" loading="lazy" onerror="this.remove()">':'<div class="px">'+prodPH()+'</div>')
+    +'<div class="ups-im">'+(p.img?'<img src="'+esc(tImg(pImgNow(p)))+'" alt="" loading="lazy" onerror="this.remove()">':'<div class="px">'+prodPH()+'</div>')
     +'<span class="ups-plus" aria-label="أضف">+</span></div>'
     +'<b>'+esc(p.name)+'</b><span>'+(pKgW(p)?'≈ ':'')+pBase(p).toLocaleString('en-US')+' د.ع</span></div>';
 }
@@ -29960,7 +29963,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v556', seen={}, n=0, q=[], t=null;
+  var VER='v557', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30213,7 +30216,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v556', t0=Date.now();
+  var VER='v557', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
