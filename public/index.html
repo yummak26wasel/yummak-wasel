@@ -8906,7 +8906,7 @@ function prodFormOpen(pid){
   const ds=document.getElementById('pfDesc'); if(ds) ds.value = p ? (p.desc||'') : '';
   _pfImg = p ? (p.img||'') : '';
   prodFormPaintImg();
-  szRows = p && Array.isArray(p.sizes) ? p.sizes.map(z=>({n:z.n,p:z.p,d:z.d||'',img:z.img||'',out:z.out===true})) : []; szLabel=(p&&p.sizeLabel)||''; _szOpen=-1; szPaint();
+  szRows = p && Array.isArray(p.sizes) ? p.sizes.map(z=>({n:z.n,p:z.p,d:z.d||'',img:z.img||'',out:z.out===true})) : []; szLabel=(p&&p.sizeLabel)||''; _szOpen=-1; _szBaseP=p?(Number(p.price)||0):0; szPaint();
   optRows = p && Array.isArray(p.opts) ? p.opts.map(o=>({n:o.n,p:o.p,img:o.img||''})) : []; renderOpts();
   pfLead = pLead(p); leadPaint();
   pfKg={on:!!pKgW(p), w:(p&&p.w)?String(p.w):''}; kgPaint();   /* v381 */
@@ -8953,6 +8953,7 @@ async function prodFormSave(){
   const ds=document.getElementById('pfDesc');
   const n=String((nm&&nm.value)||'').trim();
   const _kg=kgCollect(); if(_kg.err) return toast(_kg.err);
+  if(!_kg.on) szLinkMain(pr&&pr.value);   /* v560 */
   const _sz=_kg.on?{p:0,sizes:[]}:szCollect(); if(_sz.err) return toast(_sz.err);
   const price=_sz.p ? _sz.p : parseInt((pr&&pr.value)||0);
   if(!n){ toast('اكتب اسم المنتج'); if(nm) nm.focus(); return }
@@ -16313,6 +16314,15 @@ let optRows=[];
 /* ── الأحجام (اختيار وحد إجباري) ── */
 let szRows=[], szLabel='';
 let _szOpen=-1;
+/* v560: السعر الرئيسي مربوط بالخيارات (مثل الحاسبة) — إذا كل الخيارات بنفس سعر المنتج وغيّرت السعر الرئيسي، كلها تتغير وياه */
+let _szBaseP=0;
+function szLinkMain(mainVal){
+  const v=parseInt(String(mainVal||'').replace(/[^0-9]/g,''))||0, base=_szBaseP;
+  if(!(v>0) || !(base>0) || v===base) return;
+  const rows=szRows.filter(z=>String(z.n||'').trim());
+  if(rows.length && rows.every(z=>(parseInt(z.p)||0)===base)) rows.forEach(z=>{ z.p=v });
+}
+function szUniform(p){ const sz=Array.isArray(p&&p.sizes)?p.sizes.filter(z=>z&&String(z.n||'').trim()):[]; return sz.length>0 && sz.every(z=>Number(z.p)===Number(p.price)) }
 function szToggle(i){ _szOpen=(_szOpen===i)?-1:i; szPaint() }
 function szPaint(){
   const CAM='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg>';
@@ -16593,6 +16603,7 @@ function extBanner(o){
 
 async function addProduct(){
   const _kg=kgCollect(); if(_kg.err) return toast(_kg.err);
+  if(!_kg.on) szLinkMain(pp.value);   /* v560 */
   const _sz=_kg.on?{p:0,sizes:[]}:szCollect(); if(_sz.err) return toast(_sz.err);
   const n=pn.value.trim(),p=_sz.p?_sz.p:parseInt(pp.value),d=pd.value.trim(),ct=(document.getElementById('pc').value||'').trim();
   if(!n)return toast('اكتب اسم المنتج');
@@ -16659,7 +16670,7 @@ function editProduct(id){
       b.innerHTML='<div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div><div class="tx">صورة المنتج (اختيارية)</div><div class="sub">اضغط لإضافة صورة</div>'}
   }
   optRows=(p.opts||[]).map(o=>({n:o.n,p:o.p,img:o.img||''})); renderOpts();
-  szRows=(Array.isArray(p.sizes)?p.sizes:[]).map(z=>({n:z.n,p:z.p,d:z.d||'',img:z.img||'',out:z.out===true})); szLabel=p.sizeLabel||''; _szOpen=-1; szPaint();
+  szRows=(Array.isArray(p.sizes)?p.sizes:[]).map(z=>({n:z.n,p:z.p,d:z.d||'',img:z.img||'',out:z.out===true})); szLabel=p.sizeLabel||''; _szOpen=-1; _szBaseP=Number(p.price)||0; szPaint();
   pfLead=pLead(p); leadPaint();
   pfKg={on:!!pKgW(p), w:(p&&p.w)?String(p.w):''}; kgPaint();   /* v381 */
   pfWas=(p&&p.was)?String(p.was):''; wasPaint();   /* v384 */
@@ -21735,8 +21746,9 @@ async function pqSave(){
   const w=pWas(p); if(w && np>=w) return toast('هذا المنتج عليه خصم (السعر القديم '+w.toLocaleString()+') — السعر لازم يكون أقل منه، أو غيّره من التعديل');
   const b=document.getElementById('pqOk'); if(b){ b.disabled=true; b.textContent='يحفظ…' }
   try{
-    await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:{...p, price:np}});
-    p.price=np; try{ if(editingProdId===id && typeof pp!=='undefined') pp.value=np }catch(e){}
+    const _lk=szUniform(p), sizes=_lk?p.sizes.map(z=>({...z,p:np})):p.sizes;   /* v560: كل الخيارات تتغير ويا السعر الرئيسي */
+    await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:{...p, price:np, sizes}});
+    p.price=np; if(_lk) p.sizes=sizes; try{ if(editingProdId===id && typeof pp!=='undefined') pp.value=np }catch(e){}
     pqClose(); renderStMenu(); toast('انحفظ السعر: '+np.toLocaleString()+' د.ع ✓');
   }catch(e){ toast('ما انحفظ السعر: '+errMsg(e)) }
   if(b){ b.disabled=false; b.textContent='حفظ السعر' }
@@ -21751,7 +21763,7 @@ function smRow(p){
   return `<div class="smr${on?'':' off'}" data-pid="${p.id}" onclick="openProdEditor(${p.id})">
     <div class="smr-img">${p.img?`<img loading="lazy" decoding="async" src="${esc(tImg(p.img))}" alt="">`:SM_ICO}</div>
     <div class="smr-tx"><b>${esc(p.name)}</b>
-      ${sz.length?`<div class="smr-pr">${pPriceLbl(p)}${w?` <s>${w.toLocaleString()}</s>`:''}</div>`
+      ${(sz.length&&!szUniform(p))?`<div class="smr-pr">${pPriceLbl(p)}${w?` <s>${w.toLocaleString()}</s>`:''}</div>`
         :`<div class="smr-pr"><button type="button" class="smpbtn" onclick="event.stopPropagation();pqOpen(${p.id})" aria-label="غيّر السعر">${pPriceLbl(p)} <i>✎</i></button>${w?` <s>${w.toLocaleString()}</s>`:''}</div>`}
       ${meta?`<div class="smr-mt">${meta}</div>`:''}${szc}</div>
     <div class="smr-side" onclick="event.stopPropagation()">
@@ -29974,7 +29986,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v559', seen={}, n=0, q=[], t=null;
+  var VER='v560', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30227,7 +30239,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v559', t0=Date.now();
+  var VER='v560', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
