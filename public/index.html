@@ -10637,7 +10637,8 @@ function applyShops(docs){
   renderShops();
   renderDailyMeals();
   if(curShop){ const f=shops.find(x=>x.id===curShop.id); if(f){
-    const same=f.menu_n>0 && f.products===curShop.products && _shSig(f)===_shSig(curShop);   /* v531: المحل الكبير — إذا ما تغيّر شي ما نعيد رسم آلاف المواد كل دقيقة */
+    const _ps=x=>{ try{ return JSON.stringify(x||[]) }catch(e){ return Math.random() } };
+    const same=_shSig(f)===_shSig(curShop) && (f.products===curShop.products || (!(f.menu_n>0) && _ps(f.products)===_ps(curShop.products)));   /* v531 + v559: حتى المحل الصغير — إذا ما تغيّر شي ما نعيد الرسم (كانت الصور تختفي كل دقيقة) */
     curShop=f; if(!same) renderMenu() } }
   try{ if(me && me.role==='customer') cartSync() }catch(e){}
 }
@@ -12295,11 +12296,14 @@ function _imgDiag(sid){
 /* ═══ v509: صور المنيو تنزل بالترتيب — الي بالشاشة أول (4 سوه)، وبعدين الباقي بالخلفية (2 سوه)
    بالنت الضعيف ما تتقاسم الصور الظاهرة السرعة ويه 30 صورة ما مبينة ═══ */
 const LZ={vq:[],bg:[],rt:[],run:0,io:null,raf:0,t0:0,sid:'',cnt:0,gen:0,slow:0};
+/* v559: الصورة اللي نزلت مرة بهالجلسة، إذا القائمة انعاد رسمها (السلة، تحديث المحل كل دقيقة…) تطلع فوراً — قبل: تختفي وترجع تحمّل */
+const LZOK=new Map();
+function lzA(u){ const k=LZOK.get(u); return k ? 'src="'+esc(k)+'" class="lzok"' : 'data-lz="'+u+'"' }
 function lzLoad(img){
   if(!img || !img.dataset.lz || img.dataset.lzs) return;
   /* v524: إذا صورة من /m/sb/ علكت قبل بهالجلسة، الباقي نجيبه من الأصل مباشرة (ما ننتظر 7 ثواني لكل دفعة) */
   if(LZ.sbStuck && !img.dataset.sbf){ const m2=/\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(img.dataset.lz||''); if(m2){ img.dataset.sbf='1'; img.dataset.lz=SB_PIMG+m2[1] } }
-  img.dataset.lzs='1'; LZ.run++; const g=LZ.gen;
+  img.dataset.lzs='1'; LZ.run++; const g=LZ.gen; if(!img.dataset.lz0) img.dataset.lz0=img.dataset.lz;
   /* v514: إذا صورة علكت (النت ضعيف) ما نبقى ننتظرها للأبد — بعد 7 ثواني نفك مكانها وتكمل الباقي، وهي تكمل تنزل وحدها */
   let fin=false; const rel=()=>{ if(fin) return false; fin=true; clearTimeout(tm); if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.classList.add('lzok'); return true };
   const done=()=>{ if(rel()){ lzMark(); lzPump() } };
@@ -12310,7 +12314,7 @@ function lzLoad(img){
     if(!img.dataset.lzr && !img.complete){   /* أول مرة: نلغي الطلب العالك (يفك الخط) ونرجعها لآخر الدور (بعد كل الصور) تنعاد */
       img.dataset.lzr='1'; fin=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lzw='1'; LZ.rt.push(img); lzPump(); return }
     if(rel()) lzPump() },7000);
-  img.addEventListener('load',done);
+  img.addEventListener('load',()=>{ try{ if(img.naturalWidth>0 && img.dataset.lz0) LZOK.set(img.dataset.lz0, img.currentSrc||img.src) }catch(e){} done() });
   img.addEventListener('error',()=>{ if(img.dataset.tf==='1' && !img.dataset.lze){ img.dataset.lze='1'; return } done() });
   img.src=img.dataset.lz;
 }
@@ -12561,7 +12565,7 @@ document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'
 /* v384: كرت منتج مثل تطبيقات الماركت العالمية — صورة كبيرة على خلفية فاتحة، زر + أبيض، السعر ثم الاسم ثم الحجم */
 function mkCardHTML(p){
   return `<div class="mkp${pNA(p)?' off':''}" onclick="openItem(${p.id})">
-    <div class="mkp-im">${p.img?`<img decoding="async" data-lz="${tImg(pImgNow(p))}" alt="">`:`<div class="px">${prodPH()}</div>`}
+    <div class="mkp-im">${p.img?`<img decoding="async" ${lzA(tImg(pImgNow(p)))} alt="">`:`<div class="px">${prodPH()}</div>`}
       ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
       <div class="mkp-add" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
     <div class="mkp-nm">${esc(p.name)}</div>
@@ -12572,7 +12576,7 @@ function mkCardHTML(p){
 function spCardHTML(p){
   if(_isMarket(curShop)) return mkCardHTML(p);
   return `<div class="spcard" onclick="openItem(${p.id})">
-          <div class="spcimg">${p.img?`<img decoding="async" data-lz="${tImg(pImgNow(p))}" alt="">`:`<div class="px">${prodPH()}</div>`}
+          <div class="spcimg">${p.img?`<img decoding="async" ${lzA(tImg(pImgNow(p)))} alt="">`:`<div class="px">${prodPH()}</div>`}
             <div class="spcadd" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
           <div class="spcnm">${esc(p.name)}</div>
           <div class="spcpr">${pPriceTxt(p)} د.ع</div>
@@ -12943,7 +12947,7 @@ function renderMenu(){
   box.innerHTML=ps.map(p=>`
     <div class="prod"${pNA(p)?' style="opacity:.55"':''} onclick="openItem(${p.id})">
       <div class="pimgw">
-        ${p.img?`<img decoding="async" class="pimg" data-lz="${tImg(pImgNow(p))}" alt="">`:`<div class="px">${prodPH()}</div>`}
+        ${p.img?`<img decoding="async" class="pimg${LZOK.has(tImg(pImgNow(p)))?' lzok':''}" ${LZOK.has(tImg(pImgNow(p)))?'src="'+esc(LZOK.get(tImg(pImgNow(p))))+'"':'data-lz="'+tImg(pImgNow(p))+'"'} alt="">`:`<div class="px">${prodPH()}</div>`}
         ${p.isNew?'<span class="pnew">جديد</span>':''}
         <div class="pctl" onclick="event.stopPropagation()">${prodCtl(p)}</div>
       </div>
@@ -29970,7 +29974,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v558', seen={}, n=0, q=[], t=null;
+  var VER='v559', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30223,7 +30227,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v558', t0=Date.now();
+  var VER='v559', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
