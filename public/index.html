@@ -10637,6 +10637,7 @@ function applyShops(docs){
   try{ if(me && me.role==='customer' && !docs.__cached) shopsCacheSave(docs) }catch(e){}
   renderShops();
   renderDailyMeals();
+  try{ clearTimeout(window.__pfT); window.__pfT=setTimeout(pfShops,2500) }catch(e){}   /* v560 */
   if(curShop){ const f=shops.find(x=>x.id===curShop.id); if(f){
     const _ps=x=>{ try{ return JSON.stringify(x||[]) }catch(e){ return Math.random() } };
     const same=_shSig(f)===_shSig(curShop) && (f.products===curShop.products || (!(f.menu_n>0) && _ps(f.products)===_ps(curShop.products)));   /* v531 + v559: حتى المحل الصغير — إذا ما تغيّر شي ما نعيد الرسم (كانت الصور تختفي كل دقيقة) */
@@ -12300,6 +12301,25 @@ const LZ={vq:[],bg:[],rt:[],run:0,io:null,raf:0,t0:0,sid:'',cnt:0,gen:0,slow:0};
 /* v559: الصورة اللي نزلت مرة بهالجلسة، إذا القائمة انعاد رسمها (السلة، تحديث المحل كل دقيقة…) تطلع فوراً — قبل: تختفي وترجع تحمّل */
 const LZOK=new Map();
 function lzA(u){ const k=LZOK.get(u); return k ? 'src="'+esc(k)+'" class="lzok"' : 'data-lz="'+u+'"' }
+/* v560: بالخلفية نجيب أول صور كل محل — وحدة وحدة، وبس إذا ماكو تحميل ثاني شغّال — حتى من يفتح المحل تطلع فوراً (مثل التطبيقات العالمية) */
+const PF={q:[],on:false,seen:new Set(),t:0};
+function pfShops(){
+  try{ if(!me || me.role!=='customer') return; const nc=navigator.connection||{}; if(nc.saveData || /2g/.test(nc.effectiveType||'')) return }catch(e){ return }
+  for(const sh of (shops||[]).slice(0,12)){
+    const ps=(sh && (sh._teaser && sh._teaser.length ? sh._teaser : sh.products)) || []; let n=0;
+    for(const p of ps){ if(n>=6) break; if(!p || !p.img) continue; n++;
+      const u=tImg(pImgNow(p)); if(!u || LZOK.has(u) || PF.seen.has(u)) continue; PF.seen.add(u); PF.q.push(u) }
+  }
+  pfPump();
+}
+function pfPump(){
+  if(PF.on || !PF.q.length) return;
+  if(LZ.run>0 || LZ.vq.length){ clearTimeout(PF.t); PF.t=setTimeout(pfPump,1500); return }
+  PF.on=true; const u=PF.q.shift(), im=new Image(); let done=false;
+  const fin=ok=>{ if(done) return; done=true; clearTimeout(tm); if(ok && im.naturalWidth>0) LZOK.set(u, im.currentSrc||im.src); PF.on=false; PF.t=setTimeout(pfPump,120) };
+  const tm=setTimeout(()=>fin(false),8000);
+  im.onload=()=>fin(true); im.onerror=()=>fin(false); im.decoding='async'; im.src=u;
+}
 function lzLoad(img){
   if(!img || !img.dataset.lz || img.dataset.lzs) return;
   /* v524: إذا صورة من /m/sb/ علكت قبل بهالجلسة، الباقي نجيبه من الأصل مباشرة (ما ننتظر 7 ثواني لكل دفعة) */
@@ -12326,7 +12346,7 @@ function lzMark(){
   if(dt>4000) try{ const nc=navigator.connection||{}; window.__errPush&&window.__errPush('IMGSLOW '+Math.round(dt/100)/10+'s','shop='+sid+' net='+(nc.effectiveType||'?')+'/'+(nc.downlink||'?')+' origin='+location.host,'lz') }catch(e){}
 }
 function lzPump(){
-  while(LZ.run<4 && LZ.vq.length){ const i=LZ.vq.shift(); if(i.isConnected) lzLoad(i) }
+  while(LZ.run<6 && LZ.vq.length){ const i=LZ.vq.shift(); if(i.isConnected) lzLoad(i) }   /* v560: 4 ← 6 (الصور المصغّرة صغيرة) */
   while(LZ.run<2 && !LZ.vq.length && LZ.bg.length){ const i=LZ.bg.shift(); if(i.isConnected && !i.dataset.lzs) lzLoad(i) }
   while(LZ.run<2 && !LZ.vq.length && !LZ.bg.length && LZ.rt.length){ const i=LZ.rt.shift(); if(i.isConnected && !i.dataset.lzs){ delete i.dataset.lzw; lzLoad(i) } }   /* v514: العالكة تنعاد بالأخير */
 }
@@ -12338,7 +12358,7 @@ function lzScan(){
   if(!LZ.io) LZ.io=new IntersectionObserver(es=>{
     es.forEach(e=>{ if(e.isIntersecting){ LZ.io.unobserve(e.target); if(!e.target.dataset.lzs) LZ.vq.push(e.target) } });
     lzPump();
-  },{rootMargin:'160px 120px'});
+  },{rootMargin:'700px 200px'});   /* v560: تبدي تنزل قبل ما توصلها بالتمرير */
   L.forEach(i=>{ i.dataset.lzo='1'; LZ.io.observe(i) });
   if(!LZ.bt) LZ.bt=setTimeout(()=>{ LZ.bt=0; LZ.bg=[...document.querySelectorAll('img[data-lz]:not([data-lzs]):not([data-lzw])')]; lzPump() },1200);   /* v514: قبل كان ينأجل للأبد إذا الصفحة تتغيّر كل شوية */
 }
