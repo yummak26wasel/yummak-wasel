@@ -9756,14 +9756,42 @@ function pushFixSteps(){
   if(sa) return '<li>إعدادات التلفون ← التطبيقات</li><li>واصل ليمَك ← الإشعارات ← فعّلها</li>';
   return '<li>اضغط القفل 🔒 يم عنوان الموقع فوك</li><li>الأذونات ← الإشعارات ← «سماح»</li><li>ارجع للتطبيق</li>';
 }
+/* v562: عبد — «شكله بدائي»: بطاقة بيضاء + أيقونة بمربع ملوّن + الخطوات كمسار واضح بدل القائمة المرقّمة */
+const PB_IC={
+  off:'<path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/>',
+  denied:'<path d="M17.8 13.5V11a6 6 0 0 0-9.3-5"/><path d="M6.3 8.5A6 6 0 0 0 6 11v4.5L4.5 18H18"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/><path d="M4 4l16 16"/>',
+  error:'<path d="M12 4 3 19.5h18z"/><path d="M12 10v4.2M12 16.9v.1"/>',
+  unsupported:'<rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M11 18.3h2"/>'
+};
+function pbIc(k){ return '<span class="pb-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+PB_IC[k]+'</svg></span>' }
+function pushFixPath(){
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent||'');
+  let sa=false; try{ sa=matchMedia('(display-mode: standalone)').matches || navigator.standalone===true }catch(e){}
+  const I={
+    tune:'<path d="M4 8h8M17 8h3M4 16h3M12 16h8"/><circle cx="14.5" cy="8" r="2.3"/><circle cx="9.5" cy="16" r="2.3"/>',
+    perm:'<path d="M12 3 5 6v5c0 4.4 3 8.3 7 9.5 4-1.2 7-5.1 7-9.5V6z"/><path d="M9 12l2 2 4-4.2"/>',
+    bell:PB_IC.off,
+    gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a7.6 7.6 0 0 0 0-3l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-2.6-1.5L14 2.5h-4l-.4 2.5A7.5 7.5 0 0 0 7 6.5l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 3l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 2.6 1.5l.4 2.5h4l.4-2.5a7.5 7.5 0 0 0 2.6-1.5l2.4 1 2-3.4z"/>',
+    apps:'<rect x="4" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.8"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.8"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.8"/>',
+    on:'<rect x="2.5" y="7" width="19" height="10" rx="5"/><circle cx="7.5" cy="12" r="2.6" fill="currentColor"/>'
+  };
+  const L = ios ? [['gear','الإعدادات'],['bell','الإشعارات'],['logo','واصل ليمَك'],['on','السماح']]
+    : sa ? [['gear','الإعدادات'],['apps','التطبيقات'],['logo','واصل ليمَك'],['on','الإشعارات']]
+    : [['tune','الرمز يم العنوان'],['perm','الأذونات'],['bell','الإشعارات'],['on','سماح']];
+  return '<div class="pb-path">'+L.map(([k,t])=>{
+    const ic = k==='logo' ? '<img src="792707e8.png" alt="">'
+      : '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'+I[k]+'</svg>';
+    return '<span class="pb-st'+(k==='on'?' ok':'')+'"><i>'+ic+'</i>'+t+'</span>';
+  }).join('')+'</div>';
+}
 function pushBanHTML(){
   const st=pushState(), why=PB_WHY[(me&&me.role)||'']||'حتى توصلك التنبيهات';
-  if(st==='off') return `<div class="pban"><div class="pb-t"><b>🔔 الإشعارات مطفّية</b><span>فعّلها ${why}.</span></div><button type="button" onclick="pushEnableNow(this)">فعّلها</button></div>`;
-  if(st==='error') return `<div class="pban"><div class="pb-t"><b>⚠️ الإشعارات ما اشتغلت</b><span>مسموحة بس ما انربطت بعد. جرّب مرة ثانية.</span></div><button type="button" onclick="pushEnableNow(this)">جرّب</button></div>`;
-  if(st==='denied') return `<div class="pban red"><div class="pb-t"><b>🔕 الإشعارات مقفولة</b><span>ما يوصلك شي والتطبيق مسدود. فعّلها من الإعدادات:</span><ol>${pushFixSteps()}</ol></div></div>`;
+  if(st==='off') return `<div class="pban">${pbIc('off')}<div class="pb-t"><b>الإشعارات مطفّية</b><span>فعّلها ${why}.</span></div><button type="button" onclick="pushEnableNow(this)">فعّلها</button></div>`;
+  if(st==='error') return `<div class="pban amb">${pbIc('error')}<div class="pb-t"><b>الإشعارات ما اشتغلت</b><span>مسموحة بس ما انربطت بعد.</span></div><button type="button" onclick="pushEnableNow(this)">جرّب</button></div>`;
+  if(st==='denied') return `<div class="pban red">${pbIc('denied')}<div class="pb-t"><b>الإشعارات مقفولة</b><span>ما يوصلك شي إذا التطبيق مسدود. شغّلها هيچ:</span></div>${pushFixPath()}</div>`;
   if(st==='unsupported'){
     const ios=/iphone|ipad|ipod/i.test(navigator.userAgent||'');
-    return `<div class="pban gray"><div class="pb-t"><b>🔔 جهازك ما يستقبل الإشعارات من هنا</b><span>${ios?'افتح التطبيق من أيقونته بالشاشة الرئيسية (زر المشاركة ← «إضافة إلى الشاشة الرئيسية»)، أو نزّل تطبيق واصل ليمك من المتجر.':'افتح التطبيق من متصفح Chrome، أو نزّل تطبيق واصل ليمك من المتجر.'}</span></div></div>`;
+    return `<div class="pban gray">${pbIc('unsupported')}<div class="pb-t"><b>جهازك ما يستقبل الإشعارات من هنا</b><span>${ios?'افتح التطبيق من أيقونته بالشاشة الرئيسية (زر المشاركة ← «إضافة إلى الشاشة الرئيسية»)، أو نزّل تطبيق واصل ليمك من المتجر.':'افتح التطبيق من متصفح Chrome، أو نزّل تطبيق واصل ليمك من المتجر.'}</span></div></div>`;
   }
   return '';
 }
@@ -9833,7 +9861,7 @@ async function pushTestMe(btn){
   const web=Number(a&&a.sent)||0, app=Number(b&&b.sent)||0;
   if(out) out.innerHTML = (web+app)
     ? `<div class="pban" style="background:#E8F7EE;border-color:#BFE6CC"><div class="pb-t"><b style="color:#15803D">✓ انرسل لـ ${web+app} جهاز</b><span style="color:#166534">${app?'تطبيق المتجر: '+app+' ':''}${web?'المتصفح: '+web:''} — إذا ما شفته، سد التطبيق ودوس التجربة مرة ثانية.</span></div></div>`
-    : `<div class="pban red"><div class="pb-t"><b>ما وصل لأي جهاز</b><span>تلفونك مو مربوط بحسابك هسه. ${pushIsNative()?'بتطبيق المتجر: سجّل خروج وادخل مرة ثانية، واسمح بالإشعارات من إعدادات التلفون ← التطبيقات ← واصل ليمك.':'اضغط «فعّلها» بالشريط البرتقالي واختار «سماح».'}</span></div></div>`;
+    : `<div class="pban red"><div class="pb-t"><b>ما وصل لأي جهاز</b><span>تلفونك مو مربوط بحسابك هسه. ${pushIsNative()?'بتطبيق المتجر: سجّل خروج وادخل مرة ثانية، واسمح بالإشعارات من إعدادات التلفون ← التطبيقات ← واصل ليمك.':'اضغط «فعّلها» ببطاقة الإشعارات فوك واختار «سماح».'}</span></div></div>`;
   if(btn){ btn.disabled=false; btn.textContent='🔔 دزلي إشعار تجربة على تلفوني' }
 }
 
@@ -26370,15 +26398,34 @@ async function initPush(silent){
 /* v366: تبويب طلبات الانضمام */
 #aPending .jseg{margin:0 0 12px}
 /* v363: شريط «فعّل الإشعارات» للسائق والمحل والإدارة */
-.pban{display:flex;align-items:center;gap:10px;background:#FFF6E8;border:1.5px solid #F5D9A8;border-radius:16px;padding:11px 12px;margin:0 0 12px}
-.pban .pb-t{flex:1;min-width:0}.pban b{display:block;font-size:14px;font-weight:800;color:#7A4A00}
-.pban span{display:block;font-size:12.5px;font-weight:600;color:#8A5A10;margin-top:2px;line-height:1.6}
-.pban ol{margin:6px 0 0;padding-inline-start:18px;font-size:12.5px;font-weight:700;color:#7A1F1F;line-height:1.8}
-.pban button{flex:none;border:0;background:var(--g);color:#fff;border-radius:12px;padding:9px 14px;font:inherit;font-size:13.5px;font-weight:800}
+/* v562: بطاقة الإشعارات — نفس لغة النافذة العائمة */
+.pban{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;background:#fff;border:1px solid var(--bd);border-radius:20px;padding:14px;margin:0 0 12px;box-shadow:0 1px 2px rgba(27,21,51,.04),0 10px 26px -16px rgba(27,21,51,.22)}
+.pb-ic{flex:none;width:46px;height:46px;border-radius:16px;display:grid;place-items:center;background:var(--g3);color:var(--g)}
+.pb-ic svg{width:24px;height:24px}
+.pban .pb-t{flex:1;min-width:0}
+.pban b{display:block;font-size:15px;font-weight:800;color:var(--txt);line-height:1.45}
+.pban .pb-t span{display:block;font-size:12.5px;font-weight:600;color:var(--mut);margin-top:1px;line-height:1.6}
+.pban button{flex:none;border:0;background:var(--g);color:#fff;border-radius:999px;padding:10px 18px;font:inherit;font-size:13.5px;font-weight:800;box-shadow:0 6px 14px -6px var(--gsh)}
 .pban button:disabled{opacity:.6}
-.pban.red{background:#FDECEC;border-color:#F5C2C2}.pban.red b{color:#B42318}.pban.red span{color:#9B2C2C}
-.pban.gray{background:#F4F2F8;border-color:#E3DFEC}.pban.gray b{color:#3b2f57}.pban.gray span{color:#6E6A7C}
-html[data-theme=dark] .pban{background:#2a2216;border-color:#4a3a1c}html[data-theme=dark] .pban.red{background:#2c1717;border-color:#4d2424}html[data-theme=dark] .pban.gray{background:#221f2c;border-color:#35304a}
+.pban.red{border-color:#F3D3D3}.pban.red .pb-ic{background:var(--no3);color:var(--no2)}
+.pban.amb .pb-ic{background:var(--o3);color:var(--o2)}
+.pban.gray .pb-ic{background:var(--gy);color:var(--gy2)}
+.pb-path{flex-basis:100%;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;background:#F6F3FD;border-radius:16px;padding:12px 4px 11px}
+.pb-st{position:relative;display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center;font-size:11.5px;font-weight:700;color:var(--txt);line-height:1.35}
+.pb-st i{position:relative;z-index:1;width:36px;height:36px;border-radius:50%;background:#fff;border:1px solid var(--bd);display:grid;place-items:center;color:var(--g);overflow:hidden}
+.pb-st i svg{width:18px;height:18px}.pb-st i img{width:100%;height:100%;object-fit:cover}
+.pb-st:not(:last-child)::before{content:"";position:absolute;top:18px;inset-inline-start:calc(50% + 22px);width:calc(100% - 40px);border-top:1.5px dashed #CDC3E6}
+.pb-st.ok{color:var(--g)}.pb-st.ok i{background:var(--g);border-color:var(--g);color:#fff;box-shadow:0 6px 14px -6px var(--gsh)}
+html[data-theme=dark] .pban{background:#1f1a30;border-color:#2f2944;box-shadow:none}
+html[data-theme=dark] .pban b{color:#F3F0FA}html[data-theme=dark] .pban .pb-t span{color:#B9B3C9}
+html[data-theme=dark] .pb-ic{background:rgba(124,92,255,.18);color:#CBB8FF}
+html[data-theme=dark] .pban.red{border-color:#4d2424}html[data-theme=dark] .pban.red .pb-ic{background:rgba(239,68,68,.16);color:#FF8F8F}
+html[data-theme=dark] .pban.amb .pb-ic{background:rgba(249,116,2,.16);color:#FFB067}
+html[data-theme=dark] .pban.gray .pb-ic{background:rgba(255,255,255,.07);color:#B9B3C9}
+html[data-theme=dark] .pb-path{background:rgba(255,255,255,.04)}
+html[data-theme=dark] .pb-st{color:#ECE8F5}html[data-theme=dark] .pb-st i{background:#272138;border-color:#372f4e;color:#CBB8FF}
+html[data-theme=dark] .pb-st:not(:last-child)::before{border-color:rgba(255,255,255,.16)}
+html[data-theme=dark] .pb-st.ok{color:#CBB8FF}html[data-theme=dark] .pb-st.ok i{background:#6F42D8;border-color:#6F42D8;color:#fff;box-shadow:none}
 #npAsk{position:fixed;inset:0;z-index:95;display:none;align-items:flex-end;
   background:rgba(20,10,45,.5);backdrop-filter:blur(2px)}
 #npAsk.on{display:flex}
@@ -30123,7 +30170,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v561', seen={}, n=0, q=[], t=null;
+  var VER='v562', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30376,7 +30423,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v561', t0=Date.now();
+  var VER='v562', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
