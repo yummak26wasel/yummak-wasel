@@ -1070,6 +1070,52 @@ html[data-theme=dark] .cat-mv button{background:#2a2244;color:#c9b6ff}
 .bnj-img{width:100%;aspect-ratio:2/1;object-fit:cover;border-radius:14px;margin:8px 0;background:#F3F0F8;cursor:pointer}
 .bnj-a{display:flex;gap:8px}
 .sbn{margin:6px 0 10px}
+/* v561: لوحة المحل — البراندات */
+.brm-l{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.brm-it{display:flex;align-items:center;gap:8px;background:#F4F1FA;border-radius:12px;padding:6px 6px 6px 10px}
+.brm-it b{font-size:14px}
+.brm-it span{font-size:12px;color:#7A7290;font-weight:700}
+.brm-it span.z{color:#C2410C}
+.brm-it button{border:0;background:#fff;color:#7A7290;width:26px;height:26px;border-radius:50%;font-size:16px;line-height:1;cursor:pointer}
+.brm-add{display:flex;gap:8px;margin-top:12px}
+.brm-add input{flex:1;min-width:0;border:1.5px solid #E2DCEE;border-radius:12px;padding:11px 12px;font:inherit;font-size:14px;background:#fff}
+.brm-add button{border:0;background:var(--g);color:#fff;border-radius:12px;padding:0 18px;font:inherit;font-weight:800;cursor:pointer}
+.brm-h{font-size:12.5px;color:var(--g);font-weight:700;margin-top:6px;min-height:1px}
+.brm-h.z{color:#C2410C}
+html[data-theme=dark] .brm-it{background:#2a2340}
+html[data-theme=dark] .brm-it button,html[data-theme=dark] .brm-add input{background:#1f1a30;color:#ECE8F7;border-color:#3a3354}
+/* v561: سوگ مثل يمك مارت — مربع العروض · بانر بين الأقسام · اكتشف البراندات */
+#cApp.mkmode .mkci{width:86px;height:86px;background:transparent;box-shadow:none;border-radius:0}
+#cApp.mkmode .mkci img{object-fit:contain;padding:0;mix-blend-mode:normal}
+#cApp.mkmode .mkgrid{grid-auto-columns:92px;gap:18px 8px}
+#cApp.mkmode .mkcat b{font-size:14px;font-weight:800;color:#1B1533;line-height:1.35}
+#cApp.mkmode .mksh h3{font-size:19px;font-weight:900;color:#1B1533}
+#cApp.mkmode .sprow .mkp{flex:0 0 158px}
+#cApp.mkmode .mkp-nm{color:#1B1533;font-weight:800;font-size:15px;line-height:1.4}
+#cApp.mkmode .mkp-sz{font-size:13px;color:#8A849C;font-weight:600;margin-top:1px}
+#cApp.mkmode .mkp-pr{font-size:18px;font-weight:900;color:#1B1533}
+#cApp.mkmode .mkp-pr.sale{color:#E11D48}
+#cApp.mkmode .mksbn{margin:18px 0 8px}
+html[data-theme=dark] #cApp.mkmode .mkcat b,html[data-theme=dark] #cApp.mkmode .mksh h3,html[data-theme=dark] #cApp.mkmode .mkp-nm,html[data-theme=dark] #cApp.mkmode .mkp-pr{color:#F1EDFA}
+html[data-theme=dark] #cApp.mkmode .mkp-pr.sale{color:#FB7185}
+.mkci.mkoffi{background:linear-gradient(145deg,#F6F1FF,#EADFFF)}
+.mkoffi svg{width:64px;height:64px}
+.mkcat.mkoff b{color:var(--g)}
+.mkbn{display:block;width:100%;border:0;padding:0;margin:16px 0 4px;border-radius:20px;overflow:hidden;aspect-ratio:2/1;background:#F3F0F8;cursor:pointer}
+.mkbn img{width:100%;height:100%;object-fit:cover;display:block}
+.mkbrs{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain;padding:2px 2px 8px;scroll-snap-type:x proximity}
+.mkbr{position:relative;flex:0 0 calc(50% - 22px);min-width:160px;aspect-ratio:4/5;border:0;border-radius:24px;background:var(--bb);color:var(--bf);padding:16px 14px 14px;text-align:right;overflow:hidden;cursor:pointer;scroll-snap-align:start;display:flex;flex-direction:column;font:inherit}
+.mkbr::before{content:'';position:absolute;width:160px;height:160px;border-radius:50%;background:rgba(255,255,255,.5);top:-56px;left:-46px}
+.mkbr-k{position:relative;font-size:12px;font-weight:700;opacity:.75}
+.mkbr b{position:relative;font-family:'Cairo',sans-serif;font-size:25px;font-weight:900;line-height:1.25;margin-top:2px;word-break:break-word}
+.mkbr-n{position:relative;font-size:12.5px;font-weight:700;opacity:.8;margin-top:2px}
+.mkbr-ims{position:relative;margin-top:auto;display:flex;justify-content:center;align-items:flex-end}
+.mkbr-ims i{width:60px;height:60px;border-radius:16px;background:#fff;display:grid;place-items:center;overflow:hidden;box-shadow:0 6px 16px rgba(20,12,40,.12);margin-inline-start:-10px}
+.mkbr-ims i:first-child{margin-inline-start:0}
+.mkbr-ims i:nth-child(2){width:74px;height:74px;z-index:1}
+.mkbr-ims img{width:88%;height:88%;object-fit:contain}
+html[data-theme=dark] .mkbr{filter:brightness(.9)}
+html[data-theme=dark] .mkci.mkoffi{background:linear-gradient(145deg,#2c2347,#241c3b)}
 .sbn-tr{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
 .sbn-tr::-webkit-scrollbar{display:none}
 .sbn-it{flex:0 0 100%;scroll-snap-align:center;aspect-ratio:2/1;border:0;padding:0;border-radius:20px;overflow:hidden;background:#F3F0F8;cursor:pointer}
@@ -8588,8 +8634,8 @@ function renderCatsPage(){
   if(!_tops.length){
     box.innerHTML='<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>'
       +'<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>'
-      +(_mkMine()?'<div id="bnMine"></div>':'');
-    if(_mkMine()) loadMyBanners();
+      +(_mkMine()?'<div id="bnMine"></div><div id="brMine"></div>':'');
+    if(_mkMine()){ loadMyBanners(); loadMyBrands() }
     return;
   }
 
@@ -8629,10 +8675,10 @@ function renderCatsPage(){
 
   if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
 
-  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div>';   /* v384 · v390 · v399 */
+  if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div><div id="brMine"></div>';   /* v384 · v390 · v399 · v561 */
   box.innerHTML=html;
   catBindDrag();
-  if(_mkMine()) loadMyBanners();
+  if(_mkMine()){ loadMyBanners(); loadMyBrands() }
 }
 
 /* ═══════════════════════════════════════════════
@@ -12496,6 +12542,7 @@ function menuSections(){
 /* منتجات القسم المختار */
 function _secProducts(all){
   if(menuSec==='__all') return all;
+  if(menuSec==='__off') return all.filter(p=>p.avail!==false&&pWas(p)).sort((a,b)=>pOffPct(b)-pOffPct(a));   /* v561 */
   if(menuSec==='__top')
     return all.filter(p=>_shopTop.includes(String(p.id)))
               .sort((a,b)=>_shopTop.indexOf(String(a.id))-_shopTop.indexOf(String(b.id)));
@@ -12589,7 +12636,8 @@ function mkCardHTML(p){
     <div class="mkp-im">${p.img?`<img decoding="async" ${lzA(tImg(pImgNow(p)))} alt="">`:`<div class="px">${prodPH()}</div>`}
       ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
       <div class="mkp-add" onclick="event.stopPropagation()">${prodCtl(p)}</div></div>
-    <div class="mkp-nm">${esc(p.name)}</div>
+    ${(()=>{ const m=/^(.+?)\s+(\d+(?:[.,]\d+)?\s?(?:غم|غ|غرام|كغم|كغ|كيلو|مل|لتر|ml|g|kg))\.?$/i.exec(String(p.name||'').trim());   /* v561: الحجم بسطر رمادي (عرض بس — الاسم ما يتغيّر) */
+      return m ? `<div class="mkp-nm">${esc(m[1])}</div><div class="mkp-sz">${esc(m[2])}</div>` : `<div class="mkp-nm">${esc(p.name)}</div>` })()}
     ${p.desc?`<div class="mkp-ds">${esc(p.desc)}</div>`:''}
     <div class="mkp-pr${pWas(p)?' sale':''}">${pPriceTxt(p)} <small>د.ع</small>${pWas(p)?` <s>${pWas(p).toLocaleString()}</s>`:''}</div>
   </div>`;
@@ -12635,6 +12683,36 @@ async function catImgUp(inp){
     toast('انحفظت صورة القسم ✓');
   }catch(e){ toast(/img|column|schema/i.test(errMsg(e))?'شغّل market_v384.sql أول':('ما انحفظت: '+errMsg(e))) }
   inp.value='';
+}
+/* v561 — صاحب المحل/موظفه: البراندات (تطلع للزبون بقسم «اكتشف البراندات») */
+let _brMine=[];
+async function loadMyBrands(){
+  if(!me||!me.shopId) return;
+  try{ _brMine=await sbGet('shop_brands?select=id,name,q,sort&shop_id=eq.'+me.shopId+'&active=is.true&order=sort.asc,created_at.asc')||[] }catch(e){ _brMine=null }
+  renderMyBrands();
+}
+function _brCount(n){ const q=_normAr(n); if(!q) return 0; return ((myShopDoc&&myShopDoc.products)||[]).filter(p=>_normAr(p.name||'').includes(q)).length }
+function renderMyBrands(){
+  const box=document.getElementById('brMine'); if(!box) return;
+  if(_brMine===null){ box.innerHTML='<div class="bnm"><div class="bnm-h"><b>🏷️ البراندات</b><span>ما گدرنا نجيبها — جرّب بعد شوية</span></div></div>'; return }
+  box.innerHTML=`<div class="bnm"><div class="bnm-h"><b>🏷️ البراندات</b><span>تطلع للزبون بقسم «اكتشف البراندات» · اكتب الاسم مثل ما مكتوب بأسماء المنتجات · حدها 12</span></div>
+    ${_brMine.length?`<div class="brm-l">${_brMine.map(b=>{ const n=_brCount(b.q||b.name); return `<div class="brm-it"><b>${esc(b.name)}</b><span class="${n?'':'z'}">${n?n+' منتج':'٠ منتج — ما يطلع للزبون'}</span><button type="button" onclick="brDel('${b.id}')" aria-label="شيل">×</button></div>` }).join('')}</div>`:''}
+    ${_brMine.length<12?`<div class="brm-add"><input id="brNew" type="text" maxlength="40" placeholder="اسم البراند، مثل: المراعي" oninput="brHint()"><button type="button" onclick="brAdd()">أضف</button></div><div class="brm-h" id="brHint"></div>`:'<div class="bnm-max">وصلت 12 براند — شيل وحدة حتى تضيف</div>'}
+  </div>`;
+}
+function brHint(){
+  const h=document.getElementById('brHint'), t=((document.getElementById('brNew')||{}).value||'').trim(); if(!h) return;
+  if(t.length<2){ h.textContent=''; h.className='brm-h'; return }
+  const n=_brCount(t); h.textContent=n?('يلگى '+n+' منتج بهذا الاسم'):'ما لگينا منتج بهذا الاسم — تأكد من الكتابة'; h.className='brm-h'+(n?'':' z');
+}
+async function brAdd(){
+  const inp=document.getElementById('brNew'), v=((inp&&inp.value)||'').trim(); if(v.length<2) return toast('اكتب اسم البراند');
+  if(!_brCount(v)){ const ok=await askConfirm('ما لگينا ولا منتج بهذا الاسم، فالكرت ما راح يطلع للزبون لحد ما تضيف منتجات بهذا الاسم.',{title:'تضيفه هيچ؟',ok:'أضيفه',no:'رجوع'}); if(!ok) return }
+  try{ await rpc('shop_brand_add',{p_shop:me.shopId, p_name:v}); toast('انضاف ✓'); loadMyBrands() }catch(e){ toast(errMsg(e)) }
+}
+async function brDel(id){
+  const ok=await askConfirm('تشيل هذا البراند من «اكتشف البراندات»؟',{title:'شيل البراند',ok:'إي، شيله',danger:true}); if(!ok) return;
+  try{ await rpc('shop_brand_remove',{p_id:id}); toast('انشال'); loadMyBrands() }catch(e){ toast('ما صار: '+errMsg(e)) }
 }
 /* — صاحب المحل: بنراته — */
 let _bnMine=[], _bnNew=null;
@@ -12751,10 +12829,39 @@ let _shopBn={sid:null,list:[]}, __sbnT=null;
 async function loadShopBanners(){
   const sid=curShop&&curShop.id; _shopBn={sid,list:[]};
   if(!sid||!_isMarket(curShop)) return;
-  try{ const r=await sbGet('shop_banners?select=id,img,target_kind,target,sort,created_at&shop_id=eq.'+sid+'&status=eq.approved&order=sort.asc,created_at.desc&limit=5')||[]; if(curShop&&curShop.id===sid){ _shopBn={sid,list:r.filter(b=>_bnImgOk(b.img))}; renderShopBanners() } }catch(e){}
+  try{ const r=await sbGet('shop_banners?select=id,img,target_kind,target,sort,created_at&shop_id=eq.'+sid+'&status=eq.approved&order=sort.asc,created_at.desc&limit=5')||[]; if(curShop&&curShop.id===sid){ _shopBn={sid,list:r.filter(b=>_bnImgOk(b.img))}; renderShopBanners(); if(_mkHome() && _shopBn.list.length) renderMenu() } }catch(e){}
+  /* v561: البراندات */
+  try{ const r=await sbGet('shop_brands?select=id,name,q,sort&shop_id=eq.'+sid+'&active=is.true&order=sort.asc,created_at.asc&limit=12')||[]; if(curShop&&curShop.id===sid){ _shopBr={sid,list:r}; if(_mkHome() && r.length) renderMenu() } }catch(e){}
+}
+/* v561: البانرات — النص الأول فوك (يتحرك)، والباقي بين صفوف الأقسام مثل يمك مارت */
+function _sbnSplit(){ const L=(_shopBn.sid===(curShop&&curShop.id))?_shopBn.list:[]; return {first:L[0]||null, rest:L.slice(1)} }   /* مثل يمك مارت: الأول عريض تحت الأقسام، والباقي يتحرك بين الصفوف */
+function _sbnTr(){ return document.querySelector('#menu .sbn-tr')||document.querySelector('#shopBanners .sbn-tr') }
+let _shopBr={sid:null,list:[]};
+const BRC=[['#E8F1FF','#1D3B8C'],['#FFF4D6','#7A4B00'],['#FDEBF3','#86184A'],['#F1EBFF','#3F1D8C'],['#FFEEE3','#8A3300']];
+function _offBadge(){
+  let pts=''; for(let i=0;i<28;i++){ const a=Math.PI*2*i/28, r=i%2?40:46; pts+=(50+r*Math.sin(a)).toFixed(1)+','+(50-r*Math.cos(a)).toFixed(1)+' ' }
+  return `<svg viewBox="0 0 100 100" aria-hidden="true"><defs><linearGradient id="mkog" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8B5CF6"/><stop offset="1" stop-color="#4C1D95"/></linearGradient></defs>
+    <polygon points="${pts}" fill="url(#mkog)"/><text x="50" y="62" text-anchor="middle" font-size="40" font-weight="900" fill="#fff" font-family="Cairo,sans-serif">%</text>
+    <circle cx="80" cy="78" r="13" fill="#FF7A00" stroke="#fff" stroke-width="3"/><path d="M75 76h10l-1 8h-8z" fill="#fff"/></svg>`;
+}
+function _brCards(){
+  const L=(_shopBr.sid===(curShop&&curShop.id))?_shopBr.list:[]; if(!L.length) return '';
+  const all=(curShop&&curShop.products)||[];
+  const cards=L.map((b,i)=>{ const q=_normAr(b.q||b.name); if(!q) return '';
+    const ps=all.filter(p=>p.avail!==false && _normAr(p.name||'').includes(q)); if(!ps.length) return '';
+    const ims=ps.filter(p=>p.img).slice(0,3).map(p=>`<i><img decoding="async" ${lzA(tImg(pImgNow(p)))} alt=""></i>`).join('');
+    const c=BRC[i%BRC.length];
+    return `<button type="button" class="mkbr" style="--bb:${c[0]};--bf:${c[1]}" onclick="brandOpen(${JSON.stringify(String(b.q||b.name)).replace(/"/g,'&quot;')})"><span class="mkbr-k">براند</span><b>${esc(b.name)}</b><span class="mkbr-n">${ps.length} منتج</span><span class="mkbr-ims">${ims}</span></button>` }).filter(Boolean);
+  return cards.length ? `<div class="mksec"><div class="mksh"><h3>اكتشف البراندات</h3></div><div class="mkbrs">${cards.join('')}</div></div>` : '';
+}
+function brandOpen(q){
+  shopQ=String(q||''); menuSec='__all'; menuSub=''; mkOff=false; mkTop=false;
+  const inp=document.querySelector('#shopSearch input'); if(inp) inp.value=shopQ;
+  renderMenu(); try{ window.scrollTo(0,0); scrollTopAll() }catch(e){}
 }
 function renderShopBanners(){
   const box=document.getElementById('shopBanners'); if(!box) return;
+  if(_isMarket(curShop)){ box.innerHTML=''; box.dataset.k=''; return }   /* v561: بالسوگ البانرات تنرسم بين الأقسام */
   const L=(_shopBn.sid===(curShop&&curShop.id))?_shopBn.list:[];
   if(!_mkHome()||!L.length){ box.innerHTML=''; clearInterval(__sbnT); return }
   if(box.dataset.k===L.map(b=>b.id).join(',') && box.querySelector('.sbn')) return;
@@ -12764,11 +12871,11 @@ function renderShopBanners(){
   clearInterval(__sbnT);
   if(L.length>1) __sbnT=setInterval(sbnNext,4500);
 }
-function _sbnCur(){ const w=document.querySelector('#shopBanners .sbn-tr'); if(!w) return 0; const c=w.getBoundingClientRect(), mid=c.left+c.width/2; let best=0,bd=1e9;
+function _sbnCur(){ const w=_sbnTr(); if(!w) return 0; const c=w.getBoundingClientRect(), mid=c.left+c.width/2; let best=0,bd=1e9;
   [...w.children].forEach((el,i)=>{ const r=el.getBoundingClientRect(), d=Math.abs(r.left+r.width/2-mid); if(d<bd){bd=d;best=i} }); return best }
-function sbnDots(){ const i=_sbnCur(); document.querySelectorAll('#shopBanners .sbn-dots i').forEach((d,k)=>d.classList.toggle('on',k===i)); window.__sbnHold=Date.now() }
+function sbnDots(){ const i=_sbnCur(), w=_sbnTr(), sb=w&&w.closest('.sbn'); if(sb) sb.querySelectorAll('.sbn-dots i').forEach((d,k)=>d.classList.toggle('on',k===i)); window.__sbnHold=Date.now() }
 function sbnNext(){
-  const w=document.querySelector('#shopBanners .sbn-tr'); if(!w||document.hidden){ if(!w) clearInterval(__sbnT); return }
+  const w=_sbnTr(); if(!w||document.hidden){ if(!w) clearInterval(__sbnT); return }
   if(Date.now()-(window.__sbnHold||0)<4000) return;
   const r0=w.getBoundingClientRect(); if(r0.bottom<0||r0.top>innerHeight) return;   /* مو ظاهر — ما نحرّكه */
   const n=w.children.length, i=(_sbnCur()+1)%n, el=w.children[i], tr=el.getBoundingClientRect();
@@ -12814,9 +12921,12 @@ function renderCatGrid(cats){
   if(!_mkHome()){ box.innerHTML=''; return }
   cats=cats||_mkCats();
   if(cats.length<2){ box.innerHTML=''; return }
-  const rows=cats.length>=9?3:(cats.length>=5?2:1);
-  box.innerHTML=`<h3 class="mkttl">تسوق حسب القسم</h3><div class="mkgrid" style="--rows:${rows}" onscroll="mkBar(this)">${cats.map(c=>{ const im=c.img||(c.ps.find(p=>p.img)||{}).img;
-    return `<button type="button" class="mkcat" onclick="pickSec(${_secAttr(c.id)})"><span class="mkci">${im?`<img loading="lazy" decoding="async" src="${esc(im)}" alt="">`:prodPH()}</span><b>${esc(c.name)}</b></button>` }).join('')}</div><div class="mkbar"><i></i></div>`;
+  const rows=cats.length+1>=9?3:(cats.length+1>=5?2:1);
+  const offTile=`<button type="button" class="mkcat mkoff" onclick="pickSec('__off')"><span class="mkci mkoffi">${_offBadge()}</span><b>العروض</b></button>`;   /* v561: مثل يمك مارت — أول مربع */
+  const _b1=_sbnSplit().first, _b1h=_b1?`<button type="button" class="mkbn" onclick="sbnTap(0)"><img src="${_b1.img}" alt="" decoding="async"></button>`:'';
+  box.dataset.b1=_b1?_b1.id:'';
+  box.innerHTML=`<h3 class="mkttl">تسوق حسب القسم</h3><div class="mkgrid" style="--rows:${rows}" onscroll="mkBar(this)">${offTile}${cats.map(c=>{ const im=c.img||(c.ps.find(p=>p.img)||{}).img;
+    return `<button type="button" class="mkcat" onclick="pickSec(${_secAttr(c.id)})"><span class="mkci">${im?`<img loading="lazy" decoding="async" src="${esc(im)}" alt="">`:prodPH()}</span><b>${esc(c.name)}</b></button>` }).join('')}</div><div class="mkbar"><i></i></div>${_b1h}`;
   requestAnimationFrame(()=>{ const g=box.querySelector('.mkgrid'); if(g) mkBar(g) });
 }
 function mkBar(g){
@@ -12831,10 +12941,15 @@ function renderMkRows(box,cats){
   const seen=new Set(); cats.forEach(c=>c.ps.forEach(p=>seen.add(String(p.id))));
   const rest=((curShop&&curShop.products)||[]).filter(p=>!seen.has(String(p.id)));
   const _offs=((curShop&&curShop.products)||[]).filter(p=>p.avail!==false&&pWas(p)).sort((a,b)=>pOffPct(b)-pOffPct(a));
-  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>🔥 العروض</h3></div><div class="sprow">${_offs.slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
-    +cats.map(c=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
-      <div class="sprow">${c.ps.slice(0,12).map(spCardHTML).join('')}</div></div>`).join('')
+  const _R=_sbnSplit().rest, _at=Math.min(2,cats.length);
+  const _car=_R.length?`<div class="sbn mksbn"><div class="sbn-tr" onscroll="sbnDots()">${_R.map((b,i)=>`<button type="button" class="sbn-it" onclick="sbnTap(${i+1})"><img src="${b.img}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>${_R.length>1?`<div class="sbn-dots">${_R.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`:'';
+  const _mid=_car+_brCards();
+  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>العروض</h3><button type="button" onclick="pickSec('__off')">عرض الكل ›</button></div><div class="sprow">${_offs.slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
+    +(_at===0?_mid:'')
+    +cats.map((c,i)=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
+      <div class="sprow">${c.ps.slice(0,12).map(spCardHTML).join('')}</div></div>`+(i+1===_at?_mid:'')).join('')
     +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${rest.slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
+  clearInterval(__sbnT); if(_R.length>1) __sbnT=setInterval(sbnNext,4500);   /* v561 */
   return true;
 }
 function pickSec(v){
@@ -12860,9 +12975,11 @@ function renderMenuTabs(){
   let T=null;
   if(_shopCats.length){
     const _tops=_cTop(_shopCats);   /* v390: التبويبات للأقسام الرئيسية بس */
-    const valid=['__all'].concat(_shopTop.length?['__top']:[]).concat(_tops.map(c=>c.id));
+    const _mkO=_isMarket(curShop), _offHas=_mkO && (curShop.products||[]).some(p=>p.avail!==false&&pWas(p));   /* v561 */
+    const valid=['__all'].concat(_mkO?['__off']:[]).concat(_shopTop.length?['__top']:[]).concat(_tops.map(c=>c.id));
     if(!valid.includes(menuSec)){ menuSec='__all'; menuSub='' }
     T=[['__all','الكل']]
+      .concat(_offHas?[['__off','العروض']]:[])
       .concat(_shopTop.length?[['__top','الأكثر مبيعاً']]:[])
       .concat(_tops.map(c=>[c.id,c.name]));
     if(T.length<2){ box.innerHTML=''; if(ttl)ttl.textContent=''; menuSec='__all'; return }
@@ -12878,7 +12995,7 @@ function renderMenuTabs(){
   _mtabKeep(box,_oldL);
   if(ttl){
     const f=T.find(x=>x[0]===menuSec);
-    ttl.textContent = menuSec==='__all' ? 'كل المنتجات' : (f?f[1]:'');
+    ttl.textContent = menuSec==='__all' ? 'كل المنتجات' : (menuSec==='__off' ? 'العروض' : (f?f[1]:''));
   }
 }
 function prodPH(){
@@ -12954,14 +13071,14 @@ function renderMenu(){
   const _subs=(!_q && _isMarket(curShop) && menuSec!=='__all' && menuSec!=='__top') ? _cSubs(_shopCats,menuSec) : [];
   if(menuSub && !_subs.some(x=>x.id===menuSub)){ menuSub=''; ps=_secProducts(all) }
   const _subRow=_subs.length?_mkSubRow(_subs):'';
-  if(!ps.length){ box.innerHTML=_subRow+EMPTY(_isMarket(curShop)?'هذا القسم بعده ما بيه منتجات':'ما بيه منتجات بهذا القسم'); renderSpBar(); return }
+  if(!ps.length){ box.innerHTML=_subRow+EMPTY(menuSec==='__off'?'ماكو عروض هسه — العروض تتجدد، رجعلها بعدين':(_isMarket(curShop)?'هذا القسم بعده ما بيه منتجات':'ما بيه منتجات بهذا القسم')); renderSpBar(); return }
   if(_isMarket(curShop)){   /* v384 · v392: مثل «يمك مارت» — الأقسام الفرعية · العروض/الأكثر طلباً · عدد الأصناف · عمودين */
     let L=ps.slice();
     const hasOff=L.some(p=>pWas(p)), hasTop=_shopTop.length>0;
     if(mkOff) L=L.filter(p=>pWas(p));
     if(mkTop) L=L.slice().sort((a,b)=>{ const ia=_shopTop.indexOf(String(a.id)), ib=_shopTop.indexOf(String(b.id)); return (ia<0?1e9:ia)-(ib<0?1e9:ib) });
     const chip=(k,on,lbl,ic)=>`<button type="button" class="mkchip${on?' on':''}" aria-pressed="${on}" onclick="mkChip('${k}')">${ic}${lbl}</button>`;
-    const chips=(!_q && (hasOff||mkOff||hasTop)) ? `<div class="mkchips">${(hasOff||mkOff)?chip('off',mkOff,'العروض','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3h6.4a1.5 1.5 0 0 1 1.06.44l8.6 8.6a1.5 1.5 0 0 1 0 2.12l-6.4 6.4a1.5 1.5 0 0 1-2.12 0l-8.6-8.6A1.5 1.5 0 0 1 3 10.9zM7.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>'):''}${hasTop?chip('top',mkTop,'الأكثر طلباً','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20V5M4.5 8.5 8 5l3.5 3.5M16 4v15M12.5 15.5 16 19l3.5-3.5"/></svg>'):''}</div>` : '';
+    const chips=(!_q && menuSec!=='__off' && (hasOff||mkOff||hasTop)) ? `<div class="mkchips">${(hasOff||mkOff)?chip('off',mkOff,'العروض','<svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 4.5A1.5 1.5 0 0 1 4.5 3h6.4a1.5 1.5 0 0 1 1.06.44l8.6 8.6a1.5 1.5 0 0 1 0 2.12l-6.4 6.4a1.5 1.5 0 0 1-2.12 0l-8.6-8.6A1.5 1.5 0 0 1 3 10.9zM7.5 6a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z"/></svg>'):''}${hasTop?chip('top',mkTop,'الأكثر طلباً','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 20V5M4.5 8.5 8 5l3.5 3.5M16 4v15M12.5 15.5 16 19l3.5-3.5"/></svg>'):''}</div>` : '';
     box.innerHTML=_subRow+chips+`<div class="mkcount">${L.length} صنف</div>`
       +(L.length ? '<div class="mkpg">'+L.map(mkCardHTML).join('')+'</div>' : EMPTY(mkOff?'ماكو عروض بهذا القسم هسه':'هذا القسم بعده ما بيه منتجات'));
     renderSpBar(); return }
@@ -30006,7 +30123,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v560', seen={}, n=0, q=[], t=null;
+  var VER='v561', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30259,7 +30376,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v560', t0=Date.now();
+  var VER='v561', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
