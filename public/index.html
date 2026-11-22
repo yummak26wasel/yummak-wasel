@@ -10657,9 +10657,15 @@ function shopsCacheSave(docs){   /* v353: آخر قائمة محلات (ويا �
    المنيو الكامل: /_api/menu — ينحفظ بالذاكرة وبالتلفون (lw_menu_<id>) ويتحدّث بس إذا تغيّرت نسخته.
    المحلات الصغيرة: نفس قبل بالضبط (منيوها كامل بالقائمة). */
 const _LM={}, _LMP={}, _LMF={}, _LMK='lw_menu_';
+/* v563: بعض المنتجات رقمها ينحفظ كنص ("1797…") والأزرار تبعث رقم — فالمقارنة === تفشل و«+» ما يضيف.
+   نوحّد الرقم لـ Number أول ما توصل القائمة (كل الأرقام 13 خانة، بأمان تحت حد الجافاسكربت). */
+function _pidNorm(list){
+  if(Array.isArray(list)) for(const p of list){ if(p && typeof p.id==='string' && /^\d{1,15}$/.test(p.id)) p.id=Number(p.id) }
+  return list;
+}
 function _lmGet(id){   /* المنيو الكامل إذا عندنا (بالذاكرة أو محفوظ بالتلفون) */
   if(_LM[id]) return _LM[id];
-  try{ const c=JSON.parse(localStorage.getItem(_LMK+id)||'null'); if(c && Array.isArray(c.list) && c.list.length){ _LM[id]=c; return c } }catch(e){}
+  try{ const c=JSON.parse(localStorage.getItem(_LMK+id)||'null'); if(c && Array.isArray(c.list) && c.list.length){ _pidNorm(c.list); _LM[id]=c; return c } }catch(e){}
   return null;
 }
 function _lmSet(id,list){   /* نربط نفس المنيو بكل نسخ المحل (القائمة + المحل المفتوح) */
@@ -10681,7 +10687,7 @@ function _lmLoad(sh){
     if(_SAME_ORIGIN) try{ const r=await _fto(location.origin+'/_api/menu?id='+encodeURIComponent(id)+'&v='+encodeURIComponent(v),{method:'GET'},15000); if(r.ok) j=await r.json() }catch(e){}
     if(!(j && Array.isArray(j.products))) try{ j=await sbGet('rpc/shop_menu?p_id='+encodeURIComponent(id)) }catch(e){ j=null }   /* احتياط: من القاعدة مباشرة */
     if(!(j && Array.isArray(j.products) && j.products.length)){ _LMF[id]=Date.now(); return false }
-    const c={v:String(j.v||v), list:j.products}; _LM[id]=c; _lmSet(id,c.list);
+    const c={v:String(j.v||v), list:_pidNorm(j.products)}; _LM[id]=c; _lmSet(id,c.list);
     try{ const s=JSON.stringify(c); if(s.length<1500000) localStorage.setItem(_LMK+id,s) }catch(e){ try{ localStorage.removeItem(_LMK+id) }catch(_){} }
     return true;
   })().finally(()=>{ delete _LMP[id] });
@@ -10705,6 +10711,7 @@ function _lmPrep(docs){   /* كل ما توصل قائمة المحلات: ال�
 function shopsCacheLoad(){ try{ const c=JSON.parse(localStorage.getItem(_SHC_K)||'null'); if(c && Array.isArray(c.rows) && c.rows.length && Date.now()-(c.at||0)<7*864e5) return c.rows }catch(e){} return null }
 function _shSig(s){ try{ const o=Object.assign({},s); delete o.products; delete o._teaser; return JSON.stringify(o) }catch(e){ return Math.random() } }
 function applyShops(docs){
+  try{ (docs||[]).forEach(d=>{ if(d) _pidNorm(d.products) }) }catch(e){}   /* v563 */
   try{ _lmPrep(docs) }catch(e){}   /* v531 */
   shops = docs; window.__shopsLoaded = true;
   try{ renderCats() }catch(e){}   /* v379: «قريباً» على الأقسام الفاضية */
@@ -15393,7 +15400,7 @@ function sup(t,el){
 
 /* ══════ STORE ══════ */
 function loadMyShop(){
-  db.collection('shops').doc(me.shopId).onSnapshot(d=>{myShopDoc={...d.data(), id:d.id};try{_availApplyPend()}catch(e){}renderStore();
+  db.collection('shops').doc(me.shopId).onSnapshot(d=>{myShopDoc={...d.data(), id:d.id};try{ _pidNorm(myShopDoc.products) }catch(e){}try{_availApplyPend()}catch(e){}renderStore();
     /* v556: كل تعديل بالمنيو جان يجيب العمولة والأقسام من جديد (عشرات الطلبات بالثانية) — هسه مرة وحدة بعد ما يهدأ */
     const _lm=()=>{ try{loadMyComm()}catch(e){ __silent(e,'loadMyComm') }try{loadShopCats()}catch(e){ __silent(e,'loadShopCats') } };
     clearTimeout(window.__lmcT); if(!window.__lmcFirst){ window.__lmcFirst=1; _lm() } else window.__lmcT=setTimeout(_lm, 1200)});
@@ -30170,7 +30177,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v562', seen={}, n=0, q=[], t=null;
+  var VER='v563', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30423,7 +30430,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v562', t0=Date.now();
+  var VER='v563', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
