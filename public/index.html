@@ -4038,6 +4038,70 @@ html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,htm
 .ask-ok{background:var(--g);border:0;color:#fff;box-shadow:0 10px 24px rgba(91,43,201,.30)}
 .ask-ok.danger{background:#E8365D;box-shadow:0 10px 24px rgba(232,54,93,.28)}
 .ask-no:active,.ask-ok:active{transform:scale(.97)}
+
+/* v564: عجلة الافتتاح — نفس لغة النافذة العائمة */
+#whSheet{position:fixed;inset:0;z-index:10001;background:rgba(17,10,35,.5);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
+  display:none;align-items:flex-end;justify-content:center;padding:0 10px calc(10px + env(safe-area-inset-bottom))}
+#whSheet.on{display:flex;animation:svcFade .2s}
+.whbox{position:relative;background:#fff;border-radius:34px;padding:22px 20px 18px;width:100%;max-width:480px;text-align:center;
+  box-shadow:0 24px 60px rgba(20,12,40,.35);animation:askUp .4s cubic-bezier(.2,1.15,.3,1)}
+.wh-x{position:absolute;top:16px;left:16px;width:36px;height:36px;border-radius:50%;border:0;background:#F3F1F8;color:#6E6787;display:grid;place-items:center}
+.wh-x svg{width:16px;height:16px}
+.wh-tag{display:inline-flex;align-items:center;gap:6px;background:var(--g3,#F1ECFC);color:var(--g);font:800 12px Cairo,sans-serif;padding:5px 12px;border-radius:999px}
+.whbox h2{font:900 25px/1.3 Cairo,sans-serif;color:#1B1533;margin:10px 0 0}
+.wh-sub{font-size:13.5px;color:#7A7490;font-weight:600;margin-top:2px}
+.wh-wrap{position:relative;width:min(300px,78vw);aspect-ratio:300/318;margin:12px auto 6px}
+.wh-ptr{position:absolute;top:0;left:50%;transform:translateX(-50%);z-index:3;width:13%;filter:drop-shadow(0 4px 6px rgba(249,116,2,.45))}
+.wh-wrap>svg.wh-w{position:absolute;top:5.7%;left:0;width:100%;height:auto}
+#whRot{transform-origin:150px 150px;transition:transform 4.6s cubic-bezier(.12,.72,.1,1)}
+.wh-go{display:block;width:100%;height:56px;border:0;border-radius:999px;background:var(--g);color:#fff;font:800 17px Cairo,sans-serif;box-shadow:0 12px 24px -12px rgba(91,43,201,.8)}
+.wh-go:disabled{opacity:.75}
+.wh-go:active{transform:scale(.98)}
+.wh-fine{font-size:11.5px;color:#A29CB6;font-weight:600;margin-top:10px;line-height:1.6}
+.wh-res{animation:askPop .35s cubic-bezier(.2,1.2,.3,1)}
+.wh-ric{width:68px;height:68px;border-radius:23px;background:#FFF1E4;color:#F97402;display:grid;place-items:center;margin:8px auto 0}
+.wh-ric svg{width:34px;height:34px}
+.wh-ric.lose{background:#F3F1F8;color:#8C84A6}
+.wh-res h2{font-size:23px;margin-top:12px}
+.wh-res p{font-size:13.5px;color:#7A7490;font-weight:600;line-height:1.7;margin:4px 8px 0}
+.wh-code{margin:14px 0 0;display:flex;align-items:center;justify-content:space-between;border:1.5px dashed #CDBFF3;background:#FAF8FF;border-radius:16px;padding:11px 14px}
+.wh-code b{font:900 17px Cairo,sans-serif;letter-spacing:1px;color:var(--g);direction:ltr}
+.wh-code span{font-size:12px;color:#7A7490;font-weight:700}
+.wh-res .wh-go{margin-top:16px}
+.wh-tile{display:flex;align-items:center;gap:12px;margin:4px 16px 14px;padding:12px 14px;border-radius:20px;background:#fff;border:1px solid var(--bd,#ECE8F4);
+  box-shadow:0 10px 26px -18px rgba(27,21,51,.35);cursor:pointer;text-align:right}
+.wh-tile:active{transform:scale(.985)}
+.wh-tile .wt-ic{flex:none;width:48px;height:48px}
+.wh-tile .wt-t{flex:1;min-width:0}
+.wh-tile b{display:block;font:800 15px/1.45 Cairo,sans-serif;color:#1B1533}
+.wh-tile span{display:block;font-size:12.5px;font-weight:600;color:#7A7490;line-height:1.5}
+.wh-tile i{flex:none;font-style:normal;font-size:22px;color:#B3ABC5}
+.wh-tile.won .wt-ic{border-radius:16px;background:#FFF1E4;color:#F97402;display:grid;place-items:center}
+.wh-tile.won .wt-ic svg{width:26px;height:26px}
+html[data-theme=dark] .whbox{background:#1f1a30}
+html[data-theme=dark] .whbox h2,html[data-theme=dark] .wh-tile b{color:#F3F0FA}
+html[data-theme=dark] .wh-x{background:#2a2440;color:#B9B3C9}
+html[data-theme=dark] .wh-code{background:#272138;border-color:#4a3f70}
+html[data-theme=dark] .wh-tile{background:#1f1a30;border-color:#2f2944;box-shadow:none}
+.wh-adm{background:#fff;border:1px solid var(--bd,#ECE8F4);border-radius:20px;padding:14px;margin:0 0 14px}
+.wh-adm .wa-h{display:flex;align-items:center;gap:10px}
+.wh-adm .wa-h b{flex:1;font:800 15px Cairo,sans-serif;color:#1B1533}
+.wh-adm .wa-st{font:800 11.5px Cairo,sans-serif;padding:4px 10px;border-radius:999px;background:#F3F1F8;color:#6E6787}
+.wh-adm .wa-st.on{background:#FFF1E4;color:#C25A00}
+.wh-adm .wa-g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:12px 0}
+.wh-adm .wa-g div{background:#F7F5FC;border-radius:14px;padding:10px}
+.wh-adm .wa-g span{display:block;font-size:11.5px;font-weight:700;color:#7A7490}
+.wh-adm .wa-g em{display:block;font-style:normal;font:900 17px Cairo,sans-serif;color:#1B1533}
+.wh-adm .wa-g small{display:block;font-size:11.5px;font-weight:700;color:#8C84A6;margin-top:1px}
+.wh-adm .wa-cs{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.wh-adm .wa-c{display:inline-flex;align-items:center;gap:6px;padding:5px 10px;border-radius:10px;background:#F7F5FC;font-size:12px;font-weight:700;color:#6E6787;direction:rtl}
+.wh-adm .wa-c b{font-weight:900;color:#1B1533}
+html[data-theme=dark] .wh-adm .wa-c{background:#272138;color:#B9B3C9}html[data-theme=dark] .wh-adm .wa-c b{color:#F3F0FA}
+.wh-adm button{width:100%;height:46px;border:0;border-radius:14px;font:800 14.5px Cairo,sans-serif;background:var(--g);color:#fff}
+.wh-adm button.off{background:#F4F1FA;color:#3D3557}
+html[data-theme=dark] .wh-adm{background:#1f1a30;border-color:#2f2944}
+html[data-theme=dark] .wh-adm .wa-h b,html[data-theme=dark] .wh-adm .wa-g em{color:#F3F0FA}
+html[data-theme=dark] .wh-adm .wa-g div{background:#272138}
 @media (prefers-reduced-motion:reduce){.askbox{animation:none}}
 /* v551: وقت التوصيل المتوقع بالسلة */
 .cketa{display:flex;align-items:center;gap:12px;background:#F4F0FD;border-radius:16px;padding:12px 14px;margin:12px 0 6px}
@@ -7038,6 +7102,7 @@ body,.screen{background:#fff;color:var(--txt)}
 
 </div>
 <div class="ord-soon" id="ordSoonBan" style="display:none"></div>
+<div id="whTile"></div>
 <div class="off-sec" id="offSec">
   <div class="dm-t"><h3>أحدث العروض</h3><p>عروض وكوبونات نشطة الآن</p></div>
   <span class="ymk-all" onclick="openDisc()">عرض الكل ›</span>
@@ -7368,6 +7433,7 @@ body,.screen{background:#fff;color:var(--txt)}
  <div id="aOver"></div> <div class="panel atbl"> <div class="atHead"> <div class="atIc p"><svg viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M9 8h6M9 12h6M9 16h3"/></svg></div> <div><h3>طلبات اليوم</h3><p>عدد الطلبات لكل محل اليوم</p></div> </div> <div id="atOrders"></div> <div class="atMore" id="atOrdersMore"></div> </div> <div class="panel atbl g"> <div class="atHead"> <div class="atIc g"><svg viewBox="0 0 24 24"><path d="M4 19V10M10 19V5M16 19v-6M22 19H2"/></svg></div> <div><h3>المبيعات الكلية</h3><p>إجمالي مبيعات كل محل</p></div> </div> <div id="atSales"></div> <div class="atMore" id="atSalesMore"></div> </div> <div class="panel atbl o"> <div class="atHead"> <div class="atIc o"><svg viewBox="0 0 24 24"><path d="M4 8h16v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2z"/><path d="M4 8 7 3h10l3 5"/><path d="M12 12v5"/></svg></div> <div><h3>رسوم الخدمة المحصّلة</h3><p>مجموع رسوم الخدمة من طلبات كل محل</p></div> </div> <div id="atFees"></div> <div class="atMore" id="atFeesMore"></div> </div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 8.5A2.5 2.5 0 0 1 5.5 6H18a2 2 0 0 1 2 2v1"/><path d="M3 8.5V17a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-3"/><path d="M21 10.5h-4a1.8 1.8 0 0 0 0 3.6h4z"/></svg> العمولات المستحقة على السواق</h3><div id="aDebts"></div></div> <div class="panel"><h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M18 15.5V11a6 6 0 1 0-12 0v4.5L4.5 18h15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/></svg> آخر الطلبات</h3><div id="aRecent"></div></div> </div> <div class="page" id="a_join"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 3h10M7 21h10M7 3c0 4.5 5 5.6 5 9s-5 4.5-5 9M17 3c0 4.5-5 5.6-5 9s5 4.5 5 9"/></svg> طلبات انضمام تنتظر موافقتك</h3> <div id="aPending"></div> </div> <div class="page" id="a_inv"> <div class="pgtop"><h2>فواتير المطاعم</h2><button onclick="atabBack()">›</button></div> <p class="pgsub">إدارة عمولات المطاعم وتحصيلها</p> <div id="invMonth"></div> <div class="chips" id="invChips"></div> <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="invSearch" placeholder="البحث باسم المطعم…" oninput="renderInv()"></div> <div id="invList"></div> </div> <div class="page" id="a_invone"> <div class="pgtop"><h2>تفاصيل الفاتورة</h2><button onclick="openInv()">›</button></div> <div id="invOne"></div> </div> <div class="page" id="a_fin"> <div class="fin-hd"><h2>المالية</h2><p>كل فلس يدخل أو يطلع، ووين وصل</p><div class="fin-tabs" id="finTabs"></div></div> <div id="finBody"></div> <div id="finMove"></div> </div> <div class="page" id="a_dracc"> <div class="pgtop"><h2>حسابات السائقين</h2><button onclick="atabBack()">›</button></div> <p class="pgsub">متابعة مستحقات السائقين للتطبيق</p> <div id="draTop"></div> <div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="draSearch" placeholder="البحث باسم السائق أو رقم الهاتف…" oninput="renderDrAcc()"></div> <div class="chips" id="draChips"></div> <div id="draList"></div> </div> <div class="page" id="a_drone"> <div class="pgtop"><h2>تفاصيل حساب السائق</h2><button onclick="openDrAcc()">›</button></div> <div id="drOne"></div> </div> <div class="page" id="a_people"> <div class="chips" id="pFilter"></div> <div id="aPeople"></div> </div> <div class="page" id="a_orders"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg> كل الطلبات</h3> <div id="aoCtl"></div> <div id="aOrders"></div> </div> <div class="page" id="a_sup"> <h3 class="ttl"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.5 12.6c0 4-3.8 7.2-8.5 7.2a10 10 0 0 1-2.6-.3L4 21.4l1.4-3.8A6.9 6.9 0 0 1 3.5 12.6c0-4 3.8-7.2 8.5-7.2s8.5 3.2 8.5 7.2z"/></svg> رسائل المحلات والسواق</h3> <div id="tktList"></div> <div id="tktChat"></div> </div> <div class="page" id="a_offers">
       <div class="sechd"><h3>العروض والخصومات</h3>
         <button class="addbtn" onclick="newOffer()">+ عرض جديد</button></div>
+      <div id="whAdm"></div>
       <div id="offList"></div>
     </div>
     <div class="page" id="a_drv"><div id="drvBoard"></div></div>
@@ -10612,6 +10678,7 @@ function enter(){
     document.getElementById('cApp').classList.add('on');
     const _cw=document.getElementById('cWho'); if(_cw) _cw.textContent='هلا '+me.name;
     cartLoad(); renderCats(); renderAccount(); renderHomeLoc(); renderCart(); listenShops(); listenCustomerOrders(); bnAuto(); loadFare(); loadOffersC();
+    try{ setTimeout(()=>whLoad(true),1800) }catch(e){}   /* v564: عجلة الافتتاح */
     setTimeout(()=>{ try{ if(!window.__npSess && 'Notification' in window && Notification.permission==='default'){ window.__npSess=1; npAsk() } }catch(e){} },7000);
     try{ teamCheck() }catch(e){ __silent(e,'teamCheck') }   /* v508: موظف الفريق يبقى زبون، ولوحة الفريق من «حسابي» */
   }else if(me.role==='store'){
@@ -13303,6 +13370,7 @@ function minOrderMsg(n){ const t=_moShopType(); return 'أقل طلب من '+(t=
 function _pvKey(){ return ((cart[0]&&cart[0].shopId)||'')+'|'+cartSub()+'|'+(orderCode||'') }
 async function promoRefresh(force){
   if(!cart.length){ _pv={key:'',res:null}; return }
+  try{ whAutoCode() }catch(e){}   /* v564: جائزة العجلة تنطبق وحدها */
   const k=_pvKey();
   if(!force && k===_pv.key) return;
   _pv={key:k,res:_pv.key===k?_pv.res:null};
@@ -13335,7 +13403,7 @@ function promoWhy(r){ if(!r) return 'ما گدرنا نتحقق — جرّب م�
 function _promoList(){
   const sid=cart[0]&&cart[0].shopId, now=Date.now();
   const _used=new Set((myOrders||[]).filter(x=>!['rejected','cancelled'].includes(x.status)).map(x=>x.offer_id||x.offerId).filter(Boolean));
-  return (myOffers||[]).filter(o=>o.code && o.is_active!==false && !_used.has(o.id) && offFor(o,sid)
+  return [...(myPrizes||[]),...(myOffers||[])].filter(o=>o.code && o.is_active!==false && !_used.has(o.id) && offFor(o,sid)
     && !(o.starts_at&&Date.parse(o.starts_at)>now) && !(o.ends_at&&Date.parse(o.ends_at)<now)
     && !(o.uses_limit&&Number(o.uses_count||0)>=o.uses_limit));
 }
@@ -13410,7 +13478,7 @@ async function promoApply(code){
   if(p && !p.auto){ promoClose(); try{ buzz([15,30,15]) }catch(e){} toast(p.free_delivery?'انطبق — التوصيل مجاني 🎉':'انطبق الكوبون — وفّرت '+Number(p.discount||0).toLocaleString()+' د.ع 🎉'); promoRepaint() }
   else { const why=promoWhy(_pv.res); orderCode=prev&&prev!==code?prev:''; promoRefresh(true); fail(why) }
 }
-function promoClear(){ orderCode=''; _pv={key:'',res:null}; promoRefresh(true); promoRepaint(); toast('انشال الكوبون') }
+function promoClear(){ try{ if(WH.st&&WH.st.code&&String(orderCode).toUpperCase()===WH.st.code) WH.skip=true }catch(e){} orderCode=''; _pv={key:'',res:null}; promoRefresh(true); promoRepaint(); toast('انشال الكوبون') }
 /* الفلوس اللي يسلّمها السائق للمطعم = سعر الأكل ناقص الخصم (اللي دفعه الزبون فعلاً)
    حصة التطبيق من الخصم يعوّضها التطبيق للمطعم بعدين */
 /* v324: توزيع فلوس الطلب للسائق — نفس الأرقام بكل مكان (شاشة الرحلة، طلباتي، وصل التسليم) */
@@ -14400,6 +14468,7 @@ async function submitOrder(){
     /* وموظفين المحل هم — حتى لو تطبيقهم مسكّر */
     try{ if(o.shopId && _ref && _ref.id) __sendPush({shop_staff:o.shopId},'🔔 طلب جديد',o.customer+' — '+o.total.toLocaleString()+' د.ع',{type:'new_order', order_id:_ref.id, shop_id:o.shopId, total:String(o.total||0), customer:String(o.customer||'')}) }catch(e){}
     cart=[];orderNote='';orderCode='';_pv={key:'',res:null};renderCart();
+    try{ setTimeout(()=>whLoad(false),2500) }catch(e){}
     document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
     document.getElementById('p_orders').classList.add('on');
     document.querySelectorAll('#cNav button').forEach(b=>b.classList.remove('on'));
@@ -15112,7 +15181,7 @@ async function saveUserInfo(){
 
 
 /* ══════════ شاشة الخصومات — الزبون ══════════ */
-let myOffers=[], dscCat='all';
+let myOffers=[], myPrizes=[], dscCat='all';
 const DSC_CATS=[['all','الكل','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12.6 2.6 21 11l-9.4 9.4L3 12V4.5a1.9 1.9 0 0 1 1.9-1.9z"/><circle cx="8" cy="8" r="1.4"/></svg>'],
   ['restaurant','طعام','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M5 3v7a2.5 2.5 0 0 0 5 0V3M7.5 10v11"/><path d="M17 3c-1.7 1-2.5 3-2.5 5.5S15.3 13 17 13v8"/></svg>'],
   ['store','متاجر','<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 4h2l2.4 11.3a2 2 0 0 0 2 1.7h7.6a2 2 0 0 0 2-1.6L21 8H6"/><circle cx="10" cy="20" r="1.3"/><circle cx="17.5" cy="20" r="1.3"/></svg>'],
@@ -15124,9 +15193,144 @@ async function loadOffersC(){
     try{ myOffers = await sbGet('offers?select=*&is_active=eq.true&order=value.desc') || [] }
     catch(e2){ myOffers=[] }
   }
+  /* v564: جوائز العجلة شخصية — ما تطلع بالعروض العامة، بس بقائمة كوبونات صاحبها */
+  myPrizes=(myOffers||[]).filter(o=>o&&o.for_user); myOffers=(myOffers||[]).filter(o=>o&&!o.for_user);
   renderDisc();
   try{ renderHomeOffers() }catch(e){}
   try{ if(document.getElementById('shopList') && (shops||[]).length) renderShops() }catch(e){}
+}
+
+/* ══════════════════════════════════════════════════════════
+   v564: 🎡 عجلة الافتتاح — السيرفر يسحب الجائزة (wheel_spin)، والتطبيق بس يدوّر لحد النتيجة
+   ══════════════════════════════════════════════════════════ */
+const WH={st:null,busy:false,rot:0,skip:false};
+const WH_SEG=[4000,1000,1500,0,2000,1000,1500,0];
+const WH_LOGO='792707e8.png';
+const WH_IC={
+  gift:'<rect x="3.5" y="9" width="17" height="11.5" rx="2"/><path d="M2.5 9h19M12 9v11.5M12 9c-1.6-3.4-6-3.8-6-1.2C6 9.2 9.6 9 12 9zM12 9c1.6-3.4 6-3.8 6-1.2 0 1.4-3.6 1.2-6 1.2z"/>',
+  again:'<path d="M19.5 12a7.5 7.5 0 1 1-2.2-5.3"/><path d="M19.5 4.5v4h-4"/>',
+  x:'<path d="M6 6l12 12M18 6 6 18"/>'
+};
+function _whSv(p,cls,sw){ return '<svg'+(cls?' class="'+cls+'"':'')+' viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||1.9)+'" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>' }
+function _whFmt(n){ return Number(n||0).toLocaleString('en-US') }
+function _whDate(t){ try{ return new Date(t).toLocaleDateString('ar-IQ-u-nu-latn',{day:'numeric',month:'long'}) }catch(e){ return '' } }
+function whWheelSVG(){
+  const C=150,R=128,N=WH_SEG.length,S=360/N, pt=(a,r)=>[C+r*Math.cos((a-90)*Math.PI/180),C+r*Math.sin((a-90)*Math.PI/180)];
+  let h='<defs><radialGradient id="whSh" cx="50%" cy="50%" r="50%"><stop offset="70%" stop-color="#000" stop-opacity="0"/><stop offset="100%" stop-color="#000" stop-opacity=".16"/></radialGradient><clipPath id="whLc"><circle cx="150" cy="150" r="24"/></clipPath></defs>';
+  h+='<circle cx="150" cy="150" r="148" fill="#3A1C8C"/><circle cx="150" cy="150" r="141" fill="#4A25AE"/>';
+  for(let i=0;i<16;i++){ const [x,y]=pt(i*22.5+11.25,144.5); h+='<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="2.6" fill="'+(i%2?'#FFD7B0':'#fff')+'"/>' }
+  h+='<g id="whRot" style="transform:rotate('+WH.rot+'deg)">';
+  WH_SEG.forEach((v,i)=>{
+    const a0=i*S-S/2,a1=a0+S,[x0,y0]=pt(a0,R),[x1,y1]=pt(a1,R);
+    const fill = v===4000?'#F97402' : (i%2?'#fff':'#5B2BC9'), ink = v===4000||!(i%2)?'#fff':(v?'#5B2BC9':'#8C84A6'), sub = v===4000?'#FFE3C8':(i%2?'#8C84A6':'#CBBDF5');
+    h+='<path d="M150 150L'+x0.toFixed(1)+' '+y0.toFixed(1)+'A'+R+' '+R+' 0 0 1 '+x1.toFixed(1)+' '+y1.toFixed(1)+'Z" fill="'+fill+'"/>';
+    h+='<g transform="rotate('+(i*S)+' 150 150)">';
+    if(v) h+='<text x="150" y="64" text-anchor="middle" fill="'+ink+'" font-family="Cairo,sans-serif" font-weight="900" font-size="22">'+v+'</text><text x="150" y="84" text-anchor="middle" fill="'+sub+'" font-family="Cairo,sans-serif" font-weight="800" font-size="11.5">دينار</text>';
+    else h+='<svg x="139" y="40" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="'+ink+'" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">'+WH_IC.again+'</svg><text x="150" y="84" text-anchor="middle" fill="'+sub+'" font-family="Cairo,sans-serif" font-weight="800" font-size="11">حظ أوفر</text>';
+    h+='</g>';
+  });
+  WH_SEG.forEach((v,i)=>{ const [x,y]=pt(i*S-S/2,R); h+='<line x1="150" y1="150" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="#E9E3F7" stroke-width="1.1"/>' });
+  h+='</g><circle cx="150" cy="150" r="128" fill="url(#whSh)"/>';
+  h+='<circle cx="150" cy="150" r="31" fill="#fff" stroke="#E9E3F7" stroke-width="2"/><image href="'+WH_LOGO+'" x="126" y="126" width="48" height="48" clip-path="url(#whLc)"/>';
+  return '<svg class="wh-w" viewBox="0 0 300 300">'+h+'</svg>';
+}
+const WH_PTR='<svg class="wh-ptr" viewBox="0 0 38 44"><path d="M19 42 4 12a15 15 0 1 1 30 0z" fill="#F97402"/><circle cx="19" cy="15" r="6" fill="#fff"/></svg>';
+async function whLoad(auto){
+  if(!me||me.role!=='customer') return;
+  try{ WH.st=await rpc('wheel_state',{}) }catch(e){ WH.st=null }
+  whTilePaint();
+  const st=WH.st;
+  if(auto && st && st.can){
+    let k='wl_wh_seen_'+(me.id||me.uid||''); let seen=false; try{ seen=!!localStorage.getItem(k) }catch(e){}
+    if(!seen && !document.querySelector('#askSheet.on,#whSheet.on,.spds.on,#termsSheet.on')){ try{ localStorage.setItem(k,'1') }catch(e){} setTimeout(whOpen,600) }
+  }
+}
+function _whPrizeLive(st){ return !!(st&&st.code&&!st.used&&(!st.code_ends||Date.parse(st.code_ends)>Date.now())) }
+function whTilePaint(){
+  const el=document.getElementById('whTile'); if(!el) return;
+  const st=WH.st;
+  if(st&&st.can){
+    el.innerHTML='<div class="wh-tile" onclick="whOpen()"><svg class="wt-ic" viewBox="0 0 48 48"><circle cx="24" cy="24" r="23" fill="#4A25AE"/><path d="M24 24 24 4A20 20 0 0 1 38.1 9.9z" fill="#F97402"/><path d="M24 24 38.1 9.9A20 20 0 0 1 44 24z" fill="#fff"/><path d="M24 24 44 24A20 20 0 0 1 38.1 38.1z" fill="#7B5AE0"/><path d="M24 24 38.1 38.1A20 20 0 0 1 24 44z" fill="#fff"/><path d="M24 24 24 44A20 20 0 0 1 9.9 38.1z" fill="#7B5AE0"/><path d="M24 24 9.9 38.1A20 20 0 0 1 4 24z" fill="#fff"/><path d="M24 24 4 24A20 20 0 0 1 9.9 9.9z" fill="#7B5AE0"/><path d="M24 24 9.9 9.9A20 20 0 0 1 24 4z" fill="#fff"/><circle cx="24" cy="24" r="6" fill="#fff" stroke="#E9E3F7"/></svg>'
+      +'<div class="wt-t"><b>دوّر واربح خصم لحد 4,000 د.ع</b><span>عجلة الافتتاح · دورة وحدة لكل رقم</span></div><i>‹</i></div>';
+  }else if(_whPrizeLive(st)){
+    el.innerHTML='<div class="wh-tile won" onclick="whShowPrize()"><span class="wt-ic">'+_whSv(WH_IC.gift)+'</span>'
+      +'<div class="wt-t"><b>جائزتك: خصم '+_whFmt(st.prize)+' د.ع</b><span>تنطبق وحدها على طلبك الجاي'+(st.code_ends?' · لحد '+_whDate(st.code_ends):'')+'</span></div><i>‹</i></div>';
+  }else el.innerHTML='';
+}
+function _whSheet(){
+  let sh=document.getElementById('whSheet');
+  if(!sh){ sh=document.createElement('div'); sh.id='whSheet'; sh.onclick=e=>{ if(e.target===sh&&!WH.busy) whClose() }; document.body.appendChild(sh) }
+  return sh;
+}
+function whClose(){ const sh=document.getElementById('whSheet'); if(sh) sh.classList.remove('on') }
+function whOpen(){
+  const st=WH.st||{}, sh=_whSheet();
+  if(!st.can){ if(_whPrizeLive(st)) return whShowPrize(); return }
+  const mo=_whFmt(st.min_order||7000);
+  sh.innerHTML='<div class="whbox"><button type="button" class="wh-x" onclick="whClose()" aria-label="سد">'+_whSv(WH_IC.x,'',2.4)+'</button>'
+    +'<span class="wh-tag">عجلة الافتتاح · دورة وحدة</span><h2>دوّر واربح</h2><div class="wh-sub">خصم لحد 4,000 د.ع على طلبك</div>'
+    +'<div class="wh-wrap">'+WH_PTR+whWheelSVG()+'</div>'
+    +'<button type="button" class="wh-go" id="whGo" onclick="whSpin()">دوّر</button>'
+    +'<div class="wh-fine">الجائزة كود خصم على طلب بـ'+mo+' د.ع أو أكثر · صالح 7 أيام</div></div>';
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+async function whSpin(){
+  if(WH.busy) return; WH.busy=true;
+  const b=document.getElementById('whGo'); if(b){ b.disabled=true; b.textContent='…' }
+  let r=null;
+  try{ r=await rpc('wheel_spin',{}) }
+  catch(e){ WH.busy=false; if(b){ b.disabled=false; b.textContent='دوّر' } toast(errMsg(e)); try{ whLoad(false) }catch(_){} return }
+  const pz=Number(r&&r.prize||0), idx=WH_SEG.map((v,i)=>v===pz?i:-1).filter(i=>i>=0), k=idx[Math.floor(Math.random()*idx.length)]||0;
+  const S=360/WH_SEG.length, jit=(Math.random()-.5)*S*.6, cur=((WH.rot%360)+360)%360, tgt=((360-k*S+jit)%360+360)%360;
+  WH.rot+=360*6+((tgt-cur+360)%360);
+  const g=document.getElementById('whRot'); if(g) g.style.transform='rotate('+WH.rot+'deg)';
+  if(b) b.textContent='تدوّر…';
+  WH.st=Object.assign({},WH.st||{},{can:false,spun:true,prize:pz,code:r.code||null,code_ends:r.ends_at||null,used:false,min_order:r.min_order||(WH.st&&WH.st.min_order)});
+  setTimeout(()=>{ WH.busy=false; whResult(pz); whTilePaint(); try{ loadOffersC() }catch(e){} try{ if(cart.length) promoRefresh(true) }catch(e){} },4800);
+}
+function whResult(pz){
+  const sh=_whSheet(), st=WH.st||{}, box=sh.querySelector('.whbox'); if(!box) return;
+  if(!pz){
+    box.innerHTML='<div class="wh-res"><div class="wh-ric lose">'+_whSv(WH_IC.again)+'</div><h2>حظ أوفر هالمرة</h2>'
+      +'<p>شكراً لأنك ويانا بالافتتاح. تابع العروض والكوبونات بالتطبيق.</p><button type="button" class="wh-go" onclick="whClose()">تمام</button></div>';
+  }else box.innerHTML=_whPrizeHTML(st);
+  if(!sh.classList.contains('on')) requestAnimationFrame(()=>sh.classList.add('on'));
+}
+function _whPrizeHTML(st){
+  return '<div class="wh-res"><div class="wh-ric">'+_whSv(WH_IC.gift)+'</div><h2>مبروك! ربحت خصم '+_whFmt(st.prize)+' د.ع</h2>'
+    +'<p>ينطبق وحده على طلبك الجاي بـ'+_whFmt(st.min_order||7000)+' د.ع أو أكثر'+(st.code_ends?' · لحد '+_whDate(st.code_ends):'')+'</p>'
+    +'<div class="wh-code"><span>كود الخصم</span><b>'+esc(st.code||'')+'</b></div>'
+    +'<button type="button" class="wh-go" onclick="whClose();try{goHome&&goHome()}catch(e){}">اطلب هسه</button></div>';
+}
+function whShowPrize(){
+  const st=WH.st; if(!_whPrizeLive(st)) return;
+  const sh=_whSheet();
+  sh.innerHTML='<div class="whbox"><button type="button" class="wh-x" onclick="whClose()" aria-label="سد">'+_whSv(WH_IC.x,'',2.4)+'</button>'+_whPrizeHTML(st)+'</div>';
+  requestAnimationFrame(()=>sh.classList.add('on'));
+}
+function whAutoCode(){
+  const st=WH.st; if(WH.skip||!_whPrizeLive(st)||(orderCode||'').trim()) return;
+  if(cartSub()>=Number(st.min_order||0)) orderCode=st.code;
+}
+/* ── لوحة الإدارة ── */
+async function whAdmLoad(){
+  const el=document.getElementById('whAdm'); if(!el) return;
+  let r=null; try{ r=await rpc('admin_wheel_stats',{}) }catch(e){ r=null }
+  if(!r||typeof r!=='object'||r.total==null){ el.innerHTML=''; return }
+  const bp=r.by_prize||{}, C=(k,t)=>'<span class="wa-c"><b>'+t+'</b>'+(bp[k]?bp[k].left:0)+' / '+(bp[k]?bp[k].total:0)+'</span>';
+  const act=!!r.active, ends=r.ends_at?_whDate(r.ends_at):'';
+  el.innerHTML='<div class="wh-adm"><div class="wa-h"><b>عجلة الافتتاح</b><span class="wa-st'+(act?' on':'')+'">'+(act?'شغّالة'+(ends?' لحد '+ends:''):(r.is_on?'خلص وقتها':'مطفية'))+'</span></div>'
+    +'<div class="wa-g"><div><span>باقي بالكيس</span><em>'+r.left+' / '+r.total+'</em></div><div><span>دوّروا</span><em>'+r.spins+'</em></div>'
+    +'<div><span>ربحوا</span><em>'+r.winners+'</em><small>بقيمة '+_whFmt(r.given)+' د.ع</small></div><div><span>استخدموا الكود</span><em>'+r.used+'</em><small>صرفنا '+_whFmt(r.spent)+' د.ع</small></div></div>'
+    +'<div class="wa-cs">'+C('4000','4,000')+C('2000','2,000')+C('1500','1,500')+C('1000','1,000')+C('0','حظ أوفر')+'</div>'
+    +'<button type="button" class="'+(act?'off':'')+'" onclick="whAdmToggle('+(act?'false':'true')+')">'+(act?'إيقاف العجلة':'تشغيل العجلة')+'</button></div>';
+}
+async function whAdmToggle(on){
+  const yes=await askConfirm(on?'العجلة تطلع لكل الزبائن هسه، وتبقى <b>7 أيام</b> أو لين تخلص الجوائز.<br>الخصم على حساب التطبيق، لحد <b>200,000 د.ع</b>.':'العجلة تختفي عن الزبائن. اللي ربحوا تبقى أكوادهم شغّالة.',
+    {title:on?'تشغّل عجلة الافتتاح؟':'توقف العجلة؟', ok:on?'إي، شغّلها':'إي، وقّفها', danger:!on});
+  if(!yes) return;
+  try{ await rpc('admin_wheel_set',{p_on:!!on}); toast(on?'العجلة اشتغلت':'العجلة وقفت') }catch(e){ toast(errMsg(e)) }
+  whAdmLoad();
 }
 
 /* ══════════════════════════════════════════════════════════
@@ -20347,9 +20551,10 @@ let allOffers=[], adLedger=[];
 async function loadAdminData(){
   try{ adLedger = await sbGet('ledger?select=*') }catch(e){ adLedger=[] }
   window.adLedger = adLedger;
-  try{ allOffers = await sbGet('offers?select=*&order=created_at.desc') }catch(e){ allOffers=[] }
+  try{ allOffers = (await sbGet('offers?select=*&order=created_at.desc')||[]).filter(o=>!o.for_user) }catch(e){ allOffers=[] }
   try{ renderAdmin() }catch(e){}
   renderOffers();
+  try{ whAdmLoad() }catch(e){}
 }
 
 /* ═══════════════════════════════════════════════
@@ -30177,7 +30382,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v563', seen={}, n=0, q=[], t=null;
+  var VER='v564', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30430,7 +30635,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v563', t0=Date.now();
+  var VER='v564', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
