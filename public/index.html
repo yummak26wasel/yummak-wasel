@@ -1092,6 +1092,9 @@ html[data-theme=dark] .brm-it button,html[data-theme=dark] .brm-add input{backgr
 #cApp.mkmode .mksh h3{font-size:19px;font-weight:900;color:#1B1533}
 #cApp.mkmode .sprow .mkp{flex:0 0 158px}
 #cApp.mkmode .mkp-nm{color:#1B1533;font-weight:800;font-size:15px;line-height:1.4}
+.mkp>.mkp-pr{margin-top:auto}   /* v566: السعر بنفس الخط حتى لو كرت بيه نوع وكرت لا */
+.mkp-vr{display:inline-block;align-self:flex-start;margin-top:3px;padding:2px 9px;border-radius:8px;background:var(--g3,#F1ECFC);color:var(--g);font-size:12px;font-weight:800;line-height:1.6;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+html[data-theme=dark] .mkp-vr{background:rgba(124,92,255,.18);color:#CBB8FF}
 #cApp.mkmode .mkp-sz{font-size:13px;color:#8A849C;font-weight:600;margin-top:1px}
 #cApp.mkmode .mkp-pr{font-size:18px;font-weight:900;color:#1B1533}
 #cApp.mkmode .mkp-pr.sale{color:#E11D48}
@@ -12738,7 +12741,44 @@ function wasCollect(price,noDisc){
 }
 document.addEventListener('input',e=>{ const t=e.target; if(t&&(t.id==='pfPrice'||t.id==='pp')) wasPrev() });
 /* v384: كرت منتج مثل تطبيقات الماركت العالمية — صورة كبيرة على خلفية فاتحة، زر + أبيض، السعر ثم الاسم ثم الحجم */
+/* v566: عبد — «الانواع نفرقها بس تبقى مرتبطة بالاصلية»: بالماركت كل نوع/حجم يطلع كرت لحاله للزبون،
+   بس المنتج يبقى واحد بالبيانات (نفس اسم الحاسبة وتحديث الأسعار). الكرت يضيف المنتج الأصلي ويّا النوع. */
+function _mkVars(list){
+  if(!_isMarket(curShop)) return list;
+  const out=[];
+  for(const p of (list||[])){
+    const z=pSizes(p);
+    if(z.length<2 || pKgW(p) || pOpts(p).length){ out.push(p); continue }
+    const imgs=new Set(z.map(x=>x.img).filter(Boolean));
+    z.forEach((v,i)=>out.push(Object.assign({},p,{_vp:p, _vi:i, _vn:v.n, price:Number(v.p), was:0, sizes:[],
+      img: v.img || (p.img && !imgs.has(p.img) ? p.img : ''), avail: (p.avail!==false && v.out!==true)})));
+  }
+  return out;
+}
+function _vLine(p){ return cart.find(c=>c.pid===p._vp.id && c.shopId===curShop.id && (c.size||'')===p._vn && !(Array.isArray(c.opts)&&c.opts.length)) }
+function vCtl(p){
+  if(curShop && !isOpenNow(curShop)) return '';
+  if(pNA(p)) return `<span class="ost-b dis">نفذ</span>`;
+  const c=_vLine(p);
+  return c
+    ? `<div class="qty"><button onclick="vQty(${p._vp.id},${p._vi},-1)">−</button><span>${c.qty}</span><button onclick="vQty(${p._vp.id},${p._vi},1)">+</button></div>`
+    : `<button class="addb" onclick="vAdd(${p._vp.id},${p._vi})" aria-label="أضف">+</button>`;
+}
+function _vGet(pid,i){ const p=(curShop&&curShop.products||[]).find(x=>x.id===pid); const z=p?pSizes(p)[i]:null; return p&&z?{p,z}:null }
+function vAdd(pid,i){ const v=_vGet(pid,i); if(!v) return; addCart(pid, v.z.n) }
+function vQty(pid,i,d){
+  const v=_vGet(pid,i); if(!v) return;
+  const k=cart.findIndex(c=>c.pid===pid && c.shopId===curShop.id && (c.size||'')===v.z.n && !(Array.isArray(c.opts)&&c.opts.length));
+  if(k<0) return; if(d>0) return addCart(pid, v.z.n);
+  cartQty(k,d); try{ renderSpBar() }catch(e){}
+}
+function vOpen(pid,i){
+  const v=_vGet(pid,i); if(!v) return;
+  if(v.p.avail===false || v.z.out) return toast('هذا النوع نفذ');
+  openSizeSheet(v.p); _szSel=i; try{ szSheetPaint() }catch(e){}
+}
 function mkCardHTML(p){
+  if(p&&p._vp) return mkVarHTML(p);
   return `<div class="mkp${pNA(p)?' off':''}" onclick="openItem(${p.id})">
     <div class="mkp-im">${p.img?`<img decoding="async" ${lzA(tImg(pImgNow(p)))} alt="">`:`<div class="px">${prodPH()}</div>`}
       ${pOffPct(p)?`<span class="mkp-off">-${pOffPct(p)}%</span>`:''}
@@ -12747,6 +12787,18 @@ function mkCardHTML(p){
       return m ? `<div class="mkp-nm">${esc(m[1])}</div><div class="mkp-sz">${esc(m[2])}</div>` : `<div class="mkp-nm">${esc(p.name)}</div>` })()}
     ${p.desc?`<div class="mkp-ds">${esc(p.desc)}</div>`:''}
     <div class="mkp-pr${pWas(p)?' sale':''}">${pPriceTxt(p)} <small>د.ع</small>${pWas(p)?` <s>${pWas(p).toLocaleString()}</s>`:''}</div>
+  </div>`;
+}
+function _mkNameHTML(name){
+  const m=/^(.+?)\s+(\d+(?:[.,]\d+)?\s?(?:غم|غ|غرام|كغم|كغ|كيلو|مل|لتر|ml|g|kg))\.?$/i.exec(String(name||'').trim());
+  return m ? `<div class="mkp-nm">${esc(m[1])}</div><div class="mkp-sz">${esc(m[2])}</div>` : `<div class="mkp-nm">${esc(name)}</div>`;
+}
+function mkVarHTML(p){
+  return `<div class="mkp${pNA(p)?' off':''}" onclick="vOpen(${p._vp.id},${p._vi})">
+    <div class="mkp-im">${p.img?`<img decoding="async" ${lzA(tImg(p.img))} alt="">`:`<div class="px">${prodPH()}</div>`}
+      <div class="mkp-add" onclick="event.stopPropagation()">${vCtl(p)}</div></div>
+    ${_mkNameHTML(p.name)}<div class="mkp-vr">${esc(p._vn)}</div>
+    <div class="mkp-pr">${Number(p.price||0).toLocaleString()} <small>د.ع</small></div>
   </div>`;
 }
 function spCardHTML(p){
@@ -13051,11 +13103,11 @@ function renderMkRows(box,cats){
   const _R=_sbnSplit().rest, _at=Math.min(2,cats.length);
   const _car=_R.length?`<div class="sbn mksbn"><div class="sbn-tr" onscroll="sbnDots()">${_R.map((b,i)=>`<button type="button" class="sbn-it" onclick="sbnTap(${i+1})"><img src="${b.img}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>${_R.length>1?`<div class="sbn-dots">${_R.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`:'';
   const _mid=_car+_brCards();
-  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>العروض</h3><button type="button" onclick="pickSec('__off')">عرض الكل ›</button></div><div class="sprow">${_offs.slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
+  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>العروض</h3><button type="button" onclick="pickSec('__off')">عرض الكل ›</button></div><div class="sprow">${_mkVars(_offs).slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
     +(_at===0?_mid:'')
     +cats.map((c,i)=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
-      <div class="sprow">${c.ps.slice(0,12).map(spCardHTML).join('')}</div></div>`+(i+1===_at?_mid:'')).join('')
-    +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${rest.slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
+      <div class="sprow">${_mkVars(c.ps.slice(0,12)).slice(0,12).map(spCardHTML).join('')}</div></div>`+(i+1===_at?_mid:'')).join('')
+    +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${_mkVars(rest.slice(0,20)).slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
   clearInterval(__sbnT); if(_R.length>1) __sbnT=setInterval(sbnNext,4500);   /* v561 */
   return true;
 }
@@ -13170,7 +13222,7 @@ function renderMenu(){
   const _q=_normAr(shopQ), _ttl=document.getElementById('secTtl');
   if(_q){
     if(_ttl) _ttl.textContent='نتائج البحث';
-    var ps=all.filter(p=>_normAr((p.name||'')+' '+(p.desc||'')+' '+(p.cat||'')).includes(_q));
+    var ps=(_isMarket(curShop)?_mkVars(all):all).filter(p=>_normAr((p.name||'')+' '+(p._vn||'')+' '+(p.desc||'')+' '+(p.cat||'')).includes(_q));   /* v566: يدوّر بالأنواع هم */
     if(!ps.length){ box.innerHTML=EMPTY('ما لگينا «'+esc(String(shopQ).trim())+'» بهذا المحل'); renderSpBar(); return }
   } else if(_cats && renderMkRows(box,_cats)){ if(_ttl) _ttl.textContent=''; renderSpBar(); return }
   else var ps = _secProducts(all);
@@ -13180,7 +13232,7 @@ function renderMenu(){
   const _subRow=_subs.length?_mkSubRow(_subs):'';
   if(!ps.length){ box.innerHTML=_subRow+EMPTY(menuSec==='__off'?'ماكو عروض هسه — العروض تتجدد، رجعلها بعدين':(_isMarket(curShop)?'هذا القسم بعده ما بيه منتجات':'ما بيه منتجات بهذا القسم')); renderSpBar(); return }
   if(_isMarket(curShop)){   /* v384 · v392: مثل «يمك مارت» — الأقسام الفرعية · العروض/الأكثر طلباً · عدد الأصناف · عمودين */
-    let L=ps.slice();
+    let L=ps.some(p=>p&&p._vp)?ps.slice():_mkVars(ps);   /* v566: كل نوع كرت */
     const hasOff=L.some(p=>pWas(p)), hasTop=_shopTop.length>0;
     if(mkOff) L=L.filter(p=>pWas(p));
     if(mkTop) L=L.slice().sort((a,b)=>{ const ia=_shopTop.indexOf(String(a.id)), ib=_shopTop.indexOf(String(b.id)); return (ia<0?1e9:ia)-(ib<0?1e9:ib) });
@@ -30393,7 +30445,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v565', seen={}, n=0, q=[], t=null;
+  var VER='v566', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30646,7 +30698,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v565', t0=Date.now();
+  var VER='v566', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
