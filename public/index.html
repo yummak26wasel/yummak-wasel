@@ -1093,8 +1093,8 @@ html[data-theme=dark] .brm-it button,html[data-theme=dark] .brm-add input{backgr
 #cApp.mkmode .sprow .mkp{flex:0 0 158px}
 #cApp.mkmode .mkp-nm{color:#1B1533;font-weight:800;font-size:15px;line-height:1.4}
 .mkp>.mkp-pr{margin-top:auto}   /* v566: السعر بنفس الخط حتى لو كرت بيه نوع وكرت لا */
-.mkp-vr{display:inline-block;align-self:flex-start;margin-top:3px;padding:2px 9px;border-radius:8px;background:var(--g3,#F1ECFC);color:var(--g);font-size:12px;font-weight:800;line-height:1.6;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-html[data-theme=dark] .mkp-vr{background:rgba(124,92,255,.18);color:#CBB8FF}
+.mkp-sz b{color:#3D3557;font-weight:800}
+html[data-theme=dark] .mkp-sz b{color:#E4E0EE}
 #cApp.mkmode .mkp-sz{font-size:13px;color:#8A849C;font-weight:600;margin-top:1px}
 #cApp.mkmode .mkp-pr{font-size:18px;font-weight:900;color:#1B1533}
 #cApp.mkmode .mkp-pr.sale{color:#E11D48}
@@ -12797,7 +12797,8 @@ function mkVarHTML(p){
   return `<div class="mkp${pNA(p)?' off':''}" onclick="vOpen(${p._vp.id},${p._vi})">
     <div class="mkp-im">${p.img?`<img decoding="async" ${lzA(tImg(p.img))} alt="">`:`<div class="px">${prodPH()}</div>`}
       <div class="mkp-add" onclick="event.stopPropagation()">${vCtl(p)}</div></div>
-    ${_mkNameHTML(p.name)}<div class="mkp-vr">${esc(p._vn)}</div>
+    ${(()=>{ const m=/^(.+?)\s+(\d+(?:[.,]\d+)?\s?(?:غم|غ|غرام|كغم|كغ|كيلو|مل|لتر|ml|g|kg))\.?$/i.exec(String(p.name||'').trim());   /* v567: النوع بالسطر الرمادي (بدون لون) */
+      return m ? `<div class="mkp-nm">${esc(m[1])}</div><div class="mkp-sz"><b>${esc(p._vn)}</b> · ${esc(m[2])}</div>` : `<div class="mkp-nm">${esc(p.name)}</div><div class="mkp-sz"><b>${esc(p._vn)}</b></div>` })()}
     <div class="mkp-pr">${Number(p.price||0).toLocaleString()} <small>د.ع</small></div>
   </div>`;
 }
@@ -30445,7 +30446,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v566', seen={}, n=0, q=[], t=null;
+  var VER='v567', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30698,7 +30699,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v566', t0=Date.now();
+  var VER='v567', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
