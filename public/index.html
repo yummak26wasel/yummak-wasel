@@ -8121,8 +8121,23 @@ if('serviceWorker' in navigator){
       try{ navigator.serviceWorker.getRegistration().then(function(r){ if(r) r.update().catch(function(){}) }).catch(function(){}) }catch(e){} }
     document.addEventListener('visibilitychange',chk); setInterval(chk,600000); })();
   /* الـSW يبلّغ لما ينزل إصدار جديد — شريط صغير، والمستخدم يقرر متى يحدّث (ما نقطع طلب شغّال) */
+  /* v570: التحديث ينطبق وحده — قبل: يبقى شريط «اضغط للتحديث» والناس ما تضغطه (تلفون بقى على v565 يومين).
+     ١) إذا انفتح التطبيق هسه وبعده ما لمس شي ← نعيد التحميل فوراً.  ٢) الزبون: إذا طلع من التطبيق دقيقة أو أكثر ورجع ← يتحدث وهو راجع.
+     (السلة محفوظة. وما نحدّث إذا جان يصوّر/يختار صورة بآخر 3 دقايق) */
+  var __t0=Date.now(), __touched=false, __updWait=false, __hidAt=0, __fileAt=0;
+  ['pointerdown','keydown','touchstart'].forEach(function(t){ document.addEventListener(t,function(){ __touched=true },{capture:true,passive:true}) });
+  document.addEventListener('click',function(e){ try{ var el=e.target; if(el&&el.closest&&el.closest('input[type=file],label')) __fileAt=Date.now() }catch(_){} },true);
+  document.addEventListener('change',function(e){ try{ if(e.target&&e.target.type==='file') __fileAt=Date.now() }catch(_){} },true);
+  document.addEventListener('visibilitychange',function(){
+    if(!__updWait) return;
+    if(document.visibilityState==='hidden'){ __hidAt=Date.now(); return }
+    var cust=false; try{ cust=!!(me&&me.role==='customer') }catch(_){}
+    if(cust && __hidAt && Date.now()-__hidAt>=60000 && Date.now()-__fileAt>180000) location.reload();
+  });
   navigator.serviceWorker.addEventListener('message',function(ev){
     if(!(ev.data&&ev.data.type==='leemak-update')) return;
+    __updWait=true;
+    if(!__touched && Date.now()-__t0<20000){ location.reload(); return }
     if(document.getElementById('updBar')) return;
     var b=document.createElement('button'); b.id='updBar';
     b.textContent='فيه تحديث جديد — اضغط للتحديث';
@@ -12455,13 +12470,16 @@ function _imgDiag(sid){
 /* ═══ v509: صور المنيو تنزل بالترتيب — الي بالشاشة أول (4 سوه)، وبعدين الباقي بالخلفية (2 سوه)
    بالنت الضعيف ما تتقاسم الصور الظاهرة السرعة ويه 30 صورة ما مبينة ═══ */
 const LZ={vq:[],bg:[],rt:[],run:0,io:null,raf:0,t0:0,sid:'',cnt:0,gen:0,slow:0};
+/* v570: النت البطيء جداً (3G / أقل من 1.5 ميگا) — 6 صور سوه تتقاسم السرعة وكلها تخلص بنفس الوكت متأخرة، وبعد 7 ثواني تنلغي وتنعاد (تضيع اللي نزل).
+   هسه: صورتين بس سوه (الي بالشاشة أول)، وننتظر 20 ثانية بدون ما نلغي شي */
+function lzSlowNet(){ try{ const nc=navigator.connection||{}; return !!(nc.saveData || /2g|3g/.test(nc.effectiveType||'') || (nc.downlink && nc.downlink<1.5) || LZ.slow>=3) }catch(e){ return false } }
 /* v559: الصورة اللي نزلت مرة بهالجلسة، إذا القائمة انعاد رسمها (السلة، تحديث المحل كل دقيقة…) تطلع فوراً — قبل: تختفي وترجع تحمّل */
 const LZOK=new Map();
 function lzA(u){ const k=LZOK.get(u); return k ? 'src="'+esc(k)+'" class="lzok"' : 'data-lz="'+u+'"' }
 /* v560: بالخلفية نجيب أول صور كل محل — وحدة وحدة، وبس إذا ماكو تحميل ثاني شغّال — حتى من يفتح المحل تطلع فوراً (مثل التطبيقات العالمية) */
 const PF={q:[],on:false,seen:new Set(),t:0};
 function pfShops(){
-  try{ if(!me || me.role!=='customer') return; const nc=navigator.connection||{}; if(nc.saveData || /2g/.test(nc.effectiveType||'')) return }catch(e){ return }
+  try{ if(!me || me.role!=='customer') return; if(lzSlowNet()) return }catch(e){ return }   /* v570: بالنت البطيء ما نجيب صور محلات ثانية */
   for(const sh of (shops||[]).slice(0,12)){
     const ps=(sh && (sh._teaser && sh._teaser.length ? sh._teaser : sh.products)) || []; let n=0;
     for(const p of ps){ if(n>=6) break; if(!p || !p.img) continue; n++;
@@ -12485,13 +12503,15 @@ function lzLoad(img){
   /* v514: إذا صورة علكت (النت ضعيف) ما نبقى ننتظرها للأبد — بعد 7 ثواني نفك مكانها وتكمل الباقي، وهي تكمل تنزل وحدها */
   let fin=false; const rel=()=>{ if(fin) return false; fin=true; clearTimeout(tm); if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.classList.add('lzok'); return true };
   const done=()=>{ if(rel()){ lzMark(); lzPump() } };
+  const _sl=lzSlowNet();
   const tm=setTimeout(()=>{ if(fin) return; LZ.slow++;
+    if(_sl){ if(rel()) lzPump(); return }   /* v570: نت بطيء — ما نلغي الصورة (تكمل تنزل)، بس نفك مكانها */
     /* v524: نسخة /m/sb/ علكت 7 ثواني (اتصال عالك بعنوان التطبيق) ← نجيبها هسه من الأصل بـ Supabase بدل ما تنعاد بالأخير وتعلك مرة ثانية */
     const mm=(!img.complete && !img.dataset.sbf) ? /\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(img.dataset.lz||'') : null;
     if(mm){ fin=true; LZ.sbStuck=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.dataset.sbf='1'; img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lz=SB_PIMG+mm[1]; LZ.vq.unshift(img); lzPump(); return }
     if(!img.dataset.lzr && !img.complete){   /* أول مرة: نلغي الطلب العالك (يفك الخط) ونرجعها لآخر الدور (بعد كل الصور) تنعاد */
       img.dataset.lzr='1'; fin=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lzw='1'; LZ.rt.push(img); lzPump(); return }
-    if(rel()) lzPump() },7000);
+    if(rel()) lzPump() },_sl?20000:7000);
   img.addEventListener('load',()=>{ try{ if(img.naturalWidth>0 && img.dataset.lz0) LZOK.set(img.dataset.lz0, img.currentSrc||img.src) }catch(e){} done() });
   img.addEventListener('error',()=>{ if(img.dataset.tf==='1' && !img.dataset.lze){ img.dataset.lze='1'; return } done() });
   img.src=img.dataset.lz;
@@ -12503,8 +12523,9 @@ function lzMark(){
   if(dt>4000) try{ const nc=navigator.connection||{}; window.__errPush&&window.__errPush('IMGSLOW '+Math.round(dt/100)/10+'s','shop='+sid+' net='+(nc.effectiveType||'?')+'/'+(nc.downlink||'?')+' origin='+location.host,'lz') }catch(e){}
 }
 function lzPump(){
-  while(LZ.run<6 && LZ.vq.length){ const i=LZ.vq.shift(); if(i.isConnected) lzLoad(i) }   /* v560: 4 ← 6 (الصور المصغّرة صغيرة) */
-  while(LZ.run<2 && !LZ.vq.length && LZ.bg.length){ const i=LZ.bg.shift(); if(i.isConnected && !i.dataset.lzs) lzLoad(i) }
+  const _mx=lzSlowNet()?2:6;
+  while(LZ.run<_mx && LZ.vq.length){ const i=LZ.vq.shift(); if(i.isConnected) lzLoad(i) }   /* v560: 4 ← 6 (الصور المصغّرة صغيرة) */
+  while(LZ.run<(_mx===2?1:2) && !LZ.vq.length && LZ.bg.length){ const i=LZ.bg.shift(); if(i.isConnected && !i.dataset.lzs) lzLoad(i) }
   while(LZ.run<2 && !LZ.vq.length && !LZ.bg.length && LZ.rt.length){ const i=LZ.rt.shift(); if(i.isConnected && !i.dataset.lzs){ delete i.dataset.lzw; lzLoad(i) } }   /* v514: العالكة تنعاد بالأخير */
 }
 function lzScan(){
@@ -30450,7 +30471,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v569', seen={}, n=0, q=[], t=null;
+  var VER='v570', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30703,7 +30724,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v569', t0=Date.now();
+  var VER='v570', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
