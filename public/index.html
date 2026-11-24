@@ -101,7 +101,8 @@ html{touch-action:pan-x pan-y}
 .szadd span{white-space:nowrap;font-size:15.5px}
 .szd{max-width:80px}
 #p_shop .prod{cursor:pointer}
-.szbig{margin:0 -18px 14px;height:220px;overflow:hidden;background:#F4F1FA}.szbig img{width:100%;height:100%;object-fit:cover;display:block}
+.szbig{position:relative;margin:0 -18px 14px;height:220px;overflow:hidden;background:#F4F1FA}.szbig img{width:100%;height:100%;object-fit:cover;display:block}
+.szbig .szth+.szfu{position:absolute;top:0;left:0;right:0;margin:auto;opacity:0;transition:opacity .25s}.szbig .szth+.szfu.ok{opacity:1}
 .oplist{display:flex;flex-direction:column;gap:8px;padding-bottom:14px}
 .oprow{display:flex;align-items:center;gap:10px;padding:12px 14px;border:1.5px solid #ECE8F2;border-radius:16px;cursor:pointer}
 .oprow.on{border-color:#7B3FE4;background:#F7F2FF}
@@ -13318,7 +13319,7 @@ function pPriceTxt(p){
   if(z.length===1) return Number(z[0].p).toLocaleString();
   return Number(p.price||0).toLocaleString();
 }
-let _szP=null,_szSel=0,_szQ=1,_szOpt=[];
+let _szP=null,_szSel=0,_szQ=1,_szOpt=[]; const SZFULL=new Set();
 const SZ_TAG={'صغير':'S','وسط':'M','متوسط':'M','كبير':'L','عائلي':'XL','جامبو':'XL','سنكل':'S','دبل':'L'};
 function szTag(n,i,len){ const t=SZ_TAG[String(n).trim()]; if(t) return t; return (len===2?['M','L']:['S','M','L','XL','XXL','3XL'])[i]||String(i+1) }
 function openSizeSheet(p){ _szP=p; _szSel=Math.max(0,pSizes(p).findIndex(z=>!z.out)); _szQ=1; _szOpt=[]; szSheetPaint() }
@@ -13340,7 +13341,10 @@ function szSheetPaint(){
   const p=_szP, N=n=>Number(n).toLocaleString();
   el.innerHTML=`<div class="szcard">
     <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
-    ${(()=>{ const im=(z.length&&z[_szSel]&&z[_szSel].img)||p.img; return im?`<div class="szbig"><img src="${esc(oImg(im))}" alt=""></div>`:`<div class="szbig szph">${prodPH()}<span>${esc(p.name)}</span></div>` })()}
+    ${(()=>{ const im=(z.length&&z[_szSel]&&z[_szSel].img)||p.img; if(!im) return `<div class="szbig szph">${prodPH()}<span>${esc(p.name)}</span></div>`;
+      /* v568: عبد «تأخير ممل» — الصورة الصغيرة (محمّلة أصلاً من الكرت) تطلع فوراً، والكبيرة تبين فوقها أول ما توصل */
+      const t=tImg(im), th=LZOK.get(t)||t, fu=oImg(im), ok=SZFULL.has(fu);
+      return `<div class="szbig">${ok?'':`<img class="szth" src="${esc(th)}" alt="">`}<img class="szfu${ok?' ok':''}" src="${esc(fu)}" alt="" onload="SZFULL.add('${esc(fu).replace(/'/g,'')}');this.classList.add('ok')"></div>` })()}
     <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${pKgW(p)?'≈ ':''}${N(z.length?Number(z[_szSel].p):base)} د.ع${pWas(p)?` <s class="szwas">${N(pWas(p))}</s> <em class="szoff">-${pOffPct(p)}%</em>`:''}</div>${kgInfoHTML(p)}${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
     ${z.length?`<div class="szg"><div class="szgt">${esc(p.sizeLabel||'الحجم')} <i>مطلوب</i></div>
       ${z.map((x,i)=>x.out?`<div class="szo szo-z szo-out" onclick="toast('«${esc(x.n).replace(/'/g,'')}» خلص هسه')">${(x.img||p.img)&&z.some(y=>y.img)?`<img class="szo-im" src="${esc(tImg(x.img||p.img))}" alt="">`:''}<div class="szo-n"><b>${esc(x.n)}</b>${x.d?`<span>${esc(x.d)}</span>`:''}</div><em class="szo-pr szo-x">خلص</em><i class="rd"></i></div>`
@@ -30446,7 +30450,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v567', seen={}, n=0, q=[], t=null;
+  var VER='v568', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30699,7 +30703,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v567', t0=Date.now();
+  var VER='v568', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
