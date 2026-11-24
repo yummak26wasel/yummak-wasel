@@ -8,8 +8,10 @@
               public/m/sb/<مسارها بالمخزن>.t.webp   ← 320px  (القوائم)
    التطبيق (oImg/tImg بـ index.html) يطلبها من هنا، وإذا ما لكاها (صورة انرفعت بعد آخر نشر) يرجع للأصل.
 
+   v571: + <...>.s.webp ← 160px خفيفة (‎~3KB) للنت البطيء — وتنصنع هم لكل ملفات .t.webp داخل public/m اللي ما الها نسخة خفيفة.
+
    هذا السكربت ما يوقّف النشر أبداً: أي خطأ ← يكتب سطر ويطلع بنجاح (التطبيق يرجع للصور الأصلية). */
-import { mkdir, writeFile, readFile } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { execSync } from 'node:child_process';
@@ -51,6 +53,33 @@ async function convert(sharp, buf, rel) {
              .webp({ quality: 82, effort: 4 }).toFile(base + '.webp');
   await src().resize({ width: 320, height: 320, fit: 'inside', withoutEnlargement: true })
              .webp({ quality: 72, effort: 4 }).toFile(base + '.t.webp');
+  await src().resize({ width: 160, height: 160, fit: 'inside', withoutEnlargement: true })
+             .webp({ quality: 55, effort: 4 }).toFile(base + '.s.webp');
+}
+
+/* v571: نسخة خفيفة 160px لكل صورة 320px داخل public/m ما الها وحدة */
+async function smallPass(sharp) {
+  const t0 = Date.now(); let made = 0, fail = 0;
+  const todo = [];
+  async function walk(dir) {
+    let ents; try { ents = await readdir(dir, { withFileTypes: true }); } catch (e) { return; }
+    for (const e of ents) {
+      const f = join(dir, e.name);
+      if (e.isDirectory()) await walk(f);
+      else if (e.name.endsWith('.t.webp')) { const o = f.replace(/\.t\.webp$/, '.s.webp'); if (!existsSync(o)) todo.push([f, o]); }
+    }
+  }
+  await walk('public/m');
+  let i = 0;
+  async function worker() {
+    while (i < todo.length) {
+      const [f, o] = todo[i++];
+      try { await sharp(f, { failOn: 'none' }).resize({ width: 160, height: 160, fit: 'inside', withoutEnlargement: true })
+                 .webp({ quality: 55, effort: 4 }).toFile(o); made++; } catch (e) { fail++; }
+    }
+  }
+  await Promise.all(Array.from({ length: 8 }, worker));
+  log('small pass', JSON.stringify({ made, fail, sec: Math.round((Date.now() - t0) / 1000) }));
 }
 
 async function main() {
@@ -96,4 +125,6 @@ async function main() {
   log(JSON.stringify(man));
 }
 
-main().catch(e => log('error — skipped:', e && e.message || e)).finally(() => { process.exitCode = 0; });
+main().catch(e => log('error — skipped:', e && e.message || e))
+  .then(async () => { try { await smallPass(getSharp()); } catch (e) { log('small pass skipped:', e && e.message || e); } })
+  .finally(() => { process.exitCode = 0; });

@@ -8862,10 +8862,15 @@ function cpSearch2(v){ _cpQ2=String(v||'').trim(); cpPaintList() }
 const SB_PIMG=(typeof SB_URL!=='undefined'?SB_URL:'https://obvxqyfmcmldruauhsgw.supabase.co')+'/storage/v1/object/public/images/';
 function sbLocal(u){ if(u.indexOf(SB_PIMG)!==0) return u; const r=u.slice(SB_PIMG.length); return (/^[\w.\/-]+\.(jpe?g|png|webp)$/i.test(r) && r.indexOf('..')<0) ? '/m/sb/'+r+'.webp' : u }
 function oImg(u){ u=String(u||''); return sbLocal(u.replace(/^https:\/\/leemak\.app(\/m\/)/,'$1')) }
-function tImg(u){ u=oImg(u); return (/^\/m\/[\w\/.-]+\.webp$/.test(u) && !/\.t\.webp$/.test(u)) ? u.replace(/\.webp$/,'.t.webp') : u }
+function tImg320(u){ u=oImg(u); return (/^\/m\/[\w\/.-]+\.webp$/.test(u) && !/\.[ts]\.webp$/.test(u)) ? u.replace(/\.webp$/,'.t.webp') : u }
+/* v571: «ناس نتهم تعبان» — بالنت البطيء الكروت تاخذ نسخة 160px (أخف ٤ مرات، ‎~3KB) بدل 320px. تنصنع وقت النشر (tools/sbimg.mjs).
+   إذا ما موجودة (صورة جديدة قبل النشر الجاي) ← ترجع للـ320 وحدها (معالج الخطأ تحت) */
+var __imgLite=false;
+function tImg(u){ const t=tImg320(u); return (__imgLite && /^\/m\/[\w\/.-]+\.t\.webp$/.test(t)) ? t.replace(/\.t\.webp$/,'.s.webp') : t }
 document.addEventListener('error',e=>{ const t=e.target; if(!t||t.tagName!=='IMG') return;
-  const m=/\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(t.src||'');
+  const m=/\/m\/sb\/(.+?)(?:\.[ts])?\.webp$/.exec(t.src||'');
   if(m && !t.dataset.sbf){ t.dataset.sbf='1'; t.dataset.tf='1'; if(t.dataset.lz) t.dataset.lz=SB_PIMG+m[1]; t.src=SB_PIMG+m[1]; return }   /* v515: ما الها نسخة بعد ← الأصل */
+  if(/\/m\/.+\.s\.webp$/.test(t.src)&&!t.dataset.sf){ t.dataset.sf='1'; t.dataset.tf='1'; t.src=t.src.replace(/\.s\.webp$/,'.t.webp'); return }   /* v571: النسخة الخفيفة ما موجودة ← 320 */
   if(/\.t\.webp$/.test(t.src)&&!t.dataset.tf){ t.dataset.tf='1'; t.src=t.src.replace(/\.t\.webp$/,'.webp') } },true);
 function _cpThumb(p){
   return p.img
@@ -12498,7 +12503,7 @@ function pfPump(){
 function lzLoad(img){
   if(!img || !img.dataset.lz || img.dataset.lzs) return;
   /* v524: إذا صورة من /m/sb/ علكت قبل بهالجلسة، الباقي نجيبه من الأصل مباشرة (ما ننتظر 7 ثواني لكل دفعة) */
-  if(LZ.sbStuck && !img.dataset.sbf){ const m2=/\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(img.dataset.lz||''); if(m2){ img.dataset.sbf='1'; img.dataset.lz=SB_PIMG+m2[1] } }
+  if(LZ.sbStuck && !img.dataset.sbf){ const m2=/\/m\/sb\/(.+?)(?:\.[ts])?\.webp$/.exec(img.dataset.lz||''); if(m2){ img.dataset.sbf='1'; img.dataset.lz=SB_PIMG+m2[1] } }
   img.dataset.lzs='1'; LZ.run++; const g=LZ.gen; if(!img.dataset.lz0) img.dataset.lz0=img.dataset.lz;
   /* v514: إذا صورة علكت (النت ضعيف) ما نبقى ننتظرها للأبد — بعد 7 ثواني نفك مكانها وتكمل الباقي، وهي تكمل تنزل وحدها */
   let fin=false; const rel=()=>{ if(fin) return false; fin=true; clearTimeout(tm); if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.classList.add('lzok'); return true };
@@ -12507,7 +12512,7 @@ function lzLoad(img){
   const tm=setTimeout(()=>{ if(fin) return; LZ.slow++;
     if(_sl){ if(rel()) lzPump(); return }   /* v570: نت بطيء — ما نلغي الصورة (تكمل تنزل)، بس نفك مكانها */
     /* v524: نسخة /m/sb/ علكت 7 ثواني (اتصال عالك بعنوان التطبيق) ← نجيبها هسه من الأصل بـ Supabase بدل ما تنعاد بالأخير وتعلك مرة ثانية */
-    const mm=(!img.complete && !img.dataset.sbf) ? /\/m\/sb\/(.+?)(?:\.t)?\.webp$/.exec(img.dataset.lz||'') : null;
+    const mm=(!img.complete && !img.dataset.sbf) ? /\/m\/sb\/(.+?)(?:\.[ts])?\.webp$/.exec(img.dataset.lz||'') : null;
     if(mm){ fin=true; LZ.sbStuck=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.dataset.sbf='1'; img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lz=SB_PIMG+mm[1]; LZ.vq.unshift(img); lzPump(); return }
     if(!img.dataset.lzr && !img.complete){   /* أول مرة: نلغي الطلب العالك (يفك الخط) ونرجعها لآخر الدور (بعد كل الصور) تنعاد */
       img.dataset.lzr='1'; fin=true; if(g===LZ.gen) LZ.run=Math.max(0,LZ.run-1); img.removeAttribute('src'); delete img.dataset.lzs; img.dataset.lzw='1'; LZ.rt.push(img); lzPump(); return }
@@ -12545,6 +12550,7 @@ function openShop(id){
   { const _s=shops.find(s=>s.id===id); if(_s && shopSoon(_s) && !(me && me.role==='admin')){ toast((_s.name||'هذا المحل')+' — قريباً إن شاء الله'); return } }   /* v538 */
   curShop=shops.find(s=>s.id===id); if(!curShop)return;
   if(curShop.menu_n>0 && _lmHave(curShop)) _lmRefresh(curShop);   /* v531: المنيو المحفوظ يبين فوراً، والجديد يجي بالخلفية إذا تغيّر */
+  try{ __imgLite=lzSlowNet() }catch(e){ __imgLite=false }   /* v571 */
   LZ.t0=Date.now(); LZ.sid=String(id).slice(0,8); LZ.cnt=0; LZ.vq=[]; LZ.bg=[]; LZ.rt=[]; LZ.gen++; LZ.run=0; LZ.slow=0;   /* v514: كل محل يبدي بعدّاد نظيف */
   try{ clearTimeout(LZ.wd); const _g=LZ.gen; LZ.wd=setTimeout(()=>{ if(_g!==LZ.gen) return; const L=[...document.querySelectorAll('#p_shop img[data-lz]')]; if(!L.length) return;
     const ok=L.filter(i=>i.complete&&i.naturalWidth>0).length; if(ok>=Math.min(6,L.length)) return; const nc=navigator.connection||{};
@@ -13364,7 +13370,7 @@ function szSheetPaint(){
     <button class="szx" onclick="szClose()" aria-label="سكّر">×</button>
     ${(()=>{ const im=(z.length&&z[_szSel]&&z[_szSel].img)||p.img; if(!im) return `<div class="szbig szph">${prodPH()}<span>${esc(p.name)}</span></div>`;
       /* v568: عبد «تأخير ممل» — الصورة الصغيرة (محمّلة أصلاً من الكرت) تطلع فوراً، والكبيرة تبين فوقها أول ما توصل */
-      const t=tImg(im), th=LZOK.get(t)||t, fu=oImg(im), ok=SZFULL.has(fu);
+      const t=tImg(im), th=LZOK.get(t)||t, fu=__imgLite?tImg320(im):oImg(im), ok=SZFULL.has(fu);   /* v571: بالنت البطيء الكبيرة = 320 */
       return `<div class="szbig">${ok?'':`<img class="szth" src="${esc(th)}" alt="">`}<img class="szfu${ok?' ok':''}" src="${esc(fu)}" alt="" onload="SZFULL.add('${esc(fu).replace(/'/g,'')}');this.classList.add('ok')"></div>` })()}
     <div class="szinfo2"><b>${esc(p.name)}</b>${p.desc?`<p>${esc(p.desc)}</p>`:''}<div class="szpr">${pKgW(p)?'≈ ':''}${N(z.length?Number(z[_szSel].p):base)} د.ع${pWas(p)?` <s class="szwas">${N(pWas(p))}</s> <em class="szoff">-${pOffPct(p)}%</em>`:''}</div>${kgInfoHTML(p)}${pLead(p)?`<div class="sch-lead">📅 يحتاج حجز قبل ${pLead(p)>=24?(pLead(p)===24?'يوم':(pLead(p)===48?'يومين':(pLead(p)/24)+' أيام')):pLead(p)+' ساعات'}</div>`:''}</div>
     ${z.length?`<div class="szg"><div class="szgt">${esc(p.sizeLabel||'الحجم')} <i>مطلوب</i></div>
@@ -30471,7 +30477,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v570', seen={}, n=0, q=[], t=null;
+  var VER='v571', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30724,7 +30730,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v570', t0=Date.now();
+  var VER='v571', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
