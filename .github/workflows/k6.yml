@@ -1,0 +1,29 @@
+name: k6-loadtest
+on:
+  push:
+    branches: [loadtest]
+permissions:
+  contents: write
+jobs:
+  k6:
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: grafana/setup-k6-action@v1
+      - name: run
+        run: |
+          mkdir -p tools/loadtest/out
+          date -u +%FT%TZ > tools/loadtest/out/started.txt
+          k6 run tools/loadtest/k6.js > tools/loadtest/out/log.txt 2>&1 || true
+          date -u +%FT%TZ > tools/loadtest/out/ended.txt
+      - name: save
+        run: |
+          git config user.name "loadtest-bot"
+          git config user.email "loadtest-bot@users.noreply.github.com"
+          tail -c 200000 tools/loadtest/out/log.txt > tools/loadtest/out/log_tail.txt || true
+          rm -f tools/loadtest/out/log.txt
+          git add -f tools/loadtest/out
+          git commit -m "loadtest results [skip ci]" || true
+          git push origin HEAD:loadtest
