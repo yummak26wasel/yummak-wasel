@@ -4045,6 +4045,35 @@ html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,htm
 .ask-ok.danger{background:#E8365D;box-shadow:0 10px 24px rgba(232,54,93,.28)}
 .ask-no:active,.ask-ok:active{transform:scale(.97)}
 
+/* v575: مواد بموافقة الإدارة */
+.prq-box{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:12px 14px;margin:0 0 12px}
+.prq-h b{display:block;font:800 14px Cairo,sans-serif;color:#1B1533}.prq-h span{display:block;font-size:12px;font-weight:600;color:#7A7490;margin-top:1px}
+.prq-st{margin:12px 0 6px;font:800 12.5px Cairo,sans-serif;color:#6E6787}.prq-st i{font-style:normal;background:#F3F1F8;border-radius:8px;padding:1px 7px;margin-right:4px}
+.prq-r{display:flex;align-items:center;gap:10px;padding:7px 0;border-top:1px solid #F1EEF7}
+.prq-r img,.prq-ph{flex:none;width:42px;height:42px;border-radius:11px;object-fit:cover;background:#F4F1FA;display:block}
+.prq-r>div{flex:1;min-width:0}.prq-r b{display:block;font-size:13.5px;font-weight:800;color:#1B1533;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prq-r span{display:block;font-size:12px;font-weight:600;color:#7A7490}
+.prq-r em{flex:none;font-style:normal;font:800 11.5px Cairo,sans-serif;padding:3px 9px;border-radius:999px}.prq-r em.w{background:#FFF1E4;color:#C25A00}.prq-r em.x{background:#FCEBEB;color:#A32D2D}
+.prq-bar{width:100%;display:flex;align-items:center;gap:12px;text-align:right;background:#FFF6EC;border:1px solid #F7D3AE;border-radius:18px;padding:12px 14px;margin:0 0 14px;font:inherit;cursor:pointer}
+.prq-bar .pb-ic{width:42px;height:42px;border-radius:14px;background:#FFE3C8;color:#C25A00}.prq-bar .pb-ic svg{width:22px;height:22px}
+.prq-bar>div{flex:1;min-width:0}.prq-bar b{display:block;font:800 14.5px Cairo,sans-serif;color:#1B1533}.prq-bar span{display:block;font-size:12px;font-weight:600;color:#7A7490;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.prq-bar i{flex:none;font-style:normal;min-width:30px;height:30px;border-radius:999px;background:#F97402;color:#fff;font:900 14px/30px Cairo,sans-serif;text-align:center}
+#prqSheet{position:fixed;inset:0;z-index:9990;background:rgba(17,10,35,.5);display:none;align-items:flex-end;justify-content:center}
+#prqSheet.on{display:flex}
+.prq-sheet{background:#F7F5FC;width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:26px 26px 0 0;padding:14px 14px calc(18px + env(safe-area-inset-bottom))}
+.prq-sh-h{display:flex;align-items:center;justify-content:space-between;margin:2px 4px 12px}.prq-sh-h .as-x{position:static;width:36px;height:36px;border-radius:50%;border:0;background:#EEEAF6;color:#6E6787;font-size:15px}.prq-sh-h b{font:900 17px Cairo,sans-serif;color:#1B1533}
+.prq-a{display:flex;gap:12px;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:12px;margin-bottom:10px}
+.prq-ai img,.prq-ai .prq-ph{width:84px;height:84px;border-radius:14px;object-fit:cover;background:#F4F1FA;display:block}
+.prq-ab{flex:1;min-width:0}.prq-sh{display:inline-block;font:800 11.5px Cairo,sans-serif;color:var(--g);background:var(--g3,#F1ECFC);border-radius:8px;padding:1px 8px}
+.prq-ab b{display:block;font:800 15px/1.5 Cairo,sans-serif;color:#1B1533;margin-top:4px}
+.prq-pr{font:800 13px Cairo,sans-serif;color:#3D3557}.prq-ct{font-size:12px;font-weight:600;color:#7A7490;margin-top:2px}
+.prq-note{width:100%;box-sizing:border-box;margin-top:8px;border:1px solid var(--bd);border-radius:10px;padding:7px 10px;font:600 12.5px Cairo,sans-serif;background:#FBFAFE}
+.prq-bt{display:flex;gap:8px;margin-top:8px}.prq-bt button{flex:1;height:40px;border-radius:12px;border:0;font:800 14px Cairo,sans-serif}
+.prq-bt .ok{background:var(--g);color:#fff}.prq-bt .no{background:#F4F1FA;color:#A32D2D}
+html[data-theme=dark] .prq-box,html[data-theme=dark] .prq-a{background:#1f1a30;border-color:#2f2944}
+html[data-theme=dark] .prq-h b,html[data-theme=dark] .prq-r b,html[data-theme=dark] .prq-ab b,html[data-theme=dark] .prq-sh-h b,html[data-theme=dark] .prq-bar b{color:#F3F0FA}
+html[data-theme=dark] .prq-sheet{background:#141022}html[data-theme=dark] .prq-bar{background:#2a2216;border-color:#4a3a22}
+
 /* v564: عجلة الافتتاح — نفس لغة النافذة العائمة */
 #whSheet{position:fixed;inset:0;z-index:10001;background:rgba(17,10,35,.5);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px);
   display:none;align-items:flex-end;justify-content:center;padding:0 10px calc(10px + env(safe-area-inset-bottom))}
@@ -7438,6 +7467,7 @@ body,.screen{background:#fff;color:var(--txt)}
  <div id="aCompOwed"></div>
  <div id="aSetls"></div>
  <div id="aMoney"></div>
+ <div id="prqBar"></div>
  <div class="sechd"><h3>إجراءات سريعة</h3></div>
  <div id="aQuick"></div>
  <div class="sechd"><h3>نظرة عامة</h3></div>
@@ -9118,6 +9148,10 @@ async function prodFormSave(){
   };
   if(old && old.avail===false) item.avail=false;
 
+  if(!old && prqOn()){   /* v575: المحل «بموافقة الإدارة» — المادة الجديدة تروح طلب */
+    try{ await prqSend(item) }catch(e){ toast(errMsg(e)); return }
+    _pfId=null; prodFormClose(); return;
+  }
   try{
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
   }catch(e){ toast('ما گدرنا نحفظ: '+String(e.message||e).slice(0,90)); return }
@@ -15305,6 +15339,81 @@ async function loadOffersC(){
   try{ if(document.getElementById('shopList') && (shops||[]).length) renderShops() }catch(e){}
 }
 
+
+/* ══════════════════════════════════════════════════════════
+   v575: «إضافة مواد بموافقة الإدارة» (عبد: طرشي الرواد) — المحل يرسل، الإدارة توافق/ترفض
+   ══════════════════════════════════════════════════════════ */
+let _prqMine=null, _prqMineAt=0;
+function prqOn(){ return !!(myShopDoc && myShopDoc.prod_review===true) }
+async function prqSend(item){
+  const it=Object.assign({},item); delete it.avail;
+  await rpc('shop_product_request',{p_shop:me.shopId, p_item:it});
+  toast('انرسلت للإدارة ✓ — تطلع للزبائن من يوافقون');
+  try{ pushAdmins('📦 مادة جديدة تنتظر موافقتك', ((myShopDoc&&myShopDoc.name)||'محل')+': '+(it.name||''), {type:'prodreq'}) }catch(e){}
+  _prqMineAt=0; prqMineLoad(true);
+}
+async function prqMineLoad(force){
+  if(!me||!me.shopId) return;
+  if(!force && _prqMine && Date.now()-_prqMineAt<60000) return;
+  try{ _prqMine=await sbGet('product_requests?shop_id=eq.'+me.shopId+'&select=id,item,status,note,created_at,decided_at&order=created_at.desc&limit=60')||[] }catch(e){ _prqMine=_prqMine||[] }
+  _prqMineAt=Date.now();
+  try{ const box=document.getElementById('stMenu'); if(box) prqMinePaint(box) }catch(e){}
+}
+function prqMinePaint(box){
+  let el=document.getElementById('prqMine');
+  if(!prqOn() && !(_prqMine&&_prqMine.some(r=>r.status==='pending'))){ if(el) el.remove(); return }
+  if(!el){ el=document.createElement('div'); el.id='prqMine'; box.parentNode.insertBefore(el, document.getElementById('stMenuCtl')||box) }
+  if(_prqMine===null){ prqMineLoad(); }
+  const L=_prqMine||[], pend=L.filter(r=>r.status==='pending'), rej=L.filter(r=>r.status==='rejected' && r.decided_at && Date.now()-Date.parse(r.decided_at)<7*864e5);
+  const pr=it=>{ const z=Array.isArray(it.sizes)?it.sizes.filter(x=>x&&x.p):[]; return (z.length?Math.min(...z.map(x=>Number(x.p)||0)):Number(it.price||0)).toLocaleString()+' د.ع' };
+  el.innerHTML='<div class="prq-box"><div class="prq-h"><b>المواد الجديدة تنضاف بموافقة الإدارة</b><span>تضيف المادة عادي، وتطلع للزبائن من توافق عليها الإدارة</span></div>'
+    +(pend.length?'<div class="prq-st">تنتظر الموافقة <i>'+pend.length+'</i></div>'+pend.map(r=>'<div class="prq-r">'+(r.item.img?'<img src="'+esc(tImg(r.item.img))+'" alt="">':'<span class="prq-ph"></span>')+'<div><b>'+esc(r.item.name||'')+'</b><span>'+pr(r.item)+(r.item.cat?' · '+esc(r.item.cat):'')+'</span></div><em class="w">بالانتظار</em></div>').join(''):'')
+    +(rej.length?'<div class="prq-st">ما انقبلت</div>'+rej.map(r=>'<div class="prq-r">'+(r.item.img?'<img src="'+esc(tImg(r.item.img))+'" alt="">':'<span class="prq-ph"></span>')+'<div><b>'+esc(r.item.name||'')+'</b><span>'+(r.note?esc(r.note):'بدون سبب')+'</span></div><em class="x">مرفوضة</em></div>').join(''):'')
+    +'</div>';
+}
+/* ── الإدارة ── */
+let _prqA=[];
+async function prqAdmLoad(){
+  try{ _prqA=await rpc('admin_product_requests',{})||[] }catch(e){ _prqA=[] }
+  const bar=document.getElementById('prqBar'); if(!bar) return;
+  bar.innerHTML=_prqA.length?'<button type="button" class="prq-bar" onclick="prqAdmOpen()"><span class="pb-ic">'+_whSv('<path d="M21 8 12 3 3 8v8l9 5 9-5V8z"/><path d="M3 8l9 5 9-5M12 13v8"/>')+'</span><div><b>مواد جديدة تنتظر موافقتك</b><span>'+[...new Set(_prqA.map(r=>r.shop_name))].slice(0,3).join('، ')+'</span></div><i>'+_prqA.length+'</i></button>':'';
+}
+function prqAdmOpen(){
+  let el=document.getElementById('prqSheet');
+  if(!el){ el=document.createElement('div'); el.id='prqSheet'; el.onclick=e=>{ if(e.target===el) el.classList.remove('on') }; document.body.appendChild(el) }
+  const N=v=>(Number(v)||0).toLocaleString();
+  const rows=_prqA.map(r=>{ const it=r.item||{}, z=Array.isArray(it.sizes)?it.sizes.filter(x=>x&&x.n):[];
+    return '<div class="prq-a" id="prq_'+r.id+'">'
+      +'<div class="prq-ai">'+(it.img?'<img src="'+esc(oImg(it.img))+'" alt="">':'<span class="prq-ph"></span>')+'</div>'
+      +'<div class="prq-ab"><span class="prq-sh">'+esc(r.shop_name||'')+'</span><b>'+esc(it.name||'')+'</b>'
+      +'<div class="prq-pr">'+(z.length?z.map(x=>esc(x.n)+' · '+N(x.p)).join(' / '):N(it.price)+' د.ع')+'</div>'
+      +(it.cat?'<div class="prq-ct">القسم: '+esc(it.cat)+'</div>':'')+(it.desc?'<div class="prq-ct">'+esc(String(it.desc).slice(0,120))+'</div>':'')
+      +'<input class="prq-note" id="prqn_'+r.id+'" maxlength="120" placeholder="سبب الرفض (اختياري)">'
+      +'<div class="prq-bt"><button type="button" class="no" onclick="prqDecide(\''+r.id+'\',false)">رفض</button><button type="button" class="ok" onclick="prqDecide(\''+r.id+'\',true)">قبول</button></div></div></div>' }).join('');
+  el.innerHTML='<div class="prq-sheet"><div class="prq-sh-h"><b>مواد جديدة تنتظر موافقتك</b><button type="button" class="as-x" onclick="document.getElementById(\'prqSheet\').classList.remove(\'on\')" aria-label="سد">✕</button></div>'
+    +(rows||'<div class="as-empty">ماكو شي ينتظر</div>')+'</div>';
+  el.classList.add('on');
+}
+async function prqDecide(id,ok){
+  const r=_prqA.find(x=>x.id===id); if(!r) return;
+  const note=ok?'':String((document.getElementById('prqn_'+id)||{}).value||'').trim();
+  try{
+    await rpc('admin_product_decide',{p_id:id, p_ok:!!ok, p_note:note||null});
+    toast(ok?'انضافت «'+(r.item.name||'')+'» ✓':'انرفضت');
+    try{ const sh=(allShops||[]).find(x=>x.id===r.shop_id), own=sh&&(sh.ownerUid||sh.owner_id); if(own) pushTo(own, ok?'✅ انضافت مادتك':'❌ مادة ما انقبلت', (r.item.name||'')+(ok?' صارت تطلع للزبائن':(note?' — '+note:'')), {type:'prodreq'}) }catch(e){}
+    const row=document.getElementById('prq_'+id); if(row) row.remove();
+    _prqA=_prqA.filter(x=>x.id!==id); prqAdmLoad();
+    if(!_prqA.length){ const el=document.getElementById('prqSheet'); if(el) el.classList.remove('on') }
+  }catch(e){ toast(errMsg(e)) }
+}
+async function setProdReview(id,on,btn){
+  try{
+    if(btn){ const w=btn.parentNode; w.querySelectorAll('button').forEach(b=>b.classList.toggle('on',b===btn)) }
+    await rpc('admin_set_prod_review',{p_shop:id, p_on:!!on});
+    const sh=(allShops||[]).find(x=>x.id===id); if(sh) sh.prod_review=!!on;
+    toast(on?'المواد الجديدة لهذا المحل تحتاج موافقتك':'المحل يضيف مواد مباشرة');
+  }catch(e){ toast(errMsg(e)) }
+}
 /* ══════════════════════════════════════════════════════════
    v564: 🎡 عجلة الافتتاح — السيرفر يسحب الجائزة (wheel_spin)، والتطبيق بس يدوّر لحد النتيجة
    ══════════════════════════════════════════════════════════ */
@@ -17118,6 +17227,10 @@ async function addProduct(){
     id: editingProdId!==null ? editingProdId : Date.now(),
     name:n, price:p, desc:d, cat:ct, img:prodPhoto||'', opts, sizes:_sz.sizes, byKg:_kg.on?true:undefined, w:_kg.on?_kg.w:undefined, was:_wc.was||undefined, lead:(pfLead>0?pfLead:undefined), sizeLabel:(_sz.sizes.length && String(szLabel||'').trim()) ? String(szLabel).trim().slice(0,20) : undefined, avail:editingProdAvail
   };
+  if(editingProdId===null && prqOn()){   /* v575 */
+    try{ await prqSend(item); cancelEditProduct() }catch(e){ toast(errMsg(e)) }
+    return;
+  }
   try{
     const _oldCat = editingProdId!==null ? String((((myShopDoc&&myShopDoc.products)||[]).find(x=>x.id===editingProdId)||{}).cat||'').trim() : '';   /* v445 */
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
@@ -20683,6 +20796,7 @@ async function loadAdminData(){
   try{ renderAdmin() }catch(e){}
   renderOffers();
   try{ whAdmLoad() }catch(e){}
+  try{ prqAdmLoad() }catch(e){}
 }
 
 /* ═══════════════════════════════════════════════
@@ -22281,6 +22395,7 @@ function smRow(p){
 function smJump(){ const el=document.getElementById('smHead'); if(!el) return; try{ el.scrollIntoView({behavior:'smooth',block:'start'}) }catch(e){ el.scrollIntoView() } }
 function renderStMenu(sh){
   sh=sh||myShopDoc; const box=document.getElementById('stMenu'); if(!box||!sh) return;
+  try{ prqMinePaint(box) }catch(e){}
   const ps=sh.products||[];
   let ctl=document.getElementById('stMenuCtl');
   if(!ctl){ ctl=document.createElement('div'); ctl.id='stMenuCtl';
@@ -23897,6 +24012,7 @@ function openAdminShop(id){
       <div class="w"><span>الموقع</span><b>${hasLoc?'محدد ✓':'ما محدد'} <button type="button" class="as-lk" onclick="document.getElementById('asSheet').classList.remove('on');amFixShopLoc('${sh.id}')">📍 ${hasLoc?'صحّح':'حدد'} الموقع</button></b></div>
       ${sh.addr?`<div class="w"><span>العنوان</span><b>${esc(sh.addr)}</b></div>`:''}
       <div class="w"><span>القسم بالرئيسية (وين يطلع للزبون)</span>${secPickHTML(sh)}</div>
+      <div class="w"><span>إضافة المواد الجديدة</span><div class="secpk"><button type="button" class="${sh.prod_review?'':'on'}" onclick="setProdReview('${sh.id}',false,this)">المحل يضيف مباشرة</button><button type="button" class="${sh.prod_review?'on':''}" onclick="setProdReview('${sh.id}',true,this)">بموافقتي</button></div></div>
       <div class="w"><span>أيام بدون عمولة <small>(كل طلبات المحل بذيج الأيام)</small></span><div id="asFree">${freeDaysHTML(sh)}</div></div>
       <div class="w"><span>الوصف تحت اسم المحل</span><div class="as-tl"><input id="asTl" type="text" maxlength="40" value="${esc(sh.tagline||'')}" placeholder="مثال: طرشي · مخللات" enterkeyhint="done" onkeydown="if(event.key==='Enter'){event.preventDefault();saveShopTagline('${sh.id}')}"><button type="button" class="as-lk" onclick="saveShopTagline('${sh.id}')">حفظ</button></div><small>يطلع للزبون تحت اسم المحل. إذا تخليه فارغ، يطلع من أقسام المنتجات.</small></div>
     </div>
@@ -30510,7 +30626,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v574', seen={}, n=0, q=[], t=null;
+  var VER='v575', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30763,7 +30879,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v574', t0=Date.now();
+  var VER='v575', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
