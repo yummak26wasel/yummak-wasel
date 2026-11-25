@@ -1,7 +1,7 @@
 name: k6-loadtest
 on:
   push:
-    branches: [loadtest]
+    branches: [loadtest2]
 permissions:
   contents: write
 jobs:
@@ -26,4 +26,4 @@ jobs:
           rm -f tools/loadtest/out/log.txt
           git add -f tools/loadtest/out
           git commit -m "loadtest results [skip ci]" || true
-          git push origin HEAD:loadtest
+          git push origin HEAD:loadtest2
