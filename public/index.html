@@ -14249,6 +14249,7 @@ async function goCheckout(){
   document.getElementById('p_checkout').classList.add('on');
   renderCheckout();
   try{ window.__trk&&__trk('checkout') }catch(e){}
+  try{ whAtCheckout() }catch(e){}   /* v574 */
 }
 function backToCart(){
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
@@ -15343,11 +15344,14 @@ async function whLoad(auto){
   if(!me||me.role!=='customer') return;
   try{ WH.st=await rpc('wheel_state',{}) }catch(e){ WH.st=null }
   whTilePaint();
-  const st=WH.st;
-  if(auto && st && st.can){
-    let k='wl_wh_seen_'+(me.id||me.uid||''); let seen=false; try{ seen=!!localStorage.getItem(k) }catch(e){}
-    if(!seen && !document.querySelector('#askSheet.on,#whSheet.on,.spds.on,#termsSheet.on')){ try{ localStorage.setItem(k,'1') }catch(e){} setTimeout(whOpen,600) }
-  }
+  /* v574: عبد — «اثناء طلب تطلعله»: ما تنفتح وحدها من يفتح التطبيق، تنفتح بصفحة تأكيد الطلب (whAtCheckout) */
+}
+async function whAtCheckout(){
+  if(!me||me.role!=='customer'||WH.ckShown) return;
+  if(!WH.st){ try{ WH.st=await rpc('wheel_state',{}) }catch(e){ return } }
+  if(!(WH.st&&WH.st.can)) return;
+  if(!document.getElementById('p_checkout').classList.contains('on')) return;
+  WH.ckShown=true; setTimeout(()=>{ if(document.getElementById('p_checkout').classList.contains('on')) whOpen(true) },450);
 }
 function _whPrizeLive(st){ return !!(st&&st.code&&!st.used&&(!st.code_ends||Date.parse(st.code_ends)>Date.now())) }
 function whTilePaint(){
@@ -15367,12 +15371,13 @@ function _whSheet(){
   return sh;
 }
 function whClose(){ const sh=document.getElementById('whSheet'); if(sh) sh.classList.remove('on') }
-function whOpen(){
+function whOpen(fromCk){
   const st=WH.st||{}, sh=_whSheet();
   if(!st.can){ if(_whPrizeLive(st)) return whShowPrize(); return }
+  WH.fromCk=!!fromCk;
   const mo=_whFmt(st.min_order||7000);
   sh.innerHTML='<div class="whbox"><button type="button" class="wh-x" onclick="whClose()" aria-label="سد">'+_whSv(WH_IC.x,'',2.4)+'</button>'
-    +'<span class="wh-tag">عجلة الافتتاح · دورة وحدة</span><h2>دوّر واربح</h2><div class="wh-sub">خصم لحد 4,000 د.ع على طلبك</div>'
+    +'<span class="wh-tag">عجلة الافتتاح · دورة وحدة</span><h2>دوّر واربح</h2><div class="wh-sub">'+(WH.fromCk?'دوّر قبل ما تأكد — الخصم ينطبق على هذا الطلب':'خصم لحد 4,000 د.ع على طلبك')+'</div>'
     +'<div class="wh-wrap">'+WH_PTR+whWheelSVG()+'</div>'
     +'<button type="button" class="wh-go" id="whGo" onclick="whSpin()">دوّر</button>'
     +'<div class="wh-fine">الجائزة كود خصم على طلب بـ'+mo+' د.ع أو أكثر · صالح 7 أيام</div></div>';
@@ -15390,25 +15395,30 @@ async function whSpin(){
   const g=document.getElementById('whRot'); if(g) g.style.transform='rotate('+WH.rot+'deg)';
   if(b) b.textContent='تدوّر…';
   WH.st=Object.assign({},WH.st||{},{can:false,spun:true,prize:pz,code:r.code||null,code_ends:r.ends_at||null,used:false,min_order:r.min_order||(WH.st&&WH.st.min_order)});
-  setTimeout(()=>{ WH.busy=false; whResult(pz); whTilePaint(); try{ loadOffersC() }catch(e){} try{ if(cart.length) promoRefresh(true) }catch(e){} },4800);
+  setTimeout(()=>{ WH.busy=false; if(pz&&WH.fromCk) whApplyNow(pz); whResult(pz); whTilePaint(); try{ loadOffersC() }catch(e){} try{ if(cart.length) promoRefresh(true).then(()=>{ try{ if(document.getElementById('p_checkout').classList.contains('on')) renderCheckout() }catch(e){} }) }catch(e){} },4800);
 }
 function whResult(pz){
   const sh=_whSheet(), st=WH.st||{}, box=sh.querySelector('.whbox'); if(!box) return;
   if(!pz){
     box.innerHTML='<div class="wh-res"><div class="wh-ric lose">'+_whSv(WH_IC.again)+'</div><h2>حظ أوفر هالمرة</h2>'
-      +'<p>شكراً لأنك ويانا بالافتتاح. تابع العروض والكوبونات بالتطبيق.</p><button type="button" class="wh-go" onclick="whClose()">تمام</button></div>';
+      +'<p>شكراً لأنك ويانا بالافتتاح. تابع العروض والكوبونات بالتطبيق.</p><button type="button" class="wh-go" onclick="whClose()">'+(WH.fromCk?'كمّل طلبك':'تمام')+'</button></div>';
   }else box.innerHTML=_whPrizeHTML(st);
   if(!sh.classList.contains('on')) requestAnimationFrame(()=>sh.classList.add('on'));
 }
 function _whPrizeHTML(st){
+  const ap=WH.fromCk?WH.apply:null, till=(st.code_ends?' · لحد '+_whDate(st.code_ends):'');
+  const msg = ap&&ap.k==='ok' ? '<b>انطبق على طلبك هسه</b> — نقص '+_whFmt(st.prize)+' د.ع من الحساب'
+    : ap&&ap.k==='min' ? 'ينطبق من يصير طلبك '+_whFmt(st.min_order||7000)+' د.ع أو أكثر — زيد '+_whFmt(ap.need)+' د.ع بس<br>أو استخدمه بطلبك الجاي'+till
+    : ap&&ap.k==='bigger' ? 'طلبك هسه عليه كود خصم أكبر، فجائزتك تبقى لطلبك الجاي'+till
+    : 'ينطبق وحده على طلبك الجاي بـ'+_whFmt(st.min_order||7000)+' د.ع أو أكثر<br>ينستخدم مرة وحدة'+till;
   return '<div class="wh-res"><div class="wh-ric">'+_whSv(WH_IC.gift)+'</div><h2>مبروك! ربحت خصم '+_whFmt(st.prize)+' د.ع</h2>'
-    +'<p>ينطبق وحده على طلبك الجاي بـ'+_whFmt(st.min_order||7000)+' د.ع أو أكثر<br>ينستخدم مرة وحدة'+(st.code_ends?' · لحد '+_whDate(st.code_ends):'')+'</p>'
+    +'<p>'+msg+'</p>'
     +'<button type="button" class="wh-code" onclick="whCopy(this)"><span class="wc-t"><span>كود الخصم</span><b>'+esc(st.code||'')+'</b></span>'
     +'<span class="wc-bt">'+_whSv('<rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/>')+'<em>نسخ</em></span></button>'
-    +'<button type="button" class="wh-go" onclick="whClose();try{goHome&&goHome()}catch(e){}">اطلب هسه</button></div>';
+    +(WH.fromCk?'<button type="button" class="wh-go" onclick="whClose()">كمّل طلبك</button></div>':'<button type="button" class="wh-go" onclick="whClose();try{goHome&&goHome()}catch(e){}">اطلب هسه</button></div>');
 }
 function whShowPrize(){
-  const st=WH.st; if(!_whPrizeLive(st)) return;
+  const st=WH.st; if(!_whPrizeLive(st)) return; WH.fromCk=false;
   const sh=_whSheet();
   sh.innerHTML='<div class="whbox"><button type="button" class="wh-x" onclick="whClose()" aria-label="سد">'+_whSv(WH_IC.x,'',2.4)+'</button>'+_whPrizeHTML(st)+'</div>';
   requestAnimationFrame(()=>sh.classList.add('on'));
@@ -15417,6 +15427,14 @@ function whCopy(btn){
   const c=(WH.st&&WH.st.code)||''; if(!c) return;
   const done=()=>{ try{ const e=btn.querySelector('em'); btn.classList.add('ok'); if(e) e.textContent='انتنسخ'; setTimeout(()=>{ btn.classList.remove('ok'); if(e) e.textContent='نسخ' },2000) }catch(_){} };
   try{ if(navigator.clipboard&&navigator.clipboard.writeText) navigator.clipboard.writeText(c).then(done,()=>trkCopyFB(c,done)); else trkCopyFB(c,done) }catch(e){ trkCopyFB(c,done) }
+}
+/* v574: ربح وهو بصفحة التأكيد ← تنطبق على نفس الطلب (إذا الطلب ≥ الحد الأدنى، وما عليه كود أكبر) */
+function whApplyNow(pz){
+  const st=WH.st||{}, min=Number(st.min_order||0), sub=cartSub();
+  const cur=(_pv&&_pv.res&&_pv.res.ok&&String(orderCode||'').toUpperCase()!==st.code)?Number(_pv.res.discount||0):0;
+  if(sub<min){ WH.apply={k:'min',need:min-sub}; return }
+  if((orderCode||'').trim() && String(orderCode).toUpperCase()!==st.code && cur>pz){ WH.apply={k:'bigger'}; return }
+  orderCode=st.code; WH.skip=false; WH.apply={k:'ok'};
 }
 function whAutoCode(){
   const st=WH.st; if(WH.skip||!_whPrizeLive(st)||(orderCode||'').trim()) return;
@@ -30492,7 +30510,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v573', seen={}, n=0, q=[], t=null;
+  var VER='v574', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30745,7 +30763,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v573', t0=Date.now();
+  var VER='v574', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
