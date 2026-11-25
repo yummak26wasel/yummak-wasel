@@ -12785,6 +12785,19 @@ function _mkVars(list){
   }
   return out;
 }
+/* v573: صفوف رئيسية الماركت — كرت واحد لكل منتج (أول نوع متوفر) حتى الصف يبقى متنوع. صفحة القسم والبحث: كل الأنواع */
+var MK_ROW1=true;
+function _mkVars1(list){
+  const all=_mkVars(list); if(!MK_ROW1) return all;
+  const seen=new Set(), out=[];
+  for(const p of all){
+    if(!p._vp){ out.push(p); continue }
+    const k=p._vp.id; if(seen.has(k)) continue;
+    const z=pSizes(p._vp), i=Math.max(0,z.findIndex(x=>!x.out&&p._vp.avail!==false));
+    seen.add(k); out.push(all.find(x=>x._vp&&x._vp.id===k&&x._vi===i)||p);
+  }
+  return out;
+}
 function _vLine(p){ return cart.find(c=>c.pid===p._vp.id && c.shopId===curShop.id && (c.size||'')===p._vn && !(Array.isArray(c.opts)&&c.opts.length)) }
 function vCtl(p){
   if(curShop && !isOpenNow(curShop)) return '';
@@ -13134,11 +13147,11 @@ function renderMkRows(box,cats){
   const _R=_sbnSplit().rest, _at=Math.min(2,cats.length);
   const _car=_R.length?`<div class="sbn mksbn"><div class="sbn-tr" onscroll="sbnDots()">${_R.map((b,i)=>`<button type="button" class="sbn-it" onclick="sbnTap(${i+1})"><img src="${b.img}" alt="" loading="lazy" decoding="async"></button>`).join('')}</div>${_R.length>1?`<div class="sbn-dots">${_R.map((_,i)=>`<i class="${i?'':'on'}"></i>`).join('')}</div>`:''}</div>`:'';
   const _mid=_car+_brCards();
-  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>العروض</h3><button type="button" onclick="pickSec('__off')">عرض الكل ›</button></div><div class="sprow">${_mkVars(_offs).slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
+  box.innerHTML=(_offs.length?`<div class="mksec"><div class="mksh"><h3>العروض</h3><button type="button" onclick="pickSec('__off')">عرض الكل ›</button></div><div class="sprow">${_mkVars1(_offs).slice(0,15).map(spCardHTML).join('')}</div></div>`:'')
     +(_at===0?_mid:'')
     +cats.map((c,i)=>`<div class="mksec"><div class="mksh"><h3>${esc(c.name)}</h3>${c.ps.length>3?`<button type="button" onclick="pickSec(${_secAttr(c.id)})">عرض الكل ›</button>`:''}</div>
-      <div class="sprow">${_mkVars(c.ps.slice(0,12)).slice(0,12).map(spCardHTML).join('')}</div></div>`+(i+1===_at?_mid:'')).join('')
-    +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${_mkVars(rest.slice(0,20)).slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
+      <div class="sprow">${_mkVars1(c.ps.slice(0,12)).slice(0,12).map(spCardHTML).join('')}</div></div>`+(i+1===_at?_mid:'')).join('')
+    +(rest.length?`<div class="mksec"><div class="mksh"><h3>منتجات ثانية</h3></div><div class="sprow">${_mkVars1(rest.slice(0,20)).slice(0,20).map(spCardHTML).join('')}</div></div>`:'');
   clearInterval(__sbnT); if(_R.length>1) __sbnT=setInterval(sbnNext,4500);   /* v561 */
   return true;
 }
@@ -13219,7 +13232,7 @@ function renderTopSellers(){
   box.innerHTML=`
     <div class="spsec">
       <h3>الأكثر مبيعاً</h3>
-      <div class="sprow">${_mkVars(list).slice(0,12).map(spCardHTML).join('')}</div>
+      <div class="sprow">${_mkVars1(list).slice(0,12).map(spCardHTML).join('')}</div>
     </div>`;
 }
 function renderMenu(){
@@ -30479,7 +30492,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v572', seen={}, n=0, q=[], t=null;
+  var VER='v573', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30732,7 +30745,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v572', t0=Date.now();
+  var VER='v573', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
