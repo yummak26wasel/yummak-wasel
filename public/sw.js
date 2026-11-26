@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v576';
+const VER = 'leemak-v577';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 600;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -12,6 +12,8 @@ const SHELL = ['/supabase.js', '/sb-layer.js', '/auth-layer.js', '/manifest.json
 const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
 /* v524: نسخ صور المنتجات داخل التطبيق (/m/sb/…) — إذا علكت، نجيب الأصل من هنا */
 const SB_PIMG = 'https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/';
+/* v577: نسخة صغيرة من نفس الصورة يصنعها Supabase (160px ‎~4KB / 320px ‎~15KB) — بدل الأصل (‎~70KB) بالنت الضعيف */
+const SB_RENDER = 'https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/render/image/public/images/';
 const MSB = /\/m\/sb\/(.+?)(?:\.[ts])?\.webp$/;   /* v576: + .s (النسخة الخفيفة) — قبل: الاحتياط يروح لعنوان غلط */
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
 const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|project-osrm\.org|fcm\.googleapis)/;
@@ -204,14 +206,34 @@ async function img(e, req){
   }
   const m = MSB.exec(u.pathname);
   try{
-    const net = fetch(req).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone()).catch(() => {}); return r });
+    /* v577: عنوان التطبيق علك قبل شوية بهالتلفون ← صور /m/sb/ نجيبها من Supabase فوراً (بدون انتظار 5 ثواني لكل دفعة) */
+    if(m && Date.now() < _sbStuckUntil){ const o = await sbAlt(c, req, m[1], u.pathname); if(o) return o }
+    const ac = new AbortController();
+    const net = fetch(req, m ? { signal: ac.signal } : undefined).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone()).catch(() => {}); return r });
     if(!m) return await net;
-    /* v524: نسخة /m/sb/ علكت 6 ثواني (اتصال عالك بعنوان التطبيق) ← نجيب الأصل من Supabase بدل ما الصورة تبقى فارغة */
-    const r = await Promise.race([net.catch(() => null), timeout(6000)]);
+    /* v524: نسخة /m/sb/ علكت (اتصال عالك بعنوان التطبيق) ← نجيبها من Supabase بدل ما الصورة تبقى فارغة.
+       v577: 5 ثواني (قبل 6)، والاحتياط صار نسخة صغيرة مو الأصل، وينحفظ، والدفعات الجاية 5 دقايق تروح لـ Supabase مباشرة.
+       (v571→v576 الاحتياط جان يطلب عنوان غلط «.jpg.s» ويرجع خطأ 400 ← الصور تبقى فارغة للأبد بالنت الضعيف — سجلات تلفون عبد 26/11) */
+    const r = await Promise.race([net.catch(() => null), timeout(5000)]);
     if(r && r.ok) return r;
-    try{ const o = await fetch(SB_PIMG + m[1], { mode: 'cors', credentials: 'omit' }); if(o.ok) return o }catch(e2){}
+    if(!r) _sbStuckUntil = Date.now() + 5 * 60000;
+    const o = await sbAlt(c, req, m[1], u.pathname);
+    if(o){ if(!r) try{ ac.abort() }catch(e){} return o }
     return await net;
   }catch(err){ return Response.error() }
+}
+let _sbStuckUntil = 0;
+async function sbAlt(c, req, rel, path){
+  const small = /\.s\.webp$/.test(path) ? '?width=160&height=160&resize=contain&quality=55'
+              : /\.t\.webp$/.test(path) ? '?width=320&height=320&resize=contain&quality=70' : '';
+  for(const u of (small ? [SB_RENDER + rel + small, SB_PIMG + rel] : [SB_PIMG + rel])){
+    try{
+      const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 20000);
+      const o = await fetch(u, { mode: 'cors', credentials: 'omit', signal: ac.signal }); clearTimeout(tm);
+      if(o.ok && /^image\//i.test(o.headers.get('content-type') || '')){ c.put(req, o.clone()).catch(() => {}); return o }
+    }catch(e){}
+  }
+  return null;
 }
 
 /* صور Supabase (أسماء ملفاتها فيها وقت الرفع فما تتغير): الكاش أول، وإذا ما موجودة تنزل وتنحفظ.
