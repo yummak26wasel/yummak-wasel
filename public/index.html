@@ -7239,7 +7239,7 @@ body,.screen{background:#fff;color:var(--txt)}
       <div id="stFinance"></div>
       <div id="stDiscOwed"></div>
       <div id="stCash"></div>
-      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب (الفاتورة) أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel pfm" id="prodPanel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div style="flex:1;min-width:0"><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div><button type="button" class="pfm-jump" onclick="smJump()">قائمتي <b id="smCnt"></b> ↓</button><button type="button" class="pfm-x" onclick="cancelEditProduct()" aria-label="رجوع للقائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+      </div> <div class="page" id="q_paycom"> <div class="pgtop"><h2>تسجيل سداد العمولة</h2><button onclick="stab('dash',document.querySelectorAll('#sNav button')[0])">›</button></div> <div id="payComBox"></div> </div> <div class="page" id="q_orders"><div id="sPushBanO"></div><div class="oshd"><h3>الطلبات<small>إدارة طلبات متجرك بسهولة</small></h3><button class="osref" onclick="renderStore()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 11.5a8 8 0 1 0-2.3 6"/><path d="M20 5.5v6h-6"/></svg> تحديث</button></div><div class="chips" id="ordFilter"></div><div class="osrch"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input id="ordSearch" type="text" placeholder="ابحث برقم الطلب (الفاتورة) أو اسم الزبون…" oninput="renderStore()"></div><div id="stOrders"></div></div><div class="page" id="q_orddet"><div id="ordDet"></div></div> <div class="page" id="q_menu"> <div class="panel typepanel"> <div class="tphead"><div><h3 class="ttl">ما نوع نشاطك؟</h3><p class="psub">اختر نوع نشاطك لتخصيص تجربتك</p></div></div> <div class="typegrid"> <div class="tcard" id="tc_restaurant" onclick="setShopType('restaurant')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9"/><path d="M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9"/><path d="M3 9a2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0 2.4 2.4 0 0 0 4.5 0"/></svg></span> <div class="tl">مطعم</div></div> <div class="tcard" id="tc_store" onclick="setShopType('store')"> <span class="tck"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></span> <span class="tico"><svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h18l-1.6 11a2 2 0 0 1-2 1.7H6.6a2 2 0 0 1-2-1.7z"/><path d="M8.5 8l2-4M15.5 8l-2-4"/></svg></span> <div class="tl">متجر</div></div> </div> </div> <div class="panel pfm" id="prodPanel"> <div class="phead"><span class="pic pl"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></span> <div style="flex:1;min-width:0"><h3 class="ttl" id="prodPanelTtl">إضافة منتج جديد</h3><p class="psub" id="prodPanelSub">أضف منتجاتك بسهولة واجذب المزيد من العملاء</p></div><button type="button" class="pfm-jump" onclick="smJump()">قائمتي <b id="smCnt"></b> ↓</button><button type="button" class="pfm-x" onclick="cancelEditProduct()" aria-label="رجوع للقائمة"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
  <div class="pfm-sec"><div class="pfm-h"><i>1</i><b>صورة المنتج</b></div>
   <div class="photobox dashy" id="prBox" onclick="document.getElementById('prPhoto').click()"> <div class="ph"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="2.8" y="7" width="18.4" height="13" rx="2.4"/><circle cx="12" cy="13.5" r="3.6"/><path d="M8.6 7l1.4-2.6h4L15.4 7"/></svg></div> <div class="tx">اضغط لإضافة صورة</div> <div class="sub">يفضل صورة واضحة بجودة عالية</div> </div>
   <div class="phtip">📸 <b>حتى تطلع صورتك حلوة:</b> صوّر المنتج بضو النهار وخلّيه يبين كله. التطبيق يشيل الخلفية ويخليها بيضاء ويحط المنتج بالنص وحده ✨</div>
@@ -9915,8 +9915,15 @@ function pushFixPath(){
     return '<span class="pb-st'+(k==='on'?' ok':'')+'"><i>'+ic+'</i>'+t+'</span>';
   }).join('')+'</div>';
 }
+/* v578: موظف المحل حسابه «زبون»، فبطاقة «فعّل الإشعارات» ما جانت تطلعله بلوحة المحل أبداً ← موظفين المحلات كلهم بلا إشعارات
+   (عبد 26/11: «اشعار طلبات مكاعد يوصل للموظف» — 5 موظفين بمحلين حقيقيين ولا واحد مسجّل جهاز). هسه بوضع الموظف ياخذ نفس بطاقة صاحب المحل */
+function pbRole(){
+  if(!me) return '';
+  try{ if(me.role==='customer' && me.staff && document.getElementById('sApp').classList.contains('on')) return 'store' }catch(e){}
+  return me.role||'';
+}
 function pushBanHTML(){
-  const st=pushState(), why=PB_WHY[(me&&me.role)||'']||'حتى توصلك التنبيهات';
+  const st=pushState(), why=PB_WHY[pbRole()]||'حتى توصلك التنبيهات';
   if(st==='off') return `<div class="pban">${pbIc('off')}<div class="pb-t"><b>الإشعارات مطفّية</b><span>فعّلها ${why}.</span></div><button type="button" onclick="pushEnableNow(this)">فعّلها</button></div>`;
   if(st==='error') return `<div class="pban amb">${pbIc('error')}<div class="pb-t"><b>الإشعارات ما اشتغلت</b><span>مسموحة بس ما انربطت بعد.</span></div><button type="button" onclick="pushEnableNow(this)">جرّب</button></div>`;
   if(st==='denied') return `<div class="pban red">${pbIc('denied')}<div class="pb-t"><b>الإشعارات مقفولة</b><span>ما يوصلك شي إذا التطبيق مسدود. شغّلها هيچ:</span></div>${pushFixPath()}</div>`;
@@ -9928,9 +9935,13 @@ function pushBanHTML(){
 }
 function pushUiAll(){
   if(!me||!uid) return;
-  const id={driver:'dPushBan',store:'sPushBan',admin:'aPushBan'}[me.role];
+  const r=pbRole(), id={driver:'dPushBan',store:'sPushBan',admin:'aPushBan'}[r];
   const el=id&&document.getElementById(id);
-  if(el){ const x=pushBanHTML(); if(el.innerHTML!==x) el.innerHTML=x }
+  const x=el?pushBanHTML():'';
+  if(el && el.innerHTML!==x) el.innerHTML=x;
+  /* v578: الموظف يدخل على «الطلبات» مباشرة (ما يشوف رئيسية المحل) — فالبطاقة تطلعله فوك الطلبات */
+  const o=document.getElementById('sPushBanO');
+  if(o){ const y=(r==='store' && me.role==='customer')?x:''; if(o.innerHTML!==y) o.innerHTML=y }
   pushReport();
 }
 function pushReport(){
@@ -30626,7 +30637,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v577', seen={}, n=0, q=[], t=null;
+  var VER='v578', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30879,7 +30890,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v577', t0=Date.now();
+  var VER='v578', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
