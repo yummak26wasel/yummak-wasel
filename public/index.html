@@ -9325,7 +9325,7 @@ async function catDragEnd(){
   try{
     for(let i=0;i<ids.length;i++){
       const c=myCats.find(x=>x.id===ids[i]);
-      if(c && c.sort!==i+1) await sbPatch('shop_categories?id=eq.'+ids[i], {sort:i+1});
+      if(c && c.sort!==i+1) await _scPatch('shop_categories?id=eq.'+ids[i], {sort:i+1});
     }
     await loadShopCats();
   }catch(e){
@@ -9420,7 +9420,7 @@ async function catFormSave(){
   const c=myCats.find(x=>x.id===_cfId);
   const old=c?c.name:'';
   try{
-    await sbPatch('shop_categories?id=eq.'+_cfId, {name:n, visible:_cfVis});
+    await _scPatch('shop_categories?id=eq.'+_cfId, {name:n, visible:_cfVis});
   }catch(e){ toast('ما گدرنا نحفظ: '+String(e.message||e).slice(0,90)); return }
   if(old && old!==n) await catSyncProducts(old, n);
   toast('انحفظت التعديلات');
@@ -9431,7 +9431,7 @@ async function catToggle(id){
   const c=myCats.find(x=>x.id===id); if(!c) return;
   const nv = !(c.visible!==false);
   try{
-    await sbPatch('shop_categories?id=eq.'+id, {visible:nv});
+    await _scPatch('shop_categories?id=eq.'+id, {visible:nv});
     toast(nv?'التصنيف ظاهر':'التصنيف مخفي');
     await loadShopCats();
   }catch(e){ toast('ما گدرنا نحفظ: '+String(e.message||e).slice(0,70)) }
@@ -9449,7 +9449,7 @@ async function catReorder(id, dir){
   _catReBusy=true;
   try{
     for(let k=0;k<arr.length;k++){
-      if((arr[k].sort||0)!==k+1){ await sbPatch('shop_categories?id=eq.'+arr[k].id,{sort:k+1}); arr[k].sort=k+1 }
+      if((arr[k].sort||0)!==k+1){ await _scPatch('shop_categories?id=eq.'+arr[k].id,{sort:k+1}); arr[k].sort=k+1 }
     }
   }catch(e){ toast('ما گدرنا نرتّب: '+String(e.message||e).slice(0,70)) }
   _catReBusy=false;
@@ -9463,21 +9463,26 @@ async function catMove(id, dir){
   if(i<0 || j<0 || j>=L.length) return;
   const a=L[i], b=L[j];
   try{
-    await sbPatch('shop_categories?id=eq.'+a.id, {sort:(b.sort||0)});
-    await sbPatch('shop_categories?id=eq.'+b.id, {sort:(a.sort||0)});
+    await _scPatch('shop_categories?id=eq.'+a.id, {sort:(b.sort||0)});
+    await _scPatch('shop_categories?id=eq.'+b.id, {sort:(a.sort||0)});
     await loadShopCats();
   }catch(e){ toast('ما گدرنا نرتّب: '+String(e.message||e).slice(0,70)) }
 }
 
 async function catRemove(id){
   const c=myCats.find(x=>x.id===id); if(!c) return;
-  const num=_catCnt[c.id]||0, ns=_cSubs(myCats,c.id).length;
-  const yes=await askConfirm('تشيل '+(c.parent_id?'القسم الفرعي':'تصنيف')+' «'+c.name+'»؟<br>'+num+' منتج راح يصيرون بلا قسم — المنتجات ما تنحذف.'+(ns?'<br>وأقسامه الفرعية ('+ns+') تبقى وتصير أقسام رئيسية.':''), {title:'حذف التصنيف', ok:'نعم، احذفه', danger:true});
+  try{ _catRecount() }catch(e){}
+  /* v580: منتجات القسم الفرعي ترجع لقسمه الرئيسي (قبل: تصير «بلا تصنيف» والزبون ما يلگاها) */
+  const par=c.parent_id?(myCats.find(x=>x.id===c.parent_id)||null):null;
+  const mem=[...(_catPids[c.id]||new Set())], ns=_cSubs(myCats,c.id).length;
+  const yes=await askConfirm('تشيل '+(c.parent_id?'القسم الفرعي':'تصنيف')+' «'+esc(c.name)+'»؟<br>'
+    +(mem.length?(par?mem.length+' منتج يرجعون لـ «'+esc(par.name)+'»':mem.length+' منتج راح يصيرون «بلا تصنيف»')+' — المنتجات ما تنحذف.':'ماكو منتجات بيه.')
+    +(ns?'<br>وأقسامه الفرعية ('+ns+') تبقى وتصير أقسام رئيسية.':''), {title:'حذف التصنيف', ok:'نعم، احذفه', danger:true});
   if(!yes) return;
+  if(mem.length && !(await _catMoveRun(mem, c.id, par, false))) return;
   try{
-    await sbDel('shop_categories?id=eq.'+id);
-  }catch(e){ toast('ما گدرنا نحذف: '+String(e.message||e).slice(0,70)); return }
-  await catSyncProducts(c.name, '');
+    await _scDel('shop_categories?id=eq.'+id);
+  }catch(e){ toast('ما انحذف: '+String(e.message||e).slice(0,90)); await loadShopCats(); return }
   toast('انشال التصنيف');
   await loadShopCats();
   if(_cpCat && _cpCat.id===id && document.getElementById('q_catprods')?.classList.contains('on')) catProdsClose();   /* v390: كنا داخل القسم الي انحذف */
@@ -13024,7 +13029,7 @@ async function catImgUp(inp){
     /* v388: نشيل الخلفية ونحفظها بيضاء */
     const url=await photoClean(file,{folder:'cats',size:500,origSize:500,quality:0.82,title:'صورة القسم'});
     if(!url) return;
-    await sbPatch('shop_categories?id=eq.'+encodeURIComponent(id),{img:url});
+    await _scPatch('shop_categories?id=eq.'+encodeURIComponent(id),{img:url});
     const c=(myCats||[]).find(x=>x.id===id); if(c) c.img=url;
     if(_cpCat && _cpCat.id===id) _cpCat.img=url;
     renderCatsPage(); try{ if(document.getElementById('q_catprods').classList.contains('on')) cpSubsPaint() }catch(e){}
@@ -18949,6 +18954,9 @@ async function _sbSend(path, method, body, prefer){
 const sbPost  = (p,b)=>_sbSend(p,'POST',b,'return=representation');
 const sbPatch = (p,b)=>_sbSend(p,'PATCH',b);
 const sbDel   = (p)  =>_sbSend(p,'DELETE');
+/* v580: كتابة التصنيفات تتأكد إنها صارت فعلاً — قبل: القاعدة ترفض بسكوت (موظف بلا صلاحية) والتطبيق يگول «انشال التصنيف» وهو ما انشال */
+async function _scPatch(p,b){ const r=await _sbSend(p,'PATCH',b,'return=representation'); if(Array.isArray(r)&&!r.length) throw new Error('ما عندك صلاحية تعدّل التصنيفات — اطلبها من صاحب المحل'); return r }
+async function _scDel(p){ const r=await _sbSend(p,'DELETE',null,'return=representation'); if(Array.isArray(r)&&!r.length) throw new Error('ما عندك صلاحية تحذف التصنيفات — اطلبها من صاحب المحل'); return r }
 
 /* ═══ محفظة السائق — مجموع السجل المالي ═══ */
 let myLedger=[];
@@ -30737,7 +30745,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v579', seen={}, n=0, q=[], t=null;
+  var VER='v580', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30990,7 +30998,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v579', t0=Date.now();
+  var VER='v580', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
