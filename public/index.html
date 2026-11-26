@@ -4060,7 +4060,16 @@ html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,htm
 .prq-bar i{flex:none;font-style:normal;min-width:30px;height:30px;border-radius:999px;background:#F97402;color:#fff;font:900 14px/30px Cairo,sans-serif;text-align:center}
 #cmvSheet{position:fixed;inset:0;z-index:9990;background:rgba(17,10,35,.5);display:none;align-items:flex-end;justify-content:center}#cmvSheet.on{display:flex}
 .cmv-sheet{background:#F7F5FC;width:100%;max-width:520px;max-height:84vh;overflow:auto;border-radius:26px 26px 0 0;padding:14px 14px calc(18px + env(safe-area-inset-bottom))}
-.cmv-list{display:flex;flex-direction:column;gap:6px}
+.cmv-now{margin:-4px 4px 10px;font:700 12.5px Cairo,sans-serif;color:#6E6787}.cmv-now b{color:var(--g)}
+.cmv-q{margin:0 0 10px}.cmv-h{margin:12px 4px 7px;font:900 13px Cairo,sans-serif;color:#1B1533}
+.cmv-g{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.cmv-c{display:flex;align-items:center;justify-content:space-between;gap:6px;min-height:44px;padding:8px 11px;text-align:right;background:#fff;border:1.5px solid #ECE7F6;border-radius:12px;font:800 13px/1.35 Cairo,sans-serif;color:#1B1533;cursor:pointer}
+.cmv-c span{min-width:0;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.cmv-c i{font:800 11px Cairo,sans-serif;font-style:normal;color:var(--g);background:#F1ECFC;border-radius:7px;padding:1px 6px;white-space:nowrap}
+.cmv-c em{font:800 11px Cairo,sans-serif;font-style:normal;color:#fff;background:var(--g);border-radius:7px;padding:1px 7px}
+.cmv-c.at{background:#F1ECFC;border-color:#D9CCF5;cursor:default}.cmv-c:active:not(:disabled){border-color:var(--g);transform:scale(.98)}
+.cmv-back{background:none;border:0;padding:4px 2px;font:800 13.5px Cairo,sans-serif;color:var(--g);cursor:pointer}
+.cmv-rm{display:block;width:100%;margin-top:14px;padding:11px;border:1.5px dashed #F2B8B5;border-radius:12px;background:#fff;font:800 13px Cairo,sans-serif;color:#C0392B;cursor:pointer}
 .cmv-r{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:right;background:#fff;border:1.5px solid #ECE7F6;border-radius:14px;padding:12px 14px;font:800 14.5px Cairo,sans-serif;color:#1B1533;cursor:pointer}
 .cmv-r.sub{margin-right:22px;width:calc(100% - 22px);font-weight:700;font-size:13.5px;background:#FCFBFE}
 .cmv-r.at{background:#F1ECFC;border-color:#D9CCF5;cursor:default}.cmv-r em{font:700 11.5px Cairo,sans-serif;color:var(--g);font-style:normal;white-space:nowrap}
@@ -9134,19 +9143,49 @@ async function cpAddSelected(keep){
   _cpSel=[]; _cpTab=1;
   catProdsRender();
 }
-/* v579: نقل منتج واحد — تختار التصنيف من شجرة الأقسام */
+/* v579: نقل منتج واحد.  v581: «هوسة» — 92 قسم كبطاقات طويلة ← بحث + «قريب منه» + الأقسام الرئيسية شبكة صغيرة، وتضغط الرئيسي تطلع فروعه */
+let _cmv={pid:'', view:'', q:''};
 function cpMoveOne(pid){
   const p=_cpProducts().find(x=>_cpPid(x)===String(pid)); if(!p || !_cpCat) return;
-  const curId=_cpCat.virtual?null:_cpCat.id;
-  const here=new Set(myCats.filter(c=>(_catPids[c.id]||new Set()).has(String(pid))).map(c=>c.id));
-  const row=(c,sub)=>{ const at=here.has(c.id); return `<button type="button" class="cmv-r${sub?' sub':''}${at?' at':''}" ${at?'disabled':''} onclick="cmvPick(${JSON.stringify(String(pid)).replace(/"/g,'&quot;')},'${c.id}')"><b>${esc(c.name)}</b>${at?'<em>هنا هسه</em>':''}</button>` };
-  const tree=_cTop(myCats).map(c=>row(c,false)+_cSubs(myCats,c.id).map(x=>row(x,true)).join('')).join('');
+  _cmv={pid:String(pid), view:'', q:''};
   let el=document.getElementById('cmvSheet');
   if(!el){ el=document.createElement('div'); el.id='cmvSheet'; el.onclick=e=>{ if(e.target===el) el.classList.remove('on') }; document.body.appendChild(el) }
   el.innerHTML=`<div class="cmv-sheet"><div class="prq-sh-h"><b>وين تنقل «${esc(p.name||'')}»؟</b><button type="button" class="as-x" onclick="document.getElementById('cmvSheet').classList.remove('on')" aria-label="سد">✕</button></div>
-    <div class="cmv-list">${tree||'<div class="as-empty">ماكو تصنيفات</div>'}</div>
-    ${curId?`<button type="button" class="cmv-r none" onclick="cmvPick(${JSON.stringify(String(pid)).replace(/"/g,'&quot;')},'')"><b>شيله من «${esc(_cpCat.name)}»</b><em>يصير بلا تصنيف إذا ما بأي قسم ثاني</em></button>`:''}</div>`;
+    <div class="cmv-now" id="cmvNow"></div>
+    <div class="cp-srch cmv-q"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><input type="text" placeholder="دوّر على القسم…" oninput="_cmv.q=this.value.trim();_cmv.view='';cmvPaint()"></div>
+    <div id="cmvBody"></div></div>`;
   el.classList.add('on');
+  cmvPaint();
+}
+function cmvPaint(){
+  const box=document.getElementById('cmvBody'); if(!box) return;
+  const pid=_cmv.pid, P=v=>JSON.stringify(v).replace(/"/g,'&quot;');
+  const here=new Set(myCats.filter(c=>(_catPids[c.id]||new Set()).has(pid)).map(c=>c.id));
+  const nowEl=document.getElementById('cmvNow');
+  if(nowEl){ const hs=myCats.filter(c=>here.has(c.id)).map(c=>{ const pr=c.parent_id&&myCats.find(x=>x.id===c.parent_id); return (pr?pr.name+' › ':'')+c.name });
+    nowEl.innerHTML=hs.length?'هسه بـ: <b>'+hs.map(esc).join('، ')+'</b>':'هسه: <b>بلا تصنيف</b>' }
+  const chip=(c,label)=>{ const at=here.has(c.id), ns=c.parent_id?0:_cSubs(myCats,c.id).length;
+    const go=(!c.parent_id && ns && !label) ? `_cmv.view=${P(c.id)};cmvPaint()` : `cmvPick(${P(pid)},${P(c.id)})`;
+    return `<button type="button" class="cmv-c${at?' at':''}" ${at?'disabled':''} onclick="${go}"><span>${esc(label||c.name)}</span>${at?'<em>هنا</em>':(!label&&ns?`<i>${ns} ›</i>`:'')}</button>` };
+  let html='';
+  const q=_normAr(_cmv.q||'');
+  if(q){
+    const hits=myCats.filter(c=>_normAr(c.name).includes(q));
+    html='<div class="cmv-g">'+(hits.map(c=>{ const pr=c.parent_id&&myCats.find(x=>x.id===c.parent_id); return chip(c,(pr?pr.name+' › ':'')+c.name) }).join('')||'<div class="as-empty">ماكو قسم بهذا الاسم</div>')+'</div>';
+  }else if(_cmv.view){
+    const par=myCats.find(c=>c.id===_cmv.view);
+    html=`<button type="button" class="cmv-back" onclick="_cmv.view='';cmvPaint()">‹ كل الأقسام</button><div class="cmv-h">${esc(par?par.name:'')}</div>`
+      +'<div class="cmv-g">'+(par?chip(par,par.name+' (القسم نفسه)'):'')+_cSubs(myCats,_cmv.view).map(x=>chip(x)).join('')+'</div>';
+  }else{
+    /* قريب منه: القسم الرئيسي وفروعه للقسم اللي المادة بيه هسه */
+    const base=myCats.find(c=>here.has(c.id)), top=base?(base.parent_id?myCats.find(c=>c.id===base.parent_id):base):null;
+    const near=top?[top].concat(_cSubs(myCats,top.id)):[];
+    if(near.length>1) html+='<div class="cmv-h">قريب منه</div><div class="cmv-g">'+near.map(c=>chip(c,c.id===top.id?c.name+' (الرئيسي)':c.name)).join('')+'</div>';
+    html+='<div class="cmv-h">كل الأقسام</div><div class="cmv-g">'+_cTop(myCats).map(c=>chip(c)).join('')+'</div>';
+  }
+  const curId=(_cpCat&&!_cpCat.virtual)?_cpCat.id:null;
+  if(curId && !q) html+=`<button type="button" class="cmv-rm" onclick="cmvPick(${P(pid)},'')">شيله من «${esc(_cpCat.name)}»</button>`;
+  box.innerHTML=html;
 }
 async function cmvPick(pid, toId){
   const el=document.getElementById('cmvSheet'); if(el) el.classList.remove('on');
@@ -30745,7 +30784,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v580', seen={}, n=0, q=[], t=null;
+  var VER='v581', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30998,7 +31037,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v580', t0=Date.now();
+  var VER='v581', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
