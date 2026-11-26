@@ -8900,9 +8900,9 @@ function tImg320(u){ u=oImg(u); return (/^\/m\/[\w\/.-]+\.webp$/.test(u) && !/\.
 var __imgLite=false;
 function tImg(u){ const t=tImg320(u); return (__imgLite && /^\/m\/[\w\/.-]+\.t\.webp$/.test(t)) ? t.replace(/\.t\.webp$/,'.s.webp') : t }
 document.addEventListener('error',e=>{ const t=e.target; if(!t||t.tagName!=='IMG') return;
+  if(/\/m\/.+\.s\.webp$/.test(t.src)&&!t.dataset.sf){ t.dataset.sf='1'; t.dataset.tf='1'; t.src=t.src.replace(/\.s\.webp$/,'.t.webp'); return }   /* v571: النسخة الخفيفة ما موجودة ← 320.  v576: صارت قبل «الأصل» — قبل: صورة /m/sb/ خفيفة ناقصة تروح للأصل الكبير (‎~84KB) بالنت الضعيف */
   const m=/\/m\/sb\/(.+?)(?:\.[ts])?\.webp$/.exec(t.src||'');
   if(m && !t.dataset.sbf){ t.dataset.sbf='1'; t.dataset.tf='1'; if(t.dataset.lz) t.dataset.lz=SB_PIMG+m[1]; t.src=SB_PIMG+m[1]; return }   /* v515: ما الها نسخة بعد ← الأصل */
-  if(/\/m\/.+\.s\.webp$/.test(t.src)&&!t.dataset.sf){ t.dataset.sf='1'; t.dataset.tf='1'; t.src=t.src.replace(/\.s\.webp$/,'.t.webp'); return }   /* v571: النسخة الخفيفة ما موجودة ← 320 */
   if(/\.t\.webp$/.test(t.src)&&!t.dataset.tf){ t.dataset.tf='1'; t.src=t.src.replace(/\.t\.webp$/,'.webp') } },true);
 function _cpThumb(p){
   return p.img
@@ -12590,7 +12590,7 @@ function openShop(id){
   LZ.t0=Date.now(); LZ.sid=String(id).slice(0,8); LZ.cnt=0; LZ.vq=[]; LZ.bg=[]; LZ.rt=[]; LZ.gen++; LZ.run=0; LZ.slow=0;   /* v514: كل محل يبدي بعدّاد نظيف */
   try{ clearTimeout(LZ.wd); const _g=LZ.gen; LZ.wd=setTimeout(()=>{ if(_g!==LZ.gen) return; const L=[...document.querySelectorAll('#p_shop img[data-lz]')]; if(!L.length) return;
     const ok=L.filter(i=>i.complete&&i.naturalWidth>0).length; if(ok>=Math.min(6,L.length)) return; const nc=navigator.connection||{};
-    window.__errPush&&window.__errPush('IMGSTALL ok='+ok+'/'+L.length+' run='+LZ.run+' vq='+LZ.vq.length+' slow='+LZ.slow, 'shop='+LZ.sid+' net='+(nc.effectiveType||'?')+'/'+(nc.downlink||'?')+' sw='+(navigator.serviceWorker&&navigator.serviceWorker.controller?1:0)+' origin='+location.host,'lz') },15000) }catch(e){}
+    window.__errPush&&window.__errPush('IMGSTALL ok='+ok+'/'+L.length+' run='+LZ.run+' vq='+LZ.vq.length+' slow='+LZ.slow+' lite='+(__imgLite?1:0), 'shop='+LZ.sid+' net='+(nc.effectiveType||'?')+'/'+(nc.downlink||'?')+' sw='+(navigator.serviceWorker&&navigator.serviceWorker.controller?1:0)+' origin='+location.host,'lz') },15000) }catch(e){}
   try{ window.__trk&&__trk('shop',curShop.id) }catch(e){}
   pushRecent(curShop.id);
   document.querySelectorAll('#cApp .page').forEach(x=>x.classList.remove('on'));
@@ -30626,7 +30626,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v575', seen={}, n=0, q=[], t=null;
+  var VER='v576', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30879,7 +30879,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v575', t0=Date.now();
+  var VER='v576', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

@@ -2,7 +2,7 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v575';
+const VER = 'leemak-v576';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
 const IMG_MAX = 600;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
@@ -12,7 +12,7 @@ const SHELL = ['/supabase.js', '/sb-layer.js', '/auth-layer.js', '/manifest.json
 const SBIMG = /^https:\/\/[a-z0-9]+\.supabase\.co\/storage\/v1\/object\/public\/.+\.(png|jpe?g|webp|gif|svg)(\?.*)?$/i;
 /* v524: نسخ صور المنتجات داخل التطبيق (/m/sb/…) — إذا علكت، نجيب الأصل من هنا */
 const SB_PIMG = 'https://obvxqyfmcmldruauhsgw.supabase.co/storage/v1/object/public/images/';
-const MSB = /\/m\/sb\/(.+?)(?:\.t)?\.webp$/;
+const MSB = /\/m\/sb\/(.+?)(?:\.[ts])?\.webp$/;   /* v576: + .s (النسخة الخفيفة) — قبل: الاحتياط يروح لعنوان غلط */
 const CDN = /^https:\/\/(unpkg\.com|cdn\.jsdelivr\.net|cdnjs\.cloudflare\.com|www\.gstatic\.com\/firebasejs)\//;
 const API = /(supabase\.co|firestore|firebaseio|googleapis|openstreetmap\.org|project-osrm\.org|fcm\.googleapis)/;
 const IMG = /\.(png|jpe?g|webp|gif|svg|ico|woff2?)$/i;
@@ -76,9 +76,9 @@ self.addEventListener('install', e => {
       ic.match(u).then(h => h || fetch(u, { cache: 'reload' }).then(r => { if (r.ok) return ic.put(u, r) }))).map(p => p.catch(() => {})))),
     caches.open(VER).then(c => Promise.all([
     /* v352: إذا ما نزلت صفحة التطبيق كاملة، التثبيت يفشل والنسخة القديمة تبقى محفوظة وشغالة (قبل: تنمسح ويطلع تلفون بلا تطبيق) */
-    fetch('/', { cache: 'reload' }).then(clean).then(r => { if (!(r && r.ok)) throw new Error('index'); return c.put('/index.html', r) }),
+    fetch('/', { cache: 'reload', priority: 'low' }).then(clean).then(r => { if (!(r && r.ok)) throw new Error('index'); return c.put('/index.html', r) }),   /* v576: low — الصور الظاهرة تسبق التحديث */
     ...SHELL.map(u =>
-      fetch(u, { cache: 'reload' }).then(clean).then(r => { if (r && r.ok) return c.put(u, r) }).catch(() => {})
+      fetch(u, { cache: 'reload', priority: 'low' }).then(clean).then(r => { if (r && r.ok) return c.put(u, r) }).catch(() => {})
     )
   ]))])));
 });
@@ -118,6 +118,9 @@ async function store(c, key, res, notify){
 }
 
 function timeout(ms){ return new Promise(r => setTimeout(() => r(null), ms)) }
+/* v576: نت ضعيف؟ (نفس شرط الصفحة lzSlowNet) */
+function slowNet(){ try{ const nc = self.navigator && self.navigator.connection; return !!(nc && (nc.saveData || /2g|3g/.test(nc.effectiveType || '') || (nc.downlink && nc.downlink < 1.5))) }catch(e){ return false } }
+const IDX_RECHECK = 24 * 3600 * 1000;
 
 /* صفحة التطبيق: من الكاش فوراً، والتحديث بالخلفية.
    v352: إذا ما محفوظة: ننتظر ثانيتين ونص بس، وبعدها نطلّع صفحة «جاري التحميل» بشكل التطبيق والتحميل يكمل بالخلفية */
@@ -126,7 +129,7 @@ function fetchIndex(c){
   if(_idxP) return _idxP;
   /* v524: مهلة 25 ثانية — قبل: إذا الطلب علك (اتصال عالك)، _idxP يبقى ينتظر والتطبيق ما يتحدث أبد (تلفون بقى على v518) */
   const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 25000);
-  _idxP = fetch('/', { cache: 'no-cache', signal: ac.signal }).then(clean)
+  _idxP = fetch('/', { cache: 'no-cache', signal: ac.signal, priority: 'low' }).then(clean)
     .then(async r => { if(r.ok) await store(c, '/index.html', r, true); return r })
     .catch(() => null)
     .then(r => { clearTimeout(tm); _idxP = null; return r });
@@ -139,9 +142,19 @@ async function oldIndex(){
   }catch(e){}
   return null;
 }
+/* v576: صفحة التطبيق (‎~600KB) ما توصل وياها علامة نسخة (Cloudflare يشيلها) — فكل فتحة جانت تنزّلها كاملة من جديد بالخلفية.
+   بالنت الضعيف (‎0.4 ميگا) هذا ياكل الخط ~15 ثانية والصور تنتظر وراه («الصور ما تنزل»).
+   هسه: إذا الصفحة المحفوظة هي نسخة هذا الـSW نفسه، ما نجيبها — الإصدار الجديد يوصل من فحص sw.js (صغير، المتصفح يسويه كل فتحة + كل 10 دقايق)
+   وهو ينزّلها مرة وحدة وقت التثبيت. احتياط: إذا صار لها يوم، نتأكد بعد 15 ثانية من الفتح (حتى ما تزاحم الصور) */
 async function shell(e){
   const c = await caches.open(VER);
-  const cached = (await c.match('/index.html')) || (await oldIndex());
+  const own = await c.match('/index.html');
+  if(own){
+    const d = Date.parse(own.headers.get('date') || '') || 0;
+    if(Date.now() - d > IDX_RECHECK) e.waitUntil(timeout(15000).then(() => fetchIndex(c)));
+    return await clean(own);
+  }
+  const cached = await oldIndex();
   const net = fetchIndex(c);
   e.waitUntil(net);
   if(cached) return await clean(cached);
@@ -168,15 +181,28 @@ async function img(e, req){
   let cached = await c.match(req);
   /* v514: إذا انحفظت صفحة بدل صورة (لحظة النشر) نرميها ونجيب الصورة من جديد */
   if(cached && !/^image\//i.test(cached.headers.get('content-type') || '')){ try{ await c.delete(req) }catch(e){} cached = null }
+  const u = new URL(req.url);
+  /* v576: النسخة الخفيفة (.s 160px) للنت الضعيف — إذا نسخة 320 أو الكبيرة محفوظة من قبل، نطلّعها هي فوراً (أوضح وبلا نت).
+     قبل: الزبون اللي شاف المحل قبل، أول ما نته يضعف تنطلب .s من النت والصور المحفوظة عنده ما تنفع */
+  if(!cached && /\.s\.webp$/.test(u.pathname)){
+    for(const alt of [u.pathname.replace(/\.s\.webp$/, '.t.webp'), u.pathname.replace(/\.s\.webp$/, '.webp')]){
+      try{ const h = await c.match(u.origin + alt, { ignoreVary: true }); if(h && /^image\//i.test(h.headers.get('content-type') || '')) return h }catch(e){}
+    }
+  }
   if(cached){
-    const last = _checked.get(req.url) || 0;
-    if(Date.now() - last > 6 * 3600 * 1000){
-      _checked.set(req.url, Date.now());
-      e.waitUntil(fetch(req, { cache: 'no-cache' }).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) return c.put(req, r) }).catch(() => {}));
+    /* v576: الفحص كل 6 ساعات صار حقيقي (من تاريخ الصورة المحفوظة) — قبل: العدّاد بالذاكرة ينمسح كل ما ينطفي الـSW (كل فتحة)،
+       فكل صورة تطلع من الكاش جانت تنطلب من النت مرة ثانية بالخلفية وتزاحم الصور الجديدة.
+       وصور /m/sb/ أسماءها ما تتكرر (وقت الرفع) فما تحتاج فحص أبد، وبالنت الضعيف ما نفحص شي */
+    if(!MSB.test(u.pathname) && !slowNet()){
+      const last = Math.max(_checked.get(req.url) || 0, Date.parse(cached.headers.get('date') || '') || 0);
+      if(Date.now() - last > 6 * 3600 * 1000){
+        _checked.set(req.url, Date.now());
+        e.waitUntil(fetch(req, { cache: 'no-cache', priority: 'low' }).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) return c.put(req, r) }).catch(() => {}));
+      }
     }
     return cached;
   }
-  const m = MSB.exec(new URL(req.url).pathname);
+  const m = MSB.exec(u.pathname);
   try{
     const net = fetch(req).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone()).catch(() => {}); return r });
     if(!m) return await net;
