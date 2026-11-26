@@ -4058,6 +4058,20 @@ html[data-theme=dark] .oa-r{background:#262036}html[data-theme=dark] .oa-r b,htm
 .prq-bar .pb-ic{width:42px;height:42px;border-radius:14px;background:#FFE3C8;color:#C25A00}.prq-bar .pb-ic svg{width:22px;height:22px}
 .prq-bar>div{flex:1;min-width:0}.prq-bar b{display:block;font:800 14.5px Cairo,sans-serif;color:#1B1533}.prq-bar span{display:block;font-size:12px;font-weight:600;color:#7A7490;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .prq-bar i{flex:none;font-style:normal;min-width:30px;height:30px;border-radius:999px;background:#F97402;color:#fff;font:900 14px/30px Cairo,sans-serif;text-align:center}
+#cmvSheet{position:fixed;inset:0;z-index:9990;background:rgba(17,10,35,.5);display:none;align-items:flex-end;justify-content:center}#cmvSheet.on{display:flex}
+.cmv-sheet{background:#F7F5FC;width:100%;max-width:520px;max-height:84vh;overflow:auto;border-radius:26px 26px 0 0;padding:14px 14px calc(18px + env(safe-area-inset-bottom))}
+.cmv-list{display:flex;flex-direction:column;gap:6px}
+.cmv-r{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:right;background:#fff;border:1.5px solid #ECE7F6;border-radius:14px;padding:12px 14px;font:800 14.5px Cairo,sans-serif;color:#1B1533;cursor:pointer}
+.cmv-r.sub{margin-right:22px;width:calc(100% - 22px);font-weight:700;font-size:13.5px;background:#FCFBFE}
+.cmv-r.at{background:#F1ECFC;border-color:#D9CCF5;cursor:default}.cmv-r em{font:700 11.5px Cairo,sans-serif;color:var(--g);font-style:normal;white-space:nowrap}
+.cmv-r.none{margin-top:12px;flex-direction:column;align-items:flex-start;gap:2px;border-style:dashed;color:#C0392B}.cmv-r.none em{color:#8A84A0}
+.cmv-r:active:not(:disabled){transform:scale(.99);border-color:var(--g)}
+.cp-b.mv{color:var(--g);background:#F1ECFC}
+.cp-in{display:inline-block;align-self:flex-start;width:auto;margin-top:3px;font:700 11px Cairo,sans-serif;font-style:normal;color:#6E6787;background:#F2F0F7;border-radius:7px;padding:1px 8px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cp-in.no{color:#B45309;background:#FEF3C7}
+.cp-all{display:flex;align-items:center;gap:8px;margin:2px 0 8px;background:none;border:0;font:800 13px Cairo,sans-serif;color:var(--g);cursor:pointer;padding:4px 2px}
+.cp-mvbar{position:sticky;bottom:calc(82px + env(safe-area-inset-bottom));background:linear-gradient(to top,#fff 70%,rgba(255,255,255,0));padding:10px 0 4px;z-index:3}
+.cp-mvbar .cat-add:disabled,.cp-mvbar .cp-alt:disabled{opacity:.45}
+.cat-row.nocat{background:#FFFBEB;border:1.5px dashed #F5C26B;cursor:pointer}.cat-row.nocat .cat-nm b{color:#92400E}.cat-row.nocat .cat-nm span{color:#B45309}
 #prqSheet{position:fixed;inset:0;z-index:9990;background:rgba(17,10,35,.5);display:none;align-items:flex-end;justify-content:center}
 #prqSheet.on{display:flex}
 .prq-sheet{background:#F7F5FC;width:100%;max-width:520px;max-height:88vh;overflow:auto;border-radius:26px 26px 0 0;padding:14px 14px calc(18px + env(safe-area-inset-bottom))}
@@ -8700,12 +8714,39 @@ function shopCatList(){
   return Object.keys(m).map(c=>({name:c, count:m[c]}));
 }
 
-let _catPids={};
+let _catPids={}, _catLinks={};
+/* v579: «التصنيفات دخوه وهوسة» — قاعدة وحدة بكل مكان (لوحة المحل + الزبون + السيرفر shop_products_move):
+   المادة داخل التصنيف إذا اسمه مكتوب عليها (cat) أو مربوطة بيه (product_categories).
+   قبل: لوحة المحل تقرا الربط بس، والزبون الاسم إذا ماكو ربط — بغداد ماركت: 975 مادة بأسماء أقسام و3 بس مربوطة ← كل قسم «0 منتج»،
+   و«إضافة منتجات» تبيّن الـ982 كلها، و«إزالة» تمسح الاسم فالمادة تختفي من الزبون. */
+const NOCAT_ID='__none__';
+function _pcat(p){ return String((p&&p.cat)||'').trim() }
+function _catHasName(n){ return !!n && (myCats||[]).some(c=>String(c.name||'').trim()===n) }
+function _isNoCat(p){ const pid=_cpPid(p); return !_catHasName(_pcat(p)) && !Object.keys(_catLinks).some(k=>_catLinks[k].has(pid)) }
+function _catRecount(){
+  _catCnt={}; _catPids={};
+  const ps=_cpProducts(), byName={};
+  ps.forEach(p=>{ const n=_pcat(p); if(n) (byName[n]=byName[n]||[]).push(_cpPid(p)) });
+  const have=new Set(ps.map(_cpPid));
+  (myCats||[]).forEach(c=>{
+    const set=new Set(byName[String(c.name||'').trim()]||[]);
+    (_catLinks[c.id]||new Set()).forEach(id=>{ if(have.has(id)) set.add(id) });
+    _catPids[c.id]=set; _catCnt[c.id]=set.size;
+  });
+}
+/* أعضاء التصنيف — الرئيسي = منتجاته + منتجات أقسامه الفرعية */
+function _catMemberIds(c){
+  if(!c) return [];
+  if(c.id===NOCAT_ID) return _cpProducts().filter(_isNoCat).map(_cpPid);
+  const set=new Set(_catPids[c.id]||[]);
+  if(!c.parent_id) _cSubs(myCats,c.id).forEach(x=>(_catPids[x.id]||[]).forEach(p=>set.add(p)));
+  return [...set];
+}
 /* v390: عدد منتجات القسم الرئيسي = منتجاته + منتجات أقسامه الفرعية (بدون تكرار) */
 function _catCntAll(id){
   const set=new Set(_catPids[id]||[]);
   _cSubs(myCats,id).forEach(x=>(_catPids[x.id]||[]).forEach(p=>set.add(p)));
-  return set.size || (_catCnt[id]||0);
+  return set.size;
 }
 async function loadShopCats(){
   if(!me||!me.shopId){ myCats=[]; _catCnt={}; renderCatsPage(); return }
@@ -8715,14 +8756,15 @@ async function loadShopCats(){
     myCats=[];
     toast('ما گدرنا نجيب التصنيفات: '+String(e.message||e).slice(0,70));
   }
-  _catCnt={}; _catPids={};
+  _catLinks={};
   if(myCats.length){
     try{
       const ids=myCats.map(c=>c.id).join(',');
       const rows=await sbGet('product_categories?select=product_id,category_id&category_id=in.('+ids+')');
-      rows.forEach(r=>{ _catCnt[r.category_id]=(_catCnt[r.category_id]||0)+1; (_catPids[r.category_id]=_catPids[r.category_id]||new Set()).add(String(r.product_id)) });
+      (rows||[]).forEach(r=>{ (_catLinks[r.category_id]=_catLinks[r.category_id]||new Set()).add(String(r.product_id)) });
     }catch(e){ }
   }
+  _catRecount();
   await loadTopProducts();
   renderCatsPage();
   try{ renderStMenu() }catch(e){}
@@ -8751,7 +8793,8 @@ function renderCatsPage(){
   const _tops=_cTop(myCats);   /* v390: الأقسام الفرعية تطلع داخل قسمها */
   if(cnt) cnt.textContent=_tops.length;
 
-  const noCat=((myShopDoc&&myShopDoc.products)||[]).filter(p=>!String(p.cat||'').trim()).length;
+  try{ _catRecount() }catch(e){}
+  const noCat=_cpProducts().filter(_isNoCat).length;   /* v579: بلا اسم، أو اسم قسم مو موجود */
 
   if(!_tops.length){
     box.innerHTML='<div class="stf-empty">ماكو تصنيفات بعد<br>اضغط «إضافة تصنيف جديد»</div>'
@@ -8772,7 +8815,10 @@ function renderCatsPage(){
       </span>
     </div>` : '';
 
-  let html=topRow+'<div id="catRows">'+_tops.map(c=>{
+  const noRow = noCat ? `<div class="cat-row nocat" onclick="catProdsOpen('${NOCAT_ID}')">
+      <div class="cat-nm"><b>بلا تصنيف</b><span>${noCat} منتج — الزبون ما يلگاهم بأي قسم. اضغط وانقلهم</span></div>
+      <span class="cat-ic ed" aria-hidden="true"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M15 6l-6 6 6 6"/></svg></span></div>` : '';
+  let html=topRow+noRow+'<div id="catRows">'+_tops.map(c=>{
     const q=JSON.stringify(c.id).replace(/"/g,'&quot;');
     const off=c.visible===false, _ns=_cSubs(myCats,c.id).length;
     return `
@@ -8795,7 +8841,6 @@ function renderCatsPage(){
 
   html += '<button class="cat-add" onclick="catAdd()"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة تصنيف جديد</button>';
 
-  if(noCat) html += `<div class="cat-note2">${noCat} منتج بلا تصنيف — ما يظهرون تحت أي قسم</div>`;
 
   if(_mkMine()) html += '<div class="cat-note2">📷 اضغط على مربع الصورة جنب كل قسم وحط صورته — تطلع للزبون بصفحة محلك.<br>📂 تريد أقسام فرعية؟ اضغط على القسم ← «+ قسم فرعي» (مثل: التنظيف ← غسيل الصحون · مواد التنظيف).</div><div id="bnMine"></div><div id="brMine"></div>';   /* v384 · v390 · v399 · v561 */
   box.innerHTML=html;
@@ -8812,7 +8857,7 @@ function _cpProducts(){ return (myShopDoc&&Array.isArray(myShopDoc.products))?my
 function _cpPid(p){ return String(p&&p.id!=null?p.id:'') }
 
 async function catProdsOpen(catId){
-  _cpCat = (catId===TOP_CAT_ID) ? _topCat() : (myCats.find(x=>x.id===catId) || null);
+  _cpCat = (catId===TOP_CAT_ID) ? _topCat() : (catId===NOCAT_ID ? {id:NOCAT_ID, name:'بلا تصنيف', virtual:true} : (myCats.find(x=>x.id===catId) || null));
   if(!_cpCat) return toast('ماكو تصنيف');
   _cpParent = (_cpCat.parent_id && myCats.find(x=>x.id===_cpCat.parent_id)) || null;   /* v390 */
   _cpTab=1; _cpSel=[]; _cpQ1=''; _cpQ2='';
@@ -8820,13 +8865,8 @@ async function catProdsOpen(catId){
     await loadTopProducts();
     _cpLinks=_topPids.slice();
   }else{
-  try{
-    const rows = await sbGet('product_categories?select=product_id&category_id=eq.'+catId);
-    _cpLinks = (rows||[]).map(r=>String(r.product_id));
-  }catch(e){
-    _cpLinks=[];
-    toast('ما گدرنا نجيب المنتجات: '+String(e.message||e).slice(0,70));
-  }
+    try{ _catRecount() }catch(e){}
+    _cpLinks=_catMemberIds(_cpCat);   /* v579: نفس قاعدة الزبون */
   }
   document.querySelectorAll('#sApp .page').forEach(x=>x.classList.remove('on'));
   const pg=document.getElementById('q_catprods');
@@ -8850,7 +8890,7 @@ function cpSubsPaint(){
   const tabs=document.getElementById('cpTabs');
   if(!el && tabs){ el=document.createElement('div'); el.id='cpSubs'; tabs.parentNode.insertBefore(el,tabs) }
   if(!el) return;
-  if(!_cpCat || _cpCat.auto || !_mkMine()){ el.innerHTML=''; return }
+  if(!_cpCat || _cpCat.auto || _cpCat.virtual || !_mkMine()){ el.innerHTML=''; return }
   const q=v=>JSON.stringify(v).replace(/"/g,'&quot;');
   if(_cpParent){
     const c=_cpCat;
@@ -8915,10 +8955,12 @@ function catProdsRender(){
   if(t) t.textContent = _cpCat ? (_cpParent ? _cpParent.name+' ← '+_cpCat.name : _cpCat.name) : '';
   try{ cpSubsPaint() }catch(e){ console.warn('cpSubs', e) }
   const rb=document.getElementById('cpRenameBt');
-  if(rb) rb.style.display = (_cpCat&&_cpCat.auto) ? 'none' : '';
+  if(rb) rb.style.display = (_cpCat&&(_cpCat.auto||_cpCat.virtual)) ? 'none' : '';
+  if(_cpCat && !_cpCat.auto){ try{ _catRecount() }catch(e){} _cpLinks=_catMemberIds(_cpCat) }
   const inCount=_cpLinks.length;
   const tabs=document.getElementById('cpTabs');
-  if(tabs) tabs.innerHTML = (_cpCat&&_cpCat.auto)
+  if(tabs) tabs.innerHTML = (_cpCat&&_cpCat.virtual) ? `<button class="cp-tab on">بلا تصنيف (${inCount})</button>`
+    : (_cpCat&&_cpCat.auto)
     ? `<button class="cp-tab on">الأكثر مبيعاً (${inCount})</button>`
     : `<button class="cp-tab${_cpTab===1?' on':''}" onclick="cpTab(1)">المنتجات (${inCount})</button>`
       +`<button class="cp-tab${_cpTab===2?' on':''}" onclick="cpTab(2)">إضافة منتجات</button>`;
@@ -8945,55 +8987,76 @@ function cpPaintList(){
   }
 
   if(_cpTab===1){
-    const q=_cpQ1;
-    const list=ps.filter(p=>_cpLinks.includes(_cpPid(p)))
-                 .filter(p=>!q || String(p.name||'').includes(q));
+    const q=_cpQ1, vir=!!(_cpCat&&_cpCat.virtual);
+    const all=ps.filter(p=>_cpLinks.includes(_cpPid(p))).filter(p=>!q || String(p.name||'').includes(q));
+    const list=all.slice(0,CP_MAX);
+    const own=_cpCat?String(_cpCat.name||'').trim():'';
     box.innerHTML =
       `<div class="cp-srch">
          <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
-         <input type="text" placeholder="ابحث عن منتج لإضافته لهذا التصنيف…" value="${esc(q)}" oninput="cpSearch1(this.value)">
+         <input type="text" placeholder="دوّر بمنتجات هذا التصنيف…" value="${esc(q)}" oninput="cpSearch1(this.value)">
        </div>
-       <div class="cp-sec">المنتجات الحالية في هذا التصنيف</div>`
+       ${vir?'<div class="cp-hint">هذني المنتجات ما تابعة لأي قسم، فالزبون ما يلگاها إلا بالبحث. اضغط «نقل» جنب كل منتج وحطه بقسمه.</div>':''}`
       + (list.length ? list.map(p=>{ const q=JSON.stringify(_cpPid(p)).replace(/"/g,'&quot;'), on=p.avail!==false, OUT=_mkMine()?'نفذ':'غير متوفر';
-        /* v391: لكل منتج: تعديل · متوفر/نفذ · إزالة من التصنيف */
+        const pc=_pcat(p), sub=(!vir && pc && pc!==own && _catHasName(pc)) ? pc : '';
+        /* v391: تعديل · متوفر/نفذ.  v579: «إزالة» صارت «نقل» — تختار وين تروح (أو «بلا تصنيف») */
         return `
         <div class="cp-row cp-r2${on?'':' out'}">
           <div class="cp-th">${_cpThumb(p)}</div>
-          <div class="cp-nm" onclick="prodFormOpen(${q})" style="cursor:pointer"><b>${esc(p.name||'')}${on?'':` <em class="cp-out">${OUT}</em>`}</b><span>${pPriceLbl(p)}</span></div>
+          <div class="cp-nm" onclick="prodFormOpen(${q})" style="cursor:pointer"><b>${esc(p.name||'')}${on?'':` <em class="cp-out">${OUT}</em>`}</b><span>${pPriceLbl(p)}</span>${sub?`<i class="cp-in">${esc(sub)}</i>`:''}</div>
           <div class="cp-act">
             <button type="button" class="cp-b ed" onclick="prodFormOpen(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg> تعديل</button>
             <button type="button" class="cp-b av ${on?'on':'off'}" onclick="cpAvail(${q})" aria-pressed="${on}"><span class="tg${on?' on':''}" aria-hidden="true"></span> ${on?'متوفر':OUT}</button>
-            <button type="button" class="cp-b rm" onclick="cpRemove(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="9"/><path d="M8.5 12h7"/></svg> إزالة</button>
+            <button type="button" class="cp-b mv" onclick="cpMoveOne(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h14M13 6l6 6-6 6"/></svg> نقل</button>
           </div>
-        </div>` }).join('')
-        : '<div class="stf-empty">ماكو منتجات بهذا التصنيف</div>')
-      + `<button class="cat-add" onclick="cpGoNewProduct()">
+        </div>` }).join('') + (all.length>list.length?`<div class="cp-hint">يطلع أول ${CP_MAX} من ${all.length} — دوّر بالبحث حتى تلگى الباقي</div>`:'')
+        : `<div class="stf-empty">${vir?'كل المنتجات بأقسامها ✓':'ماكو منتجات بهذا التصنيف'}</div>`)
+      + (vir ? '' : `<button class="cat-add" onclick="cpGoNewProduct()">
            <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة منتج جديد</button>
          <button class="cp-alt" onclick="cpTab(2)">
-           <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 5v14M5 12h14"/></svg> إضافة منتجات من تصنيفات أخرى</button>`;
+           <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h14M13 6l6 6-6 6"/></svg> جيب منتجات من تصنيفات ثانية</button>`);
     return;
   }
 
+  /* v579: «جيب منتجات» — كل منتج يبين وين هو هسه. أول شي منتجات القسم الرئيسي (إذا هذا قسم فرعي)، بعدها أخواته، بعدها بلا تصنيف */
   const q=_cpQ2;
-  const list=ps.filter(p=>_cpPid(p) && !_cpLinks.includes(_cpPid(p)))
-               .filter(p=>!q || String(p.name||'').includes(q));
+  const par=_cpParent?String(_cpParent.name||'').trim():'';
+  const sibs=_cpParent?_cSubs(myCats,_cpParent.id).map(x=>String(x.name||'').trim()):[];
+  const rank=p=>{ const c=_pcat(p); return (par && c===par)?0 : (sibs.includes(c)?1 : (_isNoCat(p)?2:3)) };
+  const all=ps.filter(p=>_cpPid(p) && !_cpLinks.includes(_cpPid(p)))
+              .filter(p=>!q || String(p.name||'').includes(q))
+              .map((p,i)=>({p,i,r:rank(p)})).sort((a,b)=>a.r-b.r||a.i-b.i).map(x=>x.p);
+  const list=all.slice(0,CP_MAX);
+  const allSel=list.length && list.every(p=>_cpSel.includes(_cpPid(p)));
+  const nm=esc(_cpCat?_cpCat.name:'');
   box.innerHTML =
-    `<div class="cp-hint">اختر المنتجات التي تريد إضافتها إلى تصنيف: <b>${esc(_cpCat?_cpCat.name:'')}</b></div>
+    `<div class="cp-hint">اختار المنتجات اللي تريدها بتصنيف <b>«${nm}»</b>. جنب كل منتج مكتوب وين هو هسه.</div>
      <div class="cp-srch">
        <svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
-       <input type="text" placeholder="ابحث عن منتج…" value="${esc(q)}" oninput="cpSearch2(this.value)">
+       <input type="text" placeholder="دوّر على منتج… (مثلاً: حفاظ)" value="${esc(q)}" oninput="cpSearch2(this.value)">
      </div>`
+    + (list.length ? `<button type="button" class="cp-all" onclick="cpSelAll(${allSel?0:1})"><span class="cp-ck${allSel?' on':''}"></span> ${allSel?'شيل الاختيار':'اختار الكل ('+list.length+')'}</button>` : '')
     + (list.length ? list.map(p=>{
         const id=_cpPid(p);
         const on=_cpSel.includes(id);
+        const where=_isNoCat(p)?'بلا تصنيف':(_pcat(p)||'');
         return `<div class="cp-row pick${on?' on':''}" onclick="cpToggle(${JSON.stringify(id).replace(/"/g,'&quot;')})">
           <span class="cp-ck${on?' on':''}"></span>
-          <div class="cp-nm"><b>${esc(p.name||'')}</b><span>${pPriceLbl(p)}</span></div>
+          <div class="cp-nm"><b>${esc(p.name||'')}</b><span>${pPriceLbl(p)}</span><i class="cp-in${_isNoCat(p)?' no':''}">هسه: ${esc(where)}</i></div>
           <div class="cp-th">${_cpThumb(p)}</div>
-        </div>`}).join('')
-      : '<div class="stf-empty">كل المنتجات موجودة بهذا التصنيف</div>')
-    + `<button class="cat-add" ${_cpSel.length?'':'disabled style="opacity:.45"'} onclick="cpAddSelected()">
-         إضافة المنتجات المختارة (${_cpSel.length})</button>`;
+        </div>`}).join('') + (all.length>list.length?`<div class="cp-hint">يطلع أول ${CP_MAX} من ${all.length} — دوّر بالبحث حتى تلگى الباقي</div>`:'')
+      : '<div class="stf-empty">ماكو منتجات بهذا الاسم</div>')
+    + `<div class="cp-mvbar${_cpSel.length?' on':''}">
+         <button class="cat-add" ${_cpSel.length?'':'disabled'} onclick="cpAddSelected(false)">انقلها لـ «${nm}» (${_cpSel.length})</button>
+         <button class="cp-alt" ${_cpSel.length?'':'disabled'} onclick="cpAddSelected(true)">خليها بمكانها وتطلع هنا هم</button>
+       </div>`;
+}
+const CP_MAX=200;
+function cpSelAll(on){
+  const box=document.querySelector('#cpBody .cp-srch input'); const q=_cpQ2;
+  const ids=_cpProducts().filter(p=>_cpPid(p) && !_cpLinks.includes(_cpPid(p))).filter(p=>!q || String(p.name||'').includes(q)).slice(0,CP_MAX).map(_cpPid);
+  if(on) ids.forEach(id=>{ if(!_cpSel.includes(id)) _cpSel.push(id) }); else _cpSel=_cpSel.filter(id=>!ids.includes(id));
+  cpPaintList();
 }
 
 function cpToggle(id){
@@ -9045,15 +9108,55 @@ async function cpRemove(pid){
   catProdsRender();
 }
 
-async function cpAddSelected(){
-  if(!_cpCat || !_cpSel.length) return;
-  const rows=_cpSel.map(id=>({product_id:id, category_id:_cpCat.id}));
+/* v579: نقل/إضافة بخطوة وحدة على السيرفر (shop_products_move) — الاسم المكتوب والربط يتعدّلون سوة */
+let _cmvBusy=false;
+async function _catMoveRun(ids, fromId, toCat, keep){
+  if(_cmvBusy || !ids.length) return false;
+  _cmvBusy=true;
   try{
-    await sbPost('product_categories', rows);
-  }catch(e){ toast('ما گدرنا نضيف: '+String(e.message||e).slice(0,80)); return }
-  for(const id of _cpSel){ _cpLinks.push(id); await _cpSyncCat(id, _cpCat.name, true) }
-  toast(_cpSel.length+' منتج انضاف للتصنيف');
+    await rpc('shop_products_move',{p_shop:me.shopId, p_ids:ids.map(String), p_from:fromId||null, p_to:toCat?toCat.id:null, p_keep:!!keep});
+  }catch(e){ _cmvBusy=false; toast('ما گدرنا ننقل: '+String(e.message||e).slice(0,90)); return false }
+  /* نحدّث نسختنا المحلية بنفس قاعدة السيرفر */
+  const set=new Set(ids.map(String)), from=fromId?(myCats.find(c=>c.id===fromId)||null):null, fromNm=from?String(from.name||'').trim():null;
+  if(!keep) _cpProducts().forEach(p=>{ if(set.has(_cpPid(p)) && (!from || _pcat(p)===fromNm)) p.cat=toCat?String(toCat.name||'').trim():'' });
+  if(!keep && fromId && _catLinks[fromId]) ids.forEach(id=>_catLinks[fromId].delete(String(id)));
+  if(toCat) _cpProducts().forEach(p=>{ if(set.has(_cpPid(p)) && _pcat(p)!==String(toCat.name||'').trim()) (_catLinks[toCat.id]=_catLinks[toCat.id]||new Set()).add(_cpPid(p)) });
+  _catRecount();
+  _cmvBusy=false;
+  try{ renderStMenu() }catch(e){}
+  return true;
+}
+async function cpAddSelected(keep){
+  if(!_cpCat || _cpCat.virtual || !_cpSel.length) return;
+  const n=_cpSel.length;
+  if(!(await _catMoveRun(_cpSel.slice(), null, _cpCat, keep))) return;
+  toast(keep ? n+' منتج صار يطلع بـ «'+_cpCat.name+'» هم' : n+' منتج انتقل لـ «'+_cpCat.name+'» ✓');
   _cpSel=[]; _cpTab=1;
+  catProdsRender();
+}
+/* v579: نقل منتج واحد — تختار التصنيف من شجرة الأقسام */
+function cpMoveOne(pid){
+  const p=_cpProducts().find(x=>_cpPid(x)===String(pid)); if(!p || !_cpCat) return;
+  const curId=_cpCat.virtual?null:_cpCat.id;
+  const here=new Set(myCats.filter(c=>(_catPids[c.id]||new Set()).has(String(pid))).map(c=>c.id));
+  const row=(c,sub)=>{ const at=here.has(c.id); return `<button type="button" class="cmv-r${sub?' sub':''}${at?' at':''}" ${at?'disabled':''} onclick="cmvPick(${JSON.stringify(String(pid)).replace(/"/g,'&quot;')},'${c.id}')"><b>${esc(c.name)}</b>${at?'<em>هنا هسه</em>':''}</button>` };
+  const tree=_cTop(myCats).map(c=>row(c,false)+_cSubs(myCats,c.id).map(x=>row(x,true)).join('')).join('');
+  let el=document.getElementById('cmvSheet');
+  if(!el){ el=document.createElement('div'); el.id='cmvSheet'; el.onclick=e=>{ if(e.target===el) el.classList.remove('on') }; document.body.appendChild(el) }
+  el.innerHTML=`<div class="cmv-sheet"><div class="prq-sh-h"><b>وين تنقل «${esc(p.name||'')}»؟</b><button type="button" class="as-x" onclick="document.getElementById('cmvSheet').classList.remove('on')" aria-label="سد">✕</button></div>
+    <div class="cmv-list">${tree||'<div class="as-empty">ماكو تصنيفات</div>'}</div>
+    ${curId?`<button type="button" class="cmv-r none" onclick="cmvPick(${JSON.stringify(String(pid)).replace(/"/g,'&quot;')},'')"><b>شيله من «${esc(_cpCat.name)}»</b><em>يصير بلا تصنيف إذا ما بأي قسم ثاني</em></button>`:''}</div>`;
+  el.classList.add('on');
+}
+async function cmvPick(pid, toId){
+  const el=document.getElementById('cmvSheet'); if(el) el.classList.remove('on');
+  const to=toId?myCats.find(c=>c.id===toId):null;
+  const fromId=(_cpCat&&!_cpCat.virtual)?_cpCat.id:null;
+  /* من قسم رئيسي ومادته داخل قسم فرعي: نطلّعها من القسم الفرعي نفسه */
+  let src=fromId;
+  if(fromId && !(_catPids[fromId]||new Set()).has(String(pid))){ const s=_cSubs(myCats,fromId).find(x=>(_catPids[x.id]||new Set()).has(String(pid))); if(s) src=s.id }
+  if(!(await _catMoveRun([pid], src, to, false))) return;
+  toast(to?'انتقل لـ «'+to.name+'» ✓':'انشال من التصنيف');
   catProdsRender();
 }
 
@@ -12731,15 +12834,12 @@ function _secProducts(all){
   if(menuSec==='__top')
     return all.filter(p=>_shopTop.includes(String(p.id)))
               .sort((a,b)=>_shopTop.indexOf(String(a.id))-_shopTop.indexOf(String(b.id)));
-  const ids=_secIds(menuSec, menuSub);
-  if(ids && ids.length) return all.filter(p=>ids.includes(String(p.id)));
+  /* v579: نفس قاعدة لوحة المحل — المادة بالقسم إذا اسمه مكتوب عليها أو مربوطة بيه (قبل: الربط إذا موجود وإلا الاسم ← القسم يطلع غير اللي بلوحة المحل) */
+  const ids=new Set((_secIds(menuSec, menuSub)||[]).map(String));
   const c=_shopCats.find(x=>x.id===(menuSub||menuSec));
-  const nm=c?c.name:(menuSub||menuSec);
-  if(!menuSub){   /* v390: القسم الرئيسي = منتجاته + منتجات أقسامه الفرعية */
-    const names=[nm].concat(_cSubs(_shopCats,menuSec).map(x=>x.name));
-    return all.filter(x=>names.includes(String(x.cat||'').trim()));
-  }
-  return all.filter(x=>String(x.cat||'').trim()===nm);
+  const nm=String(c?c.name:(menuSub||menuSec)).trim();
+  const names = menuSub ? [nm] : [nm].concat(_cSubs(_shopCats,menuSec).map(x=>String(x.name||'').trim()));   /* v390: الرئيسي = منتجاته + أقسامه الفرعية */
+  return all.filter(x=>ids.has(String(x.id)) || names.includes(String(x.cat||'').trim()));
 }
 function _secIds(sec, sub){
   if(sub) return _shopLinks[sub];
@@ -30637,7 +30737,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v578', seen={}, n=0, q=[], t=null;
+  var VER='v579', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -30890,7 +30990,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v578', t0=Date.now();
+  var VER='v579', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
