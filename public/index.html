@@ -10207,14 +10207,14 @@ async function openPushAdmin(tab){
   let rows=[];
   try{ rows=await rpc('admin_push_status',{}) }catch(e){ el.querySelector('.tm-list').innerHTML='<div class="tm-empty">شغّل push_status.sql أول</div>'; return }
   rows=(Array.isArray(rows)?rows:[]).filter(r=>r.role===tab);
-  const PS={on:['توصله ✓','ok',3], native:['تطبيق المتجر','old',2], off:['ما فعّلها','no',0], denied:['رافضها','no',0], error:['ما اشتغلت','no',0], unsupported:['جهازه ما يدعم','old',1], none:['ما فتح التطبيق بعد','old',1]};
-  const stOf=r=>r.has_token?'on':(PS[r.push_state]?r.push_state:'none');
+  const PS={on:['توصله ✓','ok',3], native:['تطبيق Play','old',2], lost:['انقطعت — لازم يفتح التطبيق','no',0], off:['ما فعّلها','no',0], denied:['رافضها','no',0], error:['ما اشتغلت','no',0], unsupported:['جهازه ما يدعم','old',1], none:['ما فتح التطبيق بعد','old',1]};
+  const stOf=r=>r.has_token?'on':(r.push_state==='on'?'lost':(PS[r.push_state]?r.push_state:'none'));   /* v588: «توصله» بلا رمز محفوظ = الرمز انمسح — جانت تكتب «توصله ✓» وهي ما توصل (بغداد ماركت) */
   rows.sort((a,b)=>PS[stOf(a)][2]-PS[stOf(b)][2] || String(a.name||'').localeCompare(String(b.name||''),'ar'));
   const on=rows.filter(r=>stOf(r)==='on').length, nat=rows.filter(r=>stOf(r)==='native').length;
   const W={driver:'سائق',store:'محل',admin:'حساب إدارة'}[tab];
   const box=el.querySelector('.tm-list');
   if(!rows.length){ box.innerHTML='<div class="tm-empty">ماكو</div>'; return }
-  box.innerHTML=`<div class="tm-sum">${on} من ${rows.length} ${W} توصلهم الإشعارات${nat?` · و${nat} يستخدمون تطبيق المتجر`:''}</div>`+
+  box.innerHTML=`<div class="tm-sum">${on} من ${rows.length} ${W} توصلهم الإشعارات${nat?` · و${nat} يستخدمون تطبيق Play`:''}</div>`+
     rows.map(r=>{ const s=stOf(r), L=PS[s];
       const t=r.has_token?r.token_at:r.push_at;
       const dt=t?new Date(t).toLocaleString('ar-IQ',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):'';
@@ -10223,7 +10223,7 @@ async function openPushAdmin(tab){
       const appr=tab==='store'?!!(((allShops||[]).find(s=>String(s.ownerUid||s.owner_id)===String(r.id))||{}).approved):!!r.approved;
       return `<div class="tm-row"><div><b>${esc(nm)}${appr||tab==='admin'?'':' <em class="tm-ty">ينتظر الموافقة</em>'}</b><small>${dt?'آخر فحص '+dt:'ما فتح التطبيق من هذا التحديث'}</small></div><i class="${L[1]}">${L[0]}</i></div>`;
     }).join('')+
-    `<div class="st-note">«تطبيق المتجر» يعني يستخدم تطبيق Play / App Store، وإشعاراته تنبعث من هناك. «ما فعّلها» يعني يطلعله تذكير كل ما يفتح التطبيق لحد ما يفعّلها.</div>`;
+    `<div class="st-note">«تطبيق Play» يعني نازّل تطبيقنا من Play / App Store، وإشعاراته تنبعث من هناك. «انقطعت» يعني جان مفعّلها بس انمسحت — لازم يفتح التطبيق ويضغط «فعّلها». «ما فعّلها» يعني يطلعله تذكير كل ما يفتح التطبيق لحد ما يفعّلها.</div>`;
 }
 function esc(v){
   if(v===null||v===undefined) return '';
@@ -30308,7 +30308,7 @@ html[data-theme=dark] .ixm button{background:#2a2440;border-color:#3a3456;color:
 .pr2 .t span.w{color:#D92D20;font-weight:800}
 .secpk{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:7px}
 .tm-views{display:flex;gap:6px;flex-wrap:wrap}.tm-views .tm-view{flex:1;min-width:0}
-.tm-ty{font-style:normal;font-size:10.5px;font-weight:800;color:var(--g);background:#F1ECFB;border-radius:999px;padding:1px 7px;margin-inline-start:4px}
+.tm-ty{font-style:normal;font-size:10.5px;font-weight:800;white-space:nowrap;display:inline-block;color:var(--g);background:#F1ECFB;border-radius:999px;padding:1px 7px;margin-inline-start:4px}
 .secpk i{font-style:normal;font-size:11px;font-weight:800;color:#8a849c}
 .secpk button{border:1px solid #E4E0EF;background:#fff;color:#6b6480;font:inherit;font-size:11px;font-weight:800;padding:3px 10px;border-radius:999px;cursor:pointer}
 .secpk button.on{background:var(--g);border-color:var(--g);color:#fff}
@@ -30881,7 +30881,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v587', seen={}, n=0, q=[], t=null;
+  var VER='v588', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31134,7 +31134,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v587', t0=Date.now();
+  var VER='v588', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
