@@ -2674,6 +2674,7 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .cp-b.av.on{background:#ECFDF3;color:#15803D}
 .cp-b.av.off{background:#FFF4E5;color:#B45309}
 .cp-b.rm{background:#FEF2F2;color:#DC2626}
+.cp-act .cp-b.rm{flex:0 0 auto;padding:8px 11px}   /* v585: زر الحذف أصغر حتى الأربعة يوسعون بالسطر */
 .cp-b .tg{transform:scale(.72);margin:-4px -6px;pointer-events:none}
 .cp-out{font-style:normal;display:inline-block;margin-inline-start:4px;font-size:11px;font-weight:800;color:#B45309;background:#FFF4E5;border-radius:6px;padding:1px 6px;vertical-align:middle}
 .cp-ck{width:22px;height:22px;border-radius:7px;border:2px solid #D8D3E8;background:#fff;
@@ -9048,6 +9049,7 @@ function cpPaintList(){
             <button type="button" class="cp-b ed" onclick="prodFormOpen(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 20h4l10-10a2.4 2.4 0 0 0-3.4-3.4L4.6 16.6z"/><path d="M14 6.6 17.4 10"/></svg> تعديل</button>
             <button type="button" class="cp-b av ${on?'on':'off'}" onclick="cpAvail(${q})" aria-pressed="${on}"><span class="tg${on?' on':''}" aria-hidden="true"></span> ${on?'متوفر':OUT}</button>
             <button type="button" class="cp-b mv" onclick="cpMoveOne(${q})"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 12h14M13 6l6 6-6 6"/></svg> نقل</button>
+            <button type="button" class="cp-b rm" onclick="cpDelOne(${q})" aria-label="حذف المنتج"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7h16M9 7V4.8h6V7M6.5 7l1 13h9l1-13M10 11v6M14 11v6"/></svg> حذف</button>
           </div>
         </div>` }).join('') + (all.length>list.length?`<div class="cp-hint">يطلع أول ${CP_MAX} من ${all.length} — دوّر بالبحث حتى تلگى الباقي</div>`:'')
         : `<div class="stf-empty">${vir?'كل المنتجات بأقسامها ✓':'ماكو منتجات بهذا التصنيف'}</div>`)
@@ -9136,6 +9138,13 @@ async function cpAvail(pid){
     await rpc('shop_product_upsert',{p_shop:me.shopId, p_item:item});
     toast(nv?'رجع متوفر ✓':(_mkMine()?'تأشّر «نفذ» — الزبون يشوفه نفذ وما يگدر يطلبه':'صار غير متوفر'));
   }catch(e){ p.avail=!nv; cpPaintList(); toast('ما گدرنا نغيّر الحالة: '+String(e.message||e).slice(0,70)) }
+}
+/* v585: «حذف» بصفحة التصنيف — يسأل أول، وبعد الحذف يختفي من القائمة فوراً */
+async function cpDelOne(pid){
+  if(!(await delProduct(pid))) return;
+  try{ if(myShopDoc && Array.isArray(myShopDoc.products)) myShopDoc.products=myShopDoc.products.filter(x=>_cpPid(x)!==pid) }catch(e){}
+  _cpLinks=_cpLinks.filter(x=>x!==pid);
+  cpPaintList();
 }
 async function cpRemove(pid){
   if(!_cpCat) return;
@@ -30858,7 +30867,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v584', seen={}, n=0, q=[], t=null;
+  var VER='v585', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31111,7 +31120,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v584', t0=Date.now();
+  var VER='v585', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
