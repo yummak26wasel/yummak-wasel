@@ -1094,6 +1094,11 @@ html[data-theme=dark] .cat-mv button{background:#2a2244;color:#c9b6ff}
 .brc{display:inline-flex;align-items:center;gap:6px;background:#fff;border:1.5px solid #ECE7F6;border-radius:999px;padding:4px 4px 4px 12px}
 .brc b{font-size:13.5px;font-weight:800;color:#1E1530}.brc i{font-style:normal;font-size:11.5px;font-weight:700;color:#7A7290}.brc.z i{color:#B45309}
 .brc button{width:24px;height:24px;border:0;border-radius:50%;background:#F4F1FA;color:#7A7290;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}.brc button .wic{width:14px;height:14px}
+.brc-im{width:30px;height:30px;flex:0 0 30px;border-radius:50%;border:1.5px dashed #CDBDF2;background:#F7F4FD;color:var(--g);display:flex;align-items:center;justify-content:center;padding:0;overflow:hidden;cursor:pointer;margin-inline-end:2px}
+.brc-im .wic{width:15px;height:15px}.brc-im.on{border:1.5px solid #ECE7F6;background:#fff}.brc-im img{width:100%;height:100%;object-fit:contain}
+.brc{padding-inline-start:4px}
+.mkbr-lg{position:relative;width:58px;height:58px;border-radius:16px;background:#fff;display:grid;place-items:center;overflow:hidden;box-shadow:0 4px 12px rgba(20,12,40,.08);margin-bottom:6px}
+.mkbr-lg img{width:100%;height:100%;object-fit:contain}
 .brc-add{display:flex;gap:8px;margin-top:12px;align-items:stretch}
 .brc-add input{flex:1;min-width:0;height:44px;box-sizing:border-box;border:1.5px solid #E2DCEE;border-radius:12px;padding:0 12px;font:inherit;font-size:14px;background:#fff;color:#1E1530;margin:0}
 .brc-add button{flex:0 0 auto;height:44px;border:0;border-radius:12px;padding:0 20px;background:var(--g);color:#fff;font:inherit;font-size:14px;font-weight:800;cursor:pointer}
@@ -13106,7 +13111,7 @@ async function catImgUp(inp){
 let _brMine=[];
 async function loadMyBrands(){
   if(!me||!me.shopId) return;
-  try{ _brMine=await sbGet('shop_brands?select=id,name,q,sort&shop_id=eq.'+me.shopId+'&active=is.true&order=sort.asc,created_at.asc')||[] }catch(e){ _brMine=null }
+  try{ _brMine=await sbGet('shop_brands?select=id,name,q,sort,img&shop_id=eq.'+me.shopId+'&active=is.true&order=sort.asc,created_at.asc')||[] }catch(e){ _brMine=null }
   renderMyBrands();
 }
 function _brCount(n){ const q=_normAr(n); if(!q) return 0; return ((myShopDoc&&myShopDoc.products)||[]).filter(p=>_normAr(p.name||'').includes(q)).length }
@@ -13115,9 +13120,10 @@ function renderMyBrands(){
   /* v582: نفس شكل لوحة «الأقسام الفرعية» — عنوان + عدّاد + سطر شرح واحد، بلا إيموجي */
   if(_brMine===null){ box.innerHTML='<section class="sts"><div class="sts-h"><b>البراندات</b></div><p class="sts-d">ما گدرنا نجيبها، جرّب بعد شوية.</p></section>'; return }
   const X='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M7 7l10 10M17 7 7 17"/></svg>';
+  const CAM='<svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8h3l2-2.5h6L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
   box.innerHTML=`<section class="sts"><div class="sts-h"><b>البراندات</b><span class="sts-n">${_brMine.length} من 12</span></div>
-    <p class="sts-d">تطلع للزبون بقسم «اكتشف البراندات». اكتب الاسم مثل ما مكتوب على المنتجات.</p>
-    ${_brMine.length?`<div class="brc-l">${_brMine.map(b=>{ const n=_brCount(b.q||b.name); return `<span class="brc${n?'':' z'}"><b>${esc(b.name)}</b><i>${n?n+' منتج':'ما بيه منتجات'}</i><button type="button" onclick="brDel('${b.id}')" aria-label="شيل ${esc(b.name)}">${X}</button></span>` }).join('')}</div>`:''}
+    <p class="sts-d">تطلع للزبون بقسم «اكتشف البراندات». اكتب الاسم مثل ما مكتوب على المنتجات، واضغط الدائرة وحط شعاره.</p>
+    ${_brMine.length?`<div class="brc-l">${_brMine.map(b=>{ const n=_brCount(b.q||b.name); return `<span class="brc${n?'':' z'}"><button type="button" class="brc-im${b.img?' on':''}" onclick="brImgPick('${b.id}')" aria-label="${b.img?'غيّر':'حط'} شعار ${esc(b.name)}">${b.img?`<img src="${esc(b.img)}" alt="">`:CAM}</button><b>${esc(b.name)}</b><i>${n?n+' منتج':'ما بيه منتجات'}</i><button type="button" onclick="brDel('${b.id}')" aria-label="شيل ${esc(b.name)}">${X}</button></span>` }).join('')}</div>`:''}
     ${_brMine.length<12?`<div class="brc-add"><input id="brNew" type="text" maxlength="40" placeholder="اسم البراند، مثلاً المراعي" oninput="brHint()" onkeydown="if(event.key==='Enter')brAdd()"><button type="button" onclick="brAdd()">أضف</button></div><div class="brm-h" id="brHint"></div>`:'<p class="sts-d">وصلت 12 براند. شيل واحد حتى تضيف غيره.</p>'}
   </section>`;
 }
@@ -13130,6 +13136,35 @@ async function brAdd(){
   const inp=document.getElementById('brNew'), v=((inp&&inp.value)||'').trim(); if(v.length<2) return toast('اكتب اسم البراند');
   if(!_brCount(v)){ const ok=await askConfirm('ما لگينا ولا منتج بهذا الاسم، فالكرت ما راح يطلع للزبون لحد ما تضيف منتجات بهذا الاسم.',{title:'تضيفه هيچ؟',ok:'أضيفه',no:'رجوع'}); if(!ok) return }
   try{ await rpc('shop_brand_add',{p_shop:me.shopId, p_name:v}); toast('انضاف ✓'); loadMyBrands() }catch(e){ toast(errMsg(e)) }
+}
+/* v583: شعار البراند — يتحفظ مثل ما هو (بلا قص ولا شيل خلفية)، على أرضية بيضاء */
+function brImgPick(id){
+  let f=document.getElementById('brImgFile');
+  if(!f){ f=document.createElement('input'); f.type='file'; f.accept='image/*'; f.id='brImgFile'; f.style.display='none'; f.onchange=()=>brImgUp(f); document.body.appendChild(f) }
+  window._brImgId=id; f.value=''; f.click();
+}
+function _logoBlob(file){
+  return new Promise((res,rej)=>{
+    const u=URL.createObjectURL(file), im=new Image();
+    im.onerror=()=>{ URL.revokeObjectURL(u); rej(new Error('صورة غير صالحة')) };
+    im.onload=()=>{
+      const S=400, pad=24, r=Math.min((S-pad*2)/im.width,(S-pad*2)/im.height), w=Math.round(im.width*r), h=Math.round(im.height*r);
+      const c=document.createElement('canvas'); c.width=S; c.height=S; const x=c.getContext('2d');
+      x.fillStyle='#fff'; x.fillRect(0,0,S,S); x.drawImage(im,(S-w)/2,(S-h)/2,w,h); URL.revokeObjectURL(u);
+      c.toBlob(b=>b?res(b):rej(new Error('فشل الضغط')),'image/jpeg',0.9);
+    };
+    im.src=u;
+  });
+}
+async function brImgUp(inp){
+  const file=inp.files&&inp.files[0], id=window._brImgId; inp.value=''; if(!file||!id) return;
+  try{
+    toast('… جاري رفع الشعار');
+    const url=await _upBlob(await _logoBlob(file),'brands');
+    await rpc('shop_brand_set_img',{p_id:id, p_img:url});
+    const b=(_brMine||[]).find(x=>x.id===id); if(b) b.img=url;
+    renderMyBrands(); toast('انحفظ الشعار ✓');
+  }catch(e){ toast('ما انحفظ: '+errMsg(e)) }
 }
 async function brDel(id){
   const ok=await askConfirm('تشيل هذا البراند من «اكتشف البراندات»؟',{title:'شيل البراند',ok:'إي، شيله',danger:true}); if(!ok) return;
@@ -13258,7 +13293,7 @@ async function loadShopBanners(){
   if(!sid||!_isMarket(curShop)) return;
   try{ const r=await sbGet('shop_banners?select=id,img,target_kind,target,sort,created_at&shop_id=eq.'+sid+'&status=eq.approved&order=sort.asc,created_at.desc&limit=5')||[]; if(curShop&&curShop.id===sid){ _shopBn={sid,list:r.filter(b=>_bnImgOk(b.img))}; renderShopBanners(); if(_mkHome() && _shopBn.list.length) renderMenu() } }catch(e){}
   /* v561: البراندات */
-  try{ const r=await sbGet('shop_brands?select=id,name,q,sort&shop_id=eq.'+sid+'&active=is.true&order=sort.asc,created_at.asc&limit=12')||[]; if(curShop&&curShop.id===sid){ _shopBr={sid,list:r}; if(_mkHome() && r.length) renderMenu() } }catch(e){}
+  try{ const r=await sbGet('shop_brands?select=id,name,q,sort,img&shop_id=eq.'+sid+'&active=is.true&order=sort.asc,created_at.asc&limit=12')||[]; if(curShop&&curShop.id===sid){ _shopBr={sid,list:r}; if(_mkHome() && r.length) renderMenu() } }catch(e){}
 }
 /* v561: البانرات — النص الأول فوك (يتحرك)، والباقي بين صفوف الأقسام مثل يمك مارت */
 function _sbnSplit(){ const L=(_shopBn.sid===(curShop&&curShop.id))?_shopBn.list:[]; return {first:L[0]||null, rest:L.slice(1)} }   /* مثل يمك مارت: الأول عريض تحت الأقسام، والباقي يتحرك بين الصفوف */
@@ -13278,7 +13313,7 @@ function _brCards(){
     const ps=all.filter(p=>p.avail!==false && _normAr(p.name||'').includes(q)); if(!ps.length) return '';
     const ims=ps.filter(p=>p.img).slice(0,3).map(p=>`<i><img decoding="async" ${lzA(tImg(pImgNow(p)))} alt=""></i>`).join('');
     const c=BRC[i%BRC.length];
-    return `<button type="button" class="mkbr" style="--bb:${c[0]};--bf:${c[1]}" onclick="brandOpen(${JSON.stringify(String(b.q||b.name)).replace(/"/g,'&quot;')})"><span class="mkbr-k">براند</span><b>${esc(b.name)}</b><span class="mkbr-n">${ps.length} منتج</span><span class="mkbr-ims">${ims}</span></button>` }).filter(Boolean);
+    return `<button type="button" class="mkbr" style="--bb:${c[0]};--bf:${c[1]}" onclick="brandOpen(${JSON.stringify(String(b.q||b.name)).replace(/"/g,'&quot;')})">${b.img?`<span class="mkbr-lg"><img decoding="async" src="${esc(b.img)}" alt=""></span>`:'<span class="mkbr-k">براند</span>'}<b>${esc(b.name)}</b><span class="mkbr-n">${ps.length} منتج</span><span class="mkbr-ims">${ims}</span></button>` }).filter(Boolean);
   return cards.length ? `<div class="mksec"><div class="mksh"><h3>اكتشف البراندات</h3></div><div class="mkbrs">${cards.join('')}</div></div>` : '';
 }
 function brandOpen(q){
@@ -30819,7 +30854,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v582', seen={}, n=0, q=[], t=null;
+  var VER='v583', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31072,7 +31107,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v582', t0=Date.now();
+  var VER='v583', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
