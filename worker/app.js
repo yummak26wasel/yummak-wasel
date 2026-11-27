@@ -392,6 +392,9 @@ export default {
     if ((url.pathname === '/' || url.pathname === '/index.html') && (req.method === 'GET' || req.method === 'HEAD')) {
       try { return await serveDoc(req, env); } catch (e) { return env.ASSETS.fetch(req); }
     }
+    /* v586: الملفات الموجودة (صور /m/ وملفات الفرق /u/) Cloudflare يخدمها قبل ما يوصل هنا. اللي يوصل هنا = ملف ناقص.
+       قبل: env.ASSETS يرجّع صفحة التطبيق كاملة (2.5MB) بدل الصورة الناقصة — بالنت الضعيف هذا ياكل الخط دقايق */
+    if (url.pathname.startsWith('/m/') || url.pathname.startsWith('/u/')) return new Response('', { status: 404, headers: { 'Cache-Control': 'no-store' } });
     if (url.pathname === '/_bg') return bgRemove(req, env, url);
     if (url.pathname === '/_nudge') return nudge(req, env);
     if (url.pathname.startsWith('/_train/')) return train(req, env, url.pathname.slice(7));   /* v454: تدريب السواق */

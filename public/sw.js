@@ -2,9 +2,16 @@
    الهدف: التطبيق يفتح فوراً من الكاش حتى بأضعف إنترنت أو بدون إنترنت،
    ويتحدّث بالخلفية، وإذا نزل تحديث جديد يبيّن شريط "فيه تحديث" للمستخدم.
    (طلبات البيانات Supabase/Firebase ما نلمسها — تتعامل وياها الصفحة بمهلة وإعادة محاولة) */
-const VER = 'leemak-v585';
+const VER = 'leemak-v586';
 const IMGC = 'leemak-img-v1';            /* صور المحلات/البنرات من Supabase — كاش منفصل ما ينمسح مع تحديث التطبيق */
-const IMG_MAX = 600;
+/* v586: صور التطبيق نفسه (أيقونات الأقسام، البنرات، الشعار — ملفات بجذر الموقع) بكاش لحالها ما ينمسح منه شي أبداً.
+   قبل: كلها بنفس كاش صور المنتجات، وأول ما يعبر 600 صورة (محل بيه 900 مادة) جان ينمسح الأقدم — يعني أيقونات الرئيسية والبنرات —
+   والزبون بالنت الضعيف يشوف الرئيسية فارغة (عبد 27/11 الساعة 8:12) */
+const COREC = 'leemak-core-v1';
+const CORE_RE = /^\/[\w.-]+\.(png|jpe?g|webp|svg|ico)$/i;   /* ملف صورة بجذر الموقع (مو /m/…) */
+/* v586: حد صور المنتجات صار 4000 (قبل 600)، والتنظيف يصير مرة وحدة وقت التحديث وبالهدوء — قبل: كل صورة Supabase جديدة
+   تقرا كل الكاش وتمسح المئات دفعة وحدة، والصور اللي الصفحة تطلبها بنفس اللحظة تنتظر وراه */
+const IMG_MAX = 4000, IMG_KEEP = 3600;
 const LIBC = 'leemak-lib-v1';           /* مكتبات CDN والخطوط — كاش دائم ما ينمسح مع كل تحديث (حتى ما تنزل من جديد بالنت الضعيف) */
 const FONT = /^https:\/\/(fonts\.googleapis\.com|fonts\.gstatic\.com)\//;
 const PRE_IMG = ['/081cb4e0.png', '/792707e8.png'];   /* الشعار — ينحفظ بالكاش الدائم */
@@ -58,7 +65,11 @@ const _checked = new Map();   /* آخر فحص تحديث لكل صورة (با�
 /* ينقل أي صور محفوظة بالكاشات القديمة للكاش الدائم (حتى ما تختفي الصور لما يتحدّث التطبيق) */
 async function migrateImages(){
   try{
-    const ic = await caches.open(IMGC);
+    const ic = await caches.open(IMGC), cc = await caches.open(COREC);
+    /* v586: صور التطبيق المحفوظة قبل بكاش المنتجات ← كاشها الثابت */
+    for(const rq of await ic.keys()){
+      try{ const u = new URL(rq.url); if(u.origin === location.origin && CORE_RE.test(u.pathname) && !(await cc.match(rq.url))){ const rs = await ic.match(rq); if(rs && rs.ok) await cc.put(rq.url, rs) } }catch(e){}
+    }
     for(const k of await caches.keys()){
       if(k === IMGC || k.indexOf('leemak-v') !== 0) continue;
       const oc = await caches.open(k);
@@ -74,16 +85,69 @@ async function migrateImages(){
 self.addEventListener('install', e => {
   self.skipWaiting();
   e.waitUntil(migrateImages().then(() => Promise.all([
-    caches.open(IMGC).then(ic => Promise.all(PRE_IMG.map(u =>
-      ic.match(u).then(h => h || fetch(u, { cache: 'reload' }).then(r => { if (r.ok) return ic.put(u, r) }))).map(p => p.catch(() => {})))),
-    caches.open(VER).then(c => Promise.all([
-    /* v352: إذا ما نزلت صفحة التطبيق كاملة، التثبيت يفشل والنسخة القديمة تبقى محفوظة وشغالة (قبل: تنمسح ويطلع تلفون بلا تطبيق) */
-    fetch('/', { cache: 'reload', priority: 'low' }).then(clean).then(r => { if (!(r && r.ok)) throw new Error('index'); return c.put('/index.html', r) }),   /* v576: low — الصور الظاهرة تسبق التحديث */
-    ...SHELL.map(u =>
-      fetch(u, { cache: 'reload', priority: 'low' }).then(clean).then(r => { if (r && r.ok) return c.put(u, r) }).catch(() => {})
-    )
-  ]))])));
+    caches.open(COREC).then(cc => Promise.all(PRE_IMG.map(u =>
+      cc.match(u).then(h => h || fetch(u).then(r => { if (r.ok) return cc.put(u, r) }))).map(p => p.catch(() => {})))),
+    caches.open(VER).then(async c => {
+      /* v586: أول شي نجرّب ملف الفرق (بضع KB) — بس إذا ما صار، ننزّل الصفحة كاملة.
+         v352: إذا ما نزلت صفحة التطبيق، التثبيت يفشل والنسخة القديمة تبقى محفوظة وشغالة */
+      const patched = await patchIndex(c);
+      return Promise.all([
+        patched ? null : fetch('/', { cache: 'reload', priority: 'low' }).then(clean).then(r => { if (!(r && r.ok)) throw new Error('index'); return c.put('/index.html', r) }),
+        /* v586: no-cache (يسأل السيرفر «تغيّر؟» ويجي 304 صغير) بدل reload (ينزّلها كاملة ~40KB بكل تحديث) */
+        ...SHELL.map(u => fetch(u, { cache: 'no-cache', priority: 'low' }).then(clean).then(r => { if (r && r.ok) return c.put(u, r); throw 0 })
+          .catch(() => oldMatch(u).then(o => { if (o) return c.put(u, o) })).catch(() => {}))
+      ]);
+    })
+  ])));
 });
+
+/* ═══ v586: تحديث التطبيق بالفرق (tools/mkpatch.mjs يصنع public/u/<sha256 النسخة القديمة>.json وقت النشر) ═══
+   قبل: كل تحديث = الصفحة كاملة ~650KB. بنت عبد (~4KB/ثانية) 3 دقايق، والصور توگف وراها بالدور.
+   هسه ~5–30KB. أي شي ما يطابق (sha256 قبل وبعد، رقم الإصدار) ← نرجع للصفحة الكاملة */
+async function sha256hex(s){
+  const b = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return Array.from(new Uint8Array(b), x => x.toString(16).padStart(2, '0')).join('');
+}
+function applyPatch(oldText, ops){
+  const a = oldText.split('\n'), out = []; let i = 0;
+  for(const op of ops){
+    if(typeof op === 'number'){ if(op > 0){ if(i + op > a.length) return null; for(let k = 0; k < op; k++) out.push(a[i++]) } else i -= op }
+    else if(typeof op === 'string') out.push(op);
+    else return null;
+  }
+  return i === a.length ? out.join('\n') : null;
+}
+async function oldMatch(u){
+  for(const k of (await caches.keys()).filter(k => k.indexOf('leemak-v') === 0 && k !== VER).sort().reverse()){
+    const r = await (await caches.open(k)).match(u); if(r) return r;
+  }
+  return null;
+}
+/* سلسلة: كل ملف ينقل من نسخة لنسخة أحدث (كل نشر يصنع ملف من النسخة اللي قبله) — نطبّقها وحدة ورا وحدة لحد ما نوصل لهذا الإصدار */
+async function patchIndex(c){
+  try{
+    const old = await oldIndex(); if(!old) return false;
+    let t = await old.clone().text(), h = await sha256hex(t); const from = (/var VER='(v\d+)'/.exec(t) || [])[1] || '';
+    const me = VER.slice(7); let good = null, steps = 0;
+    for(let step = 0; step < 12; step++){
+      const ac = new AbortController(), tm = setTimeout(() => ac.abort(), 30000);
+      let r = null;
+      try{ r = await fetch('/u/' + h.slice(0, 16) + '.json', { cache: 'no-store', signal: ac.signal }) }catch(e){ r = null }
+      clearTimeout(tm);
+      if(!r || !r.ok || !/json/i.test(r.headers.get('content-type') || '')){ try{ r && r.body && r.body.cancel() }catch(e){} break }
+      let p = null; try{ p = await r.json() }catch(e){ break }
+      if(!p || p.fh !== h || !Array.isArray(p.ops)) break;
+      if(good && p.t !== me) break;   /* وصلنا لهذا الإصدار — ما نعبره */
+      const nt = applyPatch(t, p.ops); if(!nt) break;
+      const nh = await sha256hex(nt); if(nh !== p.th || nh === h) break;
+      t = nt; h = nh;
+      if(p.t === me && (/var VER='(v\d+)'/.exec(t) || [])[1] === me){ good = t; steps = step + 1 }   /* نكمل: يمكن أكو نسخة أحدث بنفس الرقم */
+    }
+    if(!good) return false;
+    await c.put('/index.html', new Response(good, { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Date': new Date().toUTCString(), 'X-Leemak-Patch': from + '>' + steps } }));
+    return true;
+  }catch(e){ return false }
+}
 
 self.addEventListener('activate', e => {
   e.waitUntil((async () => {
@@ -91,11 +155,22 @@ self.addEventListener('activate', e => {
     const ks = await caches.keys();
     /* v352: إذا النسخة الجديدة ما محفوظة بعد، نخلي القديمة احتياط */
     const upd = ks.some(k => k !== VER && k.indexOf('leemak-v') === 0);   /* v438: كان أكو إصدار قبله = هذا تحديث */
-    await Promise.all(ks.filter(k => k !== VER && k !== IMGC && k !== LIBC && (has || k.indexOf('leemak-v') !== 0)).map(k => caches.delete(k)));
+    await Promise.all(ks.filter(k => k !== VER && k !== IMGC && k !== LIBC && k !== COREC && (has || k.indexOf('leemak-v') !== 0)).map(k => caches.delete(k)));
     await self.clients.claim();
     if(upd && has) await notifyUpdate();
+    await trimImages();
   })());
 });
+
+/* v586: تنظيف هادي — بس إذا كاش المنتجات عبر 4000، نمسح الأقدم لحد 3600، 40 بكل دفعة. كاش صور التطبيق (COREC) ما ينلمس */
+async function trimImages(){
+  try{
+    const ic = await caches.open(IMGC); const ks = await ic.keys();
+    if(ks.length <= IMG_MAX) return;
+    const del = ks.slice(0, ks.length - IMG_KEEP);
+    for(let i = 0; i < del.length; i += 40){ await Promise.all(del.slice(i, i + 40).map(k => ic.delete(k))); await timeout(30) }
+  }catch(e){}
+}
 
 async function notifyUpdate(){
   const cl = await self.clients.matchAll({ type: 'window' });
@@ -152,8 +227,10 @@ async function shell(e){
   const c = await caches.open(VER);
   const own = await c.match('/index.html');
   if(own){
+    /* v586: صار لها يوم؟ نسأل عن sw.js بس (~6KB) — إذا أكو إصدار جديد، تثبيته ينزّل ملف الفرق.
+       قبل (v576): ننزّل الصفحة كاملة (~650KB) مرة باليوم بعد 15 ثانية من الفتح — بنص تصفّح المحل */
     const d = Date.parse(own.headers.get('date') || '') || 0;
-    if(Date.now() - d > IDX_RECHECK) e.waitUntil(timeout(15000).then(() => fetchIndex(c)));
+    if(Date.now() - d > IDX_RECHECK) e.waitUntil(timeout(30000).then(() => self.registration.update()).catch(() => {}));
     return await clean(own);
   }
   const cached = await oldIndex();
@@ -178,9 +255,13 @@ async function swr(e, req){
 }
 
 /* صور وخطوط: الكاش أول، وتحديث بالخلفية كل 6 ساعات كحد أقصى */
+const isImg = r => /^image\//i.test(r.headers.get('content-type') || '');
 async function img(e, req){
-  const c = await caches.open(IMGC);
+  const u0 = new URL(req.url);
+  const core = u0.origin === location.origin && CORE_RE.test(u0.pathname);   /* v586 */
+  const c = await caches.open(core ? COREC : IMGC);
   let cached = await c.match(req);
+  if(!cached && core){ try{ const ic = await caches.open(IMGC); const h = await ic.match(req); if(h){ cached = h; c.put(req, h.clone()).catch(() => {}) } }catch(e){} }
   /* v514: إذا انحفظت صفحة بدل صورة (لحظة النشر) نرميها ونجيب الصورة من جديد */
   if(cached && !/^image\//i.test(cached.headers.get('content-type') || '')){ try{ await c.delete(req) }catch(e){} cached = null }
   const u = new URL(req.url);
@@ -195,7 +276,7 @@ async function img(e, req){
     /* v576: الفحص كل 6 ساعات صار حقيقي (من تاريخ الصورة المحفوظة) — قبل: العدّاد بالذاكرة ينمسح كل ما ينطفي الـSW (كل فتحة)،
        فكل صورة تطلع من الكاش جانت تنطلب من النت مرة ثانية بالخلفية وتزاحم الصور الجديدة.
        وصور /m/sb/ أسماءها ما تتكرر (وقت الرفع) فما تحتاج فحص أبد، وبالنت الضعيف ما نفحص شي */
-    if(!MSB.test(u.pathname) && !slowNet()){
+    if(core && !slowNet()){   /* v586: صور /m/ أسماءها ما تتغيّر (الصورة الجديدة تاخذ اسم جديد -v2) — ما تحتاج فحص أبد */
       const last = Math.max(_checked.get(req.url) || 0, Date.parse(cached.headers.get('date') || '') || 0);
       if(Date.now() - last > 6 * 3600 * 1000){
         _checked.set(req.url, Date.now());
@@ -209,16 +290,21 @@ async function img(e, req){
     /* v577: عنوان التطبيق علك قبل شوية بهالتلفون ← صور /m/sb/ نجيبها من Supabase فوراً (بدون انتظار 5 ثواني لكل دفعة) */
     if(m && Date.now() < _sbStuckUntil){ const o = await sbAlt(c, req, m[1], u.pathname); if(o) return o }
     const ac = new AbortController();
-    const net = fetch(req, m ? { signal: ac.signal } : undefined).then(r => { if(r.ok && /^image\//i.test(r.headers.get('content-type') || '')) c.put(req, r.clone()).catch(() => {}); return r });
+    const net = fetch(req, { signal: ac.signal }).then(r => {
+      if(r.ok && isImg(r)){ c.put(req, r.clone()).catch(() => {}); return r }
+      /* v586: صورة ناقصة ← Cloudflare جان يرجّع صفحة التطبيق كاملة (2.5MB) بدلها. نوقفها فوراً */
+      if(r.ok && /\/m\//.test(u.pathname)){ try{ ac.abort() }catch(e){} return new Response('', { status: 404 }) }
+      return r });
     if(!m) return await net;
     /* v524: نسخة /m/sb/ علكت (اتصال عالك بعنوان التطبيق) ← نجيبها من Supabase بدل ما الصورة تبقى فارغة.
        v577: 5 ثواني (قبل 6)، والاحتياط صار نسخة صغيرة مو الأصل، وينحفظ، والدفعات الجاية 5 دقايق تروح لـ Supabase مباشرة.
        (v571→v576 الاحتياط جان يطلب عنوان غلط «.jpg.s» ويرجع خطأ 400 ← الصور تبقى فارغة للأبد بالنت الضعيف — سجلات تلفون عبد 26/11) */
     const r = await Promise.race([net.catch(() => null), timeout(5000)]);
-    if(r && r.ok) return r;
+    if(r && r.ok && isImg(r)) return r;
     if(!r) _sbStuckUntil = Date.now() + 5 * 60000;
     const o = await sbAlt(c, req, m[1], u.pathname);
     if(o){ if(!r) try{ ac.abort() }catch(e){} return o }
+    if(r) return r;
     return await net;
   }catch(err){ return Response.error() }
 }
@@ -245,11 +331,7 @@ async function sbimg(req){
   let r = null;
   try{ r = await fetch(req.url, { mode: 'cors', credentials: 'omit' }) }catch(e){ r = null }
   if(r && r.ok){
-    try{
-      await c.put(req.url, r.clone());
-      const ks = await c.keys();
-      if(ks.length > IMG_MAX) await Promise.all(ks.slice(0, ks.length - IMG_MAX).map(k => c.delete(k)));
-    }catch(e){}
+    try{ await c.put(req.url, r.clone()) }catch(e){}   /* v586: بلا مسح هنا (صار trimImages وقت التحديث) */
     return r;
   }
   try{ return await fetch(req) }catch(e){ return Response.error() }   /* CORS فشل أو النت طايح: نجرّب الطلب العادي */

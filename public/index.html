@@ -11814,12 +11814,12 @@ function goHome(){try{clearInterval(__revTimer)}catch(e){}
 /* ═══ البانرات — من قاعدة البيانات ═══ */
 let allBanners=[];
 const BAN_DEF=[
-  {id:'d1',img:'ban6.jpg',action:'cat:all',        title:'',body:''},
-  {id:'d2',img:'ban1.jpg',action:'cat:restaurant', title:'',body:''},
-  {id:'d3',img:'ban2.jpg',action:'cat:store',      title:'',body:''},
-  {id:'d4',img:'ban3.jpg',action:'cat:sweet',      title:'',body:''},
-  {id:'d5',img:'ban5.jpg',action:'cat:special',    title:'',body:''},
-  {id:'d6',img:'ban4.jpg',action:'cat:all',        title:'',body:''}
+  {id:'d1',img:'ban6.webp',action:'cat:all',        title:'',body:''},
+  {id:'d2',img:'ban1.webp',action:'cat:restaurant', title:'',body:''},
+  {id:'d3',img:'ban2.webp',action:'cat:store',      title:'',body:''},
+  {id:'d4',img:'ban3.webp',action:'cat:sweet',      title:'',body:''},
+  {id:'d5',img:'ban5.webp',action:'cat:special',    title:'',body:''},
+  {id:'d6',img:'ban4.webp',action:'cat:all',        title:'',body:''}
 ];
 async function loadBanners(){
   try{
@@ -11839,9 +11839,9 @@ function renderBanners(){
   const w=document.getElementById('bSlides'), d=document.getElementById('bDots');
   if(!w) return;
   const list=allBanners.length?allBanners:BAN_DEF;
-  w.innerHTML=list.map(b=>`
+  w.innerHTML=list.map((b,i)=>`
     <div class="bslide" onclick="banAct('${String(b.action||'').replace(/'/g,"\\'")}')">
-      ${b.img?`<img src="${b.img}" alt="" onerror="bnBroken(this)">`:''}
+      ${b.img?`<img src="${b.img}" alt=""${i?' loading="lazy"':''} onerror="bnBroken(this)">`:''}
       ${(b.title||b.body)?`<div class="btx">
         ${b.title?`<b>${esc(b.title)}</b>`:''}
         ${b.body?`<span>${esc(b.body)}</span>`:''}
@@ -11870,6 +11870,7 @@ function bDots(i){
 function bScroll(){ bDots(bCur()); if(!__bMoving) __bHold=Date.now() }
 /* صورة بانر ما انحمّلت: نشيل الشريحة، وإذا ما بقت ولا وحدة نخفي المنطقة كلها (بدل فراغ فاضي) */
 function bnBroken(img){
+  if(/\/ban\d\.webp$/.test(img.src||'') && !img.dataset.jf){ img.dataset.jf='1'; img.src=img.src.replace(/\.webp$/,'.jpg'); return }   /* v586: البنرات صارت webp خفيفة — إذا ما لكاها نرجع للـ jpg */
   try{
     const sl=img.closest('.bslide'); if(sl&&!sl.querySelector('.btx')) sl.remove();
     const w=document.getElementById('bSlides'), wrap=document.querySelector('.bwrap');
@@ -11914,20 +11915,20 @@ function bnScroll(){ bScroll() }
 function renderCats(){
   const C=[
     /* v346: شلنا «الكل» — تضغط القسم المختار مرة ثانية (علامة ✕) وترجع لكل المحلات */
-    ['restaurant', 'cat-food-1.png','مطاعم'],
-    ['cafe',       'cat-cafe.png',  'كافيه'],   /* v513: قسم الكافيهات */
-    ['sweet',      'cat-sweet-1.png', 'حلويات'],
-    ['market',     'cat-market-4.png', 'سوبر ماركت'],   /* v379 · v397: سلة التطبيق البنفسجية الحقيقية (من بنر «كل اللي تحتاجه من المتاجر») */
-    ['special',    'cat-buy-1.png', 'اشتريلي'],
-    ['veg',        'cat-veg.png',   'مخضر'],   /* v346 */
-    ['pharmacy',   'cat-medsup.png', 'مستلزمات طبية'],   /* v379 · v380: مستلزمات طبية مو أدوية (الأدوية ممنوع تتوصّل) */
-    ['store',      'cat-store-1.png', 'متاجر'],
-    ['cosmetics',  'cat-cosm-2.png',  'كوزمتك']   /* v379: الصورة بدون الكلمة المكتوبة بيها */
+    ['restaurant', 'cat-food-1.webp','مطاعم'],   /* v586: webp صغيرة (‎~5KB) بدل png (‎40–150KB) — بالنت الضعيف أيقونات الرئيسية جانت تطلع فارغة */
+    ['cafe',       'cat-cafe.webp',  'كافيه'],   /* v513: قسم الكافيهات */
+    ['sweet',      'cat-sweet-1.webp', 'حلويات'],
+    ['market',     'cat-market-4.webp', 'سوبر ماركت'],   /* v379 · v397: سلة التطبيق البنفسجية الحقيقية (من بنر «كل اللي تحتاجه من المتاجر») */
+    ['special',    'cat-buy-1.webp', 'اشتريلي'],
+    ['veg',        'cat-veg.webp',   'مخضر'],   /* v346 */
+    ['pharmacy',   'cat-medsup.webp', 'مستلزمات طبية'],   /* v379 · v380: مستلزمات طبية مو أدوية (الأدوية ممنوع تتوصّل) */
+    ['store',      'cat-store-1.webp', 'متاجر'],
+    ['cosmetics',  'cat-cosm-2.webp',  'كوزمتك']   /* v379: الصورة بدون الكلمة المكتوبة بيها */
   ];
   const el=document.getElementById('catCards'); if(!el)return;
   el.innerHTML=C.map(([v,img,l])=>
     `<div class="catc ${cat===v?'on':''}${catSoon(v)?' soon':''}" onclick="pickCat('${v}')">${catSoon(v)?'<em class="cat-soon">قريباً</em>':''}${cat===v?'<em class="cat-x" aria-label="إلغاء">✕</em>':''}
-       <img src="${img}" alt="" onerror="this.onerror=null;this.src=this.src.replace('.png','-1.png')"><span>${l}</span></div>`).join('');
+       <img src="${img}" alt="" onerror="this.onerror=null;this.src=this.src.replace(/\.webp$/,'.png')"><span>${l}</span></div>`).join('');
   /* v348: لما تختار قسم، يطلع زر «الكل ✕» بنص سطر «الأقسام» حتى ترجع لكل المحلات */
   const cab=document.getElementById('catAllBtn'); if(cab) cab.style.display=(cat!=='all')?'inline-flex':'none';
   const t=document.getElementById('listTtl');
@@ -30867,7 +30868,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v585', seen={}, n=0, q=[], t=null;
+  var VER='v586', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31120,7 +31121,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v585', t0=Date.now();
+  var VER='v586', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{

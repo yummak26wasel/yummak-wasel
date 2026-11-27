@@ -127,4 +127,6 @@ async function main() {
 
 main().catch(e => log('error — skipped:', e && e.message || e))
   .then(async () => { try { await smallPass(getSharp()); } catch (e) { log('small pass skipped:', e && e.message || e); } })
+  /* v586: ملفات فرق التحديث (public/u) — من الصفحة الشغّالة هسه للنسخة الجديدة. تشتغل بكل نشر مهما جان منو نشر */
+  .then(() => { try { execSync('node tools/mkpatch.mjs --build', { stdio: 'inherit', timeout: 180000 }); } catch (e) { log('mkpatch skipped:', e && e.message || e); } })
   .finally(() => { process.exitCode = 0; });
