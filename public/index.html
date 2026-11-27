@@ -22565,6 +22565,9 @@ function _smGroups(ps){
   if(none.length && G.length) G.push({k:'__none', n:'بدون قسم', L:none});
   const off=ps.filter(p=>p.avail===false);
   if(off.length) G.push({k:'__off', n:_mkMine()?'نفذ':'غير متوفر', L:off, off:true});
+  /* v584: «بدون صورة» — المنتجات اللي ما إلها صورة (أو نوع من أنواعها ناقص صورة) حتى صاحب المحل يصوّرها ويرفعها */
+  const ni=ps.filter(p=>{ if(!p.img) return true; const z=pSizes(p); return z.some(x=>x.img) && z.some(x=>!x.img) });
+  if(ni.length) G.unshift({k:'__noimg', n:'بدون صورة', L:ni, ni:true});
   return G;
 }
 function smSet(k){ smCat=(smCat===k?'':k); renderStMenu() }
@@ -22635,16 +22638,16 @@ function renderStMenu(sh){
   if(smCat && !G.some(g=>g.k===smCat)) smCat='';
   const ch=document.getElementById('smChips');
   if(ch) ch.innerHTML=`<div class="chip ${!smCat?'on':''}" onclick="smSet('')">الكل <b>${ps.length}</b></div>`
-    + G.map(g=>`<div class="chip ${smCat===g.k?'on':''}${g.off?' smoff':''}" data-k="${esc(g.k)}" onclick="smSet(this.dataset.k)">${esc(g.n)} <b>${g.L.length}</b></div>`).join('');
+    + G.map(g=>`<div class="chip ${smCat===g.k?'on':''}${g.off?' smoff':''}${g.ni?' smni':''}" data-k="${esc(g.k)}" onclick="smSet(this.dataset.k)">${esc(g.n)} <b>${g.L.length}</b></div>`).join('');
   try{ const on=ch&&ch.querySelector('.chip.on'); if(on){ const L0=on.offsetLeft; if(L0<ch.scrollLeft||L0+on.offsetWidth>ch.scrollLeft+ch.clientWidth) ch.scrollLeft=L0-12 } }catch(e){}
   let L=smCat?((G.find(g=>g.k===smCat)||{}).L||[]):ps;
   const q=String(smQ||'').trim().toLowerCase();
   if(q) L=ps.filter(p=>[p.name,p.desc,p.cat].some(v=>String(v||'').toLowerCase().includes(q)));
   box.innerHTML=!ps.length?'<div class="empty"><div class="e"><svg class="wic" viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="5" y="4.5" width="14" height="16.5" rx="2"/><path d="M9 4.5V3.4A1.4 1.4 0 0 1 10.4 2h3.2A1.4 1.4 0 0 1 15 3.4v1.1z"/><path d="M9 11h6M9 15h4"/></svg></div><p>ضيف أول منتج</p></div>'
     :(!L.length?'<div class="pg-empty">'+(q?'ما لگينا منتج بهذا الاسم':'ما بيه منتجات هنا')+'</div>'
-      :(!smCat && !q && G.some(g=>!g.off && g.k!=='__none')) ? (()=>{   /* «الكل»: مقسّمة حسب الأقسام مثل ما يشوفها الزبون */
+      :(!smCat && !q && G.some(g=>!g.off && !g.ni && g.k!=='__none')) ? (()=>{   /* «الكل»: مقسّمة حسب الأقسام مثل ما يشوفها الزبون */
         const used=new Set(); let h='';
-        G.filter(g=>!g.off && g.k!=='__none').forEach(g=>{ const it=g.L.filter(x=>!used.has(x)); it.forEach(x=>used.add(x));
+        G.filter(g=>!g.off && !g.ni && g.k!=='__none').forEach(g=>{ const it=g.L.filter(x=>!used.has(x)); it.forEach(x=>used.add(x));
           if(it.length) h+=`<div class="smgh">${esc(g.n)} <b>${it.length}</b></div>`+it.map(smRow).join('') });
         const rest=ps.filter(x=>!used.has(x)); if(rest.length) h+=`<div class="smgh">بدون قسم <b>${rest.length}</b></div>`+rest.map(smRow).join('');
         return h })()
@@ -30498,6 +30501,7 @@ html[data-theme=dark] .prevm{background:#3a1a20;border-color:#6b2a2e}
 #stMenuCtl .smchips{padding:2px 2px 10px;margin-bottom:6px}
 #stMenuCtl .chip b{margin-inline-start:4px;opacity:.75}
 #stMenuCtl .chip.smoff:not(.on){color:#D92D20;border-color:#F6C9C4;background:#FFF5F4}
+#stMenuCtl .chip.smni:not(.on){color:#B54708;border-color:#FEDF89;background:#FFFAEB}   /* v584 */
 .pfm .phead{align-items:center}
 .pod-gal{display:block;width:100%;margin-top:10px;border:0;background:none;color:#6b6580;font:inherit;font-size:12.5px;font-weight:700;text-decoration:underline;cursor:pointer;padding:6px}
 #auth .forgot.flash{animation:fgFlash .6s ease-in-out 4;color:#F97402}
@@ -30854,7 +30858,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v583', seen={}, n=0, q=[], t=null;
+  var VER='v584', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31107,7 +31111,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v583', t0=Date.now();
+  var VER='v584', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
