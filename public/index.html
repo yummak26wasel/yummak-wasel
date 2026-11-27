@@ -13504,7 +13504,20 @@ function renderTopSellers(){
       <div class="sprow">${_mkVars1(list).slice(0,12).map(spCardHTML).join('')}</div>
     </div>`;
 }
+/* v587: «أضغط قسم فرعي وأنزل، من أصعد ألگاها راجعة للبداية» — كل رسم للقائمة (الضغط على القسم نفسه، إضافة للسلة، تحديث المحل)
+   جان يبني صف الأقسام الفرعية من جديد فيرجع لأوله، والقسم المختار يختفي برّا الشاشة. هسه نحفظ مكانه ونخلي المختار بالنظر */
 function renderMenu(){
+  const b=document.getElementById('menu'), r0=b&&b.querySelector('.mksubs'), L=r0?r0.scrollLeft:null, sec=menuSec;
+  _renderMenu0();
+  try{
+    const r=b&&b.querySelector('.mksubs'); if(!r) return;
+    if(L!=null && sec===menuSec) r.scrollLeft=L;
+    const on=r.querySelector('.mksub.on'); if(!on) return;
+    const rr=r.getBoundingClientRect(), o=on.getBoundingClientRect();
+    if(o.left<rr.left || o.right>rr.right) r.scrollLeft += (o.left+o.width/2)-(rr.left+rr.width/2);
+  }catch(e){}
+}
+function _renderMenu0(){
   const box=document.getElementById('menu'),all=curShop.products||[];
   renderShopSearch();
   mkModeSync();
@@ -30868,7 +30881,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v586', seen={}, n=0, q=[], t=null;
+  var VER='v587', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31121,7 +31134,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v586', t0=Date.now();
+  var VER='v587', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
