@@ -2773,6 +2773,22 @@ button:not(:disabled):active,.rcard:active,.mrow:active,.cat2:active,.daychip:ac
 .stf-p svg{width:14px;height:14px;stroke-width:2.2}
 .stf-p.no{opacity:.38}
 .stf-empty{text-align:center;padding:34px 16px;color:var(--g);font-size:13px}
+/* v590: صورة الموظف + المسمى الوظيفي */
+.stf-avb{position:relative;border:0;padding:0;cursor:pointer;overflow:visible;width:52px;height:52px;flex:0 0 52px;border-radius:14px}
+.stf-avb>span{width:100%;height:100%;border-radius:14px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.stf-avb img{width:100%;height:100%;object-fit:cover}
+.stf-avb i{position:absolute;inset-inline-start:-4px;bottom:-4px;width:22px;height:22px;border-radius:50%;background:#5B2BC9;color:#fff;
+  display:flex;align-items:center;justify-content:center;border:2px solid #fff}
+.stf-avb i svg{width:12px;height:12px;stroke-width:2.2}
+.stf-avb.up>span{opacity:.45}
+.stf-tt{display:inline-flex;align-items:center;gap:4px;margin:3px 0 2px;padding:3px 10px;border-radius:999px;background:#FFF1E3;color:#B4560A;
+  font-size:11.5px;font-weight:800;border:0;font-family:inherit;direction:rtl;cursor:pointer}
+.stf-tt.add{background:transparent;color:#7A6E93;border:1px dashed #D9D1EA;font-weight:700}
+.stf-tts{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px}
+.stf-tts button{border:1px solid #E6E0F2;background:#fff;color:#4A3F63;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer}
+.stf-tts button.on{background:#5B2BC9;border-color:#5B2BC9;color:#fff}
+.stf-tin{width:100%;box-sizing:border-box;height:44px;border:1.5px solid #E6E0F2;border-radius:12px;padding:0 12px;font-size:14px;font-family:inherit;margin-bottom:14px;background:#fff;color:inherit}
+.stf-tin:focus{outline:none;border-color:#5B2BC9}
 /* شريط المتجر — ستة تبويبات */
 #sNav button{font-size:11px;padding-inline:2px}
 #sNav .ni svg{width:20px;height:20px}
@@ -7401,6 +7417,7 @@ body,.screen{background:#fff;color:var(--txt)}
         إضافة موظف جديد
       </button>
       <div id="stfList"></div>
+      <input type="file" id="stfPhIn" accept="image/*" hidden onchange="stfPhotoUp(this)">
     </div> <div class="page" id="q_set">
     <div class="mycard" id="mySetCard"></div><div id="cstCard"></div>
     <div class="qgrid">
@@ -7687,6 +7704,9 @@ body,.screen{background:#fff;color:var(--txt)}
       <div class="stf-av" id="stfFAv"></div>
       <div class="stf-i"><b id="stfFName"></b><span id="stfFPhone"></span></div>
     </div>
+    <label class="stf-lb">المسمى الوظيفي</label>
+    <div class="stf-tts" id="stfTts"></div>
+    <input id="stfTitle" class="stf-tin" maxlength="30" placeholder="أو اكتبه: مثلاً كاشير" oninput="stfTtPaint()">
     <label class="stf-lb">الصلاحيات</label>
     <div id="stfPerms"></div>
     <button class="big-btn" id="stfSaveBtn" style="background:#5B2BC9;color:#fff;margin-top:14px" onclick="stfSave()">حفظ الموظف</button>
@@ -8473,12 +8493,13 @@ async function loadShopStaff(){
   const sid = me.shopId || (me.staff && me.staff.shop_id);
   if(!sid) return;
   try{
-    const rows = await rpc('shop_staff_list',{p_shop:sid});
+    let rows; try{ rows = await rpc('shop_staff_list2',{p_shop:sid}) }catch(e){ rows = await rpc('shop_staff_list',{p_shop:sid}) }   /* v590 */
     shopStaff = (rows||[]).map(r=>({
       ...r,
       name : r.name || 'موظف',
       phone: r.phone || '',
-      photo: r.photo_url || ''
+      title: r.title || '',
+      photo: r.staff_photo || r.photo_url || ''
     }));
   }catch(e){ shopStaff=[]; console.warn('staff',e.message) }
   renderShopStaff();
@@ -8508,9 +8529,10 @@ function renderShopStaff(){
   box.innerHTML = shopStaff.map(s=>`
     <div class="stf-c">
       <div class="stf-r">
-        <div class="stf-av">${s.photo?`<img src="${esc(s.photo)}" alt="">`:esc((s.name||'م').charAt(0))}</div>
+        <button class="stf-av stf-avb" id="stfAv_${s.id}" onclick="stfPhotoPick('${s.id}')" aria-label="صورة الموظف"><span>${s.photo?`<img src="${esc(s.photo)}" alt="" loading="lazy">`:esc((s.name||'م').charAt(0))}</span><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 8.5h3l1.6-2.5h6.8L17 8.5h3v10.5H4z"/><circle cx="12" cy="13.2" r="3.3"/></svg></i></button>
         <div class="stf-i">
           <b>${esc(s.name)}</b>
+          ${s.title?`<button class="stf-tt" onclick="stfTitleEdit('${s.id}')">${esc(s.title)}</button>`:`<button class="stf-tt add" onclick="stfTitleEdit('${s.id}')">+ المسمى الوظيفي</button>`}
           <span>${esc(fmtPhone(s.phone))}</span>
           <span class="stf-st ${s.is_active?'on':'off'}">${s.is_active?'نشط':'معطل'}</span>
         </div>
@@ -8544,8 +8566,37 @@ function stfOpenAdd(){
   document.getElementById('stfTtl').textContent='إضافة موظف جديد';
   document.getElementById('stfSub').textContent='أدخل رقم هاتف الموظف';
   document.getElementById('stfPhone').value='';
+  stfTtSet('');
   stfBack();
   document.getElementById('stfSheet').classList.add('on');
+}
+/* v590: المسمى الوظيفي — اختيار سريع أو كتابة */
+const STF_TITLES=['كاشير','مجهّز طلبات','عامل','محاسب','مدير','مسؤول مخزن'];
+function stfTtSet(v){ const i=document.getElementById('stfTitle'); if(i) i.value=v||''; stfTtPaint() }
+function stfTtPaint(){
+  const box=document.getElementById('stfTts'); if(!box) return;
+  const v=((document.getElementById('stfTitle')||{}).value||'').trim();
+  box.innerHTML=STF_TITLES.map(t=>`<button type="button" class="${t===v?'on':''}" onclick="stfTtSet('${t}')">${t}</button>`).join('');
+}
+function stfTitleEdit(id){ stfSel=shopStaff.find(s=>s.id===id); if(!stfSel) return; stfEditPerms(); setTimeout(()=>{ try{ document.getElementById('stfTitle').focus() }catch(e){} },250) }
+let _stfPhId=null;
+function stfPhotoPick(id){ _stfPhId=id; const i=document.getElementById('stfPhIn'); if(i){ i.value=''; i.click() } }
+/* مربع 400×400 من نص الصورة */
+async function _sqBlob(file, N){
+  N=N||400; const im=await _imgFromBlob(file), w=im.naturalWidth, h=im.naturalHeight, m=Math.min(w,h);
+  const c=document.createElement('canvas'); c.width=c.height=N; const x=c.getContext('2d');
+  x.fillStyle='#fff'; x.fillRect(0,0,N,N); x.drawImage(im,(w-m)/2,(h-m)/2,m,m,0,0,N,N);
+  return await new Promise(r=>c.toBlob(r,'image/jpeg',0.85));
+}
+async function stfPhotoUp(inp){
+  const f=inp.files&&inp.files[0], id=_stfPhId; if(!f||!id) return;
+  const av=document.getElementById('stfAv_'+id); if(av) av.classList.add('up');
+  try{
+    const url=await _upBlob(await _sqBlob(f,400),'staff');
+    await stfPatch(id,{photo:url});
+    toast('انحطّت صورة الموظف');
+    loadShopStaff();
+  }catch(e){ if(av) av.classList.remove('up'); toast('ما گدرنا نحط الصورة') }
 }
 function stfBack(){
   document.getElementById('stfStep1').style.display='';
@@ -8629,9 +8680,11 @@ async function stfSave(){
   btn.disabled=true; btn.textContent='...جاري الحفظ';
   try{
     const perms=stfReadPerms();
+    const _tt=((document.getElementById('stfTitle')||{}).value||'').trim().slice(0,30);
+    perms.title=_tt||null;   /* v590 */
     if(editId){
       await stfPatch(editId, perms);
-      toast('انحدّثت الصلاحيات');
+      toast('انحفظ');
     }else{
       const r=await fetch(SB_URL+'/rest/v1/shop_staff',{
         method:'POST',
@@ -8698,7 +8751,8 @@ function stfEditPerms(){
   document.getElementById('stfFName').textContent=s.name||'';
   document.getElementById('stfFPhone').textContent=fmtPhone(s.phone);
   stfRenderPerms(s);
-  document.getElementById('stfTtl').textContent='تعديل الصلاحيات';
+  stfTtSet(s.title||'');
+  document.getElementById('stfTtl').textContent='تعديل الموظف';
   document.getElementById('stfSub').textContent=s.name||'';
   document.getElementById('stfStep1').style.display='none';
   document.getElementById('stfStep0').style.display='none';
@@ -30882,7 +30936,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v589', seen={}, n=0, q=[], t=null;
+  var VER='v590', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31135,7 +31189,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v589', t0=Date.now();
+  var VER='v590', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
