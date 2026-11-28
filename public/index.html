@@ -24137,7 +24137,8 @@ async function updAdmSave(){
 
 /* ═══ v348: خريطة السواق المباشرة بلوحة الإدارة ═══ */
 let dMap=null, dMarks={}, dMapTimer=null, dMapData=[], dShopLayer=null;
-function _agoTxt(t){ if(!t) return 'ما وصل موقع'; const m=Math.max(0,Math.round((Date.now()-t)/60000));
+/* v589: جان اسمه _agoTxt — نفس اسم دالة وقت الطلب، فيغطّي عليها، وقائمة طلبات المحل تكتب «قبل NaN يوم» */
+function _dmAgo(t){ if(!t) return 'ما وصل موقع'; const m=Math.max(0,Math.round((Date.now()-t)/60000));
   return m<1?'هسه':m<60?'قبل '+m+' د':m<1440?'قبل '+Math.floor(m/60)+' س':'قبل '+Math.floor(m/1440)+' يوم' }
 function _dmState(d){
   const t=d.seen_at?Date.parse(d.seen_at):0, stale=!t||Date.now()-t>10*60000;
@@ -24180,7 +24181,7 @@ async function dmLoad(fit){
     const st=_dmState(d); seen[d.id]=1;
     const ic=L.divIcon({className:'dm-pin', iconSize:[44,54], iconAnchor:[22,50],
       html:`<div class="dm-p ${st.c}">${d.photo?`<img src="${esc(d.photo)}" alt="">`:`<b>${esc(String(d.name||'؟').charAt(0))}</b>`}</div><em>${esc(String(d.name||'').split(' ')[0])}</em>`});
-    const pop=`<div class="dm-pop"><b>${esc(d.name||'سائق')}</b><span>${esc(st.l)}</span><small>آخر موقع: ${_agoTxt(st.t)}</small>${d.phone?`<a href="tel:${esc(d.phone)}">📞 اتصال</a>`:''}</div>`;
+    const pop=`<div class="dm-pop"><b>${esc(d.name||'سائق')}</b><span>${esc(st.l)}</span><small>آخر موقع: ${_dmAgo(st.t)}</small>${d.phone?`<a href="tel:${esc(d.phone)}">📞 اتصال</a>`:''}</div>`;
     if(dMarks[d.id]){ dMarks[d.id].setLatLng([d.lat,d.lng]); dMarks[d.id].setIcon(ic); dMarks[d.id].setPopupContent(pop) }
     else dMarks[d.id]=L.marker([d.lat,d.lng],{icon:ic, zIndexOffset:1000}).addTo(dMap).bindPopup(pop);
   });
@@ -24192,7 +24193,7 @@ async function dmLoad(fit){
   const order={busy:0,free:1,stale:2,off:3};
   const list=rows.map(d=>({d,st:_dmState(d)})).sort((a,b)=>order[a.st.c]-order[b.st.c]);
   const box=document.getElementById('dmList');
-  if(box) box.innerHTML=list.map(({d,st})=>`<div class="dm-row ${st.c}" onclick="dmFocus('${d.id}')"><i></i><div><b>${esc(d.name||'سائق')}</b><span>${esc(st.l)} · ${_agoTxt(st.t)}</span></div>${d.phone?`<a href="tel:${esc(d.phone)}" onclick="event.stopPropagation()">📞</a>`:''}</div>`).join('')
+  if(box) box.innerHTML=list.map(({d,st})=>`<div class="dm-row ${st.c}" onclick="dmFocus('${d.id}')"><i></i><div><b>${esc(d.name||'سائق')}</b><span>${esc(st.l)} · ${_dmAgo(st.t)}</span></div>${d.phone?`<a href="tel:${esc(d.phone)}" onclick="event.stopPropagation()">📞</a>`:''}</div>`).join('')
     || '<div class="pg-empty">ماكو سواق</div>';
 }
 /* v348: المحلات على خريطة السواق — ثابتة (من موقع المحل اللي حدده بالتطبيق) */
@@ -30881,7 +30882,7 @@ window.__silent = function(e, where){
 <script>
 /* ══ v324: تبليغ تلقائي بالأخطاء — أي خطأ عند زبون/سائق/مطعم يوصل للمؤسس بدون ما يحس أحد ══ */
 (function(){
-  var VER='v588', seen={}, n=0, q=[], t=null;
+  var VER='v589', seen={}, n=0, q=[], t=null;
   var NOISE=/ResizeObserver|^Script error\.?$|Load failed|Failed to fetch|NetworkError|AbortError|aborted|انتهت المهلة|الاتصال ضعيف|ماكو اتصال|ERR_|chrome-extension|moz-extension|safari-(web-)?extension|webkit-masked-url|Non-Error promise rejection|cancelled|cancelado/i;
   function scr(){ try{ return [].map.call(document.querySelectorAll('.screen.on'),function(e){ return e.id }).join(',')+'|'+(window.__step||'') }catch(e){ return '' } }
   function push(msg, stack, src){
@@ -31134,7 +31135,7 @@ setInterval(function(){ try{ if(document.visibilityState==='visible' && me && me
 /* حارس الشاشة الفارغة: إذا ما يبين شي (لا صورة البداية ولا شاشة ولا تحميل) نطلّع «جاري التحميل».
    وبأسفلها رقم النسخة والمرحلة — حتى نعرف من الصورة وين واكف */
 (function(){
-  var VER='v588', t0=Date.now();
+  var VER='v589', t0=Date.now();
   function vis(el){ if(!el) return false; var cs=getComputedStyle(el); return cs.display!=='none'&&cs.visibility!=='hidden'&&cs.opacity!=='0' }
   function tick(){
     try{
